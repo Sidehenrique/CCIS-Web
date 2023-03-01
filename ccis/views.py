@@ -4,7 +4,7 @@ from django.shortcuts import render
 # Create your views here.
 
 
-def login(request):
-   return render(request, 'ccis/login.html')
+def area(request):
+   return render(request, 'ccis/area.html')
 
 
