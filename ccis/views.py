@@ -9,7 +9,7 @@ from django.contrib import messages
 # Create your views here.
 
 
-def login(request):
+def loginPage(request):
    return render(request, 'ccis/login.html')
 
 
@@ -22,16 +22,26 @@ def formLogin(request):
       username = request.POST.get('login')
       password = request.POST.get('senha')
 
+      statusName = 'is-valid'
+      statusSenha = 'is-valid'
+
       user = authenticate(request, username=username, password=password)
 
       if user is not None:
          login(request, user)
-         return redirect('ccis/conta.html')
+         return redirect('conta')
 
       else:
+
+         statusName = 'is-invalid'
+         statusSenha = 'is-invalid'
+
          context = {
             'username': username,
             'password': password,
+            'statusName': statusName,
+            'statusSenha': statusSenha
+
          }
          messages.add_message(request=request, message='Usuario ou senha incorretos', level=messages.ERROR)
          return render(request, 'ccis/login.html', context)

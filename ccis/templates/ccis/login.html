@@ -34,18 +34,32 @@
               <form method="post" action="formLogin">
                 {% csrf_token %}
                 <div class="mb-2">
-                  <label for="login" class="form-label">Usuário:</label>
-                  <input name="login" type="text" class="form-control" id="login" aria-describedby="userHelp" required
-                  maxlength="50">
+                  <label for="login" class="form-label">Usuário</label>
+                  <input name="login"
+                         type="text"
+                         class="form-control {{ statusName }}"
+                         id="login"
+                         aria-describedby="userHelp"
+                         required
+                         maxlength="50"
+                         value="{{ username }}">
+                  <div id="userHelp" class="form-text">Entre com seu usuário do SISBR</div>
 
                 </div>
 
                 <div class="mb-2">
-                  <label for="senha" class="form-label">Senha:</label>
-                  <input name="senha" type="password" class="form-control" id="senha" required
-                  maxlength="20">
+                  <label for="senha" class="form-label">Senha</label>
+                  <input name="senha"
+                         type="password"
+                         class="form-control {{ statusSenha }}"
+                         id="senha"
+                         required
+                         maxlength="20"
+                         aria-describedby="senhaFeedback">
 
-                  <div id="userHelp" class="form-text">Informe suas credenciais do SISBR</div>
+                  <div class="invalid-feedback" id="senhaFeedback">
+                    Usuário ou senha invalido
+                  </div>
                 </div>
 
                 <div class="d-grid gap-2 mt-3">
