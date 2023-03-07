@@ -8,6 +8,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- link css -->
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -17,7 +19,7 @@
     <title>Login</title>
   </head>
 
-  <body style="background-color:#04343D;">
+  <body style="background-color:#04343D">
 
     <div class="container-sm">
       <div class="row">
@@ -29,22 +31,24 @@
 
             <div class="card-body p-0">
 
-              <form>
-
+              <form method="post" action="formLogin">
+                {% csrf_token %}
                 <div class="mb-2">
                   <label for="login" class="form-label">Usuário:</label>
-                  <input type="text" class="form-control" id="login" aria-describedby="userHelp">
+                  <input name="login" type="text" class="form-control" id="login" aria-describedby="userHelp" required
+                  maxlength="50">
 
                 </div>
 
                 <div class="mb-2">
                   <label for="senha" class="form-label">Senha:</label>
-                  <input type="password" class="form-control" id="senha">
+                  <input name="senha" type="password" class="form-control" id="senha" required
+                  maxlength="20">
+
                   <div id="userHelp" class="form-text">Informe suas credenciais do SISBR</div>
                 </div>
 
                 <div class="d-grid gap-2 mt-3">
-                    {% csrf_token %}
                   <button class="btn btn-lg d-grid" type="submit" style="background-color:#00A194; color:#ffffff;">Fazer Login</button>
                 </div>
 
