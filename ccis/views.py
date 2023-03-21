@@ -334,9 +334,3 @@ def dev(request):
 def base(request):
    return render(request, 'ccis/base.html')
 
-
-
-
-
-
-
