@@ -6,6 +6,8 @@ from . import views
 urlpatterns = [
     path('', views.loginPage, name='login'),
     path('conta', views.conta, name='conta'),
+    path('usuario', views.usuario, name='usuario'),
+    path('profile', views.profile, name='profile'),
     path('formLogin', views.formLogin, name='formLogin'),
     path('formDadosPessoais', views.formDadosPessoais, name='formDadosPessoais'),
     path('formDependentes', views.formDependentes, name='formDependentes'),
@@ -14,6 +16,7 @@ urlpatterns = [
     path('formCertif', views.formCertif, name='formCertif'),
     path('formProficional', views.formProficional, name='formProficional'),
     path('formDadosBancarios', views.formDadosBancarios, name='formDadosBancarios'),
+    path('formMidia', views.formMidia, name='formMidia'),
     path('formOutros', views.formOutros, name='formOutros'),
     path('dev', views.dev, name='dev'),
     path('base', views.base, name='base'),

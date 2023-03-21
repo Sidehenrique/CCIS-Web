@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+import os
 
 
 class Arquivoatestadoadmissional(models.Model):
@@ -232,6 +233,8 @@ class Dadospessoais(models.Model):
     seriereservista = models.CharField(db_column='serieReservista', max_length=45, blank=True, null=True)  # Field name made lowercase.
     carteiranacionaldesaude = models.CharField(db_column='carteiraNacionalDeSaude', max_length=45, blank=True, null=True)  # Field name made lowercase.
     pessoacomdeficiencia = models.CharField(db_column='pessoaComDeficiencia', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    avatar = models.ImageField(upload_to='ccis/midia/', null=True, blank=True)
+    canvas = models.ImageField(upload_to='ccis/midia/', null=True, blank=True)
     escolaridade_idescolaridade = models.ForeignKey('Escolaridade', models.DO_NOTHING, db_column='escolaridade_idEscolaridade', blank=True, null=True)  # Field name made lowercase.
     profissional_idprofissional = models.ForeignKey('Profissional', models.DO_NOTHING, db_column='profissional_idProfissional', blank=True, null=True)  # Field name made lowercase.
     outros_idoutros = models.ForeignKey('Outros', models.DO_NOTHING, db_column='outros_idOutros', blank=True, null=True)  # Field name made lowercase.

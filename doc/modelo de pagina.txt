@@ -1,0 +1,200 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+<div class="col ms-3">
+    <!-- subMenu ---------------------------------------------------------------------------------------------------->
+    <div class="row">
+
+        <nav class="navbar navbar-light bg-light mb-2">
+          <div class="container-fluid">
+
+            <p class="m-0" style="font-family:Asap medium"> USUÁRIOS <br>
+                <small style="font-family:Asap Regular; color:#AFAFAF;">Modulo gestor</small></p>
+
+            <div class="navbar-nav-wrap-content-end">
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+              </form>
+            </div>
+          </div>
+
+        </nav>
+
+
+      </div>
+    <!-- End subMenu ------------------------------------------------------------------------------------------------>
+
+
+    <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
+
+    <div class="row">
+        <div style="height:75vh; background-color:#ff00ff" class="col overflow-auto bg-light">
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+            <p>conteudo</p>
+        </div>
+    </div>
+
+    <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
+
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+
+.navbar-topp {
+    background-color:#04343D;
+
+};
+
+.link {
+    font-family:Asap Semibold;
+    text-decoration: none;
+    color:#B7B7B7;
+
+}
+
+.avatar-label{
+    display: flex;
+    background-color: #fff;
+    border: 0.25rem solid #fff;
+    margin: -6.3rem auto 0.5rem auto;
+    border-radius:50%;
+};
+
+.avatar-profile {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    cursor: pointer;
+
+};
+
+.avatar-img{
+    border:1px solid;
+    border-radius:50%;
+    border-color:white;
+    cursor: pointer;
+};
+
+
+.button-canvas {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+
+};
+
+
+.canvas-label{
+    display: flex;
+    background-color: #fff;
+    border: 0.25rem solid #fff;
+    margin: -6.3rem auto 0.5rem auto;
+};
+
+.canvas-img{
+    cursor: pointer;
+
+};

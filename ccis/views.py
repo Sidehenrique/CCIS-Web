@@ -7,7 +7,6 @@ from ccis.models import Dadospessoais, Dependentes, Enderecoecontato, Escolarida
 
 # Create your views here.
 
-
 def loginPage(request):
    return render(request, 'ccis/login.html')
 
@@ -53,6 +52,14 @@ def conta(request):
    }
 
    return render(request, 'ccis/conta.html', context)
+
+
+def usuario(request):
+   return render(request, 'ccis/usuario.html')
+
+
+def profile(request):
+   return render(request, 'ccis/profile.html')
 
 
 def formDadosPessoais(request):
@@ -287,6 +294,24 @@ def formDadosBancarios(request):
       return render(request, 'ccis/conta.html', {'form': form})
 
 
+def formMidia(request):
+      form = Dadospessoais()
+
+      if request.method == 'POST':
+         foto = request.POST.get('foto')
+         background = request.POST.get('background')
+
+         print(foto, background)
+
+         db = Dadospessoais(avatar=foto, canvas=background,)
+         db.save()
+
+         return render(request, 'ccis/conta.html')
+
+      elif request.method == 'GET':
+         return render(request, 'ccis/conta.html', {'form': form})
+
+
 def formOutros(request):
    form = Outros()
 
@@ -304,6 +329,7 @@ def formOutros(request):
 
 def dev(request):
    return render(request, 'ccis/dev.html')
+
 
 def base(request):
    return render(request, 'ccis/base.html')

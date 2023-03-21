@@ -1,0 +1,233 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+<div class="col">
+    <!-- subMenu ---------------------------------------------------------------------------------------------------->
+    <div class="row">
+
+        <nav class="navbar navbar-light bg-light mb-2 ps-0 pe-0">
+          <div class="container-fluid">
+
+            <p class="m-0" style="font-family:Asap medium"> USUÁRIOS <br>
+                <small style="font-family:Asap Regular; color:#AFAFAF;">Modulo gestor</small></p>
+
+            <div class="navbar-nav-wrap-content-end">
+              <form class="d-flex">
+                <button class="btn btn-primary" type="submit"><i class="fa-solid fa-user-plus"></i> Novo</button>
+              </form>
+            </div>
+          </div>
+
+        </nav>
+
+
+      </div>
+    <!-- End subMenu ------------------------------------------------------------------------------------------------>
+
+
+    <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
+
+    <div class="row">
+        <div style="height:77vh;" class="col overflow-auto">
+
+
+            <!-- Cards informativos --------------------------->
+            <div class="row">
+                <div class="col-sm-6 col-lg-3 mb-3 mb-lg-3 mt-lg-1 ps-lg-0">
+
+                    <!-- card -->
+                    <div class="card h-100">
+                        <div class="card-body shadow-sm">
+                            <h6 class="card-subtitle mb-2">Total de Usuários</h6>
+
+                            <div class="row align-items-center gx-2">
+                                <div class="col">
+                                    <span class="display-4 text-dark" data-value="24">135</span>
+                                    <span class="text-body fs-5 ms-1">de 142</span>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-auto">
+                                    <span class="display-4 badge text-success p-1">
+                                        <i class="fa-regular fa-chart-line-up"></i> 5.0%
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </div>
+                            <!-- End Row -->
+                        </div>
+                    </div>
+                    <!-- End card -->
+
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-3 mb-lg-3 mt-lg-1 ps-lg-0">
+
+                    <!-- card -->
+                    <div class="card h-100">
+                        <div class="card-body shadow-sm">
+                            <h6 class="card-subtitle mb-2">Total de Usuários</h6>
+
+                            <div class="row align-items-center gx-2">
+                                <div class="col">
+                                    <span class="display-4 text-dark" data-value="24">135</span>
+                                    <span class="text-body fs-5 ms-1">de 142</span>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-auto">
+                                    <span class="display-4 badge text-success p-1">
+                                        <i class="fa-regular fa-chart-line-up"></i> 5.0%
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </div>
+                            <!-- End Row -->
+                        </div>
+                    </div>
+                    <!-- End card -->
+
+
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-3 mb-lg-3 mt-lg-1 ps-lg-0">
+
+                    <!-- card -->
+                    <div class="card h-100">
+                        <div class="card-body shadow-sm">
+                            <h6 class="card-subtitle mb-2">Total de Usuários</h6>
+
+                            <div class="row align-items-center gx-2">
+                                <div class="col">
+                                    <span class="display-4 text-dark" data-value="24">135</span>
+                                    <span class="text-body fs-5 ms-1">de 142</span>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-auto">
+                                    <span class="display-4 badge text-success p-1">
+                                        <i class="fa-regular fa-chart-line-up"></i> 5.0%
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </div>
+                            <!-- End Row -->
+                        </div>
+                    </div>
+                    <!-- End card -->
+
+
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-3 mb-lg-3 mt-lg-1 ps-lg-0 pe-lg-0">
+
+                    <!-- card -->
+                    <div class="card h-100">
+                        <div class="card-body shadow-sm">
+                            <h6 class="card-subtitle mb-2">Total de Usuários</h6>
+
+                            <div class="row align-items-center gx-2">
+                                <div class="col">
+                                    <span class="display-4 text-dark" data-value="24">135</span>
+                                    <span class="text-body fs-5 ms-1">de 142</span>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-auto">
+                                    <span class="display-4 badge text-success p-1">
+                                        <i class="fa-regular fa-chart-line-up"></i> 5.0%
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </div>
+                            <!-- End Row -->
+                        </div>
+                    </div>
+                    <!-- End card -->
+
+
+                </div>
+            </div>
+            <!-- End Cards informativos ----------------------->
+
+
+            <!-- Table Usuários ------------------------------->
+            <div class="row">
+                <div class="card p-0">
+                    <table class="table table-hover" id="table">
+
+                        <thead style="background-color:#F8FAFD; color:#888888;">
+                        <tr>
+                            <td >
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="CheckTotal">
+                                    <label class="form-check-label" for="invalidCheck"></label>
+                                </div>
+                            </td>
+                            <th></th>
+                            <th>Nome</th>
+                            <th>Cargo</th>
+                            <th>Status</th>
+                            <th>Editar</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <tr>
+
+                            <td style="vertical-align: middle;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck">
+                                    <label class="form-check-label" for="invalidCheck"></label>
+                                </div>
+                            </td>
+
+                            <td>
+
+                                <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                     alt="img" width="50" height="50" style="border:1px solid; border-radius:25px;">
+
+                            </td>
+
+                            <td>
+                                <p class="mb-0">Henrique Silva</p>
+                                <small style="color:#888888;" class="mb-0">henrique.silva@sicoobbrasilia.com.br</small>
+                            </td>
+
+                            <td>
+                                <p class="mb-0">Desenvolvedor</p>
+                                <small style="color:#888888;" class="mb-0">Unidade de Tecnologia</small>
+                            </td>
+
+                            <td style="vertical-align: middle;"> <span style="display: inline-block; width:0.5rem; height:0.5rem; background-color:red;
+                            border-radius:50%; "></span> Ativo</td>
+
+                            <td style="vertical-align: middle;">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#editUserModal">
+                                    <i class="fa-solid fa-pen"></i> Editar</button>
+                            </td>
+
+                        </tr>
+
+
+
+
+
+
+
+
+                        <!-- adicione mais linhas aqui conforme necessário -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End Table Usuários --------------------------->
+
+
+        </div>
+    </div>
+
+    <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
+
+</div>
+{% endblock %}

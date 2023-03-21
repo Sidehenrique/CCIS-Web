@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- link css -->
+    <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
 
 
     <!-- Bootstrap CSS -->
@@ -21,12 +22,12 @@
 
   <body>
     <!-- topMenu ------------------------------------------------------------------------------------------------------>
-    <header class="shadow-sm mb-1 nav justify-content-center bg-light">
+    <header class="navbar-topp shadow-sm mb-1 nav justify-content-center ">
 
-        <nav class="col-10 navbar navbar-expand-lg navbar-fixed navbar-light  bg-light">
+        <nav class="col-10 navbar navbar-topp navbar-expand-lg navbar-fixed">
           <div class="container-fluid ps-3 pe-0">
 
-            <!-- Logo do Menu --------------------------------------------------------------------------------------------->
+            <!-- Logo do Menu ----------------------------------------------------------------------------------------->
             <a class="navbar-brand" href="#">
               <img src="{% static 'ccis/logonav.png' %}"
                    alt="logo"
@@ -39,23 +40,23 @@
                     aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- End Logo do Menu ----------------------------------------------------------------------------------------->
+            <!-- End Logo do Menu ------------------------------------------------------------------------------------->
 
 
-            <!-- Esquerda do Menu ----------------------------------------------------------------------------------------->
+            <!-- Esquerda do Menu ------------------------------------------------------------------------------------->
             <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
               <ul class="navbar-nav">
 
-                <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="#" style="font-family:Asap Semibold;">INICIO</a>
+                <li class="  ms-5 me-4">
+                  <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;" href="#">INICIO</a>
                 </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="#" style="font-family:Asap Semibold;">PERFIL</a>
+                <li class="  ms-4 me-4">
+                  <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"  href="#">PERFIL</a>
                 </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="#" style="font-family:Asap Semibold;">SAIR</a>
+                <li class="ms-4 me-4">
+                  <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"  href="#" >SAIR</a>
                 </li>
 
               </ul>
@@ -135,34 +136,12 @@
     <!-- End topMenu -------------------------------------------------------------------------------------------------->
 
     <main class="container col-10">
-      <!-- subMenu ---------------------------------------------------------------------------------------------------->
-      <div class="row">
-
-        <nav class="navbar navbar-expand-lg navbar-fixed navbar-light bg-light rounded mt-2">
-          <div class="container-fluid ps-1 pe-1">
-
-            <p class="m-0" style="font-family:Asap medium"> GESTÃO DE PESSOAS <br> <small
-                    style="font-family:Asap Regular; color:#AFAFAF;">Modulo gestor</small></p>
-
-            <div class="navbar-nav-wrap-content-end">
-              <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-              </form>
-            </div>
-          </div>
-
-        </nav>
-
-
-      </div>
-      <!-- End subMenu ------------------------------------------------------------------------------------------------>
 
       <div class="row mt-2">
         <!-- Menu Lateral --------------------------------------------------------------------------------------------->
-        <div class="col-2 p-3 d-flex flex-column flex-shrink-0 bg-light rounded shadow-sm"
+        <div class="col-2 me-3 p-3 d-flex flex-column flex-shrink-0 bg-light rounded shadow-sm"
              id="conteiner_menu_left"
-             style="height:78vh;">
+             style="height:77vh;">
 
           <ul class="nav nav-pills flex-column mb-auto">
             <!-- Titulo -->
@@ -196,7 +175,7 @@
 
             <!-- Perfil -->
             <li class="nav-item">
-              <a href="#" class="nav-link link-dark" aria-current="page">
+              <a href="{% url 'profile' %}" class="nav-link link-dark" aria-current="page">
                 <i class="fa-solid fa-user"></i>
                 Perfil
               </a>
@@ -239,7 +218,7 @@
 
             <!-- Usuários -->
             <li class="nav-item">
-              <a href="#" class="nav-link link-dark" aria-current="page">
+              <a href="{% url 'usuario' %}" class="nav-link link-dark" aria-current="page">
                 <i class="fa-solid fa-users"></i>
                 Usuários
               </a>
@@ -247,7 +226,7 @@
 
             <!-- Conta -->
             <li class="nav-item">
-              <a href="#" class="nav-link link-dark" aria-current="page">
+              <a href= "{% url 'conta' %}" class="nav-link link-dark" aria-current="page">
                 <i class="fa-solid fa-address-card"></i>
                 Conta
               </a>
@@ -283,6 +262,11 @@
 
         {% endblock %}
         <!-- FINAL DA PAGINA *************************************************************************************  --->
+
+
+
+
+
       </div>
     </main>
 
