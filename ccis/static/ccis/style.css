@@ -2,7 +2,7 @@
 .navbar-topp {
     background-color:#04343D;
 
-};
+}
 
 .link {
     font-family:Asap Semibold;
@@ -17,7 +17,7 @@
     border: 0.25rem solid #fff;
     margin: -6.3rem auto 0.5rem auto;
     border-radius:50%;
-};
+}
 
 .avatar-profile {
     opacity: 0;
@@ -25,22 +25,26 @@
     z-index: -1;
     cursor: pointer;
 
-};
+}
 
 .avatar-img{
     border:1px solid;
     border-radius:50%;
     border-color:white;
-    cursor: pointer;
-};
+}
+
+.flow{
+    height:78vh;
+
+}
 
 
 .button-canvas {
-    opacity: 0;
     position: absolute;
-    z-index: -1;
-
-};
+    bottom: 108px;
+    right: 0;
+    cursor: pointer;
+}
 
 
 .canvas-label{
@@ -48,9 +52,77 @@
     background-color: #fff;
     border: 0.25rem solid #fff;
     margin: -6.3rem auto 0.5rem auto;
-};
+}
 
 .canvas-img{
     cursor: pointer;
 
-};
+}
+
+
+.comp-text{
+    font-family: Asap semibold;
+    text-align: center!important;
+    color:#B9B9B9
+}
+
+
+.nome-text{
+    text-align: center!important;
+    font-family: Asap semibold;
+    color:#51504F
+}
+
+.status{
+    display: inline-block;
+    width:0.5rem;
+    height:0.5rem;
+    background-color:#55CB69;
+    border-radius:50%;"
+}
+
+.text-status{
+    font-size:14px;
+    text-align: center!important;
+    font-family: Segoe UI;
+    color:#B9B9B9
+}
+
+/*---- Perfil -------------------------------------*/
+
+.card-config{
+    padding:0px;
+    border: 1px solid;
+    border-radius: 20px;
+    border-color: rgb(220,220,220);
+    font-family: Asap;
+    background-color:white;
+    box-shadow: 0 0 10px 1px rgb(237,237,237);
+}
+
+
+.card-header-config{
+    font-family: Asap medium;
+    color:#4D4D4D;
+    margin:17px;
+    background-color:white;
+    border-color: rgb(185,185,185);
+}
+
+
+.card-body-config{
+    font-family: Segoe UI;
+    font-size: 13px;
+    color:#888888;
+    margin:17px;
+    background-color:white;
+}
+
+
+.align-colum{
+    text-align: center!important;
+    display: flex;
+
+}
+
+

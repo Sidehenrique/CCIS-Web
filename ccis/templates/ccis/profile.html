@@ -2,20 +2,20 @@
 {% load static %}
 
 {% block conteudo %}
-<div class="col ms-3">
+    <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
+
     <!-- subMenu ---------------------------------------------------------------------------------------------------->
     <div class="row">
 
         <nav class="navbar navbar-light bg-light mb-2">
           <div class="container-fluid">
 
-            <p class="m-0" style="font-family:Asap medium"> USUÁRIOS <br>
+            <p class="m-0" style="font-family:Asap medium"> PROFILE <br>
                 <small style="font-family:Asap Regular; color:#AFAFAF;">Modulo gestor</small></p>
 
             <div class="navbar-nav-wrap-content-end">
               <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+
               </form>
             </div>
           </div>
@@ -26,60 +26,425 @@
       </div>
     <!-- End subMenu ------------------------------------------------------------------------------------------------>
 
-
-    <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
-
+    <!-- CONTEUDO --------------------------------------------------------------------------------------------------->
     <div class="row">
-        <div style="height:75vh; background-color:#ff00ff" class="col overflow-auto bg-light">
+
+        <!-- Coluna Esquerda -------------------------------------------------->
+        <div class="col-9 me-3">
+
+            <!-- Card Header --------------------->
+            <div class="row mb-3">
+
+                <div style="border-radius:0 0 20px 20px; box-shadow: 0 0 10px 1px rgb(237,237,237); " class="card p-0">
+
+                    <!-- Background - canvas ---------------->
+                    <img src="{% static 'ccis/henrique.png' %}"
+                         class="card-img-top" alt="canvas">
+
+                    <button type="button" class="btn button-canvas" data-bs-toggle="modal" data-bs-target="#profileModal"
+                            data-bs-whatever="@getbootstrap" style="color:#219180" aria-expanded="false">
+
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                    <!-- End Background - canvas ---------------->
+
+
+                    <!-- Avatar --------------------------------->
+                    <label class="avatar-label">
+
+                    <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                         alt="Avatar"
+                         width="140rem"
+                         height="140rem">
+
+                    </label>
+                    <!-- End Avatar ----------------------------->
+
+                    <!-- Modal foto e banner -------------------->
+                    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModal" aria-hidden="true">
+
+                        <div class="modal-dialog">
+
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+
+                                    <h5 class="modal-title" id="exampleModalLabel">Alterar Foto e Capa</h5>
+
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <form id="formMidia" method="post" enctype="multipart/form-data" action="formMidia"
+                                          class="row g-3 needs-validation" novalidate>
+                                        {% csrf_token %}
+
+                                        <div class="col-12">
+                                            <label class="form-check-label">Carregar Foto:</label>
+                                            <input name="foto" type="file" class="form-control"
+                                                   aria-label="file example" required>
+                                            <div class="invalid-feedback">Nenhum arquivo selecionado</div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label class="form-check-label">Carregar Background:</label>
+                                            <input name="background" type="file" class="form-control"
+                                                   aria-label="file example">
+                                            <div class="invalid-feedback">Nenhum arquivo selecionado</div>
+                                        </div>
+
+                                        <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" data-bs-target="#formMidia">
+                                                Salvar
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal foto e banner ---------------->
+
+                    <p class="text-status  mb-0">
+                        <span class="status"></span>
+                        <small>Este perfil esta ativo</small>
+                    </p>
+
+                    <h4 class=" nome-text mb-1 "> Henrique da Silva </h4>
+
+                    <h6 class=" comp-text mb-0 " > Analista de TI </h6>
+
+                    <small class="text-status mb-2 " style="font-size:12px" >Credibrasília</small>
+
+
+                </div>
+
+            </div>
+            <!-- End card Header ----------------->
+
+            <!-- Card Informações ---------------->
+            <div class="row">
+
+                <div class=" card-config mb-3 p-0 ">
+
+                    <div class="card-header-config d-flex">
+                        <div class="col">Sobre</div>
+                        <div class="col">Contato</div>
+                        <div class="col">Profissional</div>
+                    </div>
+
+                    <hr>
+
+                    <div class="card-body-config d-flex justify-content-between">
+                        <div class="col">
+                            <p><i class="fa-solid fa-mars-double"></i> Masculino</p>
+                            <p><i class="fa-solid fa-ring fa-rotate-90"></i> Casado(a)</p>
+                            <p><i class="fa-solid fa-calendar"></i> 30/03/1993</p>
+                        </div>
+
+                        <div class="col">
+                            <p><i class="fa-solid fa-envelope"></i> henrique.silva@</p>
+                            <p><i class="fa-solid fa-phone"></i> Tel: 9 8888-7755</p>
+                            <p><i class="fa-solid fa-phone"></i> Ramal: 222</p>
+                        </div>
+
+                        <div class="col">
+                            <p><i class="fa-solid fa-layer-group"></i> Área: Tecnologia</p>
+                            <p><i class="fa-solid fa-building"></i> Unidade: 99 - UAD</p>
+                            <p><i class="fa-solid fa-address-book"></i> Funcionário</p>
+
+                        </div>
 
 
 
-          <!-- card profile enctype="multipart/form-data"-->
-          <div class="card">
+                    </div>
+                </div>
 
-              <!-- Background - canvas ---------------->
-              <label class="">
+            </div>
+            <!-- End card Informações ------------>
 
-                <img src="{% static 'ccis/backgroundPro.jpg' %}"
-                     class="card-img-top canvas-img" alt="canvas">
+            <!-- Card Equipe --------------------->
+            <div class="row d-flex">
+                <div class=" card-config mb-3 p-0 ">
 
-                  <input class="button-canvas"
-                         id="canvas"
-                         name="canvas" type="file"
-                         aria-label="file example">
+                    <div class="card-header-config d-flex">
+                        <div class="col">Histórico</div>
+                    </div>
 
-              </label>
-              <!-- End Background - canvas ---------------->
+                    <hr>
 
-              <!-- Avatar --------------------------------->
-              <label class="avatar-label">
+                    <div class="col card-body-config">
 
-                <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-                     alt="Avatar"
-                     width="150rem"
-                     height="150rem">
+                        <div class="row">
 
-                <input class="avatar-profile"
-                       type="file" id="avatar"
-                       width="150rem"
-                       height="150rem">
+                            <div class="col justify-content-center align-colum">
 
+                                <img class="avatar-img"
 
-              </label>
-            <!-- End Avatar ----------------------------->
+                                         src="{% static 'ccis/avatar.jpg' %}"
+                                         alt="img"
+                                         width="35"
+                                         height="35"
+                                         align="middle">
 
+                            </div>
+                            <div class="col justify-content-center align-colum">
 
-          </div>
+                                <img class="avatar-img"
 
+                                         src="{% static 'ccis/avatar.jpg' %}"
+                                         alt="img"
+                                         width="35"
+                                         height="35"
+                                         align="middle">
 
+                            </div>
+                            <div class="col justify-content-center align-colum">
 
+                                <img class="avatar-img"
+
+                                         src="{% static 'ccis/avatar.jpg' %}"
+                                         alt="img"
+                                         width="35"
+                                         height="35"
+                                         align="middle">
+
+                            </div>
+                            <div class="col justify-content-center align-colum">
+
+                                <img class="avatar-img"
+
+                                         src="{% static 'ccis/avatar.jpg' %}"
+                                         alt="img"
+                                         width="35"
+                                         height="35"
+                                         align="middle">
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress" style="height:6px">
+                            <div class="progress-bar"
+                                 role="progressbar"
+                                 style="width: 63%; background-color: #219180"
+                                 aria-valuenow="63"
+                                 aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col align-colum d-flex flex-column">
+                                Office-boy 20/03/2019 Tecnologia
+                            </div>
+
+                            <div class="col justify-content-center align-colum">
+                                Auxiliar de TI 20/03/2019 Tecnologia
+                            </div>
+
+                            <div class="col justify-content-center align-colum">
+                                Analista Junior 20/03/2019 Tecnologia
+                            </div>
+
+                            <div class="col justify-content-center align-colum">
+                                Analista Pleno 20/03/2019 Tecnologia
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- End card Equipe ----------------->
 
         </div>
+        <!-- End Coluna Esquerda ---------------------------------------------->
+
+
+        <!-- Coluna Direita --------------------------------------------------->
+        <div class="col">
+
+            <!-- Card progresso --------------------->
+            <div class="row d-flex">
+                <div class=" card-config mb-3 p-0 ">
+
+                    <div class="col card-header-config">
+                        Complete seu perfil
+
+                        <div class="progress" style="height:6px">
+                            <div class="progress-bar" role="progressbar" style="width: 78%; background-color: #219180" aria-valuenow="78"
+                                 aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- End card progresso ----------------->
+
+            <!-- Card Atividade ------------------>
+            <div class="row d-flex overflow-auto">
+                <div class=" card-config mb-3 p-0 ">
+
+                    <div class="card-header-config d-flex">
+                        <div class="col">Atividades</div>
+                    </div>
+
+                    <hr style="margin-bottom:0">
+
+                    <div class="col">
+                        <div class="list-group list-group-flush border-bottom scrollarea">
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action py-3 lh-tight"
+                               aria-current="true">
+
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <strong class="mb-1">Aniversariante</strong>
+                                    <small>28/03/2023</small>
+                                </div>
+                                <div class="col-10 mb-1 small">
+                                    De os Parabéns para a colaboradora Mariana de Souza.
+                                </div>
+                            </a>
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action py-3 lh-tight"
+                               aria-current="true">
+
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <strong class="mb-1">Gestão de Pessoas</strong>
+                                    <small>29/03/2023</small>
+                                </div>
+
+                                <div class="col-10 mb-1 small d-flex justify-content-between">
+                                    Seu pedido de férias foi aprovado.
+
+                                </div>
+
+                            </a>
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action py-3 lh-tight"
+                               aria-current="true">
+
+                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <strong class="mb-1">Tecnologia</strong>
+                                    <small>30/03/2023</small>
+                                </div>
+
+                                <div class="col-10 mb-1 small d-flex justify-content-between">
+                                    Os acesso PLD solicitados foram liberados
+                                </div>
+
+                            </a>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Card Footer -->
+                    <div style="height:20px;"></div>
+
+                </div>
+
+            </div>
+            <!-- End card Atividade -------------->
+
+            <!-- Card Equipe --------------------->
+            <div class="row d-flex">
+                <div class=" card-config mb-3 p-0 ">
+
+                    <div class="card-header-config d-flex">
+                        <div class="col">Equipe</div>
+                    </div>
+
+                    <hr>
+
+                    <div class="col card-body-config">
+
+                        <div class=" d-flex">
+
+                            <img class="avatar-img"
+                                 src="{% static 'ccis/avatar.jpg' %}"
+                                 alt="img"
+                                 width="35"
+                                 height="35">
+
+                            <p class="ms-1 mt-2">Emanuel Sardinha</p>
+
+                        </div>
+                        <div class=" d-flex">
+
+                            <img class="avatar-img"
+                                 src="{% static 'ccis/avatar.jpg' %}"
+                                 alt="img"
+                                 width="35"
+                                 height="35">
+
+                            <p class="ms-1 mt-2">Henrique Silva</p>
+
+                        </div>
+                        <div class=" d-flex">
+
+                            <img class="avatar-img"
+                                 src="{% static 'ccis/avatar.jpg' %}"
+                                 alt="img"
+                                 width="35"
+                                 height="35">
+
+                            <p class="ms-1 mt-2">Pedro Henrique</p>
+
+                        </div>
+                        <div class=" d-flex">
+
+                            <img class="avatar-img"
+                                 src="{% static 'ccis/avatar.jpg' %}"
+                                 alt="img"
+                                 width="35"
+                                 height="35">
+
+                            <p class="ms-1 mt-2">Raquel Santos</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- End card Equipe ----------------->
+
+        </div>
+        <!-- End coluna Direita ---------------------------------------------->
+
+
+
+
     </div>
+    <!-- END CONTEÚDO ---------------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
-
-</div>
 {% endblock %}
 
 

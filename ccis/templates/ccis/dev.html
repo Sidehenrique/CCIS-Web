@@ -29,26 +29,42 @@
 
     <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
 
-    <div class="row">
-        <div style="height:75vh; background-color:#ff00ff" class="col overflow-auto bg-light">
+  <div class="">
+    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="isso aqui">
+    <button class="btn" type="button" id="timeHistorico"
+            data-bs-toggle="dropdown" aria-expanded="false">
+
+      <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+           alt="img" width="40" height="40" style="border:1px solid; border-radius:25px;">
+
+    </button>
+    </span>
+
+    <span>Henrique Silva</span>
 
 
-            <h2>Upload de imagem</h2>
-            <form action="upload_imagem" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="file">
-
-                <div class="col-12">
-                  <button type="submit" class="btn btn-primary">Confirmar</button>
-                </div>
-            </form>
-
-
-        </div>
+    <div class="progress" style="height: 9px;">
+      <div class="progress-bar progress-bar-striped progress-bar-animated"
+           role="progressbar"
+           aria-valuenow="75"
+           aria-valuemin="0"
+           aria-valuemax="100"
+           style="width: 60%">
+      </div>
     </div>
 
-    <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
+  </div>
+
+  <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+  <button class="btn btn-primary" type="button" disabled>Disabled button</button>
+</span>
+
+
+  <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
+  Popover on top
+</button>
+
+  <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
 
 </div>
 {% endblock %}

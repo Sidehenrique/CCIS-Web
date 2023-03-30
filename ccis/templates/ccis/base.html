@@ -141,7 +141,7 @@
 
       <div class="row mt-2">
         <!-- Menu Lateral --------------------------------------------------------------------------------------------->
-        <div class="col-2 me-3 p-3 d-flex flex-column flex-shrink-0 bg-light rounded shadow-sm"
+        <div class="col-2 me-3 p-3 bg-light shadow-sm"
              id="conteiner_menu_left"
              style="height:77vh;">
 
@@ -249,9 +249,8 @@
         </div>
         <!-- End Menu Lateral ----------------------------------------------------------------------------------------->
 
-
-
         <!-- CONTEÚDO DA PAGINA **********************************************************************************  --->
+        <div class="col flow">
         {% block conteudo %}
 
 
@@ -263,6 +262,7 @@
 
 
         {% endblock %}
+        </div>
         <!-- FINAL DA PAGINA *************************************************************************************  --->
 
 
@@ -271,6 +271,10 @@
 
       </div>
     </main>
+
+
+    <!-- link css -->
+    <script src="{% static 'ccis/script.js' %}"></script>
 
     <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
