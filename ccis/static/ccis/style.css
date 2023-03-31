@@ -1,3 +1,14 @@
+.body-background{
+    background-color:#F9FAFD;
+}
+
+
+.sub-nav-background {
+    background-color:white;
+    height:65px;
+    box-shadow: 0 0 10px 1px rgb(237,237,237);
+
+}
 
 .navbar-topp {
     background-color:#04343D;
@@ -94,7 +105,7 @@
     padding:0px;
     border: 1px solid;
     border-radius: 20px;
-    border-color: rgb(220,220,220);
+    border-color: rgb(235,235,235);
     font-family: Asap;
     background-color:white;
     box-shadow: 0 0 10px 1px rgb(237,237,237);
@@ -125,4 +136,39 @@
 
 }
 
+/*---- Usuário -------------------------------------*/
+.link-card{
+    text-decoration: none;
+}
 
+.span-label-positivo{
+    background-color:#E5F9F6;
+    padding:2%;
+    border:1px white solid;
+    border-radius: 24% 24% 24% 25%;
+}
+
+.span-label-negativo{
+    background-color:#FDEDF1;
+    padding:2%;
+    border:1px white solid;
+    border-radius: 24% 24% 24% 25%;
+}
+
+.table-header{
+    font-family: asap;
+    font-size: 13px;
+    color:rgb(200,200,200);
+    margin:25px;
+
+}
+
+.table-body{
+
+
+}
+
+.table-td{
+    vertical-align: middle;
+
+}

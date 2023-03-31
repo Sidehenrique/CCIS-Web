@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block conteudo %}
-<div class="col ms-3">
+<div class="col">
     <!-- subMenu ---------------------------------------------------------------------------------------------------->
     <div class="row">
 
-        <nav class="navbar navbar-light bg-light mb-2">
+        <nav class="navbar sub-nav-background mb-2">
           <div class="container-fluid">
 
             <p class="m-0" style="font-family:Asap medium"> USUÁRIOS <br>
@@ -29,42 +29,11 @@
 
     <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
 
-  <div class="">
-    <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="isso aqui">
-    <button class="btn" type="button" id="timeHistorico"
-            data-bs-toggle="dropdown" aria-expanded="false">
-
-      <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-           alt="img" width="40" height="40" style="border:1px solid; border-radius:25px;">
-
-    </button>
-    </span>
-
-    <span>Henrique Silva</span>
-
-
-    <div class="progress" style="height: 9px;">
-      <div class="progress-bar progress-bar-striped progress-bar-animated"
-           role="progressbar"
-           aria-valuenow="75"
-           aria-valuemin="0"
-           aria-valuemax="100"
-           style="width: 60%">
-      </div>
-    </div>
-
+    <div class="col-9">
+     <!-- end card-->
   </div>
 
-  <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
-  <button class="btn btn-primary" type="button" disabled>Disabled button</button>
-</span>
-
-
-  <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
-  Popover on top
-</button>
-
-  <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
+    <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
 
 </div>
 {% endblock %}

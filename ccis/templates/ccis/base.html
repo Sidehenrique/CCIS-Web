@@ -20,7 +20,7 @@
 
   </head>
 
-  <body>
+  <body class="body-background">
     <!-- topMenu ------------------------------------------------------------------------------------------------------>
     <header class="navbar-topp shadow-sm mb-1 nav justify-content-center ">
 
@@ -146,14 +146,6 @@
              style="height:77vh;">
 
           <ul class="nav nav-pills flex-column mb-auto">
-            <!-- Titulo -->
-            <li>
-              <a class="nav-link link-dark " href="#">SUPER-ADMIN</a>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
 
             <!-- Home -->
             <li class="nav-item">
@@ -198,18 +190,23 @@
                 Gestão
               </a>
 
-              <div id="collapseWidthExample" class="collapse collapse-horizontal ps-5 ">
+              <div id="collapseWidthExample" class="collapse collapse-horizontal ps-3 ">
                 <ul class="nav nav-pills flex-column mb-auto">
 
+                  <!-- Usuários -->
                   <li class="nav-item">
-                    <a class="nav-link link-dark pt-1 pb-1" href="#">
-                      Ferias
+                    <a href="{% url 'usuario' %}" class="nav-link link-dark" aria-current="page">
+                      <i class="fa-solid fa-users"></i>
+                      Usuários
                     </a>
                   </li>
 
+                  <!-- Solicitações -->
                   <li class="nav-item">
-                    <a class="nav-link link-dark pt-1 pb-1" href="#">
-                      Outros
+
+                    <a href="#" class="nav-link link-dark" aria-current="page">
+                      <i class="fa-solid fa-message"></i>
+                      Solicitações
                     </a>
                   </li>
 
@@ -218,29 +215,31 @@
 
             </li>
 
-            <!-- Usuários -->
-            <li class="nav-item">
-              <a href="{% url 'usuario' %}" class="nav-link link-dark" aria-current="page">
-                <i class="fa-solid fa-users"></i>
-                Usuários
-              </a>
-            </li>
 
             <!-- Conta -->
             <li class="nav-item">
-              <a href= "{% url 'conta' %}" class="nav-link link-dark" aria-current="page">
+              <a href="{% url 'conta' %}" class="nav-link link-dark" aria-current="page">
                 <i class="fa-solid fa-address-card"></i>
                 Conta
               </a>
             </li>
 
-            <!-- Autenticação -->
+            <!-- Documentos -->
             <li class="nav-item">
               <a href="#" class="nav-link link-dark" aria-current="page">
-                <i class="fa-solid fa-lock"></i>
-                Autenticação
+                <i class="fa-solid fa-file"></i>
+                Documentos
               </a>
             </li>
+
+            <!-- Solicitações -->
+            <li class="nav-item">
+              <a href="{% url 'solicitacao' %}" class="nav-link link-dark" aria-current="page">
+                <i class="fa-solid fa-message"></i>
+                Solicitações
+              </a>
+            </li>
+
 
           </ul>
           <hr>

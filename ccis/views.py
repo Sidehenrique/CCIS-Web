@@ -57,6 +57,8 @@ def conta(request):
 def usuario(request):
    return render(request, 'ccis/usuario.html')
 
+def solicitacao(request):
+   return render(request, 'ccis/solicitacao.html')
 
 def profile(request):
    return render(request, 'ccis/profile.html')
