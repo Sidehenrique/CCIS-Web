@@ -165,10 +165,43 @@
 
 .table-body{
 
-
 }
+
 
 .table-td{
     vertical-align: middle;
+}
 
+.button-style {
+    background-color:white;
+    color:rgb(33,145,128);
+    border-radius:5px;
+    border:1px rgb(33,145,128) solid;
+    padding:5px;
+}
+
+.button-style:hover{
+    background-color:rgb(33,145,128);
+    color:white;
+}
+
+.button-style:active{
+    background-color:#05443B;
+}
+
+.button-style-red{
+    background-color:white;
+    color:rgb(238,65,20);
+    border-radius:5px;
+    border:1px rgb(238,65,20) solid;
+    padding:5px;
+}
+
+.button-style-red:hover{
+    background-color:rgb(238,65,20) ;
+    color:white;
+}
+
+.button-style-red:active{
+    background-color:rgb(180,53,20);
 }
