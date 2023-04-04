@@ -30,8 +30,18 @@
     <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
 
     <div class="col-9">
-     <!-- end card-->
-  </div>
+
+        <form action=" {% url 'proformCertificado' %} " method="POST">
+            {% csrf_token %}
+            <table>
+                {{form}}
+            </table>
+
+            <input type="submit">
+
+        </form>
+
+    </div>
 
     <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
 
