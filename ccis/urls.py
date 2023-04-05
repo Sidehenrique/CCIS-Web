@@ -13,9 +13,8 @@ urlpatterns = [
     path('formLogin', views.formLogin, name='formLogin'),
 
 
+
     path('dev', views.dev, name='dev'),
-
-
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

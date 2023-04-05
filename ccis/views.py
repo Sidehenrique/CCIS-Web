@@ -2,8 +2,8 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-# from ccis.models import Dadospessoais, Dependentes, Enderecoecontato, Escolaridade, Certificacao, Profissional, Dadosbancarios, Outros
-from .forms import formImagens
+
+from .forms import modelFormDadosPessoais
 
 
 def loginPage(request):
@@ -63,22 +63,22 @@ def formLogin(request):
    return render(request, 'ccis/login.html')
 
 
-
-
-
 def dev(request):
-   form = formImagens()
-   return render(request, 'ccis/dev.html', {'form': form})
 
+   form = modelFormDadosPessoais()
 
-def proImagensForm(request):
+   if request.method == 'POST':
 
-   form = formImagens(request.POST)
+      if form.is_valid():
+         form.save()
+         return HttpResponse("Salvo com sucesso")
 
-   if form.is_valid():
-      form.save()
-      return HttpResponse("Salvo com sucesso")
-   return HttpResponse('Erro ao validar o formulário')
+   elif request.method == 'GET':
+      return render(request, 'ccis/dev.html', {'form': form})
+
+   else:
+      return HttpResponse("Erro de Processamento")
+
 
 
 
