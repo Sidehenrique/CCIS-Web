@@ -31,11 +31,12 @@
 
     <div class="col-9">
 
-        <form action=" {% url 'dev' %} " method="POST" enctype="multipart/form-data" novalidate>
+        <form action=" {% url 'dev' %} " method="POST" class="row needs-validation" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
-            <table>
+
+
                 {{form}}
-            </table>
+
 
             <input type="submit">
 

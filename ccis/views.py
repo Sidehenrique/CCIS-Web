@@ -69,16 +69,35 @@ def dev(request):
 
    if request.method == 'POST':
 
+      form = modelFormDadosPessoais(request.POST, request.FILES)
+
       if form.is_valid():
          form.save()
          return HttpResponse("Salvo com sucesso")
 
+      else:
+         return HttpResponse("não passou")
+
    elif request.method == 'GET':
       return render(request, 'ccis/dev.html', {'form': form})
 
-   else:
-      return HttpResponse("Erro de Processamento")
+def conta2(request):
 
+   form = modelFormDadosPessoais()
+
+   if request.method == 'POST':
+
+      form = modelFormDadosPessoais(request.POST, request.FILES)
+
+      if form.is_valid():
+         form.save()
+         return HttpResponse("Salvo com sucesso")
+
+      else:
+         return HttpResponse("não passou")
+
+   elif request.method == 'GET':
+      return render(request, 'ccis/conta2.html', {'form': form})
 
 
 
