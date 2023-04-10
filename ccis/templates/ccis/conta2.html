@@ -64,7 +64,7 @@
               <p class="card-text"><span></span></p>
 
               <form method="post"
-                    action=" {% url 'dev' %} "
+                    action=" {% url 'conta2' %} "
                     class="row g-3 needs-validation"
                     enctype="multipart/form-data"
                     novalidate>
@@ -246,12 +246,7 @@
 
                 <div class="col-6">
                   <label for="inputDepNome" class="form-label">Nome Completo:</label>
-                  <input name="depNome"
-                         type="text"
-                         class="form-control"
-                         id="inputDepNome"
-                         placeholder="Pedro jose santos"
-                         required>
+                  {{dependentes.nomeCompleto}}
                 </div>
 
                 <div class="col-3">

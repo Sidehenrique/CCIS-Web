@@ -16,6 +16,7 @@ urlpatterns = [
 
     path('dev', views.dev, name='dev'),
     path('conta2', views.conta2, name='conta2'),
+    
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

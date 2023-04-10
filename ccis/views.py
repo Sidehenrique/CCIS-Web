@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from .forms import modelFormDadosPessoais
+from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, ModelFormMidia
+from .forms import modelFormEscolaridade , modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios
+               
 
 
 def loginPage(request):
@@ -63,13 +65,14 @@ def formLogin(request):
    return render(request, 'ccis/login.html')
 
 
+
 def dev(request):
 
-   form = modelFormDadosPessoais()
+   form = ModelFormMidia()
 
    if request.method == 'POST':
 
-      form = modelFormDadosPessoais(request.POST, request.FILES)
+      form = ModelFormMidia(request.POST, request.FILES)
 
       if form.is_valid():
          form.save()
@@ -80,24 +83,28 @@ def dev(request):
 
    elif request.method == 'GET':
       return render(request, 'ccis/dev.html', {'form': form})
-
+   
 def conta2(request):
 
-   form = modelFormDadosPessoais()
+   dadosPessoais = modelFormDadosPessoais()
+   dependentes = modelFormDependentes()
+   contatoEndereco = modelFormEnderecoContato()
+   escolaridade = modelFormEscolaridade()
+   certificacao = modelFormCertificacao()
+   profissional = modelFormProfissional()
+   dadosBancarios = modelFormDadosBancarios()
+   outros = ModelFormOutros()
+   midia = ModelFormMidia()
 
-   if request.method == 'POST':
-
-      form = modelFormDadosPessoais(request.POST, request.FILES)
-
-      if form.is_valid():
-         form.save()
-         return HttpResponse("Salvo com sucesso")
-
-      else:
-         return HttpResponse("não passou")
-
-   elif request.method == 'GET':
-      return render(request, 'ccis/conta2.html', {'form': form})
+   return render(request, 'ccis/conta2.html', {'form': dadosPessoais,
+                                               'dependentes':dependentes,
+                                               'contatoEndereco':contatoEndereco,
+                                               'escolaridade':escolaridade,
+                                               'certificacao':certificacao,
+                                               'profissional':profissional,
+                                               'dadosBancarios':dadosBancarios,
+                                               'outros':outros,
+                                               'midia':midia,})
 
 
 

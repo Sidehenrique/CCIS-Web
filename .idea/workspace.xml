@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 11.1&#10;1 - Ambiente virtual configurado">
+      <change beforePath="$PROJECT_DIR$/.idea/CCIS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CCIS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/conta.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/conta.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,11 +25,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ccis/templates/ccis" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\PROJETOS\CCIS\ccis\templates\ccis" />
@@ -49,7 +48,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\PROJETOS\CCIS\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="E:\CCIS-Web\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -70,7 +69,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\PROJETOS\CCIS\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="E:\CCIS-Web\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -91,7 +90,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\PROJETOS\CCIS\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="E:\CCIS-Web\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
