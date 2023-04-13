@@ -63,7 +63,7 @@ class dadosPessoais(models.Model):
     nomePai = models.CharField(db_column='nomePai', max_length=60, blank=True, null=True)
     nomeMae = models.CharField(db_column='nomeMae', max_length=60, blank=True, null=True)
 
-    cpf = models.CharField(max_length=45, blank=True, null=True)
+    cpf = models.CharField(max_length=45, blank=False, null=True)
     rg = models.CharField(max_length=45, blank=True, null=True)
     expedidor = models.CharField(max_length=45, blank=True, null=True)
     cnh = models.CharField(max_length=45, blank=True, null=True)
@@ -82,7 +82,7 @@ class dadosPessoais(models.Model):
     cns = models.CharField(db_column='CNS', max_length=45, blank=True, null=True)
     pcd = models.CharField(db_column='PCD', max_length=45, blank=True, null=True)
 
-    foto = models.ImageField(null=True, blank=True)
+    foto = models.ImageField(null=True, blank=False)
     canvas = models.ImageField(null=True, blank=True)
 
     def __str__(self):
@@ -100,10 +100,10 @@ CHOICES_relacao = [
 
 class dependentes(models.Model):
     idDependentes = models.AutoField(db_column='idDependentes', primary_key=True)
-    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=45, blank=True, null=True)
-    cpf = models.CharField(max_length=45, blank=True, null=True)
+    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=45, blank=False, null=True)
+    cpf = models.CharField(max_length=45, blank=False, null=True)
     dataNascimento = models.DateField(db_column='dataNascimento', max_length=45, blank=True, null=True)
-    relacao = models.CharField(choices=CHOICES_relacao, max_length=45, blank=True, null=True)
+    relacao = models.CharField(choices=CHOICES_relacao, max_length=45, blank=False, null=True)
     email = models.EmailField(max_length=45, blank=True, null=True)
     contato = models.CharField(max_length=45, blank=True, null=True)
 
@@ -146,11 +146,11 @@ CHOICES_estado = [
 
 class enderecoContato(models.Model):
     idEndereCoecontato = models.AutoField(db_column='idEnderecoEContato', primary_key=True)
-    endereco = models.CharField(db_column='endereco', max_length=100, blank=True, null=True)
+    endereco = models.CharField(db_column='endereco', max_length=100, blank=False, null=True)
     bairro = models.CharField(db_column='bairro', max_length=45, blank=True, null=True)
     cidade = models.CharField(db_column='cidade', max_length=45, blank=True, null=True)
     estado = models.CharField(choices=CHOICES_estado, db_column='estado', max_length=45, blank=True, null=True)
-    cep = models.CharField(db_column='cep', max_length=45, blank=True, null=True)
+    cep = models.CharField(db_column='cep', max_length=45, blank=False, null=True)
     emailCorporativo = models.CharField(db_column='emailCorporativo', max_length=45, blank=True, null=True)
     telefonePessoal = models.CharField(db_column='telefonePessoal', max_length=45, blank=True, null=True)
     telefoneCorporativo = models.CharField(db_column='telefoneCorporativo', max_length=45, blank=True, null=True)
@@ -191,8 +191,8 @@ CHOICES_grau = [
 
 class escolaridade(models.Model):
     idEscolaridade = models.AutoField(db_column='idEscolaridade', primary_key=True)
-    entidadeDeEnsino = models.CharField(db_column='entidadeDeEnsino', max_length=45, blank=True, null=True)
-    curso = models.CharField(db_column='curso', max_length=45, blank=True, null=True)
+    entidadeDeEnsino = models.CharField(db_column='entidadeDeEnsino', max_length=45, blank=False, null=True)
+    curso = models.CharField(db_column='curso', max_length=45, blank=False, null=True)
     grau = models.CharField(choices=CHOICES_grau, db_column='grau', max_length=45, blank=True, null=True)
     dataConclusao = models.DateField(db_column='dataConclusao', max_length=45, blank=True, null=True)
     idiomaPrimario = models.CharField(db_column='idiomaPrimario', max_length=45, blank=True, null=True)
@@ -208,9 +208,9 @@ class escolaridade(models.Model):
 
 class certificacao(models.Model):
     idCertificacao = models.AutoField(db_column='idCertificacao', primary_key=True)
-    nome = models.CharField(db_column='nome', max_length=45, blank=True, null=True)
-    organizacaoEmissora = models.CharField(db_column='organizacaoEmissora', max_length=45, blank=True, null=True)
-    dataEmissao = models.DateField(db_column='dataEmissao', max_length=45, blank=True, null=True)
+    nome = models.CharField(db_column='nome', max_length=45, blank=False, null=True)
+    organizacaoEmissora = models.CharField(db_column='organizacaoEmissora', max_length=45, blank=False, null=True)
+    dataEmissao = models.DateField(db_column='dataEmissao', max_length=45, blank=False, null=True)
     dataExpiracao = models.DateField(db_column='dataExpiracao', max_length=45, blank=True, null=True)
 
     def __str__(self):
@@ -260,9 +260,9 @@ CHOICES_empregador = [
 
 class profissional(models.Model):
     idProfissional = models.AutoField(db_column='idProfissional', primary_key=True)
-    cargo = models.CharField(max_length=45, blank=True, null=True)
-    area = models.CharField(max_length=45, blank=True, null=True)
-    paUnidade = models.CharField(choices=CHOICES_paUnidade, db_column='paUnidade', max_length=45, blank=True, null=True)
+    cargo = models.CharField(max_length=45, blank=False, null=True)
+    area = models.CharField(max_length=45, blank=False, null=True)
+    paUnidade = models.CharField(choices=CHOICES_paUnidade, db_column='paUnidade', max_length=45, blank=False, null=True)
     colaborador = models.CharField(choices=CHOICES_colaborador, max_length=60, blank=True, null=True)
     centroDeCusto = models.CharField(db_column='centroDeCusto', max_length=45, blank=True, null=True)
     matricula = models.CharField(max_length=45, blank=True, null=True)
@@ -271,7 +271,7 @@ class profissional(models.Model):
     folhaDePagamento = models.CharField(max_length=45, blank=True, null=True)
     admissao = models.CharField(max_length=45, blank=True, null=True)
     desligamento = models.CharField(max_length=45, blank=True, null=True)
-    situacao = models.CharField(choices=CHOICES_situacao, max_length=45, blank=True, null=True)
+    situacao = models.CharField(choices=CHOICES_situacao, max_length=45, blank=False, null=True)
     horarioEntrada = models.TimeField(db_column='horarioEntrada', max_length=45, blank=True, null=True)
     horarioSaida = models.TimeField(db_column='horarioSaida', max_length=45, blank=True, null=True)
     dataAtesAdmissional = models.DateField(db_column='dataAtesAdmissional', max_length=45, blank=True, null=True)
@@ -291,10 +291,10 @@ CHOICES_tipoDeConta = [
 
 class dadosBancarios(models.Model):
     idDadosBancarios = models.AutoField(db_column='idDadosBancarios', primary_key=True)
-    conta = models.CharField(max_length=45, blank=True, null=True)
-    digito = models.CharField(db_column='digitoDaConta', max_length=45, blank=True, null=True)
-    banco = models.CharField(max_length=45, blank=True, null=True)
-    agencia = models.CharField(max_length=45, blank=True, null=True)
+    conta = models.CharField(max_length=45, blank=False, null=True)
+    digito = models.CharField(db_column='digitoDaConta', max_length=45, blank=False, null=True)
+    banco = models.CharField(max_length=45, blank=False, null=True)
+    agencia = models.CharField(max_length=45, blank=False, null=True)
     tipoDeConta = models.CharField(choices=CHOICES_tipoDeConta, db_column='tipoDeConta', max_length=45, blank=True,
                                    null=True)
     modalidade = models.CharField(max_length=45, blank=True, null=True)
@@ -317,7 +317,7 @@ CHOICES_tamanho = [
 
 class outros(models.Model):
     idOutros = models.AutoField(db_column='idOutros', primary_key=True)
-    camiseta = models.CharField(choices=CHOICES_tamanho, max_length=45, blank=True, null=True)
+    camiseta = models.CharField(choices=CHOICES_tamanho, max_length=45, blank=False, null=True)
 
     def __str__(self):
         return self.camiseta

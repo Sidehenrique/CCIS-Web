@@ -47,14 +47,15 @@ def conta(request):
         return render(request, 'ccis/conta.html', context)
 
     if request.method == 'POST':
-        dpForm = modelFormDadosPessoais(request.POST, instance=pk_dados)
-        deForm = modelFormDependentes(request.POST, instance=pk_dependentes)
-        conEndForm = modelFormEnderecoContato(request.POST, instance=pk_contato)
-        escForm = modelFormEscolaridade(request.POST, instance=pk_escolaridade)
-        certForm = modelFormCertificacao(request.POST, instance=pk_certificacao)
-        profForm = modelFormProfissional(request.POST, instance=pk_profi)
-        dbForm = modelFormDadosBancarios(request.POST, instance=pk_bancario)
-        outForm = ModelFormOutros(request.POST, instance=pk_outros)
+        dpForm = modelFormDadosPessoais(request.POST or None, instance=pk_dados)
+        deForm = modelFormDependentes(request.POST or None, instance=pk_dependentes)
+        conEndForm = modelFormEnderecoContato(request.POST or None, instance=pk_contato)
+        escForm = modelFormEscolaridade(request.POST or None, instance=pk_escolaridade)
+        certForm = modelFormCertificacao(request.POST or None, instance=pk_certificacao)
+        profForm = modelFormProfissional(request.POST or None, instance=pk_profi)
+        dbForm = modelFormDadosBancarios(request.POST or None, instance=pk_bancario)
+        outForm = ModelFormOutros(request.POST or None, instance=pk_outros)
+        midForm = ModelFormMidia(request.POST or None, request.FILES, instance=pk_dados)
 
         if dpForm.is_valid():
             cor = 'green'
@@ -128,12 +129,21 @@ def conta(request):
 
             return redirect('conta')
 
+        elif midForm.is_valid():
+            cor = 'green'
+            midForm.save()
+            messages.add_message(request=request,
+                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',
+                                 level=messages.SUCCESS)
+
+            return redirect('conta')
+
         else:
             cor = 'red'
             messages.add_message(request=request,
                                  message='ERRO ao validar o formulário, Por favor verifique se todos os'
                                          ' campos foram preenchidos corretamente', level=messages.ERROR)
-            return render(request, 'ccis/conta.html', {'form': context, 'data': data, 'cor': cor})
+            return redirect('conta')
 
 
 def usuario(request):
