@@ -2,6 +2,7 @@
 
 {% load static %}
 
+
 <html lang="pt-br">
 <head>
     <!-- Required meta tags -->
@@ -18,6 +19,9 @@
 
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -144,6 +148,18 @@
         <!-- Menu Lateral --------------------------------------------------------------------------------------------->
         <div class="col-2 me-3 menu-lateral">
 
+            <!-- Img -->
+            <img src="{% static 'ccis/rh.png' %}"
+             alt="rh"
+             width="195"
+             height="160"
+             class="d-inline-block align-text-center;">
+
+            <p class="paragrafo-style">Recursos Humanos</p>
+
+            <hr>
+
+            <!-- Menu -->
             <ul class="ul-lista">
 
                 <!-- Home -->
@@ -155,14 +171,6 @@
                 </li>
 
                 <hr>
-
-                <!-- Dash -->
-                <li class="li-lista">
-                    <a href="#" class="li-link">
-                        <i class="fa-solid fa-chart-line"></i>
-                        Dashboard
-                    </a>
-                </li>
 
                 <!-- Perfil -->
                 <li class="li-lista">
@@ -189,6 +197,14 @@
 
                     <div id="collapseWidthExample" class="collapse collapse-horizontal ps-3 ">
                         <ul class="nav nav-pills flex-column mb-auto">
+
+                            <!-- Dash -->
+                            <li class="li-lista">
+                                <a href="#" class="li-link">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    Dashboard
+                                </a>
+                            </li>
 
                             <!-- Usuários -->
                             <li style="padding:7px">
@@ -236,10 +252,8 @@
                     </a>
                 </li>
 
-
             </ul>
             <hr>
-
 
         </div>
         <!-- End Menu Lateral ----------------------------------------------------------------------------------------->

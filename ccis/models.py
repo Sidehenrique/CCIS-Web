@@ -50,8 +50,8 @@ CHOICES_categoria = [
 
 class dadosPessoais(models.Model):
     idDadosPessoais = models.AutoField(db_column='idDadosPessoais', primary_key=True)
-    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=60, blank=True, null=True)
-    sexo = models.CharField(choices=CHOICES_sexo, max_length=45, blank=True, null=True)
+    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=60, blank=False, null=True)
+    sexo = models.CharField(choices=CHOICES_sexo, max_length=45, blank=False, null=True)
     estadoCivil = models.CharField(choices=CHOICES_estadoCivil, db_column='estadoCivil', max_length=45, blank=True,
                                    null=True)
     corRaca = models.CharField(choices=CHOICES_corRaca, db_column='corRaca', max_length=45, blank=True, null=True)
@@ -111,12 +111,45 @@ class dependentes(models.Model):
         return self.nomeCompleto
 
 
+CHOICES_estado = [
+    ('', ''),
+    ('AC', 'AC'),
+    ('AL', 'AL'),
+    ('AP', 'AP'),
+    ('AM', 'AM'),
+    ('BA', 'BA'),
+    ('CE', 'CE'),
+    ('DF', 'DF'),
+    ('ES', 'ES'),
+    ('GO', 'GO'),
+    ('MA', 'MA'),
+    ('MT', 'MT'),
+    ('MS', 'MS'),
+    ('MG', 'MG'),
+    ('PA', 'PA'),
+    ('PB', 'PB'),
+    ('PR', 'PR'),
+    ('PE', 'PE'),
+    ('PI', 'PI'),
+    ('RJ', 'RJ'),
+    ('RN', 'RN'),
+    ('RS', 'RS'),
+    ('RO', 'RO'),
+    ('RR', 'RR'),
+    ('SC', 'SC'),
+    ('SP', 'SP'),
+    ('SE', 'SE'),
+    ('TO', 'TO'),
+
+]
+
+
 class enderecoContato(models.Model):
     idEndereCoecontato = models.AutoField(db_column='idEnderecoEContato', primary_key=True)
     endereco = models.CharField(db_column='endereco', max_length=100, blank=True, null=True)
     bairro = models.CharField(db_column='bairro', max_length=45, blank=True, null=True)
     cidade = models.CharField(db_column='cidade', max_length=45, blank=True, null=True)
-    estado = models.CharField(db_column='estado', max_length=45, blank=True, null=True)
+    estado = models.CharField(choices=CHOICES_estado, db_column='estado', max_length=45, blank=True, null=True)
     cep = models.CharField(db_column='cep', max_length=45, blank=True, null=True)
     emailCorporativo = models.CharField(db_column='emailCorporativo', max_length=45, blank=True, null=True)
     telefonePessoal = models.CharField(db_column='telefonePessoal', max_length=45, blank=True, null=True)

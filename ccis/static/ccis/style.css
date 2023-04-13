@@ -12,25 +12,13 @@
 
 
 
-
 /*--Menu Top -------------------------*/
 .navbar-topp {
     background-color:#04343D;
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+/*--------------------------------------*/
 
 
 
@@ -46,6 +34,15 @@
     box-shadow: 0 0 10px 1px rgb(237,237,237);
     height:87vh
 }
+
+.paragrafo-style{
+    text-aline:center;
+    font-family:asap medium;
+    color:#04343D;
+    padding-left:25px;
+
+}
+
 
 .ul-lista{
     list-style-type: none;
@@ -75,8 +72,13 @@
 
 .li-link:hover{
     color:#04343D;
-
 }
+
+.li-link:active{
+    color:#c8c8c8;
+}
+
+
 /*--------------------------------------*/
 
 

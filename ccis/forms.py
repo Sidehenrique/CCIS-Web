@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib import messages
+from django.http import request
+
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao
 from .models import profissional, dadosBancarios, outros
 
@@ -13,12 +16,12 @@ class modelFormDadosPessoais(forms.ModelForm):
 
         widgets = {
             'nomeCompleto': forms.TextInput(attrs={'class': 'form-control'}),
-            'sexo': forms.Select(attrs={'class': 'form-control'}),
-            'estadoCivil': forms.Select(attrs={'class': 'form-control'}),
-            'corRaca': forms.Select(attrs={'class': 'form-control'}),
+            'sexo': forms.Select(attrs={'class': 'form-select'}),
+            'estadoCivil': forms.Select(attrs={'class': 'form-select'}),
+            'corRaca': forms.Select(attrs={'class': 'form-select'}),
             'dataNascimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'naturalidade': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipoSanguineo': forms.Select(attrs={'class': 'form-control'}),
+            'tipoSanguineo': forms.Select(attrs={'class': 'form-select'}),
             'nomePai': forms.TextInput(attrs={'class': 'form-control'}),
             'nomeMae': forms.TextInput(attrs={'class': 'form-control'}),
             'cpf': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -26,7 +29,7 @@ class modelFormDadosPessoais(forms.ModelForm):
             'expedidor': forms.TextInput(attrs={'class': 'form-control'}),
             'cnh': forms.TextInput(attrs={'class': 'form-control'}),
             'validadeCnh': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'categoria': forms.Select(attrs={'class': 'form-select'}),
             'tituloEleitor': forms.NumberInput(attrs={'class': 'form-control'}),
             'zona': forms.NumberInput(attrs={'class': 'form-control'}),
             'secao': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -51,7 +54,7 @@ class modelFormDependentes(forms.ModelForm):
         widgets = {'nomeCompleto': forms.TextInput(attrs={'class': 'form-control'}),
                    'cpf': forms.NumberInput(attrs={'class': 'form-control'}),
                    'dataNascimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-                   'relacao': forms.Select(attrs={'class': 'form-control'}),
+                   'relacao': forms.Select(attrs={'class': 'form-select'}),
                    'email': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
                    'contato': forms.NumberInput(attrs={'class': 'form-control'})
                    }
@@ -67,7 +70,7 @@ class modelFormEnderecoContato(forms.ModelForm):
         widgets = {'endereco': forms.TextInput(attrs={'class': 'form-control'}),
                    'bairro': forms.TextInput(attrs={'class': 'form-control'}),
                    'cidade': forms.TextInput(attrs={'class': 'form-control'}),
-                   'estado': forms.TextInput(attrs={'class': 'form-control'}),
+                   'estado': forms.Select(attrs={'class': 'form-select'}),
                    'cep': forms.NumberInput(attrs={'class': 'form-control'}),
                    'emailCorporativo': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
                    'telefonePessoal': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -91,12 +94,12 @@ class modelFormEscolaridade(forms.ModelForm):
 
         widgets = {'entidadeDeEnsino': forms.TextInput(attrs={'class': 'form-control'}),
                    'curso': forms.TextInput(attrs={'class': 'form-control'}),
-                   'grau': forms.Select(attrs={'class': 'form-control'}),
+                   'grau': forms.Select(attrs={'class': 'form-select'}),
                    'dataConclusao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
                    'idiomaPrimario': forms.TextInput(attrs={'class': 'form-control'}),
                    'nivelPrimario': forms.Select(attrs={'class': 'form-control'}),
                    'idiomaSecundario': forms.TextInput(attrs={'class': 'form-control'}),
-                   'nivelSecundario': forms.Select(attrs={'class': 'form-control'})
+                   'nivelSecundario': forms.Select(attrs={'class': 'form-select'})
                    }
 
 
@@ -123,16 +126,16 @@ class modelFormProfissional(forms.ModelForm):
 
         widgets = {'cargo': forms.TextInput(attrs={'class': 'form-control'}),
                    'area': forms.TextInput(attrs={'class': 'form-control'}),
-                   'paUnidade': forms.Select(attrs={'class': 'form-control'}),
-                   'colaborador': forms.Select(attrs={'class': 'form-control'}),
+                   'paUnidade': forms.Select(attrs={'class': 'form-select'}),
+                   'colaborador': forms.Select(attrs={'class': 'form-select'}),
                    'centroDeCusto': forms.TextInput(attrs={'class': 'form-control'}),
                    'matricula': forms.TextInput(attrs={'class': 'form-control'}),
-                   'empregador': forms.Select(attrs={'class': 'form-control'}),
+                   'empregador': forms.Select(attrs={'class': 'form-select'}),
                    'superiorImediato': forms.TextInput(attrs={'class': 'form-control'}),
                    'folhaDePagamento': forms.TextInput(attrs={'class': 'form-control'}),
-                   'admissao': forms.TextInput(attrs={'class': 'form-control'}),
-                   'desligamento': forms.TextInput(attrs={'class': 'form-control'}),
-                   'situacao': forms.Select(attrs={'class': 'form-control'}),
+                   'admissao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+                   'desligamento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+                   'situacao': forms.Select(attrs={'class': 'form-select'}),
                    'horarioEntrada': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
                    'horarioSaida': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
                    'dataAtesAdmissional': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
@@ -149,7 +152,7 @@ class modelFormDadosBancarios(forms.ModelForm):
                    'digito': forms.TextInput(attrs={'class': 'form-control'}),
                    'banco': forms.TextInput(attrs={'class': 'form-control'}),
                    'agencia': forms.TextInput(attrs={'class': 'form-control'}),
-                   'tipoDeConta': forms.Select(attrs={'class': 'form-control'}),
+                   'tipoDeConta': forms.Select(attrs={'class': 'form-select'}),
                    'modalidade': forms.TextInput(attrs={'class': 'form-control'}),
                    'chavePix': forms.TextInput(attrs={'class': 'form-control'}),
                    }
@@ -170,5 +173,5 @@ class ModelFormOutros(forms.ModelForm):
         model = outros
         fields = ('camiseta',)
 
-        widgets = {'camiseta': forms.Select(attrs={'class': 'form-control'}),
+        widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
                    }
