@@ -12,6 +12,8 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('formLogin', views.formLogin, name='formLogin'),
 
+    # path('formNovoUser', views.formNovoUser, name='formNovoUser'),
+
 
     path('dev', views.dev, name='dev'),
 

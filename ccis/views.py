@@ -12,12 +12,17 @@ from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEndere
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios
 
 
+def datAT():
+    data = datetime.datetime.now()
+    d = datetime.datetime.strftime(data, "%d-%m-%Y %H:%M")
+    return d
+
+
 def loginPage(request):
     return render(request, 'ccis/login.html')
 
 
 def conta(request):
-
     pk_dados = dadosPessoais.objects.get(pk=1)
     pk_dependentes = dependentes.objects.get(pk=1)
     pk_contato = enderecoContato.objects.get(pk=1)
@@ -146,10 +151,6 @@ def conta(request):
             return redirect('conta')
 
 
-def usuario(request):
-    return render(request, 'ccis/usuario.html')
-
-
 def solicitacao(request):
     return render(request, 'ccis/solicitacao.html')
 
@@ -191,6 +192,69 @@ def formLogin(request):
             messages.add_message(request=request, message='Usuario ou senha incorretos', level=messages.ERROR)
             return render(request, 'ccis/login.html', context)
     return render(request, 'ccis/login.html')
+
+
+def usuario(request):
+    dp = modelFormDadosPessoais()
+
+    data = datAT()
+
+    totalUsuarios = len(profissional.objects.filter(situacao='Ativo'))
+    totalColaborador = len(profissional.objects.filter(colaborador='Funcionário(a)', situacao='Ativo'))
+    totalEstagiarios = len(profissional.objects.filter(colaborador='Estagiário(a)', situacao='Ativo'))
+    totalMenor = len(profissional.objects.filter(colaborador='Menor Aprendiz', situacao='Ativo'))
+
+    totalAnual = len(profissional.objects.filter(situacao='Ativo', admissao__lte='2022-12-31 00:00:00'))
+    totalAtual = len(profissional.objects.filter(situacao='Ativo', admissao__gte='2023-01-01 00:00:00'))
+    totalMaster = (totalAtual + totalAnual) * 100 / totalAnual - 100
+    totalMaster = str(totalMaster)[0:5]
+
+    anual_F = len(profissional.objects.filter(situacao='Ativo', colaborador='Funcionário(a)',
+                                              admissao__lte='2022-12-31 00:00:00'))
+    atual_F = len(profissional.objects.filter(situacao='Ativo', colaborador='Funcionário(a)',
+                                              admissao__gte='2023-01-01 00:00:00'))
+    total_F = (anual_F + atual_F) * 100 / anual_F - 100
+    porcentagem_F = str(total_F)[0:5]
+
+    anual_E = len(profissional.objects.filter(situacao='Ativo', colaborador='Estagiário(a)',
+                                              admissao__lte='2022-12-31 00:00:00'))
+    atual_E = len(profissional.objects.filter(situacao='Ativo', colaborador='Estagiário(a)',
+                                              admissao__gte='2023-01-01 00:00:00'))
+    total_E = (anual_E + atual_E) * 100 / anual_E - 100
+    porcentagem_E = str(total_E)[0:5]
+
+    anual_M = len(profissional.objects.filter(situacao='Ativo', colaborador='Menor Aprendiz',
+                                              admissao__lte='2022-12-31 00:00:00'))
+    atual_M = len(profissional.objects.filter(situacao='Ativo', colaborador='Menor Aprendiz',
+                                              admissao__gte='2023-01-01 00:00:00'))
+    total_M = (anual_M + atual_M) * 100 / anual_M - 100
+    porcentagem_M = str(total_M)[0:5]
+
+    context = {'form': dp, 'data': data, 'totalUsuarios': totalUsuarios, 'totalColaborador': totalColaborador,
+               'totalEstagiarios': totalEstagiarios, 'totalMenor': totalMenor, 'totalMaster': totalMaster,
+               'totalUsuariosAnual': totalAnual, 'porcentagem_F': porcentagem_F, 'AnualFuncionarios': anual_F,
+               'porcentagem_E': porcentagem_E, 'anualEstagiarios': anual_E, 'anualMenor': anual_M,
+               'porcentagem_M': porcentagem_M}
+
+    if request.method == 'GET':
+        return render(request, 'ccis/usuario.html', context)
+
+    # if request.method == 'POST':
+    #     dpForm = modelFormDadosPessoais(request.POST)
+    #
+    #     if dpForm.is_valid():
+    #         dpForm.save()
+    #         messages.add_message(request=request,
+    #                              message='SUCCESS: O Formulário foi validade e salvo com sucesso.',
+    #                              level=messages.SUCCESS)
+    #
+    #         return redirect('usuario')
+    #
+    #     else:
+    #         messages.add_message(request=request,
+    #                              message='ERRO ao validar o formulário, Por favor verifique se todos os'
+    #                                      ' campos foram preenchidos corretamente', level=messages.ERROR)
+    #         return redirect('usuario')
 
 
 def dev(request):

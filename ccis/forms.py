@@ -2,8 +2,8 @@ from django import forms
 from django.contrib import messages
 from django.http import request
 
-from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao
-from .models import profissional, dadosBancarios, outros
+from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, dadosBancarios, outros
+
 
 
 class modelFormDadosPessoais(forms.ModelForm):
@@ -175,3 +175,14 @@ class ModelFormOutros(forms.ModelForm):
 
         widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
                    }
+
+#
+# class modelFormNovoUser(forms.ModelForm):
+#     class Meta:
+#         model = dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, dadosBancarios, outros
+#         fields = ('camiseta',)
+#
+#         widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
+#                    }
+#
+#

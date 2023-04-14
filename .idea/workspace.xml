@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 14&#10;1 - Formulários estruturados no template&#10;2 - view conta estruturada&#10;3 - puxando dados do usuário no formulário&#10;4 - atualizando dados do usuário via formulário">
+    <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/usuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -119,11 +122,38 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="tests" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CCIS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ccis" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ccis/tests.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.makemigrations" />
       <item itemvalue="Python.migrate" />
       <item itemvalue="Python.runserver" />
+      <item itemvalue="Python.tests" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.tests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -162,7 +192,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681388624559</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA">
+      <created>1681396200561</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681396200561</updated>
+    </task>
+    <task id="LOCAL-00006" summary="# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA">
+      <created>1681396221896</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681396221896</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -193,6 +237,7 @@
     <MESSAGE value="# Checkpoint 12.1&#10;1 - Refatorando Menu Lateral" />
     <MESSAGE value="# Checkpoint 13&#10;1 - Menu Lateral estilizado&#10;2 - models estruturados&#10;3 - forms estruturados&#10;4 - iniciando trabalho nas views" />
     <MESSAGE value="# Checkpoint 14&#10;1 - Formulários estruturados no template&#10;2 - view conta estruturada&#10;3 - puxando dados do usuário no formulário&#10;4 - atualizando dados do usuário via formulário" />
-    <option name="LAST_COMMIT_MESSAGE" value="# Checkpoint 14&#10;1 - Formulários estruturados no template&#10;2 - view conta estruturada&#10;3 - puxando dados do usuário no formulário&#10;4 - atualizando dados do usuário via formulário" />
+    <MESSAGE value="# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA" />
+    <option name="LAST_COMMIT_MESSAGE" value="# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA" />
   </component>
 </project>
