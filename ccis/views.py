@@ -5,7 +5,8 @@ from django.contrib import messages
 
 from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, ModelFormMidia
 from .forms import modelFormEscolaridade , modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios
-               
+
+
 
 
 def loginPage(request):
@@ -65,14 +66,14 @@ def formLogin(request):
    return render(request, 'ccis/login.html')
 
 
-
 def dev(request):
 
-   form = ModelFormMidia()
+   form = modelFormDadosBancarios(),modelFormDadosPessoais()
 
    if request.method == 'POST':
 
-      form = ModelFormMidia(request.POST, request.FILES)
+      form = modelFormDadosPessoais(request.POST, request.FILES)
+      form = modelFormDadosBancarios(request.POST, request.FILES)
 
       if form.is_valid():
          form.save()
@@ -83,7 +84,7 @@ def dev(request):
 
    elif request.method == 'GET':
       return render(request, 'ccis/dev.html', {'form': form})
-   
+  
 def conta2(request):
 
    dadosPessoais = modelFormDadosPessoais()
@@ -105,9 +106,6 @@ def conta2(request):
                                                'dadosBancarios':dadosBancarios,
                                                'outros':outros,
                                                'midia':midia,})
-
-
-
 
 
 

@@ -1,5 +1,7 @@
 from django.db import models
 import os
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 CHOICES_sexo = [
 ('', ''),
@@ -78,6 +80,7 @@ class dadosPessoais(models.Model):
     pis = models.CharField(max_length=45, blank=True, null=True)
     cns = models.CharField(db_column='CNS', max_length=45, blank=True, null=True)
     pcd = models.CharField(db_column='PCD', max_length=45, blank=True, null=True)
+    
 
     foto = models.ImageField(null=True, blank=True)
     canvas = models.ImageField(null=True, blank=True)
@@ -100,7 +103,8 @@ class dependentes(models.Model):
     relacao = models.CharField(choices=CHOICES_relacao, max_length=45, blank=True, null=True)
     email = models.EmailField(max_length=45, blank=True, null=True)
     contato = models.CharField(max_length=45, blank=True, null=True)
-    
+    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
+
     def __str__(self):
         return self.nomeCompleto
     
@@ -119,11 +123,21 @@ class enderecoContato(models.Model):
     ramal = models.CharField(db_column='ramal',max_length=45, blank=True, null=True)
     emailPessoal = models.EmailField(db_column='emailPessoal', max_length=45, blank=True, null=True)  
     relacao = models.CharField(choices=CHOICES_relacao, max_length=45, blank=True, null=True)
+    nomeCompleto = models.CharField(choices=CHOICES_relacao, max_length=45, blank=True, null=True)
     telefoneDeEmergencia = models.CharField(db_column='telefoneDeEmergencia', max_length=45, blank=True, null=True)  
     celularDeEmergencia = models.CharField(db_column='celularDeEmergencia', max_length=45, blank=True, null=True)  
+    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.endereco
+#@receiver(pre_save, sender=enderecoContato)
+#def set_dadosPessoais(sender, instance, **kwargs):
+    #if not instance.dadosPessoais_id:
+        #instance.dadosPessoais_id = instance.dadosPessoais.id
+
+
+   # def __str__(self):
+       # return self.endereco
+    
+    
     
 CHOICES_nivelPrimario = [
 ('', ''),
@@ -150,12 +164,14 @@ class escolaridade(models.Model):
     idEscolaridade = models.AutoField(db_column='idEscolaridade', primary_key=True)  
     entidadeDeEnsino = models.CharField(db_column='entidadeDeEnsino', max_length=45, blank=True, null=True)  
     curso = models.CharField(db_column='curso', max_length=45, blank=True, null=True)
-    grau = models.CharField(choices=CHOICES_grau, db_column='grau', max_length=45, blank=True, null=True)   
+    grau = models.CharField(choices=CHOICES_grau, db_column='grau', max_length=45, blank=True, null=True)
+    dataInicio = models.DateField(db_column='dataInicio', max_length=45, blank=True, null=True) 
     dataConclusao = models.DateField(db_column='dataConclusao', max_length=45, blank=True, null=True)  
     idiomaPrimario = models.CharField(db_column='idiomaPrimario', max_length=45, blank=True, null=True) 
     nivelPrimario = models.CharField(choices=CHOICES_nivelPrimario, db_column='nivelPrimario', max_length=45, blank=True, null=True) 
     idiomaSecundario = models.CharField(db_column='idiomaSecundario', max_length=45, blank=True, null=True)  
     nivelSecundario = models.CharField(choices=CHOICES_nivelSecundario, db_column='nivelSecundario', max_length=45, blank=True, null=True)  
+    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
 
 def __str__(self):
         return self.entidadeDeEnsino
@@ -166,6 +182,7 @@ class certificacao(models.Model):
     organizacaoEmissora = models.CharField(db_column='organizacaoEmissora',max_length=45, blank=True, null=True)
     dataEmissao = models.DateField(db_column='dataEmissao', max_length=45, blank=True, null=True)  
     dataExpiracao = models.DateField(db_column='dataExpiracao', max_length=45, blank=True, null=True)
+    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
 
 def __str__(self):
     return self.nome  
@@ -227,7 +244,8 @@ class profissional(models.Model):
     horarioSaida = models.TimeField(db_column='horarioSaida', max_length=45, blank=True, null=True)
     dataAtesAdmissional = models.DateField(db_column='dataAtesAdmissional', max_length=45, blank=True, null=True)
     dataAtesPeriodico = models.DateField(db_column='dataAtesPeriodico', max_length=45, blank=True, null=True)
-
+    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
+    
 def __str__(self):
     return self.cargo  
 
@@ -246,6 +264,7 @@ class dadosBancarios(models.Model):
     tipoDeConta = models.CharField(choices=CHOICES_tipoDeConta, db_column='tipoDeConta', max_length=45, blank=True, null=True)
     modalidade = models.CharField(max_length=45, blank=True, null=True)
     chavePix = models.CharField(db_column='chavePix', max_length=45, blank=True, null=True)
+    dadosPessoais= models.OneToOneField('dadosPessoais', on_delete=models.CASCADE)
 
 def __str__(self):
     return self.conta  
@@ -262,6 +281,7 @@ CHOICES_tamanho = [
 class outros(models.Model):
     idOutros =models.AutoField(db_column='idOutros', primary_key=True)
     camiseta = models.CharField(choices=CHOICES_tamanho, max_length=45, blank=True, null=True)
-    
+    dadosPessoais= models.OneToOneField('dadosPessoais', on_delete=models.CASCADE)
+
 def __str__(self):
     return self.camiseta
