@@ -261,15 +261,16 @@ def dev(request):
     form = ModelFormMidia()
 
     if request.method == 'POST':
+      form = modelFormDadosPessoais(request.POST, request.FILES)
+      form = modelFormDadosBancarios(request.POST, request.FILES)
 
-        form = ModelFormMidia(request.POST, request.FILES)
+      if form.is_valid():
+         form.save()
+         return HttpResponse("Salvo com sucesso")
 
-        if form.is_valid():
-            form.save()
-            return HttpResponse("Salvo com sucesso")
+      else:
+         return HttpResponse("não passou")
 
-        else:
-            return HttpResponse("não passou")
-
-    elif request.method == 'GET':
-        return render(request, 'ccis/dev.html', {'form': form})
+   elif request.method == 'GET':
+      return render(request, 'ccis/dev.html', {'form': form})
+ 

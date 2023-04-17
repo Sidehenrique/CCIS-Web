@@ -170,19 +170,7 @@ class ModelFormMidia(forms.ModelForm):
 
 class ModelFormOutros(forms.ModelForm):
     class Meta:
-        model = outros
+        model = outros 
         fields = ('camiseta',)
-
         widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
                    }
-
-#
-# class modelFormNovoUser(forms.ModelForm):
-#     class Meta:
-#         model = dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, dadosBancarios, outros
-#         fields = ('camiseta',)
-#
-#         widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
-#                    }
-#
-#
