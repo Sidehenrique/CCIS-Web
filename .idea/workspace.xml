@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-
     <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_04_2023_14_24_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_04_2023_14_24__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/static/ccis/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/static/ccis/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/static/ccis/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/static/ccis/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/conta.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/conta.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/usuario.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/ccis/media/Wallpaper-code-programming-FCiências-8.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/ccis/media/avatar.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/media/ccis/avatar.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/ccis/media/imagem.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/ccis/media/imagem.jpg" beforeDir="false" />
     </list>
-    
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,16 +64,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ccis/templates/ccis" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/media/ccis" />
   </component>
-
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PROJETOS\CCIS-Web\media\ccis" />
       <recent name="D:\PROJETOS\CCIS\ccis\templates\ccis" />
     </key>
     <key name="MoveFile.RECENT_KEYS">

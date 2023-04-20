@@ -42,7 +42,7 @@ def conta(request):
     out = ModelFormOutros(instance=pk_outros)
     mid = ModelFormMidia(instance=pk_dados)
 
-    data = datetime.datetime.now()
+    data = datAT()
 
     context = {'form': dp, 'dependentes': de, 'contatoEndereco': conEnd,
                'escolaridade': esc, 'certificacao': cert, 'profissional': prof,
@@ -60,7 +60,7 @@ def conta(request):
         profForm = modelFormProfissional(request.POST or None, instance=pk_profi)
         dbForm = modelFormDadosBancarios(request.POST or None, instance=pk_bancario)
         outForm = ModelFormOutros(request.POST or None, instance=pk_outros)
-        midForm = ModelFormMidia(request.POST or None, request.FILES, instance=pk_dados)
+        midForm = ModelFormMidia(request.POST, request.FILES, instance=pk_dados)
 
         if dpForm.is_valid():
             cor = 'green'
@@ -195,8 +195,8 @@ def formLogin(request):
 
 
 def usuario(request):
-    dp = modelFormDadosPessoais()
 
+    dp = modelFormDadosPessoais()
     data = datAT()
 
     totalUsuarios = len(profissional.objects.filter(situacao='Ativo'))
@@ -230,11 +230,15 @@ def usuario(request):
     total_M = (anual_M + atual_M) * 100 / anual_M - 100
     porcentagem_M = str(total_M)[0:5]
 
+    dados = dadosPessoais.objects.all()
+    profi = profissional.objects.select_related('dadosPessoais').all()
+    contatos = enderecoContato.objects.select_related('dadosPessoais').all()
+
     context = {'form': dp, 'data': data, 'totalUsuarios': totalUsuarios, 'totalColaborador': totalColaborador,
                'totalEstagiarios': totalEstagiarios, 'totalMenor': totalMenor, 'totalMaster': totalMaster,
                'totalUsuariosAnual': totalAnual, 'porcentagem_F': porcentagem_F, 'AnualFuncionarios': anual_F,
                'porcentagem_E': porcentagem_E, 'anualEstagiarios': anual_E, 'anualMenor': anual_M,
-               'porcentagem_M': porcentagem_M}
+               'porcentagem_M': porcentagem_M, 'profissional': profi, 'dados': dados, 'enderecoContato': contatos}
 
     if request.method == 'GET':
         return render(request, 'ccis/usuario.html', context)
@@ -260,17 +264,15 @@ def usuario(request):
 def dev(request):
     form = ModelFormMidia()
 
+    dados = dadosPessoais.objects.get(pk=266)
+    print(dados)
+
     if request.method == 'POST':
-      form = modelFormDadosPessoais(request.POST, request.FILES)
-      form = modelFormDadosBancarios(request.POST, request.FILES)
+        form = ModelFormMidia(request.POST, request.FILES)
 
-      if form.is_valid():
-         form.save()
-         return HttpResponse("Salvo com sucesso")
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Salvo com sucesso")
 
-      else:
-         return HttpResponse("não passou")
-
-   elif request.method == 'GET':
-      return render(request, 'ccis/dev.html', {'form': form})
- 
+    elif request.method == 'GET':
+        return render(request, 'ccis/dev.html', {'form': form, 'dados': dados})

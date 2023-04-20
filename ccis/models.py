@@ -83,13 +83,12 @@ class dadosPessoais(models.Model):
     pis = models.CharField(max_length=45, blank=True, null=True)
     cns = models.CharField(db_column='CNS', max_length=45, blank=True, null=True)
     pcd = models.CharField(db_column='PCD', max_length=45, blank=True, null=True)
-    
 
-    foto = models.ImageField(null=True, blank=False)
-    canvas = models.ImageField(null=True, blank=True)
+    foto = models.ImageField(upload_to='users', null=True, blank=False)
+    canvas = models.ImageField(upload_to='users', null=True, blank=True)
 
     def __str__(self):
-        return self.idDadosPessoais
+        return self.nomeCompleto
 
 
 CHOICES_relacao = [
@@ -109,7 +108,7 @@ class dependentes(models.Model):
     relacao = models.CharField(choices=CHOICES_relacao, max_length=45, blank=False, null=True)
     email = models.EmailField(max_length=45, blank=True, null=True)
     contato = models.CharField(max_length=45, blank=True, null=True)
-    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
+    dadosPessoais = models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nomeCompleto

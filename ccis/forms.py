@@ -2,8 +2,8 @@ from django import forms
 from django.contrib import messages
 from django.http import request
 
-from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, dadosBancarios, outros
-
+from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
+    dadosBancarios, outros
 
 
 class modelFormDadosPessoais(forms.ModelForm):
@@ -89,8 +89,8 @@ class modelFormEscolaridade(forms.ModelForm):
     class Meta:
         model = escolaridade
         fields = (
-        'entidadeDeEnsino', 'curso', 'grau', 'dataConclusao', 'idiomaPrimario', 'nivelPrimario', 'idiomaSecundario',
-        'nivelSecundario')
+            'entidadeDeEnsino', 'curso', 'grau', 'dataConclusao', 'idiomaPrimario', 'nivelPrimario', 'idiomaSecundario',
+            'nivelSecundario')
 
         widgets = {'entidadeDeEnsino': forms.TextInput(attrs={'class': 'form-control'}),
                    'curso': forms.TextInput(attrs={'class': 'form-control'}),
@@ -119,10 +119,10 @@ class modelFormProfissional(forms.ModelForm):
     class Meta:
         model = profissional
         fields = (
-        'cargo', 'area', 'paUnidade', 'colaborador', 'centroDeCusto', 'matricula', 'empregador', 'superiorImediato',
-        'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida',
-        'dataAtesAdmissional',
-        'dataAtesPeriodico')
+            'cargo', 'area', 'paUnidade', 'colaborador', 'centroDeCusto', 'matricula', 'empregador', 'superiorImediato',
+            'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida',
+            'dataAtesAdmissional',
+            'dataAtesPeriodico')
 
         widgets = {'cargo': forms.TextInput(attrs={'class': 'form-control'}),
                    'area': forms.TextInput(attrs={'class': 'form-control'}),
@@ -170,7 +170,8 @@ class ModelFormMidia(forms.ModelForm):
 
 class ModelFormOutros(forms.ModelForm):
     class Meta:
-        model = outros 
+        model = outros
         fields = ('camiseta',)
         widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
                    }
+

@@ -7,44 +7,152 @@
     <div class="row">
 
         <nav class="navbar sub-nav-background mb-2">
-          <div class="container-fluid">
+            <div class="container-fluid">
 
-            <p class="m-0" style="font-family:Asap medium"> USUÁRIOS <br>
-                <small style="font-family:Asap Regular; color:#AFAFAF;">Modulo gestor</small></p>
+                <p class="m-0" style="font-family:Asap medium"> USUÁRIOS <br>
+                    <small style="font-family:Asap Regular; color:#AFAFAF;">Modulo gestor</small></p>
 
-            <div class="navbar-nav-wrap-content-end">
-              <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-              </form>
+                <div class="navbar-nav-wrap-content-end">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </form>
+                </div>
             </div>
-          </div>
 
         </nav>
 
-
-      </div>
+    </div>
     <!-- End subMenu ------------------------------------------------------------------------------------------------>
-
-
     <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
 
-    <div class="col-9">
+    <div class="card-config p-0">
+        <nav class="navbar mb-2">
+            <div class="container-fluid">
 
-        <form action=" {% url 'dev' %} " method="POST" class="row needs-validation" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
+                <p style="font-family:Asap Regular; color:#AFAFAF;">Pesquisar</p>
 
+                <div class="navbar-nav-wrap-content-end" style="position: relative;">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
+                        <!-- Botão Novo Usuário ----------------------->
+                        <button class=""
+                                style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                                data-bs-whatever="@mdo">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </div>
 
-                {{form}}
+            </div>
 
+        </nav>
 
-            <input type="submit">
+        <table class="table table-hover" id="table">
 
-        </form>
+            <thead class="table-header">
+            <tr>
+                <td class="p-3">
 
+                    <h6></h6>
+
+                </td>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Status</th>
+                <th>Operações</th>
+                <th>outros</th>
+            </tr>
+            </thead>
+
+            <tbody class="table-body">
+            <tr>
+                <!-- checkbox ------------------------------->
+                <td class="table-td">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="">
+                        <label class="form-check-label"></label>
+                    </div>
+                </td>
+
+                <!-- img foto ------------------------------->
+                <td class="table-td">
+
+                    {% if dado.foto %}
+                    <img class="avatar-img" src="{{ dado.foto.url }}"
+                         alt="" width="40" height="40">
+                    {% else %}
+
+                    <span style=" width:40px; height:40px; background-color:rgb(33,145,128);
+                            border-radius:50%;"></span>
+
+                    {% endif %}
+
+                </td>
+
+                <!-- Nome e CPF --------------------------->
+                <td class="table-td">
+                    <p class="mb-0">{{dado.nomeCompleto}}</p>
+                    <small style="color:#888888;" class="mb-0">{{dado.profissional_set.first.colaborador}}</small>
+                </td>
+
+                <!-- Cargo e local -------------------------->
+                <td class="table-td">
+                    <p class="mb-0">{{dado.profissional_set.first.cargo}}</p>
+                    <small style="color:#888888;" class="mb-0">{{dado.profissional_set.first.paUnidade}}</small>
+                </td>
+
+                <!-- Situação ------------------------------->
+                <td class="table-td">
+                    {% if dado.profissional_set.first.situacao == 'Ativo' %}
+                    <span style="display: inline-block; width:0.5rem; height:0.5rem; background-color:rgb(33,145,128);
+                            border-radius:50%; "></span> {{dado.profissional_set.first.situacao}}
+                    {% else %}
+                    <span style="display: inline-block; width:0.5rem; height:0.5rem; background-color:rgb(255,90,90);
+                            border-radius:50%; "></span> {{dado.profissional_set.first.situacao}}
+                    {% endif %}
+                </td>
+
+                <!-- Botão Edtar ---------------------------->
+                <td class="table-td">
+
+                    <button type="button" title="Ver Perfil" class="button-style btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editUserModal">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+
+                    <button type="button" title="Editar" class="button-style btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editUserModal">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button type="button" title="Editar" class="button-style btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editUserModal">
+                        <i class="fa-sharp fa-solid fa-trash"></i>
+                    </button>
+
+                </td>
+
+            </tr>
+            </tbody>
+
+        </table>
     </div>
 
-    <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
 
 </div>
 {% endblock %}
