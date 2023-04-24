@@ -1,12 +1,24 @@
-from ccis.models import dadosPessoais, dependentes, enderecoContato, profissional, dadosBancarios
+import mysql.connector
 
-from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
-    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios
+# Conectar ao banco de dados
+mydb = mysql.connector.connect(
+  host="10.6.32.24",
+  user="admin",
+  password="S1coob4155@@",
+  database="database_rh"
+)
 
+# Criar um cursor para executar as consultas SQL
+mycursor = mydb.cursor()
 
-dados = dadosPessoais.objects()
-profi = profissional.objects.select_related('dadosPessoais').all()
-contatos = enderecoContato.objects.select_related('dadosPessoais').all()
+# Executar a declaração SQL UPDATE para atualizar todas as linhas da coluna "foto"
+sql = "UPDATE database_rh.ccis_dadospessoais SET foto = users/avatar.jpg"
+val = ("users/avatar.jpg",)  # substitua o valor pelo caminho da foto padrão que você deseja usar
+mycursor.execute(sql, val)
 
-print(dados, profi, contatos)
+# Confirmar as mudanças no banco de dados
+mydb.commit()
+
+# Imprimir o número de linhas atualizadas
+print(mycursor.rowcount, "linhas atualizadas")
 

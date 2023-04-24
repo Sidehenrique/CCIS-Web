@@ -772,6 +772,7 @@
             <div class="row">
                 <div class="card-config p-0">
 
+                    <!-- Navegação table ---------------------->
                     <nav class="navbar mt-2">
                         <div class="container-fluid pe-1">
 
@@ -811,7 +812,6 @@
                             <th>Cargo</th>
                             <th>Status</th>
                             <th>Operações</th>
-                            <th>outros</th>
                         </tr>
                         </thead>
 
@@ -834,7 +834,14 @@
                                     <img class="avatar-img" src="{{ dado.foto.url }}"
                                          alt="" width="40" height="40">
                                     {% else %}
-                                    <i class="fa-solid fa-circle-minus"></i>
+                                        {% if dado.sexo == "Masculino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                             alt="" width="40" height="40">
+
+                                        {% elif  dado.sexo == "Feminino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                             alt="" width="40" height="40">
+                                        {% endif %}
 
                                     {% endif %}
 
@@ -866,7 +873,7 @@
                             <!-- Botão Edtar ---------------------------->
                             <td class="table-td">
 
-                                <button type="button" title="Ver Perfil" class="button-style btn-sm" data-bs-toggle="modal"
+                                <button type="button" title="Perfil" class="button-style btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editUserModal">
                                     <i class="fa-solid fa-user"></i>
                                 </button>
@@ -876,7 +883,7 @@
                                     <i class="fa-solid fa-pen"></i>
                                 </button>
 
-                                <button type="button" title="Editar" class="button-style btn-sm" data-bs-toggle="modal"
+                                <button type="button" title="Inativar" class="button-style btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editUserModal">
                                     <i class="fa-sharp fa-solid fa-trash"></i>
                                 </button>
