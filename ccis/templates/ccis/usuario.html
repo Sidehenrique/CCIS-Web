@@ -628,7 +628,7 @@
                                 <span class="span-label-positivo text-success">
                                 <i class="fa-solid fa-chart-simple"></i> {{ totalMaster }}% </span>
 
-                                <span> de {{totalUsuariosAnual}}</span>
+                                <span> de {{totalUsuariosAnual}} do ano anterior</span>
 
                             </div>
                         </div>
@@ -669,7 +669,7 @@
                                 <span class="span-label-positivo text-success">
                                 <i class="fa-solid fa-chart-simple"></i> {{porcentagem_F}}%</span>
 
-                                <span class=" ms-1">de {{AnualFuncionarios}}</span>
+                                <span class=" ms-1">de {{AnualFuncionarios}} do ano anterior</span>
 
                             </div>
                         </div>
@@ -710,7 +710,7 @@
                                 <span class="span-label-positivo text-success">
                                 <i class="fa-solid fa-chart-simple"></i> {{porcentagem_E}}%</span>
 
-                                <span class=" ms-1">de {{anualEstagiarios}}</span>
+                                <span class=" ms-1">de {{anualEstagiarios}} do ano anterior</span>
 
                             </div>
                         </div>
@@ -751,7 +751,7 @@
                                 <span class="span-label-positivo text-success">
                                 <i class="fa-solid fa-chart-simple"></i> {{porcentagem_M}}%</span>
 
-                                <span class=" ms-1">de {{anualMenor}}</span>
+                                <span class=" ms-1">de {{anualMenor}} do ano anterior</span>
 
                             </div>
                         </div>
@@ -764,15 +764,13 @@
 
         </div>
 
-
-
         <div style="height:57vh;" class="col overflow-auto">
 
-            <!-- Table Usuários ------------------------------->
+            <!-- Card Table ---------------------------------->
             <div class="row">
                 <div class="card-config p-0">
 
-                    <!-- Navegação table ---------------------->
+                    <!-- Pesquisa table ----------->
                     <nav class="navbar mt-2">
                         <div class="container-fluid pe-1">
 
@@ -780,15 +778,17 @@
 
                             <div class="navbar-nav-wrap-content-end" style="position: relative;">
                                 <form class="d-flex">
+                                    <!-- input de pesquisa ----------------------->
                                     <input class="form-control me-2" type="search" placeholder="Pesquisar"
-                                           aria-label="Search">
+                                           aria-label="Search" id="inputUser" onkeyup="filterTable()">
                                     <!-- Botão Novo Usuário ----------------------->
                                     <button class=""
                                             style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
                                             type="button"
                                             data-bs-toggle="modal"
                                             data-bs-target=""
-                                            data-bs-whatever="@mdo">
+                                            data-bs-whatever="@mdo"
+                                            onclick="filterTable()">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </button>
                                 </form>
@@ -798,7 +798,8 @@
 
                     </nav>
 
-                    <table class="table table-hover" id="table">
+                    <!-- Tabela ------------------->
+                    <table class="table table-hover" id="tableUser">
 
                         <thead class="table-header">
                         <tr>
@@ -874,9 +875,44 @@
                             <td class="table-td">
 
                                 <button type="button" title="Perfil" class="button-style btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#editUserModal">
+                                        data-bs-target="#userTableModal" data-bs-whatever="@mdo">
                                     <i class="fa-solid fa-user"></i>
                                 </button>
+
+                                <div class="modal fade" id="userTableModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="perfilModalLabel">New message</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="mb-3">
+                                                        <label for="recipient-name"
+                                                               class="col-form-label">Recipient:</label>
+                                                        <input type="text" class="form-control" id="recipient-name">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="message-text"
+                                                               class="col-form-label">Message:</label>
+                                                        <textarea class="form-control" id="message-text"></textarea>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">Send message</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
 
                                 <button type="button" title="Editar" class="button-style btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editUserModal">
@@ -900,7 +936,6 @@
                 </div>
             </div>
             <!-- End Table Usuários --------------------------->
-
 
         </div>
     </div>

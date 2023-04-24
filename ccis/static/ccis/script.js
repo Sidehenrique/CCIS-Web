@@ -1,11 +1,20 @@
-const timelineItems = document.querySelectorAll('.timeline-item');
+function filterTable() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("inputUser");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tableUser");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td");
+    for (var j = 0; j < td.length; j++) {
+      txtValue = td[j].textContent || td[j].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+        break;
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
 
-timelineItems.forEach((item) => {
-  item.addEventListener('click', (e) => {
-    const clickedItem = e.currentTarget;
-    const itemIndex = Array.from(timelineItems).indexOf(clickedItem);
-    const progress = document.querySelector('.timeline-progress');
-
-    progress.style.height = `${(itemIndex + 1) * 25}%`;
-  });
-});
