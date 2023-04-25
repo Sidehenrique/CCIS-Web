@@ -1,3 +1,8 @@
+$(document).ready(function(){
+    $('.toast').toast('show');
+});
+
+
 function filterTable() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("inputUser");

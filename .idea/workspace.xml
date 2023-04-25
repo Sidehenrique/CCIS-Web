@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 16&#10;1 - Tabela usuario pre-finalizada&#10;2 - pasta media redefinida">
+    <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 17-C&#10;1 - Button pre-configurados">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/usuario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/static/ccis/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/static/ccis/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/contaOutro.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +216,28 @@
       <option name="project" value="LOCAL" />
       <updated>1682013441967</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="# Checkpoint 17&#10;1 - Tabela usuario completa&#10;2 - avatares masculino e feminino">
+      <created>1682345007982</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1682345007983</updated>
+    </task>
+    <task id="LOCAL-00009" summary="# Checkpoint 17-B&#10;1 - Pesquisa da tabela funcionando">
+      <created>1682356616643</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1682356616643</updated>
+    </task>
+    <task id="LOCAL-00010" summary="# Checkpoint 17-C&#10;1 - Button pre-configurados">
+      <created>1682425681552</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1682425681552</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -246,6 +270,9 @@
     <MESSAGE value="# Checkpoint 14&#10;1 - Formulários estruturados no template&#10;2 - view conta estruturada&#10;3 - puxando dados do usuário no formulário&#10;4 - atualizando dados do usuário via formulário" />
     <MESSAGE value="# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA" />
     <MESSAGE value="# Checkpoint 16&#10;1 - Tabela usuario pre-finalizada&#10;2 - pasta media redefinida" />
-    <option name="LAST_COMMIT_MESSAGE" value="# Checkpoint 16&#10;1 - Tabela usuario pre-finalizada&#10;2 - pasta media redefinida" />
+    <MESSAGE value="# Checkpoint 17&#10;1 - Tabela usuario completa&#10;2 - avatares masculino e feminino" />
+    <MESSAGE value="# Checkpoint 17-B&#10;1 - Pesquisa da tabela funcionando" />
+    <MESSAGE value="# Checkpoint 17-C&#10;1 - Button pre-configurados" />
+    <option name="LAST_COMMIT_MESSAGE" value="# Checkpoint 17-C&#10;1 - Button pre-configurados" />
   </component>
 </project>

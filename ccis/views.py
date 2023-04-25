@@ -1,9 +1,10 @@
 import datetime
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     profissional, dadosBancarios
@@ -19,9 +20,44 @@ def datAT():
 
 
 def loginPage(request):
-    return render(request, 'ccis/login.html')
+    if request.method == 'GET':
+        return render(request, 'ccis/login.html')
+
+    if request.method == 'POST':
+        username = request.POST.get('login')
+        password = request.POST.get('senha')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('profile')
+
+        else:
+
+            statusName = 'is-invalid'
+            statusSenha = 'is-invalid'
+
+            context = {
+                'username': username,
+                'password': password,
+                'statusName': statusName,
+                'statusSenha': statusSenha
+            }
+
+            messages.add_message(request=request,
+                                 message='Usuário ou senha incorretos.',
+                                 level=messages.ERROR)
+
+            return render(request, 'ccis/login.html', context)
 
 
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+
+@login_required(login_url="/login")
 def conta(request):
     pk_dados = dadosPessoais.objects.get(pk=1)
     pk_dependentes = dependentes.objects.get(pk=1)
@@ -151,10 +187,12 @@ def conta(request):
             return redirect('conta')
 
 
+@login_required(login_url="/login")
 def solicitacao(request):
     return render(request, 'ccis/solicitacao.html')
 
 
+@login_required(login_url="/login")
 def profile(request):
     return render(request, 'ccis/profile.html')
 
@@ -163,37 +201,7 @@ def base(request):
     return render(request, 'ccis/base.html')
 
 
-def formLogin(request):
-    if request.method == 'POST':
-        username = request.POST.get('login')
-        password = request.POST.get('senha')
-
-        statusName = 'is-valid'
-        statusSenha = 'is-valid'
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('conta')
-
-        else:
-
-            statusName = 'is-invalid'
-            statusSenha = 'is-invalid'
-
-            context = {
-                'username': username,
-                'password': password,
-                'statusName': statusName,
-                'statusSenha': statusSenha
-
-            }
-            messages.add_message(request=request, message='Usuario ou senha incorretos', level=messages.ERROR)
-            return render(request, 'ccis/login.html', context)
-    return render(request, 'ccis/login.html')
-
-
+@login_required(login_url="/login")
 def usuario(request):
 
     dp = modelFormDadosPessoais()
