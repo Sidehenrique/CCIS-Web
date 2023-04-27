@@ -201,6 +201,10 @@ def base(request):
     return render(request, 'ccis/base.html')
 
 
+def home(request):
+    return render(request, 'ccis/home.html')
+
+
 @login_required(login_url="/login")
 def usuario(request):
 
