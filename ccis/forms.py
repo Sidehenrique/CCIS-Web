@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import messages
 from django.http import request
+from django.contrib.auth.models import User
 
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros
@@ -174,4 +175,17 @@ class ModelFormOutros(forms.ModelForm):
         fields = ('camiseta',)
         widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
                    }
+
+
+class modelFormUser(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'email', 'first_name', 'last_name')
+
+        widgets = {'username': forms.TextInput(attrs={'class': 'form-control'}),
+               'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+               'email': forms.EmailInput(attrs={'class': 'form-control'}),
+               'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+               'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 

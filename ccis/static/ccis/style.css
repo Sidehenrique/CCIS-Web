@@ -2,14 +2,12 @@
     background-color:#F9FAFD;
 }
 
-
 .sub-nav-background {
     background-color:white;
     height:65px;
     box-shadow: 0 0 10px 1px rgb(237,237,237);
 
 }
-
 
 
 /*--Menu Top -------------------------*/
@@ -42,7 +40,89 @@
 
 
 
-/*--------------------------------------*/
+/*----------------------------------------*/
+
+
+
+/* Menu Recolhível -----------------------*/
+
+.offcanvas {
+    top: 0;
+    width: 300px;
+    right: 0;
+    border:none;
+    background-color:none;
+}
+
+.sidebar {
+    position: fixed;
+    padding:20px;
+    height-max:0px;
+    top: 0;
+    background-color:#333;
+    box-shadow: -3px 0px 10px rgba(51, 51, 51, 0.5);
+    text-align: left;
+}
+
+.sidebar ul.menu-elements {
+    padding: 10px 0;
+
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px 20px;
+    border: 0;
+    color: black;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a:focus,
+.sidebar ul li.active > a:hover,
+.sidebar ul li.active > a:focus {
+    outline: 0;
+    background: #155;
+    color: #fff;
+}
+
+.sidebar ul li a i {
+    margin-right: 5px;
+}
+
+.sidebar ul ul a {
+    background: #155;
+    padding-left: 30px;
+    font-size: 14px;
+}
+
+.sidebar ul li a:active{
+    background:#04343D;
+}
+
+.dismiss {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #444;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+
+.dismiss:hover,
+.dismiss:focus {
+    background: #555;
+    color: #fff;
+}
+
+/*----------------------------------------*/
+
+
 
 
 
@@ -85,6 +165,7 @@
     padding-left:20px;
     box-sizing: border-box;
     display: block;
+    transition: all .3s;
 }
 
 
@@ -190,6 +271,14 @@
     border-radius:50%;"
 }
 
+status-negativo{
+    display: inline-block;
+    width:0.5rem;
+    height:0.5rem;
+    background-color:rgb(255,90,90);
+    border-radius:50%;"
+}
+
 .text-status{
     font-size:14px;
     text-align: center!important;
@@ -216,7 +305,6 @@
 
 .flow{
     height:78vh;
-
 }
 
 .avatar-img{
@@ -323,7 +411,6 @@
     font-size: 13px;
     color:rgb(200,200,200);
     margin:25px;
-
 }
 
 

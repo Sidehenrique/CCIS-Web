@@ -5,12 +5,15 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 
 from .models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     profissional, dadosBancarios
 
 from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
-    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios
+    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
+    modelFormUser
 
 
 def datAT():
@@ -194,7 +197,24 @@ def solicitacao(request):
 
 @login_required(login_url="/login")
 def profile(request):
-    return render(request, 'ccis/profile.html')
+
+    dados = dadosPessoais.objects.get(pk=1)
+    prof = profissional.objects.get(pk=1)
+    contatos = enderecoContato.objects.get(pk=1)
+
+    equipe = profissional.objects.filter(superiorImediato='FABIO MONTEIRO MACEDO')
+
+    print(dados, prof, contatos, equipe)
+
+    # ----------------codigo certo--------------------------#
+    # dados = dadosPessoais.objects.get(usuario=request.user)
+    # prof = profissional.objects.get(usuario=request.user)
+    # contatos = enderecoContato.objects.get(usuario=request.user)
+
+    contexto = {'dados': dados, 'prof': prof, 'contato': contatos}
+
+    if request.method == 'GET':
+        return render(request, 'ccis/profile.html', contexto)
 
 
 def base(request):
@@ -274,17 +294,31 @@ def usuario(request):
 
 
 def dev(request):
-    form = ModelFormMidia()
 
-    dados = dadosPessoais.objects.get(pk=266)
-    print(dados)
+    form = modelFormUser()
+
+    print(request)
+
+    if request.method == 'GET':
+        # Verifique se o usuário está autenticado
+        if request.user.is_authenticated:
+            # Acessar informações do usuário
+            username = request.user.username
+            email = request.user.email
+            first_name = request.user.first_name
+            last_name = request.user.last_name
+
+            # Renderize a página com as informações do usuário
+            return render(request, 'ccis/dev.html',
+                          {'username': username, 'email': email, 'first_name': first_name, 'last_name': last_name})
+
+        else:
+            # Renderize a página de login se o usuário não estiver autenticado
+            return render(request, 'ccis/login.html')
 
     if request.method == 'POST':
-        form = ModelFormMidia(request.POST, request.FILES)
+        form = modelFormUser(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
             return HttpResponse("Salvo com sucesso")
-
-    elif request.method == 'GET':
-        return render(request, 'ccis/dev.html', {'form': form, 'dados': dados})

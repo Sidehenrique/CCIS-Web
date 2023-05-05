@@ -11,6 +11,8 @@ urlpatterns = [
     path('solicitacao', views.solicitacao, name='solicitacao'),
     path('profile', views.profile, name='profile'),
     path('', views.home, name='home'),
+    path('logout', views.logout_view, name='logout'),
+
 
     path('dev', views.dev, name='dev'),
 
