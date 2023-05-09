@@ -1,10 +1,9 @@
 from django import forms
-from django.contrib import messages
-from django.http import request
 from django.contrib.auth.models import User
-
+from django.contrib.auth.forms import UserCreationForm
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros
+from crispy_forms.layout import Layout, Submit, Row, Column
 
 
 class modelFormDadosPessoais(forms.ModelForm):
@@ -121,9 +120,7 @@ class modelFormProfissional(forms.ModelForm):
         model = profissional
         fields = (
             'cargo', 'area', 'paUnidade', 'colaborador', 'centroDeCusto', 'matricula', 'empregador', 'superiorImediato',
-            'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida',
-            'dataAtesAdmissional',
-            'dataAtesPeriodico')
+            'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida')
 
         widgets = {'cargo': forms.TextInput(attrs={'class': 'form-control'}),
                    'area': forms.TextInput(attrs={'class': 'form-control'}),
@@ -139,8 +136,6 @@ class modelFormProfissional(forms.ModelForm):
                    'situacao': forms.Select(attrs={'class': 'form-select'}),
                    'horarioEntrada': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
                    'horarioSaida': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
-                   'dataAtesAdmissional': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-                   'dataAtesPeriodico': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
                    }
 
 
@@ -186,6 +181,13 @@ class modelFormUser(forms.ModelForm):
                'password': forms.PasswordInput(attrs={'class': 'form-control'}),
                'email': forms.EmailInput(attrs={'class': 'form-control'}),
                'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-               'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+               'last_name': forms.TextInput(attrs={'class': 'form-control'})
+                   }
 
+
+class CustomUserCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control'})

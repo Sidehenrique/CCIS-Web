@@ -328,27 +328,32 @@
             <div class="col flow">
                 {% block conteudo %}
 
-                {{username}}
-                {{email}}
-                {{first_name}}
-                {{last_name}}
+                <div class="row">
+
+                    <form method="post"
+                      action="{% url 'dev' %}"
+                      class="row g-3 needs-validation"
+                      enctype="multipart/form-data"
+                      novalidate>
+
+                        {% csrf_token %}
+
+                            {{ user|crispy }}
 
 
+                        <div class="modal-footer">
 
+                            <button type="button" class="button-style-red" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
 
+                            <button type="submit" class="button-style">
+                                Cadastrar
+                            </button>
+                        </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
+                    </form>
+                </div>
 
                 {% endblock %}
             </div>

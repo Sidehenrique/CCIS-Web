@@ -5,7 +5,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.forms import formset_factory, inlineformset_factory
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
 from .models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
@@ -13,7 +15,7 @@ from .models import dadosPessoais, dependentes, enderecoContato, outros, escolar
 
 from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    modelFormUser
+    CustomUserCreationForm
 
 
 def datAT():
@@ -198,23 +200,23 @@ def solicitacao(request):
 @login_required(login_url="/login")
 def profile(request):
 
-    dados = dadosPessoais.objects.get(pk=1)
-    prof = profissional.objects.get(pk=1)
-    contatos = enderecoContato.objects.get(pk=1)
+    # Verifique se o usuário está autenticado
+    if request.user.is_authenticated:
 
-    equipe = profissional.objects.filter(superiorImediato='FABIO MONTEIRO MACEDO')
+        username = request.user.username
+        email = request.user.email
+        first_name = request.user.first_name
+        last_name = request.user.last_name
 
-    print(dados, prof, contatos, equipe)
+        dados = dadosPessoais.objects.get(usuario=request.user)
+        prof = profissional.objects.get(usuario=request.user)
+        contatos = enderecoContato.objects.get(usuario=request.user)
 
-    # ----------------codigo certo--------------------------#
-    # dados = dadosPessoais.objects.get(usuario=request.user)
-    # prof = profissional.objects.get(usuario=request.user)
-    # contatos = enderecoContato.objects.get(usuario=request.user)
+        contexto = {'username': username, 'email': email, 'first_name': first_name, 'last_name': last_name,
+                    'dados': dados, 'prof': prof, 'contato': contatos}
 
-    contexto = {'dados': dados, 'prof': prof, 'contato': contatos}
-
-    if request.method == 'GET':
-        return render(request, 'ccis/profile.html', contexto)
+        if request.method == 'GET':
+            return render(request, 'ccis/profile.html', contexto)
 
 
 def base(request):
@@ -293,32 +295,167 @@ def usuario(request):
     #         return redirect('usuario')
 
 
+# def dev(request):
+#
+#     form = modelFormUser()
+#
+#     print(request)
+#
+#     if request.method == 'GET':
+#         # Verifique se o usuário está autenticado
+#         if request.user.is_authenticated:
+#             # Acessar informações do usuário
+#             username = request.user.username
+#             email = request.user.email
+#             first_name = request.user.first_name
+#             last_name = request.user.last_name
+#
+#             # Renderize a página com as informações do usuário
+#             return render(request, 'ccis/dev.html',
+#                           {'username': username, 'email': email, 'first_name': first_name, 'last_name': last_name})
+#
+#         else:
+#             # Renderize a página de login se o usuário não estiver autenticado
+#             return render(request, 'ccis/login.html')
+#
+#     if request.method == 'POST':
+#         form = modelFormUser(request.POST, request.FILES)
+#
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponse("Salvo com sucesso")
+#
+#
+
+
+# def dev(request):
+#
+#     if request.method == 'POST':
+#
+#         form = modelFormUser(request.POST)
+#
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.set_password(form.cleaned_data['password'])
+#             user.save()
+#             return HttpResponse('Salvo com sucesso')
+#
+#     else:
+#         form = modelFormUser()
+#         return render(request, 'ccis/dev.html', {'form': form})
+
+
+# def dev(request):
+#     usuarios = User.objects.all()
+#     return render(request, 'ccis/dev.html', {'usuarios': usuarios})
+
+
 def dev(request):
-
-    form = modelFormUser()
-
-    print(request)
-
-    if request.method == 'GET':
-        # Verifique se o usuário está autenticado
-        if request.user.is_authenticated:
-            # Acessar informações do usuário
-            username = request.user.username
-            email = request.user.email
-            first_name = request.user.first_name
-            last_name = request.user.last_name
-
-            # Renderize a página com as informações do usuário
-            return render(request, 'ccis/dev.html',
-                          {'username': username, 'email': email, 'first_name': first_name, 'last_name': last_name})
-
-        else:
-            # Renderize a página de login se o usuário não estiver autenticado
-            return render(request, 'ccis/login.html')
+    form = UserCreationForm()
+    dados_formset = inlineformset_factory(User, dadosPessoais, modelFormDadosPessoais, extra=1, can_delete=False)
+    endereco_formset = inlineformset_factory(User, enderecoContato, modelFormEnderecoContato, extra=1,
+                                             can_delete=False)
+    dependentes_formset = inlineformset_factory(User, dependentes, modelFormDependentes, extra=1,
+                                                can_delete=False)
+    escolaridade_formset = inlineformset_factory(User, escolaridade, modelFormEscolaridade, extra=1,
+                                                 can_delete=False)
+    certificacao_formset = inlineformset_factory(User, certificacao, modelFormCertificacao, extra=1,
+                                                 can_delete=False)
+    profissional_formset = inlineformset_factory(User, profissional, modelFormProfissional, extra=1,
+                                                 can_delete=False)
+    dadosBancarios_formset = inlineformset_factory(User, dadosBancarios, modelFormDadosBancarios, extra=1,
+                                                   can_delete=False)
+    outros_formset = inlineformset_factory(User, outros, ModelFormOutros, extra=1, can_delete=False)
 
     if request.method == 'POST':
-        form = modelFormUser(request.POST, request.FILES)
+        form = CustomUserCreationForm(request.POST)
+        dados_form = dados_formset(request.POST)
+        endereco_form = endereco_formset(request.POST)
+        dependentes_form = dependentes_formset(request.POST)
+        escolaridade_form = escolaridade_formset(request.POST)
+        certificacao_form = certificacao_formset(request.POST)
+        profissional_form = profissional_formset(request.POST)
+        dadosBancarios_form = dadosBancarios_formset(request.POST)
+        outros_form = outros_formset(request.POST)
 
-        if form.is_valid():
-            form.save()
-            return HttpResponse("Salvo com sucesso")
+        if form.is_valid() and dados_form.is_valid() and endereco_form.is_valid and dependentes_form.is_valid \
+                and escolaridade_form.is_valid and certificacao_form.is_valid and profissional_form.is_valid \
+                and dadosBancarios_form.is_valid and outros_form.is_valid:
+
+            novo_usuario = form.save()
+            dados_form = dados_formset(request.POST, instance=novo_usuario)
+            endereco_form = endereco_formset(request.POST, instance=novo_usuario)
+            dependentes_form = dependentes_formset(request.POST, instance=novo_usuario)
+            escolaridade_form = escolaridade_formset(request.POST, instance=novo_usuario)
+            certificacao_form = certificacao_formset(request.POST, instance=novo_usuario)
+            profissional_form = profissional_formset(request.POST, instance=novo_usuario)
+            dadosBancarios_form = dadosBancarios_formset(request.POST, instance=novo_usuario)
+            outros_form = outros_formset(request.POST, instance=novo_usuario)
+            dados_form.save()
+            endereco_form.save()
+            dependentes_form.save()
+            escolaridade_form.save()
+            certificacao_form.save()
+            profissional_form.save()
+            dadosBancarios_form.save()
+            outros_form.save()
+
+            return HttpResponse('Salvo')
+
+
+    else:
+        form = CustomUserCreationForm()
+        dados_form = dados_formset()
+        endereco_form = endereco_formset()
+        dependentes_form = dependentes_formset()
+        escolaridade_form = escolaridade_formset()
+        certificacao_form = certificacao_formset()
+        profissional_form = profissional_formset()
+        dadosBancarios_form = dadosBancarios_formset()
+        outros_form = outros_formset()
+
+    context = {
+
+        'user': form,
+        'dados': dados_form,
+        'end': endereco_form,
+        'dependentes_form': dependentes_form,
+        'escolaridade_form': escolaridade_form,
+        'certificacao_form': certificacao_form,
+        'profissional_form': profissional_form,
+        'dadosBancarios_form': dadosBancarios_form,
+        'outros_form': outros_form}
+
+    return render(request, 'ccis/dev.html', context)
+
+
+
+def cadUser(request):
+
+    pk_dados = dadosPessoais.objects.get(pk=1)
+    pk_dependentes = dependentes.objects.get(pk=1)
+    pk_contato = enderecoContato.objects.get(pk=1)
+    pk_escolaridade = escolaridade.objects.get(pk=1)
+    pk_certificacao = certificacao.objects.get(pk=1)
+    pk_profi = profissional.objects.get(pk=1)
+    pk_bancario = dadosBancarios.objects.get(pk=1)
+    pk_outros = outros.objects.get(pk=1)
+
+    dp = modelFormDadosPessoais(instance=pk_dados)
+    de = modelFormDependentes(instance=pk_dependentes)
+    conEnd = modelFormEnderecoContato(instance=pk_contato)
+    esc = modelFormEscolaridade(instance=pk_escolaridade)
+    cert = modelFormCertificacao(instance=pk_certificacao)
+    prof = modelFormProfissional(instance=pk_profi)
+    db = modelFormDadosBancarios(instance=pk_bancario)
+    out = ModelFormOutros(instance=pk_outros)
+    mid = ModelFormMidia(instance=pk_dados)
+
+    data = datAT()
+
+    context = {'form': dp, 'dependentes': de, 'contatoEndereco': conEnd,
+               'escolaridade': esc, 'certificacao': cert, 'profissional': prof,
+               'dadosBancarios': db, 'outros': out, 'midia': mid, 'data': data}
+
+    if request.method == 'GET':
+        return render(request, 'ccis/conta.html', context)
