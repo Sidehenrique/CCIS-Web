@@ -3,14 +3,40 @@
   <component name="ChangeListManager">
     <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 20&#10;1 - Menu recolhivel do usuário">
       <change beforePath="$PROJECT_DIR$/.idea/CCIS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CCIS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0002_dependentes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0003_enderecocontato_escolaridade_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0004_certificacao_alter_enderecocontato_bairro_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0005_profissional_alter_dadospessoais_categoria_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0006_dadosbancarios_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0007_outros.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0008_dadosbancarios_dadospessoa.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0009_rename_dadospessoa_dadosbancarios_dadospessoais.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0010_outros_dadospessoais.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0011_remove_dadosbancarios_dadospessoais_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0012_outros_dadospessoais.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0013_remove_outros_dadospessoais.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0014_outros_dadospessoais.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0015_alter_outros_dadospessoais.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0016_certificacao_dadospessoais_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0017_remove_dadospessoais_dadospessoais.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0018_alter_dadosbancarios_dadospessoais_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0019_enderecocontato_nomecompleto.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0020_escolaridade_datainicio.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccis/migrations/0021_certificacao_usuario_dadosbancarios_usuario_and_more.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +51,26 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="raquel" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -54,14 +99,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/manage.py" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\PROJETOS\CCIS-Web\media\users" />
@@ -282,7 +324,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="raquel" />
                       </list>
                     </value>
                   </entry>

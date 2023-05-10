@@ -11,11 +11,14 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 from .models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
-    profissional, dadosBancarios
+    profissional, dadosBancarios,User,docRg,docCnh,docCpf,docReservista,docTitulo,docClt,docResidencia,\
+    docCertidao,docAdmissional,docPeriodico,docCursos
 
 from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
-    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    CustomUserCreationForm
+    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios,\
+    modelFormUser,modelFormRg,modelFormCnh, modelFormCpf,modelFormReservista,modelFormTitulo,modelFormClt,\
+    modelFormResidencia,modelFormCertidao,modelFormAdmissional,modelFormPeriodico, modelFormCurso
+
 
 
 def datAT():
@@ -350,6 +353,8 @@ def usuario(request):
 #     return render(request, 'ccis/dev.html', {'usuarios': usuarios})
 
 
+# INCLUIR NOVO USUARIO NO BANCO
+
 def dev(request):
     form = UserCreationForm()
     dados_formset = inlineformset_factory(User, dadosPessoais, modelFormDadosPessoais, extra=1, can_delete=False)
@@ -368,7 +373,7 @@ def dev(request):
     outros_formset = inlineformset_factory(User, outros, ModelFormOutros, extra=1, can_delete=False)
 
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         dados_form = dados_formset(request.POST)
         endereco_form = endereco_formset(request.POST)
         dependentes_form = dependentes_formset(request.POST)
@@ -378,10 +383,7 @@ def dev(request):
         dadosBancarios_form = dadosBancarios_formset(request.POST)
         outros_form = outros_formset(request.POST)
 
-        if form.is_valid() and dados_form.is_valid() and endereco_form.is_valid and dependentes_form.is_valid \
-                and escolaridade_form.is_valid and certificacao_form.is_valid and profissional_form.is_valid \
-                and dadosBancarios_form.is_valid and outros_form.is_valid:
-
+        if form.is_valid() and dados_form.is_valid() and endereco_form.is_valid() and dependentes_form.is_valid() and escolaridade_form.is_valid() and certificacao_form.is_valid() and profissional_form.is_valid() and dadosBancarios_form.is_valid() and outros_form.is_valid():
             novo_usuario = form.save()
             dados_form = dados_formset(request.POST, instance=novo_usuario)
             endereco_form = endereco_formset(request.POST, instance=novo_usuario)
@@ -404,7 +406,7 @@ def dev(request):
 
 
     else:
-        form = CustomUserCreationForm()
+        form = UserCreationForm()
         dados_form = dados_formset()
         endereco_form = endereco_formset()
         dependentes_form = dependentes_formset()
@@ -429,33 +431,130 @@ def dev(request):
     return render(request, 'ccis/dev.html', context)
 
 
+# RETORNAR OS DADOS DO USUARIO NO FORMULARIO
+# def dev(request):
+#     usuario = request.user
+#     dados = dadosPessoais.objects.filter(usuario=usuario).first()
 
-def cadUser(request):
+#     if request.method == 'POST':
+#         form = modelFormDadosPessoais(request.POST, instance=dados)
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         form = modelFormDadosPessoais(instance=dados)
 
-    pk_dados = dadosPessoais.objects.get(pk=1)
-    pk_dependentes = dependentes.objects.get(pk=1)
-    pk_contato = enderecoContato.objects.get(pk=1)
-    pk_escolaridade = escolaridade.objects.get(pk=1)
-    pk_certificacao = certificacao.objects.get(pk=1)
-    pk_profi = profissional.objects.get(pk=1)
-    pk_bancario = dadosBancarios.objects.get(pk=1)
-    pk_outros = outros.objects.get(pk=1)
+#     return render(request, 'ccis/dev.html', {'dados': dados,'form': form})
 
-    dp = modelFormDadosPessoais(instance=pk_dados)
-    de = modelFormDependentes(instance=pk_dependentes)
-    conEnd = modelFormEnderecoContato(instance=pk_contato)
-    esc = modelFormEscolaridade(instance=pk_escolaridade)
-    cert = modelFormCertificacao(instance=pk_certificacao)
-    prof = modelFormProfissional(instance=pk_profi)
-    db = modelFormDadosBancarios(instance=pk_bancario)
-    out = ModelFormOutros(instance=pk_outros)
-    mid = ModelFormMidia(instance=pk_dados)
+# RECEBER OS DOCUMENTOS POR USUARIO
+def documentos(request):
+    usuario = request.user
+    doc = docRg.objects.filter(usuario=usuario).first()
+    doc_cnh = docCnh.objects.filter(usuario=usuario).first()
+    doc_cpf = docCpf.objects.filter(usuario=usuario).first()
+    doc_reservista = docReservista.objects.filter(usuario=usuario).first()
+    doc_titulo = docTitulo.objects.filter(usuario=usuario).first()
+    doc_clt = docClt.objects.filter(usuario=usuario).first()
+    doc_residencia = docResidencia.objects.filter(usuario=usuario).first()
+    doc_certidao = docCertidao.objects.filter(usuario=usuario).first()
+    doc_admissional = docAdmissional.objects.filter(usuario=usuario).first()
+    doc_periodico = docPeriodico.objects.filter(usuario=usuario).first()
 
-    data = datAT()
+    if request.method == 'POST':
+        form = modelFormRg(request.POST, request.FILES, instance=doc)
+        cnh_form = modelFormCnh(request.POST, request.FILES, instance=doc_cnh)
+        cpf_form = modelFormCpf(request.POST, request.FILES, instance=doc_cpf)
+        reservista_form = modelFormReservista(request.POST, request.FILES, instance=doc_reservista)
+        titulo_form = modelFormTitulo(request.POST, request.FILES, instance=doc_titulo)
+        clt_form = modelFormClt(request.POST, request.FILES, instance=doc_clt)
+        residencia_form = modelFormResidencia(request.POST, request.FILES, instance=doc_residencia)
+        certidao_form = modelFormCertidao(request.POST, request.FILES, instance=doc_certidao)
+        admissional_form = modelFormAdmissional(request.POST, request.FILES, instance=doc_admissional)
+        periodico_form = modelFormPeriodico(request.POST, request.FILES, instance=doc_periodico)
 
-    context = {'form': dp, 'dependentes': de, 'contatoEndereco': conEnd,
-               'escolaridade': esc, 'certificacao': cert, 'profissional': prof,
-               'dadosBancarios': db, 'outros': out, 'midia': mid, 'data': data}
+        if form.is_valid and cnh_form.is_valid() and cpf_form.is_valid() and reservista_form.is_valid() and titulo_form.is_valid() and clt_form.is_valid() and residencia_form.is_valid() and certidao_form.is_valid() and admissional_form.is_valid() and periodico_form.is_valid():
+            obj = form.save(commit=False)
+            cnh_obj = cnh_form.save(commit=False)
+            cpf_obj = cpf_form.save(commit=False)
+            reservista_obj = reservista_form.save(commit=False)
+            titulo_obj = titulo_form.save(commit=False)
+            clt_obj = clt_form.save(commit=False)
+            residencia_obj = residencia_form.save(commit=False)
+            certidao_obj = certidao_form.save(commit=False)
+            admissional_obj = admissional_form.save(commit=False)
+            periodico_obj = periodico_form.save(commit=False)
 
-    if request.method == 'GET':
-        return render(request, 'ccis/conta.html', context)
+            obj.usuario = usuario
+            cnh_obj.usuario = usuario
+            cpf_obj.usuario = usuario
+            reservista_obj.usuario = usuario
+            titulo_obj.usuario = usuario
+            clt_obj.usuario = usuario
+            residencia_obj.usuario = usuario
+            certidao_obj.usuario = usuario
+            admissional_obj.usuario = usuario
+            periodico_obj.usuario = usuario
+
+            obj.save()
+            cnh_obj.save()
+            cpf_obj.save()
+            reservista_obj.save()
+            titulo_obj.save()
+            clt_obj.save()
+            residencia_obj.save()
+            certidao_obj.save()
+            admissional_obj.save()
+            periodico_obj.save()
+
+            form.save()
+            cnh_form.save()
+            cpf_form.save()
+            reservista_form.save()
+            titulo_form.save()
+            clt_form.save()
+            residencia_form.save()
+            certidao_form.save()
+            admissional_form.save()
+            periodico_form.save()
+
+            return HttpResponse('Salvo')
+    else:
+        form = modelFormRg(instance=doc)
+        cnh_form = modelFormCnh(instance=doc_cnh)
+        cpf_form = modelFormCpf(instance=doc_cpf)
+        reservista_form = modelFormReservista(instance=doc_reservista)
+        titulo_form = modelFormTitulo(instance=doc_titulo)
+        clt_form = modelFormClt(instance=doc_clt)
+        residencia_form = modelFormResidencia(instance=doc_residencia)
+        certidao_form = modelFormCertidao(instance=doc_certidao)
+        admissional_form = modelFormAdmissional(instance=doc_admissional)
+        periodico_form = modelFormPeriodico(instance=doc_periodico)
+
+    context = {
+        'form': form,
+        'cnh_form': cnh_form,
+        'cpf_form': cpf_form,
+        'reservista_form': reservista_form,
+        'titulo_form': titulo_form,
+        'clt_form': clt_form,
+        'residencia_form': residencia_form,
+        'certidao_form': certidao_form,
+        'admissional_form': admissional_form,
+        'periodico_form': periodico_form,
+    }
+
+    return render(request, 'ccis/documentos.html', context)
+
+
+# RECEBE OS CERTIFICADOS DO CURSO DO SICOOB UNIVERSIDADE
+def cursos(request):
+    if request.method == 'POST':
+        curso_form = modelFormCurso(request.POST, request.FILES)
+        if curso_form.is_valid():
+            obj = curso_form.save(commit=False)
+            obj.usuario = request.user
+            obj.save()
+            curso_form.save()
+        return HttpResponse('Salvo')
+    else:
+        curso_form = modelFormCurso(request.POST, request.FILES)
+    return render(request, 'ccis/cursos.html', {'curso_form': curso_form})
