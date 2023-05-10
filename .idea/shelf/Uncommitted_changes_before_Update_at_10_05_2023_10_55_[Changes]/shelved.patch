@@ -1,0 +1,1116 @@
+Index: ccis/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import datetime\r\n\r\nfrom django.contrib.auth import authenticate, login, logout\r\nfrom django.http import HttpResponse\r\nfrom django.shortcuts import render, redirect\r\nfrom django.contrib import messages\r\nfrom django.contrib.auth.decorators import login_required\r\nfrom django.forms import formset_factory, inlineformset_factory\r\nfrom django.contrib.auth.models import User\r\nfrom django.contrib.auth.forms import UserCreationForm\r\n\r\n\r\nfrom .models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \\\r\n    profissional, dadosBancarios\r\n\r\nfrom .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \\\r\n    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \\\r\n    CustomUserCreationForm\r\n\r\n\r\ndef datAT():\r\n    data = datetime.datetime.now()\r\n    d = datetime.datetime.strftime(data, \"%d-%m-%Y %H:%M\")\r\n    return d\r\n\r\n\r\ndef loginPage(request):\r\n    if request.method == 'GET':\r\n        return render(request, 'ccis/login.html')\r\n\r\n    if request.method == 'POST':\r\n        username = request.POST.get('login')\r\n        password = request.POST.get('senha')\r\n\r\n        user = authenticate(request, username=username, password=password)\r\n\r\n        if user is not None:\r\n            login(request, user)\r\n            return redirect('profile')\r\n\r\n        else:\r\n\r\n            statusName = 'is-invalid'\r\n            statusSenha = 'is-invalid'\r\n\r\n            context = {\r\n                'username': username,\r\n                'password': password,\r\n                'statusName': statusName,\r\n                'statusSenha': statusSenha\r\n            }\r\n\r\n            messages.add_message(request=request,\r\n                                 message='Usuário ou senha incorretos.',\r\n                                 level=messages.ERROR)\r\n\r\n            return render(request, 'ccis/login.html', context)\r\n\r\n\r\ndef logout_view(request):\r\n    logout(request)\r\n    return redirect('login')\r\n\r\n\r\n@login_required(login_url=\"/login\")\r\ndef conta(request):\r\n    pk_dados = dadosPessoais.objects.get(pk=1)\r\n    pk_dependentes = dependentes.objects.get(pk=1)\r\n    pk_contato = enderecoContato.objects.get(pk=1)\r\n    pk_escolaridade = escolaridade.objects.get(pk=1)\r\n    pk_certificacao = certificacao.objects.get(pk=1)\r\n    pk_profi = profissional.objects.get(pk=1)\r\n    pk_bancario = dadosBancarios.objects.get(pk=1)\r\n    pk_outros = outros.objects.get(pk=1)\r\n\r\n    dp = modelFormDadosPessoais(instance=pk_dados)\r\n    de = modelFormDependentes(instance=pk_dependentes)\r\n    conEnd = modelFormEnderecoContato(instance=pk_contato)\r\n    esc = modelFormEscolaridade(instance=pk_escolaridade)\r\n    cert = modelFormCertificacao(instance=pk_certificacao)\r\n    prof = modelFormProfissional(instance=pk_profi)\r\n    db = modelFormDadosBancarios(instance=pk_bancario)\r\n    out = ModelFormOutros(instance=pk_outros)\r\n    mid = ModelFormMidia(instance=pk_dados)\r\n\r\n    data = datAT()\r\n\r\n    context = {'form': dp, 'dependentes': de, 'contatoEndereco': conEnd,\r\n               'escolaridade': esc, 'certificacao': cert, 'profissional': prof,\r\n               'dadosBancarios': db, 'outros': out, 'midia': mid, 'data': data}\r\n\r\n    if request.method == 'GET':\r\n        return render(request, 'ccis/conta.html', context)\r\n\r\n    if request.method == 'POST':\r\n        dpForm = modelFormDadosPessoais(request.POST or None, instance=pk_dados)\r\n        deForm = modelFormDependentes(request.POST or None, instance=pk_dependentes)\r\n        conEndForm = modelFormEnderecoContato(request.POST or None, instance=pk_contato)\r\n        escForm = modelFormEscolaridade(request.POST or None, instance=pk_escolaridade)\r\n        certForm = modelFormCertificacao(request.POST or None, instance=pk_certificacao)\r\n        profForm = modelFormProfissional(request.POST or None, instance=pk_profi)\r\n        dbForm = modelFormDadosBancarios(request.POST or None, instance=pk_bancario)\r\n        outForm = ModelFormOutros(request.POST or None, instance=pk_outros)\r\n        midForm = ModelFormMidia(request.POST, request.FILES, instance=pk_dados)\r\n\r\n        if dpForm.is_valid():\r\n            cor = 'green'\r\n            dpForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        elif deForm.is_valid():\r\n            cor = 'green'\r\n            deForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        elif conEndForm.is_valid():\r\n            cor = 'green'\r\n            conEndForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        elif escForm.is_valid():\r\n            cor = 'green'\r\n            escForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        elif certForm.is_valid():\r\n            cor = 'green'\r\n            certForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        elif profForm.is_valid():\r\n            cor = 'green'\r\n            profForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        elif dbForm.is_valid():\r\n            cor = 'green'\r\n            dbForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        elif outForm.is_valid():\r\n            cor = 'green'\r\n            outForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        elif midForm.is_valid():\r\n            cor = 'green'\r\n            midForm.save()\r\n            messages.add_message(request=request,\r\n                                 message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n                                 level=messages.SUCCESS)\r\n\r\n            return redirect('conta')\r\n\r\n        else:\r\n            cor = 'red'\r\n            messages.add_message(request=request,\r\n                                 message='ERRO ao validar o formulário, Por favor verifique se todos os'\r\n                                         ' campos foram preenchidos corretamente', level=messages.ERROR)\r\n            return redirect('conta')\r\n\r\n\r\n@login_required(login_url=\"/login\")\r\ndef solicitacao(request):\r\n    return render(request, 'ccis/solicitacao.html')\r\n\r\n\r\n@login_required(login_url=\"/login\")\r\ndef profile(request):\r\n\r\n    # Verifique se o usuário está autenticado\r\n    if request.user.is_authenticated:\r\n\r\n        username = request.user.username\r\n        email = request.user.email\r\n        first_name = request.user.first_name\r\n        last_name = request.user.last_name\r\n\r\n        dados = dadosPessoais.objects.get(usuario=request.user)\r\n        prof = profissional.objects.get(usuario=request.user)\r\n        contatos = enderecoContato.objects.get(usuario=request.user)\r\n\r\n        contexto = {'username': username, 'email': email, 'first_name': first_name, 'last_name': last_name,\r\n                    'dados': dados, 'prof': prof, 'contato': contatos}\r\n\r\n        if request.method == 'GET':\r\n            return render(request, 'ccis/profile.html', contexto)\r\n\r\n\r\ndef base(request):\r\n    return render(request, 'ccis/base.html')\r\n\r\n\r\ndef home(request):\r\n    return render(request, 'ccis/home.html')\r\n\r\n\r\n@login_required(login_url=\"/login\")\r\ndef usuario(request):\r\n\r\n    dp = modelFormDadosPessoais()\r\n    data = datAT()\r\n\r\n    totalUsuarios = len(profissional.objects.filter(situacao='Ativo'))\r\n    totalColaborador = len(profissional.objects.filter(colaborador='Funcionário(a)', situacao='Ativo'))\r\n    totalEstagiarios = len(profissional.objects.filter(colaborador='Estagiário(a)', situacao='Ativo'))\r\n    totalMenor = len(profissional.objects.filter(colaborador='Menor Aprendiz', situacao='Ativo'))\r\n\r\n    totalAnual = len(profissional.objects.filter(situacao='Ativo', admissao__lte='2022-12-31 00:00:00'))\r\n    totalAtual = len(profissional.objects.filter(situacao='Ativo', admissao__gte='2023-01-01 00:00:00'))\r\n    totalMaster = (totalAtual + totalAnual) * 100 / totalAnual - 100\r\n    totalMaster = str(totalMaster)[0:5]\r\n\r\n    anual_F = len(profissional.objects.filter(situacao='Ativo', colaborador='Funcionário(a)',\r\n                                              admissao__lte='2022-12-31 00:00:00'))\r\n    atual_F = len(profissional.objects.filter(situacao='Ativo', colaborador='Funcionário(a)',\r\n                                              admissao__gte='2023-01-01 00:00:00'))\r\n    total_F = (anual_F + atual_F) * 100 / anual_F - 100\r\n    porcentagem_F = str(total_F)[0:5]\r\n\r\n    anual_E = len(profissional.objects.filter(situacao='Ativo', colaborador='Estagiário(a)',\r\n                                              admissao__lte='2022-12-31 00:00:00'))\r\n    atual_E = len(profissional.objects.filter(situacao='Ativo', colaborador='Estagiário(a)',\r\n                                              admissao__gte='2023-01-01 00:00:00'))\r\n    total_E = (anual_E + atual_E) * 100 / anual_E - 100\r\n    porcentagem_E = str(total_E)[0:5]\r\n\r\n    anual_M = len(profissional.objects.filter(situacao='Ativo', colaborador='Menor Aprendiz',\r\n                                              admissao__lte='2022-12-31 00:00:00'))\r\n    atual_M = len(profissional.objects.filter(situacao='Ativo', colaborador='Menor Aprendiz',\r\n                                              admissao__gte='2023-01-01 00:00:00'))\r\n    total_M = (anual_M + atual_M) * 100 / anual_M - 100\r\n    porcentagem_M = str(total_M)[0:5]\r\n\r\n    dados = dadosPessoais.objects.all()\r\n    profi = profissional.objects.select_related('dadosPessoais').all()\r\n    contatos = enderecoContato.objects.select_related('dadosPessoais').all()\r\n\r\n    context = {'form': dp, 'data': data, 'totalUsuarios': totalUsuarios, 'totalColaborador': totalColaborador,\r\n               'totalEstagiarios': totalEstagiarios, 'totalMenor': totalMenor, 'totalMaster': totalMaster,\r\n               'totalUsuariosAnual': totalAnual, 'porcentagem_F': porcentagem_F, 'AnualFuncionarios': anual_F,\r\n               'porcentagem_E': porcentagem_E, 'anualEstagiarios': anual_E, 'anualMenor': anual_M,\r\n               'porcentagem_M': porcentagem_M, 'profissional': profi, 'dados': dados, 'enderecoContato': contatos}\r\n\r\n    if request.method == 'GET':\r\n        return render(request, 'ccis/usuario.html', context)\r\n\r\n    # if request.method == 'POST':\r\n    #     dpForm = modelFormDadosPessoais(request.POST)\r\n    #\r\n    #     if dpForm.is_valid():\r\n    #         dpForm.save()\r\n    #         messages.add_message(request=request,\r\n    #                              message='SUCCESS: O Formulário foi validade e salvo com sucesso.',\r\n    #                              level=messages.SUCCESS)\r\n    #\r\n    #         return redirect('usuario')\r\n    #\r\n    #     else:\r\n    #         messages.add_message(request=request,\r\n    #                              message='ERRO ao validar o formulário, Por favor verifique se todos os'\r\n    #                                      ' campos foram preenchidos corretamente', level=messages.ERROR)\r\n    #         return redirect('usuario')\r\n\r\n\r\n# def dev(request):\r\n#\r\n#     form = modelFormUser()\r\n#\r\n#     print(request)\r\n#\r\n#     if request.method == 'GET':\r\n#         # Verifique se o usuário está autenticado\r\n#         if request.user.is_authenticated:\r\n#             # Acessar informações do usuário\r\n#             username = request.user.username\r\n#             email = request.user.email\r\n#             first_name = request.user.first_name\r\n#             last_name = request.user.last_name\r\n#\r\n#             # Renderize a página com as informações do usuário\r\n#             return render(request, 'ccis/dev.html',\r\n#                           {'username': username, 'email': email, 'first_name': first_name, 'last_name': last_name})\r\n#\r\n#         else:\r\n#             # Renderize a página de login se o usuário não estiver autenticado\r\n#             return render(request, 'ccis/login.html')\r\n#\r\n#     if request.method == 'POST':\r\n#         form = modelFormUser(request.POST, request.FILES)\r\n#\r\n#         if form.is_valid():\r\n#             form.save()\r\n#             return HttpResponse(\"Salvo com sucesso\")\r\n#\r\n#\r\n\r\n\r\n# def dev(request):\r\n#\r\n#     if request.method == 'POST':\r\n#\r\n#         form = modelFormUser(request.POST)\r\n#\r\n#         if form.is_valid():\r\n#             user = form.save(commit=False)\r\n#             user.set_password(form.cleaned_data['password'])\r\n#             user.save()\r\n#             return HttpResponse('Salvo com sucesso')\r\n#\r\n#     else:\r\n#         form = modelFormUser()\r\n#         return render(request, 'ccis/dev.html', {'form': form})\r\n\r\n\r\n# def dev(request):\r\n#     usuarios = User.objects.all()\r\n#     return render(request, 'ccis/dev.html', {'usuarios': usuarios})\r\n\r\n\r\ndef dev(request):\r\n    form = UserCreationForm()\r\n    dados_formset = inlineformset_factory(User, dadosPessoais, modelFormDadosPessoais, extra=1, can_delete=False)\r\n    endereco_formset = inlineformset_factory(User, enderecoContato, modelFormEnderecoContato, extra=1,\r\n                                             can_delete=False)\r\n    dependentes_formset = inlineformset_factory(User, dependentes, modelFormDependentes, extra=1,\r\n                                                can_delete=False)\r\n    escolaridade_formset = inlineformset_factory(User, escolaridade, modelFormEscolaridade, extra=1,\r\n                                                 can_delete=False)\r\n    certificacao_formset = inlineformset_factory(User, certificacao, modelFormCertificacao, extra=1,\r\n                                                 can_delete=False)\r\n    profissional_formset = inlineformset_factory(User, profissional, modelFormProfissional, extra=1,\r\n                                                 can_delete=False)\r\n    dadosBancarios_formset = inlineformset_factory(User, dadosBancarios, modelFormDadosBancarios, extra=1,\r\n                                                   can_delete=False)\r\n    outros_formset = inlineformset_factory(User, outros, ModelFormOutros, extra=1, can_delete=False)\r\n\r\n    if request.method == 'POST':\r\n        form = CustomUserCreationForm(request.POST)\r\n        dados_form = dados_formset(request.POST)\r\n        endereco_form = endereco_formset(request.POST)\r\n        dependentes_form = dependentes_formset(request.POST)\r\n        escolaridade_form = escolaridade_formset(request.POST)\r\n        certificacao_form = certificacao_formset(request.POST)\r\n        profissional_form = profissional_formset(request.POST)\r\n        dadosBancarios_form = dadosBancarios_formset(request.POST)\r\n        outros_form = outros_formset(request.POST)\r\n\r\n        if form.is_valid() and dados_form.is_valid() and endereco_form.is_valid and dependentes_form.is_valid \\\r\n                and escolaridade_form.is_valid and certificacao_form.is_valid and profissional_form.is_valid \\\r\n                and dadosBancarios_form.is_valid and outros_form.is_valid:\r\n\r\n            novo_usuario = form.save()\r\n            dados_form = dados_formset(request.POST, instance=novo_usuario)\r\n            endereco_form = endereco_formset(request.POST, instance=novo_usuario)\r\n            dependentes_form = dependentes_formset(request.POST, instance=novo_usuario)\r\n            escolaridade_form = escolaridade_formset(request.POST, instance=novo_usuario)\r\n            certificacao_form = certificacao_formset(request.POST, instance=novo_usuario)\r\n            profissional_form = profissional_formset(request.POST, instance=novo_usuario)\r\n            dadosBancarios_form = dadosBancarios_formset(request.POST, instance=novo_usuario)\r\n            outros_form = outros_formset(request.POST, instance=novo_usuario)\r\n            dados_form.save()\r\n            endereco_form.save()\r\n            dependentes_form.save()\r\n            escolaridade_form.save()\r\n            certificacao_form.save()\r\n            profissional_form.save()\r\n            dadosBancarios_form.save()\r\n            outros_form.save()\r\n\r\n            return HttpResponse('Salvo')\r\n\r\n\r\n    else:\r\n        form = CustomUserCreationForm()\r\n        dados_form = dados_formset()\r\n        endereco_form = endereco_formset()\r\n        dependentes_form = dependentes_formset()\r\n        escolaridade_form = escolaridade_formset()\r\n        certificacao_form = certificacao_formset()\r\n        profissional_form = profissional_formset()\r\n        dadosBancarios_form = dadosBancarios_formset()\r\n        outros_form = outros_formset()\r\n\r\n    context = {\r\n\r\n        'user': form,\r\n        'dados': dados_form,\r\n        'end': endereco_form,\r\n        'dependentes_form': dependentes_form,\r\n        'escolaridade_form': escolaridade_form,\r\n        'certificacao_form': certificacao_form,\r\n        'profissional_form': profissional_form,\r\n        'dadosBancarios_form': dadosBancarios_form,\r\n        'outros_form': outros_form}\r\n\r\n    return render(request, 'ccis/dev.html', context)\r\n\r\n\r\n\r\ndef cadUser(request):\r\n\r\n    pk_dados = dadosPessoais.objects.get(pk=1)\r\n    pk_dependentes = dependentes.objects.get(pk=1)\r\n    pk_contato = enderecoContato.objects.get(pk=1)\r\n    pk_escolaridade = escolaridade.objects.get(pk=1)\r\n    pk_certificacao = certificacao.objects.get(pk=1)\r\n    pk_profi = profissional.objects.get(pk=1)\r\n    pk_bancario = dadosBancarios.objects.get(pk=1)\r\n    pk_outros = outros.objects.get(pk=1)\r\n\r\n    dp = modelFormDadosPessoais(instance=pk_dados)\r\n    de = modelFormDependentes(instance=pk_dependentes)\r\n    conEnd = modelFormEnderecoContato(instance=pk_contato)\r\n    esc = modelFormEscolaridade(instance=pk_escolaridade)\r\n    cert = modelFormCertificacao(instance=pk_certificacao)\r\n    prof = modelFormProfissional(instance=pk_profi)\r\n    db = modelFormDadosBancarios(instance=pk_bancario)\r\n    out = ModelFormOutros(instance=pk_outros)\r\n    mid = ModelFormMidia(instance=pk_dados)\r\n\r\n    data = datAT()\r\n\r\n    context = {'form': dp, 'dependentes': de, 'contatoEndereco': conEnd,\r\n               'escolaridade': esc, 'certificacao': cert, 'profissional': prof,\r\n               'dadosBancarios': db, 'outros': out, 'midia': mid, 'data': data}\r\n\r\n    if request.method == 'GET':\r\n        return render(request, 'ccis/conta.html', context)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ccis/views.py b/ccis/views.py
+--- a/ccis/views.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ b/ccis/views.py	(date 1683726612718)
+@@ -14,7 +14,7 @@
+     profissional, dadosBancarios
+ 
+ from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
+-    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
++    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios,\
+     CustomUserCreationForm
+ 
+ 
+@@ -351,8 +351,11 @@
+ 
+ 
+ def dev(request):
+-    form = UserCreationForm()
++
++    form = CustomUserCreationForm()
++
+     dados_formset = inlineformset_factory(User, dadosPessoais, modelFormDadosPessoais, extra=1, can_delete=False)
++
+     endereco_formset = inlineformset_factory(User, enderecoContato, modelFormEnderecoContato, extra=1,
+                                              can_delete=False)
+     dependentes_formset = inlineformset_factory(User, dependentes, modelFormDependentes, extra=1,
+@@ -378,9 +381,9 @@
+         dadosBancarios_form = dadosBancarios_formset(request.POST)
+         outros_form = outros_formset(request.POST)
+ 
+-        if form.is_valid() and dados_form.is_valid() and endereco_form.is_valid and dependentes_form.is_valid \
+-                and escolaridade_form.is_valid and certificacao_form.is_valid and profissional_form.is_valid \
+-                and dadosBancarios_form.is_valid and outros_form.is_valid:
++        if form.is_valid() and dados_form.is_valid() and endereco_form.is_valid() and dependentes_form.is_valid() \
++                and escolaridade_form.is_valid() and certificacao_form.is_valid() and profissional_form.is_valid() \
++                and dadosBancarios_form.is_valid() and outros_form.is_valid():
+ 
+             novo_usuario = form.save()
+             dados_form = dados_formset(request.POST, instance=novo_usuario)
+@@ -402,6 +405,8 @@
+ 
+             return HttpResponse('Salvo')
+ 
++        else:
++            return HttpResponse('Não validou')
+ 
+     else:
+         form = CustomUserCreationForm()
+Index: ccis/migrations/0010_outros_dadospessoais.py
+===================================================================
+diff --git a/ccis/migrations/0010_outros_dadospessoais.py b/ccis/migrations/0010_outros_dadospessoais.py
+deleted file mode 100644
+--- a/ccis/migrations/0010_outros_dadospessoais.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,19 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-11 17:39
+-
+-from django.db import migrations, models
+-import django.db.models.deletion
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0009_rename_dadospessoa_dadosbancarios_dadospessoais'),
+-    ]
+-
+-    operations = [
+-        migrations.AddField(
+-            model_name='outros',
+-            name='dadosPessoais',
+-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='ccis.dadospessoais'),
+-        ),
+-    ]
+Index: ccis/migrations/0008_dadosbancarios_dadospessoa.py
+===================================================================
+diff --git a/ccis/migrations/0008_dadosbancarios_dadospessoa.py b/ccis/migrations/0008_dadosbancarios_dadospessoa.py
+deleted file mode 100644
+--- a/ccis/migrations/0008_dadosbancarios_dadospessoa.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,19 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-11 17:35
+-
+-from django.db import migrations, models
+-import django.db.models.deletion
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0007_outros'),
+-    ]
+-
+-    operations = [
+-        migrations.AddField(
+-            model_name='dadosbancarios',
+-            name='dadosPessoa',
+-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='ccis.dadospessoais'),
+-        ),
+-    ]
+Index: ccis/migrations/0011_remove_dadosbancarios_dadospessoais_and_more.py
+===================================================================
+diff --git a/ccis/migrations/0011_remove_dadosbancarios_dadospessoais_and_more.py b/ccis/migrations/0011_remove_dadosbancarios_dadospessoais_and_more.py
+deleted file mode 100644
+--- a/ccis/migrations/0011_remove_dadosbancarios_dadospessoais_and_more.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,21 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-11 17:44
+-
+-from django.db import migrations
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0010_outros_dadospessoais'),
+-    ]
+-
+-    operations = [
+-        migrations.RemoveField(
+-            model_name='dadosbancarios',
+-            name='dadosPessoais',
+-        ),
+-        migrations.RemoveField(
+-            model_name='outros',
+-            name='dadosPessoais',
+-        ),
+-    ]
+Index: ccis/migrations/0018_alter_dadosbancarios_dadospessoais_and_more.py
+===================================================================
+diff --git a/ccis/migrations/0018_alter_dadosbancarios_dadospessoais_and_more.py b/ccis/migrations/0018_alter_dadosbancarios_dadospessoais_and_more.py
+deleted file mode 100644
+--- a/ccis/migrations/0018_alter_dadosbancarios_dadospessoais_and_more.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,24 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-12 15:28
+-
+-from django.db import migrations, models
+-import django.db.models.deletion
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0017_remove_dadospessoais_dadospessoais'),
+-    ]
+-
+-    operations = [
+-        migrations.AlterField(
+-            model_name='dadosbancarios',
+-            name='dadosPessoais',
+-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-        ),
+-        migrations.AlterField(
+-            model_name='outros',
+-            name='dadosPessoais',
+-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-        ),
+-    ]
+Index: ccis/migrations/0013_remove_outros_dadospessoais.py
+===================================================================
+diff --git a/ccis/migrations/0013_remove_outros_dadospessoais.py b/ccis/migrations/0013_remove_outros_dadospessoais.py
+deleted file mode 100644
+--- a/ccis/migrations/0013_remove_outros_dadospessoais.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,17 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-11 18:17
+-
+-from django.db import migrations
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0012_outros_dadospessoais'),
+-    ]
+-
+-    operations = [
+-        migrations.RemoveField(
+-            model_name='outros',
+-            name='dadosPessoais',
+-        ),
+-    ]
+Index: ccis/migrations/0005_profissional_alter_dadospessoais_categoria_and_more.py
+===================================================================
+diff --git a/ccis/migrations/0005_profissional_alter_dadospessoais_categoria_and_more.py b/ccis/migrations/0005_profissional_alter_dadospessoais_categoria_and_more.py
+deleted file mode 100644
+--- a/ccis/migrations/0005_profissional_alter_dadospessoais_categoria_and_more.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,65 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-10 14:00
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0004_certificacao_alter_enderecocontato_bairro_and_more'),
+-    ]
+-
+-    operations = [
+-        migrations.CreateModel(
+-            name='profissional',
+-            fields=[
+-                ('idprofissional', models.AutoField(db_column='idProfissional', primary_key=True, serialize=False)),
+-                ('cargo', models.CharField(blank=True, max_length=45, null=True)),
+-                ('area', models.CharField(blank=True, max_length=45, null=True)),
+-                ('paUnidade', models.CharField(blank=True, choices=[('', ''), ('00-SIA', '00-SIA'), ('01-PADF', '01-PADF'), ('02-FSA', '02-FSA'), ('03-SJA', '03-SJA'), ('06-PLA', '06-PLA'), ('07-VIP', '07-VIP'), ('08-AGC', '08-AGC'), ('09-SSB', '09-SSB'), ('97-DIG', '97-DIG'), ('98-OPE', '98-OPE'), ('99-UAD', '99-UAD')], db_column='paUnidade', max_length=45, null=True)),
+-                ('colaborador', models.CharField(blank=True, choices=[('', ''), ('Funcionário(a)', 'Funcionário(a)'), ('Tercerizado(a)', 'Tercerizado(a)'), ('Estagiário(a)', 'Estagiário(a)'), ('Menor Aprendiz', 'Menor Aprendiz'), ('Diretoria Executiva', 'Diretoria Executiva'), ('Diretoria Administrativa', 'Diretoria Administrativa'), ('Conselho Fiscal', 'Conselho Fiscal'), ('Conselho de Administração', 'Conselho de Administração')], max_length=60, null=True)),
+-                ('centroDeCusto', models.CharField(blank=True, db_column='centroDeCusto', max_length=45, null=True)),
+-                ('matricula', models.CharField(blank=True, max_length=45, null=True)),
+-                ('empregador', models.CharField(blank=True, choices=[('', ''), ('Sicoob Credibrasília', 'Sicoob Credibrasília'), ('Life Defense', 'Life Defense'), ('BS Soares', 'BS Soares')], max_length=45, null=True)),
+-                ('superiorImediato', models.CharField(blank=True, max_length=45, null=True)),
+-                ('folhaDePagamento', models.CharField(blank=True, max_length=45, null=True)),
+-                ('admissao', models.CharField(blank=True, max_length=45, null=True)),
+-                ('desligamento', models.CharField(blank=True, max_length=45, null=True)),
+-                ('situacao', models.CharField(blank=True, choices=[('', ''), ('Ativo', 'Ativo'), ('Inativo', 'Inativo')], max_length=45, null=True)),
+-                ('horarioEntrada', models.TimeField(blank=True, db_column='horarioEntrada', max_length=45, null=True)),
+-                ('horarioSaida', models.TimeField(blank=True, db_column='horarioSaida', max_length=45, null=True)),
+-                ('dataAtesAdmissional', models.DateField(blank=True, db_column='dataAtesAdmissional', max_length=45, null=True)),
+-                ('dataAtesPeriodico', models.DateField(blank=True, db_column='dataAtesPeriodico', max_length=45, null=True)),
+-            ],
+-        ),
+-        migrations.AlterField(
+-            model_name='dadospessoais',
+-            name='categoria',
+-            field=models.CharField(blank=True, choices=[('', ''), ('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D'), ('E', 'E')], max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='dadospessoais',
+-            name='corRaca',
+-            field=models.CharField(blank=True, choices=[('', ''), ('Amarelo', 'Amarelo'), ('Branco', 'Branco'), ('Indígena', 'Indígena'), ('Pardo', 'Pardo'), ('Preto', 'Preto')], db_column='corRaca', max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='dadospessoais',
+-            name='estadoCivil',
+-            field=models.CharField(blank=True, choices=[('', ''), ('Solteiro(a)', 'Solteiro(a)'), ('Casado(a)', 'Casado(a)'), ('Divorciado(a)', 'Divorciado(a)'), ('Viúvo(a)', 'Viúvo(a)'), ('Separado(a)', 'Separado(a)'), ('União Estável', 'União Estável')], db_column='estadoCivil', max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='dadospessoais',
+-            name='sexo',
+-            field=models.CharField(blank=True, choices=[('', ''), ('Feminino', 'Feminino'), ('Masculino', 'Masculino')], max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='dadospessoais',
+-            name='tipoSanguineo',
+-            field=models.CharField(blank=True, choices=[('', ''), ('A+', 'A+'), ('A-', 'A-'), ('B+', 'B+'), ('B-', 'B-'), ('AB+', 'AB+'), ('AB-', 'AB-'), ('O+', 'O+'), ('O-', 'O-')], db_column='tipoSanguineo', max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='enderecocontato',
+-            name='relacao',
+-            field=models.CharField(blank=True, choices=[('', ''), ('Cônjuge', 'Cônjuge'), ('Filho(a)', 'Filho(a)'), ('Pais', 'Pais'), ('Outros', 'Outros')], max_length=45, null=True),
+-        ),
+-    ]
+Index: ccis/migrations/0019_enderecocontato_nomecompleto.py
+===================================================================
+diff --git a/ccis/migrations/0019_enderecocontato_nomecompleto.py b/ccis/migrations/0019_enderecocontato_nomecompleto.py
+deleted file mode 100644
+--- a/ccis/migrations/0019_enderecocontato_nomecompleto.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,18 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-13 13:40
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0018_alter_dadosbancarios_dadospessoais_and_more'),
+-    ]
+-
+-    operations = [
+-        migrations.AddField(
+-            model_name='enderecocontato',
+-            name='nomeCompleto',
+-            field=models.CharField(blank=True, choices=[('', ''), ('Cônjuge', 'Cônjuge'), ('Filho(a)', 'Filho(a)'), ('Pais', 'Pais'), ('Outros', 'Outros')], max_length=45, null=True),
+-        ),
+-    ]
+Index: ccis/migrations/0021_certificacao_usuario_dadosbancarios_usuario_and_more.py
+===================================================================
+diff --git a/ccis/migrations/0021_certificacao_usuario_dadosbancarios_usuario_and_more.py b/ccis/migrations/0021_certificacao_usuario_dadosbancarios_usuario_and_more.py
+deleted file mode 100644
+--- a/ccis/migrations/0021_certificacao_usuario_dadosbancarios_usuario_and_more.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,139 +0,0 @@
+-# Generated by Django 4.2 on 2023-05-05 15:32
+-
+-from django.conf import settings
+-from django.db import migrations, models
+-import django.db.models.deletion
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+-        ('ccis', '0020_escolaridade_datainicio'),
+-    ]
+-
+-    operations = [
+-        migrations.AddField(
+-            model_name='certificacao',
+-            name='usuario',
+-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='certificacao', to=settings.AUTH_USER_MODEL),
+-        ),
+-        migrations.AddField(
+-            model_name='dadosbancarios',
+-            name='usuario',
+-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dadosBancarios', to=settings.AUTH_USER_MODEL),
+-        ),
+-        migrations.AddField(
+-            model_name='dadospessoais',
+-            name='usuario',
+-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dadosPessoais', to=settings.AUTH_USER_MODEL),
+-        ),
+-        migrations.AddField(
+-            model_name='dependentes',
+-            name='usuario',
+-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dependentes', to=settings.AUTH_USER_MODEL),
+-        ),
+-        migrations.AddField(
+-            model_name='enderecocontato',
+-            name='usuario',
+-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='enderecoContato', to=settings.AUTH_USER_MODEL),
+-        ),
+-        migrations.AddField(
+-            model_name='escolaridade',
+-            name='usuario',
+-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='escolaridade', to=settings.AUTH_USER_MODEL),
+-        ),
+-        migrations.AddField(
+-            model_name='outros',
+-            name='usuario',
+-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='outros', to=settings.AUTH_USER_MODEL),
+-        ),
+-        migrations.AddField(
+-            model_name='profissional',
+-            name='usuario',
+-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='profissional', to=settings.AUTH_USER_MODEL),
+-        ),
+-        migrations.AlterField(
+-            model_name='dadospessoais',
+-            name='cpf',
+-            field=models.CharField(max_length=11, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='dadospessoais',
+-            name='nomeCompleto',
+-            field=models.CharField(db_column='nomeCompleto', max_length=60, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='enderecocontato',
+-            name='estado',
+-            field=models.CharField(blank=True, choices=[('', ''), ('AC', 'AC'), ('AL', 'AL'), ('AP', 'AP'), ('AM', 'AM'), ('BA', 'BA'), ('CE', 'CE'), ('DF', 'DF'), ('ES', 'ES'), ('GO', 'GO'), ('MA', 'MA'), ('MT', 'MT'), ('MS', 'MS'), ('MG', 'MG'), ('PA', 'PA'), ('PB', 'PB'), ('PR', 'PR'), ('PE', 'PE'), ('PI', 'PI'), ('RJ', 'RJ'), ('RN', 'RN'), ('RS', 'RS'), ('RO', 'RO'), ('RR', 'RR'), ('SC', 'SC'), ('SP', 'SP'), ('SE', 'SE'), ('TO', 'TO')], db_column='estado', max_length=45, null=True),
+-        ),
+-        migrations.AlterOrderWithRespectTo(
+-            name='certificacao',
+-            order_with_respect_to='usuario',
+-        ),
+-        migrations.AlterOrderWithRespectTo(
+-            name='dadosbancarios',
+-            order_with_respect_to='usuario',
+-        ),
+-        migrations.AlterOrderWithRespectTo(
+-            name='dadospessoais',
+-            order_with_respect_to='usuario',
+-        ),
+-        migrations.AlterOrderWithRespectTo(
+-            name='dependentes',
+-            order_with_respect_to='usuario',
+-        ),
+-        migrations.AlterOrderWithRespectTo(
+-            name='enderecocontato',
+-            order_with_respect_to='usuario',
+-        ),
+-        migrations.AlterOrderWithRespectTo(
+-            name='escolaridade',
+-            order_with_respect_to='usuario',
+-        ),
+-        migrations.AlterOrderWithRespectTo(
+-            name='outros',
+-            order_with_respect_to='usuario',
+-        ),
+-        migrations.AlterOrderWithRespectTo(
+-            name='profissional',
+-            order_with_respect_to='usuario',
+-        ),
+-        migrations.RemoveField(
+-            model_name='certificacao',
+-            name='dadosPessoais',
+-        ),
+-        migrations.RemoveField(
+-            model_name='dadosbancarios',
+-            name='dadosPessoais',
+-        ),
+-        migrations.RemoveField(
+-            model_name='dependentes',
+-            name='dadosPessoais',
+-        ),
+-        migrations.RemoveField(
+-            model_name='enderecocontato',
+-            name='dadosPessoais',
+-        ),
+-        migrations.RemoveField(
+-            model_name='escolaridade',
+-            name='dadosPessoais',
+-        ),
+-        migrations.RemoveField(
+-            model_name='outros',
+-            name='dadosPessoais',
+-        ),
+-        migrations.RemoveField(
+-            model_name='profissional',
+-            name='dadosPessoais',
+-        ),
+-        migrations.RemoveField(
+-            model_name='profissional',
+-            name='dataAtesAdmissional',
+-        ),
+-        migrations.RemoveField(
+-            model_name='profissional',
+-            name='dataAtesPeriodico',
+-        ),
+-    ]
+Index: ccis/migrations/0006_dadosbancarios_and_more.py
+===================================================================
+diff --git a/ccis/migrations/0006_dadosbancarios_and_more.py b/ccis/migrations/0006_dadosbancarios_and_more.py
+deleted file mode 100644
+--- a/ccis/migrations/0006_dadosbancarios_and_more.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,31 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-10 14:37
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0005_profissional_alter_dadospessoais_categoria_and_more'),
+-    ]
+-
+-    operations = [
+-        migrations.CreateModel(
+-            name='dadosBancarios',
+-            fields=[
+-                ('idDadosBancarios', models.AutoField(db_column='idDadosBancarios', primary_key=True, serialize=False)),
+-                ('conta', models.CharField(blank=True, max_length=45, null=True)),
+-                ('digito', models.CharField(blank=True, db_column='digitoDaConta', max_length=45, null=True)),
+-                ('banco', models.CharField(blank=True, max_length=45, null=True)),
+-                ('agencia', models.CharField(blank=True, max_length=45, null=True)),
+-                ('tipoDeConta', models.CharField(blank=True, choices=[('', ''), ('Conta Corrente', 'Conta Corrente'), ('Conta Poupança', 'Conta Poupança'), ('Conta Salário', 'Conta Salário')], db_column='tipoDeConta', max_length=45, null=True)),
+-                ('modalidade', models.CharField(blank=True, max_length=45, null=True)),
+-                ('chavePix', models.CharField(blank=True, db_column='chavePix', max_length=45, null=True)),
+-            ],
+-        ),
+-        migrations.RenameField(
+-            model_name='profissional',
+-            old_name='idprofissional',
+-            new_name='idProfissional',
+-        ),
+-    ]
+Index: ccis/migrations/0016_certificacao_dadospessoais_and_more.py
+===================================================================
+diff --git a/ccis/migrations/0016_certificacao_dadospessoais_and_more.py b/ccis/migrations/0016_certificacao_dadospessoais_and_more.py
+deleted file mode 100644
+--- a/ccis/migrations/0016_certificacao_dadospessoais_and_more.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,56 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-12 14:56
+-
+-from django.db import migrations, models
+-import django.db.models.deletion
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0015_alter_outros_dadospessoais'),
+-    ]
+-
+-    operations = [
+-        migrations.AddField(
+-            model_name='certificacao',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-        migrations.AddField(
+-            model_name='dadosbancarios',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(default=2, on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-        migrations.AddField(
+-            model_name='dadospessoais',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-        migrations.AddField(
+-            model_name='dependentes',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-        migrations.AddField(
+-            model_name='enderecocontato',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-        migrations.AddField(
+-            model_name='escolaridade',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-        migrations.AddField(
+-            model_name='profissional',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-    ]
+Index: ccis/migrations/0014_outros_dadospessoais.py
+===================================================================
+diff --git a/ccis/migrations/0014_outros_dadospessoais.py b/ccis/migrations/0014_outros_dadospessoais.py
+deleted file mode 100644
+--- a/ccis/migrations/0014_outros_dadospessoais.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,20 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-11 19:01
+-
+-from django.db import migrations, models
+-import django.db.models.deletion
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0013_remove_outros_dadospessoais'),
+-    ]
+-
+-    operations = [
+-        migrations.AddField(
+-            model_name='outros',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-    ]
+Index: ccis/migrations/0007_outros.py
+===================================================================
+diff --git a/ccis/migrations/0007_outros.py b/ccis/migrations/0007_outros.py
+deleted file mode 100644
+--- a/ccis/migrations/0007_outros.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,20 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-10 15:03
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0006_dadosbancarios_and_more'),
+-    ]
+-
+-    operations = [
+-        migrations.CreateModel(
+-            name='outros',
+-            fields=[
+-                ('idOutros', models.AutoField(db_column='idOutros', primary_key=True, serialize=False)),
+-                ('camiseta', models.CharField(blank=True, choices=[('', ''), ('PP', 'PP'), ('P', 'P'), ('M', 'M'), ('G', 'G'), ('GG', 'GG'), ('XG', 'XG')], max_length=45, null=True)),
+-            ],
+-        ),
+-    ]
+Index: ccis/migrations/0015_alter_outros_dadospessoais.py
+===================================================================
+diff --git a/ccis/migrations/0015_alter_outros_dadospessoais.py b/ccis/migrations/0015_alter_outros_dadospessoais.py
+deleted file mode 100644
+--- a/ccis/migrations/0015_alter_outros_dadospessoais.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,19 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-11 19:02
+-
+-from django.db import migrations, models
+-import django.db.models.deletion
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0014_outros_dadospessoais'),
+-    ]
+-
+-    operations = [
+-        migrations.AlterField(
+-            model_name='outros',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ccis.dadospessoais'),
+-        ),
+-    ]
+Index: ccis/migrations/0001_initial.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ccis/migrations/0001_initial.py b/ccis/migrations/0001_initial.py
+deleted file mode 100644
+--- a/ccis/migrations/0001_initial.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,49 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-05 13:23
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    initial = True
+-
+-    dependencies = [
+-    ]
+-
+-    operations = [
+-        migrations.CreateModel(
+-            name='dadosPessoais',
+-            fields=[
+-                ('idDadosPessoais', models.AutoField(db_column='idDadosPessoais', primary_key=True, serialize=False)),
+-                ('nomeCompleto', models.CharField(blank=True, db_column='nomeCompleto', max_length=60, null=True)),
+-                ('sexo', models.CharField(blank=True, max_length=45, null=True)),
+-                ('estadoCivil', models.CharField(blank=True, db_column='estadoCivil', max_length=45, null=True)),
+-                ('corRaca', models.CharField(blank=True, db_column='corRaca', max_length=45, null=True)),
+-                ('dataNascimento', models.DateField(blank=True, db_column='dataNascimento', null=True)),
+-                ('naturalidade', models.CharField(blank=True, max_length=45, null=True)),
+-                ('tipoSanguineo', models.CharField(blank=True, db_column='tipoSanguineo', max_length=45, null=True)),
+-                ('nomePai', models.CharField(blank=True, db_column='nomePai', max_length=60, null=True)),
+-                ('nomeMae', models.CharField(blank=True, db_column='nomeMae', max_length=60, null=True)),
+-                ('cpf', models.CharField(blank=True, max_length=45, null=True)),
+-                ('rg', models.CharField(blank=True, max_length=45, null=True)),
+-                ('expedidor', models.CharField(blank=True, max_length=45, null=True)),
+-                ('cnh', models.CharField(blank=True, max_length=45, null=True)),
+-                ('validadeCnh', models.DateField(blank=True, db_column='validadeCnh', null=True)),
+-                ('categoria', models.CharField(blank=True, max_length=45, null=True)),
+-                ('tituloEleitor', models.CharField(blank=True, db_column='tituloEleitor', max_length=45, null=True)),
+-                ('zona', models.CharField(blank=True, max_length=45, null=True)),
+-                ('secao', models.CharField(blank=True, max_length=45, null=True)),
+-                ('ctps', models.CharField(blank=True, max_length=45, null=True)),
+-                ('serieCTPS', models.CharField(blank=True, db_column='serieCTPS', max_length=45, null=True)),
+-                ('dataCTPS', models.DateField(blank=True, db_column='dataCTPS', null=True)),
+-                ('reservista', models.CharField(blank=True, max_length=45, null=True)),
+-                ('ra', models.CharField(blank=True, db_column='RA', max_length=45, null=True)),
+-                ('serieReservista', models.CharField(blank=True, db_column='serieReservista', max_length=45, null=True)),
+-                ('pis', models.CharField(blank=True, max_length=45, null=True)),
+-                ('cns', models.CharField(blank=True, db_column='CNS', max_length=45, null=True)),
+-                ('pcd', models.CharField(blank=True, db_column='PCD', max_length=45, null=True)),
+-                ('foto', models.ImageField(blank=True, null=True, upload_to='')),
+-                ('canvas', models.ImageField(blank=True, null=True, upload_to='')),
+-            ],
+-        ),
+-    ]
+Index: ccis/migrations/0017_remove_dadospessoais_dadospessoais.py
+===================================================================
+diff --git a/ccis/migrations/0017_remove_dadospessoais_dadospessoais.py b/ccis/migrations/0017_remove_dadospessoais_dadospessoais.py
+deleted file mode 100644
+--- a/ccis/migrations/0017_remove_dadospessoais_dadospessoais.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,17 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-12 15:07
+-
+-from django.db import migrations
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0016_certificacao_dadospessoais_and_more'),
+-    ]
+-
+-    operations = [
+-        migrations.RemoveField(
+-            model_name='dadospessoais',
+-            name='dadosPessoais',
+-        ),
+-    ]
+Index: ccis/migrations/0012_outros_dadospessoais.py
+===================================================================
+diff --git a/ccis/migrations/0012_outros_dadospessoais.py b/ccis/migrations/0012_outros_dadospessoais.py
+deleted file mode 100644
+--- a/ccis/migrations/0012_outros_dadospessoais.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,20 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-11 18:16
+-
+-from django.db import migrations, models
+-import django.db.models.deletion
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0011_remove_dadosbancarios_dadospessoais_and_more'),
+-    ]
+-
+-    operations = [
+-        migrations.AddField(
+-            model_name='outros',
+-            name='dadosPessoais',
+-            field=models.ForeignKey(auto_created=True, default=1, on_delete=django.db.models.deletion.PROTECT, related_name='outros', to='ccis.dadospessoais'),
+-            preserve_default=False,
+-        ),
+-    ]
+Index: ccis/migrations/0003_enderecocontato_escolaridade_and_more.py
+===================================================================
+diff --git a/ccis/migrations/0003_enderecocontato_escolaridade_and_more.py b/ccis/migrations/0003_enderecocontato_escolaridade_and_more.py
+deleted file mode 100644
+--- a/ccis/migrations/0003_enderecocontato_escolaridade_and_more.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,58 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-06 18:49
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0002_dependentes'),
+-    ]
+-
+-    operations = [
+-        migrations.CreateModel(
+-            name='enderecoContato',
+-            fields=[
+-                ('idEndereCoecontato', models.AutoField(db_column='idEnderecoEContato', primary_key=True, serialize=False)),
+-                ('endereco', models.CharField(blank=True, max_length=100, null=True)),
+-                ('bairro', models.CharField(blank=True, max_length=45, null=True)),
+-                ('cidade', models.CharField(blank=True, max_length=45, null=True)),
+-                ('estado', models.CharField(blank=True, max_length=45, null=True)),
+-                ('cep', models.CharField(blank=True, max_length=45, null=True)),
+-                ('emailCorporativo', models.CharField(blank=True, db_column='emailCorporativo', max_length=45, null=True)),
+-                ('telefonePessoal', models.CharField(blank=True, db_column='telefonePessoal', max_length=45, null=True)),
+-                ('telefoneCorporativo', models.CharField(blank=True, db_column='telefoneCorporativo', max_length=45, null=True)),
+-                ('celularCorporativo', models.CharField(blank=True, db_column='celularCorporativo', max_length=45, null=True)),
+-                ('celularPessoal', models.CharField(blank=True, db_column='celularPessoal', max_length=45, null=True)),
+-                ('ramal', models.CharField(blank=True, max_length=45, null=True)),
+-                ('emailPessoal', models.EmailField(blank=True, db_column='emailPessoal', max_length=45, null=True)),
+-                ('relacao', models.CharField(blank=True, max_length=45, null=True)),
+-                ('telefoneDeEmergencia', models.CharField(blank=True, db_column='telefoneDeEmergencia', max_length=45, null=True)),
+-                ('celularDeEmergencia', models.CharField(blank=True, db_column='celularDeEmergencia', max_length=45, null=True)),
+-            ],
+-        ),
+-        migrations.CreateModel(
+-            name='escolaridade',
+-            fields=[
+-                ('idEscolaridade', models.AutoField(db_column='idEscolaridade', primary_key=True, serialize=False)),
+-                ('entidadeDeEnsino', models.CharField(blank=True, db_column='entidadeDeEnsino', max_length=45, null=True)),
+-                ('curso', models.CharField(blank=True, db_column='curso', max_length=45, null=True)),
+-                ('grau', models.CharField(blank=True, choices=[('', ''), ('Graduação', 'Graduação'), ('Pós-Graduação', 'Pós-Graduação'), ('Mestrado', 'Mestrado'), ('Doutorado', 'Doutorado')], db_column='grau', max_length=45, null=True)),
+-                ('dataConclusao', models.DateField(blank=True, db_column='dataConclusao', max_length=45, null=True)),
+-                ('idiomaPrimario', models.CharField(blank=True, db_column='idiomaPrimario', max_length=45, null=True)),
+-                ('idiomaSecundario', models.CharField(blank=True, db_column='idiomaSecundario', max_length=45, null=True)),
+-                ('nivelPrimario', models.CharField(blank=True, choices=[('', ''), ('Básico', 'Básico'), ('Intermediário', 'Intermediário'), ('Avançado', 'Avançado')], db_column='nivelPrimario', max_length=45, null=True)),
+-                ('nivelSecundario', models.CharField(blank=True, choices=[('', ''), ('Básico', 'Básico'), ('Intermediário', 'Intermediário'), ('Avançado', 'Avançado')], db_column='nivelSecundario', max_length=45, null=True)),
+-            ],
+-        ),
+-        migrations.AlterField(
+-            model_name='dependentes',
+-            name='dataNascimento',
+-            field=models.DateField(blank=True, db_column='dataNascimento', max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='dependentes',
+-            name='relacao',
+-            field=models.CharField(blank=True, choices=[('', ''), ('Cônjuge', 'Cônjuge'), ('Filho(a)', 'Filho(a)'), ('Pais', 'Pais'), ('Outros', 'Outros')], max_length=45, null=True),
+-        ),
+-    ]
+Index: ccis/migrations/0004_certificacao_alter_enderecocontato_bairro_and_more.py
+===================================================================
+diff --git a/ccis/migrations/0004_certificacao_alter_enderecocontato_bairro_and_more.py b/ccis/migrations/0004_certificacao_alter_enderecocontato_bairro_and_more.py
+deleted file mode 100644
+--- a/ccis/migrations/0004_certificacao_alter_enderecocontato_bairro_and_more.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,53 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-06 19:58
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0003_enderecocontato_escolaridade_and_more'),
+-    ]
+-
+-    operations = [
+-        migrations.CreateModel(
+-            name='certificacao',
+-            fields=[
+-                ('idCertificacao', models.AutoField(db_column='idCertificacao', primary_key=True, serialize=False)),
+-                ('nome', models.CharField(blank=True, db_column='nome', max_length=45, null=True)),
+-                ('organizacaoEmissora', models.CharField(blank=True, db_column='organizacaoEmissora', max_length=45, null=True)),
+-                ('dataEmissao', models.DateField(blank=True, db_column='dataEmissao', max_length=45, null=True)),
+-                ('dataExpiracao', models.DateField(blank=True, db_column='dataExpiracao', max_length=45, null=True)),
+-            ],
+-        ),
+-        migrations.AlterField(
+-            model_name='enderecocontato',
+-            name='bairro',
+-            field=models.CharField(blank=True, db_column='bairro', max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='enderecocontato',
+-            name='cep',
+-            field=models.CharField(blank=True, db_column='cep', max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='enderecocontato',
+-            name='cidade',
+-            field=models.CharField(blank=True, db_column='cidade', max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='enderecocontato',
+-            name='endereco',
+-            field=models.CharField(blank=True, db_column='endereco', max_length=100, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='enderecocontato',
+-            name='estado',
+-            field=models.CharField(blank=True, db_column='estado', max_length=45, null=True),
+-        ),
+-        migrations.AlterField(
+-            model_name='enderecocontato',
+-            name='ramal',
+-            field=models.CharField(blank=True, db_column='ramal', max_length=45, null=True),
+-        ),
+-    ]
+Index: ccis/migrations/0002_dependentes.py
+===================================================================
+diff --git a/ccis/migrations/0002_dependentes.py b/ccis/migrations/0002_dependentes.py
+deleted file mode 100644
+--- a/ccis/migrations/0002_dependentes.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,25 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-06 14:05
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0001_initial'),
+-    ]
+-
+-    operations = [
+-        migrations.CreateModel(
+-            name='dependentes',
+-            fields=[
+-                ('idDependentes', models.AutoField(db_column='idDependentes', primary_key=True, serialize=False)),
+-                ('nomeCompleto', models.CharField(blank=True, db_column='nomeCompleto', max_length=45, null=True)),
+-                ('cpf', models.CharField(blank=True, max_length=45, null=True)),
+-                ('dataNascimento', models.CharField(blank=True, db_column='dataNascimento', max_length=45, null=True)),
+-                ('relacao', models.CharField(blank=True, max_length=45, null=True)),
+-                ('email', models.EmailField(blank=True, max_length=45, null=True)),
+-                ('contato', models.CharField(blank=True, max_length=45, null=True)),
+-            ],
+-        ),
+-    ]
+Index: ccis/migrations/0009_rename_dadospessoa_dadosbancarios_dadospessoais.py
+===================================================================
+diff --git a/ccis/migrations/0009_rename_dadospessoa_dadosbancarios_dadospessoais.py b/ccis/migrations/0009_rename_dadospessoa_dadosbancarios_dadospessoais.py
+deleted file mode 100644
+--- a/ccis/migrations/0009_rename_dadospessoa_dadosbancarios_dadospessoais.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,18 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-11 17:38
+-
+-from django.db import migrations
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0008_dadosbancarios_dadospessoa'),
+-    ]
+-
+-    operations = [
+-        migrations.RenameField(
+-            model_name='dadosbancarios',
+-            old_name='dadosPessoa',
+-            new_name='dadosPessoais',
+-        ),
+-    ]
+Index: ccis/migrations/0020_escolaridade_datainicio.py
+===================================================================
+diff --git a/ccis/migrations/0020_escolaridade_datainicio.py b/ccis/migrations/0020_escolaridade_datainicio.py
+deleted file mode 100644
+--- a/ccis/migrations/0020_escolaridade_datainicio.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ /dev/null	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
+@@ -1,18 +0,0 @@
+-# Generated by Django 4.2 on 2023-04-13 13:47
+-
+-from django.db import migrations, models
+-
+-
+-class Migration(migrations.Migration):
+-
+-    dependencies = [
+-        ('ccis', '0019_enderecocontato_nomecompleto'),
+-    ]
+-
+-    operations = [
+-        migrations.AddField(
+-            model_name='escolaridade',
+-            name='dataInicio',
+-            field=models.DateField(blank=True, db_column='dataInicio', max_length=45, null=True),
+-        ),
+-    ]
+Index: ccis/templates/ccis/base.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!doctype html>\r\n\r\n{% load static %}\r\n\r\n<html lang=\"pt-br\">\r\n\r\n    <head>\r\n        <!-- Required meta tags -->\r\n        <meta charset=\"utf-8\">\r\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n\r\n        <!-- link css -->\r\n        <link rel=\"stylesheet\" href=\"{% static 'ccis/style.css' %}\">\r\n\r\n\r\n        <!-- Bootstrap CSS -->\r\n        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n              integrity=\"sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC\" crossorigin=\"anonymous\">\r\n\r\n        <!-- fontawesome -->\r\n        <script src=\"https://kit.fontawesome.com/df67e6f5ba.js\" crossorigin=\"anonymous\"></script>\r\n\r\n    </head>\r\n\r\n    <body class=\"body-background\">\r\n    <!-- topMenu ------------------------------------------------------------------------------------------------------>\r\n    <header class=\"navbar-topp shadow-sm nav justify-content-center \">\r\n\r\n        <nav class=\"col-10 p-0 navbar navbar-topp navbar-expand-lg navbar-fixed\">\r\n            <div class=\"container-fluid\">\r\n\r\n                <!-- Logo do Menu ------------------------------------------------------------------------------------->\r\n                <a class=\"navbar-brand\" href=\"#\">\r\n                    <img src=\"{% static 'ccis/logonav.png' %}\"\r\n                         alt=\"logo\"\r\n                         width=\"47\"\r\n                         height=\"54\"\r\n                         class=\"d-inline-block align-text-center;\">\r\n                </a>\r\n                <!-- End Logo do Menu --------------------------------------------------------------------------------->\r\n\r\n\r\n                <!-- Esquerda do Menu --------------------------------------------------------------------------------->\r\n                <div class=\"collapse navbar-collapse\" id=\"navbarNav\" style=\"font-size:18px;\">\r\n                    <ul class=\"navbar-nav\">\r\n\r\n                        <li class=\"  ms-5 me-4\">\r\n                            <a style=\"font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;\"\r\n                               href=\"#\"></a>\r\n                        </li>\r\n\r\n                    </ul>\r\n                </div>\r\n                <!-- End Esquerda do Menu ----------------------------------------------------------------------------->\r\n\r\n\r\n                <!-- Direita do Menu ---------------------------------------------------------------------------------->\r\n                <div class=\"navbar-nav-wrap-content-end\">\r\n\r\n                    <div class=\"navbar-nav-wrap-content-end\">\r\n\r\n                        <div class=\"collapse navbar-collapse\" id=\"navbarNavDarkDropdown\">\r\n                            <ul class=\"navbar-nav\">\r\n\r\n                                <!-- Start Notification ------------------------------------------->\r\n                                <li class=\"nav-item dropdown d-none d-sm-inline-block me-5 mt-3\">\r\n\r\n                                    <button class=\"btn\" type=\"button\" style=\"color:#219180\" id=\"notButton\"\r\n                                            data-bs-toggle=\"dropdown\" aria-expanded=\"false\">\r\n\r\n                                        <i class=\"fa-solid fa-bell\"></i>\r\n\r\n                                        <span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">\r\n                        99+<span class=\"visually-hidden\"></span>\r\n                      </span>\r\n\r\n                                    </button>\r\n\r\n                                    <ul class=\"dropdown-menu\" aria-labelledby=\"notButton\">\r\n\r\n                                        <li>\r\n                                            <div class=\"card\" style=\"width: 18rem;\">\r\n                                                <div class=\"card-body\">\r\n                                                    <h5 class=\"card-title\">Card title</h5>\r\n                                                    <p class=\"card-text\">Some quick example text to build on the card\r\n                                                        title and\r\n                                                        make up the bulk\r\n                                                        of\r\n                                                        the card's content.</p>\r\n                                                    <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </li>\r\n\r\n\r\n                                        <li><a class=\"dropdown-item\" href=\"#\">Another action</a></li>\r\n                                        <li><a class=\"dropdown-item\" href=\"#\">Something else here</a></li>\r\n                                    </ul>\r\n\r\n                                </li>\r\n                                <!-- End Start Notification --------------------------------------->\r\n\r\n                                <!-- Start Conta -------------------------------------------------->\r\n                                <li class=\"dropdown\">\r\n                                    <button class=\"btn open-menu\"\r\n                                            type=\"button\"\r\n                                            id=\"contBotton\"\r\n                                            data-bs-toggle=\"offcanvas\"\r\n                                            aria-expanded=\"false\"\r\n                                            aria-controls=\"offcanvasRight\"\r\n                                            data-bs-target=\"#offcanvasRight\">\r\n\r\n                                        <img class=\"avatar-img\"\r\n                                             src=\"{% static 'ccis/avatar.jpg' %}\"\r\n                                             alt=\"img\"\r\n                                             width=\"50\"\r\n                                             height=\"50\"\r\n                                             style=\"border:1px solid; border-radius:25px;\">\r\n\r\n                                    </button>\r\n                                </li>\r\n                                <!-- End Start Notification --------------------------------------->\r\n\r\n                            </ul>\r\n\r\n                            <!-- Menu Recolhivel -------------------------------------------------->\r\n                            <div class=\"offcanvas secondary sidebar p-0\"\r\n                                 tabindex=\"-1\"\r\n                                 id=\"offcanvasRight\"\r\n                                 aria-labelledby=\"offcanvasRightLabel\">\r\n\r\n                                <!-- header sidebar menu -->\r\n                                <div class=\"dismiss\"\r\n                                     data-bs-dismiss=\"offcanvas\"\r\n                                     aria-label=\"Close\">\r\n                                    <i class=\"fas fa-arrow-left\"></i>\r\n                                </div>\r\n\r\n                                <div class=\"mt-3\" style=\"text-align: center;\">\r\n                                    <img class=\"avatar-img\"\r\n                                         src=\"{% static 'ccis/avatar.jpg' %}\"\r\n                                         alt=\"img\"\r\n                                         width=\"110\"\r\n                                         height=\"110\">\r\n\r\n                                    <p>Side Henrique da Silva Paes Landim</p>\r\n\r\n                                </div>\r\n                                <!-- end header sidebar menu -->\r\n\r\n                                <!-- corpo sidebar menu -->\r\n                                <div class=\"offcanvas-body\">\r\n                                    <hr>\r\n\r\n                                    <ul class=\"list-unstyled menu-elements\">\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"{% url 'home' %}\"><i class=\"fas fa-home\"></i>\r\n                                                Inicio</a>\r\n                                        </li>\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"{% url 'profile' %}\"><i\r\n                                                    class=\"fas fa-user\"></i> Perfil</a>\r\n                                        </li>\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"{% url 'conta' %}\"><i\r\n                                                    class=\"fas fa-pencil-alt\"></i>\r\n                                                Editar Conta</a>\r\n                                        </li>\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"#section-1\"><i class=\"fas fa-cog\"></i>\r\n                                                Configurações</a>\r\n                                        </li>\r\n\r\n                                        <hr>\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"{% url 'logout' %}\">\r\n                                                <i class=\"fa-sharp fa-solid fa-right-from-bracket\"></i> Sair\r\n                                            </a>\r\n                                        </li>\r\n\r\n                                    </ul>\r\n\r\n                                </div>\r\n\r\n\r\n                                <!-- End Menu Recolhivel ---------------------------------------------->\r\n\r\n\r\n                            </div>\r\n                            <!-- End Menu Recolhivel ---------------------------------------------->\r\n\r\n                        </div>\r\n\r\n                    </div>\r\n\r\n                </div>\r\n                <!-- End Direita do Menu ------------------------------------------------------------------------------>\r\n            </div>\r\n\r\n        </nav>\r\n\r\n    </header>\r\n    <!-- End topMenu -------------------------------------------------------------------------------------------------->\r\n\r\n    <main class=\"container col-10\">\r\n\r\n        <div class=\"row mt-2 me-2\">\r\n            <!-- Menu Lateral --------------------------------------------------------------------------------------------->\r\n            <div class=\"col-2 me-3 menu-lateral\">\r\n\r\n                <!-- Img -->\r\n                <img src=\"{% static 'ccis/rh.png' %}\"\r\n                 alt=\"rh\"\r\n                 width=\"195\"\r\n                 height=\"160\"\r\n                 class=\"d-inline-block align-text-center;\">\r\n\r\n                <p class=\"paragrafo-style\">Recursos Humanos</p>\r\n\r\n                <hr>\r\n\r\n                <!-- Menu -->\r\n                <ul class=\"ul-lista\">\r\n\r\n                    <!-- Home -->\r\n                    <li class=\"li-lista\">\r\n                        <a class=\"li-link\" href=\"{% url 'home' %}\" aria-current=\"page\">\r\n                            <i class=\"fa-sharp fa-solid fa-house\"></i>\r\n                            Home\r\n                        </a>\r\n                    </li>\r\n\r\n                    <hr>\r\n\r\n                    <!-- Perfil -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"{% url 'profile' %}\" class=\"li-link\" aria-current=\"page\">\r\n                            <i class=\"fa-solid fa-user\"></i>\r\n                            Perfil\r\n                        </a>\r\n                    </li>\r\n\r\n                    <!-- Gestão -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"#\" class=\"li-link dropdown-toggle\"\r\n                           aria-current=\"page\"\r\n                           data-bs-theme=\"light\"\r\n                           type=\"link\"\r\n                           data-bs-toggle=\"collapse\"\r\n                           data-bs-target=\"#collapseWidthExample\"\r\n                           aria-expanded=\"false\"\r\n                           aria-controls=\"collapseWidthExample\">\r\n\r\n                            <i class=\"fa-solid fa-screwdriver-wrench\"></i>\r\n                            Gestão\r\n                        </a>\r\n\r\n                        <div id=\"collapseWidthExample\" class=\"collapse collapse-horizontal ps-3 \">\r\n                            <ul class=\"nav nav-pills flex-column mb-auto\">\r\n\r\n                                <!-- Dash -->\r\n                                <li class=\"li-lista\">\r\n                                    <a href=\"#\" class=\"li-link\">\r\n                                        <i class=\"fa-solid fa-chart-line\"></i>\r\n                                        Dashboard\r\n                                    </a>\r\n                                </li>\r\n\r\n                                <!-- Usuários -->\r\n                                <li style=\"padding:7px\">\r\n                                    <a href=\"{% url 'usuario' %}\" class=\"li-link\" aria-current=\"page\">\r\n                                        <i class=\"fa-solid fa-users\"></i>\r\n                                        Usuários\r\n                                    </a>\r\n                                </li>\r\n\r\n                                <!-- Solicitações -->\r\n                                <li style=\"padding:7px\">\r\n\r\n                                    <a href=\"#\" class=\"li-link\" aria-current=\"page\">\r\n                                        <i class=\"fa-solid fa-message\"></i>\r\n                                        Solicitações\r\n                                    </a>\r\n                                </li>\r\n\r\n                            </ul>\r\n                        </div>\r\n\r\n                    </li>\r\n\r\n                    <!-- Conta -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"{% url 'conta' %}\" class=\"li-link\" aria-current=\"page\">\r\n                            <i class=\"fa-solid fa-address-card\"></i>\r\n                            Conta\r\n                        </a>\r\n                    </li>\r\n\r\n                    <!-- Documentos -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"#\" class=\"li-link\" aria-current=\"page\">\r\n                            <i class=\"fa-solid fa-file\"></i>\r\n                            Documentos\r\n                        </a>\r\n                    </li>\r\n\r\n                    <!-- Solicitações -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"{% url 'solicitacao' %}\" class=\"li-link\" aria-current=\"page\">\r\n                            <i class=\"fa-solid fa-message\"></i>\r\n                            Solicitações\r\n                        </a>\r\n                    </li>\r\n\r\n                </ul>\r\n                <hr>\r\n\r\n            </div>\r\n            <!-- End Menu Lateral ----------------------------------------------------------------------------------------->\r\n\r\n            <!-- CONTEÚDO DA PAGINA **********************************************************************************  --->\r\n            <div class=\"col flow\">\r\n                {% block conteudo %}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n                {% endblock %}\r\n            </div>\r\n            <!-- FINAL DA PAGINA *************************************************************************************  --->\r\n\r\n        </div>\r\n    </main>\r\n\r\n    <!-- Option 1: Bootstrap Bundle with Popper -->\r\n\r\n    <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM\" crossorigin=\"anonymous\"></script>\r\n\r\n    <script src=\"https://code.jquery.com/jquery-3.3.1.slim.min.js\"></script>\r\n\r\n    <!-- link js -->\r\n    <script src=\"{% static 'ccis/script.js' %}\"></script>\r\n\r\n    </body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ccis/templates/ccis/base.html b/ccis/templates/ccis/base.html
+--- a/ccis/templates/ccis/base.html	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ b/ccis/templates/ccis/base.html	(date 1683657978860)
+@@ -12,7 +12,6 @@
+         <!-- link css -->
+         <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
+ 
+-
+         <!-- Bootstrap CSS -->
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+@@ -20,6 +19,8 @@
+         <!-- fontawesome -->
+         <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
+ 
++        {% load crispy_forms_tags %}
++
+     </head>
+ 
+     <body class="body-background">
+Index: ccis/templates/ccis/dev.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!doctype html>\r\n\r\n{% load static %}\r\n\r\n<html lang=\"pt-br\">\r\n\r\n    <head>\r\n        <!-- Required meta tags -->\r\n        <meta charset=\"utf-8\">\r\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n\r\n        <!-- link css -->\r\n        <link rel=\"stylesheet\" href=\"{% static 'ccis/style.css' %}\">\r\n\r\n\r\n        <!-- Bootstrap CSS -->\r\n        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n              integrity=\"sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC\" crossorigin=\"anonymous\">\r\n\r\n        <!-- fontawesome -->\r\n        <script src=\"https://kit.fontawesome.com/df67e6f5ba.js\" crossorigin=\"anonymous\"></script>\r\n\r\n    </head>\r\n\r\n    <body class=\"body-background\">\r\n\r\n    <!-- topMenu ------------------------------------------------------------------------------------------------------>\r\n    <header class=\"navbar-topp shadow-sm nav justify-content-center \">\r\n\r\n        <nav class=\"col-10 p-0 navbar navbar-topp navbar-expand-lg navbar-fixed\">\r\n            <div class=\"container-fluid\">\r\n\r\n                <!-- Logo do Menu ------------------------------------------------------------------------------------->\r\n                <a class=\"navbar-brand\" href=\"#\">\r\n                    <img src=\"{% static 'ccis/logonav.png' %}\"\r\n                         alt=\"logo\"\r\n                         width=\"47\"\r\n                         height=\"54\"\r\n                         class=\"d-inline-block align-text-center;\">\r\n                </a>\r\n                <!-- End Logo do Menu --------------------------------------------------------------------------------->\r\n\r\n\r\n                <!-- Esquerda do Menu --------------------------------------------------------------------------------->\r\n                <div class=\"collapse navbar-collapse\" id=\"navbarNav\" style=\"font-size:18px;\">\r\n                    <ul class=\"navbar-nav\">\r\n\r\n                        <li class=\"  ms-5 me-4\">\r\n                            <a style=\"font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;\"\r\n                               href=\"#\"></a>\r\n                        </li>\r\n\r\n                    </ul>\r\n                </div>\r\n                <!-- End Esquerda do Menu ----------------------------------------------------------------------------->\r\n\r\n\r\n                <!-- Direita do Menu ---------------------------------------------------------------------------------->\r\n                <div class=\"navbar-nav-wrap-content-end\">\r\n\r\n                    <div class=\"navbar-nav-wrap-content-end\">\r\n\r\n                        <div class=\"collapse navbar-collapse\" id=\"navbarNavDarkDropdown\">\r\n                            <ul class=\"navbar-nav\">\r\n\r\n                                <!-- Start Notification ------------------------------------------->\r\n                                <li class=\"nav-item dropdown d-none d-sm-inline-block me-5 mt-3\">\r\n\r\n                                    <button class=\"btn\" type=\"button\" style=\"color:#219180\" id=\"notButton\"\r\n                                            data-bs-toggle=\"dropdown\" aria-expanded=\"false\">\r\n\r\n                                        <i class=\"fa-solid fa-bell\"></i>\r\n\r\n                                        <span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">\r\n                        99+<span class=\"visually-hidden\"></span>\r\n                      </span>\r\n\r\n                                    </button>\r\n\r\n                                    <ul class=\"dropdown-menu\" aria-labelledby=\"notButton\">\r\n\r\n                                        <li>\r\n                                            <div class=\"card\" style=\"width: 18rem;\">\r\n                                                <div class=\"card-body\">\r\n                                                    <h5 class=\"card-title\">Card title</h5>\r\n                                                    <p class=\"card-text\">Some quick example text to build on the card\r\n                                                        title and\r\n                                                        make up the bulk\r\n                                                        of\r\n                                                        the card's content.</p>\r\n                                                    <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>\r\n                                                </div>\r\n                                            </div>\r\n                                        </li>\r\n\r\n\r\n                                        <li><a class=\"dropdown-item\" href=\"#\">Another action</a></li>\r\n                                        <li><a class=\"dropdown-item\" href=\"#\">Something else here</a></li>\r\n                                    </ul>\r\n\r\n                                </li>\r\n                                <!-- End Start Notification --------------------------------------->\r\n\r\n                                <!-- Start Conta -------------------------------------------------->\r\n                                <li class=\"dropdown\">\r\n                                    <button class=\"btn open-menu\"\r\n                                            type=\"button\"\r\n                                            id=\"contBotton\"\r\n                                            data-bs-toggle=\"offcanvas\"\r\n                                            aria-expanded=\"false\"\r\n                                            aria-controls=\"offcanvasRight\"\r\n                                            data-bs-target=\"#offcanvasRight\">\r\n\r\n                                        <img class=\"avatar-img\"\r\n                                             src=\"{% static 'ccis/avatar.jpg' %}\"\r\n                                             alt=\"img\"\r\n                                             width=\"50\"\r\n                                             height=\"50\"\r\n                                             style=\"border:1px solid; border-radius:25px;\">\r\n\r\n                                    </button>\r\n                                </li>\r\n                                <!-- End Start Notification --------------------------------------->\r\n\r\n                            </ul>\r\n\r\n                            <!-- Menu Recolhivel -------------------------------------------------->\r\n                            <div class=\"offcanvas secondary sidebar p-0\"\r\n                                 tabindex=\"-1\"\r\n                                 id=\"offcanvasRight\"\r\n                                 aria-labelledby=\"offcanvasRightLabel\">\r\n\r\n                                <!-- header sidebar menu -->\r\n                                <div class=\"dismiss\"\r\n                                     data-bs-dismiss=\"offcanvas\"\r\n                                     aria-label=\"Close\">\r\n                                    <i class=\"fas fa-arrow-left\"></i>\r\n                                </div>\r\n\r\n                                <div class=\"mt-3\" style=\"text-align: center;\">\r\n                                    <img class=\"avatar-img\"\r\n                                         src=\"{% static 'ccis/avatar.jpg' %}\"\r\n                                         alt=\"img\"\r\n                                         width=\"110\"\r\n                                         height=\"110\">\r\n\r\n                                    <p>Side Henrique da Silva Paes Landim</p>\r\n\r\n                                </div>\r\n                                <!-- end header sidebar menu -->\r\n\r\n                                <!-- corpo sidebar menu -->\r\n                                <div class=\"offcanvas-body\">\r\n                                    <hr>\r\n\r\n                                    <ul class=\"list-unstyled menu-elements\">\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"{% url 'home' %}\"><i class=\"fas fa-home\"></i>\r\n                                                Inicio</a>\r\n                                        </li>\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"{% url 'profile' %}\"><i\r\n                                                    class=\"fas fa-user\"></i> Perfil</a>\r\n                                        </li>\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"{% url 'conta' %}\"><i\r\n                                                    class=\"fas fa-pencil-alt\"></i>\r\n                                                Editar Conta</a>\r\n                                        </li>\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"#section-1\"><i class=\"fas fa-cog\"></i>\r\n                                                Configurações</a>\r\n                                        </li>\r\n\r\n                                        <hr>\r\n\r\n                                        <li>\r\n                                            <a class=\"scroll-link\" href=\"{% url 'logout' %}\">\r\n                                                <i class=\"fa-sharp fa-solid fa-right-from-bracket\"></i> Sair\r\n                                            </a>\r\n                                        </li>\r\n\r\n                                    </ul>\r\n\r\n                                </div>\r\n\r\n\r\n                                <!-- End Menu Recolhivel ---------------------------------------------->\r\n\r\n\r\n                            </div>\r\n                            <!-- End Menu Recolhivel ---------------------------------------------->\r\n\r\n                        </div>\r\n\r\n                    </div>\r\n\r\n                </div>\r\n                <!-- End Direita do Menu ------------------------------------------------------------------------------>\r\n            </div>\r\n\r\n        </nav>\r\n\r\n    </header>\r\n    <!-- End topMenu -------------------------------------------------------------------------------------------------->\r\n\r\n    <main class=\"container col-10\">\r\n\r\n        <div class=\"row mt-2 me-2\">\r\n            <!-- Menu Lateral ----------------------------------------------------------------------------------------->\r\n            <div class=\"col-2 me-3 menu-lateral\">\r\n\r\n                <!-- Img -->\r\n                <img src=\"{% static 'ccis/rh.png' %}\"\r\n                 alt=\"rh\"\r\n                 width=\"195\"\r\n                 height=\"160\"\r\n                 class=\"d-inline-block align-text-center;\">\r\n\r\n                <p class=\"paragrafo-style\">Recursos Humanos</p>\r\n\r\n                <hr>\r\n\r\n                <!-- Menu -->\r\n                <ul class=\"ul-lista\">\r\n\r\n                    <!-- Home -->\r\n                    <li class=\"li-lista\">\r\n                        <a class=\"li-link\" href=\"{% url 'home' %}\" aria-current=\"page\">\r\n                            <i class=\"fa-sharp fa-solid fa-house\"></i>\r\n                            Home\r\n                        </a>\r\n                    </li>\r\n\r\n                    <hr>\r\n\r\n                    <!-- Perfil -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"{% url 'profile' %}\" class=\"li-link\" aria-current=\"page\">\r\n                            <i class=\"fa-solid fa-user\"></i>\r\n                            Perfil\r\n                        </a>\r\n                    </li>\r\n\r\n                    <!-- Gestão -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"#\" class=\"li-link dropdown-toggle\"\r\n                           aria-current=\"page\"\r\n                           data-bs-theme=\"light\"\r\n                           type=\"link\"\r\n                           data-bs-toggle=\"collapse\"\r\n                           data-bs-target=\"#collapseWidthExample\"\r\n                           aria-expanded=\"false\"\r\n                           aria-controls=\"collapseWidthExample\">\r\n\r\n                            <i class=\"fa-solid fa-screwdriver-wrench\"></i>\r\n                            Gestão\r\n                        </a>\r\n\r\n                        <div id=\"collapseWidthExample\" class=\"collapse collapse-horizontal ps-3 \">\r\n                            <ul class=\"nav nav-pills flex-column mb-auto\">\r\n\r\n                                <!-- Dash -->\r\n                                <li class=\"li-lista\">\r\n                                    <a href=\"#\" class=\"li-link\">\r\n                                        <i class=\"fa-solid fa-chart-line\"></i>\r\n                                        Dashboard\r\n                                    </a>\r\n                                </li>\r\n\r\n                                <!-- Usuários -->\r\n                                <li style=\"padding:7px\">\r\n                                    <a href=\"{% url 'usuario' %}\" class=\"li-link\" aria-current=\"page\">\r\n                                        <i class=\"fa-solid fa-users\"></i>\r\n                                        Usuários\r\n                                    </a>\r\n                                </li>\r\n\r\n                                <!-- Solicitações -->\r\n                                <li style=\"padding:7px\">\r\n\r\n                                    <a href=\"#\" class=\"li-link\" aria-current=\"page\">\r\n                                        <i class=\"fa-solid fa-message\"></i>\r\n                                        Solicitações\r\n                                    </a>\r\n                                </li>\r\n\r\n                            </ul>\r\n                        </div>\r\n\r\n                    </li>\r\n\r\n                    <!-- Conta -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"{% url 'conta' %}\" class=\"li-link\" aria-current=\"page\">\r\n                            <i class=\"fa-solid fa-address-card\"></i>\r\n                            Conta\r\n                        </a>\r\n                    </li>\r\n\r\n                    <!-- Documentos -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"#\" class=\"li-link\" aria-current=\"page\">\r\n                            <i class=\"fa-solid fa-file\"></i>\r\n                            Documentos\r\n                        </a>\r\n                    </li>\r\n\r\n                    <!-- Solicitações -->\r\n                    <li class=\"li-lista\">\r\n                        <a href=\"{% url 'solicitacao' %}\" class=\"li-link\" aria-current=\"page\">\r\n                            <i class=\"fa-solid fa-message\"></i>\r\n                            Solicitações\r\n                        </a>\r\n                    </li>\r\n\r\n                </ul>\r\n                <hr>\r\n\r\n            </div>\r\n            <!-- End Menu Lateral ------------------------------------------------------------------------------------->\r\n\r\n            <!-- CONTEÚDO DA PAGINA ******************************************************************************* --->\r\n            <div class=\"col flow\">\r\n                {% block conteudo %}\r\n\r\n                <div class=\"row\">\r\n\r\n                    <form method=\"post\"\r\n                      action=\"{% url 'dev' %}\"\r\n                      class=\"row g-3 needs-validation\"\r\n                      enctype=\"multipart/form-data\"\r\n                      novalidate>\r\n\r\n                        {% csrf_token %}\r\n\r\n                            {{ user|crispy }}\r\n\r\n\r\n                        <div class=\"modal-footer\">\r\n\r\n                            <button type=\"button\" class=\"button-style-red\" data-bs-dismiss=\"modal\">\r\n                                Cancelar\r\n                            </button>\r\n\r\n                            <button type=\"submit\" class=\"button-style\">\r\n                                Cadastrar\r\n                            </button>\r\n                        </div>\r\n\r\n                    </form>\r\n                </div>\r\n\r\n                {% endblock %}\r\n            </div>\r\n            <!-- FINAL DA PAGINA *************************************************************************************  --->\r\n\r\n        </div>\r\n    </main>\r\n\r\n    <!-- Option 1: Bootstrap Bundle with Popper -->\r\n\r\n    <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM\" crossorigin=\"anonymous\"></script>\r\n\r\n    <script src=\"https://code.jquery.com/jquery-3.3.1.slim.min.js\"></script>\r\n\r\n    <!-- link js -->\r\n    <script src=\"{% static 'ccis/script.js' %}\"></script>\r\n\r\n    </body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ccis/templates/ccis/dev.html b/ccis/templates/ccis/dev.html
+--- a/ccis/templates/ccis/dev.html	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ b/ccis/templates/ccis/dev.html	(date 1683664354292)
+@@ -323,7 +323,7 @@
+ 
+             </div>
+             <!-- End Menu Lateral ------------------------------------------------------------------------------------->
+-
++            {% load crispy_forms_tags %}
+             <!-- CONTEÚDO DA PAGINA ******************************************************************************* --->
+             <div class="col flow">
+                 {% block conteudo %}
+@@ -335,10 +335,10 @@
+                       class="row g-3 needs-validation"
+                       enctype="multipart/form-data"
+                       novalidate>
+-
+                         {% csrf_token %}
+ 
+-                            {{ user|crispy }}
++                        {% crispy user template_pack 'bootstrap5' %}
++
+ 
+ 
+                         <div class="modal-footer">
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"a50644c2-f2b6-4bd3-bbc6-b4e22d989914\" name=\"Changes\" comment=\"# Checkpoint 20&#10;1 - Menu recolhivel do usuário\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/CCIS.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/CCIS.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ccis/forms.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ccis/forms.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ccis/models.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ccis/models.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ccis/templates/ccis/dev.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ccis/templates/ccis/dev.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ccis/templates/ccis/profile.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ccis/templates/ccis/profile.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ccis/views.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ccis/views.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/core/settings.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/core/settings.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/requirements.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/requirements.txt\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"HTML File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitSEFilterConfiguration\">\r\n    <file-type-list>\r\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\r\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\r\n      <filtered-out-file-type name=\"TAG\" />\r\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\r\n    </file-type-list>\r\n  </component>\r\n  <component name=\"GithubProjectSettings\">\r\n    <option name=\"branchProtectionPatterns\">\r\n      <list>\r\n        <option value=\"master\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"ProjectErrors\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2Ny6R6GEoMF9DKu2lDuOCYegy9N\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"DefaultHtmlFileTemplate\" value=\"HTML File\" />\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/manage.py\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\PROJETOS\\CCIS-Web\\media\\users\" />\r\n      <recent name=\"D:\\PROJETOS\\CCIS-Web\\media\\ccis\" />\r\n      <recent name=\"D:\\PROJETOS\\CCIS\\ccis\\templates\\ccis\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\PROJETOS\\CCIS-Web\\media\\ccis\" />\r\n      <recent name=\"D:\\PROJETOS\\CCIS\\ccis\\templates\\ccis\" />\r\n      <recent name=\"D:\\PROJETOS\\CCIS\\ccis\" />\r\n      <recent name=\"D:\\PROJETOS\\CCIS\\core\" />\r\n      <recent name=\"D:\\PROJETOS\\CCIS\\doc\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Python.runserver\">\r\n    <configuration name=\"makemigrations\" type=\"PythonConfigurationType\" factoryName=\"Python\">\r\n      <module name=\"CCIS\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"D:\\PROJETOS\\CCIS\\venv\\Scripts\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/manage.py\" />\r\n      <option name=\"PARAMETERS\" value=\"makemigrations\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"migrate\" type=\"PythonConfigurationType\" factoryName=\"Python\">\r\n      <module name=\"CCIS\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"D:\\PROJETOS\\CCIS\\venv\\Scripts\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/manage.py\" />\r\n      <option name=\"PARAMETERS\" value=\"migrate\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"runserver\" type=\"PythonConfigurationType\" factoryName=\"Python\">\r\n      <module name=\"CCIS\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/manage.py\" />\r\n      <option name=\"PARAMETERS\" value=\"runserver\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"superuser\" type=\"PythonConfigurationType\" factoryName=\"Python\">\r\n      <module name=\"CCIS\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"D:\\PROJETOS\\CCIS-Web\\venv\\Scripts\\python.exe\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/manage.py\" />\r\n      <option name=\"PARAMETERS\" value=\"python manage.py createsuperuser\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"Python.makemigrations\" />\r\n      <item itemvalue=\"Python.migrate\" />\r\n      <item itemvalue=\"Python.runserver\" />\r\n      <item itemvalue=\"Python.superuser\" />\r\n    </list>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"a50644c2-f2b6-4bd3-bbc6-b4e22d989914\" name=\"Changes\" comment=\"\" />\r\n      <created>1680623965677</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1680623965677</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"# Checkpoint 11.1&#10;1 - Ambiente virtual configurado\">\r\n      <created>1680707623651</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1680707623651</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"# Checkpoint 12.1&#10;1 - Refatorando Menu Lateral\">\r\n      <created>1681156648475</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1681156648475</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"# Checkpoint 13&#10;1 - Menu Lateral estilizado&#10;2 - models estruturados&#10;3 - forms estruturados&#10;4 - iniciando trabalho nas views\">\r\n      <created>1681157401301</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1681157401301</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"# Checkpoint 14&#10;1 - Formulários estruturados no template&#10;2 - view conta estruturada&#10;3 - puxando dados do usuário no formulário&#10;4 - atualizando dados do usuário via formulário\">\r\n      <created>1681388624559</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1681388624559</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA\">\r\n      <created>1681396200561</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1681396200561</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA\">\r\n      <created>1681396221896</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1681396221896</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"# Checkpoint 16&#10;1 - Tabela usuario pre-finalizada&#10;2 - pasta media redefinida\">\r\n      <created>1682013441967</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1682013441967</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"# Checkpoint 17&#10;1 - Tabela usuario completa&#10;2 - avatares masculino e feminino\">\r\n      <created>1682345007982</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1682345007983</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"# Checkpoint 17-B&#10;1 - Pesquisa da tabela funcionando\">\r\n      <created>1682356616643</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1682356616643</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"# Checkpoint 17-C&#10;1 - Button pre-configurados\">\r\n      <created>1682425681552</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1682425681552</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"# Checkpoint 19&#10;1 - Pagina Home\">\r\n      <created>1682605662863</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1682605662863</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"# Checkpoint 19&#10;1 - Pagina Home\">\r\n      <created>1682606279788</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1682606279788</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"# Checkpoint 20&#10;1 - Menu recolhivel do usuário\">\r\n      <created>1683295371759</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1683295371760</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"14\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"master\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"# Checkpoint 11.1&#10;1 - Ambiente virtual configurado\" />\r\n    <MESSAGE value=\"# Checkpoint 12.1&#10;1 - Refatorando Menu Lateral\" />\r\n    <MESSAGE value=\"# Checkpoint 13&#10;1 - Menu Lateral estilizado&#10;2 - models estruturados&#10;3 - forms estruturados&#10;4 - iniciando trabalho nas views\" />\r\n    <MESSAGE value=\"# Checkpoint 14&#10;1 - Formulários estruturados no template&#10;2 - view conta estruturada&#10;3 - puxando dados do usuário no formulário&#10;4 - atualizando dados do usuário via formulário\" />\r\n    <MESSAGE value=\"# Checkpoint 15&#10;1 - PAGINA CONTA FINALIZADA\" />\r\n    <MESSAGE value=\"# Checkpoint 16&#10;1 - Tabela usuario pre-finalizada&#10;2 - pasta media redefinida\" />\r\n    <MESSAGE value=\"# Checkpoint 17&#10;1 - Tabela usuario completa&#10;2 - avatares masculino e feminino\" />\r\n    <MESSAGE value=\"# Checkpoint 17-B&#10;1 - Pesquisa da tabela funcionando\" />\r\n    <MESSAGE value=\"# Checkpoint 17-C&#10;1 - Button pre-configurados\" />\r\n    <MESSAGE value=\"# Checkpoint 19&#10;1 - Pagina Home\" />\r\n    <MESSAGE value=\"# Checkpoint 20&#10;1 - Menu recolhivel do usuário\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"# Checkpoint 20&#10;1 - Menu recolhivel do usuário\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ b/.idea/workspace.xml	(date 1683722674014)
+@@ -2,15 +2,40 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 20&#10;1 - Menu recolhivel do usuário">
+-      <change beforePath="$PROJECT_DIR$/.idea/CCIS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CCIS.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/ccis/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/forms.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/ccis/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/models.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0001_initial.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0002_dependentes.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0003_enderecocontato_escolaridade_and_more.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0004_certificacao_alter_enderecocontato_bairro_and_more.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0005_profissional_alter_dadospessoais_categoria_and_more.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0006_dadosbancarios_and_more.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0007_outros.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0008_dadosbancarios_dadospessoa.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0009_rename_dadospessoa_dadosbancarios_dadospessoais.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0010_outros_dadospessoais.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0011_remove_dadosbancarios_dadospessoais_and_more.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0012_outros_dadospessoais.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0013_remove_outros_dadospessoais.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0014_outros_dadospessoais.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0015_alter_outros_dadospessoais.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0016_certificacao_dadospessoais_and_more.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0017_remove_dadospessoais_dadospessoais.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0018_alter_dadosbancarios_dadospessoais_and_more.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0019_enderecocontato_nomecompleto.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0020_escolaridade_datainicio.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/0021_certificacao_usuario_dadosbancarios_usuario_and_more.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/migrations/__init__.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/base.html" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/profile.html" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/ccis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/views.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/settings.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+Index: ccis/forms.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django import forms\r\nfrom django.contrib.auth.models import User\r\nfrom django.contrib.auth.forms import UserCreationForm\r\nfrom .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \\\r\n    dadosBancarios, outros\r\nfrom crispy_forms.layout import Layout, Submit, Row, Column\r\n\r\n\r\nclass modelFormDadosPessoais(forms.ModelForm):\r\n    class Meta:\r\n        model = dadosPessoais\r\n        fields = ('nomeCompleto', 'sexo', 'estadoCivil', 'corRaca', 'dataNascimento', 'naturalidade', 'tipoSanguineo',\r\n                  'nomePai', 'nomeMae', 'cpf', 'rg', 'expedidor', 'cnh', 'validadeCnh', 'categoria', 'tituloEleitor',\r\n                  'zona', 'secao', 'ctps', 'serieCTPS', 'dataCTPS', 'reservista', 'ra', 'serieReservista', 'pis', 'cns',\r\n                  'pcd', 'foto', 'canvas')\r\n\r\n        widgets = {\r\n            'nomeCompleto': forms.TextInput(attrs={'class': 'form-control'}),\r\n            'sexo': forms.Select(attrs={'class': 'form-select'}),\r\n            'estadoCivil': forms.Select(attrs={'class': 'form-select'}),\r\n            'corRaca': forms.Select(attrs={'class': 'form-select'}),\r\n            'dataNascimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),\r\n            'naturalidade': forms.TextInput(attrs={'class': 'form-control'}),\r\n            'tipoSanguineo': forms.Select(attrs={'class': 'form-select'}),\r\n            'nomePai': forms.TextInput(attrs={'class': 'form-control'}),\r\n            'nomeMae': forms.TextInput(attrs={'class': 'form-control'}),\r\n            'cpf': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'rg': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'expedidor': forms.TextInput(attrs={'class': 'form-control'}),\r\n            'cnh': forms.TextInput(attrs={'class': 'form-control'}),\r\n            'validadeCnh': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),\r\n            'categoria': forms.Select(attrs={'class': 'form-select'}),\r\n            'tituloEleitor': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'zona': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'secao': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'ctps': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'serieCTPS': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'dataCTPS': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),\r\n            'reservista': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'ra': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'serieReservista': forms.TextInput(attrs={'class': 'form-control'}),\r\n            'pis': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'cns': forms.NumberInput(attrs={'class': 'form-control'}),\r\n            'pcd': forms.CheckboxInput(attrs={'class': 'form-check-label'}),\r\n\r\n        }\r\n\r\n\r\nclass modelFormDependentes(forms.ModelForm):\r\n    class Meta:\r\n        model = dependentes\r\n        fields = ('nomeCompleto', 'cpf', 'dataNascimento', 'relacao', 'email', 'contato')\r\n\r\n        widgets = {'nomeCompleto': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'cpf': forms.NumberInput(attrs={'class': 'form-control'}),\r\n                   'dataNascimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),\r\n                   'relacao': forms.Select(attrs={'class': 'form-select'}),\r\n                   'email': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),\r\n                   'contato': forms.NumberInput(attrs={'class': 'form-control'})\r\n                   }\r\n\r\n\r\nclass modelFormEnderecoContato(forms.ModelForm):\r\n    class Meta:\r\n        model = enderecoContato\r\n        fields = ('endereco', 'bairro', 'cidade', 'estado', 'cep', 'emailCorporativo', 'telefonePessoal',\r\n                  'telefoneCorporativo', 'celularCorporativo', 'celularPessoal', 'ramal', 'emailPessoal',\r\n                  'relacao', 'telefoneDeEmergencia', 'celularDeEmergencia')\r\n\r\n        widgets = {'endereco': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'bairro': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'cidade': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'estado': forms.Select(attrs={'class': 'form-select'}),\r\n                   'cep': forms.NumberInput(attrs={'class': 'form-control'}),\r\n                   'emailCorporativo': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),\r\n                   'telefonePessoal': forms.NumberInput(attrs={'class': 'form-control'}),\r\n                   'telefoneCorporativo': forms.NumberInput(attrs={'class': 'form-control'}),\r\n                   'celularCorporativo': forms.NumberInput(attrs={'class': 'form-control'}),\r\n                   'celularPessoal': forms.NumberInput(attrs={'class': 'form-control'}),\r\n                   'ramal': forms.NumberInput(attrs={'class': 'form-control'}),\r\n                   'emailPessoal': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),\r\n                   'relacao': forms.Select(attrs={'class': 'form-control'}),\r\n                   'telefoneDeEmergencia': forms.NumberInput(attrs={'class': 'form-control'}),\r\n                   'celularDeEmergencia': forms.NumberInput(attrs={'class': 'form-control'})\r\n                   }\r\n\r\n\r\nclass modelFormEscolaridade(forms.ModelForm):\r\n    class Meta:\r\n        model = escolaridade\r\n        fields = (\r\n            'entidadeDeEnsino', 'curso', 'grau', 'dataConclusao', 'idiomaPrimario', 'nivelPrimario', 'idiomaSecundario',\r\n            'nivelSecundario')\r\n\r\n        widgets = {'entidadeDeEnsino': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'curso': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'grau': forms.Select(attrs={'class': 'form-select'}),\r\n                   'dataConclusao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),\r\n                   'idiomaPrimario': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'nivelPrimario': forms.Select(attrs={'class': 'form-control'}),\r\n                   'idiomaSecundario': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'nivelSecundario': forms.Select(attrs={'class': 'form-select'})\r\n                   }\r\n\r\n\r\nclass modelFormCertificacao(forms.ModelForm):\r\n    class Meta:\r\n        model = certificacao\r\n        fields = ('nome', 'organizacaoEmissora', 'dataEmissao', 'dataExpiracao')\r\n\r\n        widgets = {'nome': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'organizacaoEmissora': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'dataEmissao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),\r\n                   'dataExpiracao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})\r\n                   }\r\n\r\n\r\nclass modelFormProfissional(forms.ModelForm):\r\n    class Meta:\r\n        model = profissional\r\n        fields = (\r\n            'cargo', 'area', 'paUnidade', 'colaborador', 'centroDeCusto', 'matricula', 'empregador', 'superiorImediato',\r\n            'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida')\r\n\r\n        widgets = {'cargo': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'area': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'paUnidade': forms.Select(attrs={'class': 'form-select'}),\r\n                   'colaborador': forms.Select(attrs={'class': 'form-select'}),\r\n                   'centroDeCusto': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'matricula': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'empregador': forms.Select(attrs={'class': 'form-select'}),\r\n                   'superiorImediato': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'folhaDePagamento': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'admissao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),\r\n                   'desligamento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),\r\n                   'situacao': forms.Select(attrs={'class': 'form-select'}),\r\n                   'horarioEntrada': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),\r\n                   'horarioSaida': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),\r\n                   }\r\n\r\n\r\nclass modelFormDadosBancarios(forms.ModelForm):\r\n    class Meta:\r\n        model = dadosBancarios\r\n        fields = ('conta', 'digito', 'banco', 'agencia', 'tipoDeConta', 'modalidade', 'chavePix')\r\n\r\n        widgets = {'conta': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'digito': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'banco': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'agencia': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'tipoDeConta': forms.Select(attrs={'class': 'form-select'}),\r\n                   'modalidade': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   'chavePix': forms.TextInput(attrs={'class': 'form-control'}),\r\n                   }\r\n\r\n\r\nclass ModelFormMidia(forms.ModelForm):\r\n    class Meta:\r\n        model = dadosPessoais\r\n        fields = ('foto', 'canvas')\r\n\r\n        widgets = {'foto': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),\r\n                   'canvas': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'})\r\n                   }\r\n\r\n\r\nclass ModelFormOutros(forms.ModelForm):\r\n    class Meta:\r\n        model = outros\r\n        fields = ('camiseta',)\r\n        widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),\r\n                   }\r\n\r\n\r\nclass modelFormUser(forms.ModelForm):\r\n    class Meta:\r\n        model = User\r\n        fields = ('username', 'password', 'email', 'first_name', 'last_name')\r\n\r\n        widgets = {'username': forms.TextInput(attrs={'class': 'form-control'}),\r\n               'password': forms.PasswordInput(attrs={'class': 'form-control'}),\r\n               'email': forms.EmailInput(attrs={'class': 'form-control'}),\r\n               'first_name': forms.TextInput(attrs={'class': 'form-control'}),\r\n               'last_name': forms.TextInput(attrs={'class': 'form-control'})\r\n                   }\r\n\r\n\r\nclass CustomUserCreationForm(UserCreationForm):\r\n    def __init__(self, *args, **kwargs):\r\n        super().__init__(*args, **kwargs)\r\n        self.fields['username'].widget.attrs.update({'class': 'form-control'})\r\n        self.fields['password1'].widget.attrs.update({'class': 'form-control'})\r\n        self.fields['password2'].widget.attrs.update({'class': 'form-control'})\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ccis/forms.py b/ccis/forms.py
+--- a/ccis/forms.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ b/ccis/forms.py	(date 1683663193894)
+@@ -3,6 +3,7 @@
+ from django.contrib.auth.forms import UserCreationForm
+ from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
+     dadosBancarios, outros
++from crispy_forms.helper import FormHelper
+ from crispy_forms.layout import Layout, Submit, Row, Column
+ 
+ 
+@@ -185,9 +186,30 @@
+                    }
+ 
+ 
++# class CustomUserCreationForm(UserCreationForm):
++#     def __init__(self, *args, **kwargs):
++#         super().__init__(*args, **kwargs)
++#         self.fields['username'].widget.attrs.update({'class': 'form-control'})
++#         self.fields['password1'].widget.attrs.update({'class': 'form-control'})
++#         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
++
++
++
+ class CustomUserCreationForm(UserCreationForm):
+     def __init__(self, *args, **kwargs):
+         super().__init__(*args, **kwargs)
+-        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+-        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
+-        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
++
++        self.helper = FormHelper()
++        self.helper.layout = Layout(
++            Row(
++                Column('username', css_class='form-group col-md-6 mb-0'),
++                css_class='form-row'
++            ),
++
++            Row(
++                Column('password1', css_class='form-group col-md-6 mb-0'),
++                Column('password2', css_class='form-group col-md-6 mb-0'),
++                css_class='form-row'
++            ),
++            Submit('submit', 'Cadastrar')
++        )
+Index: core/settings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"\r\nDjango settings for core project.\r\n\r\nGenerated by 'django-admin startproject' using Django 4.2.\r\n\r\nFor more information on this file, see\r\nhttps://docs.djangoproject.com/en/4.2/topics/settings/\r\n\r\nFor the full list of settings and their values, see\r\nhttps://docs.djangoproject.com/en/4.2/ref/settings/\r\n\"\"\"\r\nimport os\r\nfrom pathlib import Path\r\n\r\n# Build paths inside the project like this: BASE_DIR / 'subdir'.\r\nBASE_DIR = Path(__file__).resolve().parent.parent\r\n\r\n\r\n# Quick-start development settings - unsuitable for production\r\n# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/\r\n\r\n# SECURITY WARNING: keep the secret key used in production secret!\r\nSECRET_KEY = 'django-insecure-3v80qv6&8(4#jj!z=02#1#02q_29x3lqnv!#$7rpxtm*ibza--'\r\n\r\n# SECURITY WARNING: don't run with debug turned on in production!\r\nDEBUG = True\r\n\r\nALLOWED_HOSTS = []\r\n\r\n\r\n# Application definition\r\n\r\nINSTALLED_APPS = [\r\n    'django.contrib.admin',\r\n    'django.contrib.auth',\r\n    'django.contrib.contenttypes',\r\n    'django.contrib.sessions',\r\n    'django.contrib.messages',\r\n    'django.contrib.staticfiles',\r\n    'django_bootstrap5',\r\n    'ccis.apps.CcisConfig',\r\n    'crispy_forms'\r\n]\r\n\r\nCRISPY_TEMPLATE_PACK = 'bootstrap5'\r\n\r\nMIDDLEWARE = [\r\n    'django.middleware.security.SecurityMiddleware',\r\n    'django.contrib.sessions.middleware.SessionMiddleware',\r\n    'django.middleware.common.CommonMiddleware',\r\n    'django.middleware.csrf.CsrfViewMiddleware',\r\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\r\n    'django.contrib.messages.middleware.MessageMiddleware',\r\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\r\n]\r\n\r\nROOT_URLCONF = 'core.urls'\r\n\r\nTEMPLATES = [\r\n    {\r\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\r\n        'DIRS': [],\r\n        'APP_DIRS': True,\r\n        'OPTIONS': {\r\n            'context_processors': [\r\n                'django.template.context_processors.debug',\r\n                'django.template.context_processors.request',\r\n                'django.contrib.auth.context_processors.auth',\r\n                'django.contrib.messages.context_processors.messages',\r\n            ],\r\n        },\r\n    },\r\n]\r\n\r\nWSGI_APPLICATION = 'core.wsgi.application'\r\n\r\n\r\n# Database\r\n# https://docs.djangoproject.com/en/4.2/ref/settings/#databases\r\n\r\nDATABASES = {\r\n    'default': {\r\n        'ENGINE': 'django.db.backends.mysql',\r\n        'NAME': 'raquel_banco',\r\n        'USER': 'admin',\r\n        'PASSWORD': 'S1coob4155@@',\r\n        'HOST': '10.6.32.24',\r\n        'PORT': '3306',\r\n    }\r\n}\r\n\r\n\r\n# Password validation\r\n# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators\r\n\r\nAUTH_PASSWORD_VALIDATORS = [\r\n    {\r\n        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',\r\n    },\r\n    {\r\n        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',\r\n    },\r\n    {\r\n        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',\r\n    },\r\n    {\r\n        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',\r\n    },\r\n]\r\n\r\n\r\n# Internationalization\r\n# https://docs.djangoproject.com/en/4.2/topics/i18n/\r\n\r\nLANGUAGE_CODE = 'pt-br'\r\n\r\nTIME_ZONE = 'UTC'\r\n\r\nUSE_I18N = True\r\n\r\nUSE_TZ = True\r\n\r\n\r\n# Static files (CSS, JavaScript, Images)\r\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\r\n\r\nSTATIC_URL = 'static/'\r\nSTATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)\r\n\r\nMEDIA_URL = '/media/'\r\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\r\n\r\n# STATICFILES_DIRS = [\r\n#     os.path.join(BASE_DIR, 'staticfiles')\r\n# ]\r\n\r\n# Default primary key field type\r\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\r\n\r\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/core/settings.py b/core/settings.py
+--- a/core/settings.py	(revision 0b495270b3a93ec02dfac2e7974557d7865dd984)
++++ b/core/settings.py	(date 1683664498542)
+@@ -40,6 +40,7 @@
+     'django_bootstrap5',
+     'ccis.apps.CcisConfig',
+     'crispy_forms'
++    'crispy_bootstrap5'
+ ]
+ 
+ CRISPY_TEMPLATE_PACK = 'bootstrap5'
+diff --git a/ccis/migrations/__init__.py b/ccis/migrations/__init__.py
+deleted file mode 100644
