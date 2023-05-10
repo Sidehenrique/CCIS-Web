@@ -2,353 +2,320 @@
 
 {% load static %}
 
+
 <html lang="pt-br">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- link css -->
-        <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
-
-
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-        <!-- fontawesome -->
-        <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
-
-    </head>
-
-    <body class="body-background">
-    <!-- topMenu ------------------------------------------------------------------------------------------------------>
-    <header class="navbar-topp shadow-sm nav justify-content-center ">
-
-        <nav class="col-10 p-0 navbar navbar-topp navbar-expand-lg navbar-fixed">
-            <div class="container-fluid">
-
-                <!-- Logo do Menu ------------------------------------------------------------------------------------->
-                <a class="navbar-brand" href="#">
-                    <img src="{% static 'ccis/logonav.png' %}"
-                         alt="logo"
-                         width="47"
-                         height="54"
-                         class="d-inline-block align-text-center;">
-                </a>
-                <!-- End Logo do Menu --------------------------------------------------------------------------------->
+    <!-- link css -->
+    <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
 
 
-                <!-- Esquerda do Menu --------------------------------------------------------------------------------->
-                <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
-                    <ul class="navbar-nav">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-                        <li class="  ms-5 me-4">
-                            <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"
-                               href="#"></a>
-                        </li>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"></script>
 
-                    </ul>
-                </div>
-                <!-- End Esquerda do Menu ----------------------------------------------------------------------------->
+</head>
 
+<body class="body-background">
+<!-- topMenu ------------------------------------------------------------------------------------------------------>
+<header class="navbar-topp shadow-sm mb-1 nav justify-content-center ">
 
-                <!-- Direita do Menu ---------------------------------------------------------------------------------->
-                <div class="navbar-nav-wrap-content-end">
+    <nav class="col-10 navbar navbar-topp navbar-expand-lg navbar-fixed">
+        <div class="container-fluid ps-3 pe-0">
 
-                    <div class="navbar-nav-wrap-content-end">
+            <!-- Logo do Menu ----------------------------------------------------------------------------------------->
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'ccis/logonav.png' %}"
+                     alt="logo"
+                     width="47"
+                     height="54"
+                     class="d-inline-block align-text-center;">
+            </a>
 
-                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                            <ul class="navbar-nav">
-
-                                <!-- Start Notification ------------------------------------------->
-                                <li class="nav-item dropdown d-none d-sm-inline-block me-5 mt-3">
-
-                                    <button class="btn" type="button" style="color:#219180" id="notButton"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-
-                                        <i class="fa-solid fa-bell"></i>
-
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        99+<span class="visually-hidden"></span>
-                      </span>
-
-                                    </button>
-
-                                    <ul class="dropdown-menu" aria-labelledby="notButton">
-
-                                        <li>
-                                            <div class="card" style="width: 18rem;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Card title</h5>
-                                                    <p class="card-text">Some quick example text to build on the card
-                                                        title and
-                                                        make up the bulk
-                                                        of
-                                                        the card's content.</p>
-                                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDarkDropdown"
+                    aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- End Logo do Menu ------------------------------------------------------------------------------------->
 
 
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
+            <!-- Esquerda do Menu ------------------------------------------------------------------------------------->
+            <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
+                <ul class="navbar-nav">
 
-                                </li>
-                                <!-- End Start Notification --------------------------------------->
-
-                                <!-- Start Conta -------------------------------------------------->
-                                <li class="dropdown">
-                                    <button class="btn open-menu"
-                                            type="button"
-                                            id="contBotton"
-                                            data-bs-toggle="offcanvas"
-                                            aria-expanded="false"
-                                            aria-controls="offcanvasRight"
-                                            data-bs-target="#offcanvasRight">
-
-                                        <img class="avatar-img"
-                                             src="{% static 'ccis/avatar.jpg' %}"
-                                             alt="img"
-                                             width="50"
-                                             height="50"
-                                             style="border:1px solid; border-radius:25px;">
-
-                                    </button>
-                                </li>
-                                <!-- End Start Notification --------------------------------------->
-
-                            </ul>
-
-                            <!-- Menu Recolhivel -------------------------------------------------->
-                            <div class="offcanvas secondary sidebar p-0"
-                                 tabindex="-1"
-                                 id="offcanvasRight"
-                                 aria-labelledby="offcanvasRightLabel">
-
-                                <!-- header sidebar menu -->
-                                <div class="dismiss"
-                                     data-bs-dismiss="offcanvas"
-                                     aria-label="Close">
-                                    <i class="fas fa-arrow-left"></i>
-                                </div>
-
-                                <div class="mt-3" style="text-align: center;">
-                                    <img class="avatar-img"
-                                         src="{% static 'ccis/avatar.jpg' %}"
-                                         alt="img"
-                                         width="110"
-                                         height="110">
-
-                                    <p>Side Henrique da Silva Paes Landim</p>
-
-                                </div>
-                                <!-- end header sidebar menu -->
-
-                                <!-- corpo sidebar menu -->
-                                <div class="offcanvas-body">
-                                    <hr>
-
-                                    <ul class="list-unstyled menu-elements">
-
-                                        <li>
-                                            <a class="scroll-link" href="{% url 'home' %}"><i class="fas fa-home"></i>
-                                                Inicio</a>
-                                        </li>
-
-                                        <li>
-                                            <a class="scroll-link" href="{% url 'profile' %}"><i
-                                                    class="fas fa-user"></i> Perfil</a>
-                                        </li>
-
-                                        <li>
-                                            <a class="scroll-link" href="{% url 'conta' %}"><i
-                                                    class="fas fa-pencil-alt"></i>
-                                                Editar Conta</a>
-                                        </li>
-
-                                        <li>
-                                            <a class="scroll-link" href="#section-1"><i class="fas fa-cog"></i>
-                                                Configurações</a>
-                                        </li>
-
-                                        <hr>
-
-                                        <li>
-                                            <a class="scroll-link" href="{% url 'logout' %}">
-                                                <i class="fa-sharp fa-solid fa-right-from-bracket"></i> Sair
-                                            </a>
-                                        </li>
-
-                                    </ul>
-
-                                </div>
-
-
-                                <!-- End Menu Recolhivel ---------------------------------------------->
-
-
-                            </div>
-                            <!-- End Menu Recolhivel ---------------------------------------------->
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <!-- End Direita do Menu ------------------------------------------------------------------------------>
-            </div>
-
-        </nav>
-
-    </header>
-    <!-- End topMenu -------------------------------------------------------------------------------------------------->
-
-    <main class="container col-10">
-
-        <div class="row mt-2 me-2">
-            <!-- Menu Lateral --------------------------------------------------------------------------------------------->
-            <div class="col-2 me-3 menu-lateral">
-
-                <!-- Img -->
-                <img src="{% static 'ccis/rh.png' %}"
-                 alt="rh"
-                 width="195"
-                 height="160"
-                 class="d-inline-block align-text-center;">
-
-                <p class="paragrafo-style">Recursos Humanos</p>
-
-                <hr>
-
-                <!-- Menu -->
-                <ul class="ul-lista">
-
-                    <!-- Home -->
-                    <li class="li-lista">
-                        <a class="li-link" href="{% url 'home' %}" aria-current="page">
-                            <i class="fa-sharp fa-solid fa-house"></i>
-                            Home
-                        </a>
+                    <li class="  ms-5 me-4">
+                        <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;" href="#">INICIO</a>
                     </li>
 
-                    <hr>
-
-                    <!-- Perfil -->
-                    <li class="li-lista">
-                        <a href="{% url 'profile' %}" class="li-link" aria-current="page">
-                            <i class="fa-solid fa-user"></i>
-                            Perfil
-                        </a>
+                    <li class="  ms-4 me-4">
+                        <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;" href="#">PERFIL</a>
                     </li>
 
-                    <!-- Gestão -->
-                    <li class="li-lista">
-                        <a href="#" class="li-link dropdown-toggle"
-                           aria-current="page"
-                           data-bs-theme="light"
-                           type="link"
-                           data-bs-toggle="collapse"
-                           data-bs-target="#collapseWidthExample"
-                           aria-expanded="false"
-                           aria-controls="collapseWidthExample">
-
-                            <i class="fa-solid fa-screwdriver-wrench"></i>
-                            Gestão
-                        </a>
-
-                        <div id="collapseWidthExample" class="collapse collapse-horizontal ps-3 ">
-                            <ul class="nav nav-pills flex-column mb-auto">
-
-                                <!-- Dash -->
-                                <li class="li-lista">
-                                    <a href="#" class="li-link">
-                                        <i class="fa-solid fa-chart-line"></i>
-                                        Dashboard
-                                    </a>
-                                </li>
-
-                                <!-- Usuários -->
-                                <li style="padding:7px">
-                                    <a href="{% url 'usuario' %}" class="li-link" aria-current="page">
-                                        <i class="fa-solid fa-users"></i>
-                                        Usuários
-                                    </a>
-                                </li>
-
-                                <!-- Solicitações -->
-                                <li style="padding:7px">
-
-                                    <a href="#" class="li-link" aria-current="page">
-                                        <i class="fa-solid fa-message"></i>
-                                        Solicitações
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </div>
-
-                    </li>
-
-                    <!-- Conta -->
-                    <li class="li-lista">
-                        <a href="{% url 'conta' %}" class="li-link" aria-current="page">
-                            <i class="fa-solid fa-address-card"></i>
-                            Conta
-                        </a>
-                    </li>
-
-                    <!-- Documentos -->
-                    <li class="li-lista">
-                        <a href="#" class="li-link" aria-current="page">
-                            <i class="fa-solid fa-file"></i>
-                            Documentos
-                        </a>
-                    </li>
-
-                    <!-- Solicitações -->
-                    <li class="li-lista">
-                        <a href="{% url 'solicitacao' %}" class="li-link" aria-current="page">
-                            <i class="fa-solid fa-message"></i>
-                            Solicitações
-                        </a>
+                    <li class="ms-4 me-4">
+                        <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;" href="#">SAIR</a>
                     </li>
 
                 </ul>
+            </div>
+            <!-- End Esquerda do Menu ------------------------------------------------------------------------------------->
+
+
+            <!-- Direita do Menu ------------------------------------------------------------------------------------------>
+            <div class="navbar-nav-wrap-content-end">
+
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                    <ul class="navbar-nav">
+                        <!-- Start Notification -->
+                        <li class="nav-item dropdown d-none d-sm-inline-block me-5 mt-3">
+
+                            <button class="btn" type="button" style="color:#219180" id="notButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+
+                                <i class="fa-solid fa-bell"></i>
+
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    99+<span class="visually-hidden"></span>
+                  </span>
+
+                            </button>
+
+                            <ul class="dropdown-menu" aria-labelledby="notButton">
+
+                                <li>
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Card title</h5>
+                                            <p class="card-text">Some quick example text to build on the card title and
+                                                make up the bulk
+                                                of
+                                                the card's content.</p>
+                                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+
+                        </li>
+
+                        <!-- Start Conta -->
+                        <li class="nav-item dropdown">
+
+                            <button class="btn" type="button" id="contBotton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+
+
+                                <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                     alt="img" width="50" height="50" style="border:1px solid; border-radius:25px;">
+
+
+                            </button>
+
+                            <ul class="dropdown-menu" aria-labelledby="contBotton">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- End Direita do Menu -------------------------------------------------------------------------------------->
+        </div>
+    </nav>
+
+</header>
+<!-- End topMenu -------------------------------------------------------------------------------------------------->
+
+<main class="container col-10">
+
+    <div class="row mt-2 me-2">
+        <!-- Menu Lateral --------------------------------------------------------------------------------------------->
+        <div class="col-2 me-3 menu-lateral">
+
+            <!-- Img -->
+            <img src="{% static 'ccis/rh.png' %}"
+             alt="rh"
+             width="195"
+             height="160"
+             class="d-inline-block align-text-center;">
+
+            <p class="paragrafo-style">Recursos Humanos</p>
+
+            <hr>
+
+            <!-- Menu -->
+            <ul class="ul-lista">
+
+                <!-- Home -->
+                <li class="li-lista">
+                    <a class="li-link" href="{% url 'home' %}" aria-current="page">
+                        <i class="fa-sharp fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </li>
+
                 <hr>
 
-            </div>
-            <!-- End Menu Lateral ----------------------------------------------------------------------------------------->
+                <!-- Perfil -->
+                <li class="li-lista">
+                    <a href="{% url 'profile' %}" class="li-link" aria-current="page">
+                        <i class="fa-solid fa-user"></i>
+                        Perfil
+                    </a>
+                </li>
 
-            <!-- CONTEÚDO DA PAGINA **********************************************************************************  --->
-            <div class="col flow">
-                {% block conteudo %}
+                <!-- Gestão -->
+                <li class="li-lista">
+                    <a href="#" class="li-link dropdown-toggle"
+                       aria-current="page"
+                       data-bs-theme="light"
+                       type="link"
+                       data-bs-toggle="collapse"
+                       data-bs-target="#collapseWidthExample"
+                       aria-expanded="false"
+                       aria-controls="collapseWidthExample">
 
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        Gestão
+                    </a>
 
+                    <div id="collapseWidthExample" class="collapse collapse-horizontal ps-3 ">
+                        <ul class="nav nav-pills flex-column mb-auto">
 
+                            <!-- Dash -->
+                            <li class="li-lista">
+                                <a href="#" class="li-link">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    Dashboard
+                                </a>
+                            </li>
 
+                            <!-- Usuários -->
+                            <li style="padding:7px">
+                                <a href="{% url 'usuario' %}" class="li-link" aria-current="page">
+                                    <i class="fa-solid fa-users"></i>
+                                    Usuários
+                                </a>
+                            </li>
 
+                            <!-- Solicitações -->
+                            <li style="padding:7px">
 
+                                <a href="#" class="li-link" aria-current="page">
+                                    <i class="fa-solid fa-message"></i>
+                                    Solicitações
+                                </a>
+                            </li>
 
+                        </ul>
+                    </div>
 
-                {% endblock %}
-            </div>
-            <!-- FINAL DA PAGINA *************************************************************************************  --->
+                </li>
+
+                <!-- Conta -->
+                <li class="li-lista">
+                    <a href="{% url 'conta' %}" class="li-link" aria-current="page">
+                        <i class="fa-solid fa-address-card"></i>
+                        Conta
+                    </a>
+                </li>
+
+                <!-- Documentos -->
+                <li class="li-lista">
+                    <a href="#" class="li-link" aria-current="page">
+                        <i class="fa-solid fa-file"></i>
+                        Documentos
+                    </a>
+                </li>
+
+                <!-- Solicitações -->
+                <li class="li-lista">
+                    <a href="{% url 'solicitacao' %}" class="li-link" aria-current="page">
+                        <i class="fa-solid fa-message"></i>
+                        Solicitações
+                    </a>
+                </li>
+
+            </ul>
+            <hr>
 
         </div>
-    </main>
+        <!-- End Menu Lateral ----------------------------------------------------------------------------------------->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+        <!-- CONTEÚDO DA PAGINA **********************************************************************************  --->
+        <div class="col flow">
+            {% block conteudo %}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
-    <!-- link js -->
-    <script src="{% static 'ccis/script.js' %}"></script>
 
-    </body>
+
+
+
+
+            {% endblock %}
+        </div>
+        <!-- FINAL DA PAGINA *************************************************************************************  --->
+
+    </div>
+</main>
+
+
+<!-- link css -->
+<script src="{% static 'ccis/script.js' %}"></script>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+    if (!form.checkValidity()) {
+    event.preventDefault()
+    event.stopPropagation()
+    }
+
+    form.classList.add('was-validated')
+    }, false)
+    })
+    })()
+
+
+</script>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+-->
+</body>
 </html>
