@@ -27,44 +27,16 @@
     <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
    
 
-    <Form action=" {% url 'dev' %} " method="POST" class="row needs-validation" enctype="multipart/form-data" novalidate>
+    <Form action=" {% url 'dev' %} " 
+          method="POST" 
+          class="row needs-validation" 
+          enctype="multipart/form-data" 
+          novalidate>
+      
         {% csrf_token %}
-    
-     <h1>Dados Pessoais</h1>
-      {{user.as_p}}
-     {{dados.as_p}}
-     <!-- {{cnh_form.as_p}}
-     {{cpf_form.as_p}}
-     {{reservista_form.as_p}}
-     {{titulo_form.as_p}}
-     {{clt_form.as_p}}
-     {{residencia_form.as_p}}
-     {{certidao_form.as_p}}
-     {{admissional_form.as_p}}
-     {{periodico_form.as_p}} -->
-    
 
-
-
-    
-    <h1>Endereço Contato</h1>
-        {{end.as_p}} 
-
-    <h1>Dependentes</h1>
-        {{dependentes_form.as_p}}
-
-    <h1>Escolaridade</h1>
-     {{escolaridade_form.as_p}}
-
-    <h1>Profissional</h1>
-      {{profissional_form.as_p}}
-
-    <h1>Dados Bancários</h1>
-    {{dadosBancarios_form.as_p}}
-
-    <h1>Outros</h1>
-    {{outros_form.as_p}} 
-
+      
+      
         <div>
             <button class="btn btn-primary"type="submit"> enviar </button>
         </div>

@@ -3,6 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 17-C&#10;1 - Button pre-configurados">
       <change beforePath="$PROJECT_DIR$/.idea/CCIS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CCIS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/migrations/0002_dependentes.py" beforeDir="false" />
@@ -28,7 +35,6 @@
       <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/conta.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/conta.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/update.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/update.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ccis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/settings.py" afterDir="false" />
     </list>
@@ -45,7 +51,26 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="raquel" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -275,7 +300,9 @@
                   <entry key="branch">
                     <value>
                       <list>
+                        
                         <option value="origin/master" />
+
                       </list>
                     </value>
                   </entry>

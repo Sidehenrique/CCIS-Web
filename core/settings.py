@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
-    'ccis.apps.CcisConfig'
-]
+    'ccis.apps.CcisConfig',
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
