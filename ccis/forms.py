@@ -1,25 +1,10 @@
 from django import forms
-from django.contrib import messages
-from django.http import request
-from django.forms import inlineformset_factory
-
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
-    dadosBancarios, outros,User, docRg ,docCnh ,docCpf, docReservista , docTitulo , docClt , docResidencia, \
-    docCertidao, docAdmissional , docPeriodico , docCursos
+    dadosBancarios, outros
+from crispy_forms.layout import Layout, Submit, Row, Column
 
-#from django.contrib.auth.models import User
-
-class modelFormUser(forms.ModelForm):
-    class Meta:
-        model= User
-
-        fields = ('username','password','email')
-
-        widgets = {'username': forms.TextInput(attrs={'class': 'form-control'}),
-                   'password': forms.PasswordInput(attrs={'class': 'form-control'}),
-                   'email': forms.EmailInput(attrs={'class': 'form-control'}),}
-                   
 
 class modelFormDadosPessoais(forms.ModelForm):
     class Meta:
@@ -60,8 +45,6 @@ class modelFormDadosPessoais(forms.ModelForm):
 
         }
 
-   
-
 
 class modelFormDependentes(forms.ModelForm):
     class Meta:
@@ -82,7 +65,7 @@ class modelFormEnderecoContato(forms.ModelForm):
         model = enderecoContato
         fields = ('endereco', 'bairro', 'cidade', 'estado', 'cep', 'emailCorporativo', 'telefonePessoal',
                   'telefoneCorporativo', 'celularCorporativo', 'celularPessoal', 'ramal', 'emailPessoal',
-                  'nomeCompleto','relacao', 'telefoneDeEmergencia', 'celularDeEmergencia')
+                  'relacao', 'telefoneDeEmergencia', 'celularDeEmergencia')
 
         widgets = {'endereco': forms.TextInput(attrs={'class': 'form-control'}),
                    'bairro': forms.TextInput(attrs={'class': 'form-control'}),
@@ -96,7 +79,6 @@ class modelFormEnderecoContato(forms.ModelForm):
                    'celularPessoal': forms.NumberInput(attrs={'class': 'form-control'}),
                    'ramal': forms.NumberInput(attrs={'class': 'form-control'}),
                    'emailPessoal': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
-                   'nomeCompleto': forms.TextInput(attrs={'class': 'form-control'}),
                    'relacao': forms.Select(attrs={'class': 'form-control'}),
                    'telefoneDeEmergencia': forms.NumberInput(attrs={'class': 'form-control'}),
                    'celularDeEmergencia': forms.NumberInput(attrs={'class': 'form-control'})
@@ -107,13 +89,12 @@ class modelFormEscolaridade(forms.ModelForm):
     class Meta:
         model = escolaridade
         fields = (
-            'entidadeDeEnsino', 'curso', 'grau', 'dataInicio', 'dataConclusao', 'idiomaPrimario', 'nivelPrimario',
-            'idiomaSecundario','nivelSecundario')
+            'entidadeDeEnsino', 'curso', 'grau', 'dataConclusao', 'idiomaPrimario', 'nivelPrimario', 'idiomaSecundario',
+            'nivelSecundario')
 
         widgets = {'entidadeDeEnsino': forms.TextInput(attrs={'class': 'form-control'}),
                    'curso': forms.TextInput(attrs={'class': 'form-control'}),
                    'grau': forms.Select(attrs={'class': 'form-select'}),
-                   'dataInicio': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
                    'dataConclusao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
                    'idiomaPrimario': forms.TextInput(attrs={'class': 'form-control'}),
                    'nivelPrimario': forms.Select(attrs={'class': 'form-control'}),
@@ -139,8 +120,7 @@ class modelFormProfissional(forms.ModelForm):
         model = profissional
         fields = (
             'cargo', 'area', 'paUnidade', 'colaborador', 'centroDeCusto', 'matricula', 'empregador', 'superiorImediato',
-            'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida',
-            )
+            'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida')
 
         widgets = {'cargo': forms.TextInput(attrs={'class': 'form-control'}),
                    'area': forms.TextInput(attrs={'class': 'form-control'}),
@@ -191,83 +171,23 @@ class ModelFormOutros(forms.ModelForm):
         widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
                    }
 
-#DOCUMENTOS -------------------------------------------------------------------->
 
-class modelFormRg(forms.ModelForm):
+class modelFormUser(forms.ModelForm):
     class Meta:
-        model = docRg
-        fields = ('documentoRg',)
-        widgets = {'documentoRg': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
-        
-class modelFormCnh(forms.ModelForm):
-    class Meta:
-        model = docCnh
-        fields = ('documentoCnh',)
-        widgets = {'documentoCnh': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
-        
-class modelFormCpf(forms.ModelForm):
-    class Meta:
-        model = docCpf
-        fields = ('documentoCpf',)
-        widgets = {'documentoCpf': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
-        
-class modelFormReservista(forms.ModelForm):
-    class Meta:
-        model = docReservista
-        fields = ('documentoReservista',)
-        widgets = {'documentoReservista': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
-        
-class modelFormTitulo(forms.ModelForm):
-    class Meta:
-        model = docTitulo
-        fields = ('documentoTitulo',)
-        widgets = {'documentoTitulo': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+        model = User
+        fields = ('username', 'password', 'email', 'first_name', 'last_name')
+
+        widgets = {'username': forms.TextInput(attrs={'class': 'form-control'}),
+               'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+               'email': forms.EmailInput(attrs={'class': 'form-control'}),
+               'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+               'last_name': forms.TextInput(attrs={'class': 'form-control'})
                    }
 
-class modelFormClt(forms.ModelForm):
-    class Meta:
-        model = docClt
-        fields = ('documentoClt',)
-        widgets = {'documentoClt': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
-        
-class modelFormResidencia(forms.ModelForm):
-    class Meta:
-        model = docResidencia
-        fields = ('documentoResidencia',)
-        widgets = {'documentoResidencia': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
 
-class modelFormCertidao(forms.ModelForm):
-    class Meta:
-        model = docCertidao
-        fields = ('documentoCertidao',)
-        widgets = {'documentoCertidao': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
-       
-class modelFormAdmissional(forms.ModelForm):
-    class Meta:
-        model = docAdmissional
-        fields = ('documentoAdmissional',)
-        widgets = {'documentoAdmissional': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
-        
-class modelFormPeriodico(forms.ModelForm):
-    class Meta:
-        model = docPeriodico
-        fields = ('documentoPeriodico',)
-        widgets = {'documentoPeriodico': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   }
-        
-class modelFormCurso(forms.ModelForm):
-    class Meta:
-        model = docCursos
-        fields = ('curso','data','certiCurso')
-        widgets = {'certiCurso': forms.ClearableFileInput(attrs={'multiple': True,'type': 'file', 'class': 'form-control'}),
-                   'data' : forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-                   'curso': forms.TextInput(attrs={'class': 'form-control'}),
-                   }
+class CustomUserCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
