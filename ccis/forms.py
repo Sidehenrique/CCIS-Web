@@ -1,9 +1,20 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.forms import FileInput
+
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
-    dadosBancarios, outros
-from crispy_forms.layout import Layout, Submit, Row, Column
+    dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
+    docCertidao, docAdmissional, docPeriodico, docCursos
+
+
+class modelFormUser(forms.ModelForm):
+    class Meta:
+        model = User
+
+        fields = ('username', 'password', 'email')
+
+        widgets = {'username': forms.TextInput(attrs={'class': 'form-control'}),
+                   'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+                   'email': forms.EmailInput(attrs={'class': 'form-control'}), }
 
 
 class modelFormDadosPessoais(forms.ModelForm):
@@ -12,7 +23,7 @@ class modelFormDadosPessoais(forms.ModelForm):
         fields = ('nomeCompleto', 'sexo', 'estadoCivil', 'corRaca', 'dataNascimento', 'naturalidade', 'tipoSanguineo',
                   'nomePai', 'nomeMae', 'cpf', 'rg', 'expedidor', 'cnh', 'validadeCnh', 'categoria', 'tituloEleitor',
                   'zona', 'secao', 'ctps', 'serieCTPS', 'dataCTPS', 'reservista', 'ra', 'serieReservista', 'pis', 'cns',
-                  'pcd', 'foto', 'canvas')
+                  'pcd')
 
         widgets = {
             'nomeCompleto': forms.TextInput(attrs={'class': 'form-control'}),
@@ -49,14 +60,15 @@ class modelFormDadosPessoais(forms.ModelForm):
 class modelFormDependentes(forms.ModelForm):
     class Meta:
         model = dependentes
-        fields = ('nomeCompleto', 'cpf', 'dataNascimento', 'relacao', 'email', 'contato')
+        fields = ('nomeCompleto', 'cpf', 'dataNascimento', 'relacao', 'email', 'contato', 'declaracao')
 
         widgets = {'nomeCompleto': forms.TextInput(attrs={'class': 'form-control'}),
                    'cpf': forms.NumberInput(attrs={'class': 'form-control'}),
                    'dataNascimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
                    'relacao': forms.Select(attrs={'class': 'form-select'}),
                    'email': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
-                   'contato': forms.NumberInput(attrs={'class': 'form-control'})
+                   'contato': forms.NumberInput(attrs={'class': 'form-control'}),
+                   'declaracao': forms.Select(attrs={'class': 'form-select'}),
                    }
 
 
@@ -65,7 +77,7 @@ class modelFormEnderecoContato(forms.ModelForm):
         model = enderecoContato
         fields = ('endereco', 'bairro', 'cidade', 'estado', 'cep', 'emailCorporativo', 'telefonePessoal',
                   'telefoneCorporativo', 'celularCorporativo', 'celularPessoal', 'ramal', 'emailPessoal',
-                  'relacao', 'telefoneDeEmergencia', 'celularDeEmergencia')
+                  'nomeCompleto', 'relacao', 'telefoneDeEmergencia', 'celularDeEmergencia')
 
         widgets = {'endereco': forms.TextInput(attrs={'class': 'form-control'}),
                    'bairro': forms.TextInput(attrs={'class': 'form-control'}),
@@ -79,7 +91,8 @@ class modelFormEnderecoContato(forms.ModelForm):
                    'celularPessoal': forms.NumberInput(attrs={'class': 'form-control'}),
                    'ramal': forms.NumberInput(attrs={'class': 'form-control'}),
                    'emailPessoal': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
-                   'relacao': forms.Select(attrs={'class': 'form-control'}),
+                   'nomeCompleto': forms.TextInput(attrs={'class': 'form-control'}),
+                   'relacao': forms.Select(attrs={'class': 'form-select'}),
                    'telefoneDeEmergencia': forms.NumberInput(attrs={'class': 'form-control'}),
                    'celularDeEmergencia': forms.NumberInput(attrs={'class': 'form-control'})
                    }
@@ -89,29 +102,30 @@ class modelFormEscolaridade(forms.ModelForm):
     class Meta:
         model = escolaridade
         fields = (
-            'entidadeDeEnsino', 'curso', 'grau', 'dataConclusao', 'idiomaPrimario', 'nivelPrimario', 'idiomaSecundario',
-            'nivelSecundario')
+            'entidadeDeEnsino', 'curso', 'grau', 'dataInicio', 'dataConclusao', 'idiomaSecundario', 'nivelSecundario',
+            'docEscolaridade',)
 
         widgets = {'entidadeDeEnsino': forms.TextInput(attrs={'class': 'form-control'}),
                    'curso': forms.TextInput(attrs={'class': 'form-control'}),
                    'grau': forms.Select(attrs={'class': 'form-select'}),
+                   'dataInicio': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
                    'dataConclusao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-                   'idiomaPrimario': forms.TextInput(attrs={'class': 'form-control'}),
-                   'nivelPrimario': forms.Select(attrs={'class': 'form-control'}),
                    'idiomaSecundario': forms.TextInput(attrs={'class': 'form-control'}),
-                   'nivelSecundario': forms.Select(attrs={'class': 'form-select'})
+                   'nivelSecundario': forms.Select(attrs={'class': 'form-select'}),
+                   'docEscolaridade': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
                    }
 
 
 class modelFormCertificacao(forms.ModelForm):
     class Meta:
         model = certificacao
-        fields = ('nome', 'organizacaoEmissora', 'dataEmissao', 'dataExpiracao')
+        fields = ('nome', 'organizacaoEmissora', 'dataEmissao', 'dataExpiracao', 'docCertificado',)
 
         widgets = {'nome': forms.TextInput(attrs={'class': 'form-control'}),
                    'organizacaoEmissora': forms.TextInput(attrs={'class': 'form-control'}),
                    'dataEmissao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-                   'dataExpiracao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+                   'dataExpiracao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+                   'docCertificado': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
                    }
 
 
@@ -120,7 +134,8 @@ class modelFormProfissional(forms.ModelForm):
         model = profissional
         fields = (
             'cargo', 'area', 'paUnidade', 'colaborador', 'centroDeCusto', 'matricula', 'empregador', 'superiorImediato',
-            'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida')
+            'folhaDePagamento', 'admissao', 'desligamento', 'situacao', 'horarioEntrada', 'horarioSaida',
+        )
 
         widgets = {'cargo': forms.TextInput(attrs={'class': 'form-control'}),
                    'area': forms.TextInput(attrs={'class': 'form-control'}),
@@ -159,8 +174,8 @@ class ModelFormMidia(forms.ModelForm):
         model = dadosPessoais
         fields = ('foto', 'canvas')
 
-        widgets = {'foto': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                   'canvas': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'})
+        widgets = {'foto': FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   'canvas': FileInput(attrs={'type': 'file', 'class': 'form-control'})
                    }
 
 
@@ -172,22 +187,94 @@ class ModelFormOutros(forms.ModelForm):
                    }
 
 
-class modelFormUser(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('username', 'password', 'email', 'first_name', 'last_name')
+# DOCUMENTOS -------------------------------------------------------------------->
 
-        widgets = {'username': forms.TextInput(attrs={'class': 'form-control'}),
-               'password': forms.PasswordInput(attrs={'class': 'form-control'}),
-               'email': forms.EmailInput(attrs={'class': 'form-control'}),
-               'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-               'last_name': forms.TextInput(attrs={'class': 'form-control'})
+class modelFormRg(forms.ModelForm):
+    class Meta:
+        model = docRg
+        fields = ('documentoRg',)
+        widgets = {'documentoRg': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
                    }
 
 
-class CustomUserCreationForm(UserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control'})
-        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
+class modelFormCnh(forms.ModelForm):
+    class Meta:
+        model = docCnh
+        fields = ('documentoCnh',)
+        widgets = {'documentoCnh': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormCpf(forms.ModelForm):
+    class Meta:
+        model = docCpf
+        fields = ('documentoCpf',)
+        widgets = {'documentoCpf': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormReservista(forms.ModelForm):
+    class Meta:
+        model = docReservista
+        fields = ('documentoReservista',)
+        widgets = {'documentoReservista': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormTitulo(forms.ModelForm):
+    class Meta:
+        model = docTitulo
+        fields = ('documentoTitulo',)
+        widgets = {'documentoTitulo': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormClt(forms.ModelForm):
+    class Meta:
+        model = docClt
+        fields = ('documentoClt',)
+        widgets = {'documentoClt': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormResidencia(forms.ModelForm):
+    class Meta:
+        model = docResidencia
+        fields = ('documentoResidencia',)
+        widgets = {'documentoResidencia': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormCertidao(forms.ModelForm):
+    class Meta:
+        model = docCertidao
+        fields = ('documentoCertidao',)
+        widgets = {'documentoCertidao': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormAdmissional(forms.ModelForm):
+    class Meta:
+        model = docAdmissional
+        fields = ('documentoAdmissional',)
+        widgets = {'documentoAdmissional': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormPeriodico(forms.ModelForm):
+    class Meta:
+        model = docPeriodico
+        fields = ('documentoPeriodico',)
+        widgets = {'documentoPeriodico': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   }
+
+
+class modelFormCurso(forms.ModelForm):
+    class Meta:
+        model = docCursos
+        fields = ('curso', 'data', 'certiCurso')
+        widgets = {
+            'certiCurso': forms.ClearableFileInput(attrs={'type': 'file', 'class': 'form-control'}),
+            'data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'curso': forms.TextInput(attrs={'class': 'form-control'}),
+        }

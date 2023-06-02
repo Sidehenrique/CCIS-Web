@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'database_rh',
-        'USER': 'admin',
-        'PASSWORD': 'S1coob4155@@',
+        'NAME': 'dados_rh_copia',
+        'USER': 'root',
+        'PASSWORD': 'Sicoob4155@@',
         'HOST': '10.6.32.24',
         'PORT': '3306',
     }
@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
 
@@ -126,6 +126,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 # 5 megabytes
 
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'staticfiles')

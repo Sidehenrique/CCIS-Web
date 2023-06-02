@@ -2,6 +2,7 @@ from django.db import models
 import os
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 CHOICES_sexo = [
     ('', ''),
@@ -52,12 +53,12 @@ CHOICES_categoria = [
 
 class dadosPessoais(models.Model):
     idDadosPessoais = models.AutoField(db_column='idDadosPessoais', primary_key=True)
-    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=60, blank=False, null=True)
-    sexo = models.CharField(choices=CHOICES_sexo, max_length=45, blank=False, null=True)
+    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=60, blank=True, null=True)
+    sexo = models.CharField(choices=CHOICES_sexo, max_length=45, blank=True, null=True)
     estadoCivil = models.CharField(choices=CHOICES_estadoCivil, db_column='estadoCivil', max_length=45, blank=True,
                                    null=True)
     corRaca = models.CharField(choices=CHOICES_corRaca, db_column='corRaca', max_length=45, blank=True, null=True)
-    dataNascimento = models.DateField(db_column='dataNascimento', blank=True, null=True)
+    dataNascimento = models.CharField(max_length=45, blank=True, null=True)
     naturalidade = models.CharField(max_length=45, blank=True, null=True)
     tipoSanguineo = models.CharField(choices=CHOICES_tipoSanguineo, db_column='tipoSanguineo', max_length=45,
                                      blank=True, null=True)
@@ -65,18 +66,18 @@ class dadosPessoais(models.Model):
     nomePai = models.CharField(db_column='nomePai', max_length=60, blank=True, null=True)
     nomeMae = models.CharField(db_column='nomeMae', max_length=60, blank=True, null=True)
 
-    cpf = models.CharField(max_length=45, blank=False, null=True)
+    cpf = models.CharField(max_length=11, blank=True, null=True)
     rg = models.CharField(max_length=45, blank=True, null=True)
     expedidor = models.CharField(max_length=45, blank=True, null=True)
     cnh = models.CharField(max_length=45, blank=True, null=True)
-    validadeCnh = models.DateField(db_column='validadeCnh', blank=True, null=True)
+    validadeCnh = models.CharField(max_length=45, blank=True, null=True)
     categoria = models.CharField(choices=CHOICES_categoria, max_length=45, blank=True, null=True)
     tituloEleitor = models.CharField(db_column='tituloEleitor', max_length=45, blank=True, null=True)
     zona = models.CharField(max_length=45, blank=True, null=True)
     secao = models.CharField(max_length=45, blank=True, null=True)
     ctps = models.CharField(max_length=45, blank=True, null=True)
     serieCTPS = models.CharField(db_column='serieCTPS', max_length=45, blank=True, null=True)
-    dataCTPS = models.DateField(db_column='dataCTPS', blank=True, null=True)
+    dataCTPS = models.CharField(max_length=45, blank=True, null=True)
     reservista = models.CharField(max_length=45, blank=True, null=True)
     ra = models.CharField(db_column='RA', max_length=45, blank=True, null=True)
     serieReservista = models.CharField(db_column='serieReservista', max_length=45, blank=True, null=True)
@@ -84,8 +85,9 @@ class dadosPessoais(models.Model):
     cns = models.CharField(db_column='CNS', max_length=45, blank=True, null=True)
     pcd = models.CharField(db_column='PCD', max_length=45, blank=True, null=True)
 
-    foto = models.ImageField(upload_to='users', null=True, blank=False)
-    canvas = models.ImageField(upload_to='users', null=True, blank=True)
+    foto = models.ImageField(upload_to='users', null=True, blank=True)
+    canvas = models.ImageField(upload_to='canvas', null=True, blank=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='dadosPessoais')
 
     def __str__(self):
         return self.nomeCompleto
@@ -99,16 +101,24 @@ CHOICES_relacao = [
     ('Outros', 'Outros'),
 ]
 
+CHOICES_declaracao = [
+    ('', ''),
+    ('Sim', 'Sim'),
+    ('Não', 'Não'),
+
+]
+
 
 class dependentes(models.Model):
     idDependentes = models.AutoField(db_column='idDependentes', primary_key=True)
-    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=45, blank=False, null=True)
-    cpf = models.CharField(max_length=45, blank=False, null=True)
-    dataNascimento = models.DateField(db_column='dataNascimento', max_length=45, blank=True, null=True)
-    relacao = models.CharField(choices=CHOICES_relacao, max_length=45, blank=False, null=True)
+    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=45, blank=True, null=True)
+    cpf = models.CharField(max_length=45, blank=True, null=True)
+    dataNascimento = models.CharField(max_length=45, blank=True, null=True)
+    relacao = models.CharField(choices=CHOICES_relacao, max_length=45, blank=True, null=True)
     email = models.EmailField(max_length=45, blank=True, null=True)
     contato = models.CharField(max_length=45, blank=True, null=True)
-    dadosPessoais = models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
+    declaracao = models.CharField(choices=CHOICES_declaracao, max_length=45, blank=True, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='dependentes')
 
     def __str__(self):
         return self.nomeCompleto
@@ -149,11 +159,11 @@ CHOICES_estado = [
 
 class enderecoContato(models.Model):
     idEndereCoecontato = models.AutoField(db_column='idEnderecoEContato', primary_key=True)
-    endereco = models.CharField(db_column='endereco', max_length=100, blank=False, null=True)
+    endereco = models.CharField(db_column='endereco', max_length=100, blank=True, null=True)
     bairro = models.CharField(db_column='bairro', max_length=45, blank=True, null=True)
     cidade = models.CharField(db_column='cidade', max_length=45, blank=True, null=True)
     estado = models.CharField(choices=CHOICES_estado, db_column='estado', max_length=45, blank=True, null=True)
-    cep = models.CharField(db_column='cep', max_length=45, blank=False, null=True)
+    cep = models.CharField(db_column='cep', max_length=45, blank=True, null=True)
     emailCorporativo = models.CharField(db_column='emailCorporativo', max_length=45, blank=True, null=True)
     telefonePessoal = models.CharField(db_column='telefonePessoal', max_length=45, blank=True, null=True)
     telefoneCorporativo = models.CharField(db_column='telefoneCorporativo', max_length=45, blank=True, null=True)
@@ -163,21 +173,14 @@ class enderecoContato(models.Model):
     emailPessoal = models.EmailField(db_column='emailPessoal', max_length=45, blank=True, null=True)
     relacao = models.CharField(choices=CHOICES_relacao, max_length=45, blank=True, null=True)
 
-    nomeCompleto = models.CharField(choices=CHOICES_relacao, max_length=45, blank=True, null=True)
-    telefoneDeEmergencia = models.CharField(db_column='telefoneDeEmergencia', max_length=45, blank=True, null=True)  
-    celularDeEmergencia = models.CharField(db_column='celularDeEmergencia', max_length=45, blank=True, null=True)  
-    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
-    
+    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=45, blank=True, null=True)
+    telefoneDeEmergencia = models.CharField(db_column='telefoneDeEmergencia', max_length=45, blank=True, null=True)
+    celularDeEmergencia = models.CharField(db_column='celularDeEmergencia', max_length=45, blank=True, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='enderecoContato')
+
     def __str__(self):
         return self.endereco
 
-
-CHOICES_nivelPrimario = [
-    ('', ''),
-    ('Básico', 'Básico'),
-    ('Intermediário', 'Intermediário'),
-    ('Avançado', 'Avançado'),
-]
 
 CHOICES_nivelSecundario = [
     ('', ''),
@@ -196,17 +199,17 @@ CHOICES_grau = [
 
 
 class escolaridade(models.Model):
-    idEscolaridade = models.AutoField(db_column='idEscolaridade', primary_key=True)  
-    entidadeDeEnsino = models.CharField(db_column='entidadeDeEnsino', max_length=45, blank=True, null=True)  
+    idEscolaridade = models.AutoField(db_column='idEscolaridade', primary_key=True)
+    entidadeDeEnsino = models.CharField(db_column='entidadeDeEnsino', max_length=45, blank=True, null=True)
     curso = models.CharField(db_column='curso', max_length=45, blank=True, null=True)
     grau = models.CharField(choices=CHOICES_grau, db_column='grau', max_length=45, blank=True, null=True)
-    dataInicio = models.DateField(db_column='dataInicio', max_length=45, blank=True, null=True) 
-    dataConclusao = models.DateField(db_column='dataConclusao', max_length=45, blank=True, null=True)  
-    idiomaPrimario = models.CharField(db_column='idiomaPrimario', max_length=45, blank=True, null=True) 
-    nivelPrimario = models.CharField(choices=CHOICES_nivelPrimario, db_column='nivelPrimario', max_length=45, blank=True, null=True) 
-    idiomaSecundario = models.CharField(db_column='idiomaSecundario', max_length=45, blank=True, null=True)  
-    nivelSecundario = models.CharField(choices=CHOICES_nivelSecundario, db_column='nivelSecundario', max_length=45, blank=True, null=True)  
-    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
+    dataInicio = models.CharField(max_length=45, blank=True, null=True)
+    dataConclusao = models.CharField(max_length=45, blank=True, null=True)
+    idiomaSecundario = models.CharField(db_column='idiomaSecundario', max_length=45, blank=True, null=True)
+    nivelSecundario = models.CharField(choices=CHOICES_nivelSecundario, db_column='nivelSecundario', max_length=45,
+                                       blank=True, null=True)
+    docEscolaridade = models.FileField(null=True, blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='escolaridade')
 
     def __str__(self):
         return self.entidadeDeEnsino
@@ -214,11 +217,12 @@ class escolaridade(models.Model):
 
 class certificacao(models.Model):
     idCertificacao = models.AutoField(db_column='idCertificacao', primary_key=True)
-    nome = models.CharField(db_column='nome', max_length=45, blank=False, null=True)
-    organizacaoEmissora = models.CharField(db_column='organizacaoEmissora', max_length=45, blank=False, null=True)
-    dataEmissao = models.DateField(db_column='dataEmissao', max_length=45, blank=False, null=True)
-    dataExpiracao = models.DateField(db_column='dataExpiracao', max_length=45, blank=True, null=True)
-    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
+    nome = models.CharField(db_column='nome', max_length=45, blank=True, null=True)
+    organizacaoEmissora = models.CharField(db_column='organizacaoEmissora', max_length=45, blank=True, null=True)
+    dataEmissao = models.CharField(max_length=45, blank=True, null=True)
+    dataExpiracao = models.CharField(max_length=45, blank=True, null=True)
+    docCertificado = models.FileField(null=True, blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='certificacao')
 
     def __str__(self):
         return self.nome
@@ -267,9 +271,9 @@ CHOICES_empregador = [
 
 class profissional(models.Model):
     idProfissional = models.AutoField(db_column='idProfissional', primary_key=True)
-    cargo = models.CharField(max_length=45, blank=False, null=True)
-    area = models.CharField(max_length=45, blank=False, null=True)
-    paUnidade = models.CharField(choices=CHOICES_paUnidade, db_column='paUnidade', max_length=45, blank=False, null=True)
+    cargo = models.CharField(max_length=45, blank=True, null=True)
+    area = models.CharField(max_length=45, blank=True, null=True)
+    paUnidade = models.CharField(choices=CHOICES_paUnidade, db_column='paUnidade', max_length=45, blank=True, null=True)
     colaborador = models.CharField(choices=CHOICES_colaborador, max_length=60, blank=True, null=True)
     centroDeCusto = models.CharField(db_column='centroDeCusto', max_length=45, blank=True, null=True)
     matricula = models.CharField(max_length=45, blank=True, null=True)
@@ -278,13 +282,10 @@ class profissional(models.Model):
     folhaDePagamento = models.CharField(max_length=45, blank=True, null=True)
     admissao = models.CharField(max_length=45, blank=True, null=True)
     desligamento = models.CharField(max_length=45, blank=True, null=True)
-    situacao = models.CharField(choices=CHOICES_situacao, max_length=45, blank=False, null=True)
+    situacao = models.CharField(choices=CHOICES_situacao, max_length=45, blank=True, null=True)
     horarioEntrada = models.TimeField(db_column='horarioEntrada', max_length=45, blank=True, null=True)
     horarioSaida = models.TimeField(db_column='horarioSaida', max_length=45, blank=True, null=True)
-    dataAtesAdmissional = models.DateField(db_column='dataAtesAdmissional', max_length=45, blank=True, null=True)
-    dataAtesPeriodico = models.DateField(db_column='dataAtesPeriodico', max_length=45, blank=True, null=True)
-
-    dadosPessoais= models.ForeignKey('dadosPessoais', on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='profissional')
 
     def __str__(self):
         return self.cargo
@@ -300,15 +301,15 @@ CHOICES_tipoDeConta = [
 
 class dadosBancarios(models.Model):
     idDadosBancarios = models.AutoField(db_column='idDadosBancarios', primary_key=True)
-    conta = models.CharField(max_length=45, blank=False, null=True)
-    digito = models.CharField(db_column='digitoDaConta', max_length=45, blank=False, null=True)
-    banco = models.CharField(max_length=45, blank=False, null=True)
-    agencia = models.CharField(max_length=45, blank=False, null=True)
+    conta = models.CharField(max_length=45, blank=True, null=True)
+    digito = models.CharField(db_column='digitoDaConta', max_length=45, blank=True, null=True)
+    banco = models.CharField(max_length=45, blank=True, null=True)
+    agencia = models.CharField(max_length=45, blank=True, null=True)
     tipoDeConta = models.CharField(choices=CHOICES_tipoDeConta, db_column='tipoDeConta', max_length=45, blank=True,
                                    null=True)
     modalidade = models.CharField(max_length=45, blank=True, null=True)
     chavePix = models.CharField(db_column='chavePix', max_length=45, blank=True, null=True)
-    dadosPessoais= models.OneToOneField('dadosPessoais', on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='dadosBancarios')
 
     def __str__(self):
         return self.conta
@@ -326,9 +327,122 @@ CHOICES_tamanho = [
 
 
 class outros(models.Model):
-    idOutros =models.AutoField(db_column='idOutros', primary_key=True)
+    idOutros = models.AutoField(db_column='idOutros', primary_key=True)
     camiseta = models.CharField(choices=CHOICES_tamanho, max_length=45, blank=True, null=True)
-    dadosPessoais= models.OneToOneField('dadosPessoais', on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='outros')
 
     def __str__(self):
         return self.camiseta
+
+
+# DOCUMENTOS----------------------------------------------------------
+class docRg(models.Model):
+    idRg = models.AutoField(db_column='idRg', primary_key=True)
+    documentoRg = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docRg')
+
+    def __str__(self):
+        return self.documentoRg
+
+
+class docCnh(models.Model):
+    idCnh = models.AutoField(db_column='idCnh', primary_key=True)
+    documentoCnh = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docCnh')
+
+    def __str__(self):
+        return self.documentoCnh
+
+
+class docCpf(models.Model):
+    idCpf = models.AutoField(db_column='idCpf', primary_key=True)
+    documentoCpf = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docCpf')
+
+    def __str__(self):
+        return self.documentoCpf
+
+
+class docReservista(models.Model):
+    idReservista = models.AutoField(db_column='idReservista', primary_key=True)
+    documentoReservista = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docReservista')
+
+    def __str__(self):
+        return self.documentoReservista
+
+
+class docTitulo(models.Model):
+    idTitulo = models.AutoField(db_column='idTitulo', primary_key=True)
+    documentoTitulo = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docTitulo')
+
+    def __str__(self):
+        return self.documentoTitulo
+
+
+class docClt(models.Model):
+    idClt = models.AutoField(db_column='idClt', primary_key=True)
+    documentoClt = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docClt')
+
+    def __str__(self):
+        return self.documentoClt
+
+
+class docResidencia(models.Model):
+    idResidencia = models.AutoField(db_column='idResidencia', primary_key=True)
+    documentoResidencia = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docResidencia')
+
+    def __str__(self):
+        return self.documentoResidencia
+
+
+class docCertidao(models.Model):
+    idCertidao = models.AutoField(db_column='idCertidao', primary_key=True)
+    documentoCertidao = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docCertidao')
+
+    def __str__(self):
+        return self.documentoCertidao
+
+
+class docAdmissional(models.Model):
+    idAdmissional = models.AutoField(db_column='idAdmissional', primary_key=True)
+    documentoAdmissional = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docAdmissional')
+
+    def __str__(self):
+        return self.documentoAdmissional
+
+
+class docPeriodico(models.Model):
+    idPeriodico = models.AutoField(db_column='idPeriodico', primary_key=True)
+    documentoPeriodico = models.FileField(null=True, blank=True)
+    dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docPeriodico')
+
+    def __str__(self):
+        return self.documentoPeriodico
+
+
+class docCursos(models.Model):
+    idCursos = models.AutoField(db_column='idCursos', primary_key=True)
+    curso = models.CharField(max_length=45, blank=True, null=True)
+    certiCurso = models.FileField(null=True, blank=True)
+    data = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='docCursos')
+
+    def __str__(self):
+        return self.certiCurso
+

@@ -2,9 +2,10 @@
 {% load static %}
 
 {% block conteudo %}
-    <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
 
-    <!-- subMenu ---------------------------------------------------------------------------------------------------->
+<div class="container-fluid scrollable-content">
+
+    <!-- subMenu ------------------------------------>
     <div class="row">
 
         <nav class="navbar sub-nav-background mb-2">
@@ -23,9 +24,9 @@
 
 
       </div>
-    <!-- End subMenu ------------------------------------------------------------------------------------------------>
+    <!-- End subMenu -------------------------------->
 
-    <!-- CONTEUDO --------------------------------------------------------------------------------------------------->
+    <!-- CONTEUDO ----------------------------------->
     <div class="row" >
 
         <!-- Coluna Esquerda -------------------------------------------------->
@@ -38,6 +39,7 @@
                     <h4 class="header-title mb-3"> Solicitação de Ferias</h4>
 
                     <form>
+
                         <div id="basicwizard">
 
                             <ul class="nav nav-pills nav-justified form-wizard-header mb-4" role="tablist">
@@ -68,7 +70,9 @@
                             </ul>
 
                             <div class="tab-content b-0 mb-0">
+
                                 <div class="tab-pane active show" id="basictab1" role="tabpanel">
+
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="row mb-3">
@@ -185,7 +189,8 @@
                                     </ul>
                                 </div>
 
-                            </div> <!-- tab-content -->
+                            </div>
+                            <!-- tab-content -->
                         </div> <!-- end #basicwizard-->
                     </form>
 
@@ -223,22 +228,11 @@
 
 
     </div>
-    <!-- END CONTEÚDO ---------------------------------------------------------------------------------------------->
+    <!-- END CONTEÚDO ------------------------------->
 
 
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-    <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
 {% endblock %}
 
 

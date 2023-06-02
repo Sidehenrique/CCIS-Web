@@ -1,13 +1,14 @@
-.body-background{
-    background-color:#F9FAFD;
+
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-.sub-nav-background {
-    background-color:white;
-    height:65px;
-    box-shadow: 0 0 10px 1px rgb(237,237,237);
-
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
 }
+
+
+
 
 
 /*--Menu Top -------------------------*/
@@ -41,153 +42,6 @@
 
 
 /*----------------------------------------*/
-
-
-
-/* Menu Recolhível -----------------------*/
-
-.offcanvas {
-    top: 0;
-    width: 300px;
-    right: 0;
-    border:none;
-    background-color:none;
-}
-
-.sidebar {
-    position: fixed;
-    padding:20px;
-    height-max:0px;
-    top: 0;
-    background-color:#333;
-    box-shadow: -3px 0px 10px rgba(51, 51, 51, 0.5);
-    text-align: left;
-}
-
-.sidebar ul.menu-elements {
-    padding: 10px 0;
-
-}
-
-.sidebar ul li a {
-    display: block;
-    padding: 10px 20px;
-    border: 0;
-    color: black;
-    text-decoration: none;
-}
-
-.sidebar ul li a:hover,
-.sidebar ul li a:focus,
-.sidebar ul li.active > a:hover,
-.sidebar ul li.active > a:focus {
-    outline: 0;
-    background: #155;
-    color: #fff;
-}
-
-.sidebar ul li a i {
-    margin-right: 5px;
-}
-
-.sidebar ul ul a {
-    background: #155;
-    padding-left: 30px;
-    font-size: 14px;
-}
-
-.sidebar ul li a:active{
-    background:#04343D;
-}
-
-.dismiss {
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #444;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 35px;
-    cursor: pointer;
-}
-
-
-.dismiss:hover,
-.dismiss:focus {
-    background: #555;
-    color: #fff;
-}
-
-/*----------------------------------------*/
-
-
-
-
-
-/*--Menu Lateral -------------------------*/
-.menu-lateral{
-    padding:20px 0px 0px 20px;
-    margin: 0x 20px 0 0
-    border: 1px solid;
-    border-radius: 20px;
-    border-color: rgb(235,235,235);
-    font-family: Asap;
-    background-color:white;
-    box-shadow: 0 0 10px 1px rgb(237,237,237);
-    height:87vh
-}
-
-.paragrafo-style{
-    text-aline:center;
-    font-family:asap medium;
-    color:#04343D;
-    padding-left:25px;
-
-}
-
-
-.ul-lista{
-    list-style-type: none;
-    padding:0;
-}
-
-.li-lista{
-    vertical-align: middle;
-    padding:10px;
-}
-
-
-.li-link{
-    text-decoration: none;
-    color:#04343D;
-    padding-left:20px;
-    box-sizing: border-box;
-    display: block;
-    transition: all .3s;
-}
-
-
-.li-lista:hover{
-    background-color:#f5f5f5;
-    color:#04343D;
-    border-radius: 20px;
-}
-
-.li-link:hover{
-    color:#04343D;
-}
-
-.li-link:active{
-    color:#c8c8c8;
-}
-
-
-/*--------------------------------------*/
-
-
-
 
 
 
@@ -263,29 +117,6 @@
     color:#51504F
 }
 
-.status{
-    display: inline-block;
-    width:0.5rem;
-    height:0.5rem;
-    background-color:#55CB69;
-    border-radius:50%;"
-}
-
-status-negativo{
-    display: inline-block;
-    width:0.5rem;
-    height:0.5rem;
-    background-color:rgb(255,90,90);
-    border-radius:50%;"
-}
-
-.text-status{
-    font-size:14px;
-    text-align: center!important;
-    font-family: Segoe UI;
-    color:#B9B9B9
-}
-
 
 .avatar-label{
     display: flex;
@@ -295,13 +126,14 @@ status-negativo{
     border-radius:50%;
 }
 
+
 .avatar-profile {
     opacity: 0;
     position: absolute;
     z-index: -1;
     cursor: pointer;
-
 }
+
 
 .flow{
     height:78vh;
@@ -314,70 +146,9 @@ status-negativo{
 }
 
 .link {
-    font-family:Asap Semibold;
+    font-family:Asap Bold;
     text-decoration: none;
     color:#B7B7B7;
-
-}
-
-
-.timeline {
-  position: relative;
-  width: 10px;
-  height: 300px;
-  background-color: #ccc;
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.timeline-item {
-  position: absolute;
-  top: 0;
-  left: -2;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #fff;
-  box-shadow: 0 0 5px #000;
-}
-
-.timeline-progress {
-  position: absolute;
-  top: 0;
-  left: 2;
-  width: 100%;
-  background-color: #00bfff;
-  z-index: -1;
-}
-
-.timeline-item:nth-child(1) {
-  top: 0;
-}
-
-.timeline-item:nth-child(2) {
-  top: 25%;
-}
-
-.timeline-item:nth-child(3) {
-  top: 50%;
-}
-
-.timeline-item:nth-child(4) {
-  top: 75%;
-}
-
-@keyframes timeline-progress {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: 100%;
-  }
-}
-
-.timeline-progress {
-  animation: timeline-progress 5s linear;
 }
 
 /*---------------------------------------*/
@@ -416,7 +187,9 @@ status-negativo{
 
 .table-td{
     vertical-align: middle;
+
 }
+
 
 .button-style {
     background-color:white;
@@ -426,31 +199,475 @@ status-negativo{
     padding:5px;
 }
 
+
 .button-style:hover{
     background-color:rgb(33,145,128);
     color:white;
 }
 
+
 .button-style:active{
     background-color:#05443B;
 }
 
-.button-style-red{
-    background-color:white;
-    color:rgb(238,65,20);
-    border-radius:5px;
-    border:1px rgb(238,65,20) solid;
-    padding:5px;
+
+.link-button{
+    padding:10px;
+    font-family: asap;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
 }
 
-.button-style-red:hover{
-    background-color:rgb(238,65,20) ;
+
+.link-button:hover{
+    background-color:#16B597;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.link-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+.button-confirm{
+    padding:5px 15px 5px 15px;
+    font-family: asap;
+    background-color:#37474F;
     color:white;
+    border-radius: 20px;
+    transition: all .5s;
+    border:none;
 }
 
-.button-style-red:active{
-    background-color:rgb(180,53,20);
+
+.button-confirm:hover{
+    background-color:#00353E;
+    color:white;
+    border-radius: 20px;
+}
+
+
+.button-confirm:active{
+    color:white;
+    background-color:#27DEBF;
+}
+
+
+.button-cancel{
+    padding:5px 15px 5px 15px;
+    font-family: asap;
+    background-color:#A8B7BE;
+    color:white;
+    border-radius: 20px;
+    transition: all .5s;
+    border:none;
+}
+
+
+.button-cancel:hover{
+    background-color:#455A64;
+    color:white;
+    border-radius: 20px;
+}
+
+
+.button-cancel:active{
+    color:white;
+    background-color:#494D4E;
 }
 
 
 /*----------------------------------------*/
+
+
+.sub-menu-background {
+    background-color:#f5f5f5;
+    height:65px;
+    border-radius:5px;
+    font-family: asap semibold;
+
+}
+
+/*--Novo Menu Lateral -------------------------*/
+.menu-background{
+    padding-top:80px;
+    font-family: Asap;
+    background-color:#fff;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+
+.ul-lista-novo{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+
+.li-lista-novo{
+    vertical-align: middle;
+    padding:2px;
+}
+
+
+.li-link-novo{
+    text-decoration: none;
+    color:#37474F;
+    padding:10px 10px 10px 20px;
+    box-sizing: border-box;
+    display: block;
+    font-family: asap;
+    transition: all .5s;
+
+}
+
+
+.li-link-novo:hover{
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.li-link-novo:active{
+    color:#ffffff;
+    background-color:#16B597;
+}
+
+
+/*--------------------------------------*/
+
+
+.button-doc {
+    cursor: pointer;
+    background-color:white;
+    color:none;
+    border:none;
+}
+
+.button-doc-icon {
+    position: absolute;
+    bottom: 108px;
+    right: 0;
+    cursor: pointer;
+}
+
+.custom-file-upload {
+  display:none;
+  cursor: pointer;
+}
+
+.custom-file-upload:hover {
+  background-color: #d8d8d8;
+}
+
+
+/*-- Configuração Base ----------------*/
+.menu-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color:white;
+    box-shadow: 0px -5px 20px #707070;
+    z-index: 100;
+}
+
+
+.scrollable-content {
+    padding-top:65px;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+
+.nav-photo{
+    border-radius:50%;
+    cursor:pointer;
+    width:36px;
+    height:36px;
+}
+
+
+.nav-text{
+    font-family:asap medium;
+    font-size:12px;
+    color:black;
+    padding:5px;
+}
+
+
+.media-pill {
+    position: relative;
+    padding: 2px 4px 2px 2px;
+    background-color: rgba(31,45,61,.15);
+    border-radius: 50rem;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+
+.align-horizontal-center{
+    display: flex;
+    flex-direction: row;
+    align-items: center!important;
+    text-decoration:none;
+}
+
+/*-- sub-menu ----------------*/
+.paragrafo-style{
+    text-aline:center;
+    font-family:asap medium;
+    color:#04343D;
+    padding-left:25px;
+
+}
+
+
+
+/*-- New Profile ---------------------------------*/
+
+.profile-img {
+    position:fixed;
+    width: 100%;
+    height: 550px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    border-bottom-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+    z-index: -1;
+}
+
+
+.profile-user{
+    margin-top:30px;
+    width: 165px;
+    height: 180px;
+    border-radius:10px;
+}
+
+
+.status{
+    display: inline-block;
+    width:0.5rem;
+    height:0.5rem;
+    background-color:#55CB69;
+    border-radius:50%;
+}
+
+status-negativo{
+    display: inline-block;
+    width:0.5rem;
+    height:0.5rem;
+    background-color:rgb(255,90,90);
+    border-radius:50%;
+}
+
+
+.profile-info {
+    padding:20px 15px 15px 15px;
+    text-align: center;
+    align-items: center!important;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius:10px;
+    margin:10px
+}
+
+
+.profile-name{
+    font-family: Segoe UI;
+    font-size:22px;
+    color: black;
+}
+
+.profile-cargo{
+    font-family: Segoe UI;
+    font-size:14px;
+    color:white;
+    background-color:#4FD1B8;
+    border-radius:10px;
+    padding: 0 5px;
+}
+
+
+.profile-progress{
+    position: relative;
+    padding:25px;
+    text-align: center;
+    align-items: center!important;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius:10px;
+    display: flex;
+    text-align: left;
+}
+
+
+.progress-percent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 20px;
+  padding: 0 5px;
+  color: black;
+}
+
+
+.image-list img {
+    width: 35px;
+    height: 35px;
+    margin: 0 0px 0 25px;
+    border-radius:4px;
+
+}
+
+/*-- New Profile ---------------------------------*/
+
+
+
+
+
+/*-- Button ---------------------*/
+.profile-button {
+    position: absolute;
+    top:85px;
+    right:52px;
+    font-family:Segoe UI semibold;
+    padding:8px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 10px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+    z-index:2;
+}
+
+
+.profile-button:hover{
+    background-color:#16B597;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.profile-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+/*-- Button ---------------------*/
+
+
+
+/*-- Card -----------------------*/
+.card-header-custom{
+    padding:15px;
+    font-family: Segoe UI semibold;
+    font-size:18px;
+    color:black;
+}
+
+
+.card-text-custom{
+    font-family: Segoe UI;
+    font-size:13px;
+    color: #CFCFCF;
+    margin:5px 0;
+}
+
+
+.card-custom{
+    padding: 0px!important;
+    margin:10px 10px 15px 10px;
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: rgb(235,235,235);
+    background-color:white;
+
+}
+
+
+.linha-custom{
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 0px 0;
+}
+
+
+.card-body-custom{
+    padding:15px;
+}
+
+
+.card-ul{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+
+.card-li{
+    text-decoration: none;
+    padding:0px 0px 0px 0px;
+    box-sizing: border-box;
+    display: block;
+    font-family: Segoe UI;
+    font-size:15px;
+    transition: all .5s;
+    margin:10px 0;
+}
+
+
+.card-icon{
+     color: #DFDFDF;
+}
+
+
+/*-- Card -----------------------*/
+
+
+
+
+/*-- primeiro login -----------------------*/
+.menu-new-login{
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color:white;
+    box-shadow: 0px -5px 20px #707070;
+    padding:0px;
+}
+
+.primeiro-button {
+    font-family:Segoe UI semibold;
+    padding:8px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+}
+
+
+.primeiro-button:hover{
+    background-color:#16B597;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.primeiro-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}

@@ -3,68 +3,62 @@
 
 {% block conteudo %}
 
-{% if messages %}
-    {% for message in messages %}
-    <!-- Toasts --------------------------------->
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="container-fluid scrollable-content">
 
-        <div class="toast-header">
-          <i class="fa-solid fa-square-check" style="color:{{ cor }}"></i>
-          <strong class="me-auto" style="color:{{ cor }}">Mensagem</strong>
-          <small>{{ data }}</small>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-
-        <div class="toast-body">
-          {{ message }}
-        </div>
-
-      </div>
-    </div>
-    {% endfor %}
-  {% endif %}
-
-  <script>
-     $(document).ready(function(){
-       $('.toast').toast('show');
-     });
-  </script>
-
-<div class="col">
-    <!-- subMenu ---------------------------------------------------------------------------------------------------->
+    <!-- subMenu --------------------------------->
     <div class="row">
 
-        <nav class="navbar sub-nav-background mb-2 ps-0 pe-0">
-          <div class="container-fluid">
+        <nav class="navbar paragrafo-style">
+            <div class="container-fluid">
 
-            <p class="m-0" style="font-family:Asap medium"> USUÁRIOS <br>
-                <small style="font-family:Asap Regular; color:#AFAFAF;">Modulo gestor</small></p>
+                <p class="m-0"> GESTÃO DE PESSOAS <br>
+                    <small style="font-family:Asap Regular; color:#AFAFAF;">Usuários</small></p>
 
-            <div class="navbar-nav-wrap-content-end">
+                <div class="navbar-nav-wrap-content-end">
 
-                <!-- Botão Novo Usuário --------------->
-                <button class="button-style"
-                        type="button"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        data-bs-whatever="@mdo">
-                    <i class="fa-solid fa-user-plus"></i> Novo Usuário
-                </button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="link-button" data-bs-toggle="modal" data-bs-target="#newUser">
+                        <i class="fa-solid fa-user"></i>
+                        Novo Usuário
+                    </button>
+
+                </div>
             </div>
-          </div>
 
         </nav>
 
-      </div>
-    <!-- End subMenu ------------------------------------------------------------------------------------------------>
 
+    </div>
+    <!-- End subMenu ----------------------------->
 
-    <!-- CONTEÚDO DA PG --------------------------------------------------------------------------------------------->
+    <!-- Header do conteúdo ---------------------->
+    <div class="row mb-5">
+
+        <div class="col ms-4 mt-5" style="">
+
+            <h1 style="font-family:Oswald medium ">Módulo de <span style="color:#27DEBF; font-family:Oswald medium ">Gestão de Usuários</span>
+            </h1>
+            <p style="color:#8a8a8a;">Pesquise, atualize e gerencie todos os usuários<br> ativos e inativos cadastrados na
+                plataforma.</p>
+
+        </div>
+
+        <div class="col">
+            <img src="{% static 'ccis/Grupo 2131.png' %}"
+                 alt="rh"
+                 width="450"
+                 height="auto"
+                 class="d-inline-block;">
+        </div>
+
+    </div>
+    <!-- Header do conteúdo ---------------------->
+
+    <!-- Conteúdo -------------------------------->
     <div class="row">
         <div>
 
-            <!-- Cards informativos --------------------------->
+            <!-- Cards informativos ------------->
             <div class="row">
                 <div class="col-sm-6 col-lg-3 mb-3 mb-lg-3 mt-lg-1 ps-0 pe-1 ">
 
@@ -97,7 +91,7 @@
                                 <!-- End Linha -->
 
                                 <span class="span-label-positivo text-success">
-                                <i class="fa-solid fa-chart-simple"></i> {{ totalMaster }}% </span>
+                                    <i class="fa-solid fa-chart-simple"></i> {{ totalMaster }}% </span>
 
                                 <span> de {{totalUsuariosAnual}} do ano anterior</span>
 
@@ -138,7 +132,7 @@
                                 <!-- End Linha -->
 
                                 <span class="span-label-positivo text-success">
-                                <i class="fa-solid fa-chart-simple"></i> {{porcentagem_F}}%</span>
+                                    <i class="fa-solid fa-chart-simple"></i> {{porcentagem_F}}%</span>
 
                                 <span class=" ms-1">de {{AnualFuncionarios}} do ano anterior</span>
 
@@ -179,7 +173,7 @@
                                 <!-- End Linha -->
 
                                 <span class="span-label-positivo text-success">
-                                <i class="fa-solid fa-chart-simple"></i> {{porcentagem_E}}%</span>
+                                    <i class="fa-solid fa-chart-simple"></i> {{porcentagem_E}}%</span>
 
                                 <span class=" ms-1">de {{anualEstagiarios}} do ano anterior</span>
 
@@ -220,7 +214,7 @@
                                 <!-- End Linha -->
 
                                 <span class="span-label-positivo text-success">
-                                <i class="fa-solid fa-chart-simple"></i> {{porcentagem_M}}%</span>
+                                    <i class="fa-solid fa-chart-simple"></i> {{porcentagem_M}}%</span>
 
                                 <span class=" ms-1">de {{anualMenor}} do ano anterior</span>
 
@@ -231,17 +225,17 @@
 
                 </div>
             </div>
-            <!-- End Cards informativos ----------------------->
+            <!-- End Cards informativos --------->
 
         </div>
 
-        <div style="height:57vh;" class="col overflow-auto">
+        <div style="height:80vh;" class="col overflow-auto mb-5">
 
-            <!-- Card Table ---------------------------------->
+            <!-- Card Table --------------------->
             <div class="row">
                 <div class="card-config p-0">
 
-                    <!-- Pesquisa table ----------->
+                    <!-- Pesquisa table --------->
                     <nav class="navbar mt-2">
                         <div class="container-fluid pe-1">
 
@@ -270,14 +264,14 @@
 
                     </nav>
 
-                    <!-- Tabela ------------------->
+                    <!-- Tabela ----------------->
                     <table class="table table-hover" id="tableUser">
 
                         <thead class="table-header">
                         <tr>
                             <td class="p-3">
 
-                            <h6></h6>
+                                <h6></h6>
 
                             </td>
                             <th>Foto</th>
@@ -290,9 +284,9 @@
 
                         <tbody class="table-body">
 
-                        {% for dado in dados %}
+                        {% for item in dadosTable %}
                         <tr>
-                            <!-- checkbox ------------------------------->
+                            <!-- checkbox --------->
                             <td class="table-td">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="">
@@ -300,50 +294,50 @@
                                 </div>
                             </td>
 
-                            <!-- img foto ------------------------------->
+                            <!-- img foto --------->
                             <td class="table-td">
 
-                                    {% if dado.foto %}
-                                    <img class="avatar-img" src="{{ dado.foto.url }}"
-                                         alt="" width="40" height="40">
-                                    {% else %}
-                                        {% if dado.sexo == "Masculino" %}
-                                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-                                             alt="" width="40" height="40">
+                                {% if item.foto %}
+                                <img class="avatar-img" src="{{ item.foto.url }}"
+                                     alt="" width="40" height="40">
+                                {% else %}
+                                {% if item.sexo == "Masculino" %}
+                                <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                     alt="" width="40" height="40">
 
-                                        {% elif  dado.sexo == "Feminino" %}
-                                        <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
-                                             alt="" width="40" height="40">
-                                        {% endif %}
+                                {% elif item.sexo == "Feminino" %}
+                                <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                     alt="" width="40" height="40">
+                                {% endif %}
 
-                                    {% endif %}
+                                {% endif %}
 
                             </td>
 
-                            <!-- Nome e CPF --------------------------->
+                            <!-- Nome e CPF ------->
                             <td class="table-td">
-                                <p class="mb-0">{{dado.nomeCompleto}}</p>
-                                <small style="color:#888888;" class="mb-0">{{dado.profissional_set.first.colaborador}}</small>
+                                <p class="mb-0">{{item.nomeCompleto}}</p>
+                                <small style="color:#888888;" class="mb-0"> {{item.colaborador}} </small>
                             </td>
 
-                            <!-- Cargo e local -------------------------->
+                            <!-- Cargo e local ---->
                             <td class="table-td">
-                                <p class="mb-0">{{dado.profissional_set.first.cargo}}</p>
-                                <small style="color:#888888;" class="mb-0">{{dado.profissional_set.first.paUnidade}}</small>
+                                <p class="mb-0">{{item.cargo}}</p>
+                                <small style="color:#888888;" class="mb-0">{{item.unidade}}</small>
                             </td>
 
-                            <!-- Situação ------------------------------->
+                            <!-- Situação --------->
                             <td class="table-td">
-                                {% if dado.profissional_set.first.situacao == 'Ativo' %}
+                                {% if item.situacao == 'Ativo' %}
                                 <span style="display: inline-block; width:0.5rem; height:0.5rem; background-color:rgb(33,145,128);
-                            border-radius:50%; "></span> {{dado.profissional_set.first.situacao}}
+                                border-radius:50%; "></span> {{item.situacao}}
                                 {% else %}
                                 <span style="display: inline-block; width:0.5rem; height:0.5rem; background-color:rgb(255,90,90);
-                            border-radius:50%; "></span> {{dado.profissional_set.first.situacao}}
+                                border-radius:50%; "></span> {{item.situacao}}
                                 {% endif %}
                             </td>
 
-                            <!-- Botões ---------------------------------------->
+                            <!-- Botões ----------->
                             <td class="table-td">
 
                                 <!-- Botão Perfil ---------------------------->
@@ -375,17 +369,18 @@
 
                 </div>
             </div>
-            <!-- End Table Usuários -------------------------->
-        </div>
-    </div>
+            <!-- End Table Usuários ------------>
 
-    <!-- END CONTEÚDO ----------------------------------------------------------------------------------------------->
+        </div>
+
+    </div>
+    <!-- Conteúdo -------------------------------->
 
 </div>
 
 <!-- Modal formulário Novo Usuário ------------->
 <div class="modal fade"
-     id="exampleModal"
+     id="newUser"
      tabindex="-1"
      aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -411,40 +406,82 @@
                       novalidate>
                     {% csrf_token %}
 
+                    <!-- Header modal ---------------------->
+                    <div class="row pt-5 mb-5">
 
-                    <!-- Dados Pessoais -->
+                        <div class="col ms-5 mt-5">
+                            <img src="{% static 'ccis/Grupo 2395.png' %}"
+                                 alt="rh"
+                                 width="450"
+                                 height="auto"
+                                 class="d-inline-block;">
+                        </div>
+
+                        <div class="col ms-5 mt-3" style="">
+                            <h1 style="font-family:Oswald medium ">Cadastre um
+                                <span style="color:#27DEBF; font-family:Oswald medium ">Novo Usuário</span></h1>
+                            <p style="color:#8a8a8a;">Se deseja cadastrar um novo usuário para esta plataforma?
+                                <br> Informe a baixo os dados do usuário.
+                            </p>
+
+
+                            <!-- Usuário -->
+                            <div class="col-10">
+                                <label class="form-label">Login:</label>
+                                {{ user.username }}
+                            </div>
+
+                            <!-- Senha1 -->
+                            <div class="col-10">
+                                <label class="form-label">Senha:</label>
+                                {{ user.password1 }}
+                            </div>
+
+                            <!-- Senha2 -->
+                            <div class="col-10">
+                                <label class="form-label">Confirme a Senha:</label>
+                                {{ user.password2 }}
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Header modal ---------------------->
+
+                    {{dadosP.management_form}}
+                    {% for d in dadosP %}
                     <div class="row pt-5">
                         <h5>Dados Pessoais</h5>
 
                         <div class="col-6">
                             <label class="form-label">Nome Completo:</label>
-                            {{form.nomeCompleto}}
+                            {{d.nomeCompleto}}
                         </div>
 
 
                         <div class="col-2">
                             <label class="form-label">Sexo:</label>
-                            {{form.sexo}}
+                            {{d.sexo}}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Estado Civil:</label>
-                            {{form.estadoCivil}}
+                            {{d.estadoCivil}}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Raça/Cor:</label>
-                            {{form.corRaca}}
+                            {{d.corRaca}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Nascimento:</label>
-                            {{form.dataNascimento}}
+                            {{d.dataNascimento}}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Naturalidade:</label>
-                            {{form.naturalidade}}
+                            {{d.naturalidade}}
                         </div>
 
                         <div class="col-4">
@@ -452,103 +489,103 @@
 
                         <div class="col-3 mb-4">
                             <label class="form-label">Tipo Sanguíneo:</label>
-                            {{form.tipoSanguineo}}
+                            {{d.tipoSanguineo}}
                         </div>
 
                         <hr>
 
                         <div class="col-6">
                             <label class="form-label">Nome Pai:</label>
-                            {{form.nomePai}}
+                            {{d.nomePai}}
                         </div>
 
                         <div class="col-6 mb-4">
                             <label class="form-label">Nome Mãe:</label>
-                            {{form.nomeMae}}
+                            {{d.nomeMae}}
                         </div>
 
                         <hr>
 
                         <div class="col-4">
                             <label class="form-label">CPF:</label>
-                            {{form.cpf}}
+                            {{d.cpf}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">RG:</label>
-                            {{form.rg}}
+                            {{d.rg}}
                         </div>
 
                         <div class="col-5">
                             <label class="form-label">Órgão Expedidor:</label>
-                            {{form.expedidor}}
+                            {{d.expedidor}}
                         </div>
 
                         <div class="col-7">
                             <label class="form-label">CNH:</label>
-                            {{form.cnh}}
+                            {{d.cnh}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Validade:</label>
-                            {{form.validadeCnh}}
+                            {{d.validadeCnh}}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Categoria:</label>
-                            {{form.categoria}}
+                            {{d.categoria}}
                         </div>
 
 
                         <div class="col-7">
-                            <label class="form-label">Titulo de Eleitor:</label>
-                            {{form.tituloEleitor}}
+                            <label class="form-label">Título de Eleitor:</label>
+                            {{d.tituloEleitor}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Zona:</label>
-                            {{form.zona}}
+                            {{d.zona}}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Seção:</label>
-                            {{form.secao}}
+                            {{d.secao}}
                         </div>
 
                         <div class="col-7">
                             <label class="form-label">CTPS:</label>
-                            {{form.ctps}}
+                            {{d.ctps}}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Serie:</label>
-                            {{form.serieCTPS}}
+                            {{d.serieCTPS}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Data:</label>
-                            {{form.dataCTPS}}
+                            {{d.dataCTPS}}
                         </div>
 
 
                         <div class="col-7">
                             <label class="form-label">Reservista:</label>
-                            {{form.reservista}}
+                            {{d.reservista}}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">RA:</label>
-                            {{form.ra}}
+                            {{d.ra}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Serie:</label>
-                            {{form.serieReservista}}
+                            {{d.serieReservista}}
                         </div>
 
                         <div class="col-4">
                             <label class="form-label">PIS:</label>
-                            {{form.pis}}
+                            {{d.pis}}
                         </div>
 
                         <div class="col-4">
@@ -556,80 +593,86 @@
 
                         <div class="col-4">
                             <label class="form-label">Carteira Nacional de Saúde:</label>
-                            {{form.cns}}
+                            {{d.cns}}
                         </div>
 
                         <div class="form-check ms-2 pt-3">
-                            {{form.pcd}}
+                            {{d.pcd}}
                             <label class="form-check-label">
                                 Possui Deficiência Física?
                             </label>
                         </div>
                     </div>
+                    {% endfor %}
 
                     <!-- Dependentes -->
+                    {{ dependentes_form.management_form }}
+                    {% for dep in dependentes_form %}
                     <div class="row pt-5">
                         <hr>
                         <h5>Dependentes</h5>
                         <div class="col-6">
                             <label class="form-label">Nome Completo:</label>
-                            {{dependentes.nomeCompleto}}
+                            {{dep.nomeCompleto}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">CPF:</label>
-                            {{dependentes.cpf}}
+                            {{dep.cpf}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Nascimento:</label>
-                            {{dependentes.dataNascimento}}
+                            {{dep.dataNascimento}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Relação:</label>
-                            {{dependentes.relacao}}
+                            {{dep.relacao}}
                         </div>
 
                         <div class="col-6">
                             <label class="form-label">Email:</label>
-                            {{dependentes.email}}
+                            {{dep.email}}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Contato:</label>
-                            {{dependentes.contato}}
+                            {{dep.contato}}
                         </div>
                     </div>
+                    {% endfor %}
 
                     <!-- Endereço e Contato -->
+                    {{ end.management_form }}
+                    {% for en in end %}
                     <div class="row pt-5">
                         <hr>
                         <h5>Endereço e Contatos</h5>
 
                         <div class="col-6">
                             <label class="form-label">Endereço:</label>
-                            {{ contatoEndereco.endereco }}
+                            {{ en.endereco }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Bairro:</label>
-                            {{ contatoEndereco.bairro }}
+                            {{ en.bairro }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Cidade:</label>
-                            {{ contatoEndereco.cidade }}
+                            {{ en.cidade }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Cep:</label>
-                            {{ contatoEndereco.cep }}
+                            {{ en.cep }}
                         </div>
 
                         <div class="col-2 mb-4">
                             <label class="form-label">Estado:</label>
-                            {{ contatoEndereco.estado }}
+                            {{ en.estado }}
                         </div>
 
                         <div class="col-5">
@@ -637,7 +680,7 @@
 
                         <div class="col-2">
                             <label class="form-label">Ramal:</label>
-                            {{ contatoEndereco.ramal }}
+                            {{ en.ramal }}
                         </div>
 
                         <span><small>Contato:</small></span>
@@ -645,33 +688,33 @@
 
                         <div class="col-6">
                             <label class="form-label">Email Corporativo:</label>
-                            {{ contatoEndereco.emailCorporativo }}
+                            {{ en.emailCorporativo }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Tel. Corporativo:</label>
-                            {{ contatoEndereco.telefoneCorporativo }}
+                            {{ en.telefoneCorporativo }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Cel. Corporativo:</label>
-                            {{ contatoEndereco.celularCorporativo }}
+                            {{ en.celularCorporativo }}
                         </div>
 
 
                         <div class="col-6">
                             <label class="form-label">Email Pessoal:</label>
-                            {{ contatoEndereco.emailPessoal }}
+                            {{ en.emailPessoal }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Tel. Pessoal:</label>
-                            {{ contatoEndereco.telefonePessoal }}
+                            {{ en.telefonePessoal }}
                         </div>
 
                         <div class="col-3 mb-3">
                             <label class="form-label">Cel. Pessoal:</label>
-                            {{ contatoEndereco.celularPessoal }}
+                            {{ en.celularPessoal }}
                         </div>
 
 
@@ -681,64 +724,77 @@
 
                         <div class="col-6">
                             <label class="form-label">Nome Completo:</label>
-
+                            {{en.nomeCompleto}}
                         </div>
 
                         <div class="col-3">
-                            <label class="form-label">Contato:</label>
-                            {{ contatoEndereco.telefoneDeEmergencia }}
+                            <label class="form-label">Telefone:</label>
+                            {{ en.telefoneDeEmergencia }}
+                        </div>
+
+                        <div class="col-3">
+                            <label class="form-label">Celular:</label>
+                            {{ en.celularDeEmergencia }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Relação:</label>
-                            {{ contatoEndereco.relacao }}
+                            {{ en.relacao }}
                         </div>
                     </div>
+                    {% endfor %}
 
+                    {{ escolaridade_form.management_form }}
+                    {% for esc in escolaridade_form %}
                     <!-- Escolaridade -->
                     <div class="row pt-5">
                         <hr>
                         <h5>Escolaridade</h5>
                         <div class="col-6">
                             <label class="form-label">Entidade de Ensino:</label>
-                            {{ escolaridade.entidadeDeEnsino }}
+                            {{ esc.entidadeDeEnsino }}
                         </div>
 
                         <div class="col-4">
                             <label class="form-label">Curso:</label>
-                            {{ escolaridade.curso }}
+                            {{ esc.curso }}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Grau:</label>
-                            {{ escolaridade.grau }}
+                            {{ esc.grau }}
                         </div>
 
                         <div class="col-3 mb-3 ">
                             <label class="form-label">Inicio:</label>
+                            {{esc.dataInicio}}
 
                         </div>
 
                         <div class="col-3 mb-3 ">
                             <label class="form-label">Conclusão:</label>
-                            {{ escolaridade.dataConclusao }}
+                            {{ esc.dataConclusao }}
                         </div>
 
                         <span><small>Outros Idiomas</small></span>
                         <hr>
 
+
                         <div class="col-6 mb-3 ">
                             <label class="form-label">Lingua:</label>
-                            {{ escolaridade.idiomaSecundario }}
+                            {{ esc.idiomaSecundario }}
                         </div>
 
 
                         <div class="col-2">
                             <label class="form-label">Nivel:</label>
-                            {{ escolaridade.nivelSecundario }}
+                            {{ esc.nivelSecundario }}
                         </div>
                     </div>
+                    {% endfor %}
 
+                    {{ profissional_form.management_form }}
+                    {% for profi in profissional_form %}
                     <!-- Profissional -->
                     <div class="row pt-5">
                         <hr>
@@ -746,62 +802,62 @@
 
                         <div class="col-6">
                             <label class="form-label">Cargo:</label>
-                            {{ profissional.cargo }}
+                            {{ profi.cargo }}
                         </div>
 
                         <div class="col-4">
                             <label class="form-label">Área:</label>
-                            {{ profissional.area }}
+                            {{ profi.area }}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">PA|Unidade:</label>
-                            {{ profissional.paUnidade }}
+                            {{ profi.paUnidade }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Colaborador:</label>
-                            {{ profissional.colaborador }}
+                            {{ profi.colaborador }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Centro de custo:</label>
-                            {{ profissional.centroDeCusto }}
+                            {{ profi.centroDeCusto }}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Matricula:</label>
-                            {{ profissional.matricula }}
+                            {{ profi.matricula }}
                         </div>
 
                         <div class="col-4">
                             <label class="form-label">Superior Imediato:</label>
-                            {{ profissional.superiorImediato }}
+                            {{ profi.superiorImediato }}
                         </div>
 
                         <div class="col-4">
                             <label class="form-label">Folha de pagamento:</label>
-                            {{ profissional.folhaDePagamento }}
+                            {{ profi.folhaDePagamento }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Admissão:</label>
-                            {{ profissional.admissao }}
+                            {{ profi.admissao }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Desligamento:</label>
-                            {{ profissional.desligamento }}
+                            {{ profi.desligamento }}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Situação:</label>
-                            {{ profissional.situacao }}
+                            {{ profi.situacao }}
                         </div>
 
                         <div class="col-5">
                             <label class="form-label">Empregador:</label>
-                            {{ profissional.empregador }}
+                            {{ profi.empregador }}
                         </div>
 
                         <div class="col-3">
@@ -809,47 +865,50 @@
 
                         <div class="col-2">
                             <label class="form-label">Horário Entrada:</label>
-                            {{ profissional.horarioEntrada }}
+                            {{ profi.horarioEntrada }}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Horário Saída:</label>
-                            {{ profissional.horarioSaida }}
+                            {{ profi.horarioSaida }}
                         </div>
                     </div>
+                    {% endfor %}
 
+                    {{ dadosBancarios_form.management_form }}
+                    {% for db in dadosBancarios_form %}
                     <!-- Dados Bancários -->
                     <div class="row pt-5">
                         <hr>
                         <h5>Dados Bancarios</h5>
                         <div class="col-6">
                             <label class="form-label">Conta:</label>
-                            {{ dadosBancarios.conta }}
+                            {{ db.conta }}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Digito:</label>
-                            {{ dadosBancarios.digito }}
+                            {{ db.digito }}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Banco:</label>
-                            {{ dadosBancarios.banco }}
+                            {{ db.banco }}
                         </div>
 
                         <div class="col-2">
                             <label class="form-label">Agencia:</label>
-                            {{ dadosBancarios.agencia }}
+                            {{ db.agencia }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Tipo de Conta:</label>
-                            {{ dadosBancarios.tipoDeConta }}
+                            {{ db.tipoDeConta }}
                         </div>
 
                         <div class="col-3">
                             <label class="form-label">Modalidade:</label>
-                            {{ dadosBancarios.modalidade }}
+                            {{ db.modalidade }}
                         </div>
 
                         <div class="col-2">
@@ -857,29 +916,13 @@
 
                         <div class="col-4">
                             <label class="form-label">Chave Pix:</label>
-                            {{ dadosBancarios.chavePix }}
+                            {{ db.chavePix }}
                         </div>
                     </div>
+                    {% endfor %}
 
-                    <!-- Midia -->
-                    <div class="row pt-5">
-                        <hr>
-                        <h5>Midia</h5>
-
-                        <div class="col-6 mb-3">
-                            <label class="form-check-label">Carregar Foto:</label>
-                            {{ midia.foto }}
-                            <div class="invalid-feedback">Nenhum arquivo selecionado</div>
-                        </div>
-
-                        <div class="col-6 mb-3">
-                            <label class="form-check-label">Carregar Background:</label>
-                            {{ midia.canvas }}
-                            <div class="invalid-feedback">Nenhum arquivo selecionado</div>
-                        </div>
-
-                    </div>
-
+                    {{ outros_form.management_form }}
+                    {% for outros in outros_form %}
                     <!-- Outros -->
                     <div class="row pt-5">
                         <hr>
@@ -889,15 +932,16 @@
                             {{ outros.camiseta }}
                         </div>
                     </div>
+                    {% endfor %}
 
 
                     <div class="modal-footer">
 
-                        <button type="button" class="button-style-red" data-bs-dismiss="modal">
+                        <button type="button" class="button-cancel" data-bs-dismiss="modal">
                             Cancelar
                         </button>
 
-                        <button type="submit" class="button-style">
+                        <button type="submit" class="button-confirm">
                             Cadastrar
                         </button>
                     </div>
