@@ -1,100 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 23 *****&#10;1 - Correções no git">
-      <change beforePath="$PROJECT_DIR$/.idea/CCIS.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_28__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_14_53__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_04_2023_16_01__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_04_2023_11_04__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]2/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]3/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/migrations/0002_dadospessoais_usuario_alter_dadospessoais_categoria_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/migrations/0003_alter_certificacao_usuario_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/migrations/0004_alter_certificacao_order_with_respect_to_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/migrations/0005_rename_cnh_doccnh_rename_rg_docrg_doccpf.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/migrations/0006_alter_doccnh_usuario_alter_doccpf_usuario_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/migrations/0007_doccursos.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/static/ccis/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/static/ccis/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/static/ccis/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/static/ccis/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/conta.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/conta.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/dev.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/solicitacao.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/solicitacao.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/templates/ccis/usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/templates/ccis/usuario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ccis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccis/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_0HQ6arP.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_3L58ZBz.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_4JGlaSn.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_4adLsJm.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_5GipYbw.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_8DmkzGW.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_Be87jlH.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_OnHxpmF.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_PsZbfWt.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_Q8lGtVf.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_RFhSsWI.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_SbBnLoN.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_YXdwBwj.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_acPVlIC.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_cwXsouZ.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_dUaBZKJ.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_fZi8GSd.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_g742EHI.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_ivGzk9w.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_jvDHLZ0.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_khCQsIx.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_noIBGu4.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_qVV7tgw.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_s2WZRkr.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_sB4WYRg.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_suS7ZLd.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_wH2sLBV.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_y6C3Tte.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/cores_sicoob_yjUB2mA.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_1QRRwyr.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_2V7l4zi.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_2WsoTDc.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_3Iwiswf.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_5i9EZUf.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_8rJCxWj.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_IuLIwFX.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_LNA7Swj.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_LibwwcY.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_RHdcbAe.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_S9emykH.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_SLLycUn.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_Tllb2Sa.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_USRv74f.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_V1lE2Ng.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_VmbfAzq.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_XdvKJk6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_Yhve0kd.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_eh23fGL.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_epehZpk.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_mh6rvjG.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_qvSfoXv.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_uRER7uE.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/imagem_y4NYofp.jpg" beforeDir="false" />
+    <list default="true" id="a50644c2-f2b6-4bd3-bbc6-b4e22d989914" name="Changes" comment="# Checkpoint 24 *****&#10;1 - Correções no git">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683744654652</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="# Checkpoint 24 *****&#10;1 - Correções no git">
+      <created>1685719466842</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1685719466842</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -369,6 +284,7 @@
     <MESSAGE value="# Checkpoint 17-C&#10;1 - Button pre-configurados" />
     <MESSAGE value="# Checkpoint 19&#10;1 - Pagina Home" />
     <MESSAGE value="Revert &quot;# Checkpoint 21 1 - Refatorando venv etc&quot;&#10;&#10;This reverts commit 0b495270" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;# Checkpoint 21 1 - Refatorando venv etc&quot;&#10;&#10;This reverts commit 0b495270" />
+    <MESSAGE value="# Checkpoint 24 *****&#10;1 - Correções no git" />
+    <option name="LAST_COMMIT_MESSAGE" value="# Checkpoint 24 *****&#10;1 - Correções no git" />
   </component>
 </project>
