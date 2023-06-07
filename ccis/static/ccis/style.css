@@ -1,4 +1,21 @@
 
+/*-- Font -------------------------------------------*/
+@font-face {
+    font-family: 'fontCustom';
+    src: url('/static/fonts/Asap.ttf') format('ttf'),
+         url('/static/fonts/Oswald-VariableFont_wght.ttf') format('ttf');
+         url('/static/fonts/Pacifico-Regular.ttf') format('ttf');
+         url('/static/fonts/segoeui.ttf') format('ttf');
+}
+/*-- Font -------------------------------------------*/
+
+
+
+
+
+
+
+/*--Scroll bar --------------------------------------*/
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -6,371 +23,15 @@
 ::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
 }
+/*--Scroll bar -------------------------------------*/
 
 
 
 
 
-/*--Menu Top -------------------------*/
-.navbar-topp {
-    background-color:#04343D;
 
-}
 
-.link-menu-top{
-    font-family: Asap medium;
-    color:#136863;
-    text-decoration: none;
-    padding:6px;
-}
-
-
-.link-menu-top:hover{
-    color:#04343D;
-    padding:6px;
-    background-color:#048A7F;
-    border-radius:25px;
-    text-decoration: none;
-}
-
-.link-menu-top:active{
-    color:#04343D;
-    background-color:#136863;
-}
-
-
-
-
-/*----------------------------------------*/
-
-
-
-/*---- Perfil ------------------------*/
-
-.card-config{
-    padding:0px;
-    border: 1px solid;
-    border-radius: 20px;
-    border-color: rgb(235,235,235);
-    font-family: Asap;
-    background-color:white;
-    box-shadow: 0 0 10px 1px rgb(237,237,237);
-}
-
-
-.card-header-config{
-    font-family: Asap medium;
-    color:#4D4D4D;
-    margin:17px;
-    background-color:white;
-    border-color: rgb(185,185,185);
-}
-
-
-.card-body-config{
-    font-family: Segoe UI;
-    font-size: 13px;
-    color:#888888;
-    margin:17px;
-    background-color:white;
-}
-
-
-.align-colum{
-    text-align: center!important;
-    display: flex;
-
-}
-
-
-.button-canvas {
-    position: absolute;
-    bottom: 108px;
-    right: 0;
-    cursor: pointer;
-}
-
-
-.canvas-label{
-    display: flex;
-    background-color: #fff;
-    border: 0.25rem solid #fff;
-    margin: -6.3rem auto 0.5rem auto;
-}
-
-.canvas-img{
-    cursor: pointer;
-
-}
-
-
-.comp-text{
-    font-family: Asap semibold;
-    text-align: center!important;
-    color:#B9B9B9
-}
-
-
-.nome-text{
-    text-align: center!important;
-    font-family: Asap semibold;
-    color:#51504F
-}
-
-
-.avatar-label{
-    display: flex;
-    background-color: #fff;
-    border: 0.25rem solid #fff;
-    margin: -6.3rem auto 0.5rem auto;
-    border-radius:50%;
-}
-
-
-.avatar-profile {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
-    cursor: pointer;
-}
-
-
-.flow{
-    height:78vh;
-}
-
-.avatar-img{
-    border:1px solid;
-    border-radius:50%;
-    border-color:white;
-}
-
-.link {
-    font-family:Asap Bold;
-    text-decoration: none;
-    color:#B7B7B7;
-}
-
-/*---------------------------------------*/
-
-
-
-
-
-
-/*---- Usuário --------------------------*/
-.link-card{
-    text-decoration: none;
-}
-
-.span-label-positivo{
-    background-color:#E5F9F6;
-    padding:2%;
-    border:1px white solid;
-    border-radius: 24% 24% 24% 25%;
-}
-
-.span-label-negativo{
-    background-color:#FDEDF1;
-    padding:2%;
-    border:1px white solid;
-    border-radius: 24% 24% 24% 25%;
-}
-
-.table-header{
-    font-family: asap;
-    font-size: 13px;
-    color:rgb(200,200,200);
-    margin:25px;
-}
-
-
-.table-td{
-    vertical-align: middle;
-
-}
-
-
-.button-style {
-    background-color:white;
-    color:rgb(33,145,128);
-    border-radius:5px;
-    border:none;
-    padding:5px;
-}
-
-
-.button-style:hover{
-    background-color:rgb(33,145,128);
-    color:white;
-}
-
-
-.button-style:active{
-    background-color:#05443B;
-}
-
-
-.link-button{
-    padding:10px;
-    font-family: asap;
-    background-color:#4FD1B8;
-    color:#ffffff;
-    border-radius: 20px;
-    transition: all .5s;
-    box-shadow: 0px 3px 10px #C6C6C6;
-    border:none;
-}
-
-
-.link-button:hover{
-    background-color:#16B597;
-    color:#ffffff;
-    border-radius: 20px;
-}
-
-
-.link-button:active{
-    color:#37474F;
-    background-color:#068E74;
-}
-
-
-.button-confirm{
-    padding:5px 15px 5px 15px;
-    font-family: asap;
-    background-color:#37474F;
-    color:white;
-    border-radius: 20px;
-    transition: all .5s;
-    border:none;
-}
-
-
-.button-confirm:hover{
-    background-color:#00353E;
-    color:white;
-    border-radius: 20px;
-}
-
-
-.button-confirm:active{
-    color:white;
-    background-color:#27DEBF;
-}
-
-
-.button-cancel{
-    padding:5px 15px 5px 15px;
-    font-family: asap;
-    background-color:#A8B7BE;
-    color:white;
-    border-radius: 20px;
-    transition: all .5s;
-    border:none;
-}
-
-
-.button-cancel:hover{
-    background-color:#455A64;
-    color:white;
-    border-radius: 20px;
-}
-
-
-.button-cancel:active{
-    color:white;
-    background-color:#494D4E;
-}
-
-
-/*----------------------------------------*/
-
-
-.sub-menu-background {
-    background-color:#f5f5f5;
-    height:65px;
-    border-radius:5px;
-    font-family: asap semibold;
-
-}
-
-/*--Novo Menu Lateral -------------------------*/
-.menu-background{
-    padding-top:80px;
-    font-family: Asap;
-    background-color:#fff;
-    height: 100vh;
-    overflow-y: auto;
-}
-
-
-.ul-lista-novo{
-    list-style-type: none;
-    margin:0;
-    padding:0;
-}
-
-
-.li-lista-novo{
-    vertical-align: middle;
-    padding:2px;
-}
-
-
-.li-link-novo{
-    text-decoration: none;
-    color:#37474F;
-    padding:10px 10px 10px 20px;
-    box-sizing: border-box;
-    display: block;
-    font-family: asap;
-    transition: all .5s;
-
-}
-
-
-.li-link-novo:hover{
-    background-color:#4FD1B8;
-    color:#ffffff;
-    border-radius: 20px;
-}
-
-
-.li-link-novo:active{
-    color:#ffffff;
-    background-color:#16B597;
-}
-
-
-/*--------------------------------------*/
-
-
-.button-doc {
-    cursor: pointer;
-    background-color:white;
-    color:none;
-    border:none;
-}
-
-.button-doc-icon {
-    position: absolute;
-    bottom: 108px;
-    right: 0;
-    cursor: pointer;
-}
-
-.custom-file-upload {
-  display:none;
-  cursor: pointer;
-}
-
-.custom-file-upload:hover {
-  background-color: #d8d8d8;
-}
-
-
-/*-- Configuração Base ----------------*/
+/*-- Configuração Base -----------------------------*/
 .menu-header{
     position: fixed;
     top: 0;
@@ -422,20 +83,270 @@
     align-items: center!important;
     text-decoration:none;
 }
+/*---- Base ----------------------------------------*/
 
-/*-- sub-menu ----------------*/
-.paragrafo-style{
-    text-aline:center;
-    font-family:asap medium;
-    color:#04343D;
-    padding-left:25px;
+
+
+
+
+
+
+
+/*---- Usuário -------------------------------------*/
+.link-card{
+    text-decoration: none;
+}
+
+.span-label-positivo{
+    background-color:#E5F9F6;
+    padding:2%;
+    border:1px white solid;
+    border-radius: 24% 24% 24% 25%;
+}
+
+.span-label-negativo{
+    background-color:#FDEDF1;
+    padding:2%;
+    border:1px white solid;
+    border-radius: 24% 24% 24% 25%;
+}
+
+.table-header{
+    font-family: 'fontCustom', Asap;
+    font-size: 13px;
+    color:rgb(200,200,200);
+    margin:25px;
+}
+
+
+.table-td{
+    vertical-align: middle;
 
 }
 
 
+.button-style {
+    background-color:white;
+    color:rgb(33,145,128);
+    border-radius:5px;
+    border:none;
+    padding:5px;
+}
+
+
+.button-style:hover{
+    background-color:rgb(33,145,128);
+    color:white;
+}
+
+
+.button-style:active{
+    background-color:#05443B;
+}
+
+
+.link-button{
+    padding:10px;
+    font-family: 'fontCustom', Asap;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+}
+
+
+.link-button:hover{
+    background-color:#16B597;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.link-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+.button-confirm{
+    padding:5px 15px 5px 15px;
+    font-family: asap;
+    background-color:#37474F;
+    color:white;
+    border-radius: 20px;
+    transition: all .5s;
+    border:none;
+}
+
+
+.button-confirm:hover{
+    background-color:#00353E;
+    color:white;
+    border-radius: 20px;
+}
+
+
+.button-confirm:active{
+    color:white;
+    background-color:#27DEBF;
+}
+
+
+.button-cancel{
+    padding:5px 15px 5px 15px;
+    font-family: 'fontCustom', Asap;
+    background-color:#A8B7BE;
+    color:white;
+    border-radius: 20px;
+    transition: all .5s;
+    border:none;
+}
+
+
+.button-cancel:hover{
+    background-color:#455A64;
+    color:white;
+    border-radius: 20px;
+}
+
+
+.button-cancel:active{
+    color:white;
+    background-color:#494D4E;
+}
+
+
+.avatar-img{
+    border-radius:50%;
+}
+
+
+.card-config{
+    padding:0px;
+    border: 1px solid;
+    border-radius: 20px;
+    border-color: rgb(235,235,235);
+    font-family: 'fontCustom', Asap;
+    background-color:white;
+    box-shadow: 0 0 10px 1px rgb(237,237,237);
+}
+
+
+.card-header-config{
+    font-family: 'fontCustom', Asap medium;
+    color:#4D4D4D;
+    margin:17px;
+    background-color:white;
+    border-color: rgb(185,185,185);
+}
+
+
+.card-body-config{
+    font-family: 'fontCustom', Segoe UI;
+    font-size: 13px;
+    color:#888888;
+    margin:17px;
+    background-color:white;
+}
+
+
+/*--------------------------------------------------*/
+
+
+
+
+
+
+
+/*--Novo Menu Lateral ------------------------------*/
+.menu-background{
+    padding-top:80px;
+    font-family: 'fontCustom', Asap;
+    background-color:#fff;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+
+.ul-lista-novo{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+
+.li-lista-novo{
+    vertical-align: middle;
+    padding:2px;
+}
+
+
+.li-link-novo{
+    text-decoration: none;
+    color:#37474F;
+    padding:10px 10px 10px 20px;
+    box-sizing: border-box;
+    display: block;
+    font-family: 'fontCustom', Asap;
+    transition: all .5s;
+
+}
+
+
+.li-link-novo:hover{
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.li-link-novo:active{
+    color:#ffffff;
+    background-color:#16B597;
+}
+
+/*-------------------------------------------------*/
+
+
+
+
+
+
+
+/*-- Documentos ----------------------------------*/
+.button-doc {
+    cursor: pointer;
+    background-color:white;
+    color:none;
+    border:none;
+}
+
+.button-doc-icon {
+    position: absolute;
+    bottom: 108px;
+    right: 0;
+    cursor: pointer;
+}
+
+.custom-file-upload {
+  display:none;
+  cursor: pointer;
+}
+
+.custom-file-upload:hover {
+  background-color: #d8d8d8;
+}
+/*-- Documentos ----------------------------------*/
+
+
+
+
+
+
 
 /*-- New Profile ---------------------------------*/
-
 .profile-img {
     position:fixed;
     width: 100%;
@@ -537,7 +448,9 @@ status-negativo{
 
 
 
-/*-- Button ---------------------*/
+
+
+/*-- Button -------------------------------------*/
 .profile-button {
     position: absolute;
     top:85px;
@@ -565,11 +478,15 @@ status-negativo{
     color:#37474F;
     background-color:#068E74;
 }
-/*-- Button ---------------------*/
+/*-- Button ---------------------------------------*/
 
 
 
-/*-- Card -----------------------*/
+
+
+
+
+/*-- Card -----------------------------------------*/
 .card-header-custom{
     padding:15px;
     font-family: Segoe UI semibold;
@@ -633,12 +550,15 @@ status-negativo{
 }
 
 
-/*-- Card -----------------------*/
+/*-- Card --------------------------------------*/
 
 
 
 
-/*-- primeiro login -----------------------*/
+
+
+
+/*-- primeiro login ----------------------------*/
 .menu-new-login{
     top: 0;
     left: 0;
@@ -671,3 +591,5 @@ status-negativo{
     color:#37474F;
     background-color:#068E74;
 }
+
+/*-- primeiro login ----------------------------*/
