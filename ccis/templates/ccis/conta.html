@@ -1,0 +1,763 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content">
+
+  <!-- subMenu --------------------------------->
+  <div class="row">
+
+    <nav class="navbar paragrafo-style">
+      <div class="container-fluid">
+
+        <p class="m-0"> GESTÃO DE PESSOAS <br>
+
+          <small style="font-family:Asap Regular; color:#AFAFAF;">Conta / Dados Pessoais</small></p>
+
+        <div class="navbar-nav-wrap-content-end">
+
+        </div>
+      </div>
+
+    </nav>
+
+
+  </div>
+  <!-- End subMenu ----------------------------->
+
+  <!-- Header do conteúdo ---------------------->
+  <div class="row mb-5">
+
+    <div class="col ms-4 mt-5" style="">
+
+      <h1 style="font-family:Oswald medium ">Módulo de <span style="color:#27DEBF; font-family:Oswald medium ">Dados Pessoais</span>
+      </h1>
+      <p style="color:#8a8a8a;">Cadastre e atualize seus dados pessoais<br> de maneira fácil e segura.</p>
+
+    </div>
+
+    <div class="col">
+      <img src="{% static 'ccis/Grupo 1370.png' %}"
+           alt="rh"
+           width="450"
+           height="auto"
+           class="d-inline-block align-text-center;">
+
+    </div>
+
+  </div>
+  <!-- Header do conteúdo ---------------------->
+
+  <!-- Formularios ----------------------------->
+  <div class="row">
+
+    <div id="list-form" class="col-2 list-group p-0">
+
+      <a class="list-group-item list-group-item-action " href="#list-item-1">Dados Pessoais</a>
+      <a class="list-group-item list-group-item-action " href="#list-item-2">Dependentes</a>
+      <a class="list-group-item list-group-item-action " href="#list-item-3">Endereço e Contato</a>
+      <a class="list-group-item list-group-item-action " href="#list-item-4">Escolaridade</a>
+      <a class="list-group-item list-group-item-action " href="#list-item-5">Certificações</a>
+      <a class="list-group-item list-group-item-action " href="#list-item-6">Profissional</a>
+      <a class="list-group-item list-group-item-action " href="#list-item-7">Dados Bancarios</a>
+      <a class="list-group-item list-group-item-action " href="#list-item-8">Midia</a>
+      <a class="list-group-item list-group-item-action " href="#list-item-9">Outros</a>
+
+    </div>
+
+    <div class="col ms-3 p-0"
+         data-bs-spy="scroll"
+         data-bs-target="list-form"
+         data-bs-offset="1"
+         tabindex="1"
+         style="height:77vh;">
+
+
+      <!-- formularios ---------------------------------------------------------------------------------------------->
+      <div class="d-grid gap-3 gap-lg-3">
+
+        <!-- card dados pessoais -->
+        <div class="card" id="list-item-1">
+
+          <div class="card-header">
+            <h5>Dados Pessoais</h5>
+          </div>
+
+          <div class="card-body">
+            <p class="card-text"></p>
+
+            <form method="post"
+                  action=" {% url 'conta' %} "
+                  class="row g-3 needs-validation"
+                  enctype="multipart/form-data"
+                  novalidate>
+              {% csrf_token %}
+
+
+              <div class="col-6">
+                <label class="form-label">Nome Completo:</label>
+                {{form.nomeCompleto}}
+              </div>
+
+
+              <div class="col-2">
+                <label class="form-label">Sexo:</label>
+                {{form.sexo}}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Estado Civil:</label>
+                {{form.estadoCivil}}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Raça/Cor:</label>
+                {{form.corRaca}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Nascimento:</label>
+                {{form.dataNascimento}}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Naturalidade:</label>
+                {{form.naturalidade}}
+              </div>
+
+              <div class="col-4">
+              </div>
+
+              <div class="col-3 mb-4">
+                <label class="form-label">Tipo Sanguíneo:</label>
+                {{form.tipoSanguineo}}
+              </div>
+
+              <hr>
+
+              <div class="col-6">
+                <label class="form-label">Nome Pai:</label>
+                {{form.nomePai}}
+              </div>
+
+              <div class="col-6 mb-4">
+                <label class="form-label">Nome Mãe:</label>
+                {{form.nomeMae}}
+              </div>
+
+              <hr>
+
+              <div class="col-4">
+                <label class="form-label">CPF:</label>
+                {{form.cpf}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">RG:</label>
+                {{form.rg}}
+              </div>
+
+              <div class="col-5">
+                <label class="form-label">Órgão Expedidor:</label>
+                {{form.expedidor}}
+              </div>
+
+              <div class="col-7">
+                <label class="form-label">CNH:</label>
+                {{form.cnh}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Validade:</label>
+                {{form.validadeCnh}}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Categoria:</label>
+                {{form.categoria}}
+              </div>
+
+
+              <div class="col-7">
+                <label class="form-label">Titulo de Eleitor:</label>
+                {{form.tituloEleitor}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Zona:</label>
+                {{form.zona}}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Seção:</label>
+                {{form.secao}}
+              </div>
+
+              <div class="col-7">
+                <label class="form-label">CTPS:</label>
+                {{form.ctps}}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Serie:</label>
+                {{form.serieCTPS}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Data:</label>
+                {{form.dataCTPS}}
+              </div>
+
+
+              <div class="col-7">
+                <label class="form-label">Reservista:</label>
+                {{form.reservista}}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">RA:</label>
+                {{form.ra}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Serie:</label>
+                {{form.serieReservista}}
+              </div>
+
+              <div class="col-4">
+                <label class="form-label">PIS:</label>
+                {{form.pis}}
+              </div>
+
+              <div class="col-4">
+              </div>
+
+              <div class="col-4">
+                <label class="form-label">Carteira Nacional de Saúde:</label>
+                {{form.cns}}
+              </div>
+
+              <div class="form-check ms-2 pt-3">
+                {{form.pcd}}
+                <label class="form-check-label">
+                  Possui Deficiência Física?
+                </label>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary" id="botao-enviar">
+                  Confirmar
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+        <!-- card Dependentes -->
+        <div class="card" id="list-item-2">
+
+          <div class="card-header">
+            <h5>Dependentes</h5>
+          </div>
+
+          <div class="card-body">
+
+            <form method="post"
+                  action="{% url 'formDep' %}"
+                  class="row g-3 needs-validation"
+                  novalidate>
+              {% csrf_token %}
+
+              <div class="col-6">
+                <label class="form-label">Nome Completo:</label>
+                {{dependentes.nomeCompleto}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">CPF:</label>
+                {{dependentes.cpf}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Nascimento:</label>
+                {{dependentes.dataNascimento}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Relação:</label>
+                {{dependentes.relacao}}
+              </div>
+
+              <div class="col-6">
+                <label class="form-label">Email:</label>
+                {{dependentes.email}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Contato:</label>
+                {{dependentes.contato}}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Fins de IRPF:</label>
+                {{dependentes.declaracao}}
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+        <!-- card End Contatos -->
+        <div class="card" id="list-item-3">
+
+          <div class="card-header">
+            <h5>Endereço e Contatos</h5>
+          </div>
+
+          <div class="card-body">
+
+            <form method="post" action="{% url 'formEnd' %}" class="row g-3 needs-validation" novalidate>
+              {% csrf_token %}
+
+              <div class="col-6">
+                <label class="form-label">Endereço:</label>
+                {{ contatoEndereco.endereco }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Bairro:</label>
+                {{ contatoEndereco.bairro }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Cidade:</label>
+                {{ contatoEndereco.cidade }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Cep:</label>
+                {{ contatoEndereco.cep }}
+              </div>
+
+              <div class="col-2 mb-4">
+                <label class="form-label">Estado:</label>
+                {{ contatoEndereco.estado }}
+              </div>
+
+              <div class="col-5">
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Ramal:</label>
+                {{ contatoEndereco.ramal }}
+              </div>
+
+              <span><small>Contato:</small></span>
+              <hr>
+
+              <div class="col-6">
+                <label class="form-label">Email Corporativo:</label>
+                {{ contatoEndereco.emailCorporativo }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Tel. Corporativo:</label>
+                {{ contatoEndereco.telefoneCorporativo }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Cel. Corporativo:</label>
+                {{ contatoEndereco.celularCorporativo }}
+              </div>
+
+
+              <div class="col-6">
+                <label class="form-label">Email Pessoal:</label>
+                {{ contatoEndereco.emailPessoal }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Tel. Pessoal:</label>
+                {{ contatoEndereco.telefonePessoal }}
+              </div>
+
+              <div class="col-3 mb-3">
+                <label class="form-label">Cel. Pessoal:</label>
+                {{ contatoEndereco.celularPessoal }}
+              </div>
+
+
+              <span><small>Contato de Emergência</small></span>
+              <hr>
+
+
+              <div class="col-6">
+                <label class="form-label">Nome Completo:</label>
+                {{ contatoEndereco.nomeCompleto }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Contato:</label>
+                {{ contatoEndereco.telefoneDeEmergencia }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Relação:</label>
+                {{ contatoEndereco.relacao }}
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- card Escolaridade -->
+        <div class="card" id="list-item-4">
+
+          <div class="card-header">
+            <h5>Escolaridade</h5>
+          </div>
+
+          <div class="card-body">
+
+            <form action=" {% url 'formEsc' %} " method="POST" class="row needs-validation"
+                  enctype="multipart/form-data" novalidate>
+              {% csrf_token %}
+
+
+              <div class="col-6">
+                <label class="form-label">Entidade de Ensino:</label>
+                {{ escolaridade.entidadeDeEnsino }}
+              </div>
+
+              <div class="col-4">
+                <label class="form-label">Curso:</label>
+                {{ escolaridade.curso }}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Grau:</label>
+                {{ escolaridade.grau }}
+              </div>
+
+              <div class="col-3 mb-3 ">
+                <label class="form-label">Inicio:</label>
+                {{ escolaridade.dataInicio }}
+              </div>
+
+              <div class="col-3 mb-3 ">
+                <label class="form-label">Conclusão:</label>
+                {{ escolaridade.dataConclusao }}
+              </div>
+
+              <div class="col-6">
+                <label class="form-label">Certificado:</label>
+                {{ escolaridade.docEscolaridade }}
+              </div>
+
+              <span><small>Outros Idiomas</small></span>
+              <hr>
+
+              <div class="col-6 mb-3 ">
+                <label class="form-label">Lingua:</label>
+                {{ escolaridade.idiomaSecundario }}
+              </div>
+
+
+              <div class="col-2">
+                <label class="form-label">Nivel:</label>
+                {{ escolaridade.nivelSecundario }}
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- card Certificações -->
+        <div class="card" id="list-item-5">
+
+          <div class="card-header">
+            <h5>Certificações</h5>
+          </div>
+
+          <div class="card-body">
+
+            <form action=" {% url 'formCert' %} " method="POST" class="row needs-validation"
+                  enctype="multipart/form-data" novalidate>
+              {% csrf_token %}
+
+              <div class="col-6">
+                <label class="form-label">Nome:</label>
+                {{ certificacao.nome }}
+              </div>
+
+              <div class="col-6">
+                <label class="form-label">Organização Emissora:</label>
+                {{ certificacao.organizacaoEmissora }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Data Emissão:</label>
+                {{ certificacao.dataEmissao }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Data Expiração:</label>
+                {{ certificacao.dataExpiracao }}
+              </div>
+
+              <div class="col-6">
+                <label class="form-label">Certificado:</label>
+                {{ certificacao.docCertificado}}
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- card Profissional -->
+        <div class="card" id="list-item-6">
+
+          <div class="card-header">
+            <h5>Profissional</h5>
+          </div>
+
+          <div class="card-body">
+
+            <form method="post" action="{% url 'formProf' %}" class="row g-3 needs-validation" novalidate>
+              {% csrf_token %}
+
+              <div class="col-6">
+                <label class="form-label">Cargo:</label>
+                {{ profissional.cargo }}
+              </div>
+
+              <div class="col-4">
+                <label class="form-label">Área:</label>
+                {{ profissional.area }}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">PA|Unidade:</label>
+                {{ profissional.paUnidade }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Colaborador:</label>
+                {{ profissional.colaborador }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Centro de custo:</label>
+                {{ profissional.centroDeCusto }}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Matricula:</label>
+                {{ profissional.matricula }}
+              </div>
+
+              <div class="col-4">
+                <label class="form-label">Superior Imediato:</label>
+                {{ profissional.superiorImediato }}
+              </div>
+
+              <div class="col-4">
+                <label class="form-label">Folha de pagamento:</label>
+                {{ profissional.folhaDePagamento }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Admissão:</label>
+                {{ profissional.admissao }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Desligamento:</label>
+                {{ profissional.desligamento }}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Situação:</label>
+                {{ profissional.situacao }}
+              </div>
+
+              <div class="col-5">
+                <label class="form-label">Empregador:</label>
+                {{ profissional.empregador }}
+              </div>
+
+              <div class="col-3">
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Horário Entrada:</label>
+                {{ profissional.horarioEntrada }}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Horário Saída:</label>
+                {{ profissional.horarioSaida }}
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- card Dados Bancarios -->
+        <div class="card" id="list-item-7">
+
+          <div class="card-header">
+            <h5>Dados Bancarios</h5>
+          </div>
+
+          <div class="card-body">
+
+            <form method="post" action="{% url 'formBanc' %}" class="row g-3 needs-validation" novalidate>
+              {% csrf_token %}
+
+              <div class="col-6">
+                <label class="form-label">Conta:</label>
+                {{ dadosBancarios.conta }}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Digito:</label>
+                {{ dadosBancarios.digito }}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Banco:</label>
+                {{ dadosBancarios.banco }}
+              </div>
+
+              <div class="col-2">
+                <label class="form-label">Agencia:</label>
+                {{ dadosBancarios.agencia }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Tipo de Conta:</label>
+                {{ dadosBancarios.tipoDeConta }}
+              </div>
+
+              <div class="col-3">
+                <label class="form-label">Modalidade:</label>
+                {{ dadosBancarios.modalidade }}
+              </div>
+
+              <div class="col-2">
+              </div>
+
+              <div class="col-4">
+                <label class="form-label">Chave Pix:</label>
+                {{ dadosBancarios.chavePix }}
+              </div>
+
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- card Midia -->
+        <div class="card" id="list-item-8">
+
+          <div class="card-header">
+            <h5>Midia</h5>
+          </div>
+
+          <div class="card-body">
+
+            <form method="post"
+                  enctype="multipart/form-data"
+                  action="{% url 'formMidia' %}"
+                  class="row g-3 needs-validation"
+                  novalidate>
+              {% csrf_token %}
+
+              <div class="col-6 mb-3">
+                <label class="form-check-label">Carregar Foto:</label>
+                {{ midia.foto }}
+                <div class="invalid-feedback">Nenhum arquivo selecionado</div>
+              </div>
+
+              <div class="col-6 mb-3">
+                <label class="form-check-label">Carregar Background:</label>
+                {{ midia.canvas }}
+                <div class="invalid-feedback">Nenhum arquivo selecionado</div>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+
+
+            </form>
+          </div>
+        </div>
+
+        <!-- card Outros -->
+        <div class="card" id="list-item-9">
+
+          <div class="card-header">
+            <h5>Outros</h5>
+          </div>
+
+          <div class="card-body">
+
+            <form method="post"
+                  action="{% url 'formOut' %}"
+                  class="row g-3 needs-validation"
+                  novalidate>
+              {% csrf_token %}
+
+              <div class="col-2">
+                <label class="form-label">Tamanho Camiseta:</label>
+                {{ outros.camiseta }}
+              </div>
+
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- Formularios ----------------------------->
+
+</div>
+
+{% endblock %}

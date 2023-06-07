@@ -1,0 +1,393 @@
+<!doctype html>
+
+{% load static %}
+
+<html lang="pt-br">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        
+        <!-- link css -->
+        <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
+
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <!-- fontawesome -->
+        <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
+
+    </head>
+
+    <body style="background-color:#F1F2F5">
+
+    <!-- start container-fluid ---------------------------------------------------------------------------------------->
+    <div class="container-fluid">
+
+        <!-- topMenu ------------------------------------------------------->
+        <header class="menu-header nav justify-content-center ">
+
+            <nav class="col p-0 navbar navbar-expand-lg navbar-fixed">
+                <div class="container-fluid">
+
+                    <!-- Logo do Menu ------------------------------------------------------------------------------------->
+                    <a class="navbar-brand" href="#">
+                        <img src="{% static 'ccis/logonav.png' %}"
+                             alt="logo"
+                             width="47"
+                             height="54"
+                             class="d-inline-block align-text-center;">
+                    </a>
+                    <!-- End Logo do Menu --------------------------------------------------------------------------------->
+
+
+                    <!-- Esquerda do Menu --------------------------------------------------------------------------------->
+                    <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
+                        <ul class="navbar-nav">
+
+                            <li class="  ms-5 me-4">
+                                <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"
+                                   href="#"></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- End Esquerda do Menu ----------------------------------------------------------------------------->
+
+
+                    <!-- Direita do Menu ---------------------------------------------------------------------------------->
+                    <div class="navbar-nav-wrap-content-end">
+
+                        <!-- user button ---------------------------->
+                        <div class="align-items-center">
+
+                            <ul class="navbar-nav">
+
+                                <!-- Start Notification -------------->
+                                <li class="nav-item dropdown">
+
+                                    <button class="btn" type="button" style="color:#219180" id="notButton"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+
+                                        <i class="fa-solid fa-bell"></i>
+
+                                    </button>
+
+                                    <ul class="dropdown-menu" aria-labelledby="notButton">
+
+                                        <li>
+                                            <!-- Card Atividade ------------------>
+                                            <div class="row d-flex overflow-auto">
+                                                <div class=" card-config mb-3 p-0 ">
+
+                                                    <div class="card-header-config d-flex">
+                                                        <div class="col">Atividades</div>
+                                                    </div>
+
+                                                    <hr style="margin-bottom:0">
+
+                                                    <div class="col">
+                                                        <div class="list-group list-group-flush border-bottom scrollarea">
+
+                                                            <a href="#"
+                                                               class="list-group-item list-group-item-action py-3 lh-tight"
+                                                               aria-current="true">
+
+                                                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                                                    <strong class="mb-1">Aniversariante</strong>
+                                                                    <small>28/03/2023</small>
+                                                                </div>
+                                                                <div class="col-10 mb-1 small">
+                                                                    De os Parabéns para a colaboradora Mariana de Souza.
+                                                                </div>
+                                                            </a>
+
+                                                            <a href="#"
+                                                               class="list-group-item list-group-item-action py-3 lh-tight"
+                                                               aria-current="true">
+
+                                                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                                                    <strong class="mb-1">Gestão de Pessoas</strong>
+                                                                    <small>29/03/2023</small>
+                                                                </div>
+
+                                                                <div class="col-10 mb-1 small d-flex justify-content-between">
+                                                                    Seu pedido de férias foi aprovado.
+
+                                                                </div>
+
+                                                            </a>
+
+                                                            <a href="#"
+                                                               class="list-group-item list-group-item-action py-3 lh-tight"
+                                                               aria-current="true">
+
+                                                                <div class="d-flex w-100 align-items-center justify-content-between">
+                                                                    <strong class="mb-1">Tecnologia</strong>
+                                                                    <small>30/03/2023</small>
+                                                                </div>
+
+                                                                <div class="col-10 mb-1 small d-flex justify-content-between">
+                                                                    Os acesso PLD solicitados foram liberados
+                                                                </div>
+
+                                                            </a>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    <!-- Card Footer -->
+                                                    <div style="height:20px;"></div>
+
+                                                </div>
+
+                                            </div>
+                                            <!-- End card Atividade -------------->
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+                                <!-- End Start Notification ---------->
+
+                                <!-- Conta usuário ------------------->
+                                <li class="dropstart media-pill">
+
+                                    <!-- Button ----------------------------->
+                                    <a class="align-horizontal-center"
+                                       type="button"
+                                       data-bs-toggle="dropdown"
+                                       aria-expanded="false">
+
+                                        <div class="">
+                                            <span class="nav-photo">
+                                                {% if dados.foto %}
+                                                <img class="nav-photo" src="{{ dados.foto.url }}"
+                                                     alt="" width="36" height="36">
+
+                                                {% else %}
+
+                                                {% if dados.sexo == "Masculino" %}
+                                                <img class="nav-photo" src="{% static 'ccis/avatar.jpg' %}"
+                                                     alt="" width="36" height="36">
+
+                                                {% elif dados.sexo == "Feminino" %}
+                                                <img class="nav-photo" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                                     alt="" width="36" height="36">
+                                                {% endif %}
+
+                                                {% endif %}
+                                            </span>
+                                        </div>
+
+                                        <div class="ml-2 pb-1 d-none d-lg-block">
+                                            <span class="nav-text mb-0">{{ first_name }} {{ last_name }}</span>
+                                        </div>
+
+                                    </a>
+                                    <!-- Button ----------------------------->
+
+
+                                    <!-- dropdown --------------------------->
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
+                                    <!-- dropdown --------------------------->
+
+                                </li>
+                                <!-- Conta usuário ------------------->
+
+                            </ul>
+
+                        </div>
+                        <!-- user button ---------------------------->
+
+                    </div>
+                    <!-- End Direita do Menu ------------------------------------------------------------------------------>
+
+                </div>
+            </nav>
+
+        </header>
+        <!-- End topMenu --------------------------------------------------->
+
+
+        <main>
+
+            <div class="container-fluid  ps-0 pe-0">
+
+                <div class="row">
+
+                <!-- Menu Lateral -------------------------------------------------------------------->
+                <div class="col-lg-2 col-md-3 col-12 menu-background">
+
+                    <!-- Menu -->
+                    <ul class="ul-lista-novo">
+
+                        <!-- Img -->
+                        <li class="li-lista-novo">
+                            <img src="{% static 'ccis/rh.png' %}"
+                                 alt="rh"
+                                 width="100%"
+                                 height="auto"
+                                 class="d-inline-block align-text-center;">
+                        </li>
+
+                        <hr class="mb-0">
+
+                        <!-- Home -->
+                        <li class="li-lista-novo">
+                            <a class="li-link-novo" href="{% url 'home' %}" aria-current="page">
+                                <i class="fa-sharp fa-solid fa-house"></i>
+                                Home
+                            </a>
+                        </li>
+
+                        <!-- Perfil -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'profile' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-user"></i>
+                                Perfil
+                            </a>
+                        </li>
+
+                        <!-- Gestão -->
+                        <li class="li-lista-novo">
+                            <a href="#" class="li-link-novo dropdown-toggle"
+                               aria-current="page"
+                               data-bs-theme="light"
+                               type="link"
+                               data-bs-toggle="collapse"
+                               data-bs-target="#collapseWidthExample"
+                               aria-expanded="false"
+                               aria-controls="collapseWidthExample">
+
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                                Gestão
+                            </a>
+
+                            <div id="collapseWidthExample" class="collapse collapse-horizontal ps-3 ">
+                                <ul class="ul-lista-novo flex-column mb-auto">
+
+                                    <!-- Dash -->
+                                    <li class="li-lista-novo">
+                                        <a href="#" class="li-link-novo">
+                                            <i class="fa-solid fa-chart-line"></i>
+                                            Dashboard
+                                        </a>
+                                    </li>
+
+                                    <!-- Usuários -->
+                                    <li class="li-lista-novo">
+                                        <a href="{% url 'usuario' %}" class="li-link-novo" aria-current="page">
+                                            <i class="fa-solid fa-users"></i>
+                                            Usuários
+                                        </a>
+                                    </li>
+
+                                    <!-- Solicitações -->
+                                    <li class="li-lista-novo">
+
+                                        <a href="#" class="li-link-novo" aria-current="page">
+                                            <i class="fa-solid fa-message"></i>
+                                            Solicitações
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </li>
+
+                        <!-- Conta -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'conta' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-address-card"></i>
+                                Conta
+                            </a>
+                        </li>
+
+                        <!-- Documentos -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'documentos' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-file"></i>
+                                Documentos
+                            </a>
+                        </li>
+
+                        <!-- Solicitações -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'solicitacao' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-message"></i>
+                                Solicitações
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <hr>
+
+                    <ul class="ul-lista-novo">
+
+                        <!-- logout -->
+                        <li class="li-lista-novo">
+                            <a class="li-link-novo" href="{% url 'logout' %}">
+                                <i class="fa-sharp fa-solid fa-right-from-bracket"></i> Sair
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <!-- End Menu Lateral ---------------------------------------------------------------->
+
+
+                <!-- Conteúdo -------------------------------------------------------------------->
+                <div class="col-lg-10 col-md-9 col-12 mt-lg-0 mt-3" style="padding: 0px;">
+
+                   {% block conteudo %}
+
+
+
+
+
+
+
+
+
+
+                   {% endblock %}
+
+                </div>
+                <!-- End Conteúdo ---------------------------------------------------------------->
+
+            </div>
+
+            </div>
+
+        </main>
+
+    </div>
+    <!-- end container-fluid ------------------------------------------------------------------------------------------>
+
+
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <!-- link js -->
+    <script src="{% static 'ccis/script.js' %}"></script>
+
+    </body>
+</html>
