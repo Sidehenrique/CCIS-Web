@@ -12,9 +12,12 @@ from django.forms import formset_factory, inlineformset_factory
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 
+from django.db.models import URLField
+from django.db.models.functions import Concat
+
 from .models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
-    profissional, dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos
+    dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
+    docCertidao, docAdmissional, docPeriodico, docCursos, profissional
 
 from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
@@ -237,24 +240,23 @@ def profile(request):
     porcentagem_out = out_form.calcular_porcentagem_out()
     porcentagem_mid = mid_form.calcular_porcentagem_mid()
 
-    porcentagem_total = (porcentagem_dados_pessoais + porcentagem_dados_dependentes + porcentagem_end + porcentagem_esc +
-                         porcentagem_cert + porcentagem_profi + porcentagem_db + porcentagem_out + porcentagem_mid) / 9
+    porcentagem_total = (
+                                porcentagem_dados_pessoais + porcentagem_dados_dependentes + porcentagem_end + porcentagem_esc +
+                                porcentagem_cert + porcentagem_profi + porcentagem_db + porcentagem_out + porcentagem_mid) / 9
 
     pf = round(porcentagem_total, 2)
     pf = str(pf)
 
     superior = Group.objects.get(user=request.user)
-    equipe = User.objects.filter(groups=superior).values('first_name', 'last_name', 'dadosPessoais__nomeCompleto',
-                                                         'dadosPessoais__foto', 'dadosPessoais__sexo',
-                                                         'profissional__cargo')
+    equipe = User.objects.filter(groups=superior)
 
     nomes_equipe = []
     for usuario in equipe:
-        first_nameA = usuario['first_name']
-        last_nameA = usuario['last_name']
-        sexo = usuario['dadosPessoais__sexo']
-        foto = usuario['dadosPessoais__foto']
-        cargo = usuario['profissional__cargo']
+        first_nameA = usuario.first_name
+        last_nameA = usuario.last_name
+        sexo = usuario.dadosPessoais.sexo
+        foto = usuario.dadosPessoais.foto
+        cargo = usuario.profissional.first().cargo
         nomes_equipe.append(
             {'foto': foto, 'first_name': first_nameA, 'last_name': last_nameA, 'sexo': sexo, 'cargo': cargo})
 
@@ -304,30 +306,31 @@ def usuario(request):
     total_M = (anual_M + atual_M) * 100 / anual_M - 100
     porcentagem_M = str(total_M)[0:4]
 
-    dados = User.objects.select_related('dadosPessoais', 'profissional').values('dadosPessoais__nomeCompleto',
-                                                                                'dadosPessoais__foto',
-                                                                                'dadosPessoais__sexo',
-                                                                                'profissional__cargo',
-                                                                                'profissional__paUnidade',
-                                                                                'profissional__situacao',
-                                                                                'profissional__colaborador')
+    dados = User.objects.prefetch_related('dadosPessoais', 'profissional')
 
     dadosTable = []
     for item in dados:
-        nomeCompleto = item['dadosPessoais__nomeCompleto']
-        foto = item['dadosPessoais__foto']
-        sexo = item['dadosPessoais__sexo']
-        cargo = item['profissional__cargo']
-        unidade = item['profissional__paUnidade']
-        situacao = item['profissional__situacao']
-        colaborador = item['profissional__colaborador']
+        nomeCompleto = item.dadosPessoais.nomeCompleto if hasattr(item, 'dadosPessoais') else None
+        foto = item.dadosPessoais.foto.url if hasattr(item, 'dadosPessoais') and item.dadosPessoais.foto else None
+        sexo = item.dadosPessoais.sexo if hasattr(item, 'dadosPessoais') else None
+        cargo = item.profissional.first().cargo if item.profissional.exists() else None
+        unidade = item.profissional.first().paUnidade if item.profissional.exists() else None
+        situacao = item.profissional.first().situacao if item.profissional.exists() else None
+        colaborador = item.profissional.first().colaborador if item.profissional.exists() else None
 
         if nomeCompleto == None and foto == None and sexo == None:
             continue
 
-        else:
-            dadosTable.append({'nomeCompleto': nomeCompleto, 'foto': foto, 'sexo': sexo, 'cargo': cargo,
-                               'unidade': unidade, 'situacao': situacao, 'colaborador': colaborador})
+        dadosTable.append({
+            'nomeCompleto': nomeCompleto,
+            'foto': foto,
+            'sexo': sexo,
+            'cargo': cargo,
+            'unidade': unidade,
+            'situacao': situacao,
+            'colaborador': colaborador
+        })
+
 
     form = UserCreationForm()
     dados_formset = inlineformset_factory(User, dadosPessoais, modelFormDadosPessoais, extra=1, can_delete=False)
