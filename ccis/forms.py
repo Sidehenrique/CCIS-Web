@@ -56,6 +56,17 @@ class modelFormDadosPessoais(forms.ModelForm):
 
         }
 
+    def calcular_porcentagem_dp(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
+
 
 class modelFormDependentes(forms.ModelForm):
     class Meta:
@@ -70,6 +81,17 @@ class modelFormDependentes(forms.ModelForm):
                    'contato': forms.NumberInput(attrs={'class': 'form-control'}),
                    'declaracao': forms.Select(attrs={'class': 'form-select'}),
                    }
+
+    def calcular_porcentagem_dep(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
 
 
 class modelFormEnderecoContato(forms.ModelForm):
@@ -97,6 +119,17 @@ class modelFormEnderecoContato(forms.ModelForm):
                    'celularDeEmergencia': forms.NumberInput(attrs={'class': 'form-control'})
                    }
 
+    def calcular_porcentagem_end(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
+
 
 class modelFormEscolaridade(forms.ModelForm):
     class Meta:
@@ -115,6 +148,17 @@ class modelFormEscolaridade(forms.ModelForm):
                    'docEscolaridade': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
                    }
 
+    def calcular_porcentagem_esc(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
+
 
 class modelFormCertificacao(forms.ModelForm):
     class Meta:
@@ -127,6 +171,17 @@ class modelFormCertificacao(forms.ModelForm):
                    'dataExpiracao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
                    'docCertificado': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
                    }
+
+    def calcular_porcentagem_cer(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
 
 
 class modelFormProfissional(forms.ModelForm):
@@ -153,6 +208,17 @@ class modelFormProfissional(forms.ModelForm):
                    'horarioSaida': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
                    }
 
+    def calcular_porcentagem_pro(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
+
 
 class modelFormDadosBancarios(forms.ModelForm):
     class Meta:
@@ -168,6 +234,17 @@ class modelFormDadosBancarios(forms.ModelForm):
                    'chavePix': forms.TextInput(attrs={'class': 'form-control'}),
                    }
 
+    def calcular_porcentagem_db(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
+
 
 class ModelFormMidia(forms.ModelForm):
     class Meta:
@@ -178,6 +255,17 @@ class ModelFormMidia(forms.ModelForm):
                    'canvas': FileInput(attrs={'type': 'file', 'class': 'form-control'})
                    }
 
+    def calcular_porcentagem_mid(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
+
 
 class ModelFormOutros(forms.ModelForm):
     class Meta:
@@ -185,6 +273,17 @@ class ModelFormOutros(forms.ModelForm):
         fields = ('camiseta',)
         widgets = {'camiseta': forms.Select(attrs={'class': 'form-select'}),
                    }
+
+    def calcular_porcentagem_out(self):
+        total_campos = len(self.Meta.fields)
+        preenchidos = 0
+
+        for campo in self.Meta.fields:
+            if getattr(self.instance, campo):
+                preenchidos += 1
+
+        print(preenchidos)
+        return (preenchidos / total_campos) * 100
 
 
 # DOCUMENTOS -------------------------------------------------------------------->
