@@ -90,9 +90,16 @@
                 <div class="justify-content-end">
 
                     <div class="image-list">
-                        <img src="{% static 'ccis/CPA-10.jpg' %}">
+                        {% for certifi in cert %}
+                            {% if certifi.certiAnbima == 'CPA-10' %}
+                            <img src="{% static 'ccis/CPA-10.jpg' %}">
+                            {% elif certifi.certiAnbima == 'CPA-20' %}
                         <img src="{% static 'ccis/CPA-20.jpg' %}">
-                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
+                        {% elif certifi.certiAnbima == 'CEA' %}
+                            <img src="{% static 'ccis/CPA-CEA.jpg' %}">
+                        {% else %}
+                        {% endif %}
+                        {% endfor %}
                     </div>
 
                 </div>
@@ -201,7 +208,6 @@
 
     </div>
     <!--info & Time-line ---------------------->
-
 
     <!-- Cards -------------------------------->
     <div class="row">
@@ -573,8 +579,7 @@
         <!-- End card Atividade -------------->
 
     </div>
-    <!-- Cards -------------------------------->
-
+    <!-- Cards ------------------------------->
 
 
 </div>

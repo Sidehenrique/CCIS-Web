@@ -3,6 +3,9 @@ import os
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.contrib import admin
+from django.contrib.auth.models import Group
+from django.contrib.auth.admin import GroupAdmin
 
 CHOICES_sexo = [
     ('', ''),
@@ -214,6 +217,13 @@ class escolaridade(models.Model):
     def __str__(self):
         return self.entidadeDeEnsino
 
+CHOICES_anbima = [
+    ('', ''),
+    ('CPA-10', 'CPA-10'),
+    ('CPA-20', 'CPA-20'),
+    ('CEA', 'CEA'),
+    ('Não possuo', 'Não possuo'),
+]
 
 class certificacao(models.Model):
     idCertificacao = models.AutoField(db_column='idCertificacao', primary_key=True)
@@ -222,6 +232,8 @@ class certificacao(models.Model):
     dataEmissao = models.CharField(max_length=45, blank=True, null=True)
     dataExpiracao = models.CharField(max_length=45, blank=True, null=True)
     docCertificado = models.FileField(null=True, blank=True)
+    certiAnbima = models.CharField(choices=CHOICES_anbima, max_length=45, blank=True, null=True)
+    anexoAnbima = models.FileField(null=True, blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='certificacao')
 
     def __str__(self):
@@ -446,3 +458,11 @@ class docCursos(models.Model):
     def __str__(self):
         return self.certiCurso
 
+class CustomGroupAdmin(GroupAdmin):
+    list_display = ('name', 'get_members')
+
+    def get_members(self, obj):
+        return ", ".join([user.username for user in obj.user_set.all()])
+
+admin.site.unregister(Group)
+admin.site.register(Group, CustomGroupAdmin)

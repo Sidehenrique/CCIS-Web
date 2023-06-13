@@ -524,7 +524,17 @@
                 {{ certificacao.docCertificado}}
               </div>
 
-              <div class="col-12">
+              <div class="col-6">
+                <label class="form-label">Certificado Anbima:</label>
+                {{ certificacao.certiAnbima }}
+              </div>
+
+              <div class="col-6">
+                <label class="form-label">Anexo:</label>
+                {{ certificacao.anexoAnbima }}
+              </div>
+
+              <div class="col-12 mt-3">
                 <button type="submit" class="btn btn-primary">Confirmar</button>
               </div>
 
@@ -706,7 +716,7 @@
                 <div class="invalid-feedback">Nenhum arquivo selecionado</div>
               </div>
 
-              <div class="col-6 mb-3">
+              <div class="col-6 mb-2">
                 <label class="form-check-label">Carregar Background:</label>
                 {{ midia.canvas }}
                 <div class="invalid-feedback">Nenhum arquivo selecionado</div>

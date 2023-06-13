@@ -163,13 +163,15 @@ class modelFormEscolaridade(forms.ModelForm):
 class modelFormCertificacao(forms.ModelForm):
     class Meta:
         model = certificacao
-        fields = ('nome', 'organizacaoEmissora', 'dataEmissao', 'dataExpiracao', 'docCertificado',)
+        fields = ('nome', 'organizacaoEmissora', 'dataEmissao', 'dataExpiracao', 'docCertificado','certiAnbima','anexoAnbima')
 
         widgets = {'nome': forms.TextInput(attrs={'class': 'form-control'}),
                    'organizacaoEmissora': forms.TextInput(attrs={'class': 'form-control'}),
                    'dataEmissao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
                    'dataExpiracao': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
                    'docCertificado': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                   'certiAnbima': forms.Select(attrs={'class': 'form-select'}),
+                   'anexoAnbima': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
                    }
 
     def calcular_porcentagem_cer(self):
