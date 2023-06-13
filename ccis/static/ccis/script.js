@@ -40,7 +40,7 @@ form.classList.add('was-validated')
 })()
 
 
-
+// Tratamento da view novo_user para esconder o display
 function displayFileName(input) {
     var fileName = input.files[0].name;
     document.getElementById('file-name').textContent = fileName;
@@ -62,4 +62,13 @@ document.addEventListener("DOMContentLoaded", function() {
         form1.style.display = "block";
     });
 
+});
+
+
+// Tratamento do modal inativar_usuario da tabela da view usuário
+
+$('.btn-inativar').click(function() {
+var modalId = $(this).data('bs-target');
+var nomeUsuario = $(this).siblings('.modal-body').find('p').text().trim();
+$(modalId).find('.modal-body p').text(nomeUsuario);
 });

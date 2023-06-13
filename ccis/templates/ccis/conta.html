@@ -88,12 +88,11 @@
             <p class="card-text"></p>
 
             <form method="post"
-                  action=" {% url 'conta' %} "
+                  action=" {% url 'conta' user_id=user_id %} "
                   class="row g-3 needs-validation"
                   enctype="multipart/form-data"
                   novalidate>
               {% csrf_token %}
-
 
               <div class="col-6">
                 <label class="form-label">Nome Completo:</label>

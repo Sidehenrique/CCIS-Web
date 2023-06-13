@@ -12,8 +12,7 @@ from django.forms import formset_factory, inlineformset_factory
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 
-from django.db.models import URLField
-from django.db.models.functions import Concat
+from django.shortcuts import render, get_object_or_404
 
 from .models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
@@ -52,7 +51,7 @@ def loginPage(request):
                 return redirect('new_login_page')
 
             else:
-                return redirect('profile')
+                return redirect('profile', user_id=request.user.id)
 
         else:
 
@@ -75,7 +74,7 @@ def loginPage(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('home')
+    return redirect('login')
 
 
 @login_required(login_url="/login")
@@ -85,9 +84,22 @@ def redefinir_senha(request):
         user = request.user
         user.set_password(nova_senha)
         user.save()
-        return redirect('profile')
+        return redirect('profile', user_id=request.user.id)
 
     return redirect('login')
+
+
+@login_required(login_url="/login")
+def inativar_usuario(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    pro = get_object_or_404(profissional, usuario=user)
+
+    # Atualize o status para inativo
+    pro.situacao = 'Inativo'
+    pro.save()
+
+    return redirect('usuario')
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -111,10 +123,9 @@ def base(request):
         dados_user.append(
             {'sexo': sexo, 'foto': foto, 'first_name': first_name, 'last_name': last_name, 'cargo': cargo})
 
-    print(dados_user)
     contexto = {'dados_user': dados_user}
 
-    return render(request, 'ccis/base.html', contexto)
+    return render(request, 'ccis/base.html')
 
 
 def home(request):
@@ -177,6 +188,12 @@ def new_login_page(request):
 
 @login_required(login_url="/login")
 def solicitacao(request):
+
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
     user = request.user.username
     dados = User.objects.filter(username=user).select_related('dadosPessoais, profissional').values \
         ('first_name', 'last_name', 'dadosPessoais__nomeCompleto', 'dadosPessoais__foto',
@@ -199,22 +216,27 @@ def solicitacao(request):
 
 
 @login_required(login_url="/login")
-def profile(request):
-    username = request.user.username
-    email = request.user.email
-    first_name = request.user.first_name
-    last_name = request.user.last_name
+def profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
 
-    dados = dadosPessoais.objects.get(usuario=request.user)
-    prof = profissional.objects.get(usuario=request.user)
-    contatos = enderecoContato.objects.get(usuario=request.user)
-    depen = dependentes.objects.filter(usuario=request.user).first()
-    end = enderecoContato.objects.filter(usuario=request.user).first()
-    esc = escolaridade.objects.filter(usuario=request.user).first()
-    cert = certificacao.objects.filter(usuario=request.user).first()
-    profi = profissional.objects.filter(usuario=request.user).first()
-    db = dadosBancarios.objects.filter(usuario=request.user).first()
-    out = outros.objects.filter(usuario=request.user).first()
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    first_name = user.first_name if user.first_name else 'Não informado'
+    last_name = user.last_name if user.last_name else ''
+
+    dados = dadosPessoais.objects.get(usuario=user)
+    prof = profissional.objects.get(usuario=user)
+    contatos = enderecoContato.objects.get(usuario=user)
+    depen = dependentes.objects.filter(usuario=user).first()
+    end = enderecoContato.objects.filter(usuario=user).first()
+    esc = escolaridade.objects.filter(usuario=user).first()
+    cert = certificacao.objects.filter(usuario=user).first()
+    profi = profissional.objects.filter(usuario=user).first()
+    db = dadosBancarios.objects.filter(usuario=user).first()
+    out = outros.objects.filter(usuario=user).first()
 
     mid = ModelFormMidia(instance=dados)
 
@@ -241,13 +263,13 @@ def profile(request):
     porcentagem_mid = mid_form.calcular_porcentagem_mid()
 
     porcentagem_total = (
-                                porcentagem_dados_pessoais + porcentagem_dados_dependentes + porcentagem_end + porcentagem_esc +
-                                porcentagem_cert + porcentagem_profi + porcentagem_db + porcentagem_out + porcentagem_mid) / 9
+        porcentagem_dados_pessoais + porcentagem_dados_dependentes + porcentagem_end + porcentagem_esc +
+        porcentagem_cert + porcentagem_profi + porcentagem_db + porcentagem_out + porcentagem_mid) / 9
 
     pf = round(porcentagem_total, 2)
     pf = str(pf)
 
-    superior = Group.objects.get(user=request.user)
+    superior = Group.objects.get(user=user)
     equipe = User.objects.filter(groups=superior)
 
     nomes_equipe = []
@@ -258,13 +280,19 @@ def profile(request):
         foto = usuario.dadosPessoais.foto
         cargo = usuario.profissional.first().cargo
         nomes_equipe.append(
-            {'foto': foto, 'first_name': first_nameA, 'last_name': last_nameA, 'sexo': sexo, 'cargo': cargo})
+            {'id': usuario.id,
+             'foto': foto,
+             'first_name': first_nameA,
+             'last_name': last_nameA,
+             'sexo': sexo,
+             'cargo': cargo})
 
     # Ordenar a equipe com o supervisor no topo
     nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Encarregado(a)'))
 
-    contexto = {'username': username, 'email': email, 'first_name': first_name, 'last_name': last_name,
-                'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid, 'equipe': nomes_equipe, 'pf': pf}
+    contexto = {'user': user, 'first_name': first_name, 'last_name': last_name, 'logName': logName, 'logLast': logLast,
+                'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
+                'equipe': nomes_equipe, 'pf': pf}
 
     if request.method == 'GET':
         return render(request, 'ccis/profile.html', contexto)
@@ -322,14 +350,17 @@ def usuario(request):
             continue
 
         dadosTable.append({
+            'id': item.id,
             'nomeCompleto': nomeCompleto,
             'foto': foto,
             'sexo': sexo,
             'cargo': cargo,
             'unidade': unidade,
             'situacao': situacao,
-            'colaborador': colaborador
+            'colaborador': colaborador,
         })
+
+        print(dadosTable)
 
 
     form = UserCreationForm()
@@ -387,43 +418,47 @@ def usuario(request):
         dadosBancarios_form = dadosBancarios_formset()
         outros_form = outros_formset()
 
-        user = request.user.username
-        email = request.user.email
-        first_name = request.user.first_name if request.user.first_name else 'Nome de Usuário'
-        last_name = request.user.last_name if request.user.last_name else 'Sobre Nome do Usuário'
-        dados = dadosPessoais.objects.get(usuario=request.user)
+        log_id = request.user.id
+        logName = request.user.first_name
+        logLast = request.user.last_name
+        logFoto = dadosPessoais.objects.get(usuario=request.user).foto
 
-        context = {'dados': dados, 'username': user, 'email': email, 'first_name': first_name, 'last_name': last_name,
+        context = {'dados': dados, 'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                    'form': dp, 'data': data, 'totalUsuarios': totalUsuarios, 'totalColaborador': totalColaborador,
                    'totalEstagiarios': totalEstagiarios, 'totalMenor': totalMenor, 'totalMaster': totalMaster,
                    'totalUsuariosAnual': totalAnual, 'porcentagem_F': porcentagem_F, 'AnualFuncionarios': anual_F,
                    'porcentagem_E': porcentagem_E, 'anualEstagiarios': anual_E, 'anualMenor': anual_M,
-                   'porcentagem_M': porcentagem_M, 'user': form, 'dadosTable': dadosTable,
+                   'porcentagem_M': porcentagem_M, 'userCreation': form, 'dadosTable': dadosTable,
                    'dadosP': dados_form, 'usuario': usuario, 'end': endereco_form, 'dependentes_form': dependentes_form,
                    'escolaridade_form': escolaridade_form, 'profissional_form': profissional_form,
-                   'dadosBancarios_form': dadosBancarios_form,
+                   'dadosBancarios_form': dadosBancarios_form, 'user':request.user,
                    'outros_form': outros_form}
 
         return render(request, 'ccis/usuario.html', context)
 
 
 @login_required(login_url="/login")
-def conta(request):
-    user = request.user.username
-    email = request.user.email
-    first_name = request.user.first_name if request.user.first_name else 'Nome de Usuário'
-    last_name = request.user.last_name if request.user.last_name else 'Sobre Nome do Usuário'
-    dados = dadosPessoais.objects.get(usuario=request.user)
+def conta(request, user_id):
+    user = get_object_or_404(User, id=user_id)
 
-    usuario = request.user
-    pk_dados = dadosPessoais.objects.filter(usuario=usuario).first()
-    pk_dependentes = dependentes.objects.filter(usuario=usuario).first()
-    pk_contato = enderecoContato.objects.filter(usuario=usuario).first()
-    pk_escolaridade = escolaridade.objects.filter(usuario=usuario).first()
-    pk_certificacao = certificacao.objects.filter(usuario=usuario).first()
-    pk_profi = profissional.objects.filter(usuario=usuario).first()
-    pk_bancario = dadosBancarios.objects.filter(usuario=usuario).first()
-    pk_outros = outros.objects.filter(usuario=usuario).first()
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    dados = dadosPessoais.objects.get(usuario=user)
+
+    pk_dados = dadosPessoais.objects.filter(usuario=user).first()
+    pk_dependentes = dependentes.objects.filter(usuario=user).first()
+    pk_contato = enderecoContato.objects.filter(usuario=user).first()
+    pk_escolaridade = escolaridade.objects.filter(usuario=user).first()
+    pk_certificacao = certificacao.objects.filter(usuario=user).first()
+    pk_profi = profissional.objects.filter(usuario=user).first()
+    pk_bancario = dadosBancarios.objects.filter(usuario=user).first()
+    pk_outros = outros.objects.filter(usuario=user).first()
 
     dp = modelFormDadosPessoais(instance=pk_dados)
     de = modelFormDependentes(instance=pk_dependentes)
@@ -436,7 +471,8 @@ def conta(request):
     mid = ModelFormMidia(instance=pk_dados)
     data = datAT()
 
-    context = {'dados': dados, 'username': user, 'email': email, 'first_name': first_name, 'last_name': last_name,
+    context = {'dados': dados, 'first_name': first_name, 'last_name': last_name, 'user_id': user_id,
+               'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'escolaridade': esc, 'certificacao': cert,
                'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid, 'data': data}
 
@@ -457,24 +493,29 @@ def conta(request):
 
 
 @login_required(login_url="/login")
-def documentos(request):
-    user = request.user.username
-    email = request.user.email
-    first_name = request.user.first_name if request.user.first_name else 'Nome de Usuário'
-    last_name = request.user.last_name if request.user.last_name else 'Sobre Nome do Usuário'
-    dados = dadosPessoais.objects.get(usuario=request.user)
+def documentos(request, user_id):
+    user = get_object_or_404(User, id=user_id)
 
-    usuario = request.user
-    doc = docRg.objects.filter(usuario=usuario).first()
-    doc_cnh = docCnh.objects.filter(usuario=usuario).first()
-    doc_cpf = docCpf.objects.filter(usuario=usuario).first()
-    doc_reservista = docReservista.objects.filter(usuario=usuario).first()
-    doc_titulo = docTitulo.objects.filter(usuario=usuario).first()
-    doc_clt = docClt.objects.filter(usuario=usuario).first()
-    doc_residencia = docResidencia.objects.filter(usuario=usuario).first()
-    doc_certidao = docCertidao.objects.filter(usuario=usuario).first()
-    doc_admissional = docAdmissional.objects.filter(usuario=usuario).first()
-    doc_periodico = docPeriodico.objects.filter(usuario=usuario).first()
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    dados = dadosPessoais.objects.get(usuario=user)
+
+    doc = docRg.objects.filter(usuario=user).first()
+    doc_cnh = docCnh.objects.filter(usuario=user).first()
+    doc_cpf = docCpf.objects.filter(usuario=user).first()
+    doc_reservista = docReservista.objects.filter(usuario=user).first()
+    doc_titulo = docTitulo.objects.filter(usuario=user).first()
+    doc_clt = docClt.objects.filter(usuario=user).first()
+    doc_residencia = docResidencia.objects.filter(usuario=user).first()
+    doc_certidao = docCertidao.objects.filter(usuario=user).first()
+    doc_admissional = docAdmissional.objects.filter(usuario=user).first()
+    doc_periodico = docPeriodico.objects.filter(usuario=user).first()
 
     status = 'Concluído' if doc != None else 'Pendente'
     statusCnh = 'Concluído' if doc_cnh != None else 'Pendente'
@@ -512,6 +553,7 @@ def documentos(request):
         periodico_form = modelFormPeriodico(instance=doc_periodico)
 
         context = {
+            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'form': form, 'cnh_form': cnh_form, 'cpf_form': cpf_form, 'reservista_form': reservista_form,
             'titulo_form': titulo_form, 'clt_form': clt_form, 'residencia_form': residencia_form,
             'certidao_form': certidao_form, 'admissional_form': admissional_form, 'periodico_form': periodico_form,
@@ -523,8 +565,7 @@ def documentos(request):
             'statusReservista': statusReservista, 'statusTitulo': statusTitulo, 'statusClt': statusClt,
             'statusResidencia': statusResidencia, 'statusCertidao': statusCertidao,
             'statusAdmissional': statusAdmissional,
-            'statusPeriodico': statusPeriodico, 'dados': dados, 'username': user, 'email': email,
-            'first_name': first_name,
+            'statusPeriodico': statusPeriodico, 'dados': dados, 'username': user, 'first_name': first_name,
             'last_name': last_name,
         }
 

@@ -166,8 +166,8 @@
 
                                         <div class="">
                                             <span class="nav-photo">
-                                                {% if dados.foto %}
-                                                <img class="nav-photo" src="{{ dados.foto.url }}"
+                                                {% if logFoto %}
+                                                <img class="nav-photo" src="{{ logFoto.url }}"
                                                      alt="" width="36" height="36">
 
                                                 {% else %}
@@ -186,7 +186,7 @@
                                         </div>
 
                                         <div class="ml-2 pb-1 d-none d-lg-block">
-                                            <span class="nav-text mb-0">{{ first_name }} {{ last_name }}</span>
+                                            <span class="nav-text mb-0">{{ logName }} {{ logLast }}</span>
                                         </div>
 
                                     </a>
@@ -252,7 +252,7 @@
 
                         <!-- Perfil -->
                         <li class="li-lista-novo">
-                            <a href="{% url 'profile' %}" class="li-link-novo" aria-current="page">
+                            <a href="{% url 'profile' request.user.id %}" class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-user"></i>
                                 Perfil
                             </a>
@@ -308,7 +308,7 @@
 
                         <!-- Conta -->
                         <li class="li-lista-novo">
-                            <a href="{% url 'conta' %}" class="li-link-novo" aria-current="page">
+                            <a href="{% url 'conta' request.user.id %}" class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-address-card"></i>
                                 Conta
                             </a>
@@ -316,7 +316,7 @@
 
                         <!-- Documentos -->
                         <li class="li-lista-novo">
-                            <a href="{% url 'documentos' %}" class="li-link-novo" aria-current="page">
+                            <a href="{% url 'documentos' request.user.id %}" class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-file"></i>
                                 Documentos
                             </a>

@@ -218,7 +218,7 @@
             <div class="" style="">
                 <!-- Supervisor -->
                 {% for ch in chefe %}
-                <a href="#" class="list-group-item-action"
+                <a href="{% url 'profile' user_id=ch.id %}" class="list-group-item-action"
                    style="border-bottom: 1px solid; border-color: rgb(235,235,235);
                        display: block; padding: 0.5rem 1rem; text-decoration: none;">
 
@@ -254,7 +254,7 @@
 
                 <!-- Membros -->
                 {% for usuario in equipe %}
-                <a href="#" class="list-group-item-action"
+                <a href="{% url 'profile' user_id=usuario.id %}" class="list-group-item-action"
                    style="border-bottom: 1px solid; border-color: rgb(235,235,235);
                        display: block; padding: 0.5rem 1rem; text-decoration: none;">
 
