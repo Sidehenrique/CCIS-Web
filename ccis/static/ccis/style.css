@@ -23,6 +23,7 @@
 ::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
 }
+
 /*--Scroll bar -------------------------------------*/
 
 
@@ -390,7 +391,7 @@ status-negativo{
     padding:20px 15px 15px 15px;
     text-align: center;
     align-items: center!important;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.4);
     border-radius:10px;
     margin:10px
 }
@@ -417,7 +418,7 @@ status-negativo{
     padding:25px;
     text-align: center;
     align-items: center!important;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.4);
     border-radius:10px;
     display: flex;
     text-align: left;
@@ -441,6 +442,93 @@ status-negativo{
     border-radius:4px;
 
 }
+
+
+.overflow-row {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+
+.card-esc{
+    width:auto;
+    height:400px;
+    border-radius: 10px;
+    border-color: rgb(235,235,235);
+    background-color:#F2F1EE;
+
+}
+
+.card-cert{
+    width: 16rem;
+    border-radius: 10px;
+    border-color: rgb(235,235,235);
+    background-color:#F2F1EE;
+
+}
+
+
+.profile-button-user {
+    position: absolute;
+    width:50px;
+    height:35px;
+    top:85px;
+    right:104px;
+    font-family:Segoe UI semibold;
+    padding:8px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 10px 0px 0px 10px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+    z-index:2;
+}
+
+
+.profile-button-user:hover{
+    background-color:#16B597;
+    color:#ffffff;
+
+}
+
+
+.profile-button-user:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+.profile-button-cert {
+    position: absolute;
+    width:50px;
+    height:35px;
+    top:85px;
+    right:50px;
+    font-family:Segoe UI semibold;
+    padding:8px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 0px 10px 10px 0px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+    z-index:2;
+}
+
+
+.profile-button-cert:hover{
+    background-color:#16B597;
+    color:#ffffff;
+
+}
+
+
+.profile-button-cert:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
 
 /*-- New Profile ---------------------------------*/
 

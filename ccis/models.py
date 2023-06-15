@@ -211,7 +211,7 @@ class escolaridade(models.Model):
     idiomaSecundario = models.CharField(db_column='idiomaSecundario', max_length=45, blank=True, null=True)
     nivelSecundario = models.CharField(choices=CHOICES_nivelSecundario, db_column='nivelSecundario', max_length=45,
                                        blank=True, null=True)
-    docEscolaridade = models.FileField(null=True, blank=True)
+    docEscolaridade = models.FileField(upload_to='certificados', null=True, blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='escolaridade')
 
     def __str__(self):
@@ -231,9 +231,9 @@ class certificacao(models.Model):
     organizacaoEmissora = models.CharField(db_column='organizacaoEmissora', max_length=45, blank=True, null=True)
     dataEmissao = models.CharField(max_length=45, blank=True, null=True)
     dataExpiracao = models.CharField(max_length=45, blank=True, null=True)
-    docCertificado = models.FileField(null=True, blank=True)
+    docCertificado = models.FileField(upload_to='certificados', null=True, blank=True)
     certiAnbima = models.CharField(choices=CHOICES_anbima, max_length=45, blank=True, null=True)
-    anexoAnbima = models.FileField(null=True, blank=True)
+    anexoAnbima = models.FileField(upload_to='certificados', null=True, blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='certificacao')
 
     def __str__(self):
@@ -350,7 +350,7 @@ class outros(models.Model):
 # DOCUMENTOS----------------------------------------------------------
 class docRg(models.Model):
     idRg = models.AutoField(db_column='idRg', primary_key=True)
-    documentoRg = models.FileField(null=True, blank=True)
+    documentoRg = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docRg')
 
@@ -360,7 +360,7 @@ class docRg(models.Model):
 
 class docCnh(models.Model):
     idCnh = models.AutoField(db_column='idCnh', primary_key=True)
-    documentoCnh = models.FileField(null=True, blank=True)
+    documentoCnh = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docCnh')
 
@@ -370,7 +370,7 @@ class docCnh(models.Model):
 
 class docCpf(models.Model):
     idCpf = models.AutoField(db_column='idCpf', primary_key=True)
-    documentoCpf = models.FileField(null=True, blank=True)
+    documentoCpf = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docCpf')
 
@@ -380,7 +380,7 @@ class docCpf(models.Model):
 
 class docReservista(models.Model):
     idReservista = models.AutoField(db_column='idReservista', primary_key=True)
-    documentoReservista = models.FileField(null=True, blank=True)
+    documentoReservista = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docReservista')
 
@@ -390,7 +390,7 @@ class docReservista(models.Model):
 
 class docTitulo(models.Model):
     idTitulo = models.AutoField(db_column='idTitulo', primary_key=True)
-    documentoTitulo = models.FileField(null=True, blank=True)
+    documentoTitulo = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docTitulo')
 
@@ -400,7 +400,7 @@ class docTitulo(models.Model):
 
 class docClt(models.Model):
     idClt = models.AutoField(db_column='idClt', primary_key=True)
-    documentoClt = models.FileField(null=True, blank=True)
+    documentoClt = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docClt')
 
@@ -410,7 +410,7 @@ class docClt(models.Model):
 
 class docResidencia(models.Model):
     idResidencia = models.AutoField(db_column='idResidencia', primary_key=True)
-    documentoResidencia = models.FileField(null=True, blank=True)
+    documentoResidencia = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docResidencia')
 
@@ -420,7 +420,7 @@ class docResidencia(models.Model):
 
 class docCertidao(models.Model):
     idCertidao = models.AutoField(db_column='idCertidao', primary_key=True)
-    documentoCertidao = models.FileField(null=True, blank=True)
+    documentoCertidao = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docCertidao')
 
@@ -430,7 +430,7 @@ class docCertidao(models.Model):
 
 class docAdmissional(models.Model):
     idAdmissional = models.AutoField(db_column='idAdmissional', primary_key=True)
-    documentoAdmissional = models.FileField(null=True, blank=True)
+    documentoAdmissional = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docAdmissional')
 
@@ -440,7 +440,7 @@ class docAdmissional(models.Model):
 
 class docPeriodico(models.Model):
     idPeriodico = models.AutoField(db_column='idPeriodico', primary_key=True)
-    documentoPeriodico = models.FileField(null=True, blank=True)
+    documentoPeriodico = models.FileField(upload_to='documents', null=True, blank=True)
     dataAtualizacao = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True, auto_now=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='docPeriodico')
 
@@ -451,7 +451,7 @@ class docPeriodico(models.Model):
 class docCursos(models.Model):
     idCursos = models.AutoField(db_column='idCursos', primary_key=True)
     curso = models.CharField(max_length=45, blank=True, null=True)
-    certiCurso = models.FileField(null=True, blank=True)
+    certiCurso = models.FileField(upload_to='cursos', null=True, blank=True)
     data = models.DateField(db_column='dataAtualizacao', max_length=45, blank=True, null=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='docCursos')
 
