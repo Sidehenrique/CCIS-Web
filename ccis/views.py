@@ -217,6 +217,7 @@ def solicitacao(request):
 
 @login_required(login_url="/login")
 def profile(request, user_id):
+    global dadosCards_esc
     user = get_object_or_404(User, id=user_id)
 
     log_id = request.user.id
@@ -293,9 +294,51 @@ def profile(request, user_id):
     nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
                                                        x['cargo'] != 'Encarregado(a)'))
 
+    escola = modelFormEscolaridade()
+    certific = modelFormCertificacao()
+
+    dados_cert = certificacao.objects.filter(usuario=request.user)
+
+    dadosCards_cert = []
+    for item in dados_cert:
+        nome = item.nome
+        instituicao = item.organizacaoEmissora
+        conclusao = item.dataEmissao
+
+        dadosCards_cert.append({
+            'id': log_id,
+            'nome': nome,
+            'instituicao': instituicao,
+            'conclusao': conclusao,
+        })
+
+    print(dadosCards_cert)
+
+    dados_esc = escolaridade.objects.filter(usuario=request.user)
+
+    dadosCards_esc = []
+    for item in dados_esc:
+        entidade = item.entidadeDeEnsino
+        curso = item.curso
+        graduacao = item.grau
+        inicio = item.dataInicio
+        conclusao = item.dataConclusao
+
+        dadosCards_esc.append({
+            'id': log_id,
+            'entidade': entidade,
+            'curso': curso,
+            'graduacao': graduacao,
+            'inicio': inicio,
+            'conclusao': conclusao,
+        })
+
+    print(dadosCards_esc)
+
     contexto = {'user': user, 'first_name': first_name, 'last_name': last_name, 'logName': logName, 'logLast': logLast,
                 'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
-                'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn}
+                'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
+                'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc}
 
     if request.method == 'GET':
         return render(request, 'ccis/profile.html', contexto)
@@ -786,7 +829,7 @@ def rg(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -804,7 +847,7 @@ def cnh(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -822,7 +865,7 @@ def cpf(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -840,7 +883,7 @@ def reservista(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -858,7 +901,7 @@ def titulo(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -876,7 +919,7 @@ def clt(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -894,7 +937,7 @@ def residencia(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -912,7 +955,7 @@ def certidao(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -930,7 +973,7 @@ def admissional(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 
@@ -948,7 +991,7 @@ def periodico(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos')
+            return redirect('documentos', user_id=request.user.id)
 
         return render(request, 'ccis/documentos.html')
 

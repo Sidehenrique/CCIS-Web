@@ -65,6 +65,31 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+// Tratamento da view novo_user para esconder o display
+function displayFilePag(input) {
+    var fileName = input.files[0].name;
+    document.getElementById('file-name').textContent = fileName;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const pag1 = document.getElementById("pag1");
+    const pag2 = document.getElementById("pag2");
+
+    document.getElementById("pagBtn1").addEventListener("click", function() {
+        pag1.style.display = "block";
+        pag2.style.display = "none";
+    });
+
+
+    document.getElementById("pagBtn2").addEventListener("click", function() {
+        pag1.style.display = "none";
+        pag2.style.display = "block";
+    });
+
+});
+
+
 // Tratamento do modal inativar_usuario da tabela da view usuário
 
 $('.btn-inativar').click(function() {
