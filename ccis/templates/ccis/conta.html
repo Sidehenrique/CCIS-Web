@@ -57,8 +57,6 @@
       <a class="list-group-item list-group-item-action " href="#list-item-1">Dados Pessoais</a>
       <a class="list-group-item list-group-item-action " href="#list-item-2">Dependentes</a>
       <a class="list-group-item list-group-item-action " href="#list-item-3">Endereço e Contato</a>
-      <a class="list-group-item list-group-item-action " href="#list-item-4">Escolaridade</a>
-      <a class="list-group-item list-group-item-action " href="#list-item-5">Certificações</a>
       <a class="list-group-item list-group-item-action " href="#list-item-6">Profissional</a>
       <a class="list-group-item list-group-item-action " href="#list-item-7">Dados Bancarios</a>
       <a class="list-group-item list-group-item-action " href="#list-item-8">Midia</a>
@@ -414,127 +412,6 @@
               </div>
 
               <div class="col-12">
-                <button type="submit" class="btn btn-primary">Confirmar</button>
-              </div>
-
-            </form>
-          </div>
-        </div>
-
-        <!-- card Escolaridade -->
-        <div class="card" id="list-item-4">
-
-          <div class="card-header">
-            <h5>Escolaridade</h5>
-          </div>
-
-          <div class="card-body">
-
-            <form action=" {% url 'formEsc' %} " method="POST" class="row needs-validation"
-                  enctype="multipart/form-data" novalidate>
-              {% csrf_token %}
-
-
-              <div class="col-6">
-                <label class="form-label">Entidade de Ensino:</label>
-                {{ escolaridade.entidadeDeEnsino }}
-              </div>
-
-              <div class="col-4">
-                <label class="form-label">Curso:</label>
-                {{ escolaridade.curso }}
-              </div>
-
-              <div class="col-2">
-                <label class="form-label">Grau:</label>
-                {{ escolaridade.grau }}
-              </div>
-
-              <div class="col-3 mb-3 ">
-                <label class="form-label">Inicio:</label>
-                {{ escolaridade.dataInicio }}
-              </div>
-
-              <div class="col-3 mb-3 ">
-                <label class="form-label">Conclusão:</label>
-                {{ escolaridade.dataConclusao }}
-              </div>
-
-              <div class="col-6">
-                <label class="form-label">Certificado:</label>
-                {{ escolaridade.docEscolaridade }}
-              </div>
-
-              <span><small>Outros Idiomas</small></span>
-              <hr>
-
-              <div class="col-6 mb-3 ">
-                <label class="form-label">Lingua:</label>
-                {{ escolaridade.idiomaSecundario }}
-              </div>
-
-
-              <div class="col-2">
-                <label class="form-label">Nivel:</label>
-                {{ escolaridade.nivelSecundario }}
-              </div>
-
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary">Confirmar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- card Certificações -->
-        <div class="card" id="list-item-5">
-
-          <div class="card-header">
-            <h5>Certificações</h5>
-          </div>
-
-          <div class="card-body">
-
-            <form action=" {% url 'formCert' %} " method="POST" class="row needs-validation"
-                  enctype="multipart/form-data" novalidate>
-              {% csrf_token %}
-
-              <div class="col-6">
-                <label class="form-label">Nome:</label>
-                {{ certificacao.nome }}
-              </div>
-
-              <div class="col-6">
-                <label class="form-label">Organização Emissora:</label>
-                {{ certificacao.organizacaoEmissora }}
-              </div>
-
-              <div class="col-3">
-                <label class="form-label">Data Emissão:</label>
-                {{ certificacao.dataEmissao }}
-              </div>
-
-              <div class="col-3">
-                <label class="form-label">Data Expiração:</label>
-                {{ certificacao.dataExpiracao }}
-              </div>
-
-              <div class="col-6">
-                <label class="form-label">Certificado:</label>
-                {{ certificacao.docCertificado}}
-              </div>
-
-              <div class="col-6">
-                <label class="form-label">Certificado Anbima:</label>
-                {{ certificacao.certiAnbima }}
-              </div>
-
-              <div class="col-6">
-                <label class="form-label">Anexo:</label>
-                {{ certificacao.anexoAnbima }}
-              </div>
-
-              <div class="col-12 mt-3">
                 <button type="submit" class="btn btn-primary">Confirmar</button>
               </div>
 

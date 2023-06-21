@@ -20,8 +20,8 @@ from .models import dadosPessoais, dependentes, enderecoContato, outros, escolar
 
 from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    modelFormUser, modelFormRg, modelFormCnh, modelFormCpf, modelFormReservista, modelFormTitulo, modelFormClt, \
-    modelFormResidencia, modelFormCertidao, modelFormAdmissional, modelFormPeriodico, modelFormCurso
+    modelFormRg, modelFormCnh, modelFormCpf, modelFormReservista, modelFormTitulo, modelFormClt, \
+    modelFormResidencia, modelFormCertidao, modelFormAdmissional, modelFormPeriodico, modelFormCurso, CustomUserCreationForm
 
 
 # SEGURANÇA ------------------------------------------------------------------------------------------------------------
@@ -138,51 +138,24 @@ def new_login_page(request):
 
         first_name = request.POST.get('first-name').capitalize()
         last_name = request.POST.get('last-name').capitalize()
-        supervisor_id = request.POST.get('supervisor')
 
         # Obter o objeto User atual
         user = request.user
 
-        print(first_name, last_name, supervisor_id, user)
+        print(first_name, last_name, user)
 
         # Atualizar os campos first_name e last_name do User
         user.first_name = first_name
         user.last_name = last_name
         user.save()
 
-        # Obter o objeto Profissional atual ou criar um novo se não existir
-        pro = profissional.objects.get(usuario=user)
-
-        print(pro)
-
-        if supervisor_id is not "":
-            # Atualizar o campo supervisor do Profissional
-            pro.superiorImediato = supervisor_id
-            print(pro)
-            pro.save()
-
-            # Redefine a Senha
-            nova_senha = request.POST['Senha']
-            user = request.user
-            user.set_password(nova_senha)
-            user.save()
-
-            # Redirecionar para outra página ou retornar uma resposta adequada
-            return redirect('profile', user_id=request.user.id)
-
-
-        else:
-
-            # Redefine a Senha
-            nova_senha = request.POST['Senha']
-            user = request.user
-            user.set_password(nova_senha)
-            user.save()
-            return redirect('profile', user_id=request.user.id)
-
+        nova_senha = request.POST['Senha']
+        user = request.user
+        user.set_password(nova_senha)
+        user.save()
+        return redirect('profile', user_id=request.user.id)
 
     else:
-
         return render(request, 'ccis/new_login_page.html')
 
 
@@ -217,7 +190,6 @@ def solicitacao(request):
 
 @login_required(login_url="/login")
 def profile(request, user_id):
-    global dadosCards_esc
     user = get_object_or_404(User, id=user_id)
 
     log_id = request.user.id
@@ -267,8 +239,7 @@ def profile(request, user_id):
         porcentagem_dados_pessoais + porcentagem_dados_dependentes + porcentagem_end + porcentagem_esc +
         porcentagem_cert + porcentagem_profi + porcentagem_db + porcentagem_out + porcentagem_mid) / 9
 
-    pf = round(porcentagem_total, 2)
-    pf = str(pf)
+    pf = str(round(porcentagem_total, 2))
 
     certiAn = certificacao.objects.filter(usuario=user)
 
@@ -297,7 +268,7 @@ def profile(request, user_id):
     escola = modelFormEscolaridade()
     certific = modelFormCertificacao()
 
-    dados_cert = certificacao.objects.filter(usuario=request.user)
+    dados_cert = certificacao.objects.filter(usuario=user)
 
     dadosCards_cert = []
     for item in dados_cert:
@@ -314,7 +285,7 @@ def profile(request, user_id):
 
     print(dadosCards_cert)
 
-    dados_esc = escolaridade.objects.filter(usuario=request.user)
+    dados_esc = escolaridade.objects.filter(usuario=user)
 
     dadosCards_esc = []
     for item in dados_esc:
@@ -335,7 +306,9 @@ def profile(request, user_id):
 
     print(dadosCards_esc)
 
-    contexto = {'user': user, 'first_name': first_name, 'last_name': last_name, 'logName': logName, 'logLast': logLast,
+    print(log_id, user_id)
+
+    contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName, 'logLast': logLast,
                 'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
                 'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
                 'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc}
@@ -346,77 +319,12 @@ def profile(request, user_id):
 
 @login_required(login_url="/login")
 def usuario(request):
-    dp = modelFormDadosPessoais()
-    data = datAT()
 
-    totalUsuarios = len(profissional.objects.filter(situacao='Ativo'))
-    totalColaborador = len(profissional.objects.filter(colaborador='Funcionário(a)', situacao='Ativo'))
-    totalEstagiarios = len(profissional.objects.filter(colaborador='Estagiário(a)', situacao='Ativo'))
-    totalMenor = len(profissional.objects.filter(colaborador='Menor Aprendiz', situacao='Ativo'))
-
-    totalAnual = len(profissional.objects.filter(situacao='Ativo', admissao__lte='2022-12-31'))
-    totalAtual = len(profissional.objects.filter(situacao='Ativo', admissao__gte='2023-01-01'))
-    totalMaster = (totalAtual + totalAnual) * 100 / totalAnual - 100
-    totalMaster = str(totalMaster)[0:4]
-
-    anual_F = len(profissional.objects.filter(situacao='Ativo', colaborador='Funcionário(a)',
-                                              admissao__lte='2022-12-31'))
-    atual_F = len(profissional.objects.filter(situacao='Ativo', colaborador='Funcionário(a)',
-                                              admissao__gte='2023-01-01'))
-    total_F = (anual_F + atual_F) * 100 / anual_F - 100
-    porcentagem_F = str(total_F)[0:4]
-
-    anual_E = len(profissional.objects.filter(situacao='Ativo', colaborador='Estagiário(a)',
-                                              admissao__lte='2022-12-31'))
-    atual_E = len(profissional.objects.filter(situacao='Ativo', colaborador='Estagiário(a)',
-                                              admissao__gte='2023-01-01'))
-    total_E = (anual_E + atual_E) * 100 / anual_E - 100
-    porcentagem_E = str(total_E)[0:4]
-
-    anual_M = len(profissional.objects.filter(situacao='Ativo', colaborador='Menor Aprendiz',
-                                              admissao__lte='2022-12-31'))
-    atual_M = len(profissional.objects.filter(situacao='Ativo', colaborador='Menor Aprendiz',
-                                              admissao__gte='2023-01-01'))
-    total_M = (anual_M + atual_M) * 100 / anual_M - 100
-    porcentagem_M = str(total_M)[0:4]
-
-    dados = User.objects.prefetch_related('dadosPessoais', 'profissional')
-
-    dadosTable = []
-    for item in dados:
-        nomeCompleto = item.dadosPessoais.nomeCompleto if hasattr(item, 'dadosPessoais') else None
-        foto = item.dadosPessoais.foto.url if hasattr(item, 'dadosPessoais') and item.dadosPessoais.foto else None
-        sexo = item.dadosPessoais.sexo if hasattr(item, 'dadosPessoais') else None
-        cargo = item.profissional.first().cargo if item.profissional.exists() else None
-        unidade = item.profissional.first().paUnidade if item.profissional.exists() else None
-        situacao = item.profissional.first().situacao if item.profissional.exists() else None
-        colaborador = item.profissional.first().colaborador if item.profissional.exists() else None
-
-        if nomeCompleto == None and foto == None and sexo == None:
-            continue
-
-        dadosTable.append({
-            'id': item.id,
-            'nomeCompleto': nomeCompleto,
-            'foto': foto,
-            'sexo': sexo,
-            'cargo': cargo,
-            'unidade': unidade,
-            'situacao': situacao,
-            'colaborador': colaborador,
-        })
-
-        print(dadosTable)
-
-
-    form = UserCreationForm()
     dados_formset = inlineformset_factory(User, dadosPessoais, modelFormDadosPessoais, extra=1, can_delete=False)
     endereco_formset = inlineformset_factory(User, enderecoContato, modelFormEnderecoContato, extra=1,
                                              can_delete=False)
     dependentes_formset = inlineformset_factory(User, dependentes, modelFormDependentes, extra=1,
                                                 can_delete=False)
-    escolaridade_formset = inlineformset_factory(User, escolaridade, modelFormEscolaridade, extra=1,
-                                                 can_delete=False)
     profissional_formset = inlineformset_factory(User, profissional, modelFormProfissional, extra=1,
                                                  can_delete=False)
     dadosBancarios_formset = inlineformset_factory(User, dadosBancarios, modelFormDadosBancarios, extra=1,
@@ -424,42 +332,139 @@ def usuario(request):
     outros_formset = inlineformset_factory(User, outros, ModelFormOutros, extra=1, can_delete=False)
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST or None)
         dados_form = dados_formset(request.POST)
         endereco_form = endereco_formset(request.POST)
         dependentes_form = dependentes_formset(request.POST)
-        escolaridade_form = escolaridade_formset(request.POST)
         profissional_form = profissional_formset(request.POST)
         dadosBancarios_form = dadosBancarios_formset(request.POST)
         outros_form = outros_formset(request.POST)
 
         if form.is_valid() and dados_form.is_valid() and endereco_form.is_valid() and dependentes_form.is_valid() and \
-                escolaridade_form.is_valid() and profissional_form.is_valid() and dadosBancarios_form.is_valid() and \
-                outros_form.is_valid():
+                profissional_form.is_valid() and dadosBancarios_form.is_valid() and outros_form.is_valid():
+
             novo_usuario = form.save()
+            grupo_selecionado = form.cleaned_data['group']
+            novo_usuario.groups.set([grupo_selecionado])
+            novo_usuario.save()
+
             dados_form = dados_formset(request.POST, instance=novo_usuario)
             endereco_form = endereco_formset(request.POST, instance=novo_usuario)
             dependentes_form = dependentes_formset(request.POST, instance=novo_usuario)
-            escolaridade_form = escolaridade_formset(request.POST, instance=novo_usuario)
             profissional_form = profissional_formset(request.POST, instance=novo_usuario)
             dadosBancarios_form = dadosBancarios_formset(request.POST, instance=novo_usuario)
             outros_form = outros_formset(request.POST, instance=novo_usuario)
+
             dados_form.save()
             endereco_form.save()
             dependentes_form.save()
-            escolaridade_form.save()
             profissional_form.save()
             dadosBancarios_form.save()
             outros_form.save()
 
             return redirect('usuario')
 
+        else:
+
+            messages.error(request, 'Ocorreu um erro no formulário. Verifique os campos.')
+            return HttpResponse('Não passou na validação')
+
     else:
-        form = UserCreationForm()
+        dp = modelFormDadosPessoais()
+        data = datAT()
+
+        totalUsuarios = len(profissional.objects.filter(situacao='Ativo'))
+        totalColaborador = len(profissional.objects.filter(colaborador='Funcionário(a)', situacao='Ativo'))
+        totalEstagiarios = len(profissional.objects.filter(colaborador='Estagiário(a)', situacao='Ativo'))
+        totalMenor = len(profissional.objects.filter(colaborador='Menor Aprendiz', situacao='Ativo'))
+
+        totalAnual = len(profissional.objects.filter(situacao='Ativo', admissao__lte='2022-12-31'))
+        totalAtual = len(profissional.objects.filter(situacao='Ativo', admissao__gte='2023-01-01'))
+        totalMaster = (totalAtual + totalAnual) * 100 / totalAnual - 100
+        totalMaster = str(totalMaster)[0:4]
+
+        anual_F = len(profissional.objects.filter(situacao='Ativo', colaborador='Funcionário(a)',
+                                                  admissao__lte='2022-12-31'))
+        atual_F = len(profissional.objects.filter(situacao='Ativo', colaborador='Funcionário(a)',
+                                                  admissao__gte='2023-01-01'))
+        total_F = (anual_F + atual_F) * 100 / anual_F - 100
+        porcentagem_F = str(total_F)[0:4]
+
+        anual_E = len(profissional.objects.filter(situacao='Ativo', colaborador='Estagiário(a)',
+                                                  admissao__lte='2022-12-31'))
+        atual_E = len(profissional.objects.filter(situacao='Ativo', colaborador='Estagiário(a)',
+                                                  admissao__gte='2023-01-01'))
+        total_E = (anual_E + atual_E) * 100 / anual_E - 100
+        porcentagem_E = str(total_E)[0:4]
+
+        anual_M = len(profissional.objects.filter(situacao='Ativo', colaborador='Menor Aprendiz',
+                                                  admissao__lte='2022-12-31'))
+        atual_M = len(profissional.objects.filter(situacao='Ativo', colaborador='Menor Aprendiz',
+                                                  admissao__gte='2023-01-01'))
+        total_M = (anual_M + atual_M) * 100 / anual_M - 100
+        porcentagem_M = str(total_M)[0:4]
+
+        # dados = User.objects.prefetch_related('dadosPessoais', 'profissional')
+        #
+        # dadosTable = []
+        # for item in dados:
+        #
+        #     nomeCompleto = item.dadosPessoais.nomeCompleto if hasattr(item, 'dadosPessoais') else None
+        #     foto = item.dadosPessoais.foto.url if hasattr(item, 'dadosPessoais') and item.dadosPessoais.foto else None
+        #     sexo = item.dadosPessoais.sexo if hasattr(item, 'dadosPessoais') else None
+        #     cargo = item.profissional.first().cargo if item.profissional.exists() else None
+        #     unidade = item.profissional.first().paUnidade if item.profissional.exists() else None
+        #     situacao = item.profissional.first().situacao if item.profissional.exists() else None
+        #     colaborador = item.profissional.first().colaborador if item.profissional.exists() else None
+        #
+        #     if nomeCompleto == None and foto == None and sexo == None:
+        #         continue
+        #
+        #     dadosTable.append({
+        #         'id': item.id,
+        #         'nomeCompleto': nomeCompleto,
+        #         'foto': foto,
+        #         'sexo': sexo,
+        #         'cargo': cargo,
+        #         'unidade': unidade,
+        #         'situacao': situacao,
+        #         'colaborador': colaborador,
+        #     })
+
+        dados = User.objects.prefetch_related('dadosPessoais', 'profissional') \
+            .values('id', 'dadosPessoais__nomeCompleto', 'dadosPessoais__foto', 'dadosPessoais__sexo',
+                    'profissional__cargo', 'profissional__paUnidade', 'profissional__situacao',
+                    'profissional__colaborador')
+
+        dadosTable = []
+        for item in dados:
+            id = item['id']
+            nomeCompleto = item['dadosPessoais__nomeCompleto']
+            foto = item['dadosPessoais__foto']
+            sexo = item['dadosPessoais__sexo']
+            cargo = item['profissional__cargo']
+            unidade = item['profissional__paUnidade']
+            situacao = item['profissional__situacao']
+            colaborador = item['profissional__colaborador']
+
+            if nomeCompleto == None and foto == None and sexo == None:
+                continue
+
+            dadosTable.append({
+                'id': id,
+                'nomeCompleto': nomeCompleto,
+                'foto': foto,
+                'sexo': sexo,
+                'cargo': cargo,
+                'unidade': unidade,
+                'situacao': situacao,
+                'colaborador': colaborador,
+            })
+
+        form = CustomUserCreationForm()
         dados_form = dados_formset()
         endereco_form = endereco_formset()
         dependentes_form = dependentes_formset()
-        escolaridade_form = escolaridade_formset()
         profissional_form = profissional_formset()
         dadosBancarios_form = dadosBancarios_formset()
         outros_form = outros_formset()
@@ -476,9 +481,8 @@ def usuario(request):
                    'porcentagem_E': porcentagem_E, 'anualEstagiarios': anual_E, 'anualMenor': anual_M,
                    'porcentagem_M': porcentagem_M, 'userCreation': form, 'dadosTable': dadosTable,
                    'dadosP': dados_form, 'usuario': usuario, 'end': endereco_form, 'dependentes_form': dependentes_form,
-                   'escolaridade_form': escolaridade_form, 'profissional_form': profissional_form,
-                   'dadosBancarios_form': dadosBancarios_form, 'user':request.user,
-                   'outros_form': outros_form}
+                   'profissional_form': profissional_form, 'dadosBancarios_form': dadosBancarios_form,
+                   'user': request.user, 'outros_form': outros_form}
 
         return render(request, 'ccis/usuario.html', context)
 
@@ -500,8 +504,6 @@ def conta(request, user_id):
     pk_dados = dadosPessoais.objects.filter(usuario=user).first()
     pk_dependentes = dependentes.objects.filter(usuario=user).first()
     pk_contato = enderecoContato.objects.filter(usuario=user).first()
-    pk_escolaridade = escolaridade.objects.filter(usuario=user).first()
-    pk_certificacao = certificacao.objects.filter(usuario=user).first()
     pk_profi = profissional.objects.filter(usuario=user).first()
     pk_bancario = dadosBancarios.objects.filter(usuario=user).first()
     pk_outros = outros.objects.filter(usuario=user).first()
@@ -509,18 +511,15 @@ def conta(request, user_id):
     dp = modelFormDadosPessoais(instance=pk_dados)
     de = modelFormDependentes(instance=pk_dependentes)
     conEnd = modelFormEnderecoContato(instance=pk_contato)
-    esc = modelFormEscolaridade(instance=pk_escolaridade)
-    cert = modelFormCertificacao(instance=pk_certificacao)
     prof = modelFormProfissional(instance=pk_profi)
     db = modelFormDadosBancarios(instance=pk_bancario)
     out = ModelFormOutros(instance=pk_outros)
     mid = ModelFormMidia(instance=pk_dados)
-    data = datAT()
 
     context = {'dados': dados, 'first_name': first_name, 'last_name': last_name, 'user_id': user_id,
                'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-               'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'escolaridade': esc, 'certificacao': cert,
-               'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid, 'data': data}
+               'form': dp, 'dependentes': de, 'contatoEndereco': conEnd,
+               'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid}
 
     if request.method == 'GET':
         return render(request, 'ccis/conta.html', context)

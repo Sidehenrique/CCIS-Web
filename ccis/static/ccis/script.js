@@ -97,3 +97,37 @@ var modalId = $(this).data('bs-target');
 var nomeUsuario = $(this).siblings('.modal-body').find('p').text().trim();
 $(modalId).find('.modal-body p').text(nomeUsuario);
 });
+
+
+
+function validarFormulario() {
+    var password1 = document.getElementById('id_password1').value;
+    var password2 = document.getElementById('id_password2').value;
+    var group = document.getElementById('id_group').value;
+
+    if (password1.length < 8) {
+        document.getElementById('password1-error').textContent = 'A senha deve ter pelo menos 8 caracteres.';
+        return false;
+    }
+
+    if (/^\d+$/.test(password1)) {
+        document.getElementById('password1-error').textContent = 'A senha não pode ser totalmente numérica.';
+        return false;
+    }
+
+    if (password1 !== password2) {
+        document.getElementById('password1-error').textContent = 'As senhas não coincidem.';
+        return false;
+    }
+
+    if (!group) {
+        document.getElementById('password1-error').textContent = 'Selecione um grupo.';
+        return false;
+    }
+
+    if (true) {document.getElementById('password1-error').textContent = '';
+    }
+
+    return true;
+
+}

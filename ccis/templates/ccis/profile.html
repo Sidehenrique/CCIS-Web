@@ -219,6 +219,7 @@
     <div class="row">
 
         <!-- Equipe -------------------------->
+        {% if equipe %}
         <div class="col-3 card-custom align-self-start">
 
             <div class="card-header-custom">
@@ -303,6 +304,25 @@
             </div>
 
         </div>
+        {% else %}
+        <div class="col-3 card-custom align-self-start">
+
+            <div class="card-header-custom">
+                Equipe
+            </div>
+
+            <hr class="linha-custom">
+
+            <div class="" style="">
+                <img src="{% static 'ccis/Grupo 4661.png' %}"
+                         alt="rh"
+                         width="auto"
+                         height="auto"
+                         style=" background-repeat:no-repeat">
+            </div>
+
+        </div>
+        {% endif %}
         <!-- Equipe -------------------------->
 
 
@@ -678,7 +698,7 @@
     </div>
     <!-- header ------------------------------->
 
-
+    {% if log_id == user %}
     <!-- from escolaridade -------------------->
     <div class="row p-5 card-custom" style="margin:0px 0px 20px 0px">
 
@@ -752,8 +772,87 @@
     <!-- from escolaridade -------------------->
 
 
+    <!-- from certificação -------------------->
+    <div class="row p-5 card-custom" style="margin:0px 0px 100px 0px">
+
+        <!-- Img ----------------->
+        <div class="col-7">
+            <div style="text-align: center">
+                <img src="{% static 'ccis/Grupo 2662.png' %}"
+                     alt="rh"
+                     width="100%"
+                     height="auto"
+                     class="d-inline-block;">
+            </div>
+        </div>
+        <!-- Img ----------------->
+
+
+        <!-- form ---------------->
+        <div class="col p-2">
+
+            <!-- info ---------------->
+            <h1 class="mt-1" style="font-family:Oswald medium ">CERTIFICAÇÕES</h1>
+
+            <!-- form Certificações -->
+            <form action=" {% url 'formCert' %} "
+                  method="POST"
+                  class="row needs-validation"
+                  enctype="multipart/form-data"
+                  novalidate>
+
+                {% csrf_token %}
+
+                <div class="col-6">
+                    <label class="form-label">Nome:</label>
+                    {{ certificacao.nome }}
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">Organização Emissora:</label>
+                    {{ certificacao.organizacaoEmissora }}
+                </div>
+
+                <div class="col-4 mt-2">
+                    <label class="form-label">Data Emissão:</label>
+                    {{ certificacao.dataEmissao }}
+                </div>
+
+                <div class="col-4 mt-2">
+                    <label class="form-label">Data Expiração:</label>
+                    {{ certificacao.dataExpiracao }}
+                </div>
+
+                <div class="col-4 mt-2">
+                    <label class="form-label">Certificado:</label>
+                    {{ certificacao.docCertificado}}
+                </div>
+
+                <div class="col-8 mt-5">
+                    <label class="form-label">Certificado Anbima:</label>
+                    {{ certificacao.certiAnbima }}
+                </div>
+
+                <div class="col-4 mt-5">
+                    <label class="form-label">Anexo:</label>
+                    {{ certificacao.anexoAnbima }}
+                </div>
+
+                <div class="col-12  mt-5 d-grid">
+                    <button type="submit" class="primeiro-button">Confirmar</button>
+                </div>
+
+            </form>
+
+        </div>
+        <!-- form ---------------->
+
+    </div>
+    <!-- from certificação -------------------->
+
+
     <!-- Cards escolaridade ------------------->
-    <div class="row p-2 card-custom" style="margin:0px 0px 100px 0px">
+    <div class="row p-2 card-custom" style="margin:0px 0px 20px 0px">
 
 
         <!-- Titulo ----------->
@@ -831,86 +930,6 @@
 
     </div>
     <!-- Cards escolaridade ------------------->
-
-
-
-    <!-- from certificação -------------------->
-    <div class="row p-5 card-custom" style="margin:0px 0px 20px 0px">
-
-            <!-- Img ----------------->
-            <div class="col-7">
-                <div style="text-align: center">
-                    <img src="{% static 'ccis/Grupo 2662.png' %}"
-                         alt="rh"
-                         width="100%"
-                         height="auto"
-                         class="d-inline-block;">
-                </div>
-            </div>
-            <!-- Img ----------------->
-
-
-            <!-- form ---------------->
-            <div class="col p-2">
-
-                <!-- info ---------------->
-                <h1 class="mt-1" style="font-family:Oswald medium ">CERTIFICAÇÕES</h1>
-
-                <!-- form Certificações -->
-                <form action=" {% url 'formCert' %} "
-                      method="POST"
-                      class="row needs-validation"
-                      enctype="multipart/form-data"
-                      novalidate>
-
-                    {% csrf_token %}
-
-                    <div class="col-6">
-                        <label class="form-label">Nome:</label>
-                        {{ certificacao.nome }}
-                    </div>
-
-                    <div class="col-6">
-                        <label class="form-label">Organização Emissora:</label>
-                        {{ certificacao.organizacaoEmissora }}
-                    </div>
-
-                    <div class="col-4 mt-2">
-                        <label class="form-label">Data Emissão:</label>
-                        {{ certificacao.dataEmissao }}
-                    </div>
-
-                    <div class="col-4 mt-2">
-                        <label class="form-label">Data Expiração:</label>
-                        {{ certificacao.dataExpiracao }}
-                    </div>
-
-                    <div class="col-4 mt-2">
-                        <label class="form-label">Certificado:</label>
-                        {{ certificacao.docCertificado}}
-                    </div>
-
-                    <div class="col-8 mt-5">
-                        <label class="form-label">Certificado Anbima:</label>
-                        {{ certificacao.certiAnbima }}
-                    </div>
-
-                    <div class="col-4 mt-5">
-                        <label class="form-label">Anexo:</label>
-                        {{ certificacao.anexoAnbima }}
-                    </div>
-
-                    <div class="col-12  mt-5 d-grid">
-                        <button type="submit" class="primeiro-button">Confirmar</button>
-                    </div>
-
-                </form>
-
-            </div>
-            <!-- form ---------------->
-
-    </div>
-    <!-- from certificação -------------------->
 
 
     <!-- Cards certificados ------------------->
@@ -993,6 +1012,170 @@
 
     </div>
     <!-- Cards certificados ------------------->
+    {% else %}
+
+     <!-- Cards escolaridade ------------------->
+    <div class="row p-2 card-custom" style="margin:0px 0px 20px 0px">
+
+
+        <!-- Titulo ----------->
+        <div class="col-12 pt-3">
+            <div class="" style="border-bottom:1px rgb">
+                <h5>Seus Diplomas:</h5>
+            </div>
+            <hr class="linha-custom">
+        </div>
+        <!-- Titulo ----------->
+
+
+        <!-- Cards ------------>
+        {% if dadosCards_esc %}
+        <div class="col pb-3 d-flex overflow-row">
+
+            {% for item in dadosCards_esc %}
+            <div class="mt-4 ">
+                <div class="card-esc me-3"
+                     style="background-color: fff;">
+
+                    <div class="p-2" style="text-align: center">
+
+                        <img src="{% static 'ccis/Grupo 2803.png' %}"
+                             alt="rh"
+                             width="auto%"
+                             height="auto%">
+
+                    </div>
+
+                    <div class="p-3" style="background-color:#00353E; border-radius:0px 0px 10px 10px;">
+
+                        <ul class="card-ul">
+
+                            <li class="">
+                                <h5 style="color:white;">{{ item.curso }}</h5>
+                            </li>
+
+                            <li class="mb-1" style="color:white;">
+                                <i class="fa-sharp fa-solid fa-building"></i>
+                                Instituição: {{ item.entidade }}
+                            </li>
+
+                            <li class="mb-1" style="color:white;">
+                                <i class="fa-sharp fa-solid fa-business-time"></i>
+                                Graduação: {{ item.graduacao }}
+                            </li>
+
+                            <li class="mb-1" style="color:white;">
+                                <i class="fa-solid fa-circle-check"></i>
+                                Conclusão: {{ item.conclusao }}
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="col">
+
+             <img src="{% static 'ccis/Grupo 4661.png' %}"
+                         alt="rh"
+                         width="auto"
+                         height="auto"
+                         style=" background-repeat:no-repeat">
+
+        </div>
+        {% endif %}
+        <!-- Cards ------------>
+
+    </div>
+    <!-- Cards escolaridade ------------------->
+
+
+    <!-- Cards certificados ------------------->
+    <div class="row p-2 card-custom" style="margin:0px 0px 20px 0px">
+
+
+        <!-- Titulo ----------->
+        <div class="col-12 pt-3">
+            <div class="" style="border-bottom:1px rgb">
+                <h5>Suas Certificações:</h5>
+            </div>
+            <hr class="linha-custom">
+        </div>
+        <!-- Titulo ----------->
+
+
+        <!-- Cards ------------>
+        {% if dadosCards_cert %}
+        <div class="col pb-3 d-flex overflow-row">
+
+            {% for item in dadosCards_cert %}
+            <div class="mt-4 ">
+                <div class="card-cert me-3"
+                     style="background-color: fff;">
+
+                    <div class="p-2" style="text-align: center">
+
+                        <img src="{% static 'ccis/Grupo 2816.png' %}"
+                             alt="rh"
+                             width="100%"
+                             height="auto%">
+
+                    </div>
+
+                    <div class="p-3"
+                         style="background-color:#4FD1B8; border-radius:0px 0px 10px 10px">
+
+                        <ul class="card-ul">
+
+                            <li class="card-li">
+                                <h5 style="color:white;">{{ item.nome }}</h5>
+                            </li>
+
+                            <li class="mb-1" style="color:white;">
+                                <i class="fa-sharp fa-solid fa-building"></i>
+                                Instituição: {{ item.instituicao }}
+                            </li>
+
+                            <li class="mb-1" style="color:white;">
+                                <i class="fa-sharp fa-solid fa-business-time"></i>
+                                Carga Horaria:
+                            </li>
+
+                            <li class="mb-1" style="color:white;">
+                                <i class="fa-solid fa-circle-check"></i>
+                                Conclusão: {{ item.conclusao }}
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="col">
+
+             <img src="{% static 'ccis/Grupo 4661.png' %}"
+                         alt="rh"
+                         width="auto"
+                         height="auto"
+                         style=" background-repeat:no-repeat">
+
+        </div>
+        {% endif %}
+        <!-- Cards ------------>
+
+    </div>
+    <!-- Cards certificados ------------------->
+    {% endif %}
 
 </div>
 <!-- Conteudo pagina 2 ------------------------------->

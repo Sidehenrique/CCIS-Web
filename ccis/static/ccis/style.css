@@ -656,6 +656,7 @@ status-negativo{
     padding:0px;
 }
 
+
 .primeiro-button {
     font-family:Segoe UI semibold;
     padding:8px;
@@ -680,4 +681,62 @@ status-negativo{
     background-color:#068E74;
 }
 
+
 /*-- primeiro login ----------------------------*/
+
+
+
+/*-- Home --------------------------------------*/
+
+.navbar-topp{
+    background-color:#04343D;
+}
+
+.login-button {
+    font-family:Segoe UI semibold;
+    text-decoration:none;
+    padding:0 10px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 15px;
+    transition: all .5s;
+    border:none;
+}
+
+
+.login-button:hover{
+    padding:0 15px;
+    background-color:#16B597;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.login-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+
+/*-- Home --------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

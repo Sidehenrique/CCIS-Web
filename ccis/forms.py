@@ -5,16 +5,23 @@ from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, c
     dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
     docCertidao, docAdmissional, docPeriodico, docCursos
 
+from django.contrib.auth.models import Group
+from django.contrib.auth.forms import UserCreationForm
 
-class modelFormUser(forms.ModelForm):
-    class Meta:
-        model = User
 
-        fields = ('username', 'password', 'email')
+# FORMULÁRIOS -------------------------------------------------------------------->
+class CustomUserCreationForm(UserCreationForm):
+    group = forms.ModelChoiceField(queryset=Group.objects.all(), widget=forms.Select(attrs={'class': 'form-select'}))
 
-        widgets = {'username': forms.TextInput(attrs={'class': 'form-control'}),
-                   'password': forms.PasswordInput(attrs={'class': 'form-control'}),
-                   'email': forms.EmailInput(attrs={'class': 'form-control'}), }
+    class Meta(UserCreationForm.Meta):
+        fields = UserCreationForm.Meta.fields + ('group',)
+
+        widgets = {
+            'group': forms.Select(attrs={'class': 'form-select'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
 
 
 class modelFormDadosPessoais(forms.ModelForm):
@@ -379,3 +386,10 @@ class modelFormCurso(forms.ModelForm):
             'data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'curso': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+# GRUPOS -------------------------------------------------------------------->
+
+class GroupForm(forms.Form):
+    group = forms.ModelChoiceField(queryset=Group.objects.all())
+

@@ -56,7 +56,7 @@ CHOICES_categoria = [
 
 class dadosPessoais(models.Model):
     idDadosPessoais = models.AutoField(db_column='idDadosPessoais', primary_key=True)
-    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=60, blank=True, null=True)
+    nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=60, blank=False, null=True)
     sexo = models.CharField(choices=CHOICES_sexo, max_length=45, blank=True, null=True)
     estadoCivil = models.CharField(choices=CHOICES_estadoCivil, db_column='estadoCivil', max_length=45, blank=True,
                                    null=True)
@@ -69,7 +69,7 @@ class dadosPessoais(models.Model):
     nomePai = models.CharField(db_column='nomePai', max_length=60, blank=True, null=True)
     nomeMae = models.CharField(db_column='nomeMae', max_length=60, blank=True, null=True)
 
-    cpf = models.CharField(max_length=11, blank=True, null=True)
+    cpf = models.CharField(max_length=11, blank=False, null=True)
     rg = models.CharField(max_length=45, blank=True, null=True)
     expedidor = models.CharField(max_length=45, blank=True, null=True)
     cnh = models.CharField(max_length=45, blank=True, null=True)
@@ -217,6 +217,7 @@ class escolaridade(models.Model):
     def __str__(self):
         return self.entidadeDeEnsino
 
+
 CHOICES_anbima = [
     ('', ''),
     ('CPA-10', 'CPA-10'),
@@ -224,6 +225,7 @@ CHOICES_anbima = [
     ('CEA', 'CEA'),
     ('Não possuo', 'Não possuo'),
 ]
+
 
 class certificacao(models.Model):
     idCertificacao = models.AutoField(db_column='idCertificacao', primary_key=True)
@@ -283,8 +285,8 @@ CHOICES_empregador = [
 
 class profissional(models.Model):
     idProfissional = models.AutoField(db_column='idProfissional', primary_key=True)
-    cargo = models.CharField(max_length=45, blank=True, null=True)
-    area = models.CharField(max_length=45, blank=True, null=True)
+    cargo = models.CharField(max_length=45, blank=False, null=True)
+    area = models.CharField(max_length=45, blank=False, null=True)
     paUnidade = models.CharField(choices=CHOICES_paUnidade, db_column='paUnidade', max_length=45, blank=True, null=True)
     colaborador = models.CharField(choices=CHOICES_colaborador, max_length=60, blank=True, null=True)
     centroDeCusto = models.CharField(db_column='centroDeCusto', max_length=45, blank=True, null=True)
@@ -294,7 +296,7 @@ class profissional(models.Model):
     folhaDePagamento = models.CharField(max_length=45, blank=True, null=True)
     admissao = models.CharField(max_length=45, blank=True, null=True)
     desligamento = models.CharField(max_length=45, blank=True, null=True)
-    situacao = models.CharField(choices=CHOICES_situacao, max_length=45, blank=True, null=True)
+    situacao = models.CharField(choices=CHOICES_situacao, max_length=45, blank=False, null=True)
     horarioEntrada = models.TimeField(db_column='horarioEntrada', max_length=45, blank=True, null=True)
     horarioSaida = models.TimeField(db_column='horarioSaida', max_length=45, blank=True, null=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='profissional')
@@ -458,11 +460,13 @@ class docCursos(models.Model):
     def __str__(self):
         return self.certiCurso
 
+
 class CustomGroupAdmin(GroupAdmin):
     list_display = ('name', 'get_members')
 
     def get_members(self, obj):
         return ", ".join([user.username for user in obj.user_set.all()])
+
 
 admin.site.unregister(Group)
 admin.site.register(Group, CustomGroupAdmin)
