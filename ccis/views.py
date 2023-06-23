@@ -4,15 +4,11 @@ from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordResetForm
 from django.forms import formset_factory, inlineformset_factory
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import UserCreationForm
-
-from django.shortcuts import render, get_object_or_404
 
 from .models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
@@ -283,8 +279,6 @@ def profile(request, user_id):
             'conclusao': conclusao,
         })
 
-    print(dadosCards_cert)
-
     dados_esc = escolaridade.objects.filter(usuario=user)
 
     dadosCards_esc = []
@@ -303,10 +297,6 @@ def profile(request, user_id):
             'inicio': inicio,
             'conclusao': conclusao,
         })
-
-    print(dadosCards_esc)
-
-    print(log_id, user_id)
 
     contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName, 'logLast': logLast,
                 'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,

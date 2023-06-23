@@ -71,7 +71,6 @@ class modelFormDadosPessoais(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
@@ -97,7 +96,6 @@ class modelFormDependentes(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
@@ -134,7 +132,6 @@ class modelFormEnderecoContato(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
@@ -163,7 +160,6 @@ class modelFormEscolaridade(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
@@ -189,7 +185,6 @@ class modelFormCertificacao(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
@@ -225,7 +220,6 @@ class modelFormProfissional(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
@@ -251,7 +245,6 @@ class modelFormDadosBancarios(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
@@ -272,7 +265,6 @@ class ModelFormMidia(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
@@ -291,7 +283,6 @@ class ModelFormOutros(forms.ModelForm):
             if getattr(self.instance, campo):
                 preenchidos += 1
 
-        print(preenchidos)
         return (preenchidos / total_campos) * 100
 
 
