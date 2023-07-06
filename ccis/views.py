@@ -239,27 +239,31 @@ def profile(request, user_id):
 
     certiAn = certificacao.objects.filter(usuario=user)
 
-    superior = Group.objects.get(user=user)
-    equipe = User.objects.filter(groups=superior)
-
+    superior = Group.objects.filter(user=user).first()
     nomes_equipe = []
-    for usuario in equipe:
-        first_nameA = usuario.first_name
-        last_nameA = usuario.last_name
-        sexo = usuario.dadosPessoais.sexo
-        foto = usuario.dadosPessoais.foto
-        cargo = usuario.profissional.first().cargo
-        nomes_equipe.append(
-            {'id': usuario.id,
-             'foto': foto,
-             'first_name': first_nameA,
-             'last_name': last_nameA,
-             'sexo': sexo,
-             'cargo': cargo})
+    if superior is None:
+        pass
+    
+    else:
+        equipe = User.objects.filter(groups=superior)
+        # Resto do código
+        for usuario in equipe:
+            first_nameA = usuario.first_name
+            last_nameA = usuario.last_name
+            sexo = usuario.dadosPessoais.sexo
+            foto = usuario.dadosPessoais.foto
+            cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+            nomes_equipe.append(
+                {'id': usuario.id,
+                 'foto': foto,
+                 'first_name': first_nameA,
+                 'last_name': last_nameA,
+                 'sexo': sexo,
+                 'cargo': cargo})
 
-    # Ordenar a equipe com o supervisor no topo
-    nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
-                                                       x['cargo'] != 'Encarregado(a)'))
+        # Ordenar a equipe com o supervisor no topo
+        nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                           x['cargo'] != 'Encarregado(a)'))
 
     escola = modelFormEscolaridade()
     certific = modelFormCertificacao()
@@ -393,33 +397,6 @@ def usuario(request):
                                                   admissao__gte='2023-01-01'))
         total_M = (anual_M + atual_M) * 100 / anual_M - 100
         porcentagem_M = str(total_M)[0:4]
-
-        # dados = User.objects.prefetch_related('dadosPessoais', 'profissional')
-        #
-        # dadosTable = []
-        # for item in dados:
-        #
-        #     nomeCompleto = item.dadosPessoais.nomeCompleto if hasattr(item, 'dadosPessoais') else None
-        #     foto = item.dadosPessoais.foto.url if hasattr(item, 'dadosPessoais') and item.dadosPessoais.foto else None
-        #     sexo = item.dadosPessoais.sexo if hasattr(item, 'dadosPessoais') else None
-        #     cargo = item.profissional.first().cargo if item.profissional.exists() else None
-        #     unidade = item.profissional.first().paUnidade if item.profissional.exists() else None
-        #     situacao = item.profissional.first().situacao if item.profissional.exists() else None
-        #     colaborador = item.profissional.first().colaborador if item.profissional.exists() else None
-        #
-        #     if nomeCompleto == None and foto == None and sexo == None:
-        #         continue
-        #
-        #     dadosTable.append({
-        #         'id': item.id,
-        #         'nomeCompleto': nomeCompleto,
-        #         'foto': foto,
-        #         'sexo': sexo,
-        #         'cargo': cargo,
-        #         'unidade': unidade,
-        #         'situacao': situacao,
-        #         'colaborador': colaborador,
-        #     })
 
         dados = User.objects.prefetch_related('dadosPessoais', 'profissional') \
             .values('id', 'dadosPessoais__nomeCompleto', 'dadosPessoais__foto', 'dadosPessoais__sexo',

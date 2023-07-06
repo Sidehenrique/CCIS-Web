@@ -11,9 +11,6 @@
         <nav class="navbar paragrafo-style">
             <div class="container-fluid">
 
-                <p class="m-0"> GESTÃO DE PESSOAS <br>
-                    <small style="font-family:Asap Regular; color:#AFAFAF;">Documentos</small></p>
-
                 <div class="navbar-nav-wrap-content-end">
 
                 </div>
@@ -59,6 +56,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{ status }} </h6>
+
+                    {% if form.instance.documentoRg %}
+                    <div>
+                        <a  class="button-link" href="{{ form.instance.documentoRg.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc.dataAtualizacao %}
                     <span>Data: {{doc.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -79,6 +85,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusCnh}}</h6>
+
+                    {% if cnh_form.instance.documentoCnh %}
+                    <div>
+                        <a  class="button-link" href="{{ cnh_form.instance.documentoCnh.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_cnh.dataAtualizacao %}
                     <span>Data: {{doc_cnh.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -99,6 +114,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusCpf}}</h6>
+
+                    {% if cpf_form.instance.documentoCpf %}
+                    <div>
+                        <a  class="button-link" href="{{ cpf_form.instance.documentoCpf.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_cpf.dataAtualizacao %}
                     <span>Data: {{doc_cpf.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -119,6 +143,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusReservista}}</h6>
+
+                    {% if reservista_form.instance.documentoReservista %}
+                    <div>
+                        <a  class="button-link" href="{{ reservista_form.instance.documentoReservista.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_reservista.dataAtualizacao %}
                     <span>Data: {{doc_reservista.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -139,6 +172,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusTitulo}}</h6>
+
+                    {% if titulo_form.instance.documentoTitulo %}
+                    <div>
+                        <a  class="button-link" href="{{ titulo_form.instance.documentoTitulo.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_titulo.dataAtualizacao %}
                     <span>Data: {{doc_titulo.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -165,6 +207,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusClt}}</h6>
+
+                    {% if clt_form.instance.documentoClt %}
+                    <div>
+                        <a  class="button-link" href="{{ clt_form.instance.documentoClt.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_clt.dataAtualizacao %}
                     <span>Data: {{doc_clt.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -185,6 +236,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusResidencia}}</h6>
+
+                    {% if residencia_form.instance.documentoResidencia %}
+                    <div>
+                        <a  class="button-link" href="{{ residencia_form.instance.documentoResidencia.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_residencia.dataAtualizacao %}
                     <span>Data: {{doc_residencia.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -205,6 +265,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusCertidao}}</h6>
+
+                    {% if certidao_form.instance.documentoCertidao %}
+                    <div>
+                        <a  class="button-link" href="{{ certidao_form.instance.documentoCertidao.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_certidao.dataAtualizacao %}
                     <span>Data: {{doc_certidao.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -225,6 +294,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusAdmissional}}</h6>
+
+                    {% if admissional_form.instance.documentoAdmissional %}
+                    <div>
+                        <a  class="button-link" href="{{ admissional_form.instance.documentoAdmissional.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_admissional.dataAtualizacao %}
                     <span>Data: {{doc_admissional.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
@@ -245,6 +323,15 @@
 
                 <div class="mt-2">
                     <h6>Situação: {{statusPeriodico}}</h6>
+
+                    {% if periodico_form.instance.documentoPeriodico %}
+                    <div>
+                        <a  class="button-link" href="{{ periodico_form.instance.documentoPeriodico.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
                     {% if doc_periodico.dataAtualizacao %}
                     <span>Data: {{doc_periodico.dataAtualizacao|date:"d/m/y"}}</span>
                     {% else %}
