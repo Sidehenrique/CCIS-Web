@@ -523,7 +523,7 @@ def conta(request):
 
         if form.is_valid():
             form.save()
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Dados Pessoais'
@@ -647,7 +647,7 @@ def formDep(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Dependentes'
@@ -670,12 +670,12 @@ def formEnd(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Endereço e Contatos'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
     else:
         return HttpResponse('não deu certo')
@@ -690,13 +690,13 @@ def formEsc(request):
             obj.usuario = request.user
             obj.save()
             curso_esc.save()
-            return redirect('conta', user_id=request.user.id)
+            return redirect('profile', user_id=request.user.id)
 
         else:
             print('deu erro')
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Escolaridade'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
-            return redirect('conta', user_id=request.user.id)
+            return redirect('profile', user_id=request.user.id)
 
     else:
         return HttpResponse('não deu certo')
@@ -712,13 +712,12 @@ def formCert(request):
             obj.usuario = request.user
             obj.save()
             curso_esc.save()
-            return redirect('conta', user_id=request.user.id)
-
+            return redirect('profile', user_id=request.user.id)
 
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Certificação'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
-            return redirect('conta', user_id=request.user.id)
+            return redirect('profile', user_id=request.user.id)
 
     else:
         return HttpResponse('não deu certo')
@@ -736,12 +735,12 @@ def formProf(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Profissional'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
     else:
         return HttpResponse('não deu certo')
@@ -759,12 +758,12 @@ def formBanc(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Dados Bancários'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
     else:
         return HttpResponse('não deu certo')
@@ -782,12 +781,12 @@ def formOut(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Outros'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
-            return redirect('conta', user_id=request.user.id)
+            return redirect('conta')
 
     else:
         return HttpResponse('não deu certo')
@@ -802,12 +801,12 @@ def formMidia(request):
 
         if form.is_valid():
             form.save()
-            return redirect('profile', user_id=request.user.id)
+            return redirect('conta')
 
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
-            return redirect('profile', user_id=request.user.id)
+            return redirect('conta')
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -908,7 +907,7 @@ def cnh(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos', user_id=request.user.id)
+            return redirect('documentos')
 
         return render(request, 'ccis/documentos.html')
 
@@ -926,7 +925,7 @@ def cpf(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos', user_id=request.user.id)
+            return redirect('documentos')
 
         return render(request, 'ccis/documentos.html')
 
@@ -944,7 +943,7 @@ def reservista(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos', user_id=request.user.id)
+            return redirect('documentos')
 
         return render(request, 'ccis/documentos.html')
 
@@ -962,7 +961,7 @@ def titulo(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos', user_id=request.user.id)
+            return redirect('documentos')
 
         return render(request, 'ccis/documentos.html')
 
@@ -980,7 +979,7 @@ def clt(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos', user_id=request.user.id)
+            return redirect('documentos')
 
         return render(request, 'ccis/documentos.html')
 
@@ -1034,7 +1033,7 @@ def admissional(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos', user_id=request.user.id)
+            return redirect('documentos')
 
         return render(request, 'ccis/documentos.html')
 
@@ -1052,7 +1051,7 @@ def periodico(request):
             obj.usuario = request.user
             obj.save()
             form.save()
-            return redirect('documentos', user_id=request.user.id)
+            return redirect('documentos')
 
         return render(request, 'ccis/documentos.html')
 
