@@ -295,6 +295,7 @@
                         </li>
 
                         <!-- Gestão -->
+                        {% if group_gestao %}
                         <li class="li-lista-novo">
                             <a href="#" class="li-link-novo dropdown-toggle"
                                aria-current="page"
@@ -328,12 +329,39 @@
                                         </a>
                                     </li>
 
-                                    <!-- Solicitações -->
+                                    <!-- Pro-seletivo -->
                                     <li class="li-lista-novo">
 
-                                        <a href="#" class="li-link-novo" aria-current="page">
+                                        <a href="{% url 'pro-seletivo' %}" class="li-link-novo" aria-current="page">
                                             <i class="fa-solid fa-message"></i>
-                                            Solicitações
+                                            Processo seletivo
+                                        </a>
+                                    </li>
+
+                                    <!-- ferias -->
+                                    <li class="li-lista-novo">
+
+                                        <a href="{% url 'ferias' %}" class="li-link-novo" aria-current="page">
+                                            <i class="fa-solid fa-message"></i>
+                                            Ferias
+                                        </a>
+                                    </li>
+
+                                    <!-- anbima -->
+                                    <li class="li-lista-novo">
+
+                                        <a href="{% url 'anbima' %}" class="li-link-novo" aria-current="page">
+                                            <i class="fa-solid fa-message"></i>
+                                            Certificação Anbima
+                                        </a>
+                                    </li>
+
+                                    <!-- colaboradores -->
+                                    <li class="li-lista-novo">
+
+                                        <a href="{% url 'colaboradores' %}" class="li-link-novo" aria-current="page">
+                                            <i class="fa-solid fa-message"></i>
+                                            Colaboradores
                                         </a>
                                     </li>
 
@@ -341,10 +369,11 @@
                             </div>
 
                         </li>
+                        {% endif %}
 
                         <!-- Conta -->
                         <li class="li-lista-novo">
-                            <a href="{% url 'conta' request.user.id %}" class="li-link-novo" aria-current="page">
+                            <a href="{% url 'conta' %}" class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-address-card"></i>
                                 Conta
                             </a>
@@ -352,7 +381,7 @@
 
                         <!-- Documentos -->
                         <li class="li-lista-novo">
-                            <a href="{% url 'documentos' request.user.id %}" class="li-link-novo" aria-current="page">
+                            <a href="{% url 'documentos'%}" class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-file"></i>
                                 Documentos
                             </a>
@@ -365,7 +394,7 @@
 
 
                 <!-- Conteúdo -------------------------------------------------------------------->
-                <div class="col-lg-10 col-md-9 col-12 mt-lg-0 mt-3" style="padding: 0px;">
+                <div class="col-lg-10 col-md-9 col-12 mt-lg-0 mt-0" style="padding: 0px;">
 
                     {% block conteudo %}
 

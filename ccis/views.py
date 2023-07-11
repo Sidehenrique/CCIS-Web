@@ -19,6 +19,10 @@ from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEndere
     modelFormRg, modelFormCnh, modelFormCpf, modelFormReservista, modelFormTitulo, modelFormClt, \
     modelFormResidencia, modelFormCertidao, modelFormAdmissional, modelFormPeriodico, modelFormCurso, CustomUserCreationForm
 
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth.views import PasswordResetView
+
 
 # SEGURANÇA ------------------------------------------------------------------------------------------------------------
 def datAT():
@@ -98,6 +102,17 @@ def inativar_usuario(request, user_id):
     return redirect('usuario')
 
 
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'registration/password_reset.html'
+    email_template_name = 'registration/password_reset_email.html'
+    success_url = 'password_reset_done'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Faça qualquer ação adicional, se necessário
+        return response
+
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -117,7 +132,7 @@ def base(request):
         cargo = d['profissional__cargo']
 
         dados_user.append(
-            {'sexo': sexo, 'foto': foto, 'first_name': first_name, 'last_name': last_name, 'cargo': cargo})
+            {'user': request.user, 'sexo': sexo, 'foto': foto, 'first_name': first_name, 'last_name': last_name, 'cargo': cargo})
 
     contexto = {'dados_user': dados_user}
 
@@ -196,9 +211,9 @@ def profile(request, user_id):
     first_name = user.first_name if user.first_name else 'Não informado'
     last_name = user.last_name if user.last_name else ''
 
-    dados = dadosPessoais.objects.get(usuario=user)
-    prof = profissional.objects.get(usuario=user)
-    contatos = enderecoContato.objects.get(usuario=user)
+    dados = dadosPessoais.objects.filter(usuario=user).first()
+    prof = profissional.objects.filter(usuario=user).first()
+    contatos = enderecoContato.objects.filter(usuario=user).first()
     depen = dependentes.objects.filter(usuario=user).first()
     end = enderecoContato.objects.filter(usuario=user).first()
     esc = escolaridade.objects.filter(usuario=user).first()
@@ -240,6 +255,7 @@ def profile(request, user_id):
     certiAn = certificacao.objects.filter(usuario=user)
 
     superior = Group.objects.filter(user=user).first()
+
     nomes_equipe = []
     if superior is None:
         pass
@@ -269,6 +285,9 @@ def profile(request, user_id):
     certific = modelFormCertificacao()
 
     dados_cert = certificacao.objects.filter(usuario=user)
+
+    log = request.user
+    group_gestao = log.groups.filter(id=3).exists()
 
     dadosCards_cert = []
     for item in dados_cert:
@@ -305,7 +324,8 @@ def profile(request, user_id):
     contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName, 'logLast': logLast,
                 'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
                 'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
-                'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc}
+                'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc, 'User': request.user,
+                'group_gestao':group_gestao}
 
     if request.method == 'GET':
         return render(request, 'ccis/profile.html', contexto)
@@ -436,10 +456,13 @@ def usuario(request):
         dadosBancarios_form = dadosBancarios_formset()
         outros_form = outros_formset()
 
+        log = request.user
         log_id = request.user.id
         logName = request.user.first_name
         logLast = request.user.last_name
         logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+        group_gestao = log.groups.filter(id=3).exists()
 
         context = {'dados': dados, 'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                    'form': dp, 'data': data, 'totalUsuarios': totalUsuarios, 'totalColaborador': totalColaborador,
@@ -449,19 +472,23 @@ def usuario(request):
                    'porcentagem_M': porcentagem_M, 'userCreation': form, 'dadosTable': dadosTable,
                    'dadosP': dados_form, 'usuario': usuario, 'end': endereco_form, 'dependentes_form': dependentes_form,
                    'profissional_form': profissional_form, 'dadosBancarios_form': dadosBancarios_form,
-                   'user': request.user, 'outros_form': outros_form}
+                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao}
 
-        return render(request, 'ccis/usuario.html', context)
+        return render(request, 'rh/usuario.html', context)
 
 
 @login_required(login_url="/login")
-def conta(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+def conta(request):
+    # user = get_object_or_404(User, id=user_id)
+    user = request.user
 
+    log = request.user
     log_id = request.user.id
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    group_gestao = log.groups.filter(id=3).exists()
 
     first_name = user.first_name
     last_name = user.last_name
@@ -483,9 +510,9 @@ def conta(request, user_id):
     out = ModelFormOutros(instance=pk_outros)
     mid = ModelFormMidia(instance=pk_dados)
 
-    context = {'dados': dados, 'first_name': first_name, 'last_name': last_name, 'user_id': user_id,
+    context = {'dados': dados, 'first_name': first_name, 'last_name': last_name,
                'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-               'form': dp, 'dependentes': de, 'contatoEndereco': conEnd,
+               'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao':group_gestao,
                'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid}
 
     if request.method == 'GET':
@@ -505,13 +532,18 @@ def conta(request, user_id):
 
 
 @login_required(login_url="/login")
-def documentos(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+def documentos(request):
+    # user = get_object_or_404(User, id=user_id)
 
+    user = request.user
+
+    log = request.user
     log_id = request.user.id
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    group_gestao = log.groups.filter(id=3).exists()
 
     first_name = user.first_name
     last_name = user.last_name
@@ -578,7 +610,7 @@ def documentos(request, user_id):
             'statusResidencia': statusResidencia, 'statusCertidao': statusCertidao,
             'statusAdmissional': statusAdmissional,
             'statusPeriodico': statusPeriodico, 'dados': dados, 'username': user, 'first_name': first_name,
-            'last_name': last_name,
+            'last_name': last_name, 'group_gestao': group_gestao,
         }
 
         return render(request, 'ccis/documentos.html', context)
@@ -778,7 +810,70 @@ def formMidia(request):
             return redirect('profile', user_id=request.user.id)
 
 
-# -----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
+
+# VIWER DO RH ----------------------------------------------------------------------------------------------------------
+@login_required(login_url="/login")
+def pro_seletivo(request):
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'group_gestao': group_gestao}
+    return render(request, 'rh/processo-seletivo.html', contexto)
+
+
+@login_required(login_url="/login")
+def ferias(request):
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'group_gestao': group_gestao}
+    return render(request, 'rh/ferias.html', contexto)
+
+
+@login_required(login_url="/login")
+def anbima(request):
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'group_gestao': group_gestao}
+    return render(request, 'rh/certificacoes-anbima.html', contexto)
+
+
+@login_required(login_url="/login")
+def colaboradores(request):
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'group_gestao': group_gestao}
+    return render(request, 'rh/colaboradores.html', contexto)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 # PROCESSAMENTO DE DOCUMENTOS -------------------------------------------------------------------------------------------
