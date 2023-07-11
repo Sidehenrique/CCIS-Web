@@ -278,14 +278,6 @@
 
                         <hr class="mb-0">
 
-                        <!-- Home -->
-                        <li class="li-lista-novo">
-                            <a class="li-link-novo" href="{% url 'home' %}" aria-current="page">
-                                <i class="fa-sharp fa-solid fa-house"></i>
-                                Home
-                            </a>
-                        </li>
-
                         <!-- Perfil -->
                         <li class="li-lista-novo">
                             <a href="{% url 'profile' request.user.id %}" class="li-link-novo" aria-current="page">
@@ -295,7 +287,7 @@
                         </li>
 
                         <!-- Gestão -->
-                        {% if group_gestao %}
+                        {% if group_gestao or is_superadmin %}
                         <li class="li-lista-novo">
                             <a href="#" class="li-link-novo dropdown-toggle"
                                aria-current="page"
@@ -338,24 +330,6 @@
                                         </a>
                                     </li>
 
-                                    <!-- ferias -->
-                                    <li class="li-lista-novo">
-
-                                        <a href="{% url 'ferias' %}" class="li-link-novo" aria-current="page">
-                                            <i class="fa-solid fa-message"></i>
-                                            Ferias
-                                        </a>
-                                    </li>
-
-                                    <!-- anbima -->
-                                    <li class="li-lista-novo">
-
-                                        <a href="{% url 'anbima' %}" class="li-link-novo" aria-current="page">
-                                            <i class="fa-solid fa-message"></i>
-                                            Certificação Anbima
-                                        </a>
-                                    </li>
-
                                     <!-- colaboradores -->
                                     <li class="li-lista-novo">
 
@@ -380,10 +354,30 @@
                         </li>
 
                         <!-- Documentos -->
+                        {% if is_superadmin %}
                         <li class="li-lista-novo">
                             <a href="{% url 'documentos'%}" class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-file"></i>
                                 Documentos
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <!-- ferias -->
+                        <li class="li-lista-novo">
+
+                            <a href="{% url 'ferias' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-message"></i>
+                                Férias
+                            </a>
+                        </li>
+
+                        <!-- anbima -->
+                        <li class="li-lista-novo">
+
+                            <a href="{% url 'anbima' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-message"></i>
+                                Certificações Anbima
                             </a>
                         </li>
 

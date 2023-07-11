@@ -41,7 +41,6 @@ urlpatterns = [
     path('admissional', views.admissional, name='admissional'),
     path('periodico', views.periodico, name='periodico'),
 
-
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name='registration/password_reset.html'),
          name='password_reset'),
     path('reset_password/done/',
@@ -54,7 +53,6 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'),
          name='password_reset_complete'),
     path('reset_password/', CustomPasswordResetView.as_view(), name='password_reset'),
-
 
     path('rh/processo-seletivo', views.pro_seletivo, name='pro-seletivo'),
     path('rh/ferias', views.ferias, name='ferias'),

@@ -19,8 +19,6 @@ from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEndere
     modelFormRg, modelFormCnh, modelFormCpf, modelFormReservista, modelFormTitulo, modelFormClt, \
     modelFormResidencia, modelFormCertidao, modelFormAdmissional, modelFormPeriodico, modelFormCurso, CustomUserCreationForm
 
-from django.core.mail import send_mail
-from django.conf import settings
 from django.contrib.auth.views import PasswordResetView
 
 
@@ -288,6 +286,7 @@ def profile(request, user_id):
 
     log = request.user
     group_gestao = log.groups.filter(id=3).exists()
+    is_superadmin = log.is_superuser
 
     dadosCards_cert = []
     for item in dados_cert:
@@ -325,7 +324,7 @@ def profile(request, user_id):
                 'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
                 'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
                 'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc, 'User': request.user,
-                'group_gestao':group_gestao}
+                'is_superadmin':is_superadmin, 'group_gestao':group_gestao}
 
     if request.method == 'GET':
         return render(request, 'ccis/profile.html', contexto)
@@ -463,6 +462,7 @@ def usuario(request):
         logFoto = dadosPessoais.objects.get(usuario=request.user).foto
 
         group_gestao = log.groups.filter(id=3).exists()
+        is_superadmin = log.is_superuser
 
         context = {'dados': dados, 'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                    'form': dp, 'data': data, 'totalUsuarios': totalUsuarios, 'totalColaborador': totalColaborador,
@@ -472,7 +472,7 @@ def usuario(request):
                    'porcentagem_M': porcentagem_M, 'userCreation': form, 'dadosTable': dadosTable,
                    'dadosP': dados_form, 'usuario': usuario, 'end': endereco_form, 'dependentes_form': dependentes_form,
                    'profissional_form': profissional_form, 'dadosBancarios_form': dadosBancarios_form,
-                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao}
+                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
 
         return render(request, 'rh/usuario.html', context)
 
@@ -487,6 +487,7 @@ def conta(request):
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
 
     group_gestao = log.groups.filter(id=3).exists()
 
@@ -512,7 +513,7 @@ def conta(request):
 
     context = {'dados': dados, 'first_name': first_name, 'last_name': last_name,
                'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-               'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao':group_gestao,
+               'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao':group_gestao, 'is_superadmin':is_superadmin,
                'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid}
 
     if request.method == 'GET':
@@ -542,6 +543,7 @@ def documentos(request):
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
 
     group_gestao = log.groups.filter(id=3).exists()
 
@@ -610,7 +612,7 @@ def documentos(request):
             'statusResidencia': statusResidencia, 'statusCertidao': statusCertidao,
             'statusAdmissional': statusAdmissional,
             'statusPeriodico': statusPeriodico, 'dados': dados, 'username': user, 'first_name': first_name,
-            'last_name': last_name, 'group_gestao': group_gestao,
+            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
         }
 
         return render(request, 'ccis/documentos.html', context)
@@ -811,6 +813,7 @@ def formMidia(request):
 
 # ----------------------------------------------------------------------------------------------------------------------
 
+
 # VIWER DO RH ----------------------------------------------------------------------------------------------------------
 @login_required(login_url="/login")
 def pro_seletivo(request):
@@ -820,10 +823,11 @@ def pro_seletivo(request):
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-
+    is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
 
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'group_gestao': group_gestao}
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
     return render(request, 'rh/processo-seletivo.html', contexto)
 
 
@@ -835,10 +839,11 @@ def ferias(request):
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-
+    is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
 
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'group_gestao': group_gestao}
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
     return render(request, 'rh/ferias.html', contexto)
 
 
@@ -850,10 +855,11 @@ def anbima(request):
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-
+    is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
 
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'group_gestao': group_gestao}
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
     return render(request, 'rh/certificacoes-anbima.html', contexto)
 
 
@@ -865,10 +871,11 @@ def colaboradores(request):
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-
+    is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
 
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'group_gestao': group_gestao}
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
     return render(request, 'rh/colaboradores.html', contexto)
 
 
