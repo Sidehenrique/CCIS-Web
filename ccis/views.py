@@ -460,7 +460,6 @@ def usuario(request):
         logName = request.user.first_name
         logLast = request.user.last_name
         logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-
         group_gestao = log.groups.filter(id=3).exists()
         is_superadmin = log.is_superuser
 
