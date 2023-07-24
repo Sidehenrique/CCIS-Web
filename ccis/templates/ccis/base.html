@@ -266,17 +266,20 @@
 
                     <!-- Menu -->
                     <ul class="ul-lista-novo">
-
-                        <!-- Img -->
-                        <li class="li-lista-novo">
-                            <img src="{% static 'ccis/rh.png' %}"
-                                 alt="rh"
-                                 width="100%"
-                                 height="auto"
-                                 class="d-inline-block align-text-center;">
+                        
+                        <li class="">
+                            <div class="p-5"></div>
                         </li>
 
-                        <hr class="mb-0">
+                        <!-- Overview -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'profile' request.user.id %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-chart-simple"></i>
+                                Overview
+                            </a>
+                        </li>
+
+                        <hr class="">
 
                         <!-- Perfil -->
                         <li class="li-lista-novo">
@@ -285,6 +288,32 @@
                                 Perfil
                             </a>
                         </li>
+
+                        <!-- Conta -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'conta' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-address-card"></i>
+                                Conta
+                            </a>
+                        </li>
+
+                        <!-- Departamentos -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'departamentos' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-network-wired"></i>
+                                Departamentos
+                            </a>
+                        </li>
+
+                         <!-- Documentos -->
+                        {% if is_superadmin %}
+                        <li class="li-lista-novo">
+                            <a href="{% url 'documentos'%}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-file"></i>
+                                Documentos
+                            </a>
+                        </li>
+                        {% endif %}
 
                         <!-- Gestão -->
                         {% if group_gestao or is_superadmin %}
@@ -342,24 +371,6 @@
                                 </ul>
                             </div>
 
-                        </li>
-                        {% endif %}
-
-                        <!-- Conta -->
-                        <li class="li-lista-novo">
-                            <a href="{% url 'conta' %}" class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-address-card"></i>
-                                Conta
-                            </a>
-                        </li>
-
-                        <!-- Documentos -->
-                        {% if is_superadmin %}
-                        <li class="li-lista-novo">
-                            <a href="{% url 'documentos'%}" class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-file"></i>
-                                Documentos
-                            </a>
                         </li>
                         {% endif %}
 

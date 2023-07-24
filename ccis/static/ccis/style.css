@@ -1,11 +1,25 @@
 
 /*-- Font -------------------------------------------*/
 @font-face {
-    font-family: 'fontCustom';
-    src: url('/static/fonts/Asap.ttf') format('ttf'),
-         url('/static/fonts/Oswald-VariableFont_wght.ttf') format('ttf');
-         url('/static/fonts/Pacifico-Regular.ttf') format('ttf');
-         url('/static/fonts/segoeui.ttf') format('ttf');
+    font-family:'asap';
+    src: url('/static/fonts/Asap-Regular.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family:'asap semibold';
+    src: url('/static/fonts/Asap-Bold.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('/static/fonts/Oswald-VariableFont_wght.ttf') format('truetype');
+
+}
+
+@font-face {
+    font-family: 'segoe';
+    src: url('/static/fonts/segoeui.ttf') format('truetype');
+
 }
 /*-- Font -------------------------------------------*/
 
@@ -61,7 +75,7 @@
 
 
 .nav-text{
-    font-family:asap medium;
+    font-family:asap;
     font-size:12px;
     color:black;
     padding:5px;
@@ -113,7 +127,7 @@
 }
 
 .table-header{
-    font-family: 'fontCustom', Asap;
+    font-family:asap;
     font-size: 13px;
     color:rgb(200,200,200);
     margin:25px;
@@ -148,7 +162,7 @@
 
 .link-button{
     padding:10px;
-    font-family: 'fontCustom', Asap;
+    font-family: asap;
     background-color:#4FD1B8;
     color:#ffffff;
     border-radius: 20px;
@@ -197,7 +211,7 @@
 
 .button-cancel{
     padding:5px 15px 5px 15px;
-    font-family: 'fontCustom', Asap;
+    font-family: asap;
     background-color:#A8B7BE;
     color:white;
     border-radius: 20px;
@@ -229,14 +243,14 @@
     border: 1px solid;
     border-radius: 20px;
     border-color: rgb(235,235,235);
-    font-family: 'fontCustom', Asap;
+    font-family: asap;
     background-color:white;
     box-shadow: 0 0 10px 1px rgb(237,237,237);
 }
 
 
 .card-header-config{
-    font-family: 'fontCustom', Asap medium;
+    font-family:asap semibold;
     color:#4D4D4D;
     margin:17px;
     background-color:white;
@@ -245,7 +259,7 @@
 
 
 .card-body-config{
-    font-family: 'fontCustom', Segoe UI;
+    font-family: segoe;
     font-size: 13px;
     color:#888888;
     margin:17px;
@@ -264,7 +278,7 @@
 /*--Novo Menu Lateral ------------------------------*/
 .menu-background{
     padding-top:80px;
-    font-family: 'fontCustom', Asap;
+    font-family:asap;
     background-color:#fff;
     height: 100vh;
     overflow-y: auto;
@@ -286,12 +300,12 @@
 
 .li-link-novo{
     text-decoration: none;
-    color:#37474F;
     padding:10px 10px 10px 20px;
     box-sizing: border-box;
     display: block;
-    font-family: 'fontCustom', Asap;
+    font-family:asap;
     transition: all .5s;
+    color:#37474F;
 
 }
 
@@ -347,7 +361,7 @@
     background-color:#E7E7E7;
     border-radius:10px;
     padding:1px 5px;
-    font-family: 'fontCustom', Asap;
+    font-family:asap;
     transition: all .5s;
     box-sizing: border-box;
     display: block;
@@ -424,13 +438,13 @@ status-negativo{
 
 
 .profile-name{
-    font-family: Segoe UI;
+    font-family: segoe;
     font-size:22px;
     color: black;
 }
 
 .profile-cargo{
-    font-family: Segoe UI;
+    font-family: segoe;
     font-size:14px;
     color:white;
     background-color:#4FD1B8;
@@ -500,7 +514,7 @@ status-negativo{
     height:35px;
     top:85px;
     right:104px;
-    font-family:Segoe UI semibold;
+    font-family:segoe;
     padding:8px;
     background-color:#4FD1B8;
     color:#ffffff;
@@ -531,7 +545,7 @@ status-negativo{
     height:35px;
     top:85px;
     right:50px;
-    font-family:Segoe UI semibold;
+    font-family:segoe;
     padding:8px;
     background-color:#4FD1B8;
     color:#ffffff;
@@ -579,7 +593,7 @@ status-negativo{
     position: absolute;
     top:85px;
     right:52px;
-    font-family:Segoe UI semibold;
+    font-family:segoe;
     padding:8px;
     background-color:#4FD1B8;
     color:#ffffff;
@@ -613,7 +627,7 @@ status-negativo{
 /*-- Card -----------------------------------------*/
 .card-header-custom{
     padding:15px;
-    font-family: Segoe UI semibold;
+    font-family: segoe;
     font-size:18px;
     color:black;
 }
@@ -662,7 +676,7 @@ status-negativo{
     padding:0px 0px 0px 0px;
     box-sizing: border-box;
     display: block;
-    font-family: Segoe UI;
+    font-family: segoe;
     font-size:15px;
     transition: all .5s;
     margin:10px 0;
@@ -694,7 +708,7 @@ status-negativo{
 
 
 .primeiro-button {
-    font-family:Segoe UI semibold;
+    font-family:segoe;
     padding:8px;
     background-color:#4FD1B8;
     color:#ffffff;
@@ -729,7 +743,7 @@ status-negativo{
 }
 
 .login-button {
-    font-family:Segoe UI semibold;
+    font-family:segoe;
     text-decoration:none;
     padding:0 10px;
     background-color:#4FD1B8;
@@ -759,18 +773,65 @@ status-negativo{
 
 
 
+/*-- Departamentos -----------------------------*/
+.icon-dep{
+    position:absolute;
+    top:-20px;
+    left:30px;
+    width:40px;
+    height:40px;
+    color:white;
+    text-align:center;
+    border-radius:7px;
+    font-family:Oswald;
+    padding-top:7px;
+
+}
 
 
 
+.links-dep{
+    text-decoration:none;
+    transition: all .2s;
+    color:black;
+}
 
 
+.links-dep:hover{
+    color:#ffffff;
+}
 
 
+.links-dep:active{
+    color:#37474F;
+
+}
 
 
+.card-buttons{
+    position:relative;
+    width:12rem;
+    height:135px;
+    padding:10px;
+    background-color:white;
+    border-radius:10px;
+    transition: all .1s;
+}
 
 
+.card-buttons:hover{
+    background-color:#4FD1B8;
 
+}
+
+
+.card-buttons:active{
+    background-color:#068E74;
+
+}
+
+
+/*-- Home --------------------------------------*/
 
 
 

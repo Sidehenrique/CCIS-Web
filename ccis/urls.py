@@ -9,12 +9,12 @@ from . import views
 urlpatterns = [
     path('base', views.base, name='base'),
     path('login', views.loginPage, name='login'),
-    path('usuario', views.usuario, name='usuario'),
     path('conta', views.conta, name='conta'),
     path('solicitacao', views.solicitacao, name='solicitacao'),
     path('profile/<int:user_id>', views.profile, name='profile'),
     path('', views.home, name='home'),
     path('documentos', views.documentos, name='documentos'),
+    path('departamentos', views.departamentos, name='departamentos'),
 
     path('logout', views.logout_view, name='logout'),
     path('new_login_page', views.new_login_page, name='new_login_page'),
@@ -58,7 +58,7 @@ urlpatterns = [
     path('rh/ferias', views.ferias, name='ferias'),
     path('rh/anbima', views.anbima, name='anbima'),
     path('rh/colaboradores', views.colaboradores, name='colaboradores'),
-
+    path('rh/usuario', views.usuario, name='usuario'),
     path('dev', views.dev, name='dev'),
 
 
