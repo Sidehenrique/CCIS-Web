@@ -131,3 +131,10 @@ function validarFormulario() {
     return true;
 
 }
+
+
+function handleScroll(event) {
+  const container = document.querySelector('.container-buttons');
+  container.scrollLeft += event.deltaY; // Ajusta a posição de rolagem horizontal
+  event.preventDefault(); // Impede o comportamento padrão do scroll do mouse
+}

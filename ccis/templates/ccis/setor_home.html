@@ -1,0 +1,322 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content">
+
+    <!-- subMenu --------------------------------->
+    <div class="row">
+
+        <nav class="navbar paragrafo-style">
+            <div class="container-fluid">
+
+                <div class="navbar-nav-wrap-content-end">
+
+                </div>
+            </div>
+
+        </nav>
+
+
+    </div>
+    <!-- End subMenu ----------------------------->
+
+    <!-- Container ------------------------------->
+    <div class="row  mt-5">
+
+        <div class="col mb-5 position-relative" style="height:87vh;">
+
+            <!-- Icon Do Setor --------------------------->
+            <div class="icon-set" style="background-color:#004E8C;">TI</div>
+            <!-- Icon Do Setor --------------------------->
+
+            <!-- container do setor ---------------------->
+            <div class="container" style="height:90%; text-align:center; background-color:white; border-radius:10px">
+
+                <div class="row">
+
+                    <!-- coluna da esquerda -------------->
+                    <div class="col-7">
+
+                        <!-- Titulo ---------------------->
+                        <div>
+                            <h3 class="mt-4 pt-4">TECNOLOGIA</h3>
+                            <hr style="background-color:#C4C4C4;">
+                        </div>
+                        <!-- Titulo ---------------------->
+
+                        <!-- Conteúdo -------------------->
+                        <div class="row ">
+
+                            <div class="col" style="text-align:left">
+
+                                <!-- Info setor ----------------------->
+                                <div style="height:30vh">
+
+                                    <div class="card-text-custom">CONTATO</div>
+
+                                    <ul class="card-ul">
+
+                                        <li class="card-li">
+                                            <i class="fa-solid fa-at card-icon"></i>
+
+                                            {{ contato.emailCorporativo|cut:"@sicoobbrasilia.com.br" }}
+
+                                        </li>
+
+                                        <li class="card-li">
+                                            <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
+                                            {% if contato.telefoneCorporativo %}
+
+                                            Corporativo: {{ contato.telefoneCorporativo }}
+
+                                            {% elif contato.celularCorporativo %}
+
+                                            Corporativo: {{ contato.celularCorporativo }}
+
+                                            {% else %}
+
+                                            Corporativo: Não informado
+
+                                            {% endif %}
+                                        </li>
+
+                                        <li class="card-li">
+                                            <i class="fa-solid fa-briefcase card-icon"></i>
+                                            Ramal: {{contato.ramal}}
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="card-text-custom">SOBRE</div>
+
+                                    <ul class="card-ul">
+
+                                        <li class="card-li">
+                                            <i class="fa-sharp fa-solid fa-building card-icon"></i>
+                                            {{prof.empregador}}
+                                        </li>
+
+                                        <li class="">
+                                            <i class="fa-solid fa-location-dot card-icon"></i>
+                                            {{prof.paUnidade}}
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+                                <!-- info setor ----------------------->
+
+                            </div>
+
+
+                            <div class="col" style="text-align:left">
+
+                                <!-- Equipe -------------------------->
+                                {% if equipe %}
+                                <div class="" style="">
+                                    <!-- Supervisor -->
+                                    {% for ch in chefe %}
+                                    <a href="{% url 'profile' user_id=ch.id %}" class="list-group-item-action"
+                                       style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                        <div class="align-horizontal-center">
+
+                                            {% if ch.foto %}
+                                            <img class="avatar-img" src="{{ chefe.foto.url }}"
+                                                 alt="" width="40" height="40">
+
+                                            {% else %}
+
+                                            {% if ch.sexo == "Masculino" %}
+                                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                                 alt="" width="40" height="40">
+
+                                            {% elif ch.sexo == "Feminino" %}
+                                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                                 alt="" width="40" height="40">
+                                            {% endif %}
+
+                                            {% endif %}
+
+                                            <div class="ps-2">
+                                                <h6 class="m-0">{{ ch.first_name }} {{ch.last_name}}</h6>
+                                                <small class="m-0">{{ ch.cargo }}</small>
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+                                    {% endfor %}
+                                    <!-- Supervisor -->
+
+                                    <!-- Membros -->
+                                    {% for usuario in equipe %}
+                                    <a href="{% url 'profile' user_id=usuario.id %}" class="list-group-item-action"
+                                       style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                        <div class="align-horizontal-center">
+
+                                            {% if usuario.foto %}
+                                            <img class="avatar-img" src="{{ usuario.foto.url }}"
+                                                 alt="" width="40" height="40">
+
+                                            {% else %}
+
+                                            {% if usuario.sexo == "Masculino" %}
+                                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                                 alt="" width="40" height="40">
+
+                                            {% elif usuario.sexo == "Feminino" %}
+                                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                                 alt="" width="40" height="40">
+                                            {% endif %}
+
+                                            {% endif %}
+
+
+                                            <div class="ps-2">
+                                                <h6 class="m-0">{{ usuario.first_name }} {{usuario.last_name}}</h6>
+                                                <small class="m-0">{{ usuario.cargo }}</small>
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+                                    {% endfor %}
+                                    <!-- Membros -->
+                                </div>
+
+
+                                {% else %}
+                                <div>
+                                    <div class="" style="">
+                                        <img src="{% static 'ccis/Grupo 4678.png' %}"
+                                                 alt="rh"
+                                                 width="80%"
+                                                 height="auto"
+                                                 style=" background-repeat:no-repeat">
+                                    </div>
+
+                                </div>
+                                {% endif %}
+                                <!-- Equipe -------------------------->
+
+                            </div>
+
+                        </div>
+                        <!-- Conteúdo -------------------->
+
+                        <!-- Botões ---------------------->
+                        <div class="col align-self-end">
+
+                            <hr style="background-color:#C4C4C4">
+
+                            <div class="d-flex container-buttons pt-3 pb-3" onwheel="handleScroll(event)">
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#4DE89D;" class="set-buttons" >
+
+                                            <h5>NOVA</h5>
+                                            <h5>SOLICITAÇÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div class="set-buttons" style="background-color:#4DDCE8;">
+
+                                            <h5>MINHAS</h5>
+                                            <h5>SOLICITAÇÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#49ABDE;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>PROCESSOS</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#49ABDE;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>ESTOQUE</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- Botões ---------------------->
+
+                    </div>
+                    <!-- coluna da esquerda -------------->
+
+                    <!-- coluna da direita --------------->
+                    <div class="col mt-3 ms-2" style="border-left: 1px solid #ccc;">
+
+                        <img src="{% static 'ccis/Grupo 6306.png' %}"
+                             alt="TI"
+                             width="90%"
+                             height="auto"
+                             class="d-inline-block;">
+
+                    </div>
+                    <!-- coluna da direita --------------->
+
+                </div>
+
+            </div>
+            <!-- container do setor ---------------------->
+
+        </div>
+
+    </div>
+    <!-- Container ------------------------------->
+
+</div>
+{% endblock %}

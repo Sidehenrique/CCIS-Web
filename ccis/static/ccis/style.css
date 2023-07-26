@@ -32,12 +32,18 @@
 /*--Scroll bar --------------------------------------*/
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
 }
 
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+
+}
 /*--Scroll bar -------------------------------------*/
 
 
@@ -777,7 +783,7 @@ status-negativo{
 .icon-dep{
     position:absolute;
     top:-20px;
-    left:30px;
+    left:40px;
     width:40px;
     height:40px;
     color:white;
@@ -810,9 +816,9 @@ status-negativo{
 
 .card-buttons{
     position:relative;
-    width:12rem;
+    width:auto;
     height:135px;
-    padding:10px;
+    padding: 10px;
     background-color:white;
     border-radius:10px;
     transition: all .1s;
@@ -831,9 +837,74 @@ status-negativo{
 }
 
 
-/*-- Home --------------------------------------*/
+/*-- Departamento --------------------------------*/
 
 
+
+/*-- setor_home ----------------------------------*/
+
+.icon-set{
+    position:absolute;
+    top:-30px;
+    left:60px;
+    width:90px;
+    height:90px;
+    color:white;
+    text-align:center;
+    border-radius:10px;
+    font-family:Oswald;
+    font-size:50px;
+    padding-top:5px;
+
+}
+
+
+.icon-button-set{
+    position:absolute;
+    top:-10px;
+    right:7px;
+    width:20px;
+    height:20px;
+    color:white;
+    text-align:center;
+    border-radius:50%;
+    font-family:asap;
+    font-size:12px;
+    padding-top:;
+
+}
+
+
+.set-buttons{
+    padding:30px 15px 15px 20px;
+    border-radius:10px;
+    transition: all .2s;
+    text-align:left;
+    width:165px;
+}
+
+
+.links-set{
+    text-decoration:none;
+    color:white;
+}
+
+
+.links-set:hover{
+    color:#E6E6E6;
+}
+
+
+.links-set:active{
+    color:#37474F;
+
+}
+
+
+.container-buttons{
+    overflow-x: auto;
+    white-space: nowrap;
+}
 
 
 
