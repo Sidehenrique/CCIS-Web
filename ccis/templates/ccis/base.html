@@ -305,75 +305,6 @@
                             </a>
                         </li>
 
-                         <!-- Documentos -->
-                        {% if is_superadmin %}
-                        <li class="li-lista-novo">
-                            <a href="{% url 'documentos'%}" class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-file"></i>
-                                Documentos
-                            </a>
-                        </li>
-                        {% endif %}
-
-                        <!-- Gestão -->
-                        {% if group_gestao or is_superadmin %}
-                        <li class="li-lista-novo">
-                            <a href="#" class="li-link-novo dropdown-toggle"
-                               aria-current="page"
-                               data-bs-theme="light"
-                               type="link"
-                               data-bs-toggle="collapse"
-                               data-bs-target="#collapseWidthExample"
-                               aria-expanded="false"
-                               aria-controls="collapseWidthExample">
-
-                                <i class="fa-solid fa-screwdriver-wrench"></i>
-                                Gestão
-                            </a>
-
-                            <div id="collapseWidthExample" class="collapse collapse-horizontal ps-3 ">
-                                <ul class="ul-lista-novo flex-column mb-auto">
-
-                                    <!-- Dash -->
-                                    <li class="li-lista-novo">
-                                        <a href="#" class="li-link-novo">
-                                            <i class="fa-solid fa-chart-line"></i>
-                                            Dashboard
-                                        </a>
-                                    </li>
-
-                                    <!-- Usuários -->
-                                    <li class="li-lista-novo">
-                                        <a href="{% url 'usuario' %}" class="li-link-novo" aria-current="page">
-                                            <i class="fa-solid fa-users"></i>
-                                            Usuários
-                                        </a>
-                                    </li>
-
-                                    <!-- Pro-seletivo -->
-                                    <li class="li-lista-novo">
-
-                                        <a href="{% url 'pro-seletivo' %}" class="li-link-novo" aria-current="page">
-                                            <i class="fa-solid fa-message"></i>
-                                            Processo seletivo
-                                        </a>
-                                    </li>
-
-                                    <!-- colaboradores -->
-                                    <li class="li-lista-novo">
-
-                                        <a href="{% url 'colaboradores' %}" class="li-link-novo" aria-current="page">
-                                            <i class="fa-solid fa-message"></i>
-                                            Colaboradores
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                        </li>
-                        {% endif %}
-
                         <!-- ferias -->
                         <li class="li-lista-novo">
 
@@ -389,6 +320,17 @@
                             <a href="{% url 'anbima' %}" class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-message"></i>
                                 Certificações Anbima
+                            </a>
+                        </li>
+
+                        <hr class="">
+
+                        <!-- coopera -->
+                        <li class="li-lista-novo">
+
+                            <a href="{% url 'coopera' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-message"></i>
+                                Coopera+
                             </a>
                         </li>
 

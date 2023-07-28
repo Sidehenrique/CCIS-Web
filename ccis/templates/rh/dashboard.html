@@ -1,0 +1,44 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content ps-0 pe-0">
+
+    <!-- Conteúdo -------------------------------->
+
+    <ul class="ul-lista-novo flex-column mb-auto">
+
+        <!-- Usuários -->
+        <li class="li-lista-novo">
+            <a href="{% url 'usuario' %}" class="li-link-novo" aria-current="page">
+                <i class="fa-solid fa-users"></i>
+                Usuários
+            </a>
+        </li>
+
+        <!-- Pro-seletivo -->
+        <li class="li-lista-novo">
+
+            <a href="{% url 'pro-seletivo' %}" class="li-link-novo" aria-current="page">
+                <i class="fa-solid fa-message"></i>
+                Processo seletivo
+            </a>
+        </li>
+
+        <!-- colaboradores -->
+        <li class="li-lista-novo">
+
+            <a href="{% url 'colaboradores' %}" class="li-link-novo" aria-current="page">
+                <i class="fa-solid fa-message"></i>
+                Colaboradores
+            </a>
+        </li>
+
+    </ul>
+
+    <!-- Conteúdo -------------------------------->
+
+</div>
+
+{% endblock %}

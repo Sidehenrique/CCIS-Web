@@ -649,7 +649,22 @@ def departamentos(request):
 
 
 @login_required(login_url="/login")
-def setor_home(request):
+def cursos(request):
+    if request.method == 'POST':
+        curso_form = modelFormCurso(request.POST, request.FILES)
+        if curso_form.is_valid():
+            obj = curso_form.save(commit=False)
+            obj.usuario = request.user
+            obj.save()
+            curso_form.save()
+        return HttpResponse('Salvo')
+    else:
+        curso_form = modelFormCurso(request.POST, request.FILES)
+    return render(request, 'ccis/cursos.html', {'curso_form': curso_form})
+
+
+@login_required(login_url="/login")
+def coopera(request):
     # user = get_object_or_404(User, id=user_id)
 
     user = request.user
@@ -676,22 +691,179 @@ def setor_home(request):
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
         }
 
+        return render(request, 'coopera/home.html', context)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+# VIWER DO TI ----------------------------------------------------------------------------------------------------------
+
+@login_required(login_url="/login")
+def ti_home(request):
+    # user = get_object_or_404(User, id=user_id)
+
+    user = request.user
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    dados = dadosPessoais.objects.get(usuario=user)
+
+    botoes = 'TECNOLOGIA'
+
+    if request.method == 'GET':
+
+        context = {
+            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+            'dados': dados, 'username': user, 'first_name': first_name,
+            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'botoes': botoes
+        }
+
+        return render(request, 'ccis/setor_home.html', context)
+
+# VIWER DO TI ----------------------------------------------------------------------------------------------------------
+
+
+# VIWER DO RH ----------------------------------------------------------------------------------------------------------
+
+@login_required(login_url="/login")
+def rh_home(request):
+    # user = get_object_or_404(User, id=user_id)
+
+    user = request.user
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    dados = dadosPessoais.objects.get(usuario=user)
+
+    botoes = 'GESTÃO DE PESSOAS'
+
+    if request.method == 'GET':
+
+        context = {
+            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+            'dados': dados, 'username': user, 'first_name': first_name,
+            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'botoes': botoes
+        }
+
         return render(request, 'ccis/setor_home.html', context)
 
 
 @login_required(login_url="/login")
-def cursos(request):
-    if request.method == 'POST':
-        curso_form = modelFormCurso(request.POST, request.FILES)
-        if curso_form.is_valid():
-            obj = curso_form.save(commit=False)
-            obj.usuario = request.user
-            obj.save()
-            curso_form.save()
-        return HttpResponse('Salvo')
-    else:
-        curso_form = modelFormCurso(request.POST, request.FILES)
-    return render(request, 'ccis/cursos.html', {'curso_form': curso_form})
+def rh_dash(request):
+    # user = get_object_or_404(User, id=user_id)
+
+    user = request.user
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    dados = dadosPessoais.objects.get(usuario=user)
+
+    if request.method == 'GET':
+
+        context = {
+            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+            'dados': dados, 'username': user, 'first_name': first_name,
+            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+        }
+
+        return render(request, 'rh/dashboard.html', context)
+
+
+@login_required(login_url="/login")
+def pro_seletivo(request):
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+    group_gestao = log.groups.filter(id=3).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+    return render(request, 'rh/processo-seletivo.html', contexto)
+
+
+@login_required(login_url="/login")
+def ferias(request):
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+    group_gestao = log.groups.filter(id=3).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+    return render(request, 'rh/ferias.html', contexto)
+
+
+@login_required(login_url="/login")
+def anbima(request):
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+    group_gestao = log.groups.filter(id=3).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+    return render(request, 'rh/certificacoes-anbima.html', contexto)
+
+
+@login_required(login_url="/login")
+def colaboradores(request):
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+    group_gestao = log.groups.filter(id=3).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+    return render(request, 'rh/colaboradores.html', contexto)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -870,74 +1042,6 @@ def formMidia(request):
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
             return redirect('conta')
-
-
-# ----------------------------------------------------------------------------------------------------------------------
-
-
-# VIWER DO RH ----------------------------------------------------------------------------------------------------------
-@login_required(login_url="/login")
-def pro_seletivo(request):
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-    group_gestao = log.groups.filter(id=3).exists()
-
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
-    return render(request, 'rh/processo-seletivo.html', contexto)
-
-
-@login_required(login_url="/login")
-def ferias(request):
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-    group_gestao = log.groups.filter(id=3).exists()
-
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
-    return render(request, 'rh/ferias.html', contexto)
-
-
-@login_required(login_url="/login")
-def anbima(request):
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-    group_gestao = log.groups.filter(id=3).exists()
-
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
-    return render(request, 'rh/certificacoes-anbima.html', contexto)
-
-
-@login_required(login_url="/login")
-def colaboradores(request):
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-    group_gestao = log.groups.filter(id=3).exists()
-
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
-    return render(request, 'rh/colaboradores.html', contexto)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
