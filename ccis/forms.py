@@ -3,7 +3,7 @@ from django.forms import FileInput
 
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos
+    docCertidao, docAdmissional, docPeriodico, docCursos, setor
 
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
@@ -377,6 +377,26 @@ class modelFormCurso(forms.ModelForm):
             'data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'curso': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+#------------------- cadatro setor ------------------------------
+
+class modelFormSetor(forms.ModelForm):
+    class Meta:
+        model = setor
+        fields = ('sigla', 'nome', 'cor','email', 'contato', 'ramal', 'unidade', 'responsavel', 'atribuicoes')
+
+        widgets = {'siglas': forms.TextInput(attrs={'class': 'form-control'}),
+                   'nome': forms.TextInput(attrs={'class': 'form-control'}),
+                   'cor': forms.TextInput(attrs={'class': 'form-control'}),
+                   'email': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
+                   'contato': forms.NumberInput(attrs={'class': 'form-control'}),
+                   'ramal': forms.NumberInput(attrs={'class': 'form-control'}),
+                   'unidade': forms.TextInput(attrs={'class': 'form-control'}),
+                   'responsavel': forms.TextInput(attrs={'class': 'form-control'}),
+                   'atribuicoes': forms.TextInput(attrs={'class': 'form-control'}),
+
+                   }
 
 
 # GRUPOS -------------------------------------------------------------------->

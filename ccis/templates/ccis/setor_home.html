@@ -28,7 +28,7 @@
         <div class="col mb-5 position-relative" style="height:87vh;">
 
             <!-- Icon Do Setor --------------------------->
-            <div class="icon-set" style="background-color:#004E8C;">TI</div>
+            <div class="icon-set" style="background-color:{{dadosSetor.cor}};">{{dadosSetor.sigla}}</div>
             <!-- Icon Do Setor --------------------------->
 
             <!-- container do setor ---------------------->
@@ -41,7 +41,7 @@
 
                         <!-- Titulo ---------------------->
                         <div>
-                            <h3 class="mt-4 pt-4">TECNOLOGIA</h3>
+                            <h3 class="mt-4 pt-4">{{dadosSetor.nome}}</h3>
                             <hr style="background-color:#C4C4C4;">
                         </div>
                         <!-- Titulo ---------------------->
@@ -61,19 +61,15 @@
                                         <li class="card-li">
                                             <i class="fa-solid fa-at card-icon"></i>
 
-                                            {{ contato.emailCorporativo|cut:"@sicoobbrasilia.com.br" }}
+                                            {{ dadosSetor.email }}
 
                                         </li>
 
                                         <li class="card-li">
                                             <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
-                                            {% if contato.telefoneCorporativo %}
+                                            {% if dadosSetor.contato %}
 
-                                            Corporativo: {{ contato.telefoneCorporativo }}
-
-                                            {% elif contato.celularCorporativo %}
-
-                                            Corporativo: {{ contato.celularCorporativo }}
+                                            Corporativo: {{ dadosSetor.contato }}
 
                                             {% else %}
 
@@ -84,7 +80,15 @@
 
                                         <li class="card-li">
                                             <i class="fa-solid fa-briefcase card-icon"></i>
-                                            Ramal: {{contato.ramal}}
+                                            {% if dadosSetor.ramal %}
+
+                                            Ramal: {{ dadosSetor.ramal }}
+
+                                            {% else %}
+
+                                            Ramal: Não informado
+
+                                            {% endif %}
                                         </li>
 
                                     </ul>
@@ -95,24 +99,31 @@
 
                                         <li class="card-li">
                                             <i class="fa-sharp fa-solid fa-building card-icon"></i>
-                                            {{prof.empregador}}
+                                            {% if dadosSetor.unidade %}
+
+                                            {{ dadosSetor.unidade }}
+
+                                            {% else %}
+
+                                            Não informado
+
+                                            {% endif %}
                                         </li>
 
                                         <li class="">
                                             <i class="fa-solid fa-location-dot card-icon"></i>
-                                            {{prof.paUnidade}}
+
                                         </li>
 
                                     </ul>
 
                                 </div>
-
                                 <!-- info setor ----------------------->
 
                             </div>
 
 
-                            <div class="col" style="text-align:left">
+                            <div class="col equipe-setor">
 
                                 <!-- Equipe -------------------------->
                                 {% if equipe %}
@@ -190,8 +201,6 @@
                                     {% endfor %}
                                     <!-- Membros -->
                                 </div>
-
-
                                 {% else %}
                                 <div>
                                     <div class="" style="">
@@ -218,6 +227,8 @@
 
                             <div class="d-flex container-buttons pt-3 pb-3" onwheel="handleScroll(event)">
 
+                                <!-- Tecnologia ---------->
+                                {% if botoes == 'TECNOLOGIA' %}
                                 <div class="position-relative me-3">
 
                                     <a class="links-set"
@@ -287,6 +298,108 @@
                                     <span class="icon-button-set" style="background-color:red;"></span>
 
                                 </div>
+                                {% endif %}
+                                <!-- Tecnologia ---------->
+
+
+                                <!-- Gestão de Pessoas --->
+                                {% if botoes == 'GESTÃO DE PESSOAS' %}
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#4DE89D;" class="set-buttons" >
+
+                                            <h5>NOVA</h5>
+                                            <h5>SOLICITAÇÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div class="set-buttons" style="background-color:#4DDCE8;">
+
+                                            <h5>MINHAS</h5>
+                                            <h5>SOLICITAÇÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#49ABDE;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>PROCESSOS</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                                {% if group_gestao or is_superadmin %}
+                                <div class="position-relative me-3">
+
+
+                                    <a class="links-set"
+                                       href="{% url 'rh_dashboard' %}"
+                                       type="button">
+
+                                        <div style="background-color:#038387;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>GESTÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+
+                                </div>
+                                {% endif %}
+
+                                {% if is_superadmin %}
+                                <div class="position-relative me-3">
+
+
+                                    <a class="links-set"
+                                       href="{% url 'documentos'%}"
+                                       type="button">
+
+                                        <div style="background-color:#7AA3FF;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>DOCUMENT...</h5>
+
+                                        </div>
+
+                                    </a>
+
+
+                                </div>
+                                {% endif %}
+
+                                {% endif %}
+                                <!-- Gestão de Pessoas --->
 
                             </div>
 

@@ -1,0 +1,100 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content ps-0 pe-0">
+
+    <!-- Conteúdo -------------------------------->
+    <div class="row">
+
+        <div class="col logo-coopera">
+            <img src= "{% static 'ccis/Grupo 6345.png' %}" alt="logo-COOPERA" width="270px">
+        </div>
+
+    </div>
+
+    <div class="row justify-content-center text-center mt-3 mb-5">
+
+        <div class="col-2">
+            <a class="btn flex-column" href="{% url 'relacionamento' %}">
+                <i class="fa-solid fa-handshake" style="font-size:8vh"></i>
+            </a>
+            <div>Relacionamento <br> com o Cooperado</div>
+        </div>
+        <div class="col-2">
+            <a class="btn flex-column" href="{% url 'relacionamento' %}">
+                <i class="fa-solid fa-chart-simple"  style="font-size:8vh"></i>
+            </a>
+            <div>Simulador <br> Taxas </div>
+        </div>
+        <div class="col-2">
+            <a class="btn flex-column">
+                <i class="fa-solid fa-list" style="font-size:8vh"></i>
+            </a>
+            <div>India</div>
+        </div>
+        <div class="col-2">
+            <a class="btn flex-column">
+                <i class="fa-solid fa-paste" style="font-size:8vh"></i>
+            </a>
+            <div>Portfólio de <br> Linhas e Taxas</div>
+        </div>
+        <div class="col-2">
+            <a class="btn flex-column">
+                <i class="fa-solid fa-triangle-exclamation" style="font-size:8vh"></i>
+            </a>
+            <div>Tabela PD X LGD</div>
+        </div>
+
+    </div>
+
+
+    <div class="row justify-content-center text-center">
+
+        <div class="col-2 box-coopera" style="background-color:#7DB61C;">
+
+            <h4 class="pt-2">PROPÓSITO</h4>
+
+            <P>CONECTAR <br>PESSOAS PARA<br> PROMOVER A<br> JUSTIÇA <br>FINANCEIRA E<br> PROSPERIDADE.</P>
+
+        </div>
+
+        <div class="col-2 box-coopera" style="background-color:#49479D;">
+
+            <h4 class="pt-2">MISSÃO</h4>
+
+            <P>PROMOVER <br>SOLUÇÕES <br>INOVADORAS E<br> SUSTENTÁVEIS.</P>
+
+        </div>
+
+        <div class="col-2 box-coopera" style="background-color:#00AE9D;">
+
+            <h4 class="pt-2">VISÃO</h4>
+
+            <P>SER REFERÊNCIA EM<br> COOPERATIVISMO,<br>
+                PROMOVENDO O <br>DESENVOLVIMENTO <br>ECONÔMICO E
+                SOCIAL<br> DAS PESSOAS E<br> COMUNIDADE.</P>
+
+        </div>
+
+        <div class="col-2 box-coopera" style="background-color:#C9D200;">
+
+            <h4 class="pt-2">VALORES</h4>
+
+            <P style="font-size:15px">RESPEITO E VALORIZAÇÃO<br> DAS PESSOAS;
+                COOPERATIVISMO E<br> SUSTENTABILIDADE; <br>ÉTICA E
+                INTEGRIDADE;<br> EXCELÊNCIA E EFICIÊNCIA<br> LIDERANÇA
+                INSPIRADORA, <br>INOVAÇÃO E SIMPLICIDADE.</P>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Conteúdo -------------------------------->
+
+</div>
+
+{% endblock %}

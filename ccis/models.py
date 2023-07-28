@@ -461,6 +461,25 @@ class docCursos(models.Model):
         return self.certiCurso
 
 
+#------------------- tabela setor -----------------------------
+class setor(models.Model):
+    idSetor = models.AutoField(db_column='idSetor', primary_key=True)
+    sigla = models.CharField(max_length=45, blank=True, null=True)
+    nome = models.CharField(db_column='nome', max_length=45, blank=True, null=True)
+    cor = models.CharField(max_length=45, blank=True, null=True)
+    email = models.EmailField(db_column='email', max_length=45, blank=True, null=True)
+    contato = models.CharField(choices=CHOICES_tipoDeConta, max_length=45, blank=True,
+                                   null=True)
+    ramal = models.CharField(max_length=45, blank=True, null=True)
+    unidade = models.CharField(max_length=45, blank=True, null=True)
+    responsavel = models.CharField( max_length=45, blank=True, null=True)
+    atribuicoes = models.CharField(max_length=45, blank=True, null=True)
+    
+
+    def __str__(self):
+        return self.sigla
+
+
 class CustomGroupAdmin(GroupAdmin):
     list_display = ('name', 'get_members')
 

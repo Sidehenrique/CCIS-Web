@@ -15,7 +15,10 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('documentos', views.documentos, name='documentos'),
     path('departamentos', views.departamentos, name='departamentos'),
-    path('setor_home', views.setor_home, name='setor_home'),
+
+    path('coopera', views.coopera, name='coopera'),
+    path('relacionamento', views.relacionamento, name='relacionamento'),
+    path('simulador', views.simulador, name='simulador'),
 
     path('logout', views.logout_view, name='logout'),
     path('new_login_page', views.new_login_page, name='new_login_page'),
@@ -55,11 +58,17 @@ urlpatterns = [
          name='password_reset_complete'),
     path('reset_password/', CustomPasswordResetView.as_view(), name='password_reset'),
 
+    path('rh', views.rh_home, name='rh_home'),
+    path('rh/dashboard', views.rh_dash, name='rh_dashboard'),
     path('rh/processo-seletivo', views.pro_seletivo, name='pro-seletivo'),
     path('rh/ferias', views.ferias, name='ferias'),
     path('rh/anbima', views.anbima, name='anbima'),
     path('rh/colaboradores', views.colaboradores, name='colaboradores'),
     path('rh/usuario', views.usuario, name='usuario'),
+
+    path('ti', views.ti_home, name='ti_home'),
+
+
     path('dev', views.dev, name='dev'),
 
 

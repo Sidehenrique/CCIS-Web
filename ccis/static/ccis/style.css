@@ -841,7 +841,7 @@ status-negativo{
 
 
 
-/*-- setor_home ----------------------------------*/
+/*-- setor_home ---------------------------------*/
 
 .icon-set{
     position:absolute;
@@ -906,5 +906,37 @@ status-negativo{
     white-space: nowrap;
 }
 
+.equipe-setor{
+    text-align:left;
+    border-left:1px solid #ccc;
+    width:auto;
+    height:35vh;
+    overflow-x: auto;
+    white-space: nowrap;
+
+}
+/*-- setor_home ---------------------------------*/
 
 
+
+
+/*-- home coopera ------------------------------*/
+.logo-coopera{
+    text-align: center;
+    padding:50px;
+
+}
+
+.box-coopera{
+    text-align: center;
+    color:white;
+    margin:20px;
+    padding:10px 5px 5px 5px;
+    border-radius:15px;
+
+}
+
+
+
+
+/*-- home coopera ------------------------------*/
