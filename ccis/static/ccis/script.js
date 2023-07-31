@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
 // Tratamento da view novo_user para esconder o display
 function displayFilePag(input) {
     var fileName = input.files[0].name;
-    document.getElementById('file-name').textContent = fileName;
+    document.getElementById('file-Page').textContent = filePage;
 }
 
 document.addEventListener("DOMContentLoaded", function() {
