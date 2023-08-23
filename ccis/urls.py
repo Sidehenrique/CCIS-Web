@@ -15,6 +15,8 @@ urlpatterns = [
     path('documentos', views.documentos, name='documentos'),
     path('departamentos', views.departamentos, name='departamentos'),
 
+    path('utilitarios', views.utilitarios, name='utilitarios'),
+
     path('coopera', views.coopera, name='coopera'),
     path('relacionamento', views.relacionamento, name='relacionamento'),
     path('simulador', views.simulador, name='simulador'),
@@ -22,6 +24,7 @@ urlpatterns = [
     path('india', views.india, name='india'),
     path('portifolio', views.portifolio, name='portifolio'),
     path('basileia', views.basileia, name='basileia'),
+    path('dados', views.dadosConsolidados, name='dados'),
 
     path('logout', views.logout_view, name='logout'),
     path('new_login_page', views.new_login_page, name='new_login_page'),
