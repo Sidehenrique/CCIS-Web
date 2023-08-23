@@ -91,18 +91,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -140,13 +140,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'  # ou 'smtp.live.com' para contas do Hotmail
+EMAIL_HOST = 'smtp.gmail.com'  # ou 'smtp.live.com' para contas do Hotmail
+EMAIL_HOST_USER = 'henriquesilver585@gmail.com'  # substitua pelo seu endereço de e-mail
+EMAIL_HOST_PASSWORD = 'wjsgidtqoeyfrnuj'  # substitua pela  sua senha
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'contato@sicoobbrasilia.com.br'  # substitua pelo seu endereço de e-mail
-EMAIL_HOST_PASSWORD = 'Sicoob4155'  # substitua pela sua senha
-
-
+DEFAULT_FROM_EMAIL = 'default from email'
 
 
 

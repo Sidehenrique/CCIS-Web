@@ -19,7 +19,8 @@ from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEndere
     modelFormRg, modelFormCnh, modelFormCpf, modelFormReservista, modelFormTitulo, modelFormClt, modelFormSetor,\
     modelFormResidencia, modelFormCertidao, modelFormAdmissional, modelFormPeriodico, modelFormCurso, CustomUserCreationForm
 
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.hashers import make_password
+from django.core.mail import send_mail
 
 
 # SEGURANÇA ------------------------------------------------------------------------------------------------------------
@@ -100,16 +101,40 @@ def inativar_usuario(request, user_id):
     return redirect('usuario')
 
 
-class CustomPasswordResetView(PasswordResetView):
-    template_name = 'registration/password_reset.html'
-    email_template_name = 'registration/password_reset_email.html'
-    success_url = 'password_reset_done'
+from django.contrib.auth.hashers import make_password
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        # Faça qualquer ação adicional, se necessário
-        return response
+def password_reset(request):
+    if request.method == 'POST':
+        username = request.POST.get('usuario')
+        cpf = request.POST.get('cpf')
 
+        try:
+            user = User.objects.get(username=username)
+            dados_pessoais = dadosPessoais.objects.get(usuario=user)
+
+            if cpf == dados_pessoais.cpf:
+                nova_senha = request.POST.get('novaSenha')
+                confirma_senha = request.POST.get('confSenha')
+
+                if nova_senha == confirma_senha:
+                    user.set_password(nova_senha)
+                    user.save()
+                    return redirect('password_done')
+                else:
+                    return render(request, 'security/password_reset.html', {'error': 'As senhas não conferem'})
+
+            else:
+                return render(request, 'security/password_reset.html', {'error': 'CPF não confere'})
+
+        except User.DoesNotExist or dadosPessoais.DoesNotExist:
+            return render(request, 'security/password_reset.html', {'error': 'Nome de usuário ou CPF não encontrado.'})
+
+    return render(request, 'security/password_reset.html')
+
+
+def password_done(request):
+
+    return render(request, 'security/password_done.html')
 
 # ----------------------------------------------------------------------------------------------------------------------
 

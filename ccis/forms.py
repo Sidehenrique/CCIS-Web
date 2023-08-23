@@ -403,4 +403,3 @@ class modelFormSetor(forms.ModelForm):
 
 class GroupForm(forms.Form):
     group = forms.ModelChoiceField(queryset=Group.objects.all())
-
