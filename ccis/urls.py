@@ -18,6 +18,10 @@ urlpatterns = [
     path('coopera', views.coopera, name='coopera'),
     path('relacionamento', views.relacionamento, name='relacionamento'),
     path('simulador', views.simulador, name='simulador'),
+    path('tabela', views.tabela, name='tabela'),
+    path('india', views.india, name='india'),
+    path('portifolio', views.portifolio, name='portifolio'),
+    path('basileia', views.basileia, name='basileia'),
 
     path('logout', views.logout_view, name='logout'),
     path('new_login_page', views.new_login_page, name='new_login_page'),

@@ -762,10 +762,10 @@ status-negativo{
 }
 
 .login-button {
-    font-family:segoe;
+    font-family:asap semibold;
     text-decoration:none;
     padding:0 10px;
-    background-color:#4FD1B8;
+    background-color:#044C58;
     color:#ffffff;
     border-radius: 15px;
     transition: all .5s;

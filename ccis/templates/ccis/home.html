@@ -26,45 +26,43 @@
 <body>
 
 <!-- topMenu ---------------------------------------------------------------------------------------------------------->
-<header class="navbar-topp shadow-sm nav justify-content-center ">
 
-    <nav class="col-10 p-0 navbar navbar-topp navbar-expand-lg navbar-fixed">
-        <div class="container-fluid">
+<nav class="col-12 p-0 navbar navbar-topp navbar-expand-lg navbar-fixed">
+    <div class="container-fluid">
 
-            <!-- Logo do Menu ----------------------------------------------------------------------------------------->
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'ccis/logonav.png' %}"
-                     alt="logo"
-                     width="47"
-                     height="54"
-                     class="d-inline-block align-text-center;">
-            </a>
-            <!-- End Logo do Menu ------------------------------------------------------------------------------------->
-
-
-            <!-- Esquerda do Menu ------------------------------------------------------------------------------------->
-            <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
-                <ul class="navbar-nav">
-
-                    <li class="  ms-5 me-4">
-                        <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"
-                           href="#"></a>
-                    </li>
-
-                </ul>
-            </div>
-            <!-- End Esquerda do Menu --------------------------------------------------------------------------------->
+        <!-- Logo do Menu ----------------------------------------------------------------------------------------->
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'ccis/logonav.png' %}"
+                 alt="logo"
+                 width="47"
+                 height="54"
+                 class="d-inline-block align-text-center;">
+        </a>
+        <!-- End Logo do Menu ------------------------------------------------------------------------------------->
 
 
-            <!-- Direita do Menu -------------------------------------------------------------------------------------->
-            <div class="navbar-nav-wrap-content-end">
-                <a class="login-button" href="{% url 'login' %}">Entrar</a>
-            </div>
-            <!-- End Direita do Menu ---------------------------------------------------------------------------------->
+        <!-- Esquerda do Menu ------------------------------------------------------------------------------------->
+        <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
+            <ul class="navbar-nav">
+
+                <li class="  ms-5 me-4">
+                    <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"
+                       href="#"></a>
+                </li>
+
+            </ul>
         </div>
-    </nav>
+        <!-- End Esquerda do Menu --------------------------------------------------------------------------------->
 
-</header>
+
+        <!-- Direita do Menu -------------------------------------------------------------------------------------->
+        <div class="navbar-nav-wrap-content-end">
+            <a class="login-button" href="{% url 'login' %}">INTRANET</a>
+        </div>
+        <!-- End Direita do Menu ---------------------------------------------------------------------------------->
+    </div>
+</nav>
+
 <!-- End topMenu ------------------------------------------------------------------------------------------------------>
 
 <!-- Carousel --------------------------------------------------------------------------------------------------------->
