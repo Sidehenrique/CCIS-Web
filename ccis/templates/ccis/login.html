@@ -17,6 +17,9 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
+
     <title>Home</title>
   </head>
 
@@ -24,6 +27,7 @@
 
     <div class="container-sm">
       <div class="row">
+
 
         <div class="d-flex justify-content-center mt-5 pt-5">
           <div class="card" style="color:#ffffff; background-color:#04343D; border:none;">
@@ -77,6 +81,8 @@
               </form>
               <div class="pt-3">
                 <a class="link-login" href="{% url 'password_reset' %}">Esqueceu sua senha?</a>
+
+                <a class="link-login d-block" href="{% url 'home' %}">Voltar</a>
               </div>
 
 

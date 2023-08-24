@@ -73,7 +73,7 @@ def loginPage(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 
 @login_required(login_url="/login")
@@ -688,13 +688,29 @@ def cursos(request):
 
 @login_required(login_url="/login")
 def utilitarios(request):
+    user = request.user
 
-    context = {}
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    dados = dadosPessoais.objects.get(usuario=user)
+
+    context = {
+        'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+        'dados': dados, 'username': user, 'first_name': first_name,
+        'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+    }
 
     return render(request, 'ccis/utilitarios.html', context)
-
-
-
 
 
 # ----------------------------------------------------------------------------------------------------------------------

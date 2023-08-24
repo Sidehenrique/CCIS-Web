@@ -758,15 +758,38 @@ status-negativo{
 /*-- Home --------------------------------------*/
 
 .navbar-topp{
-    background-color:#04343D;
+    background-color:white;
+    color: #0A3C5F;
 }
 
+.top-buttons{
+
+    list-style:none;
+
+    display: flex;
+    padding-left: 4px;
+
+}
+
+
+.top-buttons li {
+    text-decoration:none!important;
+    padding-right: 40px;
+
+}
+
+
+.top-buttons a {
+    text-decoration:none!important;
+    color: #0A3C5F;
+}
+
+
 .login-button {
-    font-family:asap semibold;
     text-decoration:none;
-    padding:0 10px;
-    background-color:#044C58;
-    color:#ffffff;
+    padding:3px 15px 6px 15px;
+    background-color:#00A194;
+    color:#ffffff!important;
     border-radius: 15px;
     transition: all .5s;
     border:none;
@@ -774,10 +797,8 @@ status-negativo{
 
 
 .login-button:hover{
-    padding:0 15px;
     background-color:#16B597;
     color:#ffffff;
-    border-radius: 20px;
 }
 
 
@@ -785,6 +806,29 @@ status-negativo{
     color:#37474F;
     background-color:#068E74;
 }
+
+
+.font-sicoob {
+    font-family:asap!important;
+    color: #0A3C5F!important;
+}
+
+
+.learn-more{
+    text-decoration:none!important;
+    color: #ffffff;
+    background-color:#18898D;
+    padding:8px 20px 8px 20px;
+    border-radius:30px;
+    transition: all .5s;
+    border:none;
+}
+
+.learn-more:hover{
+    color: #ffffff;
+    background-color:#16B597;
+}
+
 
 
 
@@ -953,3 +997,21 @@ status-negativo{
 
 
 /*-- home coopera ------------------------------*/
+
+
+/*-- back button ------------------------------*/
+.back-button{
+    position: absolute;
+    font-size: 5vh;
+    left: 100px;
+    top: 50px;
+}
+
+.arrow-button{
+    color: #D1D1D1;
+}
+
+.arrow-button:hover{
+    color: #068E74;
+}
+/*-- back button ------------------------------*/

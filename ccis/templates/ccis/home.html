@@ -5,18 +5,18 @@
 <html lang="pt-br">
 
 <head>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
     <!-- link css -->
     <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
@@ -25,48 +25,76 @@
 
 <body>
 
-<!-- topMenu ---------------------------------------------------------------------------------------------------------->
+<!-- topMenu ----------------------------------------------------------------------->
+<nav class=" mt-2 p-0 navbar">
 
-<nav class="col-12 p-0 navbar navbar-topp navbar-expand-lg navbar-fixed">
     <div class="container-fluid">
 
-        <!-- Logo do Menu ----------------------------------------------------------------------------------------->
-        <a class="navbar-brand" href="#">
-            <img src="{% static 'ccis/logonav.png' %}"
-                 alt="logo"
-                 width="47"
-                 height="54"
-                 class="d-inline-block align-text-center;">
-        </a>
-        <!-- End Logo do Menu ------------------------------------------------------------------------------------->
+        <!-- Logo do Menu ------------------------>
+        <div class="d-flex">
+            <a class="navbar-brand ms-5" href="{% url 'home' %}">
+                <img src="{% static 'ccis/Grupo 6383.png' %}"
+                     alt="logo"
+                     width="45"
+                     height="auto"
+                     class="d-inline-block align-text-center;">
 
+            </a>
+            <p class="align-self-center mb-0">Comunicação e Controle Interno</p>
+        </div>
+        <!-- End Logo do Menu -------------------->
 
-        <!-- Esquerda do Menu ------------------------------------------------------------------------------------->
-        <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
-            <ul class="navbar-nav">
+        <!-- Direita do Menu --------------------->
+        <div class="navbar-nav-wrap-content-end me-3">
 
-                <li class="  ms-5 me-4">
-                    <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"
-                       href="#"></a>
+            <ul class="top-buttons m-0">
+                <li>
+                    <a href="{% url 'home' %}">Home</a>
                 </li>
-
+                <li>
+                    <a href="#">Sobre</a>
+                </li>
+                <li>
+                    <a href="#">Contato</a>
+                </li>
+                <li>
+                    <a class="login-button" href="{% url 'login' %}">Login</a>
+                </li>
             </ul>
-        </div>
-        <!-- End Esquerda do Menu --------------------------------------------------------------------------------->
 
-
-        <!-- Direita do Menu -------------------------------------------------------------------------------------->
-        <div class="navbar-nav-wrap-content-end">
-            <a class="login-button" href="{% url 'login' %}">INTRANET</a>
         </div>
-        <!-- End Direita do Menu ---------------------------------------------------------------------------------->
+        <!-- End Direita do Menu ----------------->
     </div>
+
 </nav>
+<!-- End topMenu -------------------------------------------------------------------->
 
-<!-- End topMenu ------------------------------------------------------------------------------------------------------>
+<!-- Conteúdo -------------------------------------------------------------------->
+<div class="container-fluid mt-5 p-0">
+    <div class="text-center font-sicoob">
 
-<!-- Carousel --------------------------------------------------------------------------------------------------------->
-<main class="col">
+        <h2>CCIS - Comunicação e controle Interno Sicoob</h2>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit culpa voluptate totam accusamus<br>
+            quam nisi, beatae consectetur ab aliquam cum, quaerat eligendi recusandae. In vel at aliquam iusto <br>
+            accusamus eius quaerat eligendi recusandae.</p>
+
+        <a class="learn-more" href="#">
+            SAIBA MAIS
+        </a>
+
+    </div>
+
+    <div class="text-center mt-2">
+
+        <img src="{% static 'ccis/Grupo 6384.png' %}"
+         alt="logo"
+         width="90%"
+         height="auto"
+         class="d-inline-block align-text-center;">
+
+    </div>
+
+    <!-- Carousel ------------------------------------->
     <div id="carouselExampleDark"
          class="carousel carousel-dark slide"
          data-bs-ride="carousel">
@@ -119,16 +147,45 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-</main>
-<!-- end Carousel ----------------------------------------------------------------------------------------------------->
 
-<!-- footer ----------------------------------------------------------------------------------------------------------->
-<footer>
-    <div class="d-flex justify-content-center" style="background-color:#04343D; color:white">
-          <p>© Todos os direitos reservados</p>
+<!-- end Carousel ------------------------------------->
+
+
+
+</div>
+<!-- End Conteúdo -------------------------------------------------------------------->
+
+<!-- footer ------------------------------------------------------------------------------->
+<footer class=" p-0 navbar" style="background-color:#04343D; color:white; height:200px;">
+
+    <div class="container-fluid">
+
+        <div class="ms-5 mt-3">
+
+            <h6>Unidade de Tecnologia</h6>
+            <p>Suporte 3361-6130 Ramal 206</p>
+
+            <p class="mt-4">© Sicoob Credibrasília Todos os direitos reservados</p>
+
+        </div>
+
+        <div class="me-4">
+            <img src="{% static 'ccis/LOGO2.png' %}"
+             alt="logo"
+             width="350px"
+             height="auto">
+        </div>
+
     </div>
+
 </footer>
-<!-- end footer ------------------------------------------------------------------------------------------------------->
+<!-- end footer ----------------------------------------------------------------------------->
+
+
+
+
+
+
 
 
 
