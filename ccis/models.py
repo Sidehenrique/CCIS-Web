@@ -468,13 +468,12 @@ class setor(models.Model):
     nome = models.CharField(db_column='nome', max_length=45, blank=True, null=True)
     cor = models.CharField(max_length=45, blank=True, null=True)
     email = models.EmailField(db_column='email', max_length=45, blank=True, null=True)
-    contato = models.CharField(choices=CHOICES_tipoDeConta, max_length=45, blank=True,
-                                   null=True)
+    contato = models.CharField(choices=CHOICES_tipoDeConta, max_length=45, blank=True, null=True)
     ramal = models.CharField(max_length=45, blank=True, null=True)
     unidade = models.CharField(max_length=45, blank=True, null=True)
     responsavel = models.CharField( max_length=45, blank=True, null=True)
     atribuicoes = models.CharField(max_length=45, blank=True, null=True)
-    
+    canvas = models.ImageField(upload_to='setores', null=True, blank=True)
 
     def __str__(self):
         return self.sigla

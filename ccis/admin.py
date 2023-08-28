@@ -31,10 +31,18 @@ class profissionalAdmin(admin.ModelAdmin):
     list_display = ('cargo', 'colaborador', 'superiorImediato', 'situacao')
 
 
+class setorAdmin(admin.ModelAdmin):
+    form = modelFormSetor
+
+    # Adicione o campo 'user' na lista de campos para exibição no admin
+    list_display = ('sigla', 'nome', 'email', 'responsavel')
+
+
 # Registre o modelo DadosPessoais com o admin personalizado
 admin.site.register(dadosPessoais, DadosPessoaisAdmin)
 admin.site.register(enderecoContato, enderecoContatoAdmin)
 admin.site.register(profissional, profissionalAdmin)
+admin.site.register(setor, setorAdmin)
 
 
 # INSERÇÃO DE TABELAS NO CADASTRO DE USUARIO NO ADMIN ------------------------------------------------------------------

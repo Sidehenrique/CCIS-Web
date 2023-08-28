@@ -28,10 +28,12 @@
 <!-- start container-fluid ---------------------------------------------------------------------------------------->
 <div class="container-fluid">
 
-    <!-- topMenu ------------------------------------------------------->
-    <header class="menu-header nav justify-content-center ">
 
-        <nav class="col p-0 navbar navbar-expand-lg navbar-fixed">
+    <!-- topMenu ------------------------------------------------------->
+    <header class="menu-header nav justify-content-center">
+        {% include 'ccis/infoNavbar.html' %}
+
+        <nav class="col p-0 navbar navbar-expand-lg">
             <div class="container-fluid">
 
                 <!-- Logo do Menu ------------------------------------------------------------------------------------->
@@ -269,7 +271,7 @@
                     <ul class="ul-lista-novo">
                         
                         <li class="p-3 text-center">
-                            <img src= "{% static 'ccis/Sicoob.png' %}" alt="logo-Sicoob" width="150px">
+                            <!-- <img src= "{% static 'ccis/Sicoob.png' %}" alt="logo-Sicoob" width="150px"> -->
                         </li>
 
                         <!-- Overview -->
@@ -383,4 +385,5 @@
 <script src="{% static 'ccis/script.js' %}"></script>
 
 </body>
+
 </html>

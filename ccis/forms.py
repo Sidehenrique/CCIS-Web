@@ -379,12 +379,11 @@ class modelFormCurso(forms.ModelForm):
         }
 
 
-#------------------- cadatro setor ------------------------------
-
+# Cadastro setor -------------------------------------------------------------->
 class modelFormSetor(forms.ModelForm):
     class Meta:
         model = setor
-        fields = ('sigla', 'nome', 'cor','email', 'contato', 'ramal', 'unidade', 'responsavel', 'atribuicoes')
+        fields = ('sigla', 'nome', 'cor', 'email', 'contato', 'ramal', 'unidade', 'responsavel', 'atribuicoes', 'canvas')
 
         widgets = {'siglas': forms.TextInput(attrs={'class': 'form-control'}),
                    'nome': forms.TextInput(attrs={'class': 'form-control'}),
@@ -395,6 +394,7 @@ class modelFormSetor(forms.ModelForm):
                    'unidade': forms.TextInput(attrs={'class': 'form-control'}),
                    'responsavel': forms.TextInput(attrs={'class': 'form-control'}),
                    'atribuicoes': forms.TextInput(attrs={'class': 'form-control'}),
+                   'canvas': FileInput(attrs={'type': 'file', 'class': 'form-control'})
 
                    }
 
