@@ -112,6 +112,15 @@
 
                                         <li class="">
                                             <i class="fa-solid fa-location-dot card-icon"></i>
+                                            {% if dadosSetor.atribuicoes %}
+
+                                            {{ dadosSetor.atribuicoes }}
+
+                                            {% else %}
+
+                                            Não informado
+
+                                            {% endif %}
 
                                         </li>
 
@@ -411,12 +420,22 @@
 
                     <!-- coluna da direita --------------->
                     <div class="col mt-3 ms-2" style="border-left: 1px solid #ccc;">
-
-                        <img src="{% static 'ccis/Grupo 6306.png' %}"
-                             alt="TI"
+                        {% if dadosSetor.canvas %}
+                        <img src="{{ dadosSetor.canvas.url }}"
+                             alt="imagemSetor"
                              width="90%"
                              height="auto"
                              class="d-inline-block;">
+
+                        {% else %}
+
+                        <img src="{% static 'ccis/Grupo 4678.png' %}"
+                             alt="imagem"
+                             width="90%"
+                             height="auto"
+                             class="d-inline-block;">
+
+                        {% endif %}
 
                     </div>
                     <!-- coluna da direita --------------->

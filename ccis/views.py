@@ -697,7 +697,6 @@ def departamentos(request):
         return render(request, 'ccis/departamentos.html', context)
 
 
-@login_required(login_url="/login")
 def utilitarios(request):
     context = infoClima()
     return render(request, 'ccis/utilitarios.html', context)
