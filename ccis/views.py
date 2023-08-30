@@ -1,4 +1,7 @@
 import datetime
+
+import requests
+
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
 
@@ -16,11 +19,9 @@ from .models import dadosPessoais, dependentes, enderecoContato, outros, escolar
 
 from .forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    modelFormRg, modelFormCnh, modelFormCpf, modelFormReservista, modelFormTitulo, modelFormClt, modelFormSetor,\
-    modelFormResidencia, modelFormCertidao, modelFormAdmissional, modelFormPeriodico, modelFormCurso, CustomUserCreationForm
-
-from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
+    modelFormRg, modelFormCnh, modelFormCpf, modelFormReservista, modelFormTitulo, modelFormClt, modelFormSetor, \
+    modelFormResidencia, modelFormCertidao, modelFormAdmissional, modelFormPeriodico, modelFormCurso, \
+    CustomUserCreationForm
 
 
 # SEGURANÇA ------------------------------------------------------------------------------------------------------------
@@ -28,6 +29,29 @@ def datAT():
     data = datetime.datetime.now()
     d = datetime.datetime.strftime(data, "%d-%m-%Y")
     return d
+
+
+def infoClima():
+    API_KEY = '65ea38b72e0784b11d03334985c5fac7'
+
+    cidade_city = "brasília"
+
+    link = f"https://api.openweathermap.org/data/2.5/weather?q={cidade_city}&appid={API_KEY}&lang=pt_br"
+
+    requisicao = requests.get(link)
+    requesicao_dic = requisicao.json()
+
+    descricao = requesicao_dic['weather'][0]['description']
+    temperatura = requesicao_dic['main']['temp'] - 273.15
+    umidade = requesicao_dic['main']['humidity']
+    minima = requesicao_dic['main']['temp_min'] - 273.15
+    maxima = requesicao_dic['main']['temp_max'] - 273.15
+    cidade = requesicao_dic['name']
+
+    clima = {'descricao': descricao, 'temperatura': temperatura, 'umidade': umidade, 'minima': minima,
+             'maxima': maxima, 'cidade': cidade}
+
+    return clima
 
 
 def loginPage(request):
@@ -131,8 +155,8 @@ def password_reset(request):
 
 
 def password_done(request):
-
     return render(request, 'security/password_done.html')
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 
@@ -153,7 +177,8 @@ def base(request):
         cargo = d['profissional__cargo']
 
         dados_user.append(
-            {'user': request.user, 'sexo': sexo, 'foto': foto, 'first_name': first_name, 'last_name': last_name, 'cargo': cargo})
+            {'user': request.user, 'sexo': sexo, 'foto': foto, 'first_name': first_name, 'last_name': last_name,
+             'cargo': cargo})
 
     contexto = {'dados_user': dados_user}
 
@@ -161,7 +186,8 @@ def base(request):
 
 
 def home(request):
-    return render(request, 'ccis/home.html')
+    context = infoClima()
+    return render(request, 'ccis/home.html', context)
 
 
 @login_required(login_url="/login")
@@ -193,7 +219,6 @@ def new_login_page(request):
 
 @login_required(login_url="/login")
 def solicitacao(request):
-
     log_id = request.user.id
     logName = request.user.first_name
     logLast = request.user.last_name
@@ -268,8 +293,8 @@ def profile(request, user_id):
     porcentagem_mid = mid_form.calcular_porcentagem_mid()
 
     porcentagem_total = (
-        porcentagem_dados_pessoais + porcentagem_dados_dependentes + porcentagem_end + porcentagem_esc +
-        porcentagem_cert + porcentagem_profi + porcentagem_db + porcentagem_out + porcentagem_mid) / 9
+                                porcentagem_dados_pessoais + porcentagem_dados_dependentes + porcentagem_end + porcentagem_esc +
+                                porcentagem_cert + porcentagem_profi + porcentagem_db + porcentagem_out + porcentagem_mid) / 9
 
     pf = str(round(porcentagem_total, 2))
 
@@ -280,7 +305,7 @@ def profile(request, user_id):
     nomes_equipe = []
     if superior is None:
         pass
-    
+
     else:
         equipe = User.objects.filter(groups=superior)
         # Resto do código
@@ -343,11 +368,12 @@ def profile(request, user_id):
             'conclusao': conclusao,
         })
 
-    contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName, 'logLast': logLast,
+    contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName,
+                'logLast': logLast,
                 'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
                 'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
                 'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc, 'User': request.user,
-                'is_superadmin':is_superadmin, 'group_gestao':group_gestao}
+                'is_superadmin': is_superadmin, 'group_gestao': group_gestao}
 
     if request.method == 'GET':
         return render(request, 'ccis/profile.html', contexto)
@@ -355,7 +381,6 @@ def profile(request, user_id):
 
 @login_required(login_url="/login")
 def usuario(request):
-
     dados_formset = inlineformset_factory(User, dadosPessoais, modelFormDadosPessoais, extra=1, can_delete=False)
     endereco_formset = inlineformset_factory(User, enderecoContato, modelFormEnderecoContato, extra=1,
                                              can_delete=False)
@@ -494,7 +519,8 @@ def usuario(request):
                    'porcentagem_M': porcentagem_M, 'userCreation': form, 'dadosTable': dadosTable,
                    'dadosP': dados_form, 'usuario': usuario, 'end': endereco_form, 'dependentes_form': dependentes_form,
                    'profissional_form': profissional_form, 'dadosBancarios_form': dadosBancarios_form,
-                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao,
+                   'is_superadmin': is_superadmin}
 
         return render(request, 'rh/usuario.html', context)
 
@@ -535,7 +561,8 @@ def conta(request):
 
     context = {'dados': dados, 'first_name': first_name, 'last_name': last_name,
                'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-               'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao':group_gestao, 'is_superadmin':is_superadmin,
+               'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao': group_gestao,
+               'is_superadmin': is_superadmin,
                'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid}
 
     if request.method == 'GET':
@@ -661,7 +688,6 @@ def departamentos(request):
     dados = dadosPessoais.objects.get(usuario=user)
 
     if request.method == 'GET':
-
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'dados': dados, 'username': user, 'first_name': first_name,
@@ -672,22 +698,15 @@ def departamentos(request):
 
 
 @login_required(login_url="/login")
-def cursos(request):
-    if request.method == 'POST':
-        curso_form = modelFormCurso(request.POST, request.FILES)
-        if curso_form.is_valid():
-            obj = curso_form.save(commit=False)
-            obj.usuario = request.user
-            obj.save()
-            curso_form.save()
-        return HttpResponse('Salvo')
-    else:
-        curso_form = modelFormCurso(request.POST, request.FILES)
-    return render(request, 'ccis/cursos.html', {'curso_form': curso_form})
+def utilitarios(request):
+    context = infoClima()
+    return render(request, 'ccis/utilitarios.html', context)
 
 
 @login_required(login_url="/login")
-def utilitarios(request):
+def gestaoMetas(request):
+    # user = get_object_or_404(User, id=user_id)
+
     user = request.user
 
     log = request.user
@@ -704,15 +723,14 @@ def utilitarios(request):
 
     dados = dadosPessoais.objects.get(usuario=user)
 
-    context = {
-        'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-        'dados': dados, 'username': user, 'first_name': first_name,
-        'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
-    }
+    if request.method == 'GET':
+        context = {
+            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+            'dados': dados, 'username': user, 'first_name': first_name,
+            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+        }
 
-    return render(request, 'ccis/utilitarios.html', context)
-
-
+        return render(request, 'ccis/gestaoMetas.html', context)
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -918,7 +936,6 @@ def basileia(request):
     dados = dadosPessoais.objects.get(usuario=user)
 
     if request.method == 'GET':
-
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'dados': dados, 'username': user, 'first_name': first_name,
@@ -948,7 +965,6 @@ def dadosConsolidados(request):
     dados = dadosPessoais.objects.get(usuario=user)
 
     if request.method == 'GET':
-
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'dados': dados, 'username': user, 'first_name': first_name,
@@ -956,6 +972,7 @@ def dadosConsolidados(request):
         }
 
         return render(request, 'coopera/dados.html', context)
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 
@@ -1016,7 +1033,6 @@ def ti_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
-
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'dados': dados, 'username': user, 'first_name': first_name,
@@ -1025,6 +1041,7 @@ def ti_home(request):
         }
 
         return render(request, 'ccis/setor_home.html', context)
+
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
 
@@ -1087,7 +1104,6 @@ def rh_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
-
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'dados': dados, 'username': user, 'first_name': first_name,
@@ -1124,7 +1140,6 @@ def rh_dash(request):
     totalMenor = len(profissional.objects.filter(colaborador='Menor Aprendiz', situacao='Ativo'))
 
     if request.method == 'GET':
-
         context = {
             'totalUsuarios': totalUsuarios, 'totalColaborador': totalColaborador,
             'totalEstagiarios': totalEstagiarios, 'totalMenor': totalMenor,
@@ -1138,7 +1153,6 @@ def rh_dash(request):
 
 @login_required(login_url="/login")
 def pro_seletivo(request):
-
     log = request.user
     log_id = request.user.id
     logName = request.user.first_name
@@ -1154,7 +1168,6 @@ def pro_seletivo(request):
 
 @login_required(login_url="/login")
 def ferias(request):
-
     log = request.user
     log_id = request.user.id
     logName = request.user.first_name
@@ -1170,7 +1183,6 @@ def ferias(request):
 
 @login_required(login_url="/login")
 def anbima(request):
-
     log = request.user
     log_id = request.user.id
     logName = request.user.first_name
@@ -1186,7 +1198,6 @@ def anbima(request):
 
 @login_required(login_url="/login")
 def colaboradores(request):
-
     log = request.user
     log_id = request.user.id
     logName = request.user.first_name

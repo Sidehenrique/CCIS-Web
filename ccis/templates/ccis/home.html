@@ -28,7 +28,7 @@
 {% include 'ccis/infoNavbar.html' %}
 
 <!-- topMenu ----------------------------------------------------------------------->
-<nav class=" mt-2 p-0 navbar">
+<nav class="p-0 navbar">
 
     <div class="container-fluid">
 
@@ -58,6 +58,9 @@
                 </li>
                 <li>
                     <a href="#">Contato</a>
+                </li>
+                <li>
+                    <a href="{% url 'utilitarios' %}">Utilitários</a>
                 </li>
                 <li>
                     <a class="login-button" href="{% url 'login' %}">Login</a>
@@ -101,32 +104,24 @@
     <!-- Carousel ------------------------------------->
     <div id="carouselExampleDark"
          class="carousel carousel-dark slide mt-3"
-         data-bs-ride="carousel">
+         data-ride="carousel">
 
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
                     aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
                     aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
         </div>
 
 
         <!-- Imagens e conteúdo do carousel -------------------->
         <div class="carousel-inner">
-
             <div class="carousel-item active" data-bs-interval="5000">
                 <img src="{% static 'ccis/Grupo 6389.png' %}" class="d-block w-100" alt="Cooperar+">
             </div>
-
-        </div>
-        <div class="carousel-inner">
-
             <div class="carousel-item" data-bs-interval="5000">
                 <img src="{% static 'ccis/gestao.png' %}" class="d-block w-100" alt="Gestão">
             </div>
-
         </div>
 
         <!-- Botões de ação -------------------->

@@ -31,7 +31,6 @@
 
     <!-- topMenu ------------------------------------------------------->
     <header class="menu-header nav justify-content-center">
-        {% include 'ccis/infoNavbar.html' %}
 
         <nav class="col p-0 navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -270,19 +269,11 @@
                     <!-- Menu -->
                     <ul class="ul-lista-novo">
                         
-                        <li class="p-3 text-center">
-                            <!-- <img src= "{% static 'ccis/Sicoob.png' %}" alt="logo-Sicoob" width="150px"> -->
+                        <li class="p-3 text-center"> </li>
+                            <!-- <img src= "{% static 'ccis/Sicoob.png' %}" alt="logo-Sicoob" width="150px">
                         </li>
 
-                        <!-- Overview -->
-                        <li class="li-lista-novo d-none">
-                            <a href="{% url 'profile' request.user.id %}" class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-chart-simple"></i>
-                                Overview
-                            </a>
-                        </li>
-
-                        <hr class="">
+                        <hr class=""> -->
 
                         <!-- Perfil -->
                         <li class="li-lista-novo">
@@ -337,6 +328,15 @@
                             </a>
                         </li>
 
+                        <!-- Gestão de Metas -->
+                        <li class="li-lista-novo">
+
+                            <a href="{% url 'gestaoMetas' %}" class="li-link-novo" aria-current="page">
+                                <i class="fa-solid fa-bullseye"></i>
+                                Gestão de Metas
+                            </a>
+                        </li>
+
                         <!-- utilitarios -->
                         <li class="li-lista-novo">
 
@@ -353,7 +353,7 @@
 
 
                 <!-- Conteúdo -------------------------------------------------------------------->
-                <div class="col-lg-10 col-md-9 col-12 mt-lg-0" style="padding: 30px 0 0 0;">
+                <div class="col-lg-10 col-md-9 col-12 mt-lg-0" style="padding: 0 0 0 0;">
 
                     {% block conteudo %}
 

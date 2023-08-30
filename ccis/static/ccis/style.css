@@ -2,30 +2,26 @@
 /*-- Font -----------------------------------*/
 @font-face {
     font-family:'asap';
-    src: url('/static/fonts/Asap-Regular.ttf') format('truetype'),
+    src: url('../fonts/Asap-Regular.ttf') format('truetype'),
 }
 
 @font-face {
     font-family:'asap semibold';
-    src: url('/static/fonts/Asap-Bold.ttf') format('truetype'),
+    src: url('../fonts/Asap-Bold.ttf') format('truetype'),
 }
 
 @font-face {
     font-family: 'Oswald';
-    src: url('/static/fonts/Oswald-VariableFont_wght.ttf') format('truetype');
+    src: url('../fonts/Oswald-VariableFont_wght.ttf') format('truetype');
 
 }
 
 @font-face {
     font-family: 'segoe';
-    src: url('/static/fonts/segoeui.ttf') format('truetype');
+    src: url('../fonts/segoeui.ttf') format('truetype');
 
 }
 /*-- Font -----------------------------------*/
-
-
-
-
 
 
 

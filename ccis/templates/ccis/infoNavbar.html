@@ -10,7 +10,13 @@
                 <div class="nav justify-content-end" style="width: 400px;">
                     <marquee behavior="slade" direction="left">
 
-                        <span style="color: white;">Alerta laranja clima seco em Brasília 24ºC </span>
+                        <span style="color: white;">{{ descricao|capfirst }} em {{ cidade }} | Temperatura de {{ temperatura|floatformat:0 }} ºC |
+                            Umidade relativa do ar de {{ umidade }} ºC com |
+                            Minima de {{ minima|floatformat:0 }}ºC e Máxima de {{ maxima|floatformat:0 }}ºC</span>
+
+                        <span style="color: #C7D300;">-------</span>
+
+                        <span style="color: white;"></span>
 
                     </marquee>
                 </div>

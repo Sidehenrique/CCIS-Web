@@ -461,7 +461,7 @@ class docCursos(models.Model):
         return self.certiCurso
 
 
-#------------------- tabela setor -----------------------------
+# ------------------- tabela setor -----------------------------
 class setor(models.Model):
     idSetor = models.AutoField(db_column='idSetor', primary_key=True)
     sigla = models.CharField(max_length=45, blank=True, null=True)
