@@ -57,7 +57,7 @@ CHOICES_categoria = [
 class dadosPessoais(models.Model):
     idDadosPessoais = models.AutoField(db_column='idDadosPessoais', primary_key=True)
     nomeCompleto = models.CharField(db_column='nomeCompleto', max_length=60, blank=False, null=True)
-    sexo = models.CharField(choices=CHOICES_sexo, max_length=45, blank=True, null=True)
+    sexo = models.CharField(choices=CHOICES_sexo, max_length=45, blank=False, null=True)
     estadoCivil = models.CharField(choices=CHOICES_estadoCivil, db_column='estadoCivil', max_length=45, blank=True,
                                    null=True)
     corRaca = models.CharField(choices=CHOICES_corRaca, db_column='corRaca', max_length=45, blank=True, null=True)
@@ -182,7 +182,7 @@ class enderecoContato(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='enderecoContato')
 
     def __str__(self):
-        return self.endereco
+        return self.emailCorporativo
 
 
 CHOICES_nivelSecundario = [
