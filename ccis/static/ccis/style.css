@@ -37,12 +37,11 @@
 
 @font-face {
     font-family: 'oswald';
-    src: url('./fonts/Oswald-VariableFont_wght.ttf') format('truetype');
+    src: url('./fonts/FontsFree-Net-Oswald-Medium.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 /*-- Font -----------------------------------*/
-
 
 
 /*--Scroll bar ------------------------------*/
@@ -1095,10 +1094,18 @@ status-negativo{
 }
 
 
+.button-request{
+    transition: all .5s;
+    display:block;
+    padding:10px 100px;
+    border:none;
+}
 
 
-
-
+.button-request:hover{
+    background-color:#00353E;
+    color:#ffffff;
+}
 
 
 

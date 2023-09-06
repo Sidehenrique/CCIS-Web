@@ -394,7 +394,7 @@ class modelFormSetor(forms.ModelForm):
                    'unidade': forms.TextInput(attrs={'class': 'form-control'}),
                    'responsavel': forms.TextInput(attrs={'class': 'form-control'}),
                    'atribuicoes': forms.TextInput(attrs={'class': 'form-control'}),
-                   'canvas': FileInput(attrs={'type': 'file', 'class': 'form-control'})
+                   'canvas': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'})
 
                    }
 
@@ -412,8 +412,7 @@ class modelFormAcessosM1(forms.ModelForm):
         fields = ('assunto', 'descricao', 'arquivo')
 
         widgets = {'assunto': forms.Select(attrs={'class': 'form-select'}),
-                   'descricao': forms.TextInput(attrs={'class': 'form-control'}),
-                   'arquivo': forms.TextInput(attrs={'class': 'form-control'}),
-
+                   'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
+                   'arquivo': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'})
                    }
 

@@ -74,28 +74,32 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-lista-novo">
-                        <a id="btnSisbr" href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                        <a id="btnSisbr" href="{% url 'profile' request.user.id %}" class="li-link-request"
+                           aria-current="page">
                             <i class="fa-solid fa-key"></i>
                             Sisbr
                         </a>
                     </li>
 
                     <li class="li-lista-novo">
-                        <a id=btnVPN" href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                        <a id=btnVPN" href="{% url 'profile' request.user.id %}" class="li-link-request"
+                           aria-current="page">
                             <i class="fa-solid fa-key"></i>
                             VPN
                         </a>
                     </li>
 
                     <li class="li-lista-novo">
-                        <a id="btnEmail" href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                        <a id="btnEmail" href="{% url 'profile' request.user.id %}" class="li-link-request"
+                           aria-current="page">
                             <i class="fa-solid fa-key"></i>
                             Email
                         </a>
                     </li>
 
                     <li class="li-lista-novo">
-                        <a id="btnIntranet" href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                        <a id="btnIntranet" href="{% url 'profile' request.user.id %}" class="li-link-request"
+                           aria-current="page">
                             <i class="fa-solid fa-key"></i>
                             Intranet
                         </a>
@@ -182,7 +186,7 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-lista-novo">
-                        <a  href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-server"></i>
                             Implementação de Melhorias
                         </a>
@@ -224,13 +228,92 @@
             </div>
 
         </div>
-
         <!-- Menu -------------------------------->
 
+        <!-- Informativo ------------------------->
+        <div class="col menu-request m-0 p-5">
+            <h6>Orientações para abertura de chamado - 4155. Tecnologia</h6>
+            <p>
+                Pontos a serem observados durante a abertura de chamado:
+                - Detalhar bem a sua solicitação.
+                - Se possuir algum erro, anexe as evidências no chamado.
+
+                Horário de Atendimento
+                - Segunda-feira a sexta-feira das 08:00hs às 17:00hs
+
+                Tempo de Atendimento Médio
+                - Solicitação: SLA indefinida
+
+                Dicas:
+                - Informe corretamente e de forma clara todos os dados solicitados no chamado.</p>
+        </div>
+        <!-- Informativo ------------------------->
 
         <!-- Formulário -------------------------->
-        <div class="col menu-request m-0">
-            <!-- {{ acessoM1 }} -->
+        <div class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO</h5>
+
+            <div class="row p-3 ">
+
+                <div class="col-7">
+
+                    <h6>Detalhes da Solicitação</h6>
+
+                    <form action="processar_formulario.php" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-2">
+                            <label>* Selecione o Assunto:</label>
+                            {{ acessoM1.assunto }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label>* Detalhes:</label><br>
+                            {{ acessoM1.descricao }}
+                        </div>
+
+                        <div class="">
+                            <label>Anexar arquivo:</label>
+                            {{ acessoM1.arquivo }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </form>
+
+                </div>
+
+                <div class="col-1"></div>
+
+                <div class="col">
+
+                    <div>
+                        <h6>Dados do Setor</h6>
+
+                        <p class="m-0">Setor:</p>
+                        <p class="m-0">Responsável:</p>
+                        <p class="m-0">Email:</p>
+                        <p class="m-0">Telefone Corporativo:</p>
+                        <p class="m-0">Ramal:</p>
+
+                    </div>
+
+                    <div class="mt-5">
+
+                        <h6>Dados do Solicitante</h6>
+
+                        <p class="m-0">Nome:</p>
+                        <p class="m-0">CPF:</p>
+                        <p class="m-0">Sisbr:</p>
+                        <p class="m-0">Email:</p>
+                        <p class="m-0">Telefone Corporativo:</p>
+                        <p class="m-0">Ramal:</p>
+                        <p class="m-0">Unidade:</p>
+
+                    </div>
+
+                </div>
+
+            </div>
         </div>
         <!-- Formulário -------------------------->
 

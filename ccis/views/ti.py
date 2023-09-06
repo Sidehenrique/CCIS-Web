@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from .. models import dadosPessoais, setor, acessoM1
+from .. models import dadosPessoais, setor
+from .. forms import modelFormAcessosM1
 
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
@@ -78,7 +79,7 @@ def new_request(request):
     is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
 
-    forn = acessoM1()
+    forn = modelFormAcessosM1()
 
     contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                 'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'acessoM1': forn}
