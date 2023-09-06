@@ -31,40 +31,40 @@
 <!-- Conteúdo Pagina 1 ------------------------------->
 <div id="pag1" class="container-fluid scrollable-content">
 
-        <!-- mobile ------------------------------->
-        <div class="row mt-4">
+    <!-- mobile ------------------------------->
+    <div class="row mt-4">
 
-            <!-- avatar -------------------------->
-            <div class="d-lg-none d-md-none col d-sm-block profile-info mb-3">
+        <!-- avatar -------------------------->
+        <div class="d-lg-none d-md-none col d-sm-block profile-info mb-3">
 
-                {% if dados.foto %}
-                <img class="profile-user"
-                     src="{{ dados.foto.url }}">
+            {% if dados.foto %}
+            <img class="profile-user"
+                 src="{{ dados.foto.url }}">
 
-                {% else %}
+            {% else %}
 
-                {% if dados.sexo == "Masculino" %}
-                <img class="profile-user"
-                     src="{% static 'ccis/avatar.jpg' %}">
+            {% if dados.sexo == "Masculino" %}
+            <img class="profile-user"
+                 src="{% static 'ccis/avatar.jpg' %}">
 
-                {% elif dados.sexo == "Feminino" %}
-                <img class="profile-user"
-                     src="{% static 'ccis/avatar-feminino.jpg' %}">
+            {% elif dados.sexo == "Feminino" %}
+            <img class="profile-user"
+                 src="{% static 'ccis/avatar-feminino.jpg' %}">
 
-                {% endif %}
+            {% endif %}
 
-                {% endif %}
+            {% endif %}
 
-                <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
+            <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
 
-                <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
+            <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
 
-            </div>
-            <!-- avatar -------------------------->
+        </div>
+        <!-- avatar -------------------------->
 
-            <!-- Status -------------------------->
-            <div class="d-lg-none d-md-none col-sm-12 d-sm-block align-self-end mb-3">
-                 <div class="profile-progress mb-3">
+        <!-- Status -------------------------->
+        <div class="d-lg-none d-md-none col-sm-12 d-sm-block align-self-end mb-3">
+            <div class="profile-progress mb-3">
 
                 <!-- Barra de progresso -->
                 <div class="col position-relative">
@@ -91,12 +91,12 @@
 
                     <div class="image-list">
                         {% for certifi in cert %}
-                            {% if certifi.certiAnbima == 'CPA-10' %}
-                            <img src="{% static 'ccis/CPA-10.jpg' %}">
-                            {% elif certifi.certiAnbima == 'CPA-20' %}
+                        {% if certifi.certiAnbima == 'CPA-10' %}
+                        <img src="{% static 'ccis/CPA-10.jpg' %}">
+                        {% elif certifi.certiAnbima == 'CPA-20' %}
                         <img src="{% static 'ccis/CPA-20.jpg' %}">
                         {% elif certifi.certiAnbima == 'CEA' %}
-                            <img src="{% static 'ccis/CPA-CEA.jpg' %}">
+                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
                         {% else %}
                         {% endif %}
                         {% endfor %}
@@ -107,10 +107,10 @@
 
             </div>
         </div>
-            <!-- status -------------------------->
+        <!-- status -------------------------->
 
-        </div>
-        <!-- mobile ------------------------------->
+    </div>
+    <!-- mobile ------------------------------->
 
     <!-- header ------------------------------->
     <div class="row mt-4">
@@ -172,12 +172,12 @@
 
                     <div class="image-list">
                         {% for certifi in cert %}
-                            {% if certifi.certiAnbima == 'CPA-10' %}
-                            <img src="{% static 'ccis/CPA-10.jpg' %}">
-                            {% elif certifi.certiAnbima == 'CPA-20' %}
+                        {% if certifi.certiAnbima == 'CPA-10' %}
+                        <img src="{% static 'ccis/CPA-10.jpg' %}">
+                        {% elif certifi.certiAnbima == 'CPA-20' %}
                         <img src="{% static 'ccis/CPA-20.jpg' %}">
                         {% elif certifi.certiAnbima == 'CEA' %}
-                            <img src="{% static 'ccis/CPA-CEA.jpg' %}">
+                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
                         {% else %}
                         {% endif %}
                         {% endfor %}
@@ -244,15 +244,15 @@
                         <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
                         {% if contato.telefoneCorporativo %}
 
-                            Corporativo: {{ contato.telefoneCorporativo }}
+                        Corporativo: {{ contato.telefoneCorporativo }}
 
                         {% elif contato.celularCorporativo %}
 
-                            Corporativo: {{ contato.celularCorporativo }}
+                        Corporativo: {{ contato.celularCorporativo }}
 
                         {% else %}
 
-                            Corporativo: Não informado
+                        Corporativo: Não informado
 
                         {% endif %}
                     </li>
@@ -395,10 +395,10 @@
 
             <div class="">
                 <img src="{% static 'ccis/Grupo 4678.png' %}"
-                         alt="rh"
-                         width="300px"
-                         height="auto"
-                         style=" background-repeat:no-repeat">
+                     alt="rh"
+                     width="300px"
+                     height="auto"
+                     style=" background-repeat:no-repeat">
             </div>
 
         </div>
@@ -419,7 +419,6 @@
             <div class="card-body-custom" style="text-align: center;">
 
 
-
             </div>
 
         </div>
@@ -434,42 +433,42 @@
 
 
 <!-- Conteudo pagina 2 ------------------------------->
-    <div id="pag2" class="container-fluid scrollable-content" style="display: none;">
+<div id="pag2" class="container-fluid scrollable-content" style="display: none;">
 
-        <!-- mobile ------------------------------->
-        <div class="row mt-4">
+    <!-- mobile ------------------------------->
+    <div class="row mt-4">
 
-            <!-- avatar -------------------------->
-            <div class="d-lg-none d-md-none col d-sm-block profile-info mb-3">
+        <!-- avatar -------------------------->
+        <div class="d-lg-none d-md-none col d-sm-block profile-info mb-3">
 
-                {% if dados.foto %}
-                <img class="profile-user"
-                     src="{{ dados.foto.url }}">
+            {% if dados.foto %}
+            <img class="profile-user"
+                 src="{{ dados.foto.url }}">
 
-                {% else %}
+            {% else %}
 
-                {% if dados.sexo == "Masculino" %}
-                <img class="profile-user"
-                     src="{% static 'ccis/avatar.jpg' %}">
+            {% if dados.sexo == "Masculino" %}
+            <img class="profile-user"
+                 src="{% static 'ccis/avatar.jpg' %}">
 
-                {% elif dados.sexo == "Feminino" %}
-                <img class="profile-user"
-                     src="{% static 'ccis/avatar-feminino.jpg' %}">
+            {% elif dados.sexo == "Feminino" %}
+            <img class="profile-user"
+                 src="{% static 'ccis/avatar-feminino.jpg' %}">
 
-                {% endif %}
+            {% endif %}
 
-                {% endif %}
+            {% endif %}
 
-                <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
+            <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
 
-                <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
+            <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
 
-            </div>
-            <!-- avatar -------------------------->
+        </div>
+        <!-- avatar -------------------------->
 
-            <!-- Status -------------------------->
-            <div class="d-lg-none d-md-none col-sm-12 d-sm-block align-self-end mb-3">
-                 <div class="profile-progress mb-3">
+        <!-- Status -------------------------->
+        <div class="d-lg-none d-md-none col-sm-12 d-sm-block align-self-end mb-3">
+            <div class="profile-progress mb-3">
 
                 <!-- Barra de progresso -->
                 <div class="col position-relative">
@@ -496,12 +495,12 @@
 
                     <div class="image-list">
                         {% for certifi in cert %}
-                            {% if certifi.certiAnbima == 'CPA-10' %}
-                            <img src="{% static 'ccis/CPA-10.jpg' %}">
-                            {% elif certifi.certiAnbima == 'CPA-20' %}
+                        {% if certifi.certiAnbima == 'CPA-10' %}
+                        <img src="{% static 'ccis/CPA-10.jpg' %}">
+                        {% elif certifi.certiAnbima == 'CPA-20' %}
                         <img src="{% static 'ccis/CPA-20.jpg' %}">
                         {% elif certifi.certiAnbima == 'CEA' %}
-                            <img src="{% static 'ccis/CPA-CEA.jpg' %}">
+                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
                         {% else %}
                         {% endif %}
                         {% endfor %}
@@ -512,10 +511,10 @@
 
             </div>
         </div>
-            <!-- status -------------------------->
+        <!-- status -------------------------->
 
-        </div>
-        <!-- mobile ------------------------------->
+    </div>
+    <!-- mobile ------------------------------->
 
     <!-- header ------------------------------->
     <div class="row mt-4">
@@ -577,12 +576,12 @@
 
                     <div class="image-list">
                         {% for certifi in cert %}
-                            {% if certifi.certiAnbima == 'CPA-10' %}
-                            <img src="{% static 'ccis/CPA-10.jpg' %}">
-                            {% elif certifi.certiAnbima == 'CPA-20' %}
+                        {% if certifi.certiAnbima == 'CPA-10' %}
+                        <img src="{% static 'ccis/CPA-10.jpg' %}">
+                        {% elif certifi.certiAnbima == 'CPA-20' %}
                         <img src="{% static 'ccis/CPA-20.jpg' %}">
                         {% elif certifi.certiAnbima == 'CEA' %}
-                            <img src="{% static 'ccis/CPA-CEA.jpg' %}">
+                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
                         {% else %}
                         {% endif %}
                         {% endfor %}
@@ -602,71 +601,72 @@
     <!-- from escolaridade -------------------->
     <div class="row p-5 card-custom" style="margin:0px 0px 20px 0px">
 
-            <!-- Img ----------------->
-            <div class="col-sm-12 col-md-12 col-lg-6">
-                <div style="text-align: center">
-                    <img src="{% static 'ccis/Grupo 4619.png' %}"
-                         alt="rh"
-                         width="100%"
-                         height="auto"
-                         class="d-inline-block;">
+        <!-- Img ----------------->
+        <div class="col-sm-12 col-md-12 col-lg-6">
+            <div style="text-align: center">
+                <img src="{% static 'ccis/Grupo 4619.png' %}"
+                     alt="rh"
+                     width="100%"
+                     height="auto"
+                     class="d-inline-block;">
+            </div>
+        </div>
+        <!-- Img ----------------->
+
+
+        <!-- form ---------------->
+        <div class="col-lg-6 col-md-12 p-2">
+
+            <!-- info ---------------->
+            <h1 class="mt-1" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ">
+                ESCOLARIDADE:</h1>
+
+            <!-- form Escolaridade -->
+            <form action=" {% url 'formEsc' %} "
+                  method="POST"
+                  class="row needs-validation"
+                  enctype="multipart/form-data"
+                  novalidate>
+                {% csrf_token %}
+
+                <div class="col-12 ">
+                    <label class="form-label">Curso:</label>
+                    {{ escolaridade.curso }}
                 </div>
-            </div>
-            <!-- Img ----------------->
 
+                <div class="col-lg-6 col-md-6">
+                    <label class="form-label">Entidade de Ensino:</label>
+                    {{ escolaridade.entidadeDeEnsino }}
+                </div>
 
-            <!-- form ---------------->
-            <div class="col-lg-6 col-md-12 p-2">
+                <div class="col-lg-6 col-md-6">
+                    <label class="form-label">Grau:</label>
+                    {{ escolaridade.grau }}
+                </div>
 
-                <!-- info ---------------->
-                <h1 class="mt-1" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ">ESCOLARIDADE:</h1>
+                <div class="col-lg-6 col-md-6 mb-3 ">
+                    <label class="form-label">Inicio:</label>
+                    {{ escolaridade.dataInicio }}
+                </div>
 
-                <!-- form Escolaridade -->
-                <form action=" {% url 'formEsc' %} "
-                      method="POST"
-                      class="row needs-validation"
-                      enctype="multipart/form-data"
-                      novalidate>
-                    {% csrf_token %}
+                <div class="col-lg-6 col-md-6 mb-3 ">
+                    <label class="form-label">Conclusão:</label>
+                    {{ escolaridade.dataConclusao }}
+                </div>
 
-                    <div class="col-12 ">
-                        <label class="form-label">Curso:</label>
-                        {{ escolaridade.curso }}
-                    </div>
+                <div class="col-lg-12 mb-3">
+                    <label class="form-label">Certificado:</label>
+                    {{ escolaridade.docEscolaridade }}
+                </div>
 
-                    <div class="col-lg-6 col-md-6">
-                        <label class="form-label">Entidade de Ensino:</label>
-                        {{ escolaridade.entidadeDeEnsino }}
-                    </div>
+                <div class="col-12 mt-5 d-grid">
+                    <button type="submit" class="primeiro-button">Confirmar</button>
+                </div>
 
-                    <div class="col-lg-6 col-md-6">
-                        <label class="form-label">Grau:</label>
-                        {{ escolaridade.grau }}
-                    </div>
+            </form>
 
-                    <div class="col-lg-6 col-md-6 mb-3 ">
-                        <label class="form-label">Inicio:</label>
-                        {{ escolaridade.dataInicio }}
-                    </div>
-
-                    <div class="col-lg-6 col-md-6 mb-3 ">
-                        <label class="form-label">Conclusão:</label>
-                        {{ escolaridade.dataConclusao }}
-                    </div>
-
-                    <div class="col-lg-12 mb-3">
-                        <label class="form-label">Certificado:</label>
-                        {{ escolaridade.docEscolaridade }}
-                    </div>
-
-                    <div class="col-12 mt-5 d-grid">
-                        <button type="submit" class="primeiro-button">Confirmar</button>
-                    </div>
-
-                </form>
-
-            </div>
-            <!-- form ---------------->
+        </div>
+        <!-- form ---------------->
 
     </div>
     <!-- from escolaridade -------------------->
@@ -692,7 +692,8 @@
         <div class="col-lg-6 col-md-12 p-2">
 
             <!-- info ---------------->
-            <h1 class="mt-1" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ">CERTIFICAÇÕES:</h1>
+            <h1 class="mt-1" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ">
+                CERTIFICAÇÕES:</h1>
 
             <!-- form Certificações -->
             <form action=" {% url 'formCert' %} "
@@ -818,11 +819,11 @@
         {% else %}
         <div class="col">
 
-             <img src="{% static 'ccis/Grupo 4661.png' %}"
-                         alt="rh"
-                         width="100%"
-                         height="auto"
-                         style=" background-repeat:no-repeat">
+            <img src="{% static 'ccis/Grupo 4661.png' %}"
+                 alt="rh"
+                 width="100%"
+                 height="auto"
+                 style=" background-repeat:no-repeat">
 
         </div>
         {% endif %}
@@ -900,11 +901,11 @@
         {% else %}
         <div class="col">
 
-             <img src="{% static 'ccis/Grupo 4661.png' %}"
-                         alt="rh"
-                         width="100%"
-                         height="auto"
-                         style=" background-repeat:no-repeat">
+            <img src="{% static 'ccis/Grupo 4661.png' %}"
+                 alt="rh"
+                 width="100%"
+                 height="auto"
+                 style=" background-repeat:no-repeat">
 
         </div>
         {% endif %}
@@ -914,7 +915,7 @@
     <!-- Cards certificados ------------------->
     {% else %}
 
-     <!-- Cards escolaridade ------------------->
+    <!-- Cards escolaridade ------------------->
     <div class="row p-2 card-custom" style="margin:0px 0px 20px 0px">
 
 
@@ -981,11 +982,11 @@
         {% else %}
         <div class="col">
 
-             <img src="{% static 'ccis/Grupo 4661.png' %}"
-                         alt="rh"
-                         width="auto"
-                         height="auto"
-                         style=" background-repeat:no-repeat">
+            <img src="{% static 'ccis/Grupo 4661.png' %}"
+                 alt="rh"
+                 width="auto"
+                 height="auto"
+                 style=" background-repeat:no-repeat">
 
         </div>
         {% endif %}
@@ -1063,11 +1064,11 @@
         {% else %}
         <div class="col">
 
-             <img src="{% static 'ccis/Grupo 4661.png' %}"
-                         alt="rh"
-                         width="auto"
-                         height="auto"
-                         style=" background-repeat:no-repeat">
+            <img src="{% static 'ccis/Grupo 4661.png' %}"
+                 alt="rh"
+                 width="auto"
+                 height="auto"
+                 style=" background-repeat:no-repeat">
 
         </div>
         {% endif %}
@@ -1077,54 +1078,58 @@
     <!-- Cards certificados ------------------->
     {% endif %}
 
-<!-- Conteudo pagina 2 ------------------------------->
+    <!-- Conteudo pagina 2 ------------------------------->
 
 
-<!-- Modal foto e banner ----------------------------->
-<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModal"
-     aria-hidden="true">
+    <!-- Modal foto e banner ----------------------------->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModal"
+         aria-hidden="true">
 
-    <div class="modal-dialog">
+        <div class="modal-dialog">
 
-        <div class="modal-content">
+            <div class="modal-content">
 
-            <div class="modal-header">
+                <div class="modal-header">
 
-                <h5 class="modal-title" id="exampleModalLabel">Alterar Foto e Capa</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar Foto e Capa</h5>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="formMidia"
+                          method="post"
+                          enctype="multipart/form-data"
+                          action="{% url 'formMidia' %}"
+                          class="row g-3 needs-validation"
+                          novalidate>
+                        {% csrf_token %}
+
+                        {{ mid }}
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" class="btn btn-primary" data-bs-target="#formMidia">
+                                Salvar
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
 
             </div>
-
-            <div class="modal-body">
-
-                <form id="formMidia"
-                      method="post"
-                      enctype="multipart/form-data"
-                      action="{% url 'formMidia' %}"
-                      class="row g-3 needs-validation"
-                      novalidate>
-                    {% csrf_token %}
-
-                    {{ mid }}
-
-                    <div class="modal-footer">
-
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary" data-bs-target="#formMidia">
-                            Salvar
-                        </button>
-
-                    </div>
-
-                </form>
-
-            </div>
-
-
         </div>
     </div>
+    <!-- End Modal foto e banner ------------------------->
+
 </div>
-<!-- End Modal foto e banner ------------------------->
+
 
 {% endblock %}
+
+

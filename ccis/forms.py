@@ -3,7 +3,7 @@ from django.forms import FileInput
 
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos, setor
+    docCertidao, docAdmissional, docPeriodico, docCursos, setor, acessoM1, acessoM2
 
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
@@ -403,3 +403,17 @@ class modelFormSetor(forms.ModelForm):
 
 class GroupForm(forms.Form):
     group = forms.ModelChoiceField(queryset=Group.objects.all())
+
+
+# Cadastro request -------------------------------------------------------------->
+class modelFormAcessosM1(forms.ModelForm):
+    class Meta:
+        model = acessoM1
+        fields = ('assunto', 'descricao', 'arquivo')
+
+        widgets = {'assunto': forms.Select(attrs={'class': 'form-select'}),
+                   'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+                   'arquivo': forms.TextInput(attrs={'class': 'form-control'}),
+
+                   }
+

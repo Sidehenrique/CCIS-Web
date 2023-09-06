@@ -2,24 +2,44 @@
 /*-- Font -----------------------------------*/
 @font-face {
     font-family:'asap';
-    src: url('../fonts/Asap-Regular.ttf') format('truetype'),
+    src: url('./fonts/Asap-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family:'asap bold';
+    src: url('./fonts/Asap-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
     font-family:'asap semibold';
-    src: url('../fonts/Asap-Bold.ttf') format('truetype'),
+    src: url('./fonts/Asap-SemiBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-    font-family: 'Oswald';
-    src: url('../fonts/Oswald-VariableFont_wght.ttf') format('truetype');
-
+    font-family:'pacifico';
+    src: url('./fonts/Pacifico-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
     font-family: 'segoe';
-    src: url('../fonts/segoeui.ttf') format('truetype');
+    src: url('./fonts/segoeui.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
+@font-face {
+    font-family: 'oswald';
+    src: url('./fonts/Oswald-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 /*-- Font -----------------------------------*/
 
@@ -1023,3 +1043,64 @@ status-negativo{
     color: #068E74;
 }
 /*-- back button ----------------------------*/
+
+
+
+/*-- new_request ----------------------------*/
+.menu-request{
+    height: 88vh;
+    overflow-y: auto;
+    background-color:white;
+    border-radius:10px;
+    margin-right:12px;
+    padding:25px;
+}
+
+
+.ul-menu-request{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+
+.li-menu-request{
+    vertical-align: middle;
+    padding:2px;
+}
+
+
+.li-link-request{
+    text-decoration: none;
+    padding:12px 10px 12px 20px;
+    display: block;
+    font-family:asap;
+    transition: all .5s;
+    color:#37474F;
+    background-color:#F1F1F1;
+    border:none
+
+}
+
+
+.li-link-request:hover{
+    background-color:#00353E;
+    color:#ffffff;
+}
+
+
+.li-link-request:active{
+    color:#ffffff;
+    background-color:#16B597;
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Tratamento da view novo_user para esconder o display
 function displayFilePag(input) {
-    var fileName = input.files[0].name;
+    var filePage = input.files[0].name;
     document.getElementById('file-Page').textContent = filePage;
 }
 
@@ -88,6 +88,62 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const menuInicial = document.getElementById("menu-inicial");
+    const menuAcessos = document.getElementById("menu-acessos");
+    const menuEquipamentos = document.getElementById("menu-equipamentos");
+    const menuServicos = document.getElementById("menu-servicos");
+
+    document.getElementById("btnAcessos").addEventListener("click", function() {
+        menuInicial.style.display = "none";
+        menuAcessos.style.display = "block";
+        menuEquipamentos.style.display = "none";
+        menuServicos.style.display = "none";
+    });
+
+
+    document.getElementById("btnEquipamentos").addEventListener("click", function() {
+        menuInicial.style.display = "none";
+        menuAcessos.style.display = "none";
+        menuEquipamentos.style.display = "block";
+        menuServicos.style.display = "none";
+    });
+
+
+    document.getElementById("btnServicos").addEventListener("click", function() {
+        menuInicial.style.display = "none";
+        menuAcessos.style.display = "none";
+        menuEquipamentos.style.display = "none";
+        menuServicos.style.display = "block";
+    });
+
+     document.getElementById("btnBackAcessos").addEventListener("click", function() {
+        menuInicial.style.display = "block";
+        menuAcessos.style.display = "none";
+        menuEquipamentos.style.display = "none";
+        menuServicos.style.display = "none";
+    });
+
+    document.getElementById("bntBackEquipment").addEventListener("click", function() {
+        menuInicial.style.display = "block";
+        menuAcessos.style.display = "none";
+        menuEquipamentos.style.display = "none";
+        menuServicos.style.display = "none";
+    });
+
+    document.getElementById("btnBackService").addEventListener("click", function() {
+        menuInicial.style.display = "block";
+        menuAcessos.style.display = "none";
+        menuEquipamentos.style.display = "none";
+        menuServicos.style.display = "none";
+    });
+
+});
+
+
 
 
 // Tratamento do modal inativar_usuario da tabela da view usuário
@@ -138,3 +194,5 @@ function handleScroll(event) {
   container.scrollLeft += event.deltaY; // Ajusta a posição de rolagem horizontal
   event.preventDefault(); // Impede o comportamento padrão do scroll do mouse
 }
+
+

@@ -1,0 +1,245 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container" style="margin-top:75px">
+
+    <!-- Conteúdo -------------------------------->
+    <div class="row">
+
+        <!-- Menu -------------------------------->
+        <div id="menu-inicial" class="col-3 menu-request">
+
+            <div class="">
+
+                <h5 class="text-center p-1">TECNOLOGIA</h5>
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Acessos
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btnEquipamentos" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-computer"></i>
+                            Equipamentos
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btnServicos" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-server"></i>
+                            Serviços
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="">
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo mt-5">
+                        <a href="{% url 'ti_home' %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Voltar
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div id="menu-acessos" class="col-3 menu-request" style="display:none">
+
+            <div class="">
+
+                <h5 class="text-center p-1">ACESSOS</h5>
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo">
+                        <a id="btnSisbr" href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Sisbr
+                        </a>
+                    </li>
+
+                    <li class="li-lista-novo">
+                        <a id=btnVPN" href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            VPN
+                        </a>
+                    </li>
+
+                    <li class="li-lista-novo">
+                        <a id="btnEmail" href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Email
+                        </a>
+                    </li>
+
+                    <li class="li-lista-novo">
+                        <a id="btnIntranet" href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Intranet
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="">
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo mt-5">
+                        <a id="btnBackAcessos" type="button" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Voltar
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div id="menu-equipamentos" class="col-3 menu-request" style="display:none">
+
+            <div class="">
+
+                <h5 class="text-center p-1">EQUIPAMENTOS</h5>
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo">
+                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-computer"></i>
+                            Instalação
+                        </a>
+                    </li>
+
+                    <li class="li-lista-novo">
+                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-computer"></i>
+                            Manutenção
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="">
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo mt-5">
+                        <a id="bntBackEquipment" type="button" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Voltar
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div id="menu-servicos" class="col-3 menu-request" style="display:none">
+
+            <div class="">
+
+                <h5 class="text-center p-1">SERVIÇOS</h5>
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo">
+                        <a  href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-server"></i>
+                            Implementação de Melhorias
+                        </a>
+                    </li>
+
+                    <li class="li-lista-novo">
+                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-server"></i>
+                            Solicitação de Visita Técnica
+                        </a>
+                    </li>
+
+                    <li class="li-lista-novo">
+                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-server"></i>
+                            Outros
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="">
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo mt-5">
+                        <a id="btnBackService" type="button" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Voltar
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- Menu -------------------------------->
+
+
+        <!-- Formulário -------------------------->
+        <div class="col menu-request m-0">
+            <!-- {{ acessoM1 }} -->
+        </div>
+        <!-- Formulário -------------------------->
+
+    </div>
+
+
+    <!-- Conteúdo -------------------------------->
+</div>
+
+<!-- Modal formulário Novo Usuário --------------->
+
+{% endblock %}

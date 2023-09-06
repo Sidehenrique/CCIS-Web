@@ -1,73 +1,77 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth import views as auth_views
 from django.urls import path
-from . import views
+from .views import ti
+from .views import cooperar
+from .views import pages
+from .views import rh
+from .views import security
+from .views import formularios
 
 
 urlpatterns = [
-    path('base', views.base, name='base'),
+    path('base', pages.base, name='base'),
 
-    path('login', views.loginPage, name='login'),
-    path('conta', views.conta, name='conta'),
-    path('solicitacao', views.solicitacao, name='solicitacao'),
-    path('profile/<int:user_id>', views.profile, name='profile'),
-    path('', views.home, name='home'),
-    path('documentos', views.documentos, name='documentos'),
-    path('departamentos', views.departamentos, name='departamentos'),
-    path('gestaoMetas', views.gestaoMetas, name='gestaoMetas'),
+    path('login', security.loginPage, name='login'),
+    path('conta', pages.conta, name='conta'),
+    path('solicitacao', pages.solicitacao, name='solicitacao'),
+    path('profile/<int:user_id>', pages.profile, name='profile'),
+    path('', pages.home, name='home'),
+    path('documentos', pages.documentos, name='documentos'),
+    path('departamentos', pages.departamentos, name='departamentos'),
+    path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
 
-    path('utilitarios', views.utilitarios, name='utilitarios'),
+    path('utilitarios', pages.utilitarios, name='utilitarios'),
 
-    path('coopera', views.coopera, name='coopera'),
-    path('relacionamento', views.relacionamento, name='relacionamento'),
-    path('simulador', views.simulador, name='simulador'),
-    path('tabela', views.tabela, name='tabela'),
-    path('india', views.india, name='india'),
-    path('portifolio', views.portifolio, name='portifolio'),
-    path('basileia', views.basileia, name='basileia'),
-    path('dados', views.dadosConsolidados, name='dados'),
+    path('coopera', cooperar.coopera, name='coopera'),
+    path('relacionamento', cooperar.relacionamento, name='relacionamento'),
+    path('simulador', cooperar.simulador, name='simulador'),
+    path('tabela', cooperar.tabela, name='tabela'),
+    path('india', cooperar.india, name='india'),
+    path('portifolio', cooperar.portifolio, name='portifolio'),
+    path('basileia', cooperar.basileia, name='basileia'),
+    path('dados', cooperar.dadosConsolidados, name='dados'),
 
-    path('logout', views.logout_view, name='logout'),
-    path('new_login_page', views.new_login_page, name='new_login_page'),
-    path('redefinir_senha', views.redefinir_senha, name='redefinir_senha'),
-    path('inativar_usuario/<int:user_id>', views.inativar_usuario, name='inativar_usuario'),
+    path('logout', security.logout_view, name='logout'),
+    path('new_login_page', pages.new_login_page, name='new_login_page'),
+    path('redefinir_senha', security.redefinir_senha, name='redefinir_senha'),
+    path('inativar_usuario/<int:user_id>', security.inativar_usuario, name='inativar_usuario'),
 
-    path('formMidia', views.formMidia, name='formMidia'),
-    path('formDep', views.formDep, name='formDep'),
-    path('formEnd', views.formEnd, name='formEnd'),
-    path('formEsc', views.formEsc, name='formEsc'),
-    path('formCert', views.formCert, name='formCert'),
-    path('formProf', views.formProf, name='formProf'),
-    path('formBanc', views.formBanc, name='formBanc'),
-    path('formOut', views.formOut, name='formOut'),
+    path('formMidia', formularios.formMidia, name='formMidia'),
+    path('formDep', formularios.formDep, name='formDep'),
+    path('formEnd', formularios.formEnd, name='formEnd'),
+    path('formEsc', formularios.formEsc, name='formEsc'),
+    path('formCert', formularios.formCert, name='formCert'),
+    path('formProf', formularios.formProf, name='formProf'),
+    path('formBanc', formularios.formBanc, name='formBanc'),
+    path('formOut', formularios.formOut, name='formOut'),
 
-    path('rg', views.rg, name='rg'),
-    path('cnh', views.cnh, name='cnh'),
-    path('cpf', views.cpf, name='cpf'),
-    path('reservista', views.reservista, name='reservista'),
-    path('titulo', views.titulo, name='titulo'),
-    path('clt', views.clt, name='clt'),
-    path('residencia', views.residencia, name='residencia'),
-    path('certidao', views.certidao, name='certidao'),
-    path('admissional', views.admissional, name='admissional'),
-    path('periodico', views.periodico, name='periodico'),
+    path('rg', formularios.rg, name='rg'),
+    path('cnh', formularios.cnh, name='cnh'),
+    path('cpf', formularios.cpf, name='cpf'),
+    path('reservista', formularios.reservista, name='reservista'),
+    path('titulo', formularios.titulo, name='titulo'),
+    path('clt', formularios.clt, name='clt'),
+    path('residencia', formularios.residencia, name='residencia'),
+    path('certidao', formularios.certidao, name='certidao'),
+    path('admissional', formularios.admissional, name='admissional'),
+    path('periodico', formularios.periodico, name='periodico'),
 
-    path('security/password_reset', views.password_reset, name='password_reset'),
-    path('security/password_done', views.password_done, name='password_done'),
+    path('security/password_reset', security.password_reset, name='password_reset'),
+    path('security/password_done', security.password_done, name='password_done'),
 
-    path('rh', views.rh_home, name='rh_home'),
-    path('rh/dashboard', views.rh_dash, name='rh_dashboard'),
-    path('rh/processo-seletivo', views.pro_seletivo, name='pro-seletivo'),
-    path('rh/ferias', views.ferias, name='ferias'),
-    path('rh/anbima', views.anbima, name='anbima'),
-    path('rh/colaboradores', views.colaboradores, name='colaboradores'),
-    path('rh/usuario', views.usuario, name='usuario'),
+    path('rh', rh.rh_home, name='rh_home'),
+    path('rh/dashboard', rh.rh_dash, name='rh_dashboard'),
+    path('rh/processo-seletivo', rh.pro_seletivo, name='pro-seletivo'),
+    path('rh/ferias', rh.ferias, name='ferias'),
+    path('rh/anbima', rh.anbima, name='anbima'),
+    path('rh/colaboradores', rh.colaboradores, name='colaboradores'),
+    path('rh/usuario', pages.usuario, name='usuario'),
 
-    path('ti', views.ti_home, name='ti_home'),
+    path('ti', ti.ti_home, name='ti_home'),
+    path('ti/new_request', ti.new_request, name='new_request'),
 
-
-    path('dev', views.dev, name='dev'),
+    path('dev', pages.dev, name='dev'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
