@@ -1,0 +1,161 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content ps-0 pe-0">
+
+    <!-- Conteúdo -------------------------------->
+    <div class="row p-3">
+
+        <!-- Cards informativos ------------->
+        <div class="row">
+
+            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-3 mt-lg-1  ">
+
+                <!-- card Total Usuários-->
+                <a class="link-card" href="{% url 'usuario' %}">
+                    <div class="card-config">
+                        <div class="card-body-config">
+                            <h6 class="card-subtitle mb-2">USUÁRIOS</h6>
+
+                            <!-- Linha -->
+                            <div class="row align-items-center gx-2">
+
+                                <div class="col">
+
+                                    <!-- Dados -->
+                                    <div class="col-6">
+
+                                        <h2 class="card-title text-inherit">
+
+                                            {{totalUsuarios}}
+                                        </h2>
+                                    </div>
+                                    <!-- End dados -->
+
+                                </div>
+
+                                <div class="col text-end">
+                                    <i class="fa-solid fa-users" style="font-size:80px"></i>
+                                </div>
+
+                            </div>
+                            <!-- End Linha -->
+
+                        </div>
+                    </div>
+                </a>
+                <!-- End card -->
+
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-3 mt-lg-1  ">
+
+                <!-- card Total Usuários-->
+                <a class="link-card" href="{% url 'pro-seletivo' %}">
+                    <div class="card-config">
+                        <div class="card-body-config">
+                            <h6 class="card-subtitle mb-2">PROCESSO SELETIVO</h6>
+
+                            <!-- Linha -->
+                            <div class="row align-items-center gx-2">
+
+                                <div class="col">
+
+                                    <!-- Dados -->
+                                    <div class="col-6">
+
+                                        <h3 class="card-title">
+                                        ACESSAR
+
+                                        </h3>
+                                    </div>
+                                    <!-- End dados -->
+
+                                </div>
+
+                                <div class="col text-end">
+                                    <i class="fa-solid fa-user-tie" style="font-size:80px"></i>
+                                </div>
+
+                            </div>
+                            <!-- End Linha -->
+
+                        </div>
+                    </div>
+                </a>
+                <!-- End card -->
+
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-3 mt-lg-1  ">
+
+                <!-- card Total Usuários-->
+                <a class="link-card" href="{% url 'colaboradores' %}">
+                    <div class="card-config">
+                        <div class="card-body-config">
+                            <h6 class="card-subtitle mb-2">COLABORADORES</h6>
+
+                            <!-- Linha -->
+                            <div class="row align-items-center gx-2">
+
+                                <div class="col">
+
+                                    <!-- Dados -->
+                                    <div class="col-6">
+
+                                        <h3 class="card-title text-inherit">
+
+                                            ACESSAR
+                                        </h3>
+                                    </div>
+                                    <!-- End dados -->
+
+                                </div>
+
+                                <div class="col text-end">
+                                    <i class="fa-solid fa-briefcase" style="font-size:80px"></i>
+                                </div>
+
+                            </div>
+                            <!-- End Linha -->
+
+                        </div>
+                    </div>
+                </a>
+                <!-- End card -->
+
+            </div>
+
+        </div>
+        <!-- End Cards informativos --------->
+
+        <!-- Em breve ----------->
+        <div class="col card-custom">
+
+            <div class="card-header-custom">
+                Novas Funcionalidades | Em breve
+            </div>
+
+            <hr class="linha-custom">
+
+
+            <div class="card-body-custom" style="text-align: center;">
+
+                <img src="{% static 'ccis/Grupo 2410.png' %}"
+                     width="75%"
+                     height="auto">
+
+            </div>
+
+        </div>
+        <!-- Em breve ------------>
+
+
+
+    </div>
+
+    <!-- Conteúdo -------------------------------->
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,680 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content">
+
+    <!-- subMenu --------------------------------->
+    <div class="row">
+
+        <nav class="navbar paragrafo-style">
+            <div class="container-fluid">
+
+                <div class="navbar-nav-wrap-content-end">
+
+                </div>
+            </div>
+
+        </nav>
+
+
+    </div>
+    <!-- End subMenu ----------------------------->
+
+    <!-- Header do conteúdo ---------------------->
+    <div class="row mb-5">
+
+        <div class="col ms-4 mt-5" style="">
+
+            <h1 style="font-family:Oswald medium ">Módulo de <span style="color:#27DEBF; font-family:Oswald medium ">Documentação</span></h1>
+            <p style="color:#8a8a8a;">Anexe, atualize e gerencie seus documentos<br>  de maneira fácil e segura.</p>
+
+        </div>
+
+        <div class="col">
+            <img src="{% static 'ccis/Grupo 1520.png' %}"
+                alt="rh"
+                width="450"
+                height="auto"
+                class="d-inline-block;">
+        </div>
+
+    </div>
+    <!-- Header do conteúdo ---------------------->
+
+    <!-- 1° linha de cards documentos ------------>
+    <div class="row mb-2">
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>Registro Geral</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{ status }} </h6>
+
+                    {% if form.instance.documentoRg %}
+                    <div>
+                        <a  class="button-link" href="{{ form.instance.documentoRg.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc.dataAtualizacao %}
+                    <span>Data: {{doc.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>CNH</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#cnh_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusCnh}}</h6>
+
+                    {% if cnh_form.instance.documentoCnh %}
+                    <div>
+                        <a  class="button-link" href="{{ cnh_form.instance.documentoCnh.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_cnh.dataAtualizacao %}
+                    <span>Data: {{doc_cnh.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>CPF</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#cpf_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusCpf}}</h6>
+
+                    {% if cpf_form.instance.documentoCpf %}
+                    <div>
+                        <a  class="button-link" href="{{ cpf_form.instance.documentoCpf.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_cpf.dataAtualizacao %}
+                    <span>Data: {{doc_cpf.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>Reservista</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#reservista_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusReservista}}</h6>
+
+                    {% if reservista_form.instance.documentoReservista %}
+                    <div>
+                        <a  class="button-link" href="{{ reservista_form.instance.documentoReservista.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_reservista.dataAtualizacao %}
+                    <span>Data: {{doc_reservista.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>Titulo de Eleitor</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#titulo_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusTitulo}}</h6>
+
+                    {% if titulo_form.instance.documentoTitulo %}
+                    <div>
+                        <a  class="button-link" href="{{ titulo_form.instance.documentoTitulo.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_titulo.dataAtualizacao %}
+                    <span>Data: {{doc_titulo.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- 1° linha de cards documentos ------------>
+
+    <!-- 2° linha de cards documentos ------------>
+    <div class="row">
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>Carteira de trabalho</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#clt_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusClt}}</h6>
+
+                    {% if clt_form.instance.documentoClt %}
+                    <div>
+                        <a  class="button-link" href="{{ clt_form.instance.documentoClt.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_clt.dataAtualizacao %}
+                    <span>Data: {{doc_clt.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>Residência</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#residencia_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusResidencia}}</h6>
+
+                    {% if residencia_form.instance.documentoResidencia %}
+                    <div>
+                        <a  class="button-link" href="{{ residencia_form.instance.documentoResidencia.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_residencia.dataAtualizacao %}
+                    <span>Data: {{doc_residencia.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>Certidão</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#certidao_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusCertidao}}</h6>
+
+                    {% if certidao_form.instance.documentoCertidao %}
+                    <div>
+                        <a  class="button-link" href="{{ certidao_form.instance.documentoCertidao.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_certidao.dataAtualizacao %}
+                    <span>Data: {{doc_certidao.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>Ats. Admissional</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#admissional_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusAdmissional}}</h6>
+
+                    {% if admissional_form.instance.documentoAdmissional %}
+                    <div>
+                        <a  class="button-link" href="{{ admissional_form.instance.documentoAdmissional.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_admissional.dataAtualizacao %}
+                    <span>Data: {{doc_admissional.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card p-3" style="text-align:center;">
+                <h6>Ats. Periódico</h6>
+
+                <button class="button-doc" type="button" data-bs-toggle="modal" data-bs-target="#periodico_form">
+                    <img src="{% static 'ccis/Grupo 1376.png' %}" class="card-img-top" alt="...">
+                </button>
+
+                <div class="mt-2">
+                    <h6>Situação: {{statusPeriodico}}</h6>
+
+                    {% if periodico_form.instance.documentoPeriodico %}
+                    <div>
+                        <a  class="button-link" href="{{ periodico_form.instance.documentoPeriodico.url }}" download>
+                            <i class="fa-solid fa-download"></i> Baixar
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if doc_periodico.dataAtualizacao %}
+                    <span>Data: {{doc_periodico.dataAtualizacao|date:"d/m/y"}}</span>
+                    {% else %}
+                    <span>Data: 00/00/00</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- 2° linha de cards documentos ------------>
+
+</div>
+
+<!-- Todos os modals ---------------------------------------------------------------------------------------------->
+
+<!-- Modal RG -->
+<div class="modal fade" id="form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="">Carregar RG</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'rg' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ form }}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal cnh -->
+<div class="modal fade" id="cnh_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar CNH</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'cnh' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ cnh_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal cpf -->
+<div class="modal fade" id="cpf_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar CPF</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'cpf' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ cpf_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Reservista -->
+<div class="modal fade" id="reservista_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar Reservista</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'reservista' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ reservista_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Titulo -->
+<div class="modal fade" id="titulo_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar Titulo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'titulo' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ titulo_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal clt -->
+<div class="modal fade" id="clt_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar Carteira de trabalho</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'clt' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ clt_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal endereço -->
+<div class="modal fade" id="residencia_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar Endereço</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'residencia' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ residencia_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal certidão -->
+<div class="modal fade" id="certidao_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar Certidão</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'certidao' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ certidao_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal admissional -->
+<div class="modal fade" id="admissional_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar admissional</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'admissional' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ admissional_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal periodico -->
+<div class="modal fade" id="periodico_form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Carregar Periodico</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'periodico' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ periodico_form }}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit"> enviar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

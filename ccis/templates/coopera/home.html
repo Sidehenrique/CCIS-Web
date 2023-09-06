@@ -1,0 +1,112 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content ps-0 pe-0">
+
+    <!-- Conteúdo -------------------------------->
+    <div class="row">
+
+        <div class="col logo-coopera">
+            <img src= "{% static 'ccis/Grupo 6345.png' %}" alt="logo-COOPERA" width="270px">
+        </div>
+
+    </div>
+
+    <div style="font-size: 15px;" class="row justify-content-center text-center mt-3 mb-5">
+
+        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
+            <a class="btn flex-column" href="{% url 'relacionamento' %}">
+                <i class="fa-solid fa-handshake" style="color: #00353e; font-size: 6vh;"></i>
+            </a>
+            <div>Relacionamento</div>
+        </div>
+        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
+            <a class="btn flex-column" href="{% url 'simulador' %}">
+                <i class="fa-solid fa-chart-simple"  style="color: #00353e; font-size: 6vh;"></i>
+            </a>
+            <div>Simulador</div>
+        </div>
+        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
+            <a class="btn flex-column" href="{% url 'india' %}">
+                <i class="fa-solid fa-list" style="color: #00353e; font-size: 6vh;"></i>
+            </a>
+            <div>India</div>
+        </div>
+        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
+            <a class="btn flex-column" href="{% url 'portifolio' %}">
+                <i class="fa-solid fa-paste" style="color: #00353e; font-size: 6vh;"></i>
+            </a>
+            <div>Linhas e Produtos</div>
+        </div>
+        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
+            <a class="btn flex-column" href="{% url 'tabela' %}">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #00353e; font-size: 6vh;"></i>
+            </a>
+            <div>PD X LGD</div>
+        </div>
+        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
+            <a class="btn flex-column" href="{% url 'basileia' %}">
+                <i class="fa-solid fa-chart-column" style="color: #00353e; font-size: 6vh;"></i>
+            </a>
+            <div>Basiléia</div>
+        </div>
+        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
+            <a class="btn flex-column" href="{% url 'dados' %}">
+                <i class="fa-solid fa-clipboard-list" style="color: #00353e; font-size: 6vh;"></i>
+            </a>
+            <div>Dados <br> Consolidados</div>
+        </div>
+
+    </div>
+
+
+    <div class="row justify-content-center text-center">
+
+        <div class="col-11 col-lg-2 col-md-6 box-coopera" style="background-color:#7DB61C;">
+
+            <h4 class="pt-2">PROPÓSITO</h4>
+
+            <P>CONECTAR <br>PESSOAS PARA<br> PROMOVER A<br> JUSTIÇA <br>FINANCEIRA E<br> PROSPERIDADE.</P>
+
+        </div>
+
+        <div class="col-11 col-lg-2 col-md-6 box-coopera" style="background-color:#49479D;">
+
+            <h4 class="pt-2">MISSÃO</h4>
+
+            <P>PROMOVER <br>SOLUÇÕES <br>INOVADORAS E<br> SUSTENTÁVEIS.</P>
+
+        </div>
+
+        <div class="col-11 col-lg-2 col-md-6 box-coopera" style="background-color:#00AE9D;">
+
+            <h4 class="pt-2">VISÃO</h4>
+
+            <P>SER REFERÊNCIA EM<br> COOPERATIVISMO,<br>
+                PROMOVENDO O <br>DESENVOLVIMENTO <br>ECONÔMICO E
+                SOCIAL<br> DAS PESSOAS E<br> COMUNIDADE.</P>
+
+        </div>
+
+        <div class="col-11 col-lg-2 col-md-6 box-coopera" style="background-color:#C9D200;">
+
+            <h4 class="pt-2">VALORES</h4>
+
+            <P style="font-size:13px">RESPEITO E VALORIZAÇÃO<br> DAS PESSOAS;
+                COOPERATIVISMO E<br> SUSTENTABILIDADE; <br>ÉTICA E
+                INTEGRIDADE;<br> EXCELÊNCIA E EFICIÊNCIA<br> LIDERANÇA
+                INSPIRADORA, <br>INOVAÇÃO E SIMPLICIDADE.</P>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Conteúdo -------------------------------->
+
+</div>
+
+{% endblock %}

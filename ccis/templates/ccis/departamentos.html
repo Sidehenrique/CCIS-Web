@@ -1,0 +1,307 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content">
+
+    <!-- subMenu --------------------------------->
+    <div class="row">
+
+        <nav class="navbar paragrafo-style">
+            <div class="container-fluid">
+
+                <div class="navbar-nav-wrap-content-end">
+
+                </div>
+            </div>
+
+        </nav>
+
+
+    </div>
+    <!-- End subMenu ----------------------------->
+
+
+    <!-- Header do conteúdo ---------------------->
+    <div class="row mt-3 mb-2">
+
+        <div class="col ps-4 pt-4">
+
+            <h1 style="font-family:Oswald; font-size:42px;">Bem vindo ao módulo<br>
+                <span style="color:#27DEBF; font-family:Oswald; font-size:80px;">DEPARTAMENTOS</span></h1>
+            <p class="pt-3" style="color:#8a8a8a; font-size:17px;">Tenha acesso a todos os setores da cooperativa de maneira prática e
+                fácil.<br>Abra solicitações, monitore e obtenha informações tudo em um só lugar.</p>
+
+        </div>
+
+        <div class="col-5 d-inline-block img-fluid">
+            <img src="{% static 'ccis/Grupo 6171.png' %}"
+                alt="right"
+                width="100%"
+                height="auto%">
+        </div>
+
+    </div>
+    <!-- Header do conteúdo ---------------------->
+
+
+    <!-- Linha adm ------------------------------->
+    <p  style="margin-top:30px; margin-bottom:0px">Administrativo</p>
+    <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
+    <!-- Linha adm ------------------------------->
+
+
+    <!-- 1° linha de cards documentos ------------>
+    <div class="row justify-content-start mt-1">
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-4 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">ADMINISTRATIVO</h6>
+                    <hr>
+                    <h3 CLASS="">ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#004E8C;">AD</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-4 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">COBRANÇA</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#4F6BED;">CB</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">CONTROLADORIA</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#8764B8;">CT</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               href="{% url 'rh_home' %}"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">GESTÃO DE PESSOAS</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#038387;">GP</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">GESTÃO DE RISCO</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#986F0B;">GR</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">RETAGUARDA</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#004E8C;">RG</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               href="{% url 'ti_home' %}"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">TECNOLOGIA</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#0273EB;">TI</div>
+
+        </div>
+
+    </div>
+    <!-- 1° linha de cards documentos ------------>
+
+
+    <!-- Linha adm ------------------------------->
+    <p  style="margin-top:70px; margin-bottom:0px">Operacional</p>
+    <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
+    <!-- Linha adm ------------------------------->
+
+
+    <!-- 2° linha de cards documentos ------------>
+    <div class="row justify-content-start mb-5">
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">CADASTRO</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#0273EB;">CA</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">CRÉDITO</h6>
+                    <hr>
+                    <h4>ACESSAR</h4>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#498205;">CR</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">FINANCEIRO</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#8764B8;">FI</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">PRODUTOS E SERVIÇOS</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#038387;">CR</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">PA Digital</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#986F0B;">CR</div>
+
+        </div>
+
+    </div>
+    <!-- 2° linha de cards documentos ------------>
+
+</div>
+
+
+{% endblock %}

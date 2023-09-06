@@ -1,0 +1,454 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content">
+
+    <!-- subMenu --------------------------------->
+    <div class="row">
+
+        <nav class="navbar paragrafo-style">
+            <div class="container-fluid">
+
+                <div class="navbar-nav-wrap-content-end">
+
+                </div>
+            </div>
+
+        </nav>
+
+
+    </div>
+    <!-- End subMenu ----------------------------->
+
+    <!-- Container ------------------------------->
+    <div class="row  mt-5">
+
+        <div class="col mb-5 position-relative" style="height:87vh;">
+
+            <!-- Icon Do Setor --------------------------->
+            <div class="icon-set" style="background-color:{{dadosSetor.cor}};">{{dadosSetor.sigla}}</div>
+            <!-- Icon Do Setor --------------------------->
+
+            <!-- container do setor ---------------------->
+            <div class="container" style="height:90%; text-align:center; background-color:white; border-radius:10px">
+
+                <div class="row">
+
+                    <!-- coluna da esquerda -------------->
+                    <div class="col-7">
+
+                        <!-- Titulo ---------------------->
+                        <div>
+                            <h3 class="mt-4 pt-4">{{dadosSetor.nome}}</h3>
+                            <hr style="background-color:#C4C4C4;">
+                        </div>
+                        <!-- Titulo ---------------------->
+
+                        <!-- Conteúdo -------------------->
+                        <div class="row ">
+
+                            <div class="col" style="text-align:left">
+
+                                <!-- Info setor ----------------------->
+                                <div style="height:30vh">
+
+                                    <div class="card-text-custom">CONTATO</div>
+
+                                    <ul class="card-ul">
+
+                                        <li class="card-li">
+                                            <i class="fa-solid fa-at card-icon"></i>
+
+                                            {{ dadosSetor.email }}
+
+                                        </li>
+
+                                        <li class="card-li">
+                                            <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
+                                            {% if dadosSetor.contato %}
+
+                                            Corporativo: {{ dadosSetor.contato }}
+
+                                            {% else %}
+
+                                            Corporativo: Não informado
+
+                                            {% endif %}
+                                        </li>
+
+                                        <li class="card-li">
+                                            <i class="fa-solid fa-briefcase card-icon"></i>
+                                            {% if dadosSetor.ramal %}
+
+                                            Ramal: {{ dadosSetor.ramal }}
+
+                                            {% else %}
+
+                                            Ramal: Não informado
+
+                                            {% endif %}
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="card-text-custom">SOBRE</div>
+
+                                    <ul class="card-ul">
+
+                                        <li class="card-li">
+                                            <i class="fa-sharp fa-solid fa-building card-icon"></i>
+                                            {% if dadosSetor.unidade %}
+
+                                            {{ dadosSetor.unidade }}
+
+                                            {% else %}
+
+                                            Não informado
+
+                                            {% endif %}
+                                        </li>
+
+                                        <li class="">
+                                            <i class="fa-solid fa-location-dot card-icon"></i>
+                                            {% if dadosSetor.atribuicoes %}
+
+                                            {{ dadosSetor.atribuicoes }}
+
+                                            {% else %}
+
+                                            Não informado
+
+                                            {% endif %}
+
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                                <!-- info setor ----------------------->
+
+                            </div>
+
+
+                            <div class="col equipe-setor">
+
+                                <!-- Equipe -------------------------->
+                                {% if equipe %}
+                                <div class="" style="">
+                                    <!-- Supervisor -->
+                                    {% for ch in chefe %}
+                                    <a href="{% url 'profile' user_id=ch.id %}" class="list-group-item-action"
+                                       style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                        <div class="align-horizontal-center">
+
+                                            {% if ch.foto %}
+                                            <img class="avatar-img" src="{{ chefe.foto.url }}"
+                                                 alt="" width="40" height="40">
+
+                                            {% else %}
+
+                                            {% if ch.sexo == "Masculino" %}
+                                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                                 alt="" width="40" height="40">
+
+                                            {% elif ch.sexo == "Feminino" %}
+                                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                                 alt="" width="40" height="40">
+                                            {% endif %}
+
+                                            {% endif %}
+
+                                            <div class="ps-2">
+                                                <h6 class="m-0">{{ ch.first_name }} {{ch.last_name}}</h6>
+                                                <small class="m-0">{{ ch.cargo }}</small>
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+                                    {% endfor %}
+                                    <!-- Supervisor -->
+
+                                    <!-- Membros -->
+                                    {% for usuario in equipe %}
+                                    <a href="{% url 'profile' user_id=usuario.id %}" class="list-group-item-action"
+                                       style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                        <div class="align-horizontal-center">
+
+                                            {% if usuario.foto %}
+                                            <img class="avatar-img" src="{{ usuario.foto.url }}"
+                                                 alt="" width="40" height="40">
+
+                                            {% else %}
+
+                                            {% if usuario.sexo == "Masculino" %}
+                                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                                 alt="" width="40" height="40">
+
+                                            {% elif usuario.sexo == "Feminino" %}
+                                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                                 alt="" width="40" height="40">
+                                            {% endif %}
+
+                                            {% endif %}
+
+
+                                            <div class="ps-2">
+                                                <h6 class="m-0">{{ usuario.first_name }} {{usuario.last_name}}</h6>
+                                                <small class="m-0">{{ usuario.cargo }}</small>
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+                                    {% endfor %}
+                                    <!-- Membros -->
+                                </div>
+                                {% else %}
+                                <div>
+                                    <div class="" style="">
+                                        <img src="{% static 'ccis/Grupo 4678.png' %}"
+                                                 alt="rh"
+                                                 width="80%"
+                                                 height="auto"
+                                                 style=" background-repeat:no-repeat">
+                                    </div>
+
+                                </div>
+                                {% endif %}
+                                <!-- Equipe -------------------------->
+
+                            </div>
+
+                        </div>
+                        <!-- Conteúdo -------------------->
+
+                        <!-- Botões ---------------------->
+                        <div class="col align-self-end">
+
+                            <hr style="background-color:#C4C4C4">
+
+                            <div class="d-flex container-buttons pt-3 pb-3" onwheel="handleScroll(event)">
+
+                                <!-- Tecnologia ---------->
+                                {% if botoes == 'TECNOLOGIA' %}
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#4DE89D;" class="set-buttons" >
+
+                                            <h5>NOVA</h5>
+                                            <h5>SOLICITAÇÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div class="set-buttons" style="background-color:#4DDCE8;">
+
+                                            <h5>MINHAS</h5>
+                                            <h5>SOLICITAÇÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#49ABDE;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>PROCESSOS</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#49ABDE;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>ESTOQUE</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+                                {% endif %}
+                                <!-- Tecnologia ---------->
+
+
+                                <!-- Gestão de Pessoas --->
+                                {% if botoes == 'GESTÃO DE PESSOAS' %}
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#4DE89D;" class="set-buttons" >
+
+                                            <h5>NOVA</h5>
+                                            <h5>SOLICITAÇÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div class="set-buttons" style="background-color:#4DDCE8;">
+
+                                            <h5>MINHAS</h5>
+                                            <h5>SOLICITAÇÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                                <div class="position-relative me-3">
+
+                                    <a class="links-set"
+                                       type="button">
+
+                                        <div style="background-color:#49ABDE;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>PROCESSOS</h5>
+
+                                        </div>
+
+                                    </a>
+
+                                    <span class="icon-button-set" style="background-color:red;"></span>
+
+                                </div>
+
+                                {% if group_gestao or is_superadmin %}
+                                <div class="position-relative me-3">
+
+
+                                    <a class="links-set"
+                                       href="{% url 'rh_dashboard' %}"
+                                       type="button">
+
+                                        <div style="background-color:#038387;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>GESTÃO</h5>
+
+                                        </div>
+
+                                    </a>
+
+
+                                </div>
+                                {% endif %}
+
+                                {% if is_superadmin %}
+                                <div class="position-relative me-3">
+
+
+                                    <a class="links-set"
+                                       href="{% url 'documentos'%}"
+                                       type="button">
+
+                                        <div style="background-color:#7AA3FF;" class="set-buttons" >
+
+                                            <h5>PAINEL</h5>
+                                            <h5>DOCUMENT...</h5>
+
+                                        </div>
+
+                                    </a>
+
+
+                                </div>
+                                {% endif %}
+
+                                {% endif %}
+                                <!-- Gestão de Pessoas --->
+
+                            </div>
+
+                        </div>
+                        <!-- Botões ---------------------->
+
+                    </div>
+                    <!-- coluna da esquerda -------------->
+
+                    <!-- coluna da direita --------------->
+                    <div class="col mt-3 ms-2" style="border-left: 1px solid #ccc;">
+                        {% if dadosSetor.canvas %}
+                        <img src="{{ dadosSetor.canvas.url }}"
+                             alt="imagemSetor"
+                             width="90%"
+                             height="auto"
+                             class="d-inline-block;">
+
+                        {% else %}
+
+                        <img src="{% static 'ccis/Grupo 4678.png' %}"
+                             alt="imagem"
+                             width="90%"
+                             height="auto"
+                             class="d-inline-block;">
+
+                        {% endif %}
+
+                    </div>
+                    <!-- coluna da direita --------------->
+
+                </div>
+
+            </div>
+            <!-- container do setor ---------------------->
+
+        </div>
+
+    </div>
+    <!-- Container ------------------------------->
+
+</div>
+{% endblock %}

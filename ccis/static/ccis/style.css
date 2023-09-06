@@ -1,0 +1,1025 @@
+
+/*-- Font -----------------------------------*/
+@font-face {
+    font-family:'asap';
+    src: url('../fonts/Asap-Regular.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family:'asap semibold';
+    src: url('../fonts/Asap-Bold.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('../fonts/Oswald-VariableFont_wght.ttf') format('truetype');
+
+}
+
+@font-face {
+    font-family: 'segoe';
+    src: url('../fonts/segoeui.ttf') format('truetype');
+
+}
+/*-- Font -----------------------------------*/
+
+
+
+/*--Scroll bar ------------------------------*/
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+
+}
+/*--Scroll bar ------------------------------*/
+
+
+
+/*-- infoNavbar -----------------------------*/
+.infoTopBar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:25px;
+    background-color:#C7D300;
+    color: #ffffff;
+    z-index:101;
+    font-size:13px;
+
+}
+
+/*-- infoNavbar -----------------------------*/
+
+
+
+/*-- Configuração Base ----------------------*/
+.menu-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color:white;
+    box-shadow: 0px -5px 20px #707070;
+    z-index: 100;
+}
+
+
+.scrollable-content {
+    padding-top:65px;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+
+.nav-photo{
+    border-radius:50%;
+    cursor:pointer;
+    width:36px;
+    height:36px;
+}
+
+
+.nav-text{
+    font-family:asap;
+    font-size:12px;
+    color:black;
+    padding:5px;
+}
+
+
+.media-pill {
+    position: relative;
+    padding: 2px 4px 2px 2px;
+    background-color: rgba(31,45,61,.15);
+    border-radius: 50rem;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+
+.align-horizontal-center{
+    display: flex;
+    flex-direction: row;
+    align-items: center!important;
+    text-decoration:none;
+}
+/*---- Base ---------------------------------*/
+
+
+
+
+/*---- login --------------------------------*/
+
+.link-login{
+    text-decoration: none!important;
+    color:#8A8A8A;
+}
+
+.link-login:hover{
+    color:white;
+}
+
+/*---- login --------------------------------*/
+
+
+
+
+
+/*---- Usuário ------------------------------*/
+.link-card{
+    text-decoration: none;
+}
+
+.span-label-positivo{
+    background-color:#E5F9F6;
+    padding:2%;
+    border:1px white solid;
+    border-radius: 24% 24% 24% 25%;
+}
+
+.span-label-negativo{
+    background-color:#FDEDF1;
+    padding:2%;
+    border:1px white solid;
+    border-radius: 24% 24% 24% 25%;
+}
+
+.table-header{
+    font-family:asap;
+    font-size: 13px;
+    color:rgb(200,200,200);
+    margin:25px;
+}
+
+
+.table-td{
+    vertical-align: middle;
+
+}
+
+
+.button-style {
+    background-color:white;
+    color:rgb(33,145,128);
+    border-radius:5px;
+    border:none;
+    padding:5px;
+}
+
+
+.button-style:hover{
+    background-color:rgb(33,145,128);
+    color:white;
+}
+
+
+.button-style:active{
+    background-color:#05443B;
+}
+
+
+.link-button{
+    padding:10px;
+    font-family: asap;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+}
+
+
+.link-button:hover{
+    background-color:#16B597;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.link-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+.button-confirm{
+    padding:5px 15px 5px 15px;
+    font-family: asap;
+    background-color:#37474F;
+    color:white;
+    border-radius: 20px;
+    transition: all .5s;
+    border:none;
+}
+
+
+.button-confirm:hover{
+    background-color:#00353E;
+    color:white;
+    border-radius: 20px;
+}
+
+
+.button-confirm:active{
+    color:white;
+    background-color:#27DEBF;
+}
+
+
+.button-cancel{
+    padding:5px 15px 5px 15px;
+    font-family: asap;
+    background-color:#A8B7BE;
+    color:white;
+    border-radius: 20px;
+    transition: all .5s;
+    border:none;
+}
+
+
+.button-cancel:hover{
+    background-color:#455A64;
+    color:white;
+    border-radius: 20px;
+}
+
+
+.button-cancel:active{
+    color:white;
+    background-color:#494D4E;
+}
+
+
+.avatar-img{
+    border-radius:50%;
+}
+
+
+.card-config{
+    padding:0px;
+    border: 1px solid;
+    border-radius: 20px;
+    border-color: rgb(235,235,235);
+    font-family: asap;
+    background-color:white;
+    box-shadow: 0 0 10px 1px rgb(237,237,237);
+}
+
+
+.card-header-config{
+    font-family:asap semibold;
+    color:#4D4D4D;
+    margin:17px;
+    background-color:white;
+    border-color: rgb(185,185,185);
+}
+
+
+.card-body-config{
+    font-family: segoe;
+    font-size: 13px;
+    color:#888888;
+    margin:17px;
+    background-color:white;
+}
+
+
+/*-------------------------------------------*/
+
+
+
+
+
+
+
+/*--Novo Menu Lateral -----------------------*/
+.menu-background{
+    padding-top:80px;
+    font-family:asap;
+    background-color:#fff;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+
+.ul-lista-novo{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+
+.li-lista-novo{
+    vertical-align: middle;
+    padding:2px;
+}
+
+
+.li-link-novo{
+    text-decoration: none;
+    padding:10px 10px 10px 20px;
+    box-sizing: border-box;
+    display: block;
+    font-family:asap;
+    transition: all .5s;
+    color:#37474F;
+
+}
+
+
+.li-link-novo:hover{
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.li-link-novo:active{
+    color:#ffffff;
+    background-color:#16B597;
+}
+
+/*-------------------------------------------*/
+
+
+
+
+
+
+
+/*-- Documentos -----------------------------*/
+.button-doc {
+    cursor: pointer;
+    background-color:white;
+    color:none;
+    border:none;
+}
+
+.button-doc-icon {
+    position: absolute;
+    bottom: 108px;
+    right: 0;
+    cursor: pointer;
+}
+
+.custom-file-upload {
+  display:none;
+  cursor: pointer;
+}
+
+.custom-file-upload:hover {
+  background-color: #d8d8d8;
+}
+
+
+.button-link{
+    text-decoration: none;
+    color:#37474F;
+    background-color:#E7E7E7;
+    border-radius:10px;
+    padding:1px 5px;
+    font-family:asap;
+    transition: all .5s;
+    box-sizing: border-box;
+    display: block;
+
+}
+
+.button-link:hover{
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.button-link:active{
+    color:#ffffff;
+    background-color:#16B597;
+}
+/*-- Documentos -----------------------------*/
+
+
+
+
+
+
+
+/*-- New Profile ----------------------------*/
+.profile-img {
+    position:fixed;
+    width: 100%;
+    height: 550px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    border-bottom-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+    z-index: -1;
+}
+
+
+.profile-user{
+    margin-top:30px;
+    width: 165px;
+    height: 180px;
+    border-radius:10px;
+}
+
+
+.status{
+    display: inline-block;
+    width:0.5rem;
+    height:0.5rem;
+    background-color:#55CB69;
+    border-radius:50%;
+}
+
+status-negativo{
+    display: inline-block;
+    width:0.5rem;
+    height:0.5rem;
+    background-color:rgb(255,90,90);
+    border-radius:50%;
+}
+
+
+.profile-info {
+    padding:20px 15px 15px 15px;
+    text-align: center;
+    align-items: center!important;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius:10px;
+    margin:10px
+}
+
+
+.profile-name{
+    font-family: segoe;
+    font-size:22px;
+    color: black;
+}
+
+.profile-cargo{
+    font-family: segoe;
+    font-size:14px;
+    color:white;
+    background-color:#4FD1B8;
+    border-radius:10px;
+    padding: 0 5px;
+}
+
+
+.profile-progress{
+    position: relative;
+    padding:25px;
+    text-align: center;
+    align-items: center!important;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius:10px;
+    display: flex;
+    text-align: left;
+}
+
+
+.progress-percent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 20px;
+  padding: 0 5px;
+  color: black;
+}
+
+
+.image-list img {
+    width: 35px;
+    height: 35px;
+    margin: 0 0px 0 25px;
+    border-radius:4px;
+
+}
+
+
+.overflow-row {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+
+.card-esc{
+    width:auto;
+    height:400px;
+    border-radius: 10px;
+    border-color: rgb(235,235,235);
+    background-color:#F2F1EE;
+
+}
+
+.card-cert{
+    width: 16rem;
+    border-radius: 10px;
+    border-color: rgb(235,235,235);
+    background-color:#F2F1EE;
+
+}
+
+
+.profile-button-user {
+    position: absolute;
+    width:50px;
+    height:35px;
+    top:95px;
+    right:90px;
+    font-family:segoe;
+    padding:8px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 10px 0px 0px 10px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+    z-index:2;
+}
+
+
+.profile-button-user:hover{
+    background-color:#16B597;
+    color:#ffffff;
+
+}
+
+
+.profile-button-user:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+.profile-button-cert {
+    position: absolute;
+    width:50px;
+    height:35px;
+    top:95px;
+    right:35px;
+    font-family:segoe;
+    padding:8px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 0px 10px 10px 0px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+    z-index:2;
+}
+
+
+.profile-button-cert:hover{
+    background-color:#16B597;
+    color:#ffffff;
+
+}
+
+
+.profile-button-cert:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+.status-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin: 0px 5px 0px 0px;
+  }
+
+
+
+/*-- New Profile ----------------------------*/
+
+
+
+
+
+
+
+/*-- Button ---------------------------------*/
+.profile-button {
+    position: absolute;
+    top:85px;
+    right:52px;
+    font-family:segoe;
+    padding:8px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 10px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+    z-index:2;
+}
+
+
+.profile-button:hover{
+    background-color:#16B597;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.profile-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+/*-- Button ---------------------------------*/
+
+
+
+
+
+
+
+/*-- Card -----------------------------------*/
+.card-header-custom{
+    padding:15px;
+    font-family: segoe;
+    font-size:18px;
+    color:black;
+}
+
+
+.card-text-custom{
+    font-family: Segoe UI;
+    font-size:13px;
+    color: #CFCFCF;
+    margin:5px 0;
+}
+
+
+.card-custom{
+    padding: 0px!important;
+    margin:10px 10px 15px 10px;
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: rgb(235,235,235);
+    background-color:white;
+
+}
+
+
+.linha-custom{
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 0px 0;
+}
+
+
+.card-body-custom{
+    padding:15px;
+}
+
+
+.card-ul{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+
+.card-li{
+    text-decoration: none;
+    padding:0px 0px 0px 0px;
+    box-sizing: border-box;
+    display: block;
+    font-family: segoe;
+    font-size:15px;
+    transition: all .5s;
+    margin:10px 0;
+}
+
+
+.card-icon{
+     color: #DFDFDF;
+}
+
+
+/*-- Card -----------------------------------*/
+
+
+
+
+
+
+
+/*-- primeiro login ------------------------*/
+.menu-new-login{
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color:white;
+    box-shadow: 0px -5px 20px #707070;
+    padding:0px;
+}
+
+
+.primeiro-button {
+    font-family:segoe;
+    padding:8px;
+    background-color:#4FD1B8;
+    color:#ffffff;
+    border-radius: 20px;
+    transition: all .5s;
+    box-shadow: 0px 3px 10px #C6C6C6;
+    border:none;
+}
+
+
+.primeiro-button:hover{
+    background-color:#16B597;
+    color:#ffffff;
+    border-radius: 20px;
+}
+
+
+.primeiro-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+/*-- primeiro login -------------------------*/
+
+
+
+/*-- Home -----------------------------------*/
+
+.navbar-topp{
+    background-color:white;
+    color: #0A3C5F;
+}
+
+.top-buttons{
+
+    list-style:none;
+
+    display: flex;
+    padding-left: 4px;
+
+}
+
+
+.top-buttons li {
+    text-decoration:none!important;
+    padding-right: 40px;
+
+}
+
+
+.top-buttons a {
+    text-decoration:none!important;
+    color: #0A3C5F;
+}
+
+
+.login-button {
+    text-decoration:none;
+    padding:3px 15px 6px 15px;
+    background-color:#00A194;
+    color:#ffffff!important;
+    border-radius: 15px;
+    transition: all .5s;
+    border:none;
+}
+
+
+.login-button:hover{
+    background-color:#16B597;
+    color:#ffffff;
+}
+
+
+.login-button:active{
+    color:#37474F;
+    background-color:#068E74;
+}
+
+
+.font-sicoob {
+    font-family:asap!important;
+    color: #0A3C5F!important;
+}
+
+
+.learn-more{
+    text-decoration:none!important;
+    color: #ffffff;
+    background-color:#18898D;
+    padding:8px 20px 8px 20px;
+    border-radius:30px;
+    transition: all .5s;
+    border:none;
+}
+
+.learn-more:hover{
+    color: #ffffff;
+    background-color:#16B597;
+}
+
+
+/*-- Home -----------------------------------*/
+
+
+
+/*-- Departamentos --------------------------*/
+.icon-dep{
+    position:absolute;
+    top:-20px;
+    left:40px;
+    width:40px;
+    height:40px;
+    color:white;
+    text-align:center;
+    border-radius:7px;
+    font-family:Oswald;
+    padding-top:7px;
+
+}
+
+
+
+.links-dep{
+    text-decoration:none;
+    transition: all .2s;
+    color:black;
+}
+
+
+.links-dep:hover{
+    color:#ffffff;
+}
+
+
+.links-dep:active{
+    color:#37474F;
+
+}
+
+
+.card-buttons{
+    position:relative;
+    width:auto;
+    height:135px;
+    padding: 10px;
+    background-color:white;
+    border-radius:10px;
+    transition: all .1s;
+}
+
+
+.card-buttons:hover{
+    background-color:#4FD1B8;
+
+}
+
+
+.card-buttons:active{
+    background-color:#068E74;
+
+}
+
+
+/*-- Departamento ---------------------------*/
+
+
+
+/*-- setor_home -----------------------------*/
+
+.icon-set{
+    position:absolute;
+    top:-30px;
+    left:60px;
+    width:90px;
+    height:90px;
+    color:white;
+    text-align:center;
+    border-radius:10px;
+    font-family:Oswald;
+    font-size:50px;
+    padding-top:5px;
+
+}
+
+
+.icon-button-set{
+    position:absolute;
+    top:-10px;
+    right:7px;
+    width:20px;
+    height:20px;
+    color:white;
+    text-align:center;
+    border-radius:50%;
+    font-family:asap;
+    font-size:12px;
+    padding-top:;
+
+}
+
+
+.set-buttons{
+    padding:30px 15px 15px 20px;
+    border-radius:10px;
+    transition: all .2s;
+    text-align:left;
+    width:165px;
+}
+
+
+.links-set{
+    text-decoration:none;
+    color:white;
+}
+
+
+.links-set:hover{
+    color:#E6E6E6;
+}
+
+
+.links-set:active{
+    color:#37474F;
+
+}
+
+
+.container-buttons{
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.equipe-setor{
+    text-align:left;
+    border-left:1px solid #ccc;
+    width:auto;
+    height:35vh;
+    overflow-x: auto;
+    white-space: nowrap;
+
+}
+/*-- setor_home -----------------------------*/
+
+
+
+
+/*-- home coopera ---------------------------*/
+.logo-coopera{
+    text-align: center;
+    padding:50px;
+
+}
+
+.box-coopera{
+    text-align: center;
+    color:white;
+    margin:20px;
+    padding:10px 5px 5px 5px;
+    border-radius:15px;
+
+}
+
+
+
+
+/*-- home coopera ---------------------------*/
+
+
+/*-- back button ----------------------------*/
+.back-button{
+    position: absolute;
+    font-size: 5vh;
+    left: 100px;
+    top: 50px;
+}
+
+.arrow-button{
+    color: #D1D1D1;
+}
+
+.arrow-button:hover{
+    color: #068E74;
+}
+/*-- back button ----------------------------*/

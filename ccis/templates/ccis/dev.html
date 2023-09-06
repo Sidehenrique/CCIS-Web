@@ -1,0 +1,617 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<!--Background profile ------------------------------->
+<div class="profile-background">
+
+    {% if dados.canvas %}
+    <img class="profile-img" src="{{ dados.canvas.url }}">
+    {% else %}
+    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="profile-img">
+    {% endif %}
+
+
+</div>
+<!--Background profile ------------------------------->
+
+
+<!-- Conteúdo da Pagina ------------------------------>
+<div class="container-fluid scrollable-content">
+
+    <!-- Button Banner ------------------------>
+    <button class="profile-button"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#profileModal"
+            data-bs-whatever="@getbootstrap"
+            aria-expanded="false">Editar capa</button>
+    <!-- Button Banner ------------------------>
+
+
+    <!-- header ------------------------------->
+    <div class="row mt-4">
+
+        <!-- avatar -------------------------->
+        <div class="col-3 profile-info mb-3">
+
+            {% if dados.foto %}
+            <img class="profile-user"
+                 src="{{ dados.foto.url }}">
+
+            {% else %}
+
+            {% if dados.sexo == "Masculino" %}
+            <img class="profile-user"
+                 src="{% static 'ccis/avatar.jpg' %}">
+
+            {% elif dados.sexo == "Feminino" %}
+            <img class="profile-user"
+                 src="{% static 'ccis/avatar-feminino.jpg' %}">
+
+            {% endif %}
+
+            {% endif %}
+
+            <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
+
+            <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
+
+        </div>
+        <!-- avatar -------------------------->
+
+        <!-- Status -------------------------->
+        <div class="col align-self-end">
+            <div class="profile-progress container mb-3">
+
+                <!-- Barra de progresso -->
+                <div class="col position-relative">
+
+                    <div class="progress-percent">58%</div>
+                    <div class="">Status</div>
+
+                    <div class="progress"
+                         role="progressbar"
+                         aria-label=""
+                         aria-valuenow=""
+                         aria-valuemin="0"
+                         aria-valuemax="100"
+                         style="height: 7px; width: 100%;">
+                        <div class="progress-bar"
+                             style="width: 25%; background-color:#4FD1B8">
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Barra de progresso -->
+
+                <!-- celos certificados -->
+                <div class="justify-content-end">
+
+                    <div class="image-list">
+                        <img src="{% static 'ccis/CPA-10.jpg' %}">
+                        <img src="{% static 'ccis/CPA-20.jpg' %}">
+                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
+                    </div>
+
+                </div>
+                <!-- celos certificados -->
+
+            </div>
+        </div>
+        <!-- Status -------------------------->
+
+    </div>
+    <!-- header ------------------------------->
+
+
+    <!--info & Time-line ---------------------->
+    <div class="row">
+
+        <!-- Info user ----------------------->
+        <div class="col-3 card-custom">
+
+            <div class="card-header-custom">
+                Profile
+            </div>
+
+            <hr class="linha-custom">
+
+            <div class="card-body-custom">
+
+                <div class="card-text-custom">SOBRE</div>
+
+                <ul class="card-ul">
+
+                    <li class="card-li">
+                        <i class="fa-solid fa-user card-icon"></i>
+                        Raquel Santos de Araújo
+                    </li>
+
+                    <li class="">
+                        <i class="fa-sharp fa-solid fa-building card-icon"></i>
+                        CrediBrasília
+                    </li>
+
+                </ul>
+
+                <div class="card-text-custom mt-4">CONTATO</div>
+
+                <ul class="card-ul">
+
+                    <li class="card-li">
+                        <i class="fa-solid fa-at card-icon"></i>
+                        raquel.santos@gmail.com.br
+                    </li>
+
+                    <li class="card-li">
+                        <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
+                        (61) 9 9118-1233
+                    </li>
+
+                    <li class="card-li">
+                        <i class="fa-solid fa-briefcase card-icon"></i>
+                        Ramal: 192
+                    </li>
+
+                </ul>
+
+
+            </div>
+
+        </div>
+        <!-- info user ----------------------->
+
+
+        <!-- Histórico Corporativo ----------->
+        <div class="col card-custom">
+
+            <div class="card-header-custom">
+                Time-line | Em breve
+            </div>
+
+            <hr class="linha-custom">
+
+
+            <div class="card-body-custom" style="text-align: center;">
+
+                <img src="{% static 'ccis/Grupo 2410.png' %}"
+                     width="650px"
+                     height="auto">
+
+            </div>
+
+        </div>
+        <!-- Histórico Corporativ ------------>
+
+    </div>
+    <!--info & Time-line ---------------------->
+
+
+    <!-- Cards -------------------------------->
+    <div class="row">
+
+        <!-- Equipe -------------------------->
+        <div class="col-3 card-custom align-self-start">
+
+            <div class="card-header-custom">
+                Equipe
+            </div>
+
+            <hr class="linha-custom">
+
+            <div class="" style="">
+                <!-- Supervisor -->
+                {% for ch in chefe %}
+                <a href="#" class="list-group-item-action"
+                   style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                       display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                    <div class="align-horizontal-center">
+
+                        {% if ch.foto.url %}
+                        <img class="avatar-img" src="{{ chefe.foto }}"
+                             alt="" width="40" height="40">
+
+                        {% else %}
+
+                        {% if ch.sexo == "Masculino" %}
+                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                             alt="" width="40" height="40">
+
+                        {% elif ch.sexo == "Feminino" %}
+                        <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                             alt="" width="40" height="40">
+                        {% endif %}
+
+                        {% endif %}
+
+                        <div class="ps-2">
+                            <h6 class="m-0">{{ ch.first_name }} {{ch.last_name}}</h6>
+                            <small class="m-0">{{ ch.cargo }}</small>
+                        </div>
+
+                    </div>
+
+                </a>
+                {% endfor %}
+                <!-- Supervisor -->
+
+                <!-- Membros -->
+                {% for usuario in equipe %}
+                <a href="#" class="list-group-item-action"
+                   style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                       display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                    <div class="align-horizontal-center">
+
+                        {% if usuario.foto %}
+                        <img class="avatar-img" src="{{ usuario.foto.url }}"
+                             alt="" width="40" height="40">
+
+                        {% else %}
+
+                        {% if usuario.sexo == "Masculino" %}
+                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                             alt="" width="40" height="40">
+
+                        {% elif usuario.sexo == "Feminino" %}
+                        <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                             alt="" width="40" height="40">
+                        {% endif %}
+
+                        {% endif %}
+
+
+                        <div class="ps-2">
+                            <h6 class="m-0">{{ usuario.first_name }} {{usuario.last_name}}</h6>
+                            <small class="m-0">{{ usuario.cargo }}</small>
+                        </div>
+
+                    </div>
+
+                </a>
+                {% endfor %}
+                <!-- Membros -->
+            </div>
+
+        </div>
+        <!-- Equipe -------------------------->
+
+
+        <!-- Card Atividade ------------------>
+        <div class="col card-custom">
+
+            <div class="card-header-custom">
+                Atividades
+            </div>
+
+            <hr class="linha-custom">
+
+            <div class="card-body-custom">
+                <div>
+                    <!-- timeline item 1 -->
+                    <div class="row">
+                        <!-- timeline item 1 left dot -->
+                        <div class="col-auto text-center flex-column d-none d-sm-flex">
+                            <div class="row h-50">
+                                <div class="col">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                            <h5 class="m-2">
+                                <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                            </h5>
+                            <div class="row h-50">
+                                <div class="col border-end order">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                        </div>
+                        <!-- timeline item 1 event content -->
+                        <div class="col py-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="float-end text-muted">Mon, Jan 9th 2021 7:00 AM</div>
+                                    <h4 class="card-title text-muted">Day 1 Orientation</h4>
+                                    <p class="card-text">Welcome to the campus, introduction and get started with the
+                                        tour.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/row-->
+                    <!-- timeline item 2 -->
+                    <div class="row">
+                        <div class="col-auto text-center flex-column d-none d-sm-flex">
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                            <h5 class="m-2">
+                                <span class="badge rounded-pill bg-success">&nbsp;</span>
+                            </h5>
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col py-2">
+                            <div class="card border-success shadow">
+                                <div class="card-body">
+                                    <div class="float-end text-success">Tue, Jan 10th 2021 8:30 AM</div>
+                                    <h4 class="card-title text-success">Day 2 Sessions</h4>
+                                    <p class="card-text">Sign-up for the lessons and speakers that coincide with your
+                                        course syllabus. Meet and greet with instructors.</p>
+                                    <button class="btn btn-sm btn-outline-secondary" type="button"
+                                            data-bs-target="#t2_details" data-bs-toggle="collapse">Show Details ▼
+                                    </button>
+                                    <div class="collapse border" id="t2_details">
+                                        <div class="p-2 text-monospace">
+                                            <div>08:30 - 09:00 Breakfast in CR 2A</div>
+                                            <div>09:00 - 10:30 Live sessions in CR 3</div>
+                                            <div>10:30 - 10:45 Break</div>
+                                            <div>10:45 - 12:00 Live sessions in CR 3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/row-->
+                    <!-- timeline item 3 -->
+                    <div class="row">
+                        <div class="col-auto text-center flex-column d-none d-sm-flex">
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                            <h5 class="m-2">
+                                <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                            </h5>
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col py-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="float-end text-muted">Wed, Jan 11th 2021 8:30 AM</div>
+                                    <h4 class="card-title">Day 3 Sessions</h4>
+                                    <p>Shoreditch vegan artisan Helvetica. Tattooed Codeply Echo Park Godard kogi, next
+                                        level irony ennui twee squid fap selvage. Meggings flannel Brooklyn literally
+                                        small batch, mumblecore PBR try-hard kale chips. Brooklyn vinyl lumbersexual
+                                        bicycle rights, viral fap cronut leggings squid chillwave pickled gentrify
+                                        mustache. 3 wolf moon hashtag church-key Odd Future. Austin messenger bag
+                                        normcore, Helvetica Williamsburg sartorial tote bag distillery Portland before
+                                        they sold out gastropub taxidermy Vice.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/row-->
+                    <!-- timeline item 4 -->
+                    <div class="row">
+                        <div class="col-auto text-center flex-column d-none d-sm-flex">
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                            <h5 class="m-2">
+                                <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                            </h5>
+                            <div class="row h-50">
+                                <div class="col">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col py-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="float-end text-muted">Thu, Jan 12th 2021 11:30 AM</div>
+                                    <h4 class="card-title">Day 4 Wrap-up</h4>
+                                    <p>Join us for lunch in Bootsy's cafe across from the Campus Center.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--container-->
+
+                <hr class="my-5">
+
+                <div class="container py-4">
+
+                    <!-- timeline item 1 -->
+                    <div class="row no-gutters">
+                        <div class="col-sm"> <!--spacer--> </div>
+                        <!-- timeline item 1 center dot -->
+                        <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+                            <div class="row h-50">
+                                <div class="col">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                            <h5 class="m-2">
+                                <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                            </h5>
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                        </div>
+                        <!-- timeline item 1 event content -->
+                        <div class="col-sm py-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="float-end text-muted small">Jan 9th 2021 7:00 AM</div>
+                                    <h4 class="card-title text-muted">Day 1 Orientation</h4>
+                                    <p class="card-text">Welcome to the campus, introduction and get started with the
+                                        tour.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/row-->
+                    <!-- timeline item 2 -->
+                    <div class="row no-gutters">
+                        <div class="col-sm py-2">
+                            <div class="card border-success shadow">
+                                <div class="card-body">
+                                    <div class="float-end text-success small">Jan 10th 2021 8:30 AM</div>
+                                    <h4 class="card-title text-success">Day 2 Sessions</h4>
+                                    <p class="card-text">Sign-up for the lessons and speakers that coincide with your
+                                        course syllabus. Meet and greet with instructors.</p>
+                                    <button class="btn btn-sm btn-outline-secondary" type="button"
+                                            data-bs-target="#t22_details" data-bs-toggle="collapse">Show Details ▼
+                                    </button>
+                                    <div class="collapse border" id="t22_details">
+                                        <div class="p-2 text-monospace">
+                                            <div>08:30 - 09:00 Breakfast in CR 2A</div>
+                                            <div>09:00 - 10:30 Live sessions in CR 3</div>
+                                            <div>10:30 - 10:45 Break</div>
+                                            <div>10:45 - 12:00 Live sessions in CR 3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                            <h5 class="m-2">
+                                <span class="badge rounded-pill bg-success">&nbsp;</span>
+                            </h5>
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col-sm"> <!--spacer--> </div>
+                    </div>
+                    <!--/row-->
+                    <!-- timeline item 3 -->
+                    <div class="row no-gutters">
+                        <div class="col-sm"> <!--spacer--> </div>
+                        <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                            <h5 class="m-2">
+                                <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                            </h5>
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col-sm py-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="float-end text-muted small">Jan 11th 2021 8:30 AM</div>
+                                    <h4 class="card-title">Day 3 Sessions</h4>
+                                    <p>Shoreditch vegan artisan Helvetica. Tattooed Codeply Echo Park Godard kogi, next
+                                        level irony ennui twee squid fap selvage. Meggings flannel Brooklyn literally
+                                        small batch, mumblecore PBR try-hard kale chips. Brooklyn vinyl lumbersexual
+                                        bicycle rights, viral fap cronut leggings squid chillwave pickled gentrify
+                                        mustache.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/row-->
+                    <!-- timeline item 4 -->
+                    <div class="row no-gutters">
+                        <div class="col-sm py-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="float-end text-muted small">Jan 12th 2021 11:30 AM</div>
+                                    <h4 class="card-title">Day 4 Wrap-up</h4>
+                                    <p>Join us for lunch in Bootsy's cafe across from the Campus Center.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+                            <div class="row h-50">
+                                <div class="col border-end">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                            <h5 class="m-2">
+                                <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                            </h5>
+                            <div class="row h-50">
+                                <div class="col">&nbsp;</div>
+                                <div class="col">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col-sm"> <!--spacer--> </div>
+                    </div>
+                    <!--/row-->
+                </div>
+
+                <!-- Card Footer -->
+                <div style="height:20px;"></div>
+            </div>
+        </div>
+        <!-- End card Atividade -------------->
+
+    </div>
+    <!-- Cards -------------------------------->
+
+
+
+</div>
+<!-- Conteúdo da Pagina ------------------------------>
+
+
+<!-- Modal foto e banner -------------------->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModal"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">Alterar Foto e Capa</h5>
+
+            </div>
+
+            <div class="modal-body">
+
+                <form id="formMidia"
+                      method="post"
+                      enctype="multipart/form-data"
+                      action="{% url 'formMidia' %}"
+                      class="row g-3 needs-validation"
+                      novalidate>
+                    {% csrf_token %}
+
+                    {{ mid }}
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary" data-bs-target="#formMidia">
+                            Salvar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- End Modal foto e banner ---------------->
+
+{% endblock %}

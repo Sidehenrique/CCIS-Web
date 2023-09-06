@@ -1,0 +1,195 @@
+<!doctype html>
+
+{% load static %}
+
+<html lang="pt-br">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- link css -->
+    <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+{% include 'ccis/infoNavbar.html' %}
+
+<!-- topMenu ----------------------------------------------------------------------->
+<nav class="p-0 navbar">
+
+    <div class="container-fluid">
+
+        <!-- Logo do Menu ------------------------>
+        <div class="d-flex">
+            <a class="navbar-brand ms-5" href="{% url 'home' %}">
+                <img src="{% static 'ccis/Grupo 6383.png' %}"
+                     alt="logo"
+                     width="45"
+                     height="auto"
+                     class="d-inline-block align-text-center;">
+
+            </a>
+            <p class="align-self-center mb-0">Comunicação e Controle Interno</p>
+        </div>
+        <!-- End Logo do Menu -------------------->
+
+        <!-- Direita do Menu --------------------->
+        <div class="navbar-nav-wrap-content-end me-3">
+
+            <ul class="top-buttons m-0">
+                <li>
+                    <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li>
+                    <a href="#">Sobre</a>
+                </li>
+                <li>
+                    <a href="#">Contato</a>
+                </li>
+                <li>
+                    <a href="{% url 'utilitarios' %}">Utilitários</a>
+                </li>
+                <li>
+                    <a class="login-button" href="{% url 'login' %}">Login</a>
+                </li>
+            </ul>
+
+        </div>
+        <!-- End Direita do Menu ----------------->
+
+    </div>
+
+</nav>
+<!-- End topMenu -------------------------------------------------------------------->
+
+<!-- Conteúdo -------------------------------------------------------------------->
+<div class="container-fluid mt-5 p-0">
+
+    <div class="text-center font-sicoob">
+
+        <h2>CCIS - Comunicação e controle Interno Sicoob</h2>
+        <p>Seja muito bem vindo ao CCIS a nova plataforma do Sicoob Credibrasília que foi desenvolvida com paixão para trazer mais simplicidade<br>
+            e eficiência a todos os nosso colaboradores. Aqui, a tecnologia se une à comunicação de maneira harmoniosa, permitindo que <br>
+            todos os setores se conectem de forma contínua e otimizada.</p>
+
+        <a class="learn-more" href="#">
+            SAIBA MAIS
+        </a>
+
+    </div>
+
+    <div class="text-center mt-2">
+
+        <img src="{% static 'ccis/Grupo 6384.png' %}"
+         alt="logo"
+         width="90%"
+         height="auto"
+         class="d-inline-block align-text-center;">
+
+    </div>
+
+    <!-- Carousel ------------------------------------->
+    <div id="carouselExampleDark"
+         class="carousel carousel-dark slide mt-3"
+         data-ride="carousel">
+
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+        </div>
+
+
+        <!-- Imagens e conteúdo do carousel -------------------->
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="5000">
+                <img src="{% static 'ccis/Grupo 6389.png' %}" class="d-block w-100" alt="Cooperar+">
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="{% static 'ccis/gestao.png' %}" class="d-block w-100" alt="Gestão">
+            </div>
+        </div>
+
+        <!-- Botões de ação -------------------->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+
+    </div>
+    <!-- end Carousel ------------------------------------->
+
+
+
+</div>
+<!-- End Conteúdo -------------------------------------------------------------------->
+
+<!-- footer ------------------------------------------------------------------------------->
+<footer class=" p-0 navbar" style="background-color:#04343D; color:white; height:200px;">
+
+    <div class="container-fluid">
+
+        <div class="ms-5 mt-3">
+
+            <h6>Unidade de Tecnologia</h6>
+            <p>Suporte 3361-6130 Ramal 206</p>
+
+            <p class="mt-4">© Sicoob Credibrasília Todos os direitos reservados</p>
+
+        </div>
+
+        <div class="me-4">
+            <img src="{% static 'ccis/LOGO2.png' %}"
+             alt="logo"
+             width="350px"
+             height="auto">
+        </div>
+
+    </div>
+
+</footer>
+<!-- end footer ----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+<!-- link js -->
+<script src="{% static 'ccis/script.js' %}"></script>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
