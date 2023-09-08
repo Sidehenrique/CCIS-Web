@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-// Tratamento da view novo_user para esconder o display
+// Tratamento da view novo_user para esconder o display ----------------------------------------------------------------
 function displayFilePag(input) {
     var filePage = input.files[0].name;
     document.getElementById('file-Page').textContent = filePage;
@@ -90,63 +90,52 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+
+// Tratamento PAGINA TECNOLOGIA ----------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function() {
 
     const menuInicial = document.getElementById("menu-inicial");
     const menuAcessos = document.getElementById("menu-acessos");
     const menuEquipamentos = document.getElementById("menu-equipamentos");
     const menuServicos = document.getElementById("menu-servicos");
+    const informativoTI = document.getElementById("informativoTI");
+    const formularioAcessos = document.getElementById("formularioAcessos");
+    const formularioEquipamentos = document.getElementById("formularioEquipamentos");
+    const formularioServicos = document.getElementById("formularioServicos");
 
+    //------------------------------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------------------------------
     document.getElementById("btnAcessos").addEventListener("click", function() {
-        menuInicial.style.display = "none";
-        menuAcessos.style.display = "block";
-        menuEquipamentos.style.display = "none";
-        menuServicos.style.display = "none";
+        informativoTI.style.display = "none";
+        formularioAcessos.style.display = "block";
+        formularioEquipamentos.style.display = "none";
+        formularioServicos.style.display = "none";
     });
 
 
     document.getElementById("btnEquipamentos").addEventListener("click", function() {
-        menuInicial.style.display = "none";
-        menuAcessos.style.display = "none";
-        menuEquipamentos.style.display = "block";
-        menuServicos.style.display = "none";
+        informativoTI.style.display = "none";
+        formularioAcessos.style.display = "none";
+        formularioEquipamentos.style.display = "block";
+        formularioServicos.style.display = "none";
     });
 
 
     document.getElementById("btnServicos").addEventListener("click", function() {
-        menuInicial.style.display = "none";
-        menuAcessos.style.display = "none";
-        menuEquipamentos.style.display = "none";
-        menuServicos.style.display = "block";
+        informativoTI.style.display = "none";
+        formularioAcessos.style.display = "none";
+        formularioEquipamentos.style.display = "none";
+        formularioServicos.style.display = "block";
     });
-
-     document.getElementById("btnBackAcessos").addEventListener("click", function() {
-        menuInicial.style.display = "block";
-        menuAcessos.style.display = "none";
-        menuEquipamentos.style.display = "none";
-        menuServicos.style.display = "none";
-    });
-
-    document.getElementById("bntBackEquipment").addEventListener("click", function() {
-        menuInicial.style.display = "block";
-        menuAcessos.style.display = "none";
-        menuEquipamentos.style.display = "none";
-        menuServicos.style.display = "none";
-    });
-
-    document.getElementById("btnBackService").addEventListener("click", function() {
-        menuInicial.style.display = "block";
-        menuAcessos.style.display = "none";
-        menuEquipamentos.style.display = "none";
-        menuServicos.style.display = "none";
-    });
+    //------------------------------------------------------------------------------------------------------------------
 
 });
+//----------------------------------------------------------------------------------------------------------------------
 
 
-
-
-// Tratamento do modal inativar_usuario da tabela da view usuário
+// Tratamento do modal inativar_usuario da tabela da view usuário ------------------------------------------------------
 
 $('.btn-inativar').click(function() {
 var modalId = $(this).data('bs-target');

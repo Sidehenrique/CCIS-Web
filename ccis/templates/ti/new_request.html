@@ -62,176 +62,11 @@
             </div>
 
         </div>
-
-        <div id="menu-acessos" class="col-3 menu-request" style="display:none">
-
-            <div class="">
-
-                <h5 class="text-center p-1">ACESSOS</h5>
-
-                <hr style="color:#C4C0C0">
-
-                <ul class="ul-menu-request">
-
-                    <li class="li-lista-novo">
-                        <a id="btnSisbr" href="{% url 'profile' request.user.id %}" class="li-link-request"
-                           aria-current="page">
-                            <i class="fa-solid fa-key"></i>
-                            Sisbr
-                        </a>
-                    </li>
-
-                    <li class="li-lista-novo">
-                        <a id=btnVPN" href="{% url 'profile' request.user.id %}" class="li-link-request"
-                           aria-current="page">
-                            <i class="fa-solid fa-key"></i>
-                            VPN
-                        </a>
-                    </li>
-
-                    <li class="li-lista-novo">
-                        <a id="btnEmail" href="{% url 'profile' request.user.id %}" class="li-link-request"
-                           aria-current="page">
-                            <i class="fa-solid fa-key"></i>
-                            Email
-                        </a>
-                    </li>
-
-                    <li class="li-lista-novo">
-                        <a id="btnIntranet" href="{% url 'profile' request.user.id %}" class="li-link-request"
-                           aria-current="page">
-                            <i class="fa-solid fa-key"></i>
-                            Intranet
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <div class="">
-
-                <hr style="color:#C4C0C0">
-
-                <ul class="ul-menu-request">
-
-                    <li class="li-lista-novo mt-5">
-                        <a id="btnBackAcessos" type="button" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-arrow-left"></i>
-                            Voltar
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-        <div id="menu-equipamentos" class="col-3 menu-request" style="display:none">
-
-            <div class="">
-
-                <h5 class="text-center p-1">EQUIPAMENTOS</h5>
-
-                <hr style="color:#C4C0C0">
-
-                <ul class="ul-menu-request">
-
-                    <li class="li-lista-novo">
-                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-computer"></i>
-                            Instalação
-                        </a>
-                    </li>
-
-                    <li class="li-lista-novo">
-                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-computer"></i>
-                            Manutenção
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <div class="">
-
-                <hr style="color:#C4C0C0">
-
-                <ul class="ul-menu-request">
-
-                    <li class="li-lista-novo mt-5">
-                        <a id="bntBackEquipment" type="button" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-arrow-left"></i>
-                            Voltar
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-        <div id="menu-servicos" class="col-3 menu-request" style="display:none">
-
-            <div class="">
-
-                <h5 class="text-center p-1">SERVIÇOS</h5>
-
-                <hr style="color:#C4C0C0">
-
-                <ul class="ul-menu-request">
-
-                    <li class="li-lista-novo">
-                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-server"></i>
-                            Implementação de Melhorias
-                        </a>
-                    </li>
-
-                    <li class="li-lista-novo">
-                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-server"></i>
-                            Solicitação de Visita Técnica
-                        </a>
-                    </li>
-
-                    <li class="li-lista-novo">
-                        <a href="{% url 'profile' request.user.id %}" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-server"></i>
-                            Outros
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <div class="">
-
-                <hr style="color:#C4C0C0">
-
-                <ul class="ul-menu-request">
-
-                    <li class="li-lista-novo mt-5">
-                        <a id="btnBackService" type="button" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-arrow-left"></i>
-                            Voltar
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
         <!-- Menu -------------------------------->
 
+
         <!-- Informativo ------------------------->
-        <div class="col menu-request m-0 p-5">
+        <div id="informativoTI" class="col menu-request m-0 p-5">
             <h6>Orientações para abertura de chamado - 4155. Tecnologia</h6>
             <p>
                 Pontos a serem observados durante a abertura de chamado:
@@ -249,31 +84,36 @@
         </div>
         <!-- Informativo ------------------------->
 
-        <!-- Formulário -------------------------->
-        <div class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO</h5>
+
+        <!-- Formulário de Acessos -------------------------->
+        <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE ACESSOS</h5>
 
             <div class="row p-3 ">
 
                 <div class="col-7">
 
-                    <h6>Detalhes da Solicitação</h6>
 
                     <form action="processar_formulario.php" method="POST" enctype="multipart/form-data">
 
                         <div class="mb-2">
                             <label>* Selecione o Assunto:</label>
-                            {{ acessoM1.assunto }}
+                            {{ acessos.assunto }}
+                        </div>
+
+                        <div class="mb-2">
+                            <label>* Selecione o Serviço:</label>
+                            {{ acessos.servico }}
                         </div>
 
                         <div class="mb-3">
-                            <label>* Detalhes:</label><br>
-                            {{ acessoM1.descricao }}
+                            <label>* Descrição:</label><br>
+                            {{ acessos.descricao }}
                         </div>
 
                         <div class="">
                             <label>Anexar arquivo:</label>
-                            {{ acessoM1.arquivo }}
+                            {{ acessos.arquivo }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
@@ -315,12 +155,157 @@
 
             </div>
         </div>
-        <!-- Formulário -------------------------->
+        <!-- Formulário de Acessos -------------------------->
+
+
+        <!-- Formulário de Equipamentos --------------------->
+        <div id="formularioEquipamentos" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE EQUIPAMENTOS</h5>
+
+            <div class="row p-3 ">
+
+                <div class="col-7">
+
+
+                    <form action="" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-2">
+                            <label>* Selecione o Assunto:</label>
+                            {{ equipamentos.assunto }}
+                        </div>
+
+                        <div class="mb-2">
+                            <label>* Selecione o Serviço:</label>
+                            {{ equipamentos.servico }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label>* Descrição:</label><br>
+                            {{ equipamentos.descricao }}
+                        </div>
+
+                        <div class="">
+                            <label>Anexar arquivo:</label>
+                            {{ equipamentos.arquivo }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </form>
+
+                </div>
+
+                <div class="col-1"></div>
+
+                <div class="col">
+
+                    <div>
+                        <h6>Dados do Setor</h6>
+
+                        <p class="m-0">Setor:</p>
+                        <p class="m-0">Responsável:</p>
+                        <p class="m-0">Email:</p>
+                        <p class="m-0">Telefone Corporativo:</p>
+                        <p class="m-0">Ramal:</p>
+
+                    </div>
+
+                    <div class="mt-5">
+
+                        <h6>Dados do Solicitante</h6>
+
+                        <p class="m-0">Nome:</p>
+                        <p class="m-0">CPF:</p>
+                        <p class="m-0">Sisbr:</p>
+                        <p class="m-0">Email:</p>
+                        <p class="m-0">Telefone Corporativo:</p>
+                        <p class="m-0">Ramal:</p>
+                        <p class="m-0">Unidade:</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- Formulário de Equipamentos --------------------->
+
+
+        <!-- Formulário de Serviços --------------------->
+        <div id="formularioServicos" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE SERVIÇOS</h5>
+
+            <div class="row p-3 ">
+
+                <div class="col-7">
+
+
+                    <form action="" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-2">
+                            <label>* Selecione o Assunto:</label>
+                            {{ servicos.assunto }}
+                        </div>
+
+                        <div class="mb-2">
+                            <label>* Selecione o Serviço:</label>
+                            {{ servicos.servico }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label>* Descrição:</label><br>
+                            {{ servicos.descricao }}
+                        </div>
+
+                        <div class="">
+                            <label>Anexar arquivo:</label>
+                            {{ servicos.arquivo }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </form>
+
+                </div>
+
+                <div class="col-1"></div>
+
+                <div class="col">
+
+                    <div>
+                        <h6>Dados do Setor</h6>
+
+                        <p class="m-0">Setor:</p>
+                        <p class="m-0">Responsável:</p>
+                        <p class="m-0">Email:</p>
+                        <p class="m-0">Telefone Corporativo:</p>
+                        <p class="m-0">Ramal:</p>
+
+                    </div>
+
+                    <div class="mt-5">
+
+                        <h6>Dados do Solicitante</h6>
+
+                        <p class="m-0">Nome:</p>
+                        <p class="m-0">CPF:</p>
+                        <p class="m-0">Sisbr:</p>
+                        <p class="m-0">Email:</p>
+                        <p class="m-0">Telefone Corporativo:</p>
+                        <p class="m-0">Ramal:</p>
+                        <p class="m-0">Unidade:</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- Formulário de Equipamentos --------------------->
 
     </div>
-
-
     <!-- Conteúdo -------------------------------->
+
 </div>
 
 <!-- Modal formulário Novo Usuário --------------->

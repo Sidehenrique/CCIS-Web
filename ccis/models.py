@@ -487,38 +487,10 @@ admin.site.unregister(Group)
 admin.site.register(Group, CustomGroupAdmin)
 
 
-CHOICES_AssuntoM1 = [
-    ('', ''),
-    ('Criação', 'Criação'),
-    ('Alteração', 'Alteração'),
-    ('Redefinição', 'Redefinição'),
-    ('Exclusão', 'Exclusão'),
-
-]
-
-
-class acessoM1(models.Model):
-    idRequest = models.AutoField(db_column='idRequest', primary_key=True)
-    assunto = models.CharField(choices=CHOICES_AssuntoM1, max_length=45, blank=False, null=True)
-    descricao = models.CharField(max_length=5000, blank=False, null=True)
-    arquivo = models.FileField(upload_to='processos', null=True, blank=True)
-
-    def __str__(self):
-        return self.assunto
-
-
-CHOICES_AssuntoM2 = [
-    ('', ''),
-    ('Criação', 'Criação'),
-    ('Redefinição', 'Redefinição'),
-    ('Exclusão', 'Exclusão'),
-
-]
-
-
-class acessoM2(models.Model):
-    idRequest = models.AutoField(db_column='idRequest', primary_key=True)
-    assunto = models.CharField(choices=CHOICES_AssuntoM2, max_length=45, blank=False, null=True)
+class solicitacoes(models.Model):
+    idSolicitacoes = models.AutoField(db_column='idrequestAcessosTI', primary_key=True)
+    assunto = models.CharField(max_length=45, blank=False, null=True)
+    servico = models.CharField(max_length=45, blank=False, null=True)
     descricao = models.CharField(max_length=5000, blank=False, null=True)
     arquivo = models.FileField(upload_to='processos', null=True, blank=True)
 
