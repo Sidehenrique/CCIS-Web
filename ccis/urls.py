@@ -7,6 +7,7 @@ from .views import pages
 from .views import rh
 from .views import security
 from .views import formularios
+from .views import gestaoControle
 
 
 urlpatterns = [
@@ -22,6 +23,15 @@ urlpatterns = [
     path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
 
     path('utilitarios', pages.utilitarios, name='utilitarios'),
+
+    path('gestaoControle', gestaoControle.home, name='gestaoControle'),
+    path('contabilidade', gestaoControle.contabilidade, name='contabilidade'),
+    path('comissionamento', gestaoControle.comissionamento, name='comissionamento'),
+    path('estrategico', gestaoControle.estrategico, name='estrategico'),
+    path('inadimplencia', gestaoControle.inadimplencia, name='inadimplencia'),
+    path('lastro', gestaoControle.lastro, name='lastro'),
+    path('qqs', gestaoControle.qqs, name='qqs'),
+    path('pesquisa', gestaoControle.pesquisa, name='pesquisa'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),

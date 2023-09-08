@@ -1,0 +1,111 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+<!doctype html>
+
+{% load static %}
+
+<html lang="pt-br">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- link css -->
+    <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/df67e6f5ba.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <!-- Conteúdo -->
+    <div class="container-fluid scrollable-content">
+
+        <!-- Titulo-------------------------------->
+        <div class="row mt-3 mb-2">
+
+            <div class="col ps-5 pt-4">
+
+                <h1 style="font-family: oswald ; font-size:42px;">Bem vindo ao módulo<br>
+                    <span style="color:#27DEBF; font-family: oswald ; font-size:70px;">GESTÃO E CONTROLE</span>
+                </h1>
+                <p class="pt-3" style="color:#8a8a8a; font-size:18px;">Um espaço privado especialmente para a gerencia, planilhas prontras para analise.</p>
+            </div>
+
+            <div style="text-align: center;" class="col-5 d-inline-block img-fluid m-0">
+                <img src="{% static 'ccis/gestaoControle.png' %}"
+                    alt="right"
+                    width="77%"
+                    height="auto">
+            </div>
+
+        </div>
+        <!---titulo end-------------------------------->
+
+        <!---linha gerencia-------------------------------->
+        <div class="m-5">
+            <p  style="margin-top:10px; margin-bottom:0px">Gerencia</p>
+            <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
+        </div>
+        <!---linha gerencia-------------------------------->
+
+        <div class="col m-5">
+            <!--buttoms------------------------------------------------->
+            <div style="text-align: center;" class="row mt-5">
+                <div class="col">
+                    <a href="{% url 'contabilidade' %}" class="">
+                        <i class="fa-solid fa-file-invoice" style="color: #00353e; font-size: 6vh;"></i>
+                    </a> 
+                    <div>Contabilidade</div>
+                </div>
+                <div class="col">
+                    <a href="{% url 'lastro' %}" class="">
+                        <i class="fa-solid fa-coins" style="color: #00353e; font-size: 6vh;"></i>
+                    </a> 
+                    <div>Lastro LCA</div>
+                </div>
+                <div class="col">
+                    <a href="{% url 'comissionamento' %}" class="">
+                        <i class="fa-solid fa-seedling" style="color: #00353e; font-size: 6vh;"></i>
+                    </a> 
+                    <div>Comissionamento</div>
+                </div>
+                <div class="col">
+                    <a href="{% url 'qqs' %}" class="">
+                        <i class="fa-solid fa-crop-simple" style="color: #00353e; font-size: 6vh;"></i>
+                    </a>
+                    <div>OQS</div>
+                </div>
+                <div class="col">
+                    <a href="{% url 'estrategico' %}" class="">
+                        <i class="fa-solid fa-chess-board" style="color: #00353e; font-size: 6vh;"></i>
+                    </a> 
+                    <div>Planejamento Estratégico</div>
+                </div>
+                <div class="col">
+                    <a href="{% url 'inadimplencia' %}" class="">
+                        <i class="fa-solid fa-circle-exclamation" style="color: #00353e; font-size: 6vh;"></i>
+                    </a> 
+                    <div>Inadimplência</div>
+                </div>
+                <div class="col">
+                    <a href="{% url 'pesquisa' %}" class="">
+                        <i class="fa-solid fa-compass" style="color: #00353e; font-size: 6vh;"></i>
+                    </a>
+                    <div>Pesquisa <br> de Satisfação</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Conteúdo -->
+</body>
+{% endblock %}
