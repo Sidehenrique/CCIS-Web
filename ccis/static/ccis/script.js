@@ -95,9 +95,6 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function() {
 
     const menuInicial = document.getElementById("menu-inicial");
-    const menuAcessos = document.getElementById("menu-acessos");
-    const menuEquipamentos = document.getElementById("menu-equipamentos");
-    const menuServicos = document.getElementById("menu-servicos");
     const informativoTI = document.getElementById("informativoTI");
     const formularioAcessos = document.getElementById("formularioAcessos");
     const formularioEquipamentos = document.getElementById("formularioEquipamentos");
