@@ -46,26 +46,24 @@ def infoClima():
 
 
 def base(request):
-    user = request.user.username
-    dados = User.objects.filter(username=user).select_related('dadosPessoais, profissional').values \
-        ('first_name', 'last_name', 'dadosPessoais__nomeCompleto', 'dadosPessoais__foto',
-         'dadosPessoais__sexo', 'profissional__cargo')
 
-    dados_user = []
-    for d in dados:
-        first_name = d['first_name']
-        last_name = d['last_name']
-        sexo = d['dadosPessoais__sexo']
-        foto = d['dadosPessoais__foto']
-        cargo = d['profissional__cargo']
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
 
-        dados_user.append(
-            {'user': request.user, 'sexo': sexo, 'foto': foto, 'first_name': first_name, 'last_name': last_name,
-             'cargo': cargo})
+    dados = dadosPessoais.objects.get(usuario=log)
 
-    contexto = {'dados_user': dados_user}
+    groupControle = log.groups.filter(id=32).exists()
 
-    return render(request, 'ccis/base.html')
+    context = {
+        'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+        'dados': dados, 'is_superadmin': is_superadmin, 'groupControle': groupControle,
+        }
+
+    return render(request, 'ccis/base.html', context)
 
 
 def home(request):
