@@ -19,6 +19,7 @@ def rh_home(request):
     is_superadmin = log.is_superuser
 
     group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     first_name = user.first_name
     last_name = user.last_name
@@ -63,7 +64,7 @@ def rh_home(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name,
+            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle':groupControle,
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
             'botoes': botoes, 'dadosSetor': dadosSetor, 'superior': superior, 'equipe': nomes_equipe
         }
@@ -85,6 +86,7 @@ def rh_dash(request):
     is_superadmin = log.is_superuser
 
     group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     first_name = user.first_name
     last_name = user.last_name
@@ -101,7 +103,7 @@ def rh_dash(request):
             'totalUsuarios': totalUsuarios, 'totalColaborador': totalColaborador,
             'totalEstagiarios': totalEstagiarios, 'totalMenor': totalMenor,
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name,
+            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
         }
 
@@ -117,9 +119,12 @@ def pro_seletivo(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+                'groupControle':groupControle, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin
+                }
+
     return render(request, 'rh/processo-seletivo.html', contexto)
 
 
@@ -132,9 +137,11 @@ def ferias(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+                'groupControle': groupControle, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin
+                }
     return render(request, 'rh/ferias.html', contexto)
 
 
@@ -147,9 +154,11 @@ def anbima(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+                'groupControle': groupControle, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin
+                }
     return render(request, 'rh/certificacoes-anbima.html', contexto)
 
 
@@ -162,8 +171,10 @@ def colaboradores(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin}
+                'groupControle': groupControle, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin
+                }
     return render(request, 'rh/colaboradores.html', contexto)
 # ----------------------------------------------------------------------------------------------------------------------

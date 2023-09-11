@@ -20,6 +20,7 @@ def ti_home(request):
     is_superadmin = log.is_superuser
 
     group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     first_name = user.first_name
     last_name = user.last_name
@@ -62,7 +63,7 @@ def ti_home(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name,
+            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
             'botoes': botoes, 'dadosSetor': dadosSetor, 'superior': superior, 'equipe': nomes_equipe
         }
@@ -78,6 +79,7 @@ def new_request(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
     group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     acessos = modelFormAcessosTI()
     equipamentos = modelFormEquipamentosTI()
@@ -85,7 +87,7 @@ def new_request(request):
 
     contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                 'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'acessos': acessos,
-                'equipamentos': equipamentos, 'servicos': servicos}
+                'equipamentos': equipamentos, 'servicos': servicos, 'groupControle': groupControle}
 
     return render(request, 'ti/new_request.html', contexto)
 
