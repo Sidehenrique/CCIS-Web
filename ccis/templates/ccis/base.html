@@ -69,7 +69,6 @@
                         <ul class="navbar-nav">
 
 
-
                             <li>
                                 <div class="btn-group dropstart p-0">
 
@@ -90,7 +89,7 @@
                                                     <small>3 days ago</small>
                                                 </div>
                                                 <p class="mb-1">Por favor, Solicito ferias ao...</p>
-                                                    <small>Assunto: Ferias</small>
+                                                <small>Assunto: Ferias</small>
                                             </a>
 
                                             <a href="#" class="list-group-item list-group-item-action"
@@ -100,7 +99,7 @@
                                                     <small>3 days ago</small>
                                                 </div>
                                                 <p class="mb-1">Por favor, Solicito ferias ao...</p>
-                                                    <small>Assunto: Ferias</small>
+                                                <small>Assunto: Ferias</small>
                                             </a>
 
                                             <a href="#" class="list-group-item list-group-item-action"
@@ -110,7 +109,7 @@
                                                     <small>3 days ago</small>
                                                 </div>
                                                 <p class="mb-1">Por favor, Solicito ferias ao...</p>
-                                                    <small>Assunto: Ferias</small>
+                                                <small>Assunto: Ferias</small>
                                             </a>
 
                                         </div>
@@ -277,7 +276,8 @@
 
                         <!-- Perfil -->
                         <li class="li-lista-novo">
-                            <a style="font-family: asap;" href="{% url 'profile' request.user.id %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap;" href="{% url 'profile' request.user.id %}"
+                               class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-user"></i>
                                 Perfil
                             </a>
@@ -285,7 +285,8 @@
 
                         <!-- Conta -->
                         <li class="li-lista-novo">
-                            <a style="font-family: asap;" href="{% url 'conta' %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap;" href="{% url 'conta' %}" class="li-link-novo"
+                               aria-current="page">
                                 <i class="fa-solid fa-address-card"></i>
                                 Conta
                             </a>
@@ -293,35 +294,31 @@
 
                         <!-- Departamentos -->
                         <li class="li-lista-novo">
-                            <a style="font-family: asap;" href="{% url 'departamentos' %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap;" href="{% url 'departamentos' %}" class="li-link-novo"
+                               aria-current="page">
                                 <i class="fa-solid fa-network-wired"></i>
                                 Departamentos
                             </a>
                         </li>
 
                         <!-- Gestão e Controle -->
-<<<<<<< HEAD
                         {% if groupControle or is_superadmin %}
-=======
->>>>>>> c749cbfaa29e3fb357a093bd80fcb66c8b0d3fc0
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'gestaoControle' %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap;" href="{% url 'gestaoControle' %}" class="li-link-novo"
+                               aria-current="page">
                                 <i class="fa-solid fa-bullseye"></i>
                                 Gestão E Controle
                             </a>
-<<<<<<< HEAD
 
                         </li>
                         {% endif %}
-=======
-                        </li>
->>>>>>> c749cbfaa29e3fb357a093bd80fcb66c8b0d3fc0
 
                         <!-- ferias -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'ferias' %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap;" href="{% url 'ferias' %}" class="li-link-novo"
+                               aria-current="page">
                                 <i class="fa-solid fa-umbrella-beach"></i>
                                 Férias
                             </a>
@@ -330,7 +327,8 @@
                         <!-- anbima -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap; font-size: 15px;" href="{% url 'anbima' %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap; font-size: 15px;" href="{% url 'anbima' %}"
+                               class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-certificate"></i>
                                 Certificações Anbima
                             </a>
@@ -341,7 +339,8 @@
                         <!-- coopera -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'coopera' %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap;" href="{% url 'coopera' %}" class="li-link-novo"
+                               aria-current="page">
                                 <i class="fa-solid fa-infinity"></i>
                                 Cooperar+
                             </a>
@@ -350,7 +349,8 @@
                         <!-- Gestão de Metas -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'gestaoMetas' %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap;" href="{% url 'gestaoMetas' %}" class="li-link-novo"
+                               aria-current="page">
                                 <i class="fa-solid fa-bullseye"></i>
                                 Gestão de Metas
                             </a>
@@ -359,7 +359,8 @@
                         <!-- utilitarios -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'utilitarios' %}" class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap;" href="{% url 'utilitarios' %}" class="li-link-novo"
+                               aria-current="page">
                                 <i class="fa-solid fa-book"></i>
                                 Utilitários
                             </a>
