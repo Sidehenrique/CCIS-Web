@@ -37,11 +37,16 @@
 
 @font-face {
     font-family: 'oswald';
-    src: url('./fonts/FontsFree-Net-Oswald-Medium.ttf') format('truetype');
-    font-weight: normal;
+    src: url('./fonts/Oswald.ttf') format('truetype');
+    font-weight: medium;
     font-style: normal;
 }
 /*-- Font -----------------------------------*/
+
+
+body {
+    font-family: asap, Arial, sans-serif;
+}
 
 
 /*--Scroll bar ------------------------------*/
