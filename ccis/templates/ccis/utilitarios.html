@@ -58,7 +58,7 @@
                         <a href="#">Sobre</a>
                     </li>
                     <li>
-                        <a href="#">Contato</a>
+                        <a href="#contato">Contato</a>
                     </li>
                     <li>
                         <a href="{% url 'utilitarios' %}">Utilitários</a>
@@ -89,7 +89,7 @@
             <div class="col-8">
 
                 <div class="container">
-                    <div class="row g-2">
+                    <div style="text-align: center;" class="row m-5">
 
                         <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
                             <a href="https://web.sipag.com.br/sipagnet/emi/site" target="_blank"
@@ -186,9 +186,23 @@
                             <div>Ponto</div>
                         </div>
 
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://apps.neoway.com.br/auth/login"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square" style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Neoway</div>
+                        </div>
+        
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://sisbrmobile.sicoob.com.br/sisbr/mobile/"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square" style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Sisbr Mobile <br> Download</div>
+                        </div>
                     </div>
                 </div>
-
                 <!-- buttons --------------------->
 
             </div>
@@ -218,6 +232,46 @@
 
     </div>
 </main>
+
+<!-- footer ------------------------------------------------------------------------------->
+<footer class=" p-0 navbar" style="background-color:#04343D; color:white; height:200px;">
+
+    <div class="container-fluid">
+
+        <section id="contato" class="ms-5 mt-3">
+            
+                <h6>Unidade de Tecnologia</h6>
+                <p>Suporte 3361-6130 <br> Ramal 206</p>
+
+                <p class="mt-4">© Sicoob Credibrasília Todos os direitos reservados</p>
+            
+        </section>
+
+        <div class="me-4">
+            <img src="{% static 'ccis/LOGO2.png' %}"
+             alt="logo"
+             width="350px"
+             height="auto">
+        </div>
+
+    </div>
+
+</footer>
+<!-- end footer ----------------------------------------------------------------------------->
+
+
+<!-- link js -->
+<script src="{% static 'ccis/script.js' %}"></script>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"></script>
+
 
 </body>
 
