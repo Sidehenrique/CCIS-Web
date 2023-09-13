@@ -61,3 +61,93 @@ git rebase nomebransh       / Unir os branch de maneira linear no poto da lista
 ---------------------------- git ignore
 vi .gitignore               / Colocar dentro desse arquivo os nomes dos items a serem
                               ignorados extenssão ou nome. 
+
+
+
+------------------------------------------------------------------------------------------------
+| --- GIT FLOW ---------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+
+___________________  CLONE  __________________________
+Para clonar um repositorio remoto ----------------------
+"git clone <url do repositorio> "
+
+exemplo: git clone https://github.com/Sidehenrique/CCIS-Web.git
+_______________________________________________________
+
+
+
+
+___________________  INICIO  __________________________
+
+inicializa o git flow no repositorio -------------------
+"git flow init"
+
+________________________________________________________
+
+
+
+
+___________________  FEATURE  __________________________
+
+Para criar uma feature ---------------------------------
+"git flow feature start <name>"
+
+
+Para publicar remotamente uma feature ------------------
+"git flow feature publish <name>"
+
+
+Para Finalizar uma feature -----------------------------
+"git flow feature finish <name>"
+________________________________________________________
+
+
+
+
+___________________  RELEASE  __________________________
+
+Para criar uma release ---------------------------------
+"git flow release start <versão>"
+exemplo: git flow release start v1.0.0
+
+
+Para finalizar uma release -----------------------------
+"git flow release finish <versão>"
+________________________________________________________
+
+
+
+
+___________________  HOTFIX   __________________________
+
+Para criar uma hotfix  ---------------------------------
+"git flow release start <versão>"
+exemplo: git flow release start v1.1.0
+
+
+Para finalizar uma hotfix  -----------------------------
+"git flow hotfix finish <versão>"
+________________________________________________________
+
+
+
+
+_____________________  TAG ____________________________
+
+Apos nomear dar "ESC" e escrever qw e "ENTER" se for o caso.
+
+________________________________________________________
+
+
+
+_____________________  PUSH ____________________________
+
+Para subir ao repositorio uma bransh especifica --------
+"git push origin <nome>"
+exemplo: git push origin master
+
+Para subir ao repositorio todas as bransh --------------
+"git push --all"
+________________________________________________________
+
