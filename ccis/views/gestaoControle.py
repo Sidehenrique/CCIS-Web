@@ -63,7 +63,7 @@ def contabilidade(request):
 
 
 @login_required(login_url="/login")
-def comissionamento(request):
+def relatorios(request):
     user = request.user
 
     log = request.user
@@ -87,7 +87,7 @@ def comissionamento(request):
         'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
     }
 
-    return render(request, 'gestaoControle/comissionamento.html', context)
+    return render(request, 'gestaoControle/relatorios.html', context)
 
 
 @login_required(login_url="/login")
