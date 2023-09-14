@@ -26,7 +26,7 @@ urlpatterns = [
 
     path('gestaoControle', gestaoControle.home, name='gestaoControle'),
     path('contabilidade', gestaoControle.contabilidade, name='contabilidade'),
-    path('comissionamento', gestaoControle.comissionamento, name='comissionamento'),
+    path('relatorios', gestaoControle.relatorios, name='relatorios'),
     path('estrategico', gestaoControle.estrategico, name='estrategico'),
     path('inadimplencia', gestaoControle.inadimplencia, name='inadimplencia'),
     path('lastro', gestaoControle.lastro, name='lastro'),
