@@ -15,6 +15,6 @@ python -m pip install --upgrade pip
 --------------------------------------------  Instalar o requirements
 pip install -r requirements.txt
 
-
+pip install requests
 -------------------------------------------- Subi servidor
 python manage.py runserver
