@@ -1,0 +1,85 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content">
+
+    <div class="row mt-2">
+
+        <!-- Menu -------------------------------->
+        <div class="col-1 menu-request">
+            <h6>FILTRO</h6>
+            <!--Botões----------------------->
+            <ul class="ul-novo-solicit mt-3 ">
+                <li class="li-novo-solicit">
+                    <a href="" class="link-solicit" >
+                        Todos
+                    </a>
+                </li>
+
+                <li class="li-novo-solicit">
+                    <a href="" class="link-solicit" >
+                        Abertos
+                    </a>
+                </li>
+
+                <li class="li-novo-solicit">
+                    <a href="" class="link-solicit" >
+                        Fechados
+                    </a>
+                </li>
+
+                <li class="li-novo-solicit">
+                    <a href="" class="link-solicit" >
+                        Concluído
+                    </a>
+                </li>
+            </ul>
+            <!--Botões end----------------------->
+        </div>
+        <!-- Menu -------------------------------->
+
+        <!--Solicitações--------------------->
+        <div class="col-3 menu-request ">
+            <h6>SOLICITAÇÕES</h6>
+            <!--bottons solicit--------------------->
+            <div class="mt-4">
+                <a href="#" class="list-group-item list-group-item-action"aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1">Reinicialização de senha</h6>
+                    <i class="fa-regular fa-message"></i>
+                    </div>
+                    <small>Unidade de Tecnelogia</small>
+                </a>
+
+                <a href="#" class="list-group-item list-group-item-action"aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">Troca de Crachá</h6>
+                        <i class="fa-regular fa-message"></i>
+                    </div>
+                    <small>Unidade de Gestão de Pessoas</small>
+                </a>
+
+                <a href="#" class="list-group-item list-group-item-action"aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">Compra</h6>
+                        <i class="fa-regular fa-message"></i>
+                    </div>
+                    <small>Unidade de Administrativa</small>
+                    </a>
+            </div>
+            <!--bottons solicit end--------------------->
+        </div>
+        <!--Solicitações--------------------->
+
+        <!--Campo de Formulário--------------------->
+        <div class="col menu-request ">
+            <h6 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">Reinicialização de Senha</h6>
+            <h1 style="color: #C9C9C9; font-family: oswald; justify-content: center; align-items: center; height: 70vh" class="text-center d-flex">CAMPOS DO FORMULÁRIO!</h1>
+        </div>
+        <!--Campo de Formulário--------------------->
+    </div>
+</div>
+
+{% endblock %}
