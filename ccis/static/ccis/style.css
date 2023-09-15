@@ -959,7 +959,7 @@ status-negativo{
     border-radius:50%;
     font-family:asap;
     font-size:12px;
-    padding-top:;
+    
 
 }
 
@@ -1111,8 +1111,35 @@ status-negativo{
     background-color:#00353E;
     color:#ffffff;
 }
+/*-- new_request ----------------------------*/
 
+/*-- solicit ----------------------------*/
+.ul-novo-solicit{
+    list-style-type: none;
+    padding: 0px;
+}
+.li-novo-solicit{
+    background-color: white;
+    border: 1px white solid;
+    padding: 0px 10px;
+    font-family: asap;
+    text-align: center;
+}
+.li-novo-solicit:hover{
+    border: 1px gray solid;
+    border-radius: 20px;
+    padding: 0px 10px;
+}
 
+.link-solicit{
+    text-decoration: none;
+    color: black;
+    font-size: 11px;
+}
 
+.link-solicit:hover{
+    color: black;
+}
 
+/*-- solicit ----------------------------*/
 
