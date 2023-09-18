@@ -176,7 +176,7 @@ def portifolio(request):
 
 
 @login_required(login_url="/login")
-def basileia(request):
+def capital(request):
     user = request.user
 
     log = request.user
@@ -200,7 +200,7 @@ def basileia(request):
         'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
     }
 
-    return render(request, 'coopera/basileia.html', context)
+    return render(request, 'coopera/capital.html', context)
 
 
 def dadosConsolidados(request):
