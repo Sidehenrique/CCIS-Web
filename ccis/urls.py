@@ -21,6 +21,8 @@ urlpatterns = [
     path('documentos', pages.documentos, name='documentos'),
     path('departamentos', pages.departamentos, name='departamentos'),
     path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
+    path('solicit', pages.solicit, name='solicit'),
+
 
     path('utilitarios', pages.utilitarios, name='utilitarios'),
 
@@ -39,7 +41,7 @@ urlpatterns = [
     path('tabela', cooperar.tabela, name='tabela'),
     path('india', cooperar.india, name='india'),
     path('portifolio', cooperar.portifolio, name='portifolio'),
-    path('basileia', cooperar.basileia, name='basileia'),
+    path('capital', cooperar.capital, name='capital'),
     path('dados', cooperar.dadosConsolidados, name='dados'),
 
     path('logout', security.logout_view, name='logout'),
