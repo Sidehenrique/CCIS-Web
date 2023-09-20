@@ -127,6 +127,12 @@ def solicitacao(request):
 
 
 @login_required(login_url="/login")
+def solicit(request):
+
+    return render(request, 'ccis/solicit.html')
+
+
+@login_required(login_url="/login")
 def profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
@@ -621,4 +627,7 @@ def gestaoMetas(request):
 def dev(request):
     pass
 
+
+def processo(request):
+    return render(request, 'ccis/processo.html')
 # ----------------------------------------------------------------------------------------------------------------------

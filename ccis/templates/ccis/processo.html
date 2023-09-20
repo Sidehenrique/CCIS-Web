@@ -1,0 +1,374 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content">
+
+    <!-- subMenu --------------------------------->
+    <div class="row">
+
+        <nav class="navbar paragrafo-style">
+            <div class="container-fluid">
+
+                <div class="navbar-nav-wrap-content-end">
+
+                </div>
+            </div>
+
+        </nav>
+
+
+    </div>
+    <!-- End subMenu ----------------------------->
+
+
+    <!-- Pesquisa table -------------------------->
+    <nav class="navbar align-center mb-2 " style="background-color:white">
+        <div class="container-fluid pe-1">
+
+            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE PROCESSOS</p>
+
+            <div class="navbar-nav-wrap-content-end" style="position: relative;">
+                <form class="d-flex">
+                    <!-- input de pesquisa ----------------------->
+                    <input class="form-control me-2" type="search" placeholder="Pesquisar"
+                           aria-label="Search" id="inputUser" onkeyup="filterTable()">
+
+                    <!-- Botão Novo Usuário ---------------------->
+                    <button class=""
+                            style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target=""
+                            data-bs-whatever="@mdo"
+                            onclick="filterTable()">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+    </nav>
+    <!-- Pesquisa table -------------------------->
+
+
+    <!-- cabeçalho ------------------------------->
+    <div class="row m-0">
+
+        <div class="col me-3 processo-cabecalho" style="background-color:#E0E006; color:#fff">
+            <i class="fa-solid fa-check-to-slot"></i>
+            Triagem
+        </div>
+
+        <div class="col me-3 processo-cabecalho" style="background-color:#2D73FF; color:#fff">
+            <i class="fa-solid fa-bars-progress"></i>
+            Em Atendimento
+        </div>
+
+        <div class="col me-3 processo-cabecalho" style="background-color:#4DD3E8; color:#fff">
+            <i class="fa-solid fa-angles-right"></i>
+            Encaminhado
+        </div>
+
+        <div class="col me-3 processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
+            <i class="fa-solid fa-square-check"></i>
+            Concluído
+        </div>
+
+        <div class="col processo-cabecalho" style="background-color:#BEBCBC; color:#fff">
+            <i class="fa-solid fa-boxes-packing"></i>
+            Finalizado
+        </div>
+
+    </div>
+    <!-- cabeçalho ------------------------------->
+
+
+    <!-- Processo -------------------------------->
+    <div class="row ms-0 me-0" onwheel="handleScroll(event)">
+
+        <!-- Triagem ----------------------------->
+        <div class="col me-3 overflow-auto processo-colum pt-2">
+
+            <!-- card ---------------------------->
+            <a class="d-grid processo-link mb-2"
+               type="button"
+               data-bs-toggle="modal"
+               data-bs-target="#processoModal">
+
+                <div class="processo-card">
+
+                    <div class="row">
+
+                        <div class="col-auto me-auto">
+                            <span class="card-important-baixo">baixo</span>
+                        </div>
+
+                        <div class="col-auto">
+                            <h6 style="font-size:14px; color:#818181">#1234567</h6>
+                        </div>
+
+                    </div>
+
+                    <h6 class="mt-1">SISBR</h6>
+
+                    <div class="d-flex" style="color:#818181; font-size:13px;">
+
+                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
+                            Redefinição</p>
+
+
+                    </div>
+
+                    <div class="row" style="color:#818181; font-size:13px">
+
+                        <div class="col-auto me-auto">
+                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fa-solid fa-clock"></i> 14:53
+                        </div>
+
+                    </div>
+
+                </div>
+            </a>
+            <!-- card ---------------------------->
+
+        </div>
+        <!-- Triagem ----------------------------->
+
+
+        <div class="col me-3 overflow-auto processo-colum"></div>
+        <div class="col me-3 overflow-auto processo-colum"></div>
+        <div class="col me-3 overflow-auto processo-colum"></div>
+
+        <div class="col overflow-auto processo-colum"></div>
+
+    </div>
+    <!-- Processo -------------------------------->
+
+
+    <!-- Modal Processos ------------------------->
+    <div class="modal fade"
+         id="processoModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- header --------------------->
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="exampleModalLabel">Informações do chamado</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <!-- header --------------------->
+
+
+                <!-- body ----------------------->
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <!-- Dados solicitante -->
+                        <div class="col-4" style="border-right:1px solid #818181">
+
+
+                            <div class="col-auto me-auto">
+
+                                <span class="card-important-cod">N° 000001</span>
+                                <span class="card-important-baixo">baixo</span>
+
+                            </div>
+
+                            <h6 class="mt-2">Dados do Solicitante</h6>
+
+                            <hr class="linha-custom">
+
+                            <div class="card-body-custom">
+
+                                <ul class="card-ul">
+
+                                    <li class="card-li">
+                                        <i class="fa-solid fa-user card-icon"></i>
+                                        Chaves de souza santos
+                                    </li>
+
+                                    <li class="card-li">
+                                        <i class="fa-sharp fa-solid fa-building card-icon"></i>
+                                        012.326.157-23
+                                    </li>
+
+                                    <li class="">
+                                        <i class="fa-solid fa-briefcase card-icon"></i>
+                                        Chavess4155_30
+                                    </li>
+
+                                </ul>
+
+                                <div class="card-text-custom mt-4">CONTATO</div>
+
+                                <ul class="card-ul">
+
+                                    <li class="card-li">
+                                        <i class="fa-solid fa-at card-icon"></i>
+                                        chaves.com@gmail.com.br
+                                    </li>
+
+                                    <li class="card-li">
+                                        <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
+                                        201
+                                    </li>
+
+                                    <li class="card-li">
+                                        <i class="fa-solid fa-location-dot card-icon"></i>
+                                        Ceilandia
+                                    </li>
+
+                                </ul>
+
+
+                            </div>
+
+
+                            <hr class="linha-custom">
+
+
+                            <h6 class="mt-2">Histórico</h6>
+
+                            <div class="d-flex container-buttons" onwheel="handleScroll(event)">
+
+                                <span class="card-important-triagem me-1"><i
+                                        class="fa-regular fa-compass"></i> Triagem</span>
+                                <span class="card-important-triagem me-1"><i
+                                        class="fa-regular fa-compass"></i> Em Atendimento</span>
+                                <span class="card-important-medio me-1"><i
+                                        class="fa-regular fa-compass"></i> Finalizado</span>
+
+                            </div>
+
+                        </div>
+                        <!-- Dados solicitante -->
+
+
+                        <!-- Descrição ---------->
+                        <div class="col-6 overflow-auto" style="border-right:1px solid #818181; max-height:400px">
+
+                            <div class="col-auto me-auto">
+                                <small><i class="fa-solid fa-clock"></i> Criado há 4 horas</small>
+                            </div>
+
+                            <h6 class="mt-2">Descrição</h6>
+
+                            <hr class="linha-custom">
+
+                            <div class="mt-2">
+
+                                <textarea id="descricao" style="width: 100%;" name="mensagem" rows="6"
+                                          disabled></textarea>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Responder:</label>
+                                <textarea id="resposta" style="width: 100%;" name="mensagem" rows="3"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="file">
+                            </div>
+
+                        </div>
+                        <!-- Descrição ---------->
+
+
+                        <!-- Ações -------------->
+                        <div class="col">
+
+                            <h5 class="text-center p-2">AÇÕES</h5>
+
+                            <hr style="color:#C4C0C0">
+
+                            <ul class="ul-menu-request">
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="At" class="modal-processo-link" aria-current="page">
+                                        <i class="fa-solid fa-phone-volume"></i>
+                                        Atender
+                                    </a>
+                                </li>
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="En" class="modal-processo-link"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                        Encaminhar
+                                    </a>
+                                </li>
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="Tr" class="modal-processo-link" aria-current="page">
+                                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                        Transferir
+                                    </a>
+                                </li>
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="Tf" class="modal-processo-link" aria-current="page">
+                                        <i class="fa-solid fa-xmark"></i>
+                                        Rejeitar
+                                    </a>
+                                </li>
+
+                                <li class="li-menu-request mt-5">
+                                    <a type="button" id="Co" class="modal-processo-link" aria-current="page">
+                                        <i class="fa-solid fa-check"></i>
+                                        Concluir
+                                    </a>
+                                </li>
+
+                                <li class="li-menu-request mt-1">
+                                    <a type="button" id="Fi" class="modal-processo-link" aria-current="page">
+                                        <i class="fa-solid fa-check-double"></i>
+                                        Finalizar
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                        <!-- Ações -------------->
+
+                    </div>
+
+
+                </div>
+                <!-- body ----------------------->
+
+
+                <!-- footer --------------------->
+                <div class="modal-footer">
+
+                    <div class="col">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        Henrique Silva
+                    </div>
+
+                </div>
+                <!-- footer --------------------->
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal Processos ------------------------->
+
+</div>
+{% endblock %}

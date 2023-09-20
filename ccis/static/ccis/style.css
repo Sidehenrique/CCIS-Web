@@ -959,7 +959,7 @@ status-negativo{
     border-radius:50%;
     font-family:asap;
     font-size:12px;
-    padding-top:;
+    
 
 }
 
@@ -1111,8 +1111,148 @@ status-negativo{
     background-color:#00353E;
     color:#ffffff;
 }
+/*-- new_request ----------------------------*/
 
 
+
+/*-- solicit ----------------------------*/
+.ul-novo-solicit{
+    list-style-type: none;
+    padding: 0px;
+}
+.li-novo-solicit{
+    background-color: white;
+    border: 1px white solid;
+    padding: 0px 10px;
+    font-family: asap;
+    text-align: center;
+}
+.li-novo-solicit:hover{
+    border: 1px gray solid;
+    border-radius: 20px;
+    padding: 0px 10px;
+}
+
+.link-solicit{
+    text-decoration: none;
+    color: black;
+    font-size: 11px;
+}
+
+
+.link-solicit:hover{
+    color: black;
+}
+
+
+/*-- solicit ----------------------------*/
+
+
+
+/*-- processos ----------------------------*/
+
+.processo-cabecalho{
+    padding:5px;
+    font-family:asap;
+}
+
+
+.processo-colum{
+    background-color:white;
+    height: 72vh;
+}
+
+
+.processo-card{
+    border:1px solid #f3f3f3;
+    border-radius:10px;
+    padding:7px;
+}
+
+
+.card-important-baixo{
+    font-size:10px;
+    background-color:#4FD1B8;
+    color:white;
+    padding: 3px 7px;
+    border-radius:10px;
+}
+
+
+.card-important-medio{
+    font-size:10px;
+    background-color:#E8E84D;
+    color:white;
+    padding: 3px 7px;
+    border-radius:10px;
+}
+
+
+.card-important-alto{
+    font-size:10px;
+    background-color:#FF0000;
+    color:white;
+    padding: 3px 7px;
+    border-radius:10px;
+}
+
+
+.card-important-cod{
+    font-size:10px;
+    background-color:#A1620D;
+    color:white;
+    padding: 3px 7px;
+    border-radius:10px;
+}
+
+
+.card-important-triagem{
+    font-size:10px;
+    background-color:#C5C5C5;
+    color:white;
+    padding: 3px 7px;
+    border-radius:10px;
+}
+
+
+.processo-link{
+    text-decoration:none;
+    color:black;
+}
+
+
+.processo-link:hover{
+    color:black;
+    background-color:#f3f3f3;
+    border-radius:10px;
+}
+
+
+.modal-processo-link{
+    text-decoration: none;
+    padding:7px 10px;
+    display: block;
+    font-family:asap;
+    transition: all .5s;
+    color:#37474F;
+    background-color:#F1F1F1;
+    border:none
+
+}
+
+
+.modal-processo-link:hover{
+    background-color:#00353E;
+    color:#ffffff;
+}
+
+
+.modal-processo-link:active{
+    color:#ffffff;
+    background-color:#16B597;
+}
+
+/*-- processos ----------------------------*/
 
 
 

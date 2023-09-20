@@ -1,5 +1,4 @@
 PowerShell
-
 ---------------------------- criar chave publica
 ssh-keygen
 precionar ENTER Duas Vezes
@@ -150,4 +149,6 @@ exemplo: git push origin master
 Para subir ao repositorio todas as bransh --------------
 "git push --all"
 ________________________________________________________
+
+
 
