@@ -627,4 +627,7 @@ def gestaoMetas(request):
 def dev(request):
     pass
 
+
+def processo(request):
+    return render(request, 'ccis/processo.html')
 # ----------------------------------------------------------------------------------------------------------------------

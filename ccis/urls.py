@@ -21,8 +21,10 @@ urlpatterns = [
     path('documentos', pages.documentos, name='documentos'),
     path('departamentos', pages.departamentos, name='departamentos'),
     path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
-    path('solicit', pages.solicit, name='solicit'),
 
+    path('processos', pages.processo, name='processos'),
+
+    path('solicit', pages.solicit, name='solicit'),
 
     path('utilitarios', pages.utilitarios, name='utilitarios'),
 
