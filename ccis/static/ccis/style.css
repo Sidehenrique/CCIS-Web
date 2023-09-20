@@ -1113,6 +1113,8 @@ status-negativo{
 }
 /*-- new_request ----------------------------*/
 
+
+
 /*-- solicit ----------------------------*/
 .ul-novo-solicit{
     list-style-type: none;
@@ -1137,7 +1139,13 @@ status-negativo{
     font-size: 11px;
 }
 
-<<<<<<< HEAD
+.link-solicit:hover{
+    color: black;
+}
+/*-- solicit ----------------------------*/
+
+
+
 /*-- processos ----------------------------*/
 
 .processo-cabecalho{
@@ -1243,14 +1251,4 @@ status-negativo{
 
 /*-- processos ----------------------------*/
 
-
-
-
-=======
-.link-solicit:hover{
-    color: black;
-}
->>>>>>> 558cc0e19fc4f892a5b755cc3bb09b9b94944cc3
-
-/*-- solicit ----------------------------*/
 
