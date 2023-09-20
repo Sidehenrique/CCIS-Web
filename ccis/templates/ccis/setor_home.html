@@ -136,7 +136,7 @@
 
                                 <!-- Equipe -------------------------->
                                 {% if equipe %}
-                                <div class="" style="">
+                                <div class="">
                                     <!-- Supervisor -->
                                     {% for ch in chefe %}
                                     <a href="{% url 'profile' user_id=ch.id %}" class="list-group-item-action"
@@ -212,7 +212,7 @@
                                 </div>
                                 {% else %}
                                 <div>
-                                    <div class="" style="">
+                                    <div class="">
                                         <img src="{% static 'ccis/Grupo 4678.png' %}"
                                              alt="rh"
                                              width="80%"
@@ -258,6 +258,7 @@
                                 <div class="position-relative me-3">
 
                                     <a class="links-set"
+                                        href="{% url 'solicit' %}"
                                        type="button">
 
                                         <div class="set-buttons" style="background-color:#4DDCE8;">
