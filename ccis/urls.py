@@ -21,9 +21,13 @@ urlpatterns = [
     path('documentos', pages.documentos, name='documentos'),
     path('departamentos', pages.departamentos, name='departamentos'),
     path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
+<<<<<<< HEAD
+    path('processos', pages.processo, name='processos'),
+=======
     path('solicit', pages.solicit, name='solicit'),
 
 
+>>>>>>> 558cc0e19fc4f892a5b755cc3bb09b9b94944cc3
     path('utilitarios', pages.utilitarios, name='utilitarios'),
 
     path('gestaoControle', gestaoControle.home, name='gestaoControle'),
