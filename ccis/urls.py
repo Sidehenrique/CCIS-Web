@@ -21,7 +21,7 @@ urlpatterns = [
     path('documentos', pages.documentos, name='documentos'),
     path('departamentos', pages.departamentos, name='departamentos'),
     path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
-
+    path('processos', pages.processo, name='processos'),
     path('utilitarios', pages.utilitarios, name='utilitarios'),
 
     path('gestaoControle', gestaoControle.home, name='gestaoControle'),
