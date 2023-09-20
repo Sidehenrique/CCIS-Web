@@ -26,6 +26,11 @@ urlpatterns = [
 
     path('solicit', pages.solicit, name='solicit'),
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> feature/correções
     path('utilitarios', pages.utilitarios, name='utilitarios'),
 
     path('gestaoControle', gestaoControle.home, name='gestaoControle'),
