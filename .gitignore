@@ -1,6 +1,6 @@
 *.pyc
 /venv/
 /media/
-/.idea/
-/__pycache__/
-*__pycache__
+.idea/
+__pycache__/
+*__pycache__/
