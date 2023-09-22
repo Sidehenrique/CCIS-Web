@@ -1170,7 +1170,7 @@ status-negativo{
 }
 
 
-.card-important-baixo{
+.processo-tag-setor{
     font-size:10px;
     background-color:#4FD1B8;
     color:white;
@@ -1179,25 +1179,7 @@ status-negativo{
 }
 
 
-.card-important-medio{
-    font-size:10px;
-    background-color:#E8E84D;
-    color:white;
-    padding: 3px 7px;
-    border-radius:10px;
-}
-
-
-.card-important-alto{
-    font-size:10px;
-    background-color:#FF0000;
-    color:white;
-    padding: 3px 7px;
-    border-radius:10px;
-}
-
-
-.card-important-cod{
+.processo-tag-cod{
     font-size:10px;
     background-color:#A1620D;
     color:white;
@@ -1206,9 +1188,17 @@ status-negativo{
 }
 
 
-.card-important-triagem{
+.processo-tag-historico{
     font-size:10px;
-    background-color:#C5C5C5;
+    background-color:#d9d9d9;
+    color:black;
+    padding: 3px 7px;
+    border-radius:10px;
+}
+
+.processo-tag-historico-active{
+    font-size:10px;
+    background-color:#FF5019;
     color:white;
     padding: 3px 7px;
     border-radius:10px;
@@ -1233,7 +1223,7 @@ status-negativo{
     padding:7px 10px;
     display: block;
     font-family:asap;
-    transition: all .5s;
+    transition: all .3s;
     color:#37474F;
     background-color:#F1F1F1;
     border:none
@@ -1242,15 +1232,41 @@ status-negativo{
 
 
 .modal-processo-link:hover{
-    background-color:#00353E;
+    background-color:#16B597;
+    color:#ffffff;
+}
+
+
+.modal-processo-link.btn-finish:hover{
+    background-color:red;
+    color:#ffffff;
+}
+
+.modal-processo-link.btn-finish:active{
+    background-color:#C00505;
     color:#ffffff;
 }
 
 
 .modal-processo-link:active{
     color:#ffffff;
-    background-color:#16B597;
+    background-color:#147A67;
 }
+
+
+.star-link{
+    text-decoration:none;
+    color:#d9d9d9;
+}
+
+
+.star-link:hover{
+    text-decoration:none;
+    color:#FFC803;
+}
+
+
+
 
 /*-- processos ----------------------------*/
 

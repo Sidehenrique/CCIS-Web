@@ -72,15 +72,11 @@
             Encaminhado
         </div>
 
-        <div class="col me-3 processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
+        <div class="col processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
             <i class="fa-solid fa-square-check"></i>
             Concluído
         </div>
 
-        <div class="col processo-cabecalho" style="background-color:#BEBCBC; color:#fff">
-            <i class="fa-solid fa-boxes-packing"></i>
-            Finalizado
-        </div>
 
     </div>
     <!-- cabeçalho ------------------------------->
@@ -103,16 +99,17 @@
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <span class="card-important-baixo">baixo</span>
+                            <h5 class="mt-1">SISBR</h5>
+
                         </div>
 
                         <div class="col-auto">
-                            <h6 style="font-size:14px; color:#818181">#1234567</h6>
+                            <span class="processo-tag-setor">Tecnologia</span>
                         </div>
 
                     </div>
 
-                    <h6 class="mt-1">SISBR</h6>
+                    <hr style="color:#C4C0C0; margin-top:0px;">
 
                     <div class="d-flex" style="color:#818181; font-size:13px;">
 
@@ -144,9 +141,7 @@
 
         <div class="col me-3 overflow-auto processo-colum"></div>
         <div class="col me-3 overflow-auto processo-colum"></div>
-        <div class="col me-3 overflow-auto processo-colum"></div>
-
-        <div class="col overflow-auto processo-colum"></div>
+        <div class="col  overflow-auto processo-colum"></div>
 
     </div>
     <!-- Processo -------------------------------->
@@ -165,7 +160,7 @@
                 <!-- header --------------------->
                 <div class="modal-header">
 
-                    <h5 class="modal-title" id="exampleModalLabel">Informações do chamado</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">SISBR <span style="color:gray">/ Redefinição</span></h5>
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
@@ -184,8 +179,8 @@
 
                             <div class="col-auto me-auto">
 
-                                <span class="card-important-cod">N° 000001</span>
-                                <span class="card-important-baixo">baixo</span>
+                                <span class="processo-tag-cod">N° 01</span>
+                                <span class="processo-tag-setor">tecnologia</span>
 
                             </div>
 
@@ -246,11 +241,11 @@
 
                             <div class="d-flex container-buttons" onwheel="handleScroll(event)">
 
-                                <span class="card-important-triagem me-1"><i
+                                <span class="processo-tag-historico me-1"><i
                                         class="fa-regular fa-compass"></i> Triagem</span>
-                                <span class="card-important-triagem me-1"><i
+                                <span class="processo-tag-historico me-1"><i
                                         class="fa-regular fa-compass"></i> Em Atendimento</span>
-                                <span class="card-important-medio me-1"><i
+                                <span class="processo-tag-historico-active me-1"><i
                                         class="fa-regular fa-compass"></i> Finalizado</span>
 
                             </div>
@@ -270,14 +265,86 @@
 
                             <hr class="linha-custom">
 
-                            <div class="mt-2">
+                            <!-- Chat ---------->
+                            <div class="mt-2 p-2" style="background-color:#d9d9d9">
 
-                                <textarea id="descricao" style="width: 100%;" name="mensagem" rows="6"
-                                          disabled></textarea>
+                                <!-- Cabeçalho -->
+                                <div class="row pt-2">
+
+                                    <div class="col-auto me-auto">
+
+                                        <h6>
+                                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                             alt="" width="40" height="40">
+
+                                            Henrique da Silva
+
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-auto">
+                                        <span>15/09/2023 às 09:44</span>
+                                    </div>
+
+                                </div>
+                                <!-- Cabeçalho -->
+
+                                <!-- texto -->
+                                <div class="p-2">
+                                    <p>ola quero redefinir minha senha, e não como faço.
+                                    ja tentei de todas as maneiras, mais não vai.
+                                        tem como me ajudar
+
+
+                                    </p>
+                                </div>
+                                <!-- texto -->
 
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mt-2 p-2" style="background-color:#d9d9d9">
+
+                                <!-- Cabeçalho -->
+                                <div class="row pt-2">
+
+                                    <div class="col-auto me-auto">
+
+                                        <h6>
+                                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                             alt="" width="40" height="40">
+
+                                            Chaves santos
+
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-auto">
+                                        <span>15/09/2023 às 09:44</span>
+                                    </div>
+
+                                </div>
+                                <!-- Cabeçalho -->
+
+                                <!-- texto -->
+                                <div class="p-2">
+                                    <p>ola quero redefinir minha senha, e não como faço.
+                                    ja tentei de todas as maneiras, mais não vai.
+                                        tem como me ajudar.
+
+                                        ola quero redefinir minha senha, e não como faço.
+                                    ja tentei de todas as maneiras, mais não vai.
+                                        tem como me ajudar
+
+
+                                    </p>
+                                </div>
+                                <!-- texto -->
+
+                            </div>
+                            <!-- Chat ---------->
+
+
+                            <div class="mt-3 mb-2">
                                 <label class="form-label">Responder:</label>
                                 <textarea id="resposta" style="width: 100%;" name="mensagem" rows="3"></textarea>
                             </div>
@@ -306,6 +373,15 @@
                                     </a>
                                 </li>
 
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="Re" class="modal-processo-link" aria-current="page">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                        Responder
+                                    </a>
+                                </li>
+
+
                                 <li class="li-menu-request">
                                     <a type="button" id="En" class="modal-processo-link"
                                        aria-current="page">
@@ -314,6 +390,7 @@
                                     </a>
                                 </li>
 
+
                                 <li class="li-menu-request">
                                     <a type="button" id="Tr" class="modal-processo-link" aria-current="page">
                                         <i class="fa-solid fa-arrow-right-arrow-left"></i>
@@ -321,26 +398,44 @@
                                     </a>
                                 </li>
 
-                                <li class="li-menu-request">
-                                    <a type="button" id="Tf" class="modal-processo-link" aria-current="page">
-                                        <i class="fa-solid fa-xmark"></i>
-                                        Rejeitar
-                                    </a>
+
+                                <li class="" style="margin-top:45px">
+
+
+                                    <div class="d-flex" style="justify-content: center;">
+
+                                        <a type="button" name="1" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="2" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="3" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="4" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="5" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+
+                                    </div>
+
+                                    <p style="font-size:12px; text-align:center">Avaliar este atendimento<br>
+                                    <span style="font-size:10px; text-align:center">Sua avaliação é anônima</span>
+                                    </p>
+
                                 </li>
 
-                                <li class="li-menu-request mt-5">
-                                    <a type="button" id="Co" class="modal-processo-link" aria-current="page">
-                                        <i class="fa-solid fa-check"></i>
-                                        Concluir
-                                    </a>
-                                </li>
 
                                 <li class="li-menu-request mt-1">
-                                    <a type="button" id="Fi" class="modal-processo-link" aria-current="page">
+                                    <a type="button" id="Fi" class="modal-processo-link btn-finish" aria-current="page">
                                         <i class="fa-solid fa-check-double"></i>
                                         Finalizar
                                     </a>
                                 </li>
+
 
                             </ul>
 
@@ -358,8 +453,14 @@
                 <div class="modal-footer">
 
                     <div class="col">
+
                         <i class="fa-solid fa-phone-volume"></i>
-                        Henrique Silva
+                        <select>
+                            <option value="opcao1">Henrique Silva</option>
+                            <option value="opcao2">Pedro lisboa</option>
+                            <option value="opcao3">Arthur Calorio</option>
+                        </select>
+
                     </div>
 
                 </div>
