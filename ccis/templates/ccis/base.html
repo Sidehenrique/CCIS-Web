@@ -158,7 +158,6 @@
 
                                 <!-- dropdown --------------------------->
                                 <ul class="dropdown-menu p-0" onclick="event.stopPropagation();">
-                                    <li class="p-2" style="text-align: center;">Configurações</li>
 
                                     <li>
                                         <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -169,7 +168,7 @@
                                                             data-bs-target="#panelsStayOpen-collapseOne"
                                                             aria-expanded="true"
                                                             aria-controls="panelsStayOpen-collapseOne">
-                                                        Status
+                                                        <strong>Atalhos</strong>
                                                     </button>
                                                 </h2>
                                                 <div id="panelsStayOpen-collapseOne"
@@ -179,24 +178,18 @@
                                                     <div class="accordion-body p-0">
 
                                                         <div class="">
-                                                            <a class="dropdown-item" href="#">
-                                                                <span class="status-dot"
-                                                                      style="background-color: green;"></span>
-                                                                Disponivel
+                                                            <a class="dropdown-item" href="{%url 'ferias'%}">
+                                                                Férias
                                                             </a>
                                                         </div>
                                                         <div class="">
-                                                            <a class="dropdown-item" href="#">
-                                                                <span class="status-dot"
-                                                                      style="background-color: red;"></span>
-                                                                Ocupado
+                                                            <a class="dropdown-item" href="{%url 'utilitarios'%}">
+                                                                Utilitários
                                                             </a>
                                                         </div>
                                                         <div class="">
-                                                            <a class="dropdown-item" href="#">
-                                                                <span class="status-dot"
-                                                                      style="background-color: #F1F2F5;"></span>
-                                                                Ausente
+                                                            <a class="dropdown-item" href="{%url 'departamentos'%}">
+                                                                Departamentos
                                                             </a>
                                                         </div>
                                                     </div>
@@ -211,7 +204,7 @@
                                                             data-bs-target="#panelsStayOpen-collapseThree"
                                                             aria-expanded="false"
                                                             aria-controls="panelsStayOpen-collapseThree">
-                                                        Temas
+                                                        <strong>Solicitações</strong>
                                                     </button>
                                                 </h2>
 
@@ -220,9 +213,9 @@
                                                      aria-labelledby="panelsStayOpen-headingThree">
 
                                                     <div class="accordion-body p-0">
-                                                        <div><a class="dropdown-item" href="#">Verde</a></div>
-                                                        <div><a class="dropdown-item" href="#">Roxo</a></div>
-                                                        <div><a class="dropdown-item" href="#">Cinza</a></div>
+                                                        <div><a class="dropdown-item" href="{%url 'new_request'%}">Nova Solicitaão</a></div>
+                                                        <div><a class="dropdown-item" href="{%url 'solicit'%}">Minhas Solicitações</a></div>
+                                                        <div><a class="dropdown-item" href="{%url 'processos'%}">Painel de Solicitações</a></div>
                                                     </div>
                                                 </div>
 
