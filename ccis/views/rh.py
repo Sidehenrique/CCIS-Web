@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from .. models import dadosPessoais, profissional, setor
+from .. models import dadosPessoais, profissional
 
 
 # VIWER DO RH ----------------------------------------------------------------------------------------------------------
@@ -25,13 +25,6 @@ def rh_home(request):
     last_name = user.last_name
 
     dados = dadosPessoais.objects.get(usuario=user)
-
-    dadosSetor = setor.objects.get(idSetor=2)
-    nomeSetor = dadosSetor.nome
-
-    print(dadosSetor, nomeSetor)
-
-    botoes = nomeSetor
 
     superior = Group.objects.filter(id=3).first()
 
@@ -66,7 +59,7 @@ def rh_home(request):
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'dados': dados, 'username': user, 'first_name': first_name, 'groupControle':groupControle,
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
-            'botoes': botoes, 'dadosSetor': dadosSetor, 'superior': superior, 'equipe': nomes_equipe
+            'superior': superior, 'equipe': nomes_equipe
         }
 
         return render(request, 'ccis/setor_home.html', context)
