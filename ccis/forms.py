@@ -3,7 +3,7 @@ from django.forms import FileInput
 
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos, setor, solicitacoes
+    docCertidao, docAdmissional, docPeriodico, docCursos, Card
 
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
@@ -379,28 +379,6 @@ class modelFormCurso(forms.ModelForm):
         }
 
 
-# Cadastro setor -------------------------------------------------------------->
-class modelFormSetor(forms.ModelForm):
-    class Meta:
-        model = setor
-        fields = ('sigla', 'nome', 'cor', 'email', 'contato', 'ramal', 'unidade', 'responsavel', 'atribuicoes', 'canvas')
-
-        widgets = {'siglas': forms.TextInput(attrs={'class': 'form-control'}),
-                   'nome': forms.TextInput(attrs={'class': 'form-control'}),
-                   'cor': forms.TextInput(attrs={'class': 'form-control'}),
-                   'email': forms.EmailInput(attrs={'type': 'email', 'class': 'form-control'}),
-                   'contato': forms.NumberInput(attrs={'class': 'form-control'}),
-                   'ramal': forms.NumberInput(attrs={'class': 'form-control'}),
-                   'unidade': forms.TextInput(attrs={'class': 'form-control'}),
-                   'responsavel': forms.TextInput(attrs={'class': 'form-control'}),
-                   'atribuicoes': forms.TextInput(attrs={'class': 'form-control'}),
-                   'canvas': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'})
-
-                   }
-
-
-# GRUPOS -------------------------------------------------------------------->
-
 class GroupForm(forms.Form):
     group = forms.ModelChoiceField(queryset=Group.objects.all())
 
@@ -424,68 +402,13 @@ class modelFormAcessosTI(forms.ModelForm):
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
-    servico = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    attachment = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
 
     class Meta:
-        model = solicitacoes
-        fields = ('assunto', 'servico', 'descricao', 'arquivo')
+        model = Card
+        fields = ('assunto', 'service', 'attachment')
 
         widgets = {
-            'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
-            'arquivo': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-        }
-
-
-class modelFormEquipamentosTI(forms.ModelForm):
-    CHOICES_AssuntoEquipamentos = [
-        ('', ''),
-        ('Software', 'Software'),
-        ('Equipamento', 'Equipamento'),
-    ]
-
-    CHOICES_ServicoEquipamentos = [
-        ('', ''),
-        ('Manutenção', 'Manutenção'),
-        ('Instalação', 'Instalação'),
-        ('Substituição', 'Substituição'),
-
-    ]
-
-    assunto = forms.ChoiceField(choices=CHOICES_AssuntoEquipamentos, widget=forms.Select(attrs={'class': 'form-select'}))
-    servico = forms.ChoiceField(choices=CHOICES_ServicoEquipamentos, widget=forms.Select(attrs={'class': 'form-select'}))
-
-    class Meta:
-        model = solicitacoes
-        fields = ('assunto', 'servico', 'descricao', 'arquivo')
-
-        widgets = {
-            'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
-            'arquivo': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-        }
-
-
-class modelFormServicosTI(forms.ModelForm):
-    CHOICES_AssuntoServicos = [
-        ('Serviços', 'Serviços'),
-    ]
-
-    CHOICES_ServicoServicos = [
-        ('', ''),
-        ('Internet', 'Internet'),
-        ('Visita Técnica', 'Visita Técnica'),
-        ('Manutenção CPD', 'Manutenção CPD'),
-        ('Agendamentos', 'Agendamentos'),
-        ('Outros', 'Outros'),
-    ]
-
-    assunto = forms.ChoiceField(choices=CHOICES_AssuntoServicos, widget=forms.Select(attrs={'class': 'form-select', 'disabled': 'disabled'}))
-    servico = forms.ChoiceField(choices=CHOICES_ServicoServicos, widget=forms.Select(attrs={'class': 'form-select'}))
-
-    class Meta:
-        model = solicitacoes
-        fields = ('assunto', 'servico', 'descricao', 'arquivo')
-
-        widgets = {
-            'descricao': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
-            'arquivo': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+            'attachment': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
         }

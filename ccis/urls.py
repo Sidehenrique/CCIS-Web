@@ -15,7 +15,6 @@ urlpatterns = [
 
     path('login', security.loginPage, name='login'),
     path('conta', pages.conta, name='conta'),
-    path('solicitacao', pages.solicitacao, name='solicitacao'),
     path('profile/<int:user_id>', pages.profile, name='profile'),
     path('', pages.home, name='home'),
     path('documentos', pages.documentos, name='documentos'),
