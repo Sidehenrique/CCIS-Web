@@ -86,7 +86,7 @@ def new_request(request):
 
     return render(request, 'ti/new_request.html', contexto)
 
-<<<<<<< HEAD
+
 
 def estoque(request):
     log = request.user
@@ -108,7 +108,6 @@ def estoque(request):
 
     return render(request, 'ti/estoque.html', contexto)
 # ----------- ----------------------------------------------------------------------------------------------------------
-=======
 # ----------------------------------------------------------------------------------------------------------------------
->>>>>>> 860fa90b4bf85d656ad0cf973070c3a42a0a10a3
+
 
