@@ -121,7 +121,7 @@ ________________________________________________________
 ___________________  HOTFIX   __________________________
 
 Para criar uma hotfix  ---------------------------------
-"git flow release start <versão>"
+"git flow hotfix start <versão>"
 exemplo: git flow release start v1.1.0
 
 

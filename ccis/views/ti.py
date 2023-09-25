@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from .. models import dadosPessoais, setor
-from .. forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormServicosTI
+from .. models import dadosPessoais
+# from .. forms import modelFormAcessosTI
 
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
@@ -26,11 +26,6 @@ def ti_home(request):
     last_name = user.last_name
 
     dados = dadosPessoais.objects.get(usuario=user)
-
-    dadosSetor = setor.objects.get(idSetor=1)
-    nomeSetor = dadosSetor.nome
-
-    botoes = nomeSetor
 
     superior = Group.objects.filter(id=2).first()
 
@@ -65,7 +60,7 @@ def ti_home(request):
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
-            'botoes': botoes, 'dadosSetor': dadosSetor, 'superior': superior, 'equipe': nomes_equipe
+            'superior': superior, 'equipe': nomes_equipe
         }
 
         return render(request, 'ccis/setor_home.html', context)
@@ -91,6 +86,7 @@ def new_request(request):
 
     return render(request, 'ti/new_request.html', contexto)
 
+<<<<<<< HEAD
 
 def estoque(request):
     log = request.user
@@ -112,4 +108,7 @@ def estoque(request):
 
     return render(request, 'ti/estoque.html', contexto)
 # ----------- ----------------------------------------------------------------------------------------------------------
+=======
+# ----------------------------------------------------------------------------------------------------------------------
+>>>>>>> 860fa90b4bf85d656ad0cf973070c3a42a0a10a3
 
