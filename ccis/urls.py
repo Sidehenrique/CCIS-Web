@@ -83,6 +83,7 @@ urlpatterns = [
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request', ti.new_request, name='new_request'),
+    path('ti/estoque', ti.estoque, name='estoque'),
 
     path('dev', pages.dev, name='dev'),
 
