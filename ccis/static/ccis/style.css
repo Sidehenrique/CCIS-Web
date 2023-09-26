@@ -1281,4 +1281,93 @@ status-negativo{
     z-index: 100;
 }
 
+/*-- Card Estoque --------------------------*/
+.links-estoque{
+    text-decoration:none;
+    transition: all .2s;
+    color:white;
+}
 
+
+.links-estoque:hover{
+    color:#ffffff;
+}
+
+
+.links-estoque:active{
+    color:#37474F;
+
+}
+
+
+.card-buttons-estoque{
+    position:relative;
+    width:auto;
+    height:135px;
+    padding: 10px;
+    background-color: #0273EB;
+    border-radius:10px;
+    transition: all .1s;
+}
+
+.card-buttons-estoque2{
+    position:relative;
+    width:auto;
+    height:135px;
+    padding: 10px;
+    background-color: #004E8C;
+    border-radius:10px;
+    transition: all .1s;
+}
+
+
+.card-buttons-estoque:hover{
+    background-color:#4FD1B8;
+
+}
+
+.card-buttons-estoque2:hover{
+    background-color:#4FD1B8;
+
+}
+
+
+.card-buttons-estoque:active{
+    background-color:#068E74;
+
+}
+
+.card-buttons-estoque2:active{
+    background-color:#068E74;
+
+}
+
+.row-text-estoque{
+    align-items: center;
+}
+
+.border-text-estoque{
+   border-left: 1px solid rgba(255, 255, 255, 0.322);
+}
+
+.card-graph{
+    position:relative;
+    width:auto;
+    height:175px;
+    border-radius: 5px;
+    background-color: white;
+    transition: all .1s;
+}
+
+.p-estoque{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color:white;
+}
+
+.titulo-estoque{
+    color: #004E8C;
+    font-family: 'asap semibold';
+    font-weight: normal;
+    font-size: 13px;
+}
