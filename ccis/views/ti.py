@@ -98,16 +98,7 @@ def estoque(request):
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
 
-    acessos = modelFormAcessosTI()
-    equipamentos = modelFormEquipamentosTI()
-    servicos = modelFormServicosTI()
-
     contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'acessos': acessos,
-                'equipamentos': equipamentos, 'servicos': servicos, 'groupControle': groupControle}
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle}
 
     return render(request, 'ti/estoque.html', contexto)
-# ----------- ----------------------------------------------------------------------------------------------------------
-# ----------------------------------------------------------------------------------------------------------------------
-
-
