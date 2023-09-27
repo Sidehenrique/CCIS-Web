@@ -1371,3 +1371,18 @@ status-negativo{
     font-weight: normal;
     font-size: 13px;
 }
+
+.back-button-estoque{
+    position: absolute;
+    font-size: 4vh;
+    left: 216px;
+    top: 74px;
+}
+
+.arrow-button{
+    color: #004E8C;
+}
+
+.arrow-button:hover{
+    color: #068E74;
+}
