@@ -113,6 +113,12 @@ body {
     height:36px;
 }
 
+.nav-photo2{
+    border-radius:50%;
+    cursor:pointer;
+    width:46px;
+    height:46px;
+}
 
 .nav-text{
     font-family:asap;

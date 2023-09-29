@@ -124,12 +124,6 @@ def solicitacao(request):
 
 
 @login_required(login_url="/login")
-def solicit(request):
-
-    return render(request, 'ccis/solicit.html')
-
-
-@login_required(login_url="/login")
 def profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
@@ -585,13 +579,8 @@ def departamentos(request):
         return render(request, 'ccis/departamentos.html', context)
 
 
-def utilitarios(request):
-    context = infoClima()
-    return render(request, 'ccis/utilitarios.html', context)
-
-
 @login_required(login_url="/login")
-def gestaoMetas(request):
+def utilitariosCopy(request):
     # user = get_object_or_404(User, id=user_id)
 
     user = request.user
@@ -618,7 +607,30 @@ def gestaoMetas(request):
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
         }
 
-        return render(request, 'ccis/gestaoMetas.html', context)
+        return render(request, 'ccis/utilitariosCopy.html', context)
+
+
+@login_required(login_url="/login")
+def malotes(request):
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+    group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'groupControle': groupControle, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin
+                }
+    return render(request, 'ccis/malotes.html', contexto)
+
+
+def utilitariosHome(request):
+    context = infoClima()
+    return render(request, 'ccis/utilitarios.html', context)
+
 
 
 def dev(request):

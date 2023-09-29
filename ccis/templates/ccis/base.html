@@ -162,65 +162,107 @@
                                     <li>
                                         <div class="accordion" id="accordionPanelsStayOpenExample">
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                                    <button class="accordion-button" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsStayOpen-collapseOne"
-                                                            aria-expanded="true"
-                                                            aria-controls="panelsStayOpen-collapseOne">
-                                                        <strong>Atalhos</strong>
-                                                    </button>
-                                                </h2>
-                                                <div id="panelsStayOpen-collapseOne"
-                                                     class="accordion-collapse collapse show"
-                                                     aria-labelledby="panelsStayOpen-headingOne">
+                                                <!--foto perfil-->
+                                                <div class="d-flex m-3">
+                                                    <span class="nav-photo2">
+                                                        {% if logFoto %}
+                                                        <img class="nav-photo2" src="{{ logFoto.url }}"
+                                                             alt="" width="36" height="36">
+        
+                                                        {% else %}
+        
+                                                        {% if dados.sexo == "Masculino" %}
+                                                        <img class="nav-photo2" src="{% static 'ccis/avatar.jpg' %}"
+                                                             alt="" width="36" height="36">
+        
+                                                        {% elif dados.sexo == "Feminino" %}
+                                                        <img class="nav-photo2" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                                             alt="" width="36" height="36">
+                                                        {% endif %}
+        
+                                                        {% endif %}
+                                                    </span>
 
-                                                    <div class="accordion-body p-0">
+                                                    <!--nome perfil-->
+                                                    <div class="ms-2">
+                                                        <h6 class="mb-0">{{ logName }} {{ logLast }}</h6>
+                                                        <span class="me-2">arthur.calorio@sicoobbrasilia.com.br</span>
 
-                                                        <div class="">
-                                                            <a class="dropdown-item" href="{%url 'ferias'%}">
-                                                                Férias
-                                                            </a>
-                                                        </div>
-                                                        <div class="">
-                                                            <a class="dropdown-item" href="{%url 'utilitarios'%}">
-                                                                Utilitários
-                                                            </a>
-                                                        </div>
-                                                        <div class="">
-                                                            <a class="dropdown-item" href="{%url 'departamentos'%}">
-                                                                Departamentos
-                                                            </a>
-                                                        </div>
+                                                        <select class="m-0" style="border: none;">
+                                                            <option value="valor1" selected>Online</option>
+                                                            <option value="valor2">Offline</option>
+                                                            <option value="valor3">Ocupado</option>
+                                                        </select>
+
                                                     </div>
-
+                                                    <!--nome perfil-->
                                                 </div>
+                                            </div>
+                                            
+                                            <div class="accordion-item">
+
+                                                <div class="">
+                                                    <a style="font-size: 15px;" class="dropdown-item" href="{% url 'profile' request.user.id %}"> 
+                                                        <span> 
+                                                            <i style="font-size: 2vh;" class="fa-solid fa-user"></i>
+                                                             Perfil
+                                                        </span>
+                                                    </a>
+                                                </div>
+
+                                                <div class="">
+                                                    <a style="font-size: 15px;" class="dropdown-item" href="{%url 'conta'%}"> 
+                                                        <span> 
+                                                            <i style="font-size: 2vh;" class="fa-solid fa-address-card"></i>
+                                                             Gerenciar Conta
+                                                        </span>
+                                                    </a>
+                                                </div>
+
                                             </div>
 
                                             <div class="accordion-item">
+
+                                                <div class="">
+                                                    <a style="font-size: 15px;" class="dropdown-item" href="{%url 'processos'%}"> 
+                                                        <span> 
+                                                            <i style="font-size: 2vh;" class="fa-solid fa-file-circle-plus"></i>
+                                                             Painel Solicitações
+                                                        </span>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="accordion-item">
                                                 <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                                    <button class="accordion-button collapsed" type="button"
+                                                    <button class="accordion-button collapsed ps-3" type="button"
                                                             data-bs-toggle="collapse"
                                                             data-bs-target="#panelsStayOpen-collapseThree"
                                                             aria-expanded="false"
                                                             aria-controls="panelsStayOpen-collapseThree">
-                                                        <strong>Solicitações</strong>
+                                                            <span> 
+                                                                <i style="font-size: 2vh;" class="fa-solid fa-book"></i>
+                                                                 Utilitarios
+                                                            </span>
                                                     </button>
                                                 </h2>
-
+                                        
                                                 <div id="panelsStayOpen-collapseThree"
                                                      class="accordion-collapse collapse"
                                                      aria-labelledby="panelsStayOpen-headingThree">
-
+                                        
                                                     <div class="accordion-body p-0">
-                                                        <div><a class="dropdown-item" href="{%url 'new_request'%}">Nova Solicitaão</a></div>
-                                                        <div><a class="dropdown-item" href="{%url 'solicit'%}">Minhas Solicitações</a></div>
-                                                        <div><a class="dropdown-item" href="{%url 'processos'%}">Painel de Solicitações</a></div>
+
+                                                        <div><a class="dropdown-item" href="{%url 'utilitariosCopy'%}">Links</a></div>
+                                                        
                                                     </div>
                                                 </div>
-
+                                        
                                             </div>
-                                        </div>
+                                            
+                                        </div>    
                                     </li>
 
                                     <li>
@@ -269,7 +311,7 @@
 
                         <!-- Perfil -->
                         <li class="li-lista-novo">
-                            <a style="font-family: asap;" href="{% url 'profile' request.user.id %}"
+                            <a style="font-family: asap; color: #00353e;" href="{% url 'profile' request.user.id %}"
                                class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-user"></i>
                                 Perfil
@@ -278,7 +320,7 @@
 
                         <!-- Conta -->
                         <li class="li-lista-novo">
-                            <a style="font-family: asap;" href="{% url 'conta' %}" class="li-link-novo"
+                            <a style="font-family: asap; color: #00353e;" href="{% url 'conta' %}" class="li-link-novo"
                                aria-current="page">
                                 <i class="fa-solid fa-address-card"></i>
                                 Conta
@@ -287,7 +329,7 @@
 
                         <!-- Departamentos -->
                         <li class="li-lista-novo">
-                            <a style="font-family: asap;" href="{% url 'departamentos' %}" class="li-link-novo"
+                            <a style="font-family: asap; color: #00353e;" href="{% url 'departamentos' %}" class="li-link-novo"
                                aria-current="page">
                                 <i class="fa-solid fa-network-wired"></i>
                                 Departamentos
@@ -298,7 +340,7 @@
                         {% if groupControle or is_superadmin %}
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'gestaoControle' %}" class="li-link-novo"
+                            <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoControle' %}" class="li-link-novo"
                                aria-current="page">
                                <i class="fa-solid fa-handshake"></i>
                                 Gestão E Controle
@@ -307,52 +349,64 @@
                         </li>
                         {% endif %}
 
-                        <!-- ferias -->
+                        <!-- Gestão de Metas -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'ferias' %}" class="li-link-novo"
-                               aria-current="page">
-                                <i class="fa-solid fa-umbrella-beach"></i>
-                                Férias
+                            <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoNegocios' %}" class="li-link-novo"
+                                aria-current="page">
+                                <i class="fa-solid fa-bullseye"></i>
+                                Gestão de Negocios
                             </a>
                         </li>
+
+                            <!-- ferias -->
+                            <li class="li-lista-novo">
+
+                                <a style="font-family: asap; color: #00353e;" href="{% url 'ferias' %}" class="li-link-novo"
+                                    aria-current="page">
+                                    <i class="fa-solid fa-umbrella-beach"></i>
+                                    Férias
+                                </a>
+                            </li>
 
                         <!-- anbima -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap; font-size: 15px;" href="{% url 'anbima' %}"
-                               class="li-link-novo" aria-current="page">
+                            <a style="font-family: asap; color: #00353e; font-size: 15px;" href="{% url 'anbima' %}"
+                                class="li-link-novo" aria-current="page">
                                 <i class="fa-solid fa-certificate"></i>
                                 Certificações Anbima
                             </a>
-                        </li>
+                        </li>                            
                          
                         <hr class="">
 
                         <!-- coopera -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'coopera' %}" class="li-link-novo"
+                            <a style="font-family: asap; color: #00353e;" href="{% url 'coopera' %}" class="li-link-novo"
                                aria-current="page">
                                 <i class="fa-solid fa-infinity"></i>
                                 Cooperar+
                             </a>
                         </li>
 
-                        <!-- Gestão de Metas -->
+                        <!-- Malotes -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'gestaoMetas' %}" class="li-link-novo"
-                               aria-current="page">
-                                <i class="fa-solid fa-bullseye"></i>
-                                Gestão de Metas
+                            <a style="font-family: asap; color: #00353e;" href="{%url 'malotes'%}" class="li-link-novo"
+                                aria-current="page">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                                Controle de Malotes 
                             </a>
                         </li>
+
+
 
                         <!-- utilitarios -->
                         <li class="li-lista-novo">
 
-                            <a style="font-family: asap;" href="{% url 'utilitarios' %}" class="li-link-novo"
+                            <a style="font-family: asap; color: #00353e;" href="{% url 'utilitariosCopy' %}" class="li-link-novo"
                                aria-current="page">
                                 <i class="fa-solid fa-book"></i>
                                 Utilitários

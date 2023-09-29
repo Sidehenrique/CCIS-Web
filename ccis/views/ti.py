@@ -102,3 +102,10 @@ def estoque(request):
                 'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle}
 
     return render(request, 'ti/estoque.html', contexto)
+
+
+
+@login_required(login_url="/login")
+def solicit(request):
+
+    return render(request, 'ti/solicit.html')
