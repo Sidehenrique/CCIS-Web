@@ -8,6 +8,7 @@ from .views import rh
 from .views import security
 from .views import formularios
 from .views import gestaoControle
+from .views import gestaoNegocios
 
 
 urlpatterns = [
@@ -18,14 +19,14 @@ urlpatterns = [
     path('profile/<int:user_id>', pages.profile, name='profile'),
     path('', pages.home, name='home'),
     path('departamentos', pages.departamentos, name='departamentos'),
-    path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
 
     path('processos', pages.processo, name='processos'),
     path('obter_informacoes_card/<int:card_id>/', pages.obter_informacoes_card, name='obter_informacoes_card'),
 
-    path('solicit', pages.solicit, name='solicit'),
+    path('utilitariosHome', pages.utilitariosHome, name='utilitariosHome'),
+    path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
 
-    path('utilitarios', pages.utilitarios, name='utilitarios'),
+    path('malotes', pages.malotes, name='malotes'),
 
     path('gestaoControle', gestaoControle.home, name='gestaoControle'),
     path('contabilidade', gestaoControle.contabilidade, name='contabilidade'),
@@ -35,6 +36,9 @@ urlpatterns = [
     path('lastro', gestaoControle.lastro, name='lastro'),
     path('qqs', gestaoControle.qqs, name='qqs'),
     path('pesquisa', gestaoControle.pesquisa, name='pesquisa'),
+
+    path('gestaoNegocios', gestaoNegocios.home, name='gestaoNegocios'),
+    path('gestaoMetas', gestaoNegocios.gestaoMetas, name='gestaoMetas'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
@@ -87,6 +91,7 @@ urlpatterns = [
     path('ti/request_equipamentos_ti', ti.request_equipamentos_ti, name='request_equipamentos_ti'),
     path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
     path('ti/estoque', ti.estoque, name='estoque'),
+    path('ti/solicit', ti.solicit, name='solicit'),
 
     path('dev', pages.dev, name='dev'),
 
