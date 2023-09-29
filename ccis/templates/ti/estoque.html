@@ -1,0 +1,381 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<body style="background-color: #D9D9D9;">
+    <!--Container------------>
+    <div class="container-fluid" style="margin-top:85px">
+        
+        <!--Button back------>
+        <a href="#" class="back-button-estoque" type="button">
+            <i class="fa-solid fa-arrow-left arrow-button"></i>
+        </a>
+        <!--Button back------>
+
+        <!-- Titulo --------->
+        <div class="titulo-estoque mb-4"> 
+            <p>
+                PAINEL DE ESTOQUE
+            </p>
+        </div>
+        <!-- Titulo ------------>
+
+        <!-- Gráficos ---------->
+        <div class="row justify-content-start mt-1">
+
+            <div class="d-grid col-3 mb-4 position-relative">
+    
+    
+                <div class="card-graph" style="text-align:center;">
+
+                    <h6 style="background-color: #3A7DDD;" class="p-estoque p-4">Administrativo</h6>
+                    <h3 style="color: gray;" class="mt-4">Gráficos</h3>
+
+                </div>
+    
+            </div>
+
+            <div class="d-grid col-3 mb-4 position-relative">
+    
+    
+                <div class="card-graph" style="text-align:center;">
+
+                    <h6 style="background-color: #6859F3;" class="p-estoque p-4">Consultas</h6>
+                    <h3 style="color: gray;" class="mt-4">Gráficos</h3>
+
+                </div>
+    
+            </div>
+
+            <div class="d-grid col-3 mb-4 position-relative">
+    
+    
+                <div class="card-graph" style="text-align:center;">
+
+                    <h6 style="background-color: #E85C43;" class="p-estoque p-4">Cancelado</h6>
+                    <h3 style="color: gray;" class="mt-4">Gráficos</h3>
+
+                </div>
+    
+            </div>
+
+            <div class="d-grid col-3 mb-4 position-relative">
+    
+    
+                <div class="card-graph" style="text-align:center;">
+
+                    <h6 style="background-color: #3EAE4D;" class="p-estoque p-4">Urgencias Resolvidas</h6>
+                    <h3 style="color: gray;" class="mt-4">Gráficos</h3>
+
+                </div>
+    
+            </div>
+
+        </div>
+        <!-- Gráficos ---------->
+        
+        <!-- Conteúdo ---------->
+        <div class="row justify-content-start mt-1">
+            
+            <!-- Cards --------->
+            <div class="d-grid col-3 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-laptop ms-3 mt-2"></i>
+                            </div>
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">NOTEBOOKS</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="d-grid col-3 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-display ms-4 mt-2"></i>
+                            </div> 
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">MONITORES</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="d-grid col-2 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 6vh;" class="fa-solid fa-caret-up ms-4 mt-2"></i>
+                            </div>
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">SUPORTE</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="d-grid col-2 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-computer-mouse ms-4 mt-2"></i>
+                            </div> 
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">MOUSE</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="d-grid col-2 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-keyboard ms-4 mt-2"></i>
+                            </div> 
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">TECLADO</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+            <!-- Cards -------------->
+
+            <!-- Cards -------------->
+            <div class="d-grid col-3 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque2" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-memory ms-4 mt-2"></i>
+                            </div> 
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">MEMÓRIA RAM</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="d-grid col-3 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque2" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-hard-drive ms-4 mt-2"></i>
+                            </div> 
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">SSD</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="d-grid col-2 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque2" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-plug-circle-bolt ms-4 mt-2"></i>
+                            </div> 
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">Fontes</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="d-grid col-2 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque2" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-plug ms-4 mt-2"></i>
+                            </div>
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">CABOS</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="d-grid col-2 position-relative mb-3 ">
+
+                <a class="links-estoque" href="" type="button">
+
+                    <div class="card-buttons-estoque2" style="text-align:center;">
+                        
+                        <div class="row row-text-estoque">
+
+                            <div class="col-auto me-auto ">
+                                <i style="font-size: 5vh;" class="fa-solid fa-computer ms-4 mt-2"></i>
+                            </div>
+
+                            <div class="col-auto border-text-estoque me-3">
+                                <span>Total</span>
+                                <h5>10</h5>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <h6 class="">DESKTOPS</h6>
+
+                    </div>
+
+                </a>
+
+            </div>
+            <!-- Cards -------------->
+
+        </div>
+        <!-- 1° linha de cards documentos ------------>
+
+    </div>    
+</body>
+
+{% endblock %}

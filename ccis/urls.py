@@ -86,6 +86,7 @@ urlpatterns = [
     path('ti/request_acessos_ti', ti.request_acessos_ti, name='request_acessos_ti'),
     path('ti/request_equipamentos_ti', ti.request_equipamentos_ti, name='request_equipamentos_ti'),
     path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
+    path('ti/estoque', ti.estoque, name='estoque'),
 
     path('dev', pages.dev, name='dev'),
 

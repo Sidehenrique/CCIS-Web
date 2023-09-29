@@ -74,6 +74,8 @@ def new_request(request):
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
+    group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
 
     acessos = modelFormAcessosTI()
     equipamentos = modelFormEquipamentosTI()
@@ -183,3 +185,18 @@ def request_servicos_ti(request):
 
 # ----------------------------------------------------------------------------------------------------------------------
 
+
+def estoque(request):
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+    group_gestao = log.groups.filter(id=3).exists()
+    groupControle = log.groups.filter(id=28).exists()
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle}
+
+    return render(request, 'ti/estoque.html', contexto)
