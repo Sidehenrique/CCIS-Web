@@ -475,19 +475,18 @@ class CustomGroupInfo(models.Model):
         return self.group.name
 
 
-
 #-------- Tabelas de Processo ------------------------------------------------------------------------------------------
-
 class Card(models.Model):
     idCard = models.AutoField(db_column='idCard', primary_key=True)
     assunto = models.CharField(max_length=45, blank=False, null=True)
     service = models.CharField(max_length=255, blank=False, null=True)
     dataCriacao = models.DateTimeField(auto_now_add=True)
-    responsavel = models.ForeignKey(User, on_delete=models.CASCADE)
+    solicitante = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chamados_solicitados', default=None)
+    responsavel = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                                    related_name='chamados_responsaveis', default=None)
     status = models.CharField(max_length=20)
-    sector = models.ForeignKey(Group, on_delete=models.CASCADE)
+    sector = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     colunaAtual = models.CharField(max_length=20)
-    attachment = models.FileField(upload_to='chat/', null=True, blank=True)
 
     def __str__(self):
         return self.assunto

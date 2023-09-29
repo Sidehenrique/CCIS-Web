@@ -182,3 +182,38 @@ function handleScroll(event) {
 }
 
 
+
+//---------------------------- MODAL DO PROCESSO -----------------------------------------------------------------------
+
+$(document).ready(function () {
+    // Manipulador de clique para abrir o modal
+    $('.card').click(function () {
+        // Captura o ID do card clicado
+        var cardId = $(this).data('card-id');
+
+        // Use AJAX para buscar as informações do card com base no ID
+        $.ajax({
+            url: '/obter_informacoes_card/' + cardId + '/', // Substitua pela URL correta
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Atualiza o título do modal com as informações obtidas
+                $('#modalTitle').text(data.assunto + ' / ' + data.service);
+
+                // Abre o modal
+                $('#cardModal').modal('show');
+            },
+            error: function (error) {
+                console.error('Erro ao obter informações do card: ' + error);
+            }
+        });
+    });
+});
+
+
+
+
+
+
+
+

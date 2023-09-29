@@ -17,11 +17,11 @@ urlpatterns = [
     path('conta', pages.conta, name='conta'),
     path('profile/<int:user_id>', pages.profile, name='profile'),
     path('', pages.home, name='home'),
-    path('documentos', pages.documentos, name='documentos'),
     path('departamentos', pages.departamentos, name='departamentos'),
     path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
 
     path('processos', pages.processo, name='processos'),
+    path('obter_informacoes_card/<int:card_id>/', pages.obter_informacoes_card, name='obter_informacoes_card'),
 
     path('solicit', pages.solicit, name='solicit'),
 
@@ -83,6 +83,9 @@ urlpatterns = [
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request', ti.new_request, name='new_request'),
+    path('ti/request_acessos_ti', ti.request_acessos_ti, name='request_acessos_ti'),
+    path('ti/request_equipamentos_ti', ti.request_equipamentos_ti, name='request_equipamentos_ti'),
+    path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
 
     path('dev', pages.dev, name='dev'),
 

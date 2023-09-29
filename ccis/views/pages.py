@@ -3,6 +3,7 @@ import requests
 from django.utils import timezone
 from dateutil.relativedelta import relativedelta
 
+from django.http import JsonResponse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -12,10 +13,11 @@ from django.contrib.auth.models import User, Group
 
 from .. models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos, profissional
+    docCertidao, docAdmissional, docPeriodico, docCursos, profissional, Card, CardSetorHistory, MessageHistory
 
-from .. forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
-    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios
+from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
+    ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
+    CustomUserCreationForm
 
 
 # PAGINAS --------------------------------------------------------------------------------------------------------------
@@ -467,91 +469,91 @@ def conta(request):
             return redirect('conta', user_id=request.user.id)
 
 
-@login_required(login_url="/login")
-def documentos(request):
-    # user = get_object_or_404(User, id=user_id)
-
-    user = request.user
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-
-    doc = docRg.objects.filter(usuario=user).first()
-    doc_cnh = docCnh.objects.filter(usuario=user).first()
-    doc_cpf = docCpf.objects.filter(usuario=user).first()
-    doc_reservista = docReservista.objects.filter(usuario=user).first()
-    doc_titulo = docTitulo.objects.filter(usuario=user).first()
-    doc_clt = docClt.objects.filter(usuario=user).first()
-    doc_residencia = docResidencia.objects.filter(usuario=user).first()
-    doc_certidao = docCertidao.objects.filter(usuario=user).first()
-    doc_admissional = docAdmissional.objects.filter(usuario=user).first()
-    doc_periodico = docPeriodico.objects.filter(usuario=user).first()
-
-    status = 'Concluído' if doc != None else 'Pendente'
-    statusCnh = 'Concluído' if doc_cnh != None else 'Pendente'
-    statusCpf = 'Concluído' if doc_cpf != None else 'Pendente'
-    statusReservista = 'Concluído' if doc_reservista != None else 'Pendente'
-    statusTitulo = 'Concluído' if doc_titulo != None else 'Pendente'
-    statusClt = 'Concluído' if doc_clt != None else 'Pendente'
-    statusCertidao = 'Concluído' if doc_certidao != None else 'Pendente'
-    statusAdmissional = 'Concluído' if doc_admissional != None else 'Pendente'
-
-    if doc_residencia != None:
-        statusResidencia = 'Concluído'
-        if doc_residencia.dataAtualizacao + relativedelta(years=1) < timezone.now().date():
-            statusResidencia = 'Expirado'
-    else:
-        statusResidencia = 'Pendente'
-
-    if doc_periodico != None:
-        statusPeriodico = 'Concluído'
-        if doc_periodico.dataAtualizacao + relativedelta(years=2) < timezone.now().date():
-            statusPeriodico = 'Expirado'
-    else:
-        statusPeriodico = 'Pendente'
-
-    if request.method == 'GET':
-        form = modelFormRg(instance=doc)
-        cnh_form = modelFormCnh(instance=doc_cnh)
-        cpf_form = modelFormCpf(instance=doc_cpf)
-        reservista_form = modelFormReservista(instance=doc_reservista)
-        titulo_form = modelFormTitulo(instance=doc_titulo)
-        clt_form = modelFormClt(instance=doc_clt)
-        residencia_form = modelFormResidencia(instance=doc_residencia)
-        certidao_form = modelFormCertidao(instance=doc_certidao)
-        admissional_form = modelFormAdmissional(instance=doc_admissional)
-        periodico_form = modelFormPeriodico(instance=doc_periodico)
-
-        context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'form': form, 'cnh_form': cnh_form, 'cpf_form': cpf_form, 'reservista_form': reservista_form,
-            'titulo_form': titulo_form, 'clt_form': clt_form, 'residencia_form': residencia_form,
-            'certidao_form': certidao_form, 'admissional_form': admissional_form, 'periodico_form': periodico_form,
-            'doc': doc, 'doc_cnh': doc_cnh, 'doc_cpf': doc_cpf, 'doc_reservista': doc_reservista,
-            'doc_titulo': doc_titulo,
-            'doc_clt': doc_clt, 'doc_residencia': doc_residencia, 'doc_certidao': doc_certidao,
-            'doc_admissional': doc_admissional,
-            'doc_periodico': doc_periodico, 'status': status, 'statusCnh': statusCnh, 'statusCpf': statusCpf,
-            'statusReservista': statusReservista, 'statusTitulo': statusTitulo, 'statusClt': statusClt,
-            'statusResidencia': statusResidencia, 'statusCertidao': statusCertidao,
-            'statusAdmissional': statusAdmissional,
-            'statusPeriodico': statusPeriodico, 'dados': dados, 'username': user, 'first_name': first_name,
-            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle
-        }
-
-        return render(request, 'ccis/documentos.html', context)
+# @login_required(login_url="/login")
+# def documentos(request):
+#     # user = get_object_or_404(User, id=user_id)
+#
+#     user = request.user
+#
+#     log = request.user
+#     log_id = request.user.id
+#     logName = request.user.first_name
+#     logLast = request.user.last_name
+#     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+#     is_superadmin = log.is_superuser
+#
+#     group_gestao = log.groups.filter(id=3).exists()
+#     groupControle = log.groups.filter(id=28).exists()
+#
+#     first_name = user.first_name
+#     last_name = user.last_name
+#
+#     dados = dadosPessoais.objects.get(usuario=user)
+#
+#     doc = docRg.objects.filter(usuario=user).first()
+#     doc_cnh = docCnh.objects.filter(usuario=user).first()
+#     doc_cpf = docCpf.objects.filter(usuario=user).first()
+#     doc_reservista = docReservista.objects.filter(usuario=user).first()
+#     doc_titulo = docTitulo.objects.filter(usuario=user).first()
+#     doc_clt = docClt.objects.filter(usuario=user).first()
+#     doc_residencia = docResidencia.objects.filter(usuario=user).first()
+#     doc_certidao = docCertidao.objects.filter(usuario=user).first()
+#     doc_admissional = docAdmissional.objects.filter(usuario=user).first()
+#     doc_periodico = docPeriodico.objects.filter(usuario=user).first()
+#
+#     status = 'Concluído' if doc != None else 'Pendente'
+#     statusCnh = 'Concluído' if doc_cnh != None else 'Pendente'
+#     statusCpf = 'Concluído' if doc_cpf != None else 'Pendente'
+#     statusReservista = 'Concluído' if doc_reservista != None else 'Pendente'
+#     statusTitulo = 'Concluído' if doc_titulo != None else 'Pendente'
+#     statusClt = 'Concluído' if doc_clt != None else 'Pendente'
+#     statusCertidao = 'Concluído' if doc_certidao != None else 'Pendente'
+#     statusAdmissional = 'Concluído' if doc_admissional != None else 'Pendente'
+#
+#     if doc_residencia != None:
+#         statusResidencia = 'Concluído'
+#         if doc_residencia.dataAtualizacao + relativedelta(years=1) < timezone.now().date():
+#             statusResidencia = 'Expirado'
+#     else:
+#         statusResidencia = 'Pendente'
+#
+#     if doc_periodico != None:
+#         statusPeriodico = 'Concluído'
+#         if doc_periodico.dataAtualizacao + relativedelta(years=2) < timezone.now().date():
+#             statusPeriodico = 'Expirado'
+#     else:
+#         statusPeriodico = 'Pendente'
+#
+#     if request.method == 'GET':
+#         form = modelFormRg(instance=doc)
+#         cnh_form = modelFormCnh(instance=doc_cnh)
+#         cpf_form = modelFormCpf(instance=doc_cpf)
+#         reservista_form = modelFormReservista(instance=doc_reservista)
+#         titulo_form = modelFormTitulo(instance=doc_titulo)
+#         clt_form = modelFormClt(instance=doc_clt)
+#         residencia_form = modelFormResidencia(instance=doc_residencia)
+#         certidao_form = modelFormCertidao(instance=doc_certidao)
+#         admissional_form = modelFormAdmissional(instance=doc_admissional)
+#         periodico_form = modelFormPeriodico(instance=doc_periodico)
+#
+#         context = {
+#             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+#             'form': form, 'cnh_form': cnh_form, 'cpf_form': cpf_form, 'reservista_form': reservista_form,
+#             'titulo_form': titulo_form, 'clt_form': clt_form, 'residencia_form': residencia_form,
+#             'certidao_form': certidao_form, 'admissional_form': admissional_form, 'periodico_form': periodico_form,
+#             'doc': doc, 'doc_cnh': doc_cnh, 'doc_cpf': doc_cpf, 'doc_reservista': doc_reservista,
+#             'doc_titulo': doc_titulo,
+#             'doc_clt': doc_clt, 'doc_residencia': doc_residencia, 'doc_certidao': doc_certidao,
+#             'doc_admissional': doc_admissional,
+#             'doc_periodico': doc_periodico, 'status': status, 'statusCnh': statusCnh, 'statusCpf': statusCpf,
+#             'statusReservista': statusReservista, 'statusTitulo': statusTitulo, 'statusClt': statusClt,
+#             'statusResidencia': statusResidencia, 'statusCertidao': statusCertidao,
+#             'statusAdmissional': statusAdmissional,
+#             'statusPeriodico': statusPeriodico, 'dados': dados, 'username': user, 'first_name': first_name,
+#             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle
+#         }
+#
+#         return render(request, 'ccis/documentos.html', context)
 
 
 @login_required(login_url="/login")
@@ -625,6 +627,105 @@ def dev(request):
     pass
 
 
+@login_required(login_url="/login")
 def processo(request):
-    return render(request, 'ccis/processo.html')
+    user = request.user
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    cards = Card.objects.all()
+
+    dados = dadosPessoais.objects.get(usuario=user)
+
+    if request.method == 'GET':
+        context = {
+            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,'dados': dados,
+            'username': user, 'first_name': first_name, 'last_name': last_name, 'is_superadmin': is_superadmin,
+            'cards': cards
+        }
+
+        return render(request, 'ccis/processo.html', context)
 # ----------------------------------------------------------------------------------------------------------------------
+
+
+def obter_informacoes_card(request, card_id):
+    card = get_object_or_404(Card, id=card_id)
+
+    # Obtenha informações do card
+    card_info = {
+        'card_id': card.id,  # ID do card
+        'assunto': card.assunto,
+        'servico': card.service,
+        'setor_do_card': card.sector,
+    }
+
+    # Obtenha informações do solicitante
+    solicitante = card.solicitante  # Suponhamos que este campo seja uma instância de User
+    if solicitante:
+        # Obtenha informações da tabela DadosPessoais relacionada ao solicitante
+        dados_pessoais = dadosPessoais.objects.get(usuario=solicitante)
+        if dados_pessoais:
+            card_info['nomeCompleto'] = dados_pessoais.nomeCompleto
+            card_info['cpf'] = dados_pessoais.cpf
+            card_info['sexo'] = dados_pessoais.sexo
+            card_info['foto'] = dados_pessoais.foto
+
+        # Obtenha informações da tabela Profissional relacionada ao solicitante
+        profissional_info = profissional.objects.get(usuario=solicitante)
+        if profissional_info:
+            card_info['area'] = profissional_info.area
+
+        # Obtenha informações da tabela Contato relacionada ao solicitante
+        contato_info = enderecoContato.objects.get(usuario=solicitante)
+        if contato_info:
+            card_info['emailCorporativo'] = contato_info.emailCorporativo
+            card_info['ramal'] = contato_info.ramal
+
+        historico_info = CardSetorHistory.objects.filter(card_id=card).order_by('datetime')
+        historico_list = []
+
+        # Tratamento historico ------------------------------------------------------------
+        for historico in historico_info:
+            historico_dict = {
+                'previous_status': historico.previous_status,
+                'current_status': historico.current_status,
+                'previous_sector_id': historico.previous_sector,
+                'current_sector_id': historico.current_sector,
+                'datetime': historico.datetime,
+            }
+            historico_list.append(historico_dict)
+
+        card_info['historico'] = historico_list
+
+        # Tratamento Mensagens ------------------------------------------------------------
+        message_history = MessageHistory.objects.filter(card=card)
+        message_history_list = []
+
+        for entry in message_history:
+            entry_info = {
+                'message': entry.message,
+                'author_name': entry.remetente.get_full_name() if entry.remetente else 'Anônimo',
+                'timestamp': entry.datetime.strftime('%d/%m/%Y %H:%M:%S'),
+            }
+
+            # Adicione o campo de arquivo (caso haja anexos)
+            if entry.attachment:
+                entry_info['attachment'] = entry.attachment.url
+
+            message_history_list.append(entry_info)
+
+        # Adicione a lista de histórico de mensagens ao dicionário card_info
+        card_info['message_history'] = message_history_list
+
+        print(card_info)
+
+    return JsonResponse(card_info)
+

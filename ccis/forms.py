@@ -403,12 +403,58 @@ class modelFormAcessosTI(forms.ModelForm):
 
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
-    attachment = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}), required=False)
 
     class Meta:
         model = Card
-        fields = ('assunto', 'service', 'attachment')
+        fields = ('assunto', 'service', 'descricao', 'attachment')
 
-        widgets = {
-            'attachment': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-        }
+class modelFormEquipamentosTI(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Instalação', 'Instalação'),
+        ('Manutenção', 'Manutenção'),
+        ('Substituição', 'Substituição'),
+
+    ]
+
+    CHOICES_Assunto = [
+        ('', ''),
+        ('Software', 'Software'),
+        ('Equipamento', 'Equipamento'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}), required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+class modelFormSevicosTI(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Intranet', 'Intranet'),
+        ('Visita Técnica', 'Visita Técnica'),
+        ('Manutenção CPD', 'Manutenção CPD'),
+        ('Agendamento', 'Agendamento'),
+        ('Outros', 'Outros'),
+
+    ]
+
+    CHOICES_Assunto = [
+        ('Serviço', 'Serviço'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')

@@ -139,9 +139,11 @@
 
                 <div class="col-7">
 
+                    <form action="{% url 'request_acessos_ti' %}"
+                          method="POST"
+                          enctype="multipart/form-data">
 
-                    <form action="processar_formulario.php" method="POST" enctype="multipart/form-data">
-
+                        {% csrf_token %}
                         <div class="mb-2">
                             <label>* Selecione o Assunto:</label>
                             {{ acessos.assunto }}
@@ -149,7 +151,7 @@
 
                         <div class="mb-2">
                             <label>* Selecione o Serviço:</label>
-                            {{ acessos.servico }}
+                            {{ acessos.service }}
                         </div>
 
                         <div class="mb-3">
@@ -159,7 +161,7 @@
 
                         <div class="">
                             <label>Anexar arquivo:</label>
-                            {{ acessos.arquivo }}
+                            {{ acessos.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
@@ -168,6 +170,7 @@
 
                 </div>
 
+                <!--
                 <div class="col-1"></div>
 
                 <div class="col">
@@ -198,6 +201,7 @@
                     </div>
 
                 </div>
+                -->
 
             </div>
         </div>
@@ -213,7 +217,11 @@
                 <div class="col-7">
 
 
-                    <form action="" method="POST" enctype="multipart/form-data">
+                   <form action="{% url 'request_equipamentos_ti' %}"
+                          method="POST"
+                          enctype="multipart/form-data">
+
+                        {% csrf_token %}
 
                         <div class="mb-2">
                             <label>* Selecione o Assunto:</label>
@@ -222,7 +230,7 @@
 
                         <div class="mb-2">
                             <label>* Selecione o Serviço:</label>
-                            {{ equipamentos.servico }}
+                            {{ equipamentos.service }}
                         </div>
 
                         <div class="mb-3">
@@ -232,7 +240,7 @@
 
                         <div class="">
                             <label>Anexar arquivo:</label>
-                            {{ equipamentos.arquivo }}
+                            {{ equipamentos.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
@@ -241,36 +249,6 @@
 
                 </div>
 
-                <div class="col-1"></div>
-
-                <div class="col">
-
-                    <div>
-                        <h6>Dados do Setor</h6>
-
-                        <p class="m-0">Setor:</p>
-                        <p class="m-0">Responsável:</p>
-                        <p class="m-0">Email:</p>
-                        <p class="m-0">Telefone Corporativo:</p>
-                        <p class="m-0">Ramal:</p>
-
-                    </div>
-
-                    <div class="mt-5">
-
-                        <h6>Dados do Solicitante</h6>
-
-                        <p class="m-0">Nome:</p>
-                        <p class="m-0">CPF:</p>
-                        <p class="m-0">Sisbr:</p>
-                        <p class="m-0">Email:</p>
-                        <p class="m-0">Telefone Corporativo:</p>
-                        <p class="m-0">Ramal:</p>
-                        <p class="m-0">Unidade:</p>
-
-                    </div>
-
-                </div>
 
             </div>
         </div>
@@ -286,7 +264,11 @@
                 <div class="col-7">
 
 
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="{% url 'request_servicos_ti' %}"
+                          method="POST"
+                          enctype="multipart/form-data">
+
+                        {% csrf_token %}
 
                         <div class="mb-2">
                             <label>* Selecione o Assunto:</label>
@@ -295,7 +277,7 @@
 
                         <div class="mb-2">
                             <label>* Selecione o Serviço:</label>
-                            {{ servicos.servico }}
+                            {{ servicos.service }}
                         </div>
 
                         <div class="mb-3">
@@ -305,43 +287,12 @@
 
                         <div class="">
                             <label>Anexar arquivo:</label>
-                            {{ servicos.arquivo }}
+                            {{ servicos.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </form>
-
-                </div>
-
-                <div class="col-1"></div>
-
-                <div class="col">
-
-                    <div>
-                        <h6>Dados do Setor</h6>
-
-                        <p class="m-0">Setor:</p>
-                        <p class="m-0">Responsável:</p>
-                        <p class="m-0">Email:</p>
-                        <p class="m-0">Telefone Corporativo:</p>
-                        <p class="m-0">Ramal:</p>
-
-                    </div>
-
-                    <div class="mt-5">
-
-                        <h6>Dados do Solicitante</h6>
-
-                        <p class="m-0">Nome:</p>
-                        <p class="m-0">CPF:</p>
-                        <p class="m-0">Sisbr:</p>
-                        <p class="m-0">Email:</p>
-                        <p class="m-0">Telefone Corporativo:</p>
-                        <p class="m-0">Ramal:</p>
-                        <p class="m-0">Unidade:</p>
-
-                    </div>
 
                 </div>
 

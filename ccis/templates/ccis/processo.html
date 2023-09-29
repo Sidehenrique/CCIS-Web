@@ -72,9 +72,14 @@
             Encaminhado
         </div>
 
-        <div class="col processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
+        <div class="col me-3 processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
             <i class="fa-solid fa-square-check"></i>
             Concluído
+        </div>
+
+        <div class="col processo-cabecalho" style="background-color:#d9d9d9; color:#fff">
+            <i class="fa-solid fa-square-check"></i>
+            Finalizados
         </div>
 
 
@@ -83,65 +88,348 @@
 
 
     <!-- Processo -------------------------------->
-    <div class="row ms-0 me-0" onwheel="handleScroll(event)">
+    <div class="row ms-0 me-0">
 
         <!-- Triagem ----------------------------->
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
-            <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
-               type="button"
-               data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+            {% for card in cards %}
+                {% if card.sector.id == 1 %}
+                    {% if card.colunaAtual == '1' %}
 
-                <div class="processo-card">
+                    <!-- card ---------------------------->
+                    <a class="d-grid processo-link mb-2"
+                       type="button"
+                       data-bs-toggle="modal"
+                       data-bs-target="#processoModal"
+                       data-card-id="{{ card.id }}">
 
-                    <div class="row">
+                        <div class="processo-card">
 
-                        <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <div class="row">
+
+                                <div class="col-auto me-auto">
+                                    <h5 class="mt-1"> {{ card.assunto }}</h5>
+
+                                </div>
+
+                                <div class="col-auto">
+                                    <span class="processo-tag-setor">{{card.sector.name}}</span>
+                                </div>
+
+                            </div>
+
+                            <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                            <div class="col-auto mb-2">
+                                <p style="color:#818181;">
+                                    {% if card.responsavel %}
+                                        <i class="fa-solid fa-user me-1"></i>
+                                        {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                                    {% else %}
+                                    <i class="fa-solid fa-user-slash"></i>
+                                    Aguardando ...
+                                    {% endif %}
+
+
+                                </p>
+                            </div>
+
+
+                            <div class="" style="color:#818181; font-size:13px;">
+
+                                <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+
+                            </div>
+
+
+                            <div class="row" style="color:#818181; font-size:13px">
+
+                                <div class="col-auto me-auto">
+                                    <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
+                                </div>
+
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
+                                </div>
+
+                            </div>
 
                         </div>
+                    </a>
+                    <!-- card ---------------------------->
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
-                        </div>
-
-                    </div>
-
-                    <hr style="color:#C4C0C0; margin-top:0px;">
-
-                    <div class="d-flex" style="color:#818181; font-size:13px;">
-
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
-
-
-                    </div>
-
-                    <div class="row" style="color:#818181; font-size:13px">
-
-                        <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
-                        </div>
-
-                        <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
-                        </div>
-
-                    </div>
-
-                </div>
-            </a>
-            <!-- card ---------------------------->
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
 
         </div>
         <!-- Triagem ----------------------------->
 
+        <!-- Atendimento ------------------------->
+        <div class="col me-3 overflow-auto processo-colum pt-2">
 
-        <div class="col me-3 overflow-auto processo-colum"></div>
-        <div class="col me-3 overflow-auto processo-colum"></div>
-        <div class="col  overflow-auto processo-colum"></div>
+             {% for card in cards %}
+                {% if card.sector.id == 1 %}
+                    {% if card.colunaAtual == '2' %}
+                    <!-- card ---------------------------->
+                    <a class="d-grid processo-link mb-2"
+                       type="button"
+                       data-bs-toggle="modal"
+                       data-bs-target="#processoModal">
+
+                        <div class="processo-card">
+
+                            <div class="row">
+
+                                <div class="col-auto me-auto">
+                                    <h5 class="mt-1">SISBR</h5>
+
+                                </div>
+
+                                <div class="col-auto">
+                                    <span class="processo-tag-setor">Tecnologia</span>
+                                </div>
+
+                            </div>
+
+                            <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                            <div class="col-auto mb-2">
+                                <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
+                                    Henrique Silva</p>
+                            </div>
+
+
+                            <div class="" style="color:#818181; font-size:13px;">
+
+                                <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
+                                    Redefinição</p>
+
+                            </div>
+
+
+                            <div class="row" style="color:#818181; font-size:13px">
+
+                                <div class="col-auto me-auto">
+                                    <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                                </div>
+
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-clock"></i> 14:53
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+                    <!-- card ---------------------------->
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Atendimento ------------------------->
+
+        <!-- Encaminhamento ---------------------->
+        <div class="col me-3 overflow-auto processo-colum pt-2">
+
+             {% for card in cards %}
+                {% if card.sector.id == 1 %}
+                    {% if card.colunaAtual == '3' %}
+                    <!-- card ---------------------------->
+                    <a class="d-grid processo-link mb-2"
+                       type="button"
+                       data-bs-toggle="modal"
+                       data-bs-target="#processoModal">
+
+                        <div class="processo-card">
+
+                            <div class="row">
+
+                                <div class="col-auto me-auto">
+                                    <h5 class="mt-1">SISBR</h5>
+
+                                </div>
+
+                                <div class="col-auto">
+                                    <span class="processo-tag-setor">Tecnologia</span>
+                                </div>
+
+                            </div>
+
+                            <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                            <div class="col-auto mb-2">
+                                <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
+                                    Henrique Silva</p>
+                            </div>
+
+
+                            <div class="" style="color:#818181; font-size:13px;">
+
+                                <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
+                                    Redefinição</p>
+
+                            </div>
+
+
+                            <div class="row" style="color:#818181; font-size:13px">
+
+                                <div class="col-auto me-auto">
+                                    <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                                </div>
+
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-clock"></i> 14:53
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+                    <!-- card ---------------------------->
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Encaminhamento ---------------------->
+
+        <!-- Concluído --------------------------->
+        <div class="col me-3 overflow-auto processo-colum pt-2">
+
+             {% for card in cards %}
+                {% if card.sector.id == 1 %}
+                    {% if card.colunaAtual == '4' %}
+                    <!-- card ---------------------------->
+                    <a class="d-grid processo-link mb-2"
+                       type="button"
+                       data-bs-toggle="modal"
+                       data-bs-target="#processoModal">
+
+                        <div class="processo-card">
+
+                            <div class="row">
+
+                                <div class="col-auto me-auto">
+                                    <h5 class="mt-1">SISBR</h5>
+
+                                </div>
+
+                                <div class="col-auto">
+                                    <span class="processo-tag-setor">Tecnologia</span>
+                                </div>
+
+                            </div>
+
+                            <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                            <div class="col-auto mb-2">
+                                <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
+                                    Henrique Silva</p>
+                            </div>
+
+
+                            <div class="" style="color:#818181; font-size:13px;">
+
+                                <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
+                                    Redefinição</p>
+
+                            </div>
+
+
+                            <div class="row" style="color:#818181; font-size:13px">
+
+                                <div class="col-auto me-auto">
+                                    <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                                </div>
+
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-clock"></i> 14:53
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+                    <!-- card ---------------------------->
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Concluído --------------------------->
+
+        <!-- Finalizado -------------------------->
+        <div class="col  overflow-auto processo-colum pt-2">
+
+             {% for card in cards %}
+                {% if card.sector.id == 1 %}
+                    {% if card.colunaAtual == '5' %}
+                    <!-- card ---------------------------->
+                    <a class="d-grid processo-link mb-2"
+                       type="button"
+                       data-bs-toggle="modal"
+                       data-bs-target="#processoModal">
+
+                        <div class="processo-card">
+
+                            <div class="row">
+
+                                <div class="col-auto me-auto">
+                                    <h5 class="mt-1">SISBR</h5>
+
+                                </div>
+
+                                <div class="col-auto">
+                                    <span class="processo-tag-setor">Tecnologia</span>
+                                </div>
+
+                            </div>
+
+                            <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                            <div class="col-auto mb-2">
+                                <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
+                                    Henrique Silva</p>
+                            </div>
+
+
+                            <div class="" style="color:#818181; font-size:13px;">
+
+                                <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
+                                    Redefinição</p>
+
+                            </div>
+
+
+                            <div class="row" style="color:#818181; font-size:13px">
+
+                                <div class="col-auto me-auto">
+                                    <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                                </div>
+
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-clock"></i> 14:53
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </a>
+                    <!-- card ---------------------------->
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Finalizado -------------------------->
 
     </div>
     <!-- Processo -------------------------------->
