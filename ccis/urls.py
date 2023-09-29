@@ -39,6 +39,11 @@ urlpatterns = [
 
     path('gestaoNegocios', gestaoNegocios.home, name='gestaoNegocios'),
     path('gestaoMetas', gestaoNegocios.gestaoMetas, name='gestaoMetas'),
+    path('diaria', gestaoNegocios.diaria, name='diaria'),
+    path('listasPropensos', gestaoNegocios.listasPropensos, name='listasPropensos'),
+    path('pronampe', gestaoNegocios.pronampe, name='pronampe'),
+    path('relatorioVisitas', gestaoNegocios.relatorioVisitas, name='relatorioVisitas'),
+    path('planoMetas', gestaoNegocios.planoMetas, name='planoMetas'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
