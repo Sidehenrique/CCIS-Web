@@ -59,7 +59,7 @@ def base(request):
 
     context = {
         'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-        'dados': dados, 'is_superadmin': is_superadmin, 'groupControle': groupControle,
+        'dados': dados, 'is_superadmin': is_superadmin, 'groupControle': groupControle, 'log': log
         }
 
     return render(request, 'ccis/base.html', context)
@@ -129,6 +129,7 @@ def solicitacao(request):
 def profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
+    log = request.user
     log_id = request.user.id
     logName = request.user.first_name
     logLast = request.user.last_name
@@ -212,7 +213,6 @@ def profile(request, user_id):
 
     dados_cert = certificacao.objects.filter(usuario=user)
 
-    log = request.user
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
     is_superadmin = log.is_superuser
@@ -250,7 +250,7 @@ def profile(request, user_id):
         })
 
     contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName,
-                'logLast': logLast,
+                'logLast': logLast, 'log': log,
                 'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
                 'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
                 'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc, 'User': request.user,
@@ -463,93 +463,6 @@ def conta(request):
             return redirect('conta', user_id=request.user.id)
 
 
-# @login_required(login_url="/login")
-# def documentos(request):
-#     # user = get_object_or_404(User, id=user_id)
-#
-#     user = request.user
-#
-#     log = request.user
-#     log_id = request.user.id
-#     logName = request.user.first_name
-#     logLast = request.user.last_name
-#     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-#     is_superadmin = log.is_superuser
-#
-#     group_gestao = log.groups.filter(id=3).exists()
-#     groupControle = log.groups.filter(id=28).exists()
-#
-#     first_name = user.first_name
-#     last_name = user.last_name
-#
-#     dados = dadosPessoais.objects.get(usuario=user)
-#
-#     doc = docRg.objects.filter(usuario=user).first()
-#     doc_cnh = docCnh.objects.filter(usuario=user).first()
-#     doc_cpf = docCpf.objects.filter(usuario=user).first()
-#     doc_reservista = docReservista.objects.filter(usuario=user).first()
-#     doc_titulo = docTitulo.objects.filter(usuario=user).first()
-#     doc_clt = docClt.objects.filter(usuario=user).first()
-#     doc_residencia = docResidencia.objects.filter(usuario=user).first()
-#     doc_certidao = docCertidao.objects.filter(usuario=user).first()
-#     doc_admissional = docAdmissional.objects.filter(usuario=user).first()
-#     doc_periodico = docPeriodico.objects.filter(usuario=user).first()
-#
-#     status = 'Concluído' if doc != None else 'Pendente'
-#     statusCnh = 'Concluído' if doc_cnh != None else 'Pendente'
-#     statusCpf = 'Concluído' if doc_cpf != None else 'Pendente'
-#     statusReservista = 'Concluído' if doc_reservista != None else 'Pendente'
-#     statusTitulo = 'Concluído' if doc_titulo != None else 'Pendente'
-#     statusClt = 'Concluído' if doc_clt != None else 'Pendente'
-#     statusCertidao = 'Concluído' if doc_certidao != None else 'Pendente'
-#     statusAdmissional = 'Concluído' if doc_admissional != None else 'Pendente'
-#
-#     if doc_residencia != None:
-#         statusResidencia = 'Concluído'
-#         if doc_residencia.dataAtualizacao + relativedelta(years=1) < timezone.now().date():
-#             statusResidencia = 'Expirado'
-#     else:
-#         statusResidencia = 'Pendente'
-#
-#     if doc_periodico != None:
-#         statusPeriodico = 'Concluído'
-#         if doc_periodico.dataAtualizacao + relativedelta(years=2) < timezone.now().date():
-#             statusPeriodico = 'Expirado'
-#     else:
-#         statusPeriodico = 'Pendente'
-#
-#     if request.method == 'GET':
-#         form = modelFormRg(instance=doc)
-#         cnh_form = modelFormCnh(instance=doc_cnh)
-#         cpf_form = modelFormCpf(instance=doc_cpf)
-#         reservista_form = modelFormReservista(instance=doc_reservista)
-#         titulo_form = modelFormTitulo(instance=doc_titulo)
-#         clt_form = modelFormClt(instance=doc_clt)
-#         residencia_form = modelFormResidencia(instance=doc_residencia)
-#         certidao_form = modelFormCertidao(instance=doc_certidao)
-#         admissional_form = modelFormAdmissional(instance=doc_admissional)
-#         periodico_form = modelFormPeriodico(instance=doc_periodico)
-#
-#         context = {
-#             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-#             'form': form, 'cnh_form': cnh_form, 'cpf_form': cpf_form, 'reservista_form': reservista_form,
-#             'titulo_form': titulo_form, 'clt_form': clt_form, 'residencia_form': residencia_form,
-#             'certidao_form': certidao_form, 'admissional_form': admissional_form, 'periodico_form': periodico_form,
-#             'doc': doc, 'doc_cnh': doc_cnh, 'doc_cpf': doc_cpf, 'doc_reservista': doc_reservista,
-#             'doc_titulo': doc_titulo,
-#             'doc_clt': doc_clt, 'doc_residencia': doc_residencia, 'doc_certidao': doc_certidao,
-#             'doc_admissional': doc_admissional,
-#             'doc_periodico': doc_periodico, 'status': status, 'statusCnh': statusCnh, 'statusCpf': statusCpf,
-#             'statusReservista': statusReservista, 'statusTitulo': statusTitulo, 'statusClt': statusClt,
-#             'statusResidencia': statusResidencia, 'statusCertidao': statusCertidao,
-#             'statusAdmissional': statusAdmissional,
-#             'statusPeriodico': statusPeriodico, 'dados': dados, 'username': user, 'first_name': first_name,
-#             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle
-#         }
-#
-#         return render(request, 'ccis/documentos.html', context)
-
-
 @login_required(login_url="/login")
 def departamentos(request):
     # user = get_object_or_404(User, id=user_id)
@@ -614,17 +527,17 @@ def utilitariosCopy(request):
 
 @login_required(login_url="/login")
 def malotes(request):
+
     log = request.user
     log_id = request.user.id
     logName = request.user.first_name
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+
+    print(logFoto)
 
     contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'groupControle': groupControle, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin
                 }
     return render(request, 'ccis/malotes.html', contexto)
 
