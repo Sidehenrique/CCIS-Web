@@ -1377,13 +1377,12 @@ status-negativo{
     font-family: 'asap semibold';
     font-weight: normal;
     font-size: 13px;
+    
 }
 
 .back-button-estoque{
-    position: absolute;
-    font-size: 4vh;
-    left: 216px;
-    top: 74px;
+    position: relative;
+    font-size: 3vh;
 }
 
 .arrow-button{
