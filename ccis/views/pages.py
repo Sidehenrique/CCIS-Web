@@ -55,11 +55,9 @@ def base(request):
 
     dados = dadosPessoais.objects.get(usuario=log)
 
-    groupControle = log.groups.filter(id=28).exists()
-
     context = {
         'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-        'dados': dados, 'is_superadmin': is_superadmin, 'groupControle': groupControle, 'log': log
+        'dados': dados, 'is_superadmin': is_superadmin, 'log': log
         }
 
     return render(request, 'ccis/base.html', context)
@@ -476,9 +474,6 @@ def departamentos(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
-
     first_name = user.first_name
     last_name = user.last_name
 
@@ -487,8 +482,7 @@ def departamentos(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle':groupControle,
-            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'dados': dados, 'username': user, 'first_name': first_name, 'last_name': last_name,
         }
 
         return render(request, 'ccis/departamentos.html', context)

@@ -299,7 +299,7 @@
             <div class="row">
 
                 <!-- Menu Lateral -------------------------------------------------------------------->
-                <div class="col-lg-2 col-md-3 col-12 mt-5 menu-background">
+                <div class="col-lg-2 col-md-3 col-12 menu-background" style="padding-top:80px">
 
                     <!-- Menu -->
                     <ul class="ul-lista-novo">
@@ -314,7 +314,7 @@
                         </li>
 
                         <!-- Gestão e Controle -->
-                        {% if is_in_governanca_group %}
+                        {% if controle %}
                         <li class="li-lista-novo">
 
                             <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoControle' %}" class="li-link-novo"
