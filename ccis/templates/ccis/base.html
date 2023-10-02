@@ -1,6 +1,7 @@
 <!doctype html>
 
 {% load static %}
+{% load custom_tags %}
 
 <html lang="pt-br">
 
@@ -298,7 +299,7 @@
             <div class="row">
 
                 <!-- Menu Lateral -------------------------------------------------------------------->
-                <div class="col-lg-2 col-md-3 col-12 menu-background">
+                <div class="col-lg-2 col-md-3 col-12 mt-5 menu-background">
 
                     <!-- Menu -->
                     <ul class="ul-lista-novo">
@@ -313,27 +314,26 @@
                         </li>
 
                         <!-- Gestão e Controle -->
-                        {% if groupControle or is_superadmin %}
+                        {% if is_in_governanca_group %}
                         <li class="li-lista-novo">
 
                             <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoControle' %}" class="li-link-novo"
                                aria-current="page">
                                <i class="fa-solid fa-handshake"></i>
-                                Gestão E Controle
+                                Gestão & Controle
                             </a>
 
                         </li>
                         {% endif %}
 
                         <!-- Gestão de Metas -->
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoNegocios' %}" class="li-link-novo"
-                                aria-current="page">
-                                <i class="fa-solid fa-bullseye"></i>
-                                Gestão de Negocios
-                            </a>
-                        </li>
+                            <li class="li-lista-novo">
+                                <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoNegocios' %}" class="li-link-novo"
+                                    aria-current="page">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                    Gestão de Negócios
+                                </a>
+                            </li>
 
                             <!-- ferias -->
                             <li class="li-lista-novo">
