@@ -126,16 +126,16 @@
                                         <div class="">
                                             <span class="nav-photo">
                                                 {% if logFoto %}
-                                                <img class="nav-photo" src="{{ logFoto.url }}"
-                                                     alt="" width="36" height="36">
+                                                <img class="nav-photo" src="{{ logFoto.url }}" alt="" width="36"
+                                                    height="36">
 
                                                 {% else %}
 
                                                 {% if dados.sexo == "Masculino" %}
-                                                <img class="nav-photo" src="{% static 'ccis/avatar.jpg' %}"
-                                                     alt="" width="36" height="36">
+                                                <img class="nav-photo" src="{% static 'ccis/avatar.jpg' %}" alt=""
+                                                    width="36" height="36">
 
-                                                {% elif user_data.logSexo == "Feminino" %}
+                                                {% elif dados.sexo == "Feminino" %}
                                                 <img class="nav-photo" src="{% static 'ccis/avatar-feminino.jpg' %}"
                                                     alt="" width="36" height="36">
                                                 {% endif %}
@@ -144,9 +144,9 @@
                                             </span>
                                         </div>
 
-                                    <div class="ml-2 pb-1 d-none d-lg-block">
-                                        <span class="nav-text mb-0">{{ logName }} {{ logLast }}</span>
-                                    </div>
+                                        <div class="ml-2 pb-1 d-none d-lg-block">
+                                            <span class="nav-text mb-0">{{ logName }} {{ logLast }}</span>
+                                        </div>
 
                                     </a>
                                     <!-- Button ----------------------------->
@@ -154,40 +154,49 @@
                                     <!-- dropdown --------------------------->
                                     <ul class="dropdown-menu p-0" onclick="event.stopPropagation();">
 
-                                    <li>
-                                        <div class="accordion" id="accordionPanelsStayOpenExample">
-                                            <div class="accordion-item">
-                                                <!--foto perfil-->
-                                                <div class="d-flex m-3">
-                                                    <span class="nav-photo2">
-                                                        {% if logFoto %}
-                                                        <img class="nav-photo2" src="{{ logFoto.url }}"
-                                                             alt="" width="36" height="36">
-        
-                                                        {% else %}
-        
-                                                        {% if dados.sexo == "Masculino" %}
-                                                        <img class="nav-photo2" src="{% static 'ccis/avatar.jpg' %}"
-                                                             alt="" width="36" height="36">
-        
-                                                        {% elif dados.sexo == "Feminino" %}
-                                                        <img class="nav-photo2" src="{% static 'ccis/avatar-feminino.jpg' %}"
-                                                             alt="" width="36" height="36">
-                                                        {% endif %}
-        
-                                                        {% endif %}
-                                                    </span>
+                                        <li>
+                                            <div class="accordion" id="accordionPanelsStayOpenExample">
+                                                <div class="accordion-item">
 
-                                                    <!--nome perfil-->
-                                                    <div class="ms-2">
-                                                        <h6 class="mb-0">{{ logName }} {{ logLast }}</h6>
-                                                        <span class="me-2">arthur.calorio@sicoobbrasilia.com.br</span>
 
-                                                        <select class="m-0" style="border: none;">
-                                                            <option value="valor1" selected>Online</option>
-                                                            <option value="valor2">Offline</option>
-                                                            <option value="valor3">Ocupado</option>
-                                                        </select>
+                                                    <!--foto perfil-->
+                                                    <div class="d-flex m-3">
+                                                        <a class="" type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#profileModal"
+                                                            data-bs-whatever="@getbootstrap" aria-expanded="false">
+
+                                                            <span class="nav-photo2">
+                                                                {% if logFoto %}
+                                                                <img class="nav-photo2" src="{{ logFoto.url }}" alt=""
+                                                                    width="36" height="36">
+
+                                                                {% else %}
+
+                                                                {% if dados.sexo == "Masculino" %}
+                                                                <img class="nav-photo2"
+                                                                    src="{% static 'ccis/avatar.jpg' %}" alt=""
+                                                                    width="36" height="36">
+
+                                                                {% elif dados.sexo == "Feminino" %}
+                                                                <img class="nav-photo2"
+                                                                    src="{% static 'ccis/avatar-feminino.jpg' %}" alt=""
+                                                                    width="36" height="36">
+                                                                {% endif %}
+
+                                                                {% endif %}
+                                                            </span>
+                                                        </a>
+                                                        <!--nome perfil-->
+                                                        <div class="ms-2">
+                                                            <h6 class="mb-0">{{ logName }} {{ logLast }}</h6>
+                                                            <span
+                                                                class="me-2">arthur.calorio@sicoobbrasilia.com.br</span>
+
+                                                            <select class="m-0" style="border: none;">
+                                                                <option value="valor1" selected>Online</option>
+                                                                <option value="valor2">Offline</option>
+                                                                <option value="valor3">Ocupado</option>
+                                                            </select>
 
                                                         </div>
                                                         <!--nome perfil-->
