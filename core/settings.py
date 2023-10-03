@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'ccis.context_processors.controle_button',
+                'ccis.context_processors.user_data',
             ],
         },
     },
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dados_rh',
+        'NAME': 'testes',
         'USER': 'root',
         'PASSWORD': 'Sicoob4155@@',
         'HOST': '10.6.32.24',
