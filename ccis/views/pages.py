@@ -543,8 +543,7 @@ def utilitariosHome(request):
 
 
 def dev(request):
-    pass
-
+    return render(request, 'ccis/dev.html')
 
 @login_required(login_url="/login")
 def processo(request):
