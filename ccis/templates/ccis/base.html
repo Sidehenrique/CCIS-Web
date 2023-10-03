@@ -125,15 +125,15 @@
 
                                         <div class="">
                                             <span class="nav-photo">
-                                                {% if logFoto %}
-                                                <img class="nav-photo" src="{{ logFoto.url }}" alt="" width="36"
-                                                    height="36">
+                                                {% if user_data.logFoto %}
+                                                <img class="nav-photo" src="{{ logFoto.url }}"
+                                                     alt="" width="36" height="36">
 
                                                 {% else %}
 
-                                                {% if dados.sexo == "Masculino" %}
-                                                <img class="nav-photo" src="{% static 'ccis/avatar.jpg' %}" alt=""
-                                                    width="36" height="36">
+                                                {% if user_data.logSexo == "Masculino" %}
+                                                <img class="nav-photo" src="{% static 'ccis/avatar.jpg' %}"
+                                                     alt="" width="36" height="36">
 
                                                 {% elif dados.sexo == "Feminino" %}
                                                 <img class="nav-photo" src="{% static 'ccis/avatar-feminino.jpg' %}"
@@ -144,9 +144,9 @@
                                             </span>
                                         </div>
 
-                                        <div class="ml-2 pb-1 d-none d-lg-block">
-                                            <span class="nav-text mb-0">{{ logName }} {{ logLast }}</span>
-                                        </div>
+                                    <div class="ml-2 pb-1 d-none d-lg-block">
+                                        <span class="nav-text mb-0">{{ user_data.logName }} {{ user_data.logLast }}</span>
+                                    </div>
 
                                     </a>
                                     <!-- Button ----------------------------->
@@ -192,11 +192,11 @@
                                                             <span
                                                                 class="me-2">arthur.calorio@sicoobbrasilia.com.br</span>
 
-                                                            <select class="m-0" style="border: none;">
-                                                                <option value="valor1" selected>Online</option>
-                                                                <option value="valor2">Offline</option>
-                                                                <option value="valor3">Ocupado</option>
-                                                            </select>
+                                                        <select class="m-0" style="border: none;">
+                                                            <option value="valor1" selected>Disponivel</option>
+                                                            <option value="valor2">Ocupado</option>
+                                                            <option value="valor3">Ausente</option>
+                                                        </select>
 
                                                         </div>
                                                         <!--nome perfil-->
