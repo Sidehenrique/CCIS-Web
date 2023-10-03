@@ -65,6 +65,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'ccis.context_processors.controle_button',
+                'ccis.context_processors.user_data',
+                'ccis.context_processors.foto_profile',
             ],
         },
     },
