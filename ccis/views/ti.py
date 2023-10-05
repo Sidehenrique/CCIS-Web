@@ -207,3 +207,9 @@ def estoque(request):
 def solicit(request):
 
     return render(request, 'ti/solicit.html')
+
+
+@login_required(login_url="/login")
+def notebook(request):
+
+    return render(request, 'ti/estoque/notebook.html')

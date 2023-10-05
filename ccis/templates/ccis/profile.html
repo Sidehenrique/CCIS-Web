@@ -118,27 +118,44 @@
         <!-- avatar -------------------------->
         <div class="col-md-5 col-lg-3 d-none d-sm-block d-sm-none d-md-block profile-info mb-3 container">
 
-            {% if dados.foto %}
-            <img class="profile-user"
-                 src="{{ dados.foto.url }}">
+            <div class="mt-4">
 
-            {% else %}
+                <a type="button" data-bs-toggle="modal"
+                   data-bs-target="#profileModal"
+                   data-bs-whatever="@getbootstrap"
+                   aria-expanded="false" class="bnt profile-edit">
 
-            {% if dados.sexo == "Masculino" %}
-            <img class="profile-user"
-                 src="{% static 'ccis/avatar.jpg' %}">
 
-            {% elif dados.sexo == "Feminino" %}
-            <img class="profile-user"
-                 src="{% static 'ccis/avatar-feminino.jpg' %}">
+                    {% if dados.foto %}
+                    <img class="profile-edit"
+                         src="{{ dados.foto.url }}">
 
-            {% endif %}
+                    {% else %}
 
-            {% endif %}
+                    {% if dados.sexo == "Masculino" %}
+                    <img class="profile-edit"
+                         src="{% static 'ccis/avatar.jpg' %}">
 
-            <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
+                    {% elif dados.sexo == "Feminino" %}
+                    <img class="profile-edit"
+                         src="{% static 'ccis/avatar-feminino.jpg' %}">
 
-            <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
+                    {% endif %}
+
+                    {% endif %}
+
+                    <div class="icone-lapis">
+                        <i class="far fa-pen-to-square"></i>
+                    </div>
+
+                </a>
+
+                <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
+
+                <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
+
+            </div>
+
 
         </div>
         <!-- avatar -------------------------->

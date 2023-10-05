@@ -97,6 +97,7 @@ urlpatterns = [
     path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
     path('ti/estoque', ti.estoque, name='estoque'),
     path('ti/solicit', ti.solicit, name='solicit'),
+    path('ti/estoque/notebook', ti.notebook, name='notebook'),
 
     path('dev', pages.dev, name='dev'),
 
