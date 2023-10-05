@@ -21,7 +21,7 @@ urlpatterns = [
     path('departamentos', pages.departamentos, name='departamentos'),
 
     path('processos', pages.processo, name='processos'),
-    path('obter_informacoes_card/<int:card_id>/', pages.obter_informacoes_card, name='obter_informacoes_card'),
+    path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitariosHome'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),

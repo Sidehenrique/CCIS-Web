@@ -185,31 +185,139 @@ function handleScroll(event) {
 
 //---------------------------- MODAL DO PROCESSO -----------------------------------------------------------------------
 
-$(document).ready(function () {
-    // Manipulador de clique para abrir o modal
-    $('.card').click(function () {
-        // Captura o ID do card clicado
-        var cardId = $(this).data('card-id');
+//$(document).ready(function () {
+//    // Adicione um evento de clique aos botões dos cards para abrir o modal
+//    $('.processo-link').on('click', function () {
+//        // Obtenha o ID do card a partir do atributo data-card-id
+//        var card_id = $(this).data('card-id');
+//
+//        // Faça uma solicitação AJAX para obter informações do card
+//        $.ajax({
+//            url: '/obter_informacoes_card/' + card_id + '/',
+//            method: 'GET',
+//            dataType: 'json',
+//            success: function (data) {
+//                // Preencha o modal com os dados obtidos
+//
+//                // Campos do modal relacionados ao card
+//                $('#modal-assunto').text(data.assunto);
+//                $('#modal-servico').text(data.servico);
+//                $('#modal-setor').text(data.setor_do_card);
+//                $('#modal-card-id').text(data.card_id);
+//
+//                // Campos relacionados ao solicitante
+//                $('#modal-nome-completo').text(data.nomeCompleto);
+//                $('#modal-cpf').text(data.cpf);
+//                $('#modal-sexo').text(data.sexo);
+//                $('#modal-foto').attr('src', data.foto);
+//
+//                // Campos relacionados ao profissional
+//                $('#modal-area').text(data.area);
+//
+//                // Campos relacionados ao contato
+//                $('#modal-email-corporativo').text(data.emailCorporativo);
+//                $('#modal-ramal').text(data.ramal);
+//
+//                // Preencha o histórico
+//                var historicoHtml = '';
+//                for (var i = 0; i < data.historico.length; i++) {
+//                    historicoHtml += '<div>' + data.historico[i].previous_status + ' -> ' + data.historico[i].current_status + '</div>';
+//                }
+//                $('#modal-historico').html(historicoHtml);
+//
+//                // Preencha o histórico de mensagens
+//                var mensagemHtml = '';
+//                for (var j = 0; j < data.message_history.length; j++) {
+//                    mensagemHtml += '<div>';
+//                    mensagemHtml += '<p>' + data.message_history[j].message + '</p>';
+//                    mensagemHtml += '<p>Enviado por: ' + data.message_history[j].author_name + '</p>';
+//                    mensagemHtml += '<p>Data e hora: ' + data.message_history[j].timestamp + '</p>';
+//                    if (data.message_history[j].attachment) {
+//                        mensagemHtml += '<p>Anexo: <a href="' + data.message_history[j].attachment + '">Download</a></p>';
+//                    }
+//                    mensagemHtml += '</div>';
+//                }
+//                $('#modal-message-history').html(mensagemHtml);
+//
+//                // Abra o modal
+//                $('#processoModal').modal('show');
+//            },
+//            error: function () {
+//                alert('Erro ao carregar informações do card.');
+//            }
+//        });
+//    });
+//});
 
-        // Use AJAX para buscar as informações do card com base no ID
-        $.ajax({
-            url: '/obter_informacoes_card/' + cardId + '/', // Substitua pela URL correta
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                // Atualiza o título do modal com as informações obtidas
-                $('#modalTitle').text(data.assunto + ' / ' + data.service);
 
-                // Abre o modal
-                $('#cardModal').modal('show');
-            },
-            error: function (error) {
-                console.error('Erro ao obter informações do card: ' + error);
-            }
-        });
+
+
+// Função para carregar as informações do card no modal
+function carregarInformacoesCard(card_id) {
+    $.ajax({
+        url: `/obter_informacoes_card/${card_id}/`,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            // Preencha os campos do modal com as informações obtidas
+            $('#assuntoInfo').text(data.assunto);
+            $('#servicoInfo').text(data.servico);
+
+            // Preencha os campos do solicitante
+            $('#nomeCompleto').text(data.nomeCompleto);
+            $('#cpf').text(data.cpf);
+            $('#usuarioSisbr').text(data.usuario_sisbr);
+            $('#email').text(data.email);
+            $('#ramal').text(data.ramal);
+            $('#setor').text(data.setor);
+
+            // Preencha o histórico
+            var historicoHtml = '';
+            data.historico.forEach(function (historico) {
+                historicoHtml += `<li>${historico.previous_status} &rarr; ${historico.current_status} em ${historico.datetime}</li>`;
+            });
+            $('#historicoList').html(historicoHtml);
+
+            // Preencha as mensagens
+            var mensagensHtml = '';
+            data.message_history.forEach(function (mensagem) {
+                mensagensHtml += `
+                    <div class="mt-2 p-2" style="background-color:#d9d9d9">
+                        <div class="row pt-2">
+                            <div class="col-auto me-auto">
+                                <h6>
+                                    <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}" alt="" width="40" height="40">
+                                    ${mensagem.author_name}
+                                </h6>
+                            </div>
+                            <div class="col-auto">
+                                <span>${mensagem.timestamp}</span>
+                            </div>
+                        </div>
+                        <div class="p-2">
+                            <p>${mensagem.message}</p>
+                            ${mensagem.attachment ? `<a href="${mensagem.attachment}" download>Download Anexo</a>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            $('#mensagemList').html(mensagensHtml);
+
+            // Abra o modal
+            $('#processoModal').modal('show');
+        },
+        error: function () {
+            alert('Erro muito errado ao carregar informações do card.');
+        }
     });
-});
+}
 
+// Quando o modal for mostrado, carregue as informações do card
+$('#processoModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var card_id = button.data('card-id');
+    carregarInformacoesCard(card_id);
+});
 
 
 
