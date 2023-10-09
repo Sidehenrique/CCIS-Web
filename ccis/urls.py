@@ -23,7 +23,7 @@ urlpatterns = [
     path('processos', pages.processo, name='processos'),
     path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
 
-    path('utilitariosHome', pages.utilitariosHome, name='utilitariosHome'),
+    path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
 
     path('malotes', pages.malotes, name='malotes'),
@@ -97,7 +97,11 @@ urlpatterns = [
     path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
     path('ti/estoque', ti.estoque, name='estoque'),
     path('ti/solicit', ti.solicit, name='solicit'),
+
     path('ti/estoque/notebook', ti.notebook, name='notebook'),
+    path('salvaNotebook', ti.salvaNotebook, name='salvaNotebook'),
+
+
 
     path('dev', pages.dev, name='dev'),
 

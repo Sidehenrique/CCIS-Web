@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django.shortcuts import render
+from ccis.forms import ModelFormNotebook
 from .. models import dadosPessoais, Card, MessageHistory, CardSetorHistory
 from .. forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
@@ -85,8 +87,10 @@ def request_acessos_ti(request):
     if request.method == 'POST':
         form = modelFormAcessosTI(request.POST, request.FILES)
         if form.is_valid():
+
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.colunaAtual = "1"
             card.sector = get_object_or_404(Group, id=1)
             card.save()
 
@@ -101,6 +105,7 @@ def request_acessos_ti(request):
             history_entry.save()
 
             attachment = request.FILES.get('attachment')
+
             descricao = form.cleaned_data.get('descricao')
             if descricao:
                 message_history = MessageHistory(
@@ -112,6 +117,7 @@ def request_acessos_ti(request):
                 message_history.save()
 
             return redirect('ti_home')
+
     else:
         form = modelFormAcessosTI()
 
@@ -120,11 +126,14 @@ def request_acessos_ti(request):
 
 @login_required(login_url="/login")
 def request_equipamentos_ti(request):
+
     if request.method == 'POST':
         form = modelFormEquipamentosTI(request.POST, request.FILES)
         if form.is_valid():
+
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.colunaAtual = "1"
             card.sector = get_object_or_404(Group, id=1)
             card.save()
 
@@ -139,6 +148,7 @@ def request_equipamentos_ti(request):
             history_entry.save()
 
             attachment = request.FILES.get('attachment')
+
             descricao = form.cleaned_data.get('descricao')
             if descricao:
                 message_history = MessageHistory(
@@ -150,6 +160,7 @@ def request_equipamentos_ti(request):
                 message_history.save()
 
             return redirect('ti_home')
+
     else:
         form = modelFormAcessosTI()
 
@@ -158,11 +169,14 @@ def request_equipamentos_ti(request):
 
 @login_required(login_url="/login")
 def request_servicos_ti(request):
+
     if request.method == 'POST':
         form = modelFormSevicosTI(request.POST, request.FILES)
         if form.is_valid():
+
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.colunaAtual = "1"
             card.sector = get_object_or_404(Group, id=1)
             card.save()
 
@@ -177,6 +191,7 @@ def request_servicos_ti(request):
             history_entry.save()
 
             attachment = request.FILES.get('attachment')
+
             descricao = form.cleaned_data.get('descricao')
             if descricao:
                 message_history = MessageHistory(
@@ -221,4 +236,21 @@ def solicit(request):
 @login_required(login_url="/login")
 def notebook(request):
 
-    return render(request, 'ti/estoque/notebook.html')
+    form = ModelFormNotebook(request.POST)
+    return render(request, 'ti/estoque/notebook.html', {'form': form})
+
+
+def salvaNotebook(request):
+    if request.method == 'POST':
+        form = ModelFormNotebook(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('notebook')  # Redirecione de volta para a página 'notebook' após o salvamento
+
+    else:
+        form = ModelFormNotebook()
+
+    return render(request, 'ti/estoque/notebook.html', {'form': form})
+
+    return render(request, 'ti/solicit.html')
+

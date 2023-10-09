@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import FileInput
+from .models import Notebook
 
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
@@ -166,7 +167,9 @@ class modelFormEscolaridade(forms.ModelForm):
 class modelFormCertificacao(forms.ModelForm):
     class Meta:
         model = certificacao
-        fields = ('nome', 'organizacaoEmissora', 'dataEmissao', 'dataExpiracao', 'docCertificado','certiAnbima','anexoAnbima')
+        fields = (
+            'nome', 'organizacaoEmissora', 'dataEmissao', 'dataExpiracao', 'docCertificado', 'certiAnbima',
+            'anexoAnbima')
 
         widgets = {'nome': forms.TextInput(attrs={'class': 'form-control'}),
                    'organizacaoEmissora': forms.TextInput(attrs={'class': 'form-control'}),
@@ -404,11 +407,13 @@ class modelFormAcessosTI(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}), required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
 
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment')
+
 
 class modelFormEquipamentosTI(forms.ModelForm):
     CHOICES_Servico = [
@@ -428,11 +433,13 @@ class modelFormEquipamentosTI(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}), required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
 
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment')
+
 
 class modelFormSevicosTI(forms.ModelForm):
     CHOICES_Servico = [
@@ -458,3 +465,91 @@ class modelFormSevicosTI(forms.ModelForm):
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+# ESTOQUE TI  -------------------------------------------------------------->
+
+class ModelFormNotebook(forms.ModelForm):
+    MEMORIA_RAM_CHOICES = [
+        ('4GB', '4GB'),
+        ('8GB', '8GB'),
+        ('12GB', '12GB'),
+        ('16GB', '16GB'),
+    ]
+
+    PROCESSADOR_CHOICES = [
+        ('I3', 'I3'),
+        ('I5', 'I5'),
+        ('Ryzen 5', 'Ryzen 5'),
+        ('Ryzen 7', 'Ryzen 7'),
+    ]
+
+    ARMAZENAMENTO_CHOICES = [
+        ('SSD', 'SSD'),
+        ('HDD', 'HDD'),
+    ]
+
+    GB_CHOICES = [
+        ('120GB', '120GB'),
+        ('240GB', '240GB'),
+        ('256GB', '256GB'),
+        ('480GB', '480GB'),
+        ('512GB', '512GB'),
+        ('1TB)', '1TB'),
+    ]
+
+    ANTIVIRUS_CHOICES = [
+        ('Ativado', 'Ativado'),
+        ('Desativado', 'Desativado'),
+    ]
+
+    STATUS_CHOICES = [
+        ('ÓTIMO', 'ÓTIMO'),
+        ('MUITO BOM', 'MUITO BOM'),
+        ('BOM', 'BOM'),
+        ('MEDIANO', 'MEDIANO'),
+        ('RUIM', 'RUIM'),
+        ('MUITO RUIM', 'MUITO RUIM'),
+    ]
+
+    memoria_ram = forms.ChoiceField(choices=MEMORIA_RAM_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    processador = forms.ChoiceField(choices=PROCESSADOR_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    armazenamento = forms.ChoiceField(choices=ARMAZENAMENTO_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    gb = forms.ChoiceField(choices=GB_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    antiVirus = forms.ChoiceField(choices=ANTIVIRUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+
+
+    class Meta:
+        model = Notebook
+        fields = (
+            'modelo', 'marca', 'processador', 'geracao', 'memoria_ram', 'armazenamento', 'gb', 'responsavel', 'setor',
+            'unidade','email', 'serviceTag', 'antiVirus', 'chaveWin', 'chaveOffice', 'status', )
+
+
+        widgets = {'modelo': forms.TextInput(attrs={'class': 'form-control'}),
+                   'marca': forms.TextInput(attrs={'class': 'form-control'}),
+                   'processador': forms.Select(attrs={'class': 'form-control'}),
+                   'geracao': forms.TextInput(attrs={'class': 'form-control'}),
+                   'memoria_ram': forms.Select(attrs={'class': 'form-control'}),
+                   'armazenamento': forms.Select(attrs={'class': 'form-control'}),
+                   'gb': forms.Select(attrs={'class': 'form-control'}),
+                   'status': forms.Select(attrs={'class': 'form-control'}),
+                   'responsavel': forms.TextInput(attrs={'class': 'form-control'}),
+                   'email': forms.TextInput(attrs={'class': 'form-control'}),
+                   'setor': forms.TextInput(attrs={'class': 'form-control'}),
+                   'unidade': forms.TextInput(attrs={'class': 'form-control'}),
+                   'serviceTag': forms.TextInput(attrs={'class': 'form-control'}),
+                   'antiVirus': forms.TextInput(attrs={'class': 'form-control'}),
+                   'chaveWin': forms.TextInput(attrs={'class': 'form-control'}),
+                   'chaveOffice': forms.TextInput(attrs={'class': 'form-control'}),
+                   }
+
+    def __init__(self, *args, **kwargs):
+        super(ModelFormNotebook, self).__init__(*args, **kwargs)
+
+        # Tornar os campos não obrigatórios
+        self.fields['serviceTag'].required = False
+
+        self.fields['chaveWin'].required = False
+        self.fields['chaveOffice'].required = False

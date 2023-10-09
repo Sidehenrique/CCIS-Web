@@ -475,7 +475,7 @@ class CustomGroupInfo(models.Model):
         return self.group.name
 
 
-#-------- Tabelas de Processo ------------------------------------------------------------------------------------------
+# -------- Tabelas de Processo ------------------------------------------------------------------------------------------
 class Card(models.Model):
     idCard = models.AutoField(db_column='idCard', primary_key=True)
     assunto = models.CharField(max_length=45, blank=False, null=True)
@@ -520,10 +520,35 @@ class CardSetorHistory(models.Model):
 class OperatorRating(models.Model):
     idOperatorRating = models.AutoField(db_column='idOperatorRating', primary_key=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField(choices=[(1, '1 estrela'), (2, '2 estrelas'), (3, '3 estrelas'), (4, '4 estrelas'), (5, '5 estrelas')])
+    rating = models.PositiveIntegerField(
+        choices=[(1, '1 estrela'), (2, '2 estrelas'), (3, '3 estrelas'), (4, '4 estrelas'), (5, '5 estrelas')])
     comment = models.TextField(blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
     anonymous = models.BooleanField(default=False)
 
     def __str__(self):
         return self.rating
+
+# -------- Estoque ------------------------------------------------------------------------------------------------------
+
+class Notebook(models.Model):
+    modelo = models.CharField(max_length=100)
+    marca = models.CharField(max_length=100)
+    processador = models.CharField(max_length=100)
+    geracao = models.CharField(max_length=100)
+    memoria_ram = models.CharField(max_length=100)
+    armazenamento = models.CharField(max_length=100)
+    gb = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
+    responsavel = models.CharField(max_length=100)
+    setor = models.CharField(max_length=100)
+    unidade = models.CharField(max_length=100)
+    email = models.EmailField()
+    serviceTag = models.CharField(max_length=100)
+    antiVirus = models.CharField(max_length=100)
+    chaveWin = models.CharField(max_length=100)
+    chaveOffice = models.CharField(max_length=100)
+
+
+    def __str__(self):
+        return self.modelo
