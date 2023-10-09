@@ -103,6 +103,7 @@
                        data-bs-toggle="modal"
                        data-bs-target="#processoModal"
                        data-card-id="{{ card.idCard }}"
+                       onclick="loadCardInfo({{ card.idCard }})"
                        id="card-link-{{ card.idCard }}">
                        <!-- Falta uma informação aqui referente ao id -->
 
@@ -468,12 +469,15 @@
                         <!-- Dados solicitante -->
                         <div class="col-4" style="border-right:1px solid #818181">
 
+
                             <div class="col-auto me-auto">
 
-                                <span class="processo-tag-cod" id="codInfo">N° </span>
+                                <span class="processo-tag-cod" id="codInfo"></span>
                                 <span class="processo-tag-setor" id="sectorInfo"></span>
 
                             </div>
+
+
 
                             <h6 class="mt-2">Dados do Solicitante</h6>
 
@@ -484,18 +488,18 @@
                                 <ul class="card-ul">
 
                                     <li class="card-li">
-                                        <i class="fa-solid fa-user card-icon"></i>
-                                        Chaves de souza santos
+                                        <i class="fa-solid fa-user card-icon" ></i>
+                                        <span id="nomeSolicitante"></span>
                                     </li>
 
                                     <li class="card-li">
                                         <i class="fa-sharp fa-solid fa-building card-icon"></i>
-                                        012.326.157-23
+                                        <span id="cpfSolicitante"></span>
                                     </li>
 
                                     <li class="">
-                                        <i class="fa-solid fa-briefcase card-icon"></i>
-                                        Chavess4155_30
+                                        <i class="fa-solid fa-briefcase card-icon" ></i>
+                                        <span id="loginSolicitante"></span>
                                     </li>
 
                                 </ul>
@@ -506,17 +510,17 @@
 
                                     <li class="card-li">
                                         <i class="fa-solid fa-at card-icon"></i>
-                                        chaves.com@gmail.com.br
+                                        <span id="emailSolicitante"></span>
                                     </li>
 
                                     <li class="card-li">
                                         <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
-                                        201
+                                        <span id="ramalSolicitante"></span>
                                     </li>
 
                                     <li class="card-li">
                                         <i class="fa-solid fa-location-dot card-icon"></i>
-                                        Ceilandia
+                                        <span id="areaSolicitante"></span>
                                     </li>
 
                                 </ul>
@@ -530,16 +534,15 @@
 
                             <h6 class="mt-2">Histórico</h6>
 
+
                             <div class="d-flex container-buttons" onwheel="handleScroll(event)">
-
-                                <span class="processo-tag-historico me-1"><i
-                                        class="fa-regular fa-compass"></i> Triagem</span>
-                                <span class="processo-tag-historico me-1"><i
-                                        class="fa-regular fa-compass"></i> Em Atendimento</span>
-                                <span class="processo-tag-historico-active me-1"><i
-                                        class="fa-regular fa-compass"></i> Finalizado</span>
-
+                                {% for historico in card.setor_history.all %}
+                                <span class="processo-tag-historico {% if historico.setor_atual == card.sector %}processo-tag-historico-active{% endif %}">
+                                <i class="fa-regular fa-compass"></i> {{ historico.setor_atual }}
+                                </span>
+                                {% endfor %}
                             </div>
+
 
                         </div>
                         <!-- Dados solicitante -->

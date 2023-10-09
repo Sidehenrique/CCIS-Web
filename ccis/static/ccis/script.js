@@ -227,11 +227,37 @@ function loadCardInfo(cardId) {
             $("#assuntoInfo").text(data.assunto);
             $("#servicoInfo").text(` / ${data.service}`);
             $("#codInfo").text(`N° ${data.idCard}`);
-            $("#sectorInfo").text(data.setor_nome);
 
-            // Abra o modal
-            $('#processoModal').modal('show');
-        },
+            // Preencha os campos relacionados ao solicitante
+            $("#nomeSolicitante").text(data.solicitante_dados_pessoais.nomeCompleto);
+            $("#sexoSolicitante").text(data.solicitante_dados_pessoais.sexo);
+            $("#fotoSolicitante").attr("src", data.solicitante_dados_pessoais.foto);
+            $("#cpfSolicitante").text(data.solicitante_dados_pessoais.cpf);
+
+            // Preencha os campos relacionados ao solicitante
+            $("#loginSolicitante").text(data.solicitante.username);
+            $("#emailSolicitante").text(data.solicitante.email);
+            $("#ramalSolicitante").text(data.solicitante_contato.ramal);
+            $("#areaSolicitante").text(data.solicitante_profissional.area);
+
+
+
+
+         // Obtenha o setor_atual da tabela CardSetorHistory -----------
+        if (data.setor_history && data.setor_history.length > 0) {
+        const setorAtual = data.setor_history[0].setor_atual;
+        $("#sectorInfo").text(setorAtual);
+        }
+
+        else {
+        $("#sectorInfo").text("Setor não encontrado");
+
+        }
+
+        // Abra o modal
+        $('#processoModal').modal('show');
+            },
+
         error: function () {
             alert('Erro ao buscar os detalhes do card');
         }

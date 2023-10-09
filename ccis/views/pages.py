@@ -551,9 +551,6 @@ def processo(request):
         queryset=CardSetorHistory.objects.order_by('-data_hora'))
     )
 
-    # cards = Card.objects.all()
-    # history = CardSetorHistory.objects.all()
-
     if request.method == 'GET':
         context = {
             'cards': cards,
@@ -566,15 +563,5 @@ def processo(request):
 def card_detl(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
     serializer = CardSerializer(card)
-
-    setor_id = card.sector.id
-    try:
-        setor = Group.objects.get(id=setor_id)
-        setor_nome = setor.name  # Aqui você obtém o nome do setor
-    except Group.DoesNotExist:
-        setor_nome = "Setor não encontrado"  # Ou outra mensagem de erro
-
-    # Adicione o nome do setor aos dados do card
-    serializer.data['setor_nome'] = setor_nome
 
     return Response(serializer.data)
