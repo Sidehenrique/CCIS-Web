@@ -1,8 +1,8 @@
 import requests
-
-from django.utils import timezone
-from dateutil.relativedelta import relativedelta
-
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from ..serializers import CardSerializer
+from django.core import serializers
 from django.http import JsonResponse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User, Group
 
-from .. models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
+from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
     docCertidao, docAdmissional, docPeriodico, docCursos, profissional, Card, CardSetorHistory, MessageHistory
 
@@ -45,7 +45,6 @@ def infoClima():
 
 
 def base(request):
-
     log = request.user
     log_id = request.user.id
     logName = request.user.first_name
@@ -58,7 +57,7 @@ def base(request):
     context = {
         'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
         'dados': dados, 'is_superadmin': is_superadmin, 'log': log
-        }
+    }
 
     return render(request, 'ccis/base.html', context)
 
@@ -398,7 +397,8 @@ def usuario(request):
                    'porcentagem_M': porcentagem_M, 'userCreation': form, 'dadosTable': dadosTable,
                    'dadosP': dados_form, 'usuario': usuario, 'end': endereco_form, 'dependentes_form': dependentes_form,
                    'profissional_form': profissional_form, 'dadosBancarios_form': dadosBancarios_form,
-                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao, 'groupControle':groupControle,
+                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao,
+                   'groupControle': groupControle,
                    'is_superadmin': is_superadmin}
 
         return render(request, 'rh/usuario.html', context)
@@ -442,7 +442,7 @@ def conta(request):
     context = {'dados': dados, 'first_name': first_name, 'last_name': last_name,
                'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao': group_gestao,
-               'is_superadmin': is_superadmin, 'groupControle':groupControle,
+               'is_superadmin': is_superadmin, 'groupControle': groupControle,
                'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid}
 
     if request.method == 'GET':
@@ -512,7 +512,7 @@ def utilitariosCopy(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle':groupControle,
+            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
         }
 
@@ -521,7 +521,6 @@ def utilitariosCopy(request):
 
 @login_required(login_url="/login")
 def malotes(request):
-
     log = request.user
     log_id = request.user.id
     logName = request.user.first_name
@@ -539,9 +538,9 @@ def malotes(request):
 def utilitariosHome(request):
     return render(request, 'ccis/utilitariosHome.html')
 
-
 def dev(request):
     return render(request, 'ccis/dev.html')
+
 
 @login_required(login_url="/login")
 def processo(request):
@@ -563,85 +562,17 @@ def processo(request):
 
     if request.method == 'GET':
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,'dados': dados,
+            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'dados': dados,
             'username': user, 'first_name': first_name, 'last_name': last_name, 'is_superadmin': is_superadmin,
             'cards': cards
         }
 
         return render(request, 'ccis/processo.html', context)
-# ----------------------------------------------------------------------------------------------------------------------
 
 
-def obter_informacoes_card(request, card_id):
-    card = get_object_or_404(Card, id=card_id)
-
-    # Obtenha informações do card
-    card_info = {
-        'card_id': card.id,  # ID do card
-        'assunto': card.assunto,
-        'servico': card.service,
-        'setor_do_card': card.sector,
-    }
-
-    # Obtenha informações do solicitante
-    solicitante = card.solicitante  # Suponhamos que este campo seja uma instância de User
-    if solicitante:
-        # Obtenha informações da tabela DadosPessoais relacionada ao solicitante
-        dados_pessoais = dadosPessoais.objects.get(usuario=solicitante)
-        if dados_pessoais:
-            card_info['nomeCompleto'] = dados_pessoais.nomeCompleto
-            card_info['cpf'] = dados_pessoais.cpf
-            card_info['sexo'] = dados_pessoais.sexo
-            card_info['foto'] = dados_pessoais.foto
-
-        # Obtenha informações da tabela Profissional relacionada ao solicitante
-        profissional_info = profissional.objects.get(usuario=solicitante)
-        if profissional_info:
-            card_info['area'] = profissional_info.area
-
-        # Obtenha informações da tabela Contato relacionada ao solicitante
-        contato_info = enderecoContato.objects.get(usuario=solicitante)
-        if contato_info:
-            card_info['emailCorporativo'] = contato_info.emailCorporativo
-            card_info['ramal'] = contato_info.ramal
-
-        historico_info = CardSetorHistory.objects.filter(card_id=card).order_by('datetime')
-        historico_list = []
-
-        # Tratamento historico ------------------------------------------------------------
-        for historico in historico_info:
-            historico_dict = {
-                'previous_status': historico.previous_status,
-                'current_status': historico.current_status,
-                'previous_sector_id': historico.previous_sector,
-                'current_sector_id': historico.current_sector,
-                'datetime': historico.datetime,
-            }
-            historico_list.append(historico_dict)
-
-        card_info['historico'] = historico_list
-
-        # Tratamento Mensagens ------------------------------------------------------------
-        message_history = MessageHistory.objects.filter(card=card)
-        message_history_list = []
-
-        for entry in message_history:
-            entry_info = {
-                'message': entry.message,
-                'author_name': entry.remetente.get_full_name() if entry.remetente else 'Anônimo',
-                'timestamp': entry.datetime.strftime('%d/%m/%Y %H:%M:%S'),
-            }
-
-            # Adicione o campo de arquivo (caso haja anexos)
-            if entry.attachment:
-                entry_info['attachment'] = entry.attachment.url
-
-            message_history_list.append(entry_info)
-
-        # Adicione a lista de histórico de mensagens ao dicionário card_info
-        card_info['message_history'] = message_history_list
-
-        print(card_info)
-
-    return JsonResponse(card_info)
-
+@login_required(login_url="/login")
+@api_view(['GET'])
+def card_detl(request, card_id):
+    card = get_object_or_404(Card, idCard=card_id)
+    serializer = CardSerializer(card)
+    return Response(serializer.data)

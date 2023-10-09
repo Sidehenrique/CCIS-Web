@@ -30,3 +30,4 @@ def foto_profile(request):
     midia = ModelFormMidia()
 
     return {'midia': midia}
+
