@@ -94,15 +94,17 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-                {% if card.sector.id == 1 %}
-                    {% if card.colunaAtual == '1' %}
+                {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+                    {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
                     <!-- card ---------------------------->
                     <a class="d-grid processo-link mb-2"
                        type="button"
                        data-bs-toggle="modal"
                        data-bs-target="#processoModal"
-                       data-card-id="{{ card.id }}">
+                       data-card-id="{{ card.idCard }}"
+                       id="card-link-{{ card.idCard }}">
+                       <!-- Falta uma informação aqui referente ao id -->
 
                         <div class="processo-card">
 
@@ -114,7 +116,7 @@
                                 </div>
 
                                 <div class="col-auto">
-                                    <span class="processo-tag-setor">{{card.sector.name}}</span>
+                                    <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                                 </div>
 
                             </div>
@@ -448,7 +450,8 @@
                 <!-- header --------------------->
                 <div class="modal-header">
 
-                    <h5 class="modal-title" id="assuntoInfo">SISBR <span style="color:gray" id="servicoInfo">/ Redefinição</span></h5>
+                    <h5 class="modal-title me-1" id="assuntoInfo"></h5>
+                    <span class="ms-2" style="color:gray;" id="servicoInfo"></span>
 
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -465,11 +468,10 @@
                         <!-- Dados solicitante -->
                         <div class="col-4" style="border-right:1px solid #818181">
 
-
                             <div class="col-auto me-auto">
 
-                                <span class="processo-tag-cod">N° 01</span>
-                                <span class="processo-tag-setor">tecnologia</span>
+                                <span class="processo-tag-cod" id="codInfo">N° </span>
+                                <span class="processo-tag-setor" id="sectorInfo"></span>
 
                             </div>
 

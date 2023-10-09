@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from .. models import dadosPessoais, Card, MessageHistory
+from .. models import dadosPessoais, Card, MessageHistory, CardSetorHistory
 from .. forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
 
@@ -68,21 +68,13 @@ def ti_home(request):
 
 @login_required(login_url="/login")
 def new_request(request):
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+
 
     acessos = modelFormAcessosTI()
     equipamentos = modelFormEquipamentosTI()
     servicos = modelFormSevicosTI()
 
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'is_superadmin': is_superadmin, 'acessos': acessos, 'equipamentos':equipamentos, 'servicos':servicos}
+    contexto = {'acessos': acessos, 'equipamentos':equipamentos, 'servicos':servicos}
 
     return render(request, 'ti/new_request.html', contexto)
 
@@ -93,15 +85,22 @@ def request_acessos_ti(request):
     if request.method == 'POST':
         form = modelFormAcessosTI(request.POST, request.FILES)
         if form.is_valid():
-
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
             card.sector = get_object_or_404(Group, id=1)
             card.save()
 
-            attachment = request.FILES.get('attachment')
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Tecnologia",  # Setor atual
+            )
+            history_entry.save()
 
+            attachment = request.FILES.get('attachment')
             descricao = form.cleaned_data.get('descricao')
             if descricao:
                 message_history = MessageHistory(
@@ -113,27 +112,33 @@ def request_acessos_ti(request):
                 message_history.save()
 
             return redirect('ti_home')
-
     else:
         form = modelFormAcessosTI()
 
     return render(request, 'ti/new_request.html', {'form': form})
 
+
 @login_required(login_url="/login")
 def request_equipamentos_ti(request):
-
     if request.method == 'POST':
         form = modelFormEquipamentosTI(request.POST, request.FILES)
         if form.is_valid():
-
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
             card.sector = get_object_or_404(Group, id=1)
             card.save()
 
-            attachment = request.FILES.get('attachment')
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Tecnologia",  # Setor atual
+            )
+            history_entry.save()
 
+            attachment = request.FILES.get('attachment')
             descricao = form.cleaned_data.get('descricao')
             if descricao:
                 message_history = MessageHistory(
@@ -145,27 +150,33 @@ def request_equipamentos_ti(request):
                 message_history.save()
 
             return redirect('ti_home')
-
     else:
-        form = modelFormEquipamentosTI()
+        form = modelFormAcessosTI()
 
     return render(request, 'ti/new_request.html', {'form': form})
 
+
 @login_required(login_url="/login")
 def request_servicos_ti(request):
-
     if request.method == 'POST':
         form = modelFormSevicosTI(request.POST, request.FILES)
         if form.is_valid():
-
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
             card.sector = get_object_or_404(Group, id=1)
             card.save()
 
-            attachment = request.FILES.get('attachment')
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Tecnologia",  # Setor atual
+            )
+            history_entry.save()
 
+            attachment = request.FILES.get('attachment')
             descricao = form.cleaned_data.get('descricao')
             if descricao:
                 message_history = MessageHistory(
@@ -177,9 +188,8 @@ def request_servicos_ti(request):
                 message_history.save()
 
             return redirect('ti_home')
-
     else:
-        form = modelFormSevicosTI()
+        form = modelFormAcessosTI()
 
     return render(request, 'ti/new_request.html', {'form': form})
 
@@ -200,7 +210,6 @@ def estoque(request):
                 'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle}
 
     return render(request, 'ti/estoque.html', contexto)
-
 
 
 @login_required(login_url="/login")

@@ -31,3 +31,12 @@ def foto_profile(request):
 
     return {'midia': midia}
 
+
+def ambiente_para_setor(request):
+    # Mapeamento de ambiente para setor
+    AMBIENTE_PARA_SETOR = {
+        'Tecnologia': 1,
+        # Adicione mais mapeamentos para outros ambientes, se necessário
+    }
+
+    return {'ambiente_para_setor': AMBIENTE_PARA_SETOR}

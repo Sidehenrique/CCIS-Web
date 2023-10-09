@@ -486,7 +486,6 @@ class Card(models.Model):
                                     related_name='chamados_responsaveis', default=None)
     status = models.CharField(max_length=20)
     sector = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
-    colunaAtual = models.CharField(max_length=20)
 
     def __str__(self):
         return self.assunto
@@ -506,15 +505,16 @@ class MessageHistory(models.Model):
 
 class CardSetorHistory(models.Model):
     idCardSetorHistory = models.AutoField(db_column='idCardSetorHistory', primary_key=True)
+    setor = models.ForeignKey(Group, on_delete=models.CASCADE)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    previous_sector = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='previous_sector')
-    current_sector = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='current_sector')
-    previous_status = models.CharField(max_length=20)  # Pode usar CharField ou ChoiceField
-    current_status = models.CharField(max_length=20)  # Pode usar CharField ou ChoiceField
-    datetime = models.DateTimeField(auto_now_add=True)
+    status_anterior = models.CharField(max_length=20, null=True, blank=True)
+    status_atual = models.CharField(max_length=20)
+    setor_anterior = models.CharField(max_length=20, null=True, blank=True)
+    setor_atual = models.CharField(max_length=20)
+    data_hora = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.current_status
+        return self.setor_atual
 
 
 class OperatorRating(models.Model):

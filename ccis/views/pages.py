@@ -1,4 +1,5 @@
 import requests
+from django.db.models import Prefetch
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..serializers import CardSerializer
@@ -546,35 +547,34 @@ def dev(request):
 
 @login_required(login_url="/login")
 def processo(request):
-    user = request.user
+    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+        queryset=CardSetorHistory.objects.order_by('-data_hora'))
+    )
 
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    cards = Card.objects.all()
-
-    dados = dadosPessoais.objects.get(usuario=user)
+    # cards = Card.objects.all()
+    # history = CardSetorHistory.objects.all()
 
     if request.method == 'GET':
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'dados': dados,
-            'username': user, 'first_name': first_name, 'last_name': last_name, 'is_superadmin': is_superadmin,
-            'cards': cards
+            'cards': cards,
         }
 
         return render(request, 'ccis/processo.html', context)
 
 
-@login_required(login_url="/login")
 @api_view(['GET'])
 def card_detl(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
     serializer = CardSerializer(card)
+
+    setor_id = card.sector.id
+    try:
+        setor = Group.objects.get(id=setor_id)
+        setor_nome = setor.name  # Aqui você obtém o nome do setor
+    except Group.DoesNotExist:
+        setor_nome = "Setor não encontrado"  # Ou outra mensagem de erro
+
+    # Adicione o nome do setor aos dados do card
+    serializer.data['setor_nome'] = setor_nome
+
     return Response(serializer.data)
