@@ -97,11 +97,11 @@ urlpatterns = [
     path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
     path('ti/estoque', ti.estoque, name='estoque'),
     path('ti/solicit', ti.solicit, name='solicit'),
-<<<<<<< HEAD
+
     path('ti/estoque/notebook', ti.notebook, name='notebook'),
     path('salvaNotebook', ti.salvaNotebook, name='salvaNotebook'),
-=======
->>>>>>> parent of 386a119 (alterar foto perfil e capa + notbook estoque)
+
+
 
     path('dev', pages.dev, name='dev'),
 
