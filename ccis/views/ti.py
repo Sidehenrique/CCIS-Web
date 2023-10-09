@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django.shortcuts import render
+from ccis.forms import ModelFormNotebook
 from .. models import dadosPessoais, Card, MessageHistory
 from .. forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
@@ -212,4 +214,18 @@ def solicit(request):
 @login_required(login_url="/login")
 def notebook(request):
 
-    return render(request, 'ti/estoque/notebook.html')
+    form = ModelFormNotebook(request.POST)
+    return render(request, 'ti/estoque/notebook.html', {'form': form})
+
+
+def salvaNotebook(request):
+    if request.method == 'POST':
+        form = ModelFormNotebook(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('notebook')  # Redirecione de volta para a página 'notebook' após o salvamento
+
+    else:
+        form = ModelFormNotebook()
+
+    return render(request, 'ti/estoque/notebook.html', {'form': form})

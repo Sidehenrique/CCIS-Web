@@ -172,6 +172,26 @@ body {
     align-items: center!important;
     text-decoration:none;
 }
+
+
+
+.name-bnt {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.5s;
+    padding: 5px;
+}
+
+.name-bnt:hover {
+    background-color: #E9ECEF;
+    color: black;
+}
+
+
 /*---- Base ---------------------------------*/
 
 
@@ -216,7 +236,7 @@ body {
 .table-header{
     font-family:asap;
     font-size: 13px;
-    color:rgb(200,200,200);
+    color:black;
     margin:25px;
 }
 
@@ -566,6 +586,15 @@ status-negativo{
   line-height: 20px;
   padding: 0 5px;
   color: black;
+}
+
+.custom-progress-bar {
+    background-color: #27DEBF !important;
+}
+
+.progress-title{
+    color: black;
+    font-size: 16px;
 }
 
 
@@ -1449,5 +1478,17 @@ status-negativo{
     color: #068E74;
 }
 
+/*-- Notebook --------------------------*/
+.tabela-estoque-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
 
+.required-label::after {
+    content: "*";
+    color: red;
+    margin-left: 4px;
+}
 
+/*-- Notebook --------------------------*/

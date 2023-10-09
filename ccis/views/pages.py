@@ -537,9 +537,7 @@ def malotes(request):
 
 
 def utilitariosHome(request):
-    context = infoClima()
-    return render(request, 'ccis/utilitarios.html', context)
-
+    return render(request, 'ccis/utilitariosHome.html')
 
 
 def dev(request):

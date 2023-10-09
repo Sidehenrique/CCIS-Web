@@ -23,7 +23,7 @@ urlpatterns = [
     path('processos', pages.processo, name='processos'),
     path('obter_informacoes_card/<int:card_id>/', pages.obter_informacoes_card, name='obter_informacoes_card'),
 
-    path('utilitariosHome', pages.utilitariosHome, name='utilitariosHome'),
+    path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
 
     path('malotes', pages.malotes, name='malotes'),
@@ -98,6 +98,7 @@ urlpatterns = [
     path('ti/estoque', ti.estoque, name='estoque'),
     path('ti/solicit', ti.solicit, name='solicit'),
     path('ti/estoque/notebook', ti.notebook, name='notebook'),
+    path('salvaNotebook', ti.salvaNotebook, name='salvaNotebook'),
 
     path('dev', pages.dev, name='dev'),
 

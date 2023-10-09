@@ -167,18 +167,20 @@
                 <!-- Barra de progresso -->
                 <div class="col position-relative">
 
-                    <div class="progress-percent">{{pf}}%</div>
-                    <div class="">Profile status</div>
+                    <div class="progress-percent">{{ pf }}%</div>
+
+                    <div class="progress-title">
+                        <span>Profile Status<span>
+                    </div>
 
                     <div class="progress"
                          role="progressbar"
                          aria-label=""
-                         aria-valuenow=""
+                         aria-valuenow="{{ pf }}"
                          aria-valuemin="0"
                          aria-valuemax="100"
-                         style="height: 7px; width: 100%;">
-                        <div class="progress-bar">
-                        </div>
+                         style="height: 7px;">
+                        <div class="progress-bar custom-progress-bar" style="width: {{ pf }}%;"></div>
                     </div>
 
                 </div>
