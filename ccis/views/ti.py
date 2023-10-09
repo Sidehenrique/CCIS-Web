@@ -208,6 +208,7 @@ def estoque(request):
 @login_required(login_url="/login")
 def solicit(request):
 
+
     return render(request, 'ti/solicit.html')
 
 
@@ -229,3 +230,6 @@ def salvaNotebook(request):
         form = ModelFormNotebook()
 
     return render(request, 'ti/estoque/notebook.html', {'form': form})
+
+    return render(request, 'ti/solicit.html')
+
