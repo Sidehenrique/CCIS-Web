@@ -215,49 +215,133 @@ function handleScroll(event) {
 //}
 //
 
+//function loadCardInfo(cardId) {
+//    // Realizar uma solicitação AJAX para obter os detalhes do card
+//    $.ajax({
+//        url: `/card_detl/${cardId}`,  // Substitua pela URL correta da sua view
+//        method: 'GET',
+//        dataType: 'json',
+//        success: function (data) {
+//
+//            // Os dados do card serão retornados aqui em 'data'
+//            // Agora você pode preencher o modal com esses dados
+//            $("#assuntoInfo").text(data.assunto);
+//            $("#servicoInfo").text(` / ${data.service}`);
+//            $("#codInfo").text(`N° ${data.idCard}`);
+//
+//            // Preencha os campos relacionados ao solicitante
+//            $("#nomeSolicitante").text(data.solicitante_dados_pessoais.nomeCompleto);
+//            $("#sexoSolicitante").text(data.solicitante_dados_pessoais.sexo);
+//            $("#fotoSolicitante").attr("src", data.solicitante_dados_pessoais.foto);
+//            $("#cpfSolicitante").text(data.solicitante_dados_pessoais.cpf);
+//
+//            // Preencha os campos relacionados ao solicitante
+//            $("#loginSolicitante").text(data.solicitante.username);
+//            $("#emailSolicitante").text(data.solicitante.email);
+//            $("#ramalSolicitante").text(data.solicitante_contato.ramal);
+//            $("#areaSolicitante").text(data.solicitante_profissional.area);
+//
+//
+//         // Obtenha o setor_atual da tabela CardSetorHistory -----------
+//        if (data.setor_history && data.setor_history.length > 0) {
+//        const setorAtual = data.setor_history[0].setor_atual;
+//        $("#sectorInfo").text(setorAtual);
+//        }
+//
+//        else {
+//        $("#sectorInfo").text("Setor não encontrado");
+//
+//        }
+//
+//        // Abra o modal
+//        $('#processoModal').modal('show');
+//            },
+//
+//        error: function () {
+//            alert('Erro ao buscar os detalhes do card');
+//        }
+//    });
+//}
+
 function loadCardInfo(cardId) {
+    const modal = $('#processoModal');
+    const modalBody = modal.find('.modal-body');
+
     // Realizar uma solicitação AJAX para obter os detalhes do card
     $.ajax({
         url: `/card_detl/${cardId}`,  // Substitua pela URL correta da sua view
         method: 'GET',
         dataType: 'json',
         success: function (data) {
-            // Os dados do card serão retornados aqui em 'data'
-            // Agora você pode preencher o modal com esses dados
-            $("#assuntoInfo").text(data.assunto);
-            $("#servicoInfo").text(` / ${data.service}`);
-            $("#codInfo").text(`N° ${data.idCard}`);
+            if (data) {
+                // Os dados do card foram retornados com sucesso
+                // Preencha o modal com esses dados
 
-            // Preencha os campos relacionados ao solicitante
-            $("#nomeSolicitante").text(data.solicitante_dados_pessoais.nomeCompleto);
-            $("#sexoSolicitante").text(data.solicitante_dados_pessoais.sexo);
-            $("#fotoSolicitante").attr("src", data.solicitante_dados_pessoais.foto);
-            $("#cpfSolicitante").text(data.solicitante_dados_pessoais.cpf);
+                // Use variáveis para armazenar os seletores dos elementos do modal
+                const assuntoInfo = $("#assuntoInfo");
+                const servicoInfo = $("#servicoInfo");
+                const codInfo = $("#codInfo");
+                const nomeSolicitante = $("#nomeSolicitante");
+                const sexoSolicitante = $("#sexoSolicitante");
+                const fotoSolicitante = $("#fotoSolicitante");
+                const cpfSolicitante = $("#cpfSolicitante");
+                const loginSolicitante = $("#loginSolicitante");
+                const emailSolicitante = $("#emailSolicitante");
+                const ramalSolicitante = $("#ramalSolicitante");
+                const areaSolicitante = $("#areaSolicitante");
+                const sectorInfo = $("#sectorInfo");
 
-            // Preencha os campos relacionados ao solicitante
-            $("#loginSolicitante").text(data.solicitante.username);
-            $("#emailSolicitante").text(data.solicitante.email);
-            $("#ramalSolicitante").text(data.solicitante_contato.ramal);
-            $("#areaSolicitante").text(data.solicitante_profissional.area);
+                // Preencha os campos relacionados ao card
+                assuntoInfo.text(data.assunto);
+                servicoInfo.text(` / ${data.service}`);
+                codInfo.text(`N° ${data.idCard}`);
 
+                // Preencha os campos relacionados ao solicitante
+                nomeSolicitante.text(data.solicitante_dados_pessoais.nomeCompleto);
+                sexoSolicitante.text(data.solicitante_dados_pessoais.sexo);
+                cpfSolicitante.text(data.solicitante_dados_pessoais.cpf);
 
+                // Verifique se a foto do solicitante existe
+                if (data.solicitante_dados_pessoais.foto) {
+                    fotoSolicitante.attr("src", data.solicitante_dados_pessoais.foto);
+                } else {
+                    // Caso não haja foto, defina um valor padrão ou oculte o elemento
+                    fotoSolicitante.attr("src", "caminho_para_foto_padrao.jpg");
+                    // Ou, se preferir, esconda o elemento completamente
+                    // fotoSolicitante.hide();
+                }
 
+                // Preencha os campos relacionados ao solicitante
+                loginSolicitante.text(data.solicitante.username);
+                emailSolicitante.text(data.solicitante.email);
 
-         // Obtenha o setor_atual da tabela CardSetorHistory -----------
-        if (data.setor_history && data.setor_history.length > 0) {
-        const setorAtual = data.setor_history[0].setor_atual;
-        $("#sectorInfo").text(setorAtual);
-        }
+                // Verifique se o ramal do solicitante existe
+                if (data.solicitante_contato.ramal) {
+                    ramalSolicitante.text(data.solicitante_contato.ramal);
+                } else {
+                    ramalSolicitante.text("N/A");
+                }
 
-        else {
-        $("#sectorInfo").text("Setor não encontrado");
+                if (data.solicitante_contato.ramal) {
+                    areaSolicitante.text(data.solicitante_profissional.area);
+                } else {
+                    areaSolicitante.text("N/A");
+                }
 
-        }
+                // Obtenha o setor_atual da tabela CardSetorHistory
+                if (data.setor_history && data.setor_history.length > 0) {
+                    const setorAtual = data.setor_history[0].setor_atual;
+                    sectorInfo.text(setorAtual);
+                } else {
+                    sectorInfo.text("Setor não encontrado");
+                }
 
-        // Abra o modal
-        $('#processoModal').modal('show');
-            },
-
+                // Abra o modal
+                modal.modal('show');
+            } else {
+                alert('Dados do card não encontrados.');
+            }
+        },
         error: function () {
             alert('Erro ao buscar os detalhes do card');
         }
