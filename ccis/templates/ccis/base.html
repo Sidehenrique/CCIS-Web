@@ -161,39 +161,36 @@
 
                                                 <!--foto perfil-->
                                                 <div class="d-flex m-3">
-                                                    <a class="" type="button" data-bs-toggle="modal"
+                                                    <a class="profile-link" type="button" data-bs-toggle="modal"
                                                        data-bs-target="#profileModal"
                                                        data-bs-whatever="@getbootstrap" aria-expanded="false">
-                                                            
-                                                            <span class="nav-photo2">
-                                                                {% if user_data.logFoto %}
-                                                                <img class="nav-photo2" src="{{ logFoto.url }}" alt=""
-                                                                     width="36" height="36">
-
-                                                                {% else %}
-
-                                                                {% if user_data.logSexo == "Masculino" %}
-                                                                <img class="nav-photo2"
-                                                                     src="{% static 'ccis/avatar.jpg' %}" alt=""
-                                                                     width="36" height="36">
-
-                                                                {% elif user_data.logSexo == "Feminino" %}
-                                                                <img class="nav-photo2"
-                                                                     src="{% static 'ccis/avatar-feminino.jpg' %}"
-                                                                     alt=""
-                                                                     width="36" height="36">
-                                                                {% endif %}
-
-                                                                {% endif %}
-                                                            </span>
+                                                        <div class="nav-photo-edit">
+                                                            {% if user_data.logFoto %}
+                                                            <img class="nav-photo-edit-image" src="{{ logFoto.url }}"
+                                                                 alt="">
+                                                            {% else %}
+                                                            {% if user_data.logSexo == "Masculino" %}
+                                                            <img class="nav-photo-edit-image"
+                                                                 src="{% static 'ccis/avatar.jpg' %}" alt="">
+                                                            {% elif user_data.logSexo == "Feminino" %}
+                                                            <img class="nav-photo-edit-image"
+                                                                 src="{% static 'ccis/avatar-feminino.jpg' %}" alt="">
+                                                            {% endif %}
+                                                            {% endif %}
+                                                            <div class="icone-lapis-edit">
+                                                                <i class="far fa-pen-to-square"></i>
+                                                            </div>
+                                                        </div>
                                                     </a>
+
                                                     <!--nome perfil-->
                                                     <div class="ms-2">
                                                         <a href="{% url 'profile' request.user.id %}"
                                                            class="btn custom-profile-button" data-toggle="tooltip"
                                                            data-placement="top"
                                                            title="Clique para ver o perfil do usuário" data-delay="100">
-                                                            <h6 class="mb-0">{{ user_data.logName }} {{ user_data.logLast }}</h6>
+                                                            <h6 class="mb-0">{{ user_data.logName }}
+                                                                {{ user_data.logLast }}</h6>
                                                             <span class="me-2">{{ user_data.logEmail }}</span>
                                                         </a>
 
