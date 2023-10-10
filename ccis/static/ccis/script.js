@@ -182,86 +182,104 @@ function handleScroll(event) {
 }
 
 
-
-//---------------------------- MODAL DO PROCESSO -----------------------------------------------------------------------
 //function loadCardInfo(cardId) {
-//    // Fazer uma solicitação à API para buscar as informações do card com base no cardId
-//    fetch(`card_detl/${cardId}`)
-//        .then((response) => {
-//            if (!response.ok) {
-//                throw new Error(`Erro na solicitação: ${response.statusText}`);
-//            }
-//            return response.json();
-//        })
-//        .then((data) => {
-//            // Manipular os dados do card aqui e atualizar o modal com as informações
-//            const cardInfo = data; // Os dados do card estão em 'data'
+//    const modal = $('#processoModal');
+//    const modalBody = modal.find('.modal-body');
 //
-//            // Atualizar o modal com as informações do card
-//            document.getElementById('assuntoInfo').textContent = cardInfo.assunto;
-//            document.getElementById('servicoInfo').textContent = `/  ${cardInfo.service}`;
-//
-//            document.getElementById('codCard').textContent = `N° ${cardInfo.idCard}`;
-//            document.getElementById('sector').textContent = 'outracoisa'
-//
-//
-//            // Exibir o modal
-//            $('#processoModal').modal('show');
-//        })
-//        .catch((error) => {
-//            console.error(error);
-//            // Tratar erros aqui, por exemplo, exibindo uma mensagem de erro no modal
-//        });
-//}
-//
-
-//function loadCardInfo(cardId) {
 //    // Realizar uma solicitação AJAX para obter os detalhes do card
 //    $.ajax({
 //        url: `/card_detl/${cardId}`,  // Substitua pela URL correta da sua view
 //        method: 'GET',
 //        dataType: 'json',
 //        success: function (data) {
+//            if (data) {
+//                // Os dados do card foram retornados com sucesso
+//                // Preencha o modal com esses dados
 //
-//            // Os dados do card serão retornados aqui em 'data'
-//            // Agora você pode preencher o modal com esses dados
-//            $("#assuntoInfo").text(data.assunto);
-//            $("#servicoInfo").text(` / ${data.service}`);
-//            $("#codInfo").text(`N° ${data.idCard}`);
+//                // Use variáveis para armazenar os seletores dos elementos do modal
+//                const assuntoInfo = $("#assuntoInfo");
+//                const servicoInfo = $("#servicoInfo");
+//                const codInfo = $("#codInfo");
+//                const nomeSolicitante = $("#nomeSolicitante");
+//                const sexoSolicitante = $("#sexoSolicitante");
+//                const fotoSolicitante = $("#fotoSolicitante");
+//                const cpfSolicitante = $("#cpfSolicitante");
+//                const loginSolicitante = $("#loginSolicitante");
+//                const emailSolicitante = $("#emailSolicitante");
+//                const ramalSolicitante = $("#ramalSolicitante");
+//                const areaSolicitante = $("#areaSolicitante");
+//                const sectorInfo = $("#sectorInfo");
+//                const statusHistory = $("#statusHistory"); // Adicione este seletor
 //
-//            // Preencha os campos relacionados ao solicitante
-//            $("#nomeSolicitante").text(data.solicitante_dados_pessoais.nomeCompleto);
-//            $("#sexoSolicitante").text(data.solicitante_dados_pessoais.sexo);
-//            $("#fotoSolicitante").attr("src", data.solicitante_dados_pessoais.foto);
-//            $("#cpfSolicitante").text(data.solicitante_dados_pessoais.cpf);
+//                // Preencha os campos relacionados ao card
+//                assuntoInfo.text(data.card.assunto);
+//                servicoInfo.text(` / ${data.card.service}`);
+//                codInfo.text(`N° ${data.card.idCard}`);
 //
-//            // Preencha os campos relacionados ao solicitante
-//            $("#loginSolicitante").text(data.solicitante.username);
-//            $("#emailSolicitante").text(data.solicitante.email);
-//            $("#ramalSolicitante").text(data.solicitante_contato.ramal);
-//            $("#areaSolicitante").text(data.solicitante_profissional.area);
+//                // Preencha os campos relacionados ao solicitante
+//                nomeSolicitante.text(data.card.solicitante_dados_pessoais.nomeCompleto);
+//                sexoSolicitante.text(data.card.solicitante_dados_pessoais.sexo);
+//                cpfSolicitante.text(data.card.solicitante_dados_pessoais.cpf);
 //
+//                // Verifique se a foto do solicitante existe
+//                if (data.card.solicitante_dados_pessoais.foto) {
+//                    fotoSolicitante.attr("src", data.card.solicitante_dados_pessoais.foto);
+//                } else {
+//                    // Caso não haja foto, defina um valor padrão ou oculte o elemento
+//                    fotoSolicitante.attr("src", "caminho_para_foto_padrao.jpg");
+//                    // Ou, se preferir, esconda o elemento completamente
+//                    // fotoSolicitante.hide();
+//                }
 //
-//         // Obtenha o setor_atual da tabela CardSetorHistory -----------
-//        if (data.setor_history && data.setor_history.length > 0) {
-//        const setorAtual = data.setor_history[0].setor_atual;
-//        $("#sectorInfo").text(setorAtual);
-//        }
+//                // Preencha os campos relacionados ao solicitante
+//                loginSolicitante.text(data.card.solicitante.username);
+//                emailSolicitante.text(data.card.solicitante.email);
 //
-//        else {
-//        $("#sectorInfo").text("Setor não encontrado");
+//                // Verifique se o ramal do solicitante existe
+//                if (data.card.solicitante_contato.ramal) {
+//                    ramalSolicitante.text(data.card.solicitante_contato.ramal);
+//                } else {
+//                    ramalSolicitante.text("N/A");
+//                }
 //
-//        }
+//                if (data.card.solicitante_contato.ramal) {
+//                    areaSolicitante.text(data.card.solicitante_profissional.area);
+//                } else {
+//                    areaSolicitante.text("N/A");
+//                }
 //
-//        // Abra o modal
-//        $('#processoModal').modal('show');
-//            },
+//                // Preencha o histórico de status
+//                statusHistory.empty(); // Limpa qualquer conteúdo anterior
 //
+//                if (data.history && data.history.length > 0) {
+//                    data.history.forEach(function (entry) {
+//                        const li = $("<li>").text(entry.status_atual);
+//                        statusHistory.append(li);
+//                    });
+//                } else {
+//                    statusHistory.append("<li>Nenhum histórico de status disponível.</li>");
+//                }
+//
+//                // Obtenha o setor_atual da tabela CardSetorHistory
+//                if (data.card.setor_history && data.card.setor_history.length > 0) {
+//                    const setorAtual = data.card.setor_history[0].setor_atual;
+//                    sectorInfo.text(setorAtual);
+//                } else {
+//                    sectorInfo.text("Setor não encontrado");
+//                }
+//
+//                // Abra o modal
+//                modal.modal('show');
+//            } else {
+//                alert('Dados do card não encontrados.');
+//            }
+//        },
 //        error: function () {
 //            alert('Erro ao buscar os detalhes do card');
 //        }
 //    });
 //}
+
 
 function loadCardInfo(cardId) {
     const modal = $('#processoModal');
@@ -290,20 +308,22 @@ function loadCardInfo(cardId) {
                 const ramalSolicitante = $("#ramalSolicitante");
                 const areaSolicitante = $("#areaSolicitante");
                 const sectorInfo = $("#sectorInfo");
+                const nomeResponsavel = $("#nomeResponsavel");
+                const horarioAbertura = $("#horarioAbertura");
 
                 // Preencha os campos relacionados ao card
-                assuntoInfo.text(data.assunto);
-                servicoInfo.text(` / ${data.service}`);
-                codInfo.text(`N° ${data.idCard}`);
+                assuntoInfo.text(data.card.assunto);
+                servicoInfo.text(` / ${data.card.service}`);
+                codInfo.text(`N° ${data.card.idCard}`);
 
                 // Preencha os campos relacionados ao solicitante
-                nomeSolicitante.text(data.solicitante_dados_pessoais.nomeCompleto);
-                sexoSolicitante.text(data.solicitante_dados_pessoais.sexo);
-                cpfSolicitante.text(data.solicitante_dados_pessoais.cpf);
+                nomeSolicitante.text(data.card.solicitante_dados_pessoais.nomeCompleto);
+                sexoSolicitante.text(data.card.solicitante_dados_pessoais.sexo);
+                cpfSolicitante.text(data.card.solicitante_dados_pessoais.cpf);
 
                 // Verifique se a foto do solicitante existe
-                if (data.solicitante_dados_pessoais.foto) {
-                    fotoSolicitante.attr("src", data.solicitante_dados_pessoais.foto);
+                if (data.card.solicitante_dados_pessoais.foto) {
+                    fotoSolicitante.attr("src", data.card.solicitante_dados_pessoais.foto);
                 } else {
                     // Caso não haja foto, defina um valor padrão ou oculte o elemento
                     fotoSolicitante.attr("src", "caminho_para_foto_padrao.jpg");
@@ -312,25 +332,80 @@ function loadCardInfo(cardId) {
                 }
 
                 // Preencha os campos relacionados ao solicitante
-                loginSolicitante.text(data.solicitante.username);
-                emailSolicitante.text(data.solicitante.email);
+                loginSolicitante.text(data.card.solicitante.username);
+                emailSolicitante.text(data.card.solicitante.email);
 
                 // Verifique se o ramal do solicitante existe
-                if (data.solicitante_contato.ramal) {
-                    ramalSolicitante.text(data.solicitante_contato.ramal);
+                if (data.card.solicitante_contato.ramal) {
+                    ramalSolicitante.text(data.card.solicitante_contato.ramal);
                 } else {
                     ramalSolicitante.text("N/A");
                 }
 
-                if (data.solicitante_contato.ramal) {
-                    areaSolicitante.text(data.solicitante_profissional.area);
+                if (data.card.solicitante_contato.ramal) {
+                    areaSolicitante.text(data.card.solicitante_profissional.area);
                 } else {
                     areaSolicitante.text("N/A");
                 }
 
+
+                // Preencha o histórico de status
+                const statusHistory = modalBody.find(".container-buttons");
+                statusHistory.empty(); // Limpa qualquer conteúdo anterior
+
+                if (data.history && data.history.length > 0) {
+                    data.history.forEach(function (entry) {
+                        // Crie um elemento HTML para representar cada entrada do histórico
+                        const historyItem = $("<span>").addClass("processo-tag-historico");
+                        historyItem.html(`<i class="fa-regular fa-compass"></i> ${entry.status_atual}`);
+
+                        // Adicione o elemento ao histórico de status
+                        statusHistory.append(historyItem);
+                    });
+                } else {
+                    statusHistory.append("<span>Nenhum histórico de status disponível.</span>");
+                }
+
+
+                // Exiba o horário de abertura do chamado personalizado ------------------------------------------------
+                const horarioAberturaCard = new Date(data.card.dataCriacao);
+                const horarioAtual = new Date();
+                const diferencaMilissegundos = horarioAtual - horarioAberturaCard;
+                const diferencaMinutos = Math.floor(diferencaMilissegundos / (1000 * 60)); // Diferença em minutos
+                const diferencaHoras = Math.floor(diferencaMilissegundos / (1000 * 60 * 60)); // Diferença em horas
+                const diferencaDias = Math.floor(diferencaMilissegundos / (1000 * 60 * 60 * 24)); // Diferença em dias
+                const diferencaMeses = Math.floor(diferencaMilissegundos / (1000 * 60 * 60 * 24 * 30.44)); // Diferença em meses aproximados
+
+                let mensagemHorarioAbertura = "";
+
+                if (diferencaMinutos < 60) {
+                    mensagemHorarioAbertura = `Criado há ${diferencaMinutos} minuto(s)`;
+                } else if (diferencaHoras < 24) {
+                    mensagemHorarioAbertura = `Criado há ${diferencaHoras} hora(s)`;
+                } else if (diferencaDias < 30) {
+                    mensagemHorarioAbertura = `Criado há ${diferencaDias} dia(s)`;
+                } else {
+                    mensagemHorarioAbertura = `Criado há ${diferencaMeses} mês(es)`;
+                }
+
+                horarioAbertura.text(mensagemHorarioAbertura);
+
+
+
+//                // Se alguém estiver atendendo, exiba o nome do atendente
+//                if (data.card.responsavel) {
+//                    const atendenteNome = data.card.responsavel.first_name + ' ' + data.card.responsavel.last_name;
+//                    nomeResponsavel.text(atendenteNome);
+//                }
+//                } else {
+//                    nomeResponsavel.text("Aguardando atendimento");
+//                }
+
+
+
                 // Obtenha o setor_atual da tabela CardSetorHistory
-                if (data.setor_history && data.setor_history.length > 0) {
-                    const setorAtual = data.setor_history[0].setor_atual;
+                if (data.card.setor_history && data.card.setor_history.length > 0) {
+                    const setorAtual = data.card.setor_history[0].setor_atual;
                     sectorInfo.text(setorAtual);
                 } else {
                     sectorInfo.text("Setor não encontrado");

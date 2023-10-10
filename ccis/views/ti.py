@@ -90,13 +90,12 @@ def request_acessos_ti(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
-            card.sector = get_object_or_404(Group, id=1)
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
+                setor=get_object_or_404(Group, id=1),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -133,13 +132,12 @@ def request_equipamentos_ti(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
-            card.sector = get_object_or_404(Group, id=1)
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
+                setor=get_object_or_404(Group, id=1),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -176,13 +174,12 @@ def request_servicos_ti(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
-            card.sector = get_object_or_404(Group, id=1)
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
+                setor=get_object_or_404(Group, id=1),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
