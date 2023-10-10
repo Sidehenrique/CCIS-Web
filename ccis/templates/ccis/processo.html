@@ -478,7 +478,6 @@
                             </div>
 
 
-
                             <h6 class="mt-2">Dados do Solicitante</h6>
 
                             <hr class="linha-custom">
@@ -536,11 +535,7 @@
 
 
                             <div class="d-flex container-buttons" onwheel="handleScroll(event)">
-                                {% for historico in card.setor_history.all %}
-                                <span class="processo-tag-historico {% if historico.setor_atual == card.sector %}processo-tag-historico-active{% endif %}">
-                                <i class="fa-regular fa-compass"></i> {{ historico.setor_atual }}
-                                </span>
-                                {% endfor %}
+                             <!-- span com os historicos aqui -->
                             </div>
 
 
@@ -552,7 +547,9 @@
                         <div class="col-6 overflow-auto" style="border-right:1px solid #818181; max-height:400px">
 
                             <div class="col-auto me-auto">
-                                <small><i class="fa-solid fa-clock"></i> Criado há 4 horas</small>
+                                <small><i class="fa-solid fa-clock"></i>
+                                    <span id="horarioAbertura"></span>
+                                </small>
                             </div>
 
                             <h6 class="mt-2">Descrição</h6>
@@ -749,11 +746,7 @@
                     <div class="col">
 
                         <i class="fa-solid fa-phone-volume"></i>
-                        <select>
-                            <option value="opcao1">Henrique Silva</option>
-                            <option value="opcao2">Pedro lisboa</option>
-                            <option value="opcao3">Arthur Calorio</option>
-                        </select>
+                        <span id="nomeResponsavel" >Aguardando atendimento</span>
 
                     </div>
 

@@ -2,7 +2,7 @@ import requests
 from django.db.models import Prefetch
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from ..serializers import CardSerializer
+from ..serializers import CardSerializer, CardSetorHistorySerializer
 from django.core import serializers
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -560,6 +560,18 @@ def processo(request):
 @api_view(['GET'])
 def card_detl(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
-    serializer = CardSerializer(card)
 
-    return Response(serializer.data)
+    # Busque o histórico de status para o card específico
+    card_history = CardSetorHistory.objects.filter(card=card).order_by('data_hora')
+    history_serializer = CardSetorHistorySerializer(card_history, many=True)
+
+    # Serialize o card e o histórico de status
+    card_serializer = CardSerializer(card)
+
+    # Crie um dicionário que inclua os dados do card e o histórico de status
+    response_data = {
+        'card': card_serializer.data,
+        'history': history_serializer.data,
+    }
+
+    return Response(response_data)
