@@ -467,6 +467,21 @@ class modelFormSevicosTI(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment')
 
 
+class moralFormMensage():
+
+    class Meta:
+        model = Card
+        fields = ('card', 'remetente', 'message', 'attachment')
+
+    widgets = {
+        'card': forms.TextInput(attrs={'class': 'form-control'}),
+        'remetente': forms.TextInput(attrs={'class': 'form-control'}),
+        'message': forms.TextInput(attrs={'class': 'form-control'}),
+        'attachment': forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+
+    }
+
+
 # ESTOQUE TI  -------------------------------------------------------------->
 
 class ModelFormNotebook(forms.ModelForm):

@@ -280,6 +280,39 @@ function handleScroll(event) {
 //    });
 //}
 
+// Configure o cabeçalho CSRF para solicitações AJAX
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+        }
+    }
+});
+
+function csrfSafeMethod(method) {
+    // Esses métodos não exigem um token CSRF
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Procura o nome do cookie
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+
 
 function loadCardInfo(cardId) {
     const modal = $('#processoModal');
@@ -392,6 +425,57 @@ function loadCardInfo(cardId) {
 
 
 
+                // Dentro do loop que renderiza as mensagens do chat ---------------------------------------------------
+
+                // Realizar uma solicitação AJAX para obter os detalhes do card
+ // Ao clicar em "Enviar Resposta"
+$('#enviarResposta').click(function () {
+    const resposta = $('#resposta').val();
+
+    // Verifique se a resposta não é nula ou vazia
+    if (resposta.trim() !== '') {
+        // Adicione a resposta à lista de mensagens como "pendente"
+        const messageText = resposta;  // Substitua pelo campo correto da resposta
+        const messageElement = $("<div>").addClass("mt-1 mensagem-pendente").css("background-color", "#d9d9d9");
+        const messageTextElement = $("<div>").addClass("col").html(messageText);
+        messageElement.append(messageTextElement);
+        $("#messageContainer").append(messageElement);
+
+        // Limpe o campo de resposta
+        $('#resposta').val('');
+
+        // Realize uma solicitação AJAX para enviar a resposta
+        $.ajax({
+            url: `/enviar_resposta/${cardId}`,
+            method: 'POST',
+            data: {
+                resposta: resposta
+            },
+            dataType: 'json',
+            success: function (data) {
+                // Atualize a mensagem como "enviada com sucesso"
+                messageElement.removeClass("mensagem-pendente");
+                messageElement.css("background-color", "#dfffe7");
+
+                // Limpe o campo de resposta
+                $('#resposta').val('');
+            },
+            error: function () {
+                // Exiba uma mensagem de erro
+                alert('Erro ao enviar resposta');
+            }
+        });
+    } else {
+        alert('Por favor, insira uma resposta válida');
+    }
+});
+
+
+                // -----------------------------------------------------------------------------------------------------
+
+
+
+
 //                // Se alguém estiver atendendo, exiba o nome do atendente
 //                if (data.card.responsavel) {
 //                    const atendenteNome = data.card.responsavel.first_name + ' ' + data.card.responsavel.last_name;
@@ -422,3 +506,12 @@ function loadCardInfo(cardId) {
         }
     });
 }
+
+
+//
+//// Exiba o nome, sobrenome e data do remetente
+//                const remetente = data.card.messages[0];
+//                const nomeCompleto = `${remetente.remetente_first_name} ${remetente.remetente_last_name}`;
+//                const dataHora = new Date(remetente.datetime);
+//
+//                $("#nomeRemetente").text(nomeCompleto);

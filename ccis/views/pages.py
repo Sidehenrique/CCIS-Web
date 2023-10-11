@@ -575,3 +575,28 @@ def card_detl(request, card_id):
     }
 
     return Response(response_data)
+
+
+@api_view(['POST'])
+def enviar_resposta(request, card_id):
+
+    print(card_id)
+
+    if request.method == 'POST':
+        card = get_object_or_404(Card, idCard=card_id)
+        descricao = request.data.get('resposta')
+        attachment = request.data.get('attachment')  # Se você permitir anexos
+        remetente = request.user  # Suponha que o remetente é o usuário logado
+
+        # Crie um novo objeto MessageHistory
+        message_history = MessageHistory(
+            card=card,
+            remetente=remetente,
+            message=descricao,
+            attachment=attachment,  # Se você permitir anexos
+        )
+
+        message_history.save()
+
+        data = {'status': 'Mensagem adicionada com sucesso'}
+        return JsonResponse(data)

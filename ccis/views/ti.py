@@ -249,5 +249,4 @@ def salvaNotebook(request):
 
     return render(request, 'ti/estoque/notebook.html', {'form': form})
 
-    return render(request, 'ti/solicit.html')
 

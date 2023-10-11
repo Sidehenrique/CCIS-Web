@@ -560,74 +560,26 @@
                             <div class="mt-2 p-2" style="background-color:#d9d9d9">
 
                                 <!-- Cabeçalho -->
-                                <div class="row pt-2">
+                                <div class="row pt-1">
 
                                     <div class="col-auto me-auto">
 
-                                        <h6>
-                                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-                                             alt="" width="40" height="40">
+                                        <h6 id="nomeRemetente"></h6>
 
-                                            Henrique da Silva
-
-                                        </h6>
                                     </div>
+
 
                                     <div class="col-auto">
-                                        <span>15/09/2023 às 09:44</span>
+                                        <small id="dataRemetente"></small>
                                     </div>
+
 
                                 </div>
                                 <!-- Cabeçalho -->
 
                                 <!-- texto -->
                                 <div class="p-2">
-                                    <p>ola quero redefinir minha senha, e não como faço.
-                                    ja tentei de todas as maneiras, mais não vai.
-                                        tem como me ajudar
-
-
-                                    </p>
-                                </div>
-                                <!-- texto -->
-
-                            </div>
-
-                            <div class="mt-2 p-2" style="background-color:#d9d9d9">
-
-                                <!-- Cabeçalho -->
-                                <div class="row pt-2">
-
-                                    <div class="col-auto me-auto">
-
-                                        <h6>
-                                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-                                             alt="" width="40" height="40">
-
-                                            Chaves santos
-
-                                        </h6>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <span>15/09/2023 às 09:44</span>
-                                    </div>
-
-                                </div>
-                                <!-- Cabeçalho -->
-
-                                <!-- texto -->
-                                <div class="p-2">
-                                    <p>ola quero redefinir minha senha, e não como faço.
-                                    ja tentei de todas as maneiras, mais não vai.
-                                        tem como me ajudar.
-
-                                        ola quero redefinir minha senha, e não como faço.
-                                    ja tentei de todas as maneiras, mais não vai.
-                                        tem como me ajudar
-
-
-                                    </p>
+                                    <p id="messageContainer"></p>
                                 </div>
                                 <!-- texto -->
 
@@ -635,14 +587,17 @@
                             <!-- Chat ---------->
 
 
+                            <!-- Resposta ------>
                             <div class="mt-3 mb-2">
                                 <label class="form-label">Responder:</label>
-                                <textarea id="resposta" style="width: 100%;" name="mensagem" rows="3"></textarea>
+                                <textarea id="resposta" style="width: 100%;" name="resposta" rows="3" required></textarea>
                             </div>
 
                             <div class="mb-3">
-                                <input type="file">
+                                <input type="file" id="attachment">
                             </div>
+                            <!-- Resposta ------>
+
 
                         </div>
                         <!-- Descrição ---------->
@@ -666,7 +621,7 @@
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="Re" class="modal-processo-link" aria-current="page">
+                                    <a type="button" id="enviarResposta" class="modal-processo-link" aria-current="page">
                                         <i class="fa-solid fa-paper-plane"></i>
                                         Responder
                                     </a>
