@@ -22,6 +22,7 @@ urlpatterns = [
 
     path('processos', pages.processo, name='processos'),
     path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
+    path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
