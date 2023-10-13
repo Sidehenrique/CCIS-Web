@@ -2,7 +2,7 @@ import requests
 from django.db.models import Prefetch
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from ..serializers import CardSerializer, CardSetorHistorySerializer
+from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
 from django.core import serializers
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -600,3 +600,11 @@ def enviar_resposta(request, card_id):
 
         data = {'status': 'Mensagem adicionada com sucesso'}
         return JsonResponse(data)
+
+
+@api_view(['GET'])
+def get_messages(request, card_id):
+    messages = MessageHistory.objects.filter(card__idCard=card_id)
+    message_serializer = MessageHistorySerializer(messages, many=True)  # Certifique-se de criar o serializador adequado
+
+    return Response(message_serializer.data)

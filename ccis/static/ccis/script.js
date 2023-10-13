@@ -425,65 +425,69 @@ function loadCardInfo(cardId) {
 
 
 
+
+
                 // Dentro do loop que renderiza as mensagens do chat ---------------------------------------------------
 
-                // Realizar uma solicitação AJAX para obter os detalhes do card
- // Ao clicar em "Enviar Resposta"
-$('#enviarResposta').click(function () {
-    const resposta = $('#resposta').val();
+                // Agora, vamos buscar as mensagens do solicitante
+                const messagesContainer = modal.find(".messages-container");
+                messagesContainer.empty(); // Limpa qualquer conteúdo anterior
 
-    // Verifique se a resposta não é nula ou vazia
-    if (resposta.trim() !== '') {
-        // Adicione a resposta à lista de mensagens como "pendente"
-        const messageText = resposta;  // Substitua pelo campo correto da resposta
-        const messageElement = $("<div>").addClass("mt-1 mensagem-pendente").css("background-color", "#d9d9d9");
-        const messageTextElement = $("<div>").addClass("col").html(messageText);
-        messageElement.append(messageTextElement);
-        $("#messageContainer").append(messageElement);
+                $.ajax({
+                    url: `/get_messages/${cardId}`,  // Substitua pela URL correta da sua view que retorna as mensagens
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (messages) {
+                        if (messages && messages.length > 0) {
+                            messages.forEach(function (message) {
+                                const dataHora = new Date(message.datetime);
+                                const dia = dataHora.getDate();
+                                const mes = dataHora.getMonth() + 1; // Os meses são indexados de 0 a 11
+                                const ano = dataHora.getFullYear();
+                                const hora = dataHora.getHours();
+                                const minuto = dataHora.getMinutes();
 
-        // Limpe o campo de resposta
-        $('#resposta').val('');
+                                const dataFormatada = `${dia}/${mes}/${ano}`;
+                                const horarioFormatado = `${hora}:${minuto}`;
 
-        // Realize uma solicitação AJAX para enviar a resposta
-        $.ajax({
-            url: `/enviar_resposta/${cardId}`,
-            method: 'POST',
-            data: {
-                resposta: resposta
-            },
-            dataType: 'json',
-            success: function (data) {
-                // Atualize a mensagem como "enviada com sucesso"
-                messageElement.removeClass("mensagem-pendente");
-                messageElement.css("background-color", "#dfffe7");
+                                const rowElement = $("<div>").addClass("row pt-1").css({
+                                    backgroundColor: "#d9d9d9",
+                                    padding: "10px",
+                                    borderRadius: "5px",
+                                    margin: "0 0 10px 0",
+                                });
 
-                // Limpe o campo de resposta
-                $('#resposta').val('');
-            },
-            error: function () {
-                // Exiba uma mensagem de erro
-                alert('Erro ao enviar resposta');
-            }
-        });
-    } else {
-        alert('Por favor, insira uma resposta válida');
-    }
-});
+                                const colElementEsquerda = $("<div>").addClass("col-auto me-auto");
+                                const nomeCompleto = `<h6>${message.remetente_first_name} ${message.remetente_last_name}</h6>`;
+                                const colElementDireita = $("<div>").addClass("col-auto");
+                                const dataElement = $(`<small>Data: ${dataFormatada}, Hora: ${horarioFormatado}</small>`);
+                                const messageElement = $(`<p>${message.message}</p>`);
+
+
+                                // Adicionar os elementos à estrutura desejada
+                                colElementEsquerda.append(nomeCompleto);
+                                colElementDireita.append(dataElement);
+
+                                rowElement.append(colElementEsquerda, colElementDireita);
+                                rowElement.append(messageElement);
+
+                                // Adicionar a rowElement ao seu container de mensagens
+                                messagesContainer.append(rowElement);
+                            });
+                        } else {
+                            messagesContainer.append("<p>Nenhuma mensagem disponível do solicitante.</p>");
+                        }
+                    },
+                    error: function () {
+                        alert('Erro ao buscar as mensagens do solicitante');
+                    }
+                });
+
+
 
 
                 // -----------------------------------------------------------------------------------------------------
 
-
-
-
-//                // Se alguém estiver atendendo, exiba o nome do atendente
-//                if (data.card.responsavel) {
-//                    const atendenteNome = data.card.responsavel.first_name + ' ' + data.card.responsavel.last_name;
-//                    nomeResponsavel.text(atendenteNome);
-//                }
-//                } else {
-//                    nomeResponsavel.text("Aguardando atendimento");
-//                }
 
 
 
@@ -508,6 +512,8 @@ $('#enviarResposta').click(function () {
 }
 
 
+
+
 //
 //// Exiba o nome, sobrenome e data do remetente
 //                const remetente = data.card.messages[0];
@@ -515,3 +521,48 @@ $('#enviarResposta').click(function () {
 //                const dataHora = new Date(remetente.datetime);
 //
 //                $("#nomeRemetente").text(nomeCompleto);
+
+
+
+//// Realizar uma solicitação AJAX para obter os detalhes do card
+//                // Ao clicar em "Enviar Resposta"
+//                $('#enviarResposta').click(function () {
+//                    const resposta = $('#resposta').val();
+//
+//                    // Verifique se a resposta não é nula ou vazia
+//                    if (resposta.trim() !== '') {
+//                        // Adicione a resposta à lista de mensagens como "pendente"
+//                        const messageText = resposta;  // Substitua pelo campo correto da resposta
+//                        const messageElement = $("<div>").addClass("mt-1 mensagem-pendente").css("background-color", "#d9d9d9");
+//                        const messageTextElement = $("<div>").addClass("col").html(messageText);
+//                        messageElement.append(messageTextElement);
+//                        $("#messageContainer").append(messageElement);
+//
+//                        // Limpe o campo de resposta
+//                        $('#resposta').val('');
+//
+//                        // Realize uma solicitação AJAX para enviar a resposta
+//                        $.ajax({
+//                            url: `/enviar_resposta/${cardId}`,
+//                            method: 'POST',
+//                            data: {
+//                                resposta: resposta
+//                            },
+//                            dataType: 'json',
+//                            success: function (data) {
+//                                // Atualize a mensagem como "enviada com sucesso"
+//                                messageElement.removeClass("mensagem-pendente");
+//                                messageElement.css("background-color", "#dfffe7");
+//
+//                                // Limpe o campo de resposta
+//                                $('#resposta').val('');
+//                            },
+//                            error: function () {
+//                                // Exiba uma mensagem de erro
+//                                alert('Erro ao enviar resposta');
+//                            }
+//                        });
+//                    } else {
+//                        alert('Por favor, insira uma resposta válida');
+//                    }
+//                });
