@@ -661,6 +661,7 @@ status-negativo{
   }
 
 .custom-profile-button {
+    text-align: left !important;
     display: inline-block;
     padding: 10px 20px;
     background-color: #e0e0e0;
@@ -1511,7 +1512,7 @@ status-negativo{
     color: #004E8C;
     font-family: 'asap semibold';
     font-weight: normal;
-    font-size: 13px;
+    font-size: 14px;
     
 }
 

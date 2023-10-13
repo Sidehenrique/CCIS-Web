@@ -99,7 +99,7 @@ urlpatterns = [
     path('ti/solicit', ti.solicit, name='solicit'),
 
     path('ti/estoque/notebook', ti.notebook, name='notebook'),
-    path('salvaNotebook', ti.salvaNotebook, name='salvaNotebook'),
+
 
 
 
