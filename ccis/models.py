@@ -532,6 +532,7 @@ class OperatorRating(models.Model):
 # -------- Estoque ------------------------------------------------------------------------------------------------------
 
 class Notebook(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Notebook')
     modelo = models.CharField(max_length=100)
     marca = models.CharField(max_length=100)
     processador = models.CharField(max_length=100)
@@ -540,7 +541,6 @@ class Notebook(models.Model):
     armazenamento = models.CharField(max_length=100)
     gb = models.CharField(max_length=100)
     status = models.CharField(max_length=100)
-    responsavel = models.CharField(max_length=100)
     setor = models.CharField(max_length=100)
     unidade = models.CharField(max_length=100)
     email = models.EmailField()

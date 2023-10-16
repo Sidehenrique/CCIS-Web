@@ -470,7 +470,10 @@ class modelFormSevicosTI(forms.ModelForm):
 # ESTOQUE TI  -------------------------------------------------------------->
 
 class ModelFormNotebook(forms.ModelForm):
+
+
     MEMORIA_RAM_CHOICES = [
+        ('', ''),
         ('4GB', '4GB'),
         ('8GB', '8GB'),
         ('12GB', '12GB'),
@@ -478,6 +481,7 @@ class ModelFormNotebook(forms.ModelForm):
     ]
 
     PROCESSADOR_CHOICES = [
+        ('', ''),
         ('I3', 'I3'),
         ('I5', 'I5'),
         ('Ryzen 5', 'Ryzen 5'),
@@ -485,11 +489,13 @@ class ModelFormNotebook(forms.ModelForm):
     ]
 
     ARMAZENAMENTO_CHOICES = [
+        ('', ''),
         ('SSD', 'SSD'),
         ('HDD', 'HDD'),
     ]
 
     GB_CHOICES = [
+        ('', ''),
         ('120GB', '120GB'),
         ('240GB', '240GB'),
         ('256GB', '256GB'),
@@ -499,11 +505,13 @@ class ModelFormNotebook(forms.ModelForm):
     ]
 
     ANTIVIRUS_CHOICES = [
+        ('', ''),
         ('Ativado', 'Ativado'),
         ('Desativado', 'Desativado'),
     ]
 
     STATUS_CHOICES = [
+        ('', ''),
         ('ÓTIMO', 'ÓTIMO'),
         ('MUITO BOM', 'MUITO BOM'),
         ('BOM', 'BOM'),
@@ -518,13 +526,14 @@ class ModelFormNotebook(forms.ModelForm):
     gb = forms.ChoiceField(choices=GB_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
     antiVirus = forms.ChoiceField(choices=ANTIVIRUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
     status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    usuario = forms.ModelChoiceField(queryset=User.objects.all().order_by('username'), label='Usuário', widget=forms.Select(attrs={'class': 'form-control'}))
 
 
     class Meta:
         model = Notebook
         fields = (
-            'modelo', 'marca', 'processador', 'geracao', 'memoria_ram', 'armazenamento', 'gb', 'responsavel', 'setor',
-            'unidade','email', 'serviceTag', 'antiVirus', 'chaveWin', 'chaveOffice', 'status', )
+            'modelo', 'marca', 'processador', 'geracao', 'memoria_ram', 'armazenamento', 'gb', 'usuario', 'setor',
+            'unidade', 'serviceTag', 'antiVirus', 'chaveWin', 'chaveOffice', 'status', )
 
 
         widgets = {'modelo': forms.TextInput(attrs={'class': 'form-control'}),
@@ -535,7 +544,7 @@ class ModelFormNotebook(forms.ModelForm):
                    'armazenamento': forms.Select(attrs={'class': 'form-control'}),
                    'gb': forms.Select(attrs={'class': 'form-control'}),
                    'status': forms.Select(attrs={'class': 'form-control'}),
-                   'responsavel': forms.TextInput(attrs={'class': 'form-control'}),
+                   'usuario': forms.Select(attrs={'class': 'form-control'}),
                    'email': forms.TextInput(attrs={'class': 'form-control'}),
                    'setor': forms.TextInput(attrs={'class': 'form-control'}),
                    'unidade': forms.TextInput(attrs={'class': 'form-control'}),
@@ -543,6 +552,7 @@ class ModelFormNotebook(forms.ModelForm):
                    'antiVirus': forms.TextInput(attrs={'class': 'form-control'}),
                    'chaveWin': forms.TextInput(attrs={'class': 'form-control'}),
                    'chaveOffice': forms.TextInput(attrs={'class': 'form-control'}),
+
                    }
 
     def __init__(self, *args, **kwargs):
