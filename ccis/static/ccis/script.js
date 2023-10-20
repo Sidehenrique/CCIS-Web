@@ -460,6 +460,12 @@ function loadCardInfo(cardId) {
 
                 // Abra o modal
                 modal.modal('show');
+
+                // Adicione um ouvinte de evento para o evento de ocultação do modal
+                modal.on("hidden.bs.modal", function () {
+                    // Atualize a página
+                    location.reload();
+                });
             } else {
                 alert('Dados do card não encontrados.');
             }
@@ -469,4 +475,8 @@ function loadCardInfo(cardId) {
         }
     });
 }
+
+
+
+
 
