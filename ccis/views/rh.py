@@ -4,7 +4,8 @@ from dateutil.relativedelta import relativedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from .. models import dadosPessoais, profissional
+from .. models import dadosPessoais, profissional, CardSetorHistory, MessageHistory
+from ..forms import ModelFormRhMalotes
 
 
 # VIWER DO RH ----------------------------------------------------------------------------------------------------------
@@ -174,3 +175,66 @@ def colaboradores(request):
                 }
     return render(request, 'rh/colaboradores.html', contexto)
 # ----------------------------------------------------------------------------------------------------------------------
+
+def new_request_rh(request):
+    form = ModelFormRhMalotes()
+    context = {'form': form, }
+
+    return render(request, "rh/new_request_rh.html", context)
+
+
+def salvar_malote_rh(request):
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Malote'
+
+        form = ModelFormRhMalotes(request.POST, request.FILES)
+
+        if form.is_valid():
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=1),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Rh",  # Setor atual
+            )
+            history_entry.save()
+
+            texto2 = request.POST["descricao"]
+
+            attachment = request.FILES.get('attachment')
+
+            # Coletar as seleções dos checkboxes e montar a descrição
+            itens_selecionados = []
+            for item in ['item1', 'item2', 'item3', 'item4']:
+                if request.POST.get(item):
+                    itens_selecionados.append(request.POST.get(item))
+
+            if (itens_selecionados or texto2):
+                descricao = "<h6>Este Malote contém:</h6><br>" + ", ".join(itens_selecionados)
+
+                if texto2:
+                    descricao += f"<br>DESCRIÇÃO: {texto2}"
+
+                # Salvar a descrição no campo message do MessageHistory
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+            return redirect('rh_home')
+
+    else:
+        form = ModelFormRhMalotes()
+
+    return render(request, 'rh/new_request_rh.html', {'form': form})

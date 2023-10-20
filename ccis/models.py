@@ -494,7 +494,7 @@ class MessageHistory(models.Model):
     idMessageHistory = models.AutoField(db_column='idMessageHistory', primary_key=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     remetente = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField()
+    message = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
     attachment = models.FileField(upload_to='chat/', null=True, blank=True)
 

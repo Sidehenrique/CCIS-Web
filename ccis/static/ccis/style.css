@@ -1545,3 +1545,55 @@ status-negativo{
 
 /*-- Notebook --------------------------*/
 
+/*-- new_request_retaguarda ------------*/
+
+.item-selecionado {
+    background-color: #3498db;
+    color: #fff;
+    padding: 3px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.input-new {
+  width: 100%;
+  padding: 10px; /* Espaçamento interno do input */
+  border: 1px solid #ccc; /* Borda do input */
+  border-radius: 4px; /* Cantos arredondados */
+  font-size: 16px; /* Tamanho da fonte */
+}
+
+.new-desc {
+  width: 100%;
+  height: 175px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  white-space: pre-wrap;
+}
+
+.new-desc-extra {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  white-space: pre-wrap;
+}
+
+.new-desc-extra:focus {
+  border-color: #007bff; /* Cor da borda quando focado */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
+}
+
+.new-desc:focus {
+  border-color: #007bff; /* Cor da borda quando focado */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
+}
+
+.input-new:focus {
+  border-color: #007bff; /* Cor da borda quando focado */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
+}
+/*-- new_request_retaguarda ------------*/

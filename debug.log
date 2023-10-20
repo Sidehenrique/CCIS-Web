@@ -2067,3 +2067,1951 @@ django.db.utils.OperationalError: (1054, "Unknown column 'ccis_notebook.chaveBit
 INFO:django.utils.autoreload:C:\CCIS-Web\ccis\models.py changed, reloading.
 WARNING:django.request:Not Found: /favicon.ico
 WARNING:django.request:Not Found: /favicon.ico
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 482
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /retaguarda/new_request_retaguarda
+WARNING:django.request:Not Found: /retaguarda/new_request_retaguarda
+ERROR:django.request:Internal Server Error: /new_request_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+ValueError: The view ccis.views.retaguarda.new_request_retaguarda didn't return an HttpResponse object. It returned None instead.
+ERROR:django.request:Internal Server Error: /new_request_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+ValueError: The view ccis.views.retaguarda.new_request_retaguarda didn't return an HttpResponse object. It returned None instead.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /new_request
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\models.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\models.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\models.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\models.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 120, in salvar_malote_retaguarda
+    return render(request, 'seu_template.html', {'form': form})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: seu_template.html
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 120, in salvar_malote_retaguarda
+    return render(request, 'seu_template.html', {'form': form})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: seu_template.html
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 120, in salvar_malote_retaguarda
+    return render(request, 'new_request_retaguarda.html', {'form': form})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: new_request_retaguarda.html
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 480
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 125, in salvar_malote_retaguarda
+    return render(request, 'new_request_retaguarda.html', {'form': form})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: new_request_retaguarda.html
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 480
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 124, in salvar_malote_retaguarda
+    return render(request, 'new_request_retaguarda.html', {'form': form})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: new_request_retaguarda.html
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 474
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 124, in salvar_malote_retaguarda
+    return render(request, 'new_request_retaguarda.html', {'form': form})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: new_request_retaguarda.html
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /neew
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+DEBUG:ccis.views.retaguarda:Mensagem de depuração
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:ccis.views.retaguarda:Campo 'assunto' é obrigatório.
+ERROR:ccis.views.retaguarda:Campo 'assunto' é obrigatório.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:ccis.views.retaguarda:Campo 'assunto' é obrigatório.
+ERROR:ccis.views.retaguarda:Campo 'assunto' é obrigatório.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:ccis.views.retaguarda:Campo 'assunto' é obrigatório.
+DEBUG:ccis.views.retaguarda:Pelo menos um dos campos 'assunto' ou 'service' está vazio.
+ERROR:ccis.views.retaguarda:Campo 'assunto' é obrigatório.
+DEBUG:ccis.views.retaguarda:Pelo menos um dos campos 'assunto' ou 'service' está vazio.
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 480
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:ccis.views.retaguarda:Campo 'assunto' é obrigatório.
+DEBUG:ccis.views.retaguarda:Pelo menos um dos campos 'assunto' ou 'service' está vazio.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 127, in salvar_malote_retaguarda
+    return redirect('retaguarda')
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'retaguarda' not found. 'retaguarda' is not a valid view function or pattern name.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\core\settings.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\core\settings.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\core\settings.py changed, reloading.
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 482
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 87, in salvar_malote_retaguarda
+    texto = request.get["descricao-dinamica"]
+            ^^^^^^^^^^^
+AttributeError: 'WSGIRequest' object has no attribute 'get'
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'descricao-dinamica'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 87, in salvar_malote_retaguarda
+    texto = request.GET["descricao-dinamica"]
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'descricao-dinamica'
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'descricao-dinamica'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 87, in salvar_malote_retaguarda
+    texto = request.POST["descricao-dinamica"]
+            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'descricao-dinamica'
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 134, in salvar_malote_retaguarda
+    return render(request, 'new_request_retaguarda.html', {'form': form})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: new_request_retaguarda.html
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 474
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: ('descricao-dinamica', 'service-dinamico')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 88, in salvar_malote_retaguarda
+    texto = request.POST["descricao-dinamica", "service-dinamico"]
+            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: ('descricao-dinamica', 'service-dinamico')
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 473
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 122, in salvar_malote_retaguarda
+    descricao = "Este Malote contém: " + ", ".join(itens_selecionados) + texto
+                                                                         ^^^^^
+NameError: name 'texto' is not defined
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 474
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'outros'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 88, in salvar_malote_retaguarda
+    extra5 = request.POST["outros"]
+             ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'outros'
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\models.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Bad Request: /salvar_malote_retaguarda
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\models.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+ERROR:django.request:Internal Server Error: /request_produto_servico
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\__init__.py", line 123, in Connect
+    return Connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 185, in __init__
+    super().__init__(*args, **kwargs2)
+MySQLdb.OperationalError: (2002, "Can't connect to server on '10.6.32.24' (10065)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\produtoServico.py", line 71, in request_produto_servico
+    return render(request, "produtoServico/request_produto_servico.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 173, in render
+    with context.bind_template(self):
+  File "C:\Users\Arthur\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\context.py", line 254, in bind_template
+    updates.update(processor(self.request))
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\context_processors.py", line 8, in controle_button
+    controle = log.groups.filter(name='gestao e controle').exists()
+               ^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+                    ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+                                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+           ^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+                          ^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1558, in execute_sql
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 330, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 306, in _cursor
+    self.ensure_connection()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 288, in ensure_connection
+    with self.wrap_database_errors:
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\__init__.py", line 123, in Connect
+    return Connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 185, in __init__
+    super().__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to server on '10.6.32.24' (10065)")
+ERROR:django.request:Internal Server Error: /request_produto_servico
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\__init__.py", line 123, in Connect
+    return Connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 185, in __init__
+    super().__init__(*args, **kwargs2)
+MySQLdb.OperationalError: (2002, "Can't connect to server on '10.6.32.24' (10065)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\produtoServico.py", line 71, in request_produto_servico
+    return render(request, "produtoServico/request_produto_servico.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 173, in render
+    with context.bind_template(self):
+  File "C:\Users\Arthur\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\context.py", line 254, in bind_template
+    updates.update(processor(self.request))
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\context_processors.py", line 8, in controle_button
+    controle = log.groups.filter(name='gestao e controle').exists()
+               ^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+                    ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+                                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+           ^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+                          ^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1558, in execute_sql
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 330, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 306, in _cursor
+    self.ensure_connection()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 288, in ensure_connection
+    with self.wrap_database_errors:
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\__init__.py", line 123, in Connect
+    return Connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 185, in __init__
+    super().__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to server on '10.6.32.24' (10065)")
+ERROR:django.request:Internal Server Error: /request_produto_servico
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 187, in _get_session
+    return self._session_cache
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\__init__.py", line 123, in Connect
+    return Connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 185, in __init__
+    super().__init__(*args, **kwargs2)
+MySQLdb.OperationalError: (2002, "Can't connect to server on '10.6.32.24' (10065)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\produtoServico.py", line 71, in request_produto_servico
+    return render(request, "produtoServico/request_produto_servico.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 173, in render
+    with context.bind_template(self):
+  File "C:\Users\Arthur\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\context.py", line 254, in bind_template
+    updates.update(processor(self.request))
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\context_processors.py", line 8, in controle_button
+    controle = log.groups.filter(name='gestao e controle').exists()
+               ^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\functional.py", line 266, in inner
+    self._setup()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\functional.py", line 419, in _setup
+    self._wrapped = self._setupfunc()
+                    ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 25, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 11, in get_user
+    request._cached_user = auth.get_user(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 191, in get_user
+    user_id = _get_user_session_key(request)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 60, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+                                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 53, in __getitem__
+    return self._session[key]
+           ^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\base.py", line 192, in _get_session
+    self._session_cache = self.load()
+                          ^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\db.py", line 42, in load
+    s = self._get_session_from_db()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\sessions\backends\db.py", line 32, in _get_session_from_db
+    return self.model.objects.get(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1558, in execute_sql
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 330, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 306, in _cursor
+    self.ensure_connection()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 288, in ensure_connection
+    with self.wrap_database_errors:
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 289, in ensure_connection
+    self.connect()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\base\base.py", line 270, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 247, in get_new_connection
+    connection = Database.connect(**conn_params)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\__init__.py", line 123, in Connect
+    return Connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 185, in __init__
+    super().__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to server on '10.6.32.24' (10065)")
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 502
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'descricao-agendamento'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 84, in salvar_malote_retaguarda
+    extra1 = request.POST["descricao-agendamento"]
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'descricao-agendamento'
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'descricao-agendamento'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 84, in salvar_malote_retaguarda
+    extra1 = request.POST["descricao-agendamento"]
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'descricao-agendamento'
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\financeiro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\financeiro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\financeiro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /salvar_malote_financeiro
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'descricao-outros'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\financeiro.py", line 84, in salvar_malote_financeiro
+    extra1 = request.POST["descricao-outros"]
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'descricao-outros'
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\financeiro.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /departamentos
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\pages.py", line 489, in departamentos
+    return render(request, 'ccis/departamentos.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'cadastro_home' not found. 'cadastro_home' is not a valid view function or pattern name.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 475
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+ERROR:django.request:Internal Server Error: /new_request_cadastro
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\cadastro.py", line 71, in new_request_cadastro
+    return render(request, "cadastro/new_request_cadastro.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'salvar_malote_cadastro' not found. 'salvar_malote_cadastro' is not a valid view function or pattern name.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 474
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /neew
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 133, in salvar_malote_retaguarda
+    message=descricao,
+            ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'descricao' where it is not associated with a value
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 483
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 134, in salvar_malote_retaguarda
+    message=descricao,
+            ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'descricao' where it is not associated with a value
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 75, in execute
+    return self.cursor.execute(query, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 254, in query
+    _mysql.connection.query(self, query)
+MySQLdb.OperationalError: (1048, "Column 'message' cannot be null")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 137, in salvar_malote_retaguarda
+    message_history.save()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 80, in execute
+    raise IntegrityError(*tuple(e.args))
+django.db.utils.IntegrityError: (1048, "Column 'message' cannot be null")
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\models.py changed, reloading.
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 75, in execute
+    return self.cursor.execute(query, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 254, in query
+    _mysql.connection.query(self, query)
+MySQLdb.OperationalError: (1048, "Column 'message' cannot be null")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 137, in salvar_malote_retaguarda
+    message_history.save()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 80, in execute
+    raise IntegrityError(*tuple(e.args))
+django.db.utils.IntegrityError: (1048, "Column 'message' cannot be null")
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 75, in execute
+    return self.cursor.execute(query, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "C:\CCIS-Web\venv\Lib\site-packages\MySQLdb\connections.py", line 254, in query
+    _mysql.connection.query(self, query)
+MySQLdb.OperationalError: (1048, "Column 'message' cannot be null")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 137, in salvar_malote_retaguarda
+    message_history.save()
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\db\backends\mysql\base.py", line 80, in execute
+    raise IntegrityError(*tuple(e.args))
+django.db.utils.IntegrityError: (1048, "Column 'message' cannot be null")
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /salvar_malote_retaguarda
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\retaguarda.py", line 134, in salvar_malote_retaguarda
+    message=descricao,
+            ^^^^^^^^^
+UnboundLocalError: cannot access local variable 'descricao' where it is not associated with a value
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\retaguarda.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cadastro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\financeiro.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\produtoServico.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+ERROR:django.request:Internal Server Error: /new_request_adm
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\adm.py", line 69, in new_request_adm
+    form = ModelFormAdmMalote()
+           ^^^^^^^^^^^^^^^^^^
+NameError: name 'ModelFormAdmMalote' is not defined
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+ERROR:django.request:Internal Server Error: /new_request_adm
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\adm.py", line 69, in new_request_adm
+    form = ModelFormAdmMalote()
+           ^^^^^^^^^^^^^^^^^^
+NameError: name 'ModelFormAdmMalote' is not defined
+ERROR:django.request:Internal Server Error: /new_request_adm
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\adm.py", line 69, in new_request_adm
+    form = ModelFormAdmMalote()
+           ^^^^^^^^^^^^^^^^^^
+NameError: name 'ModelFormAdmMalote' is not defined
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\core\settings.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\core\settings.py changed, reloading.
+ERROR:django.request:Internal Server Error: /departamentos
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\pages.py", line 489, in departamentos
+    return render(request, 'ccis/departamentos.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'cobranca_home' not found. 'cobranca_home' is not a valid view function or pattern name.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cobranca.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\cobranca.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\rh.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\rh.py changed, reloading.
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /new_request_rh
+WARNING:django.request:Not Found: /new_request_rh
+WARNING:django.request:Not Found: /new_request_rh
+WARNING:django.request:Not Found: /new_request_rh
+WARNING:django.request:Not Found: /new_request_rh
+WARNING:django.request:Not Found: /new_request_rh
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+WARNING:django.request:Not Found: /rh/new_request_rh
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\rh.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\rh.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\forms.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\secretaria.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+ERROR:django.request:Internal Server Error: /new_request_credito
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\credito.py", line 72, in new_request_credito
+    return render(request, "credito/new_request_credito.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'salvar_malote_credito' not found. 'salvar_malote_credito' is not a valid view function or pattern name.
+ERROR:django.request:Internal Server Error: /new_request_credito
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\credito.py", line 72, in new_request_credito
+    return render(request, "credito/new_request_credito.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'salvar_malote_credito' not found. 'salvar_malote_credito' is not a valid view function or pattern name.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\views\credito.py changed, reloading.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.
+ERROR:django.request:Internal Server Error: /new_request_credito
+Traceback (most recent call last):
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\ccis\views\credito.py", line 72, in new_request_credito
+    return render(request, "credito/new_request_credito.html", context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\CCIS-Web\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'salvar_malote_credito' not found. 'salvar_malote_credito' is not a valid view function or pattern name.
+INFO:django.utils.autoreload:C:\CCIS-Web\ccis\urls.py changed, reloading.

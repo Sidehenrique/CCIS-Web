@@ -1,10 +1,9 @@
 from django import forms
 from django.forms import FileInput
-from .models import Notebook
 
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos, Card
+    docCertidao, docAdmissional, docPeriodico, docCursos, Card, Notebook
 
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
@@ -563,3 +562,175 @@ class ModelFormNotebook(forms.ModelForm):
 
         self.fields['chaveWin'].required = False
         self.fields['chaveOffice'].required = False
+
+
+class ModelFormRetaguardaMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+class ModelFormPS(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+class ModelFormFinanceiroMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+class ModelFormCadastroMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+class ModelFormAdmMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+class ModelFormCobrancaMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+class ModelFormRhMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+class ModelFormSecretariaMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+class ModelFormCreditoMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
