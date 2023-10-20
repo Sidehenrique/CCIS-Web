@@ -34,7 +34,7 @@
 
                                 <!-- Select Option -->
                                 <div class="col ms-3 form-group">
-                                    <select class="form-control" id="exampleFormControlSelect1">
+                                    <select class="form-control" id="exampleFormControlSelect1" onkeyup="filterTable()">
                                         <option>Filtrar</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -75,6 +75,7 @@
                         </nav>
 
                         <!-- Tabela ----------------->
+
                         <table class="table table-hover" id="tableUser">
 
                             <thead class="table-header">
@@ -88,8 +89,8 @@
                                 <th>Processador</th>
                                 <th>Memória RAM</th>
                                 <th>Armazenamento</th>
-                                <th>Responsável</th>
-                                <th>Setor/Unidade</th>
+                                <th>Usuário</th>
+                                <th>Cargo/Unidade</th>
                                 <th>Status</th>
                                 <th>Operações</th>
 
@@ -97,6 +98,8 @@
                             </thead>
 
                             <tbody class="table-body">
+
+                            {% for notebook in dadosTable %}
 
 
                             <tr>
@@ -111,45 +114,45 @@
                                 <!-- Marca/Modelo --------->
                                 <td class="table-td">
 
-                                    <p class="mb-0">acer</p>
-                                    <small style="color:#888888;" class="mb-0">ASPIRE</small>
+                                    <p class="mb-0">{{ notebook.marca }}</p>
+                                    <small style="color:#888888;" class="mb-0">{{ notebook.modelo }}</small>
 
                                 </td>
 
                                 <!-- Processador --------->
                                 <td class="table-td">
 
-                                    <p class="mb-0">Core I5</p>
-                                    <small style="color:#888888;" class="mb-0">10TH Gen</small>
+                                    <p class="mb-0">{{ notebook.processador }}</p>
+                                    <small style="color:#888888;" class="mb-0">{{ notebook.geracao }}</small>
 
                                 </td>
 
                                 <!-- Memória RAM --------->
                                 <td class="table-td">
 
-                                    <p class="mb-0">Corsair</p>
-                                    <small style="color:#888888;" class="mb-0">8GB</small>
+                                    <p class="mb-0">{{ notebook.memoria_ram }}</p>
+                                    <small style="color:#888888;" class="mb-0"></small>
 
                                 </td>
 
                                 <!-- Armazenamento --------->
                                 <td class="table-td">
 
-                                    <p class="mb-0">SSD</p>
-                                    <small style="color:#888888;" class="mb-0">128GB</small>
+                                    <p class="mb-0">{{ notebook.armazenamento }}</p>
+                                    <small style="color:#888888;" class="mb-0">{{ notebook.gb }}</small>
 
                                 </td>
 
-                                <!-- Nome e CPF ------->
+                                <!-- usuario ------->
                                 <td class="table-td">
-                                    <p class="mb-0">arthur</p>
-                                    <small style="color:#888888;" class="mb-0">Estagiário</small>
+                                    <p class="mb-0"></p>
+                                    <small style="color:#888888;" class="mb-0"></small>
                                 </td>
 
                                 <!-- Cargo e local ---->
                                 <td class="table-td">
-                                    <p class="mb-0">Ti</p>
-                                    <small style="color:#888888;" class="mb-0">Sia</small>
+                                    <p class="mb-0"></p>
+                                    <small style="color:#888888;" class="mb-0"></small>
                                 </td>
 
                                 <!-- Situação --------->
@@ -164,7 +167,7 @@
                                 <!-- Botões ----------->
                                 <td class="table-td">
 
-                                    <!-- Botão Responsável --------------------------------->
+                                    <!-- Botão usuario --------------------------------->
                                     <a type="button" title="Responsável" class="button-style btn-sm"
                                        href="#">
                                         <i class="fa-solid fa-user"></i>
@@ -202,10 +205,12 @@
 
                             </tr>
 
+                            {% endfor %}
 
                             </tbody>
 
                         </table>
+
                         <!-- End Table Usuários ----->
 
                     </div>
@@ -229,11 +234,13 @@
                     <!-- Body Modal Adicionar -------------------->
                     <div class="modal-body">
                         <!-- Forms Adicionar -------------------->
-                        <form method="post">
+                        <form action="{% url 'notebook' %}"
+                              method="POST">
 
+                            {% csrf_token %}
                             <div class="row m-3">
 
-                                {% csrf_token %}
+
                                 <!-- primeira coluna -------------------->
                                 <div class="col-6 form-group">
                                     <h6 class="required-label">Modelo</h6>
@@ -285,24 +292,19 @@
                                     <hr>
                                 </div>
 
-                                <div class="form-group mt-2">
+                                <div class="col-3 form-group mt-3">
                                     <h6 class="required-label">Responsável</h6>
-                                    {{ form.responsavel }}
+                                    {{ form.usuario }}
                                 </div>
 
-                                <div class="col-6 form-group mt-3">
+                                <div class="col-4 form-group mt-3">
                                     <h6 class="required-label ">Setor</h6>
                                     {{ form.setor }}
                                 </div>
 
-                                <div class="col-6 form-group mt-3">
+                                <div class="col-5 form-group mt-3">
                                     <h6 class="required-label ">Unidade</h6>
                                     {{ form.unidade }}
-                                </div>
-
-                                <div class="form-group mt-3">
-                                    <h6 class="required-label">Email</h6>
-                                    {{ form.email }}
                                 </div>
 
                                 <div class="form-group mt-3">
@@ -326,19 +328,22 @@
                                 </div>
 
                             </div>
+
+                            <!-- Footer salvar ------------------------------>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                            <!-- Footer salvar end ------------------------------>
+
                         </form>
                         <!-- Forms Adicionar end -------------------->
                     </div>
-                    <!-- Footer salvar ------------------------------>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                    <!-- Footer salvar end ------------------------------>
+
                 </div>
             </div>
         </div>
-        <!-- End Modal foto e banner ---------------->
+        <!-- End Modal adicionar ---------------->
 
         <!-- Modal editar -------------------->
         <div class="modal fade " id="editarModalestoque" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -346,17 +351,19 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editarModalestoque2">Editar Notebooks</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Adicione o Notebook</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Body Modal Adicionar -------------------->
                     <div class="modal-body">
                         <!-- Forms Adicionar -------------------->
-                        <form method="post">
+                        <form action="{% url 'notebook' %}"
+                              method="POST">
 
+                            {% csrf_token %}
                             <div class="row m-3">
 
-                                {% csrf_token %}
+
                                 <!-- primeira coluna -------------------->
                                 <div class="col-6 form-group">
                                     <h6 class="required-label">Modelo</h6>
@@ -408,24 +415,19 @@
                                     <hr>
                                 </div>
 
-                                <div class="form-group mt-2">
+                                <div class="col-3 form-group mt-3">
                                     <h6 class="required-label">Responsável</h6>
-                                    {{ form.responsavel }}
+                                    {{ form.usuario }}
                                 </div>
 
-                                <div class="col-6 form-group mt-3">
+                                <div class="col-4 form-group mt-3">
                                     <h6 class="required-label ">Setor</h6>
                                     {{ form.setor }}
                                 </div>
 
-                                <div class="col-6 form-group mt-3">
+                                <div class="col-5 form-group mt-3">
                                     <h6 class="required-label ">Unidade</h6>
                                     {{ form.unidade }}
-                                </div>
-
-                                <div class="form-group mt-3">
-                                    <h6 class="required-label">Email</h6>
-                                    {{ form.email }}
                                 </div>
 
                                 <div class="form-group mt-3">
@@ -449,19 +451,22 @@
                                 </div>
 
                             </div>
+
+                            <!-- Footer salvar ------------------------------>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                            <!-- Footer salvar end ------------------------------>
+
                         </form>
                         <!-- Forms Adicionar end -------------------->
                     </div>
-                    <!-- Footer salvar ------------------------------>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                    <!-- Footer salvar end ------------------------------>
+
                 </div>
             </div>
         </div>
-        <!-- End Modal foto e banner ---------------->
+        <!-- End Modal editar ---------------->
 
         <!-- Modal Info ----------------------------->
         <div class="modal fade" id="InfoModalNotebook" tabindex="-1" aria-labelledby="exampleModalNotebook"
@@ -473,28 +478,28 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Forms Adicionar -------------------->
-                        <p><strong>Marca: </strong> <span id="marcaVisualizacao"></span></p>
-                        <p><strong>Modelo: </strong> <span id="modeloVisualizacao"></span></p>
-                        <p><strong>Processador: </strong> <span id="processadorVisualizacao"></span></p>
-                        <p><strong>Geração: </strong> <span id="geracaoVisualizacao"></span></p>
-                        <p><strong>Memória RAM: </strong> <span id="memoriaRamVisualizacao"></span></p>
-                        <p><strong>Armazenamento: </strong> <span id="armazenamentoVisualizacao"></span></p>
-                        <p><strong>Capacidade (GB): </strong> <span id="gbVisualizacao"></span></p>
-                        <p><strong>Responsável: </strong> <span id="responsavelVisualizacao"></span></p>
-                        <p><strong>Setor: </strong> <span id="setorVisualizacao"></span></p>
-                        <p><strong>Unidade: </strong> <span id="unidadeVisualizacao"></span></p>
-                        <p><strong>E-mail: </strong> <span id="emailVisualizacao"></span></p>
-                        <p><strong>Service Tag: </strong> <span id="serviceTagVisualizacao"></span></p>
-                        <p><strong>Anti-Vírus: </strong> <span id="antiVirusVisualizacao"></span></p>
-                        <p><strong>Chave do Windows: </strong> <span id="chaveWinVisualizacao"></span></p>
-                        <p><strong>Chave do Office: </strong> <span id="chaveOfficeVisualizacao"></span></p>
-                        <p><strong>Status: </strong> <span id="statusVisualizacao"></span></p>
+                        <!-- infos -------------------->
+                        <p><strong>Marca: </strong> <span> {{ notebook.marca }} </span></p>
+                        <p><strong>Modelo: </strong> <span> {{ notebook.modelo }} </span></p>
+                        <p><strong>Processador: </strong> <span> {{ notebook.processador }} </span></p>
+                        <p><strong>Geração: </strong> <span> {{ notebook.geracao }} </span></p>
+                        <p><strong>Memória RAM: </strong> <span> {{ notebook.memoria_ram }} </span></p>
+                        <p><strong>Armazenamento: </strong> <span> {{ notebook.armazenamento }} </span></p>
+                        <p><strong>Capacidade (GB):</strong> <span> {{ notebook.gb }} </span></p>
+                        <p><strong>Responsável: </strong> <span> </span></p>
+                        <p><strong>Setor: TI </strong> <span> </span></p>
+                        <p><strong>Unidade:  </strong> <span> </span></p>
+                        <p><strong>E-mail: </strong> <span> </span></p>
+                        <p><strong>Service Tag: </strong> <span> {{notebook.serviceTag}} </span></p>
+                        <p><strong>Anti-Vírus: </strong> <span> {{ notebook.antiVirus }} </span></p>
+                        <p><strong>Chave do Windows: </strong> <span> {{notebook.chaveWin}} </span></p>
+                        <p><strong>Chave do Office: </strong> <span> {{notebook.chaveOffice}} </span></p>
+                        <p><strong>Status: </strong> <span> </span></p>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary">Salvar</button>
                     </div>
                 </div>
             </div>

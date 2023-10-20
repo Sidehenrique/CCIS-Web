@@ -118,31 +118,35 @@
         <!-- avatar -------------------------->
         <div class="col-md-5 col-lg-3 d-none d-sm-block d-sm-none d-md-block profile-info mb-3 container">
 
-            {% if dados.foto %}
-            <img class="profile-user"
-                 src="{{ dados.foto.url }}">
+            <div class="m-3">
 
-            {% else %}
+                <a class="profile-link" type="button" data-bs-toggle="modal"
+                   data-bs-target="#profileModal"
+                   data-bs-whatever="@getbootstrap" aria-expanded="false">
+                    <div class="nav-photo2">
+                        {% if user_data.logFoto %}
+                        <img src="{{ logFoto.url }}" alt="" width="165" height="180">
+                        {% else %}
+                        {% if user_data.logSexo == "Masculino" %}
+                        <img src="{% static 'ccis/avatar.jpg' %}" alt="" width="165" height="180">
+                        {% elif user_data.logSexo == "Feminino" %}
+                        <img src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="165" height="180">
+                        {% endif %}
+                        {% endif %}
+                        <div class="icone-lapis2">
+                            <i class="far fa-pen-to-square"></i>
+                        </div>
+                    </div>
+                </a>
 
-            {% if dados.sexo == "Masculino" %}
-            <img class="profile-user"
-                 src="{% static 'ccis/avatar.jpg' %}">
+                <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
 
-            {% elif dados.sexo == "Feminino" %}
-            <img class="profile-user"
-                 src="{% static 'ccis/avatar-feminino.jpg' %}">
+                <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
 
-            {% endif %}
-
-            {% endif %}
-
-            <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
-
-            <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
-
+            </div>
         </div>
-        <!-- avatar -------------------------->
 
+        <!-- avatar -------------------------->
         <!-- Status -------------------------->
         <div class="col d-none d-sm-block d-sm-none d-md-block align-self-end">
             <div class="profile-progress mb-3">
@@ -153,7 +157,7 @@
                     <div class="progress-percent">{{ pf }}%</div>
 
                     <div class="progress-title">
-                        <span>Profile Status<span>
+                            <span>Profile Status<span>
                     </div>
 
                     <div class="progress"

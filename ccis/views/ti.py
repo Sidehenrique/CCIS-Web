@@ -3,9 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from ccis.forms import ModelFormNotebook
-from .. models import dadosPessoais, Card, MessageHistory, CardSetorHistory
+from .. models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook
 from .. forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
+import logging
+logging.basicConfig(filename='debug.log', level=logging.DEBUG)
+
+import logging
+logging.basicConfig(filename='debug.log', level=logging.DEBUG)
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
 @login_required(login_url="/login")
@@ -232,21 +237,18 @@ def solicit(request):
 
 @login_required(login_url="/login")
 def notebook(request):
+    dadosTable = Notebook.objects.all()
+    form = ModelFormNotebook()
 
-    form = ModelFormNotebook(request.POST)
-    return render(request, 'ti/estoque/notebook.html', {'form': form})
-
-
-def salvaNotebook(request):
     if request.method == 'POST':
         form = ModelFormNotebook(request.POST)
         if form.is_valid():
+            logging.debug("Formulário é válido")
             form.save()
-            return redirect('notebook')  # Redirecione de volta para a página 'notebook' após o salvamento
-
-    else:
-        form = ModelFormNotebook()
-
-    return render(request, 'ti/estoque/notebook.html', {'form': form})
+            logging.debug("Formulário salvo com sucesso")
+            return redirect('notebook')
+        else:
+            logging.debug("Formulário não é válido. Erros: %s", form.errors)
+    return render(request, 'ti/estoque/notebook.html', {'form': form, 'dadosTable': dadosTable})
 
 
