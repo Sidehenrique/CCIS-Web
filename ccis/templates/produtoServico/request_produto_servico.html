@@ -1,0 +1,353 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container" style="margin-top:75px">
+
+    <!-- Conteúdo -------------------------------->
+    <div class="row">
+
+        <!-- Menu -------------------------------->
+        <div id="menu-inicial" class="col-3 menu-request">
+
+            <div class="">
+
+                <h5 class="text-center p-1">PRODUTOS E SERVIÇOS</h5>
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Malotes
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="">
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo mt-5">
+                        <a href="{% url 'request_produto_servico' %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Voltar
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!-- Menu -------------------------------->
+
+
+        <!-- Informativo ------------------------->
+        <div id="informativoTI" class="col menu-request m-0 p-5">
+            <h6>Orientações para abertura de chamado - 4155. Retaguarda</h6>
+            <p>
+                Pontos a serem observados durante a abertura de chamado:
+                - Detalhar bem a sua solicitação.
+                - Se possuir evidências anexar no chamado.
+
+                Horário de Atendimento
+                - Segunda-feira a sexta-feira das 08:30hs às 17:30hs
+            </p>
+
+        </div>
+        <!-- Informativo ------------------------->
+
+
+        <!-- Formulário de Malotes -------------------------->
+        <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
+
+
+            <!-- Formulário de Malotes -------------------------->
+            <form action="{% url 'salvar_malote_PS' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="produtoServico">
+
+                        <div class="mb-2" id="service-dinamico">
+                            <label class="required-label">Informe o lacre:</label>
+                            <input class="input-new" name="service-dinamico" type="text">
+                        </div>
+
+                        <div id="descricao-dinamica" class="mb-3">
+                            <label class="">Descrição:</label><br>
+                            <textarea class="new-desc" name="descricao-dinamica"></textarea>
+                        </div>
+
+                        <div class="">
+                            <label class="">Anexar arquivo:</label>
+                            {{ form.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                    <!-- segunda col -------------------------->
+                    <div class="col">
+
+                        <h6 class="required-label">Selecione os itens desejados:</h6>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item1" id="Acordo" value="Acordo de Incentivo Sipag"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Acordo">Acordo de Incentivo Sipag</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item2" id="Alteracao"
+                                   value="Alteração de Beneficiários – Seguro Vida" type="checkbox">
+                            <label class="form-check-label" for="Alteracao">Alteração de Beneficiários – Seguro
+                                Vida</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item3" id="Autorizacao"
+                                   value="Autorização Para Amortização das Prestações Consórcio" type="checkbox">
+                            <label class="form-check-label" for="Autorizacao">Autorização Para Amortização das
+                                Prestações Consórcio</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item4" id="Bobinas" value="Bobinas Sipag"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Bobinas">Bobinas Sipag</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item5" id="Carta"
+                                   value="Carta de Cancelamento de Seguro"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Carta">Carta de Cancelamento de Seguro</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item6" id="CedulaConsignado"
+                                   value="Cédula de Crédito Bancário – Consignado Bancoob" type="checkbox">
+                            <label class="form-check-label" for="CedulaConsignado">Cédula de Crédito Bancário –
+                                Consignado
+                                Bancoob</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item7" id="CedulaParcelamento"
+                                   value="Cédula de Crédito Bancário – Parcelamento Total de Cartão" type="checkbox">
+                            <label class="form-check-label" for="CedulaParcelamento">Cédula de Crédito Bancário –
+                                Parcelamento Total de Cartão</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item8" id="Chip" value="Chip Sipag" type="checkbox">
+                            <label class="form-check-label" for="Chip">Chip Sipag</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item9" id="Cartoes"
+                                   value="Cartões – Conta Corrente/ Poupança/Poupança Kids e Salário" type="checkbox">
+                            <label class="form-check-label" for="Cartoes">Cartões – Conta Corrente/ Poupança/Poupança
+                                Kids e
+                                Salário</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item10" id="AutorizacaoPagamento"
+                                   value="Autorização Para Pagamento de Consorciado desistente/Excluido Consórcio"
+                                   type="checkbox">
+                            <label class="form-check-label" for="AutorizacaoPagamento">Autorização Para Pagamento de
+                                Consorciado desistente/Excluido Consórcio</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item11" id="Comprovante"
+                                   value="Comprovante de Resgate de Aplicação Financeira" type="checkbox">
+                            <label class="form-check-label" for="Comprovante">Comprovante de Resgate de Aplicação
+                                Financeira</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item12" id="Condições"
+                                   value="Condições Operacionais de Serviços de Cobrança Bancária" type="checkbox">
+                            <label class="form-check-label" for="Condições">Condições Operacionais de Serviços de
+                                Cobrança Bancária</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item13" id="Contrato"
+                                   value="Contrato de Alienação Fiduciária Em Garantia Consórcio" type="checkbox">
+                            <label class="form-check-label" for="Contrato">Contrato de Alienação Fiduciária Em Garantia
+                                Consórcio</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item14" id="Declaração"
+                                   value="Declaração de Prova de Vida" type="checkbox">
+                            <label class="form-check-label" for="Declaração">Declaração de Prova de Vida</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item15" id="DeclaraçãoRecebimento"
+                                   value="Declaração de Recebimento de Crédito Não Utilizado 180 Dias Consórcio"
+                                   type="checkbox">
+                            <label class="form-check-label" for="DeclaraçãoRecebimento">Declaração de Recebimento de
+                                Crédito Não Utilizado 180 Dias Consórcio</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item16" id="DeclaraçãoRecebimentoEncerramento"
+                                   value="Declaração de Recebimento de Encerramento de Grupo Consórcio" type="checkbox">
+                            <label class="form-check-label" for="DeclaraçãoRecebimentoEncerramento">Declaração de
+                                Recebimento de Encerramento de Grupo Consórcio</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item17" id="Equipamentos" value="Equipamentos Sipag"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Equipamentos">Equipamentos Sipag</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item18" id="Formulário"
+                                   value="Formulário de Contestação – Cartão" type="checkbox">
+                            <label class="form-check-label" for="Formulário">Formulário de Contestação – Cartão</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item19" id="Instrumento"
+                                   value="Instrumento de Protesto" type="checkbox">
+                            <label class="form-check-label" for="Instrumento">Instrumento de Protesto</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item20" id="InstrumentoParticular"
+                                   value="Instrumento Particular de Fiança Consórcio" type="checkbox">
+                            <label class="form-check-label" for="InstrumentoParticular">Instrumento Particular de Fiança
+                                Consórcio</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item21" id="Portabilidade"
+                                   value="Portabilidade de Salário" type="checkbox">
+                            <label class="form-check-label" for="Portabilidade">Portabilidade de Salário</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item22" id="Proposta"
+                                   value="Proposta de Credenciamento Sipag" type="checkbox">
+                            <label class="form-check-label" for="Proposta">Proposta de Credenciamento Sipag</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item23" id="PropostaInscricao"
+                                   value="Proposta de Inscrição de Previdência" type="checkbox">
+                            <label class="form-check-label" for="PropostaInscricao">Proposta de Inscrição de
+                                Previdência</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item24" id="QuadroResumo"
+                                   value="Quadro Resumo Consórcio" type="checkbox">
+                            <label class="form-check-label" for="QuadroResumo">Quadro Resumo Consórcio</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item25" id="ReciboAplicacao"
+                                   value="Recibo de Aplicação Financeira" type="checkbox">
+                            <label class="form-check-label" for="ReciboAplicacao">Recibo de Aplicação Financeira</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item26" id="ReciboEntrega"
+                                   value="Recibo de Entrega de Cartão" type="checkbox">
+                            <label class="form-check-label" for="ReciboEntrega">Recibo de Entrega de Cartão</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item27" id="SolicitacaoRegras"
+                                   value="Solicitação de Regras Especiais Para Uso do Cartão de Crédito"
+                                   type="checkbox">
+                            <label class="form-check-label" for="SolicitacaoRegras">Solicitação de Regras Especiais Para
+                                Uso do Cartão de Crédito</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item28" id="SolicitacaoTroca"
+                                   value="Solicitação de Troca de Domicílio Bancário de Benefícios INSS"
+                                   type="checkbox">
+                            <label class="form-check-label" for="SolicitacaoTroca">Solicitação de Troca de Domicílio
+                                Bancário de Benefícios INSS</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item29" id="TermoAdesao"
+                                   value="Termo de Adesão Pacote de Serviço" type="checkbox">
+                            <label class="form-check-label" for="TermoAdesao">Termo de Adesão Pacote de Serviço</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item30" id="TermoAutorizacao"
+                                   value="Termo de Autorização Para Acesso Aos Dados de Beneficiário INSS"
+                                   type="checkbox">
+                            <label class="form-check-label" for="TermoAutorizacao">Termo de Autorização Para Acesso Aos
+                                Dados de Beneficiário INSS</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-1">
+                            <input class="form-check-input" name="item31" id="TermoCessao"
+                                   value="Termo de Cessão de Cota Consórcio" type="checkbox">
+                            <label class="form-check-label" for="TermoCessao">Termo de Cessão de Cota Consórcio</label>
+                        </div>
+
+                        <!-- segunda col -------------------------->
+                    </div>
+            </form>
+            <!-- CheckBox list -------------------------->
+        </div>
+    </div>
+    <!-- Formulário de Acessos -------------------------->
+
+
+</div>
+<!-- Conteúdo -------------------------------->
+
+<script>
+
+    document.getElementById('flexSwitchCheckDefault6').addEventListener('change', function() {
+      var descricao = document.getElementById('descricao-outros-ps');
+      if (this.checked) {
+        descricao.style.display = 'block';
+      } else {
+        descricao.style.display = 'none';
+      }
+    });
+
+</script>
+
+
+{% endblock %}

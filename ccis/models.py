@@ -485,7 +485,6 @@ class Card(models.Model):
     responsavel = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='chamados_responsaveis', default=None)
     status = models.CharField(max_length=20)
-    sector = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.assunto
@@ -495,7 +494,7 @@ class MessageHistory(models.Model):
     idMessageHistory = models.AutoField(db_column='idMessageHistory', primary_key=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     remetente = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField()
+    message = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
     attachment = models.FileField(upload_to='chat/', null=True, blank=True)
 
@@ -505,7 +504,7 @@ class MessageHistory(models.Model):
 
 class CardSetorHistory(models.Model):
     idCardSetorHistory = models.AutoField(db_column='idCardSetorHistory', primary_key=True)
-    setor = models.ForeignKey(Group, on_delete=models.CASCADE)
+    setor = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     status_anterior = models.CharField(max_length=20, null=True, blank=True)
     status_atual = models.CharField(max_length=20)
@@ -529,9 +528,11 @@ class OperatorRating(models.Model):
     def __str__(self):
         return self.rating
 
+
 # -------- Estoque ------------------------------------------------------------------------------------------------------
 
 class Notebook(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Notebook')
     modelo = models.CharField(max_length=100)
     marca = models.CharField(max_length=100)
     processador = models.CharField(max_length=100)
@@ -540,7 +541,6 @@ class Notebook(models.Model):
     armazenamento = models.CharField(max_length=100)
     gb = models.CharField(max_length=100)
     status = models.CharField(max_length=100)
-    responsavel = models.CharField(max_length=100)
     setor = models.CharField(max_length=100)
     unidade = models.CharField(max_length=100)
     email = models.EmailField()
@@ -548,7 +548,6 @@ class Notebook(models.Model):
     antiVirus = models.CharField(max_length=100)
     chaveWin = models.CharField(max_length=100)
     chaveOffice = models.CharField(max_length=100)
-
 
     def __str__(self):
         return self.modelo

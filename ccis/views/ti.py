@@ -3,9 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from ccis.forms import ModelFormNotebook
-from .. models import dadosPessoais, Card, MessageHistory, CardSetorHistory
+from .. models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook
 from .. forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
+import logging
+logging.basicConfig(filename='debug.log', level=logging.DEBUG)
+
+import logging
+logging.basicConfig(filename='debug.log', level=logging.DEBUG)
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
 @login_required(login_url="/login")
@@ -90,13 +95,12 @@ def request_acessos_ti(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
-            card.sector = get_object_or_404(Group, id=1)
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
+                setor=get_object_or_404(Group, id=1),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -133,13 +137,12 @@ def request_equipamentos_ti(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
-            card.sector = get_object_or_404(Group, id=1)
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
+                setor=get_object_or_404(Group, id=1),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -176,13 +179,12 @@ def request_servicos_ti(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.colunaAtual = "1"
-            card.sector = get_object_or_404(Group, id=1)
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
+                setor=get_object_or_404(Group, id=1),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -235,22 +237,18 @@ def solicit(request):
 
 @login_required(login_url="/login")
 def notebook(request):
+    dadosTable = Notebook.objects.all()
+    form = ModelFormNotebook()
 
-    form = ModelFormNotebook(request.POST)
-    return render(request, 'ti/estoque/notebook.html', {'form': form})
-
-
-def salvaNotebook(request):
     if request.method == 'POST':
         form = ModelFormNotebook(request.POST)
         if form.is_valid():
+            logging.debug("Formulário é válido")
             form.save()
-            return redirect('notebook')  # Redirecione de volta para a página 'notebook' após o salvamento
+            logging.debug("Formulário salvo com sucesso")
+            return redirect('notebook')
+        else:
+            logging.debug("Formulário não é válido. Erros: %s", form.errors)
+    return render(request, 'ti/estoque/notebook.html', {'form': form, 'dadosTable': dadosTable})
 
-    else:
-        form = ModelFormNotebook()
-
-    return render(request, 'ti/estoque/notebook.html', {'form': form})
-
-    return render(request, 'ti/solicit.html')
 
