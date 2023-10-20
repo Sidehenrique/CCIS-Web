@@ -182,103 +182,7 @@ function handleScroll(event) {
 }
 
 
-//function loadCardInfo(cardId) {
-//    const modal = $('#processoModal');
-//    const modalBody = modal.find('.modal-body');
-//
-//    // Realizar uma solicitação AJAX para obter os detalhes do card
-//    $.ajax({
-//        url: `/card_detl/${cardId}`,  // Substitua pela URL correta da sua view
-//        method: 'GET',
-//        dataType: 'json',
-//        success: function (data) {
-//            if (data) {
-//                // Os dados do card foram retornados com sucesso
-//                // Preencha o modal com esses dados
-//
-//                // Use variáveis para armazenar os seletores dos elementos do modal
-//                const assuntoInfo = $("#assuntoInfo");
-//                const servicoInfo = $("#servicoInfo");
-//                const codInfo = $("#codInfo");
-//                const nomeSolicitante = $("#nomeSolicitante");
-//                const sexoSolicitante = $("#sexoSolicitante");
-//                const fotoSolicitante = $("#fotoSolicitante");
-//                const cpfSolicitante = $("#cpfSolicitante");
-//                const loginSolicitante = $("#loginSolicitante");
-//                const emailSolicitante = $("#emailSolicitante");
-//                const ramalSolicitante = $("#ramalSolicitante");
-//                const areaSolicitante = $("#areaSolicitante");
-//                const sectorInfo = $("#sectorInfo");
-//                const statusHistory = $("#statusHistory"); // Adicione este seletor
-//
-//                // Preencha os campos relacionados ao card
-//                assuntoInfo.text(data.card.assunto);
-//                servicoInfo.text(` / ${data.card.service}`);
-//                codInfo.text(`N° ${data.card.idCard}`);
-//
-//                // Preencha os campos relacionados ao solicitante
-//                nomeSolicitante.text(data.card.solicitante_dados_pessoais.nomeCompleto);
-//                sexoSolicitante.text(data.card.solicitante_dados_pessoais.sexo);
-//                cpfSolicitante.text(data.card.solicitante_dados_pessoais.cpf);
-//
-//                // Verifique se a foto do solicitante existe
-//                if (data.card.solicitante_dados_pessoais.foto) {
-//                    fotoSolicitante.attr("src", data.card.solicitante_dados_pessoais.foto);
-//                } else {
-//                    // Caso não haja foto, defina um valor padrão ou oculte o elemento
-//                    fotoSolicitante.attr("src", "caminho_para_foto_padrao.jpg");
-//                    // Ou, se preferir, esconda o elemento completamente
-//                    // fotoSolicitante.hide();
-//                }
-//
-//                // Preencha os campos relacionados ao solicitante
-//                loginSolicitante.text(data.card.solicitante.username);
-//                emailSolicitante.text(data.card.solicitante.email);
-//
-//                // Verifique se o ramal do solicitante existe
-//                if (data.card.solicitante_contato.ramal) {
-//                    ramalSolicitante.text(data.card.solicitante_contato.ramal);
-//                } else {
-//                    ramalSolicitante.text("N/A");
-//                }
-//
-//                if (data.card.solicitante_contato.ramal) {
-//                    areaSolicitante.text(data.card.solicitante_profissional.area);
-//                } else {
-//                    areaSolicitante.text("N/A");
-//                }
-//
-//                // Preencha o histórico de status
-//                statusHistory.empty(); // Limpa qualquer conteúdo anterior
-//
-//                if (data.history && data.history.length > 0) {
-//                    data.history.forEach(function (entry) {
-//                        const li = $("<li>").text(entry.status_atual);
-//                        statusHistory.append(li);
-//                    });
-//                } else {
-//                    statusHistory.append("<li>Nenhum histórico de status disponível.</li>");
-//                }
-//
-//                // Obtenha o setor_atual da tabela CardSetorHistory
-//                if (data.card.setor_history && data.card.setor_history.length > 0) {
-//                    const setorAtual = data.card.setor_history[0].setor_atual;
-//                    sectorInfo.text(setorAtual);
-//                } else {
-//                    sectorInfo.text("Setor não encontrado");
-//                }
-//
-//                // Abra o modal
-//                modal.modal('show');
-//            } else {
-//                alert('Dados do card não encontrados.');
-//            }
-//        },
-//        error: function () {
-//            alert('Erro ao buscar os detalhes do card');
-//        }
-//    });
-//}
+
 
 // Configure o cabeçalho CSRF para solicitações AJAX
 $.ajaxSetup({
@@ -289,10 +193,16 @@ $.ajaxSetup({
     }
 });
 
+
+
+
 function csrfSafeMethod(method) {
     // Esses métodos não exigem um token CSRF
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
+
+
 
 function getCookie(name) {
     var cookieValue = null;
@@ -309,6 +219,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
 
 
 
@@ -381,7 +292,6 @@ function loadCardInfo(cardId) {
                     areaSolicitante.text("N/A");
                 }
 
-
                 // Preencha o histórico de status
                 const statusHistory = modalBody.find(".container-buttons");
                 statusHistory.empty(); // Limpa qualquer conteúdo anterior
@@ -399,8 +309,7 @@ function loadCardInfo(cardId) {
                     statusHistory.append("<span>Nenhum histórico de status disponível.</span>");
                 }
 
-
-                // Exiba o horário de abertura do chamado personalizado ------------------------------------------------
+                // Exiba o horário de abertura do chamado personalizado
                 const horarioAberturaCard = new Date(data.card.dataCriacao);
                 const horarioAtual = new Date();
                 const diferencaMilissegundos = horarioAtual - horarioAberturaCard;
@@ -421,75 +330,125 @@ function loadCardInfo(cardId) {
                     mensagemHorarioAbertura = `Criado há ${diferencaMeses} mês(es)`;
                 }
 
+
                 horarioAbertura.text(mensagemHorarioAbertura);
 
 
+                atualizarListaMensagens(cardId);
+
+
+                //--------------------------------------------------------------------------------------------
 
 
 
-                // Dentro do loop que renderiza as mensagens do chat ---------------------------------------------------
-
-                // Agora, vamos buscar as mensagens do solicitante
-                const messagesContainer = modal.find(".messages-container");
-                messagesContainer.empty(); // Limpa qualquer conteúdo anterior
-
-                $.ajax({
-                    url: `/get_messages/${cardId}`,  // Substitua pela URL correta da sua view que retorna as mensagens
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function (messages) {
-                        if (messages && messages.length > 0) {
-                            messages.forEach(function (message) {
-                                const dataHora = new Date(message.datetime);
-                                const dia = dataHora.getDate();
-                                const mes = dataHora.getMonth() + 1; // Os meses são indexados de 0 a 11
-                                const ano = dataHora.getFullYear();
-                                const hora = dataHora.getHours();
-                                const minuto = dataHora.getMinutes();
-
-                                const dataFormatada = `${dia}/${mes}/${ano}`;
-                                const horarioFormatado = `${hora}:${minuto}`;
-
-                                const rowElement = $("<div>").addClass("row pt-1").css({
-                                    backgroundColor: "#d9d9d9",
-                                    padding: "10px",
-                                    borderRadius: "5px",
-                                    margin: "0 0 10px 0",
-                                });
-
-                                const colElementEsquerda = $("<div>").addClass("col-auto me-auto");
-                                const nomeCompleto = `<h6>${message.remetente_first_name} ${message.remetente_last_name}</h6>`;
-                                const colElementDireita = $("<div>").addClass("col-auto");
-                                const dataElement = $(`<small>Data: ${dataFormatada}, Hora: ${horarioFormatado}</small>`);
-                                const messageElement = $(`<p>${message.message}</p>`);
-
-
-                                // Adicionar os elementos à estrutura desejada
-                                colElementEsquerda.append(nomeCompleto);
-                                colElementDireita.append(dataElement);
-
-                                rowElement.append(colElementEsquerda, colElementDireita);
-                                rowElement.append(messageElement);
-
-                                // Adicionar a rowElement ao seu container de mensagens
-                                messagesContainer.append(rowElement);
-                            });
-                        } else {
-                            messagesContainer.append("<p>Nenhuma mensagem disponível do solicitante.</p>");
-                        }
-                    },
-                    error: function () {
-                        alert('Erro ao buscar as mensagens do solicitante');
+                // Configurar o botão de resposta
+                $("#enviarMensagemButton").click(function () {
+                    const resposta = $("#resposta").val();
+                    if (resposta) {
+                        enviarResposta(cardId, resposta);
+                    } else {
+                        alert('Preencha o campo de resposta antes de enviar.');
                     }
                 });
 
+                // Função para enviar uma mensagem de resposta
+                function enviarResposta(cardId, resposta) {
+                    const formData = new FormData();
+                    formData.append("resposta", resposta);
+
+                    $.ajax({
+                        url: `/enviar_resposta/${cardId}`,
+                        method: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            // Limpe o campo de resposta após o envio
+                            $("#resposta").val('');
+                            // Atualize a lista de mensagens
+                            atualizarListaMensagens(cardId);
+                        },
+                        error: function () {
+                            alert('Erro ao enviar a resposta');
+                        }
+                    });
+                }
+
+                // Função para atualizar a lista de mensagens
+                function atualizarListaMensagens(cardId) {
+                    // Agora, vamos buscar as mensagens do solicitante
+                    const messagesContainer = modal.find(".messages-container");
+                    messagesContainer.empty(); // Limpa qualquer conteúdo anterior
+
+                    $.ajax({
+                        url: `/get_messages/${cardId}`,
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function (messages) {
+                            if (messages && messages.length > 0) {
+                                messages.forEach(function (message) {
+                                    const dataHora = new Date(message.datetime);
+                                    const dia = dataHora.getDate();
+                                    const mes = dataHora.getMonth() + 1; // Os meses são indexados de 0 a 11
+                                    const ano = dataHora.getFullYear();
+                                    const hora = dataHora.getHours();
+                                    const minuto = dataHora.getMinutes();
+
+                                    const dataFormatada = `${dia}/${mes}/${ano}`;
+                                    const horarioFormatado = `${hora}:${minuto}`;
+
+                                    const rowElement = $("<div>").addClass("row pt-1").css({
+                                        backgroundColor: "#d9d9d9",
+                                        padding: "10px",
+                                        borderRadius: "5px",
+                                        margin: "0 0 10px 0",
+                                    });
+
+                                    const colElementEsquerda = $("<div>").addClass("col-auto me-auto");
+
+                                    // Adicionar o nome completo do autor
+                                    const nomeCompleto = `<h6>${message.remetente_first_name} ${message.remetente_last_name}</h6>`;
+                                    colElementEsquerda.append(nomeCompleto);
+
+                                    // Verificar se há anexo
+                                    if (message.attachment) {
+                                        // Se houver anexo, criar um link para download
+                                        const attachmentLink = $("<a>")
+                                            .attr("href", message.attachment)
+                                            .attr("download", "anexo.pdf") // Define um nome padrão para o anexo
+                                            .html('<button><i class="fa-solid fa-circle-down"></i> Baixar anexo</button>');
+
+                                        // Adicionar o link de anexo ao container
+                                        colElementEsquerda.append(attachmentLink);
+                                    }
+
+                                    const colElementDireita = $("<div>").addClass("col-auto");
+                                    const dataElement = $(`<small>${dataFormatada} ${horarioFormatado}</small>`);
+                                    const messageElement = $(`<p>${message.message}</p>`);
+
+                                    // Adicionar os elementos à estrutura desejada
+                                    colElementDireita.append(dataElement);
+
+                                    rowElement.append(colElementEsquerda, colElementDireita);
+                                    rowElement.append(messageElement);
+
+                                    // Adicionar a rowElement ao seu container de mensagens
+                                    messagesContainer.append(rowElement);
+                                });
+                            } else {
+                                messagesContainer.append("<p>Nenhuma mensagem Informada.</p>");
+                            }
+                        },
+                        error: function () {
+                            alert('Erro ao buscar as mensagens do solicitante');
+                        }
+                    });
+
+                }
 
 
 
-                // -----------------------------------------------------------------------------------------------------
-
-
-
+                //---------------------------------------------------------------------------------------------
 
                 // Obtenha o setor_atual da tabela CardSetorHistory
                 if (data.card.setor_history && data.card.setor_history.length > 0) {
@@ -511,58 +470,3 @@ function loadCardInfo(cardId) {
     });
 }
 
-
-
-
-//
-//// Exiba o nome, sobrenome e data do remetente
-//                const remetente = data.card.messages[0];
-//                const nomeCompleto = `${remetente.remetente_first_name} ${remetente.remetente_last_name}`;
-//                const dataHora = new Date(remetente.datetime);
-//
-//                $("#nomeRemetente").text(nomeCompleto);
-
-
-
-//// Realizar uma solicitação AJAX para obter os detalhes do card
-//                // Ao clicar em "Enviar Resposta"
-//                $('#enviarResposta').click(function () {
-//                    const resposta = $('#resposta').val();
-//
-//                    // Verifique se a resposta não é nula ou vazia
-//                    if (resposta.trim() !== '') {
-//                        // Adicione a resposta à lista de mensagens como "pendente"
-//                        const messageText = resposta;  // Substitua pelo campo correto da resposta
-//                        const messageElement = $("<div>").addClass("mt-1 mensagem-pendente").css("background-color", "#d9d9d9");
-//                        const messageTextElement = $("<div>").addClass("col").html(messageText);
-//                        messageElement.append(messageTextElement);
-//                        $("#messageContainer").append(messageElement);
-//
-//                        // Limpe o campo de resposta
-//                        $('#resposta').val('');
-//
-//                        // Realize uma solicitação AJAX para enviar a resposta
-//                        $.ajax({
-//                            url: `/enviar_resposta/${cardId}`,
-//                            method: 'POST',
-//                            data: {
-//                                resposta: resposta
-//                            },
-//                            dataType: 'json',
-//                            success: function (data) {
-//                                // Atualize a mensagem como "enviada com sucesso"
-//                                messageElement.removeClass("mensagem-pendente");
-//                                messageElement.css("background-color", "#dfffe7");
-//
-//                                // Limpe o campo de resposta
-//                                $('#resposta').val('');
-//                            },
-//                            error: function () {
-//                                // Exiba uma mensagem de erro
-//                                alert('Erro ao enviar resposta');
-//                            }
-//                        });
-//                    } else {
-//                        alert('Por favor, insira uma resposta válida');
-//                    }
-//                });
