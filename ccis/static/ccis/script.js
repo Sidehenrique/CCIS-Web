@@ -339,8 +339,6 @@ function loadCardInfo(cardId) {
 
                 //--------------------------------------------------------------------------------------------
 
-
-
                 // Configurar o botão de resposta
                 $("#enviarMensagemButton").click(function () {
                     const resposta = $("#resposta").val();
@@ -351,10 +349,11 @@ function loadCardInfo(cardId) {
                     }
                 });
 
+
                 // Função para enviar uma mensagem de resposta
                 function enviarResposta(cardId, resposta) {
-                    const formData = new FormData();
-                    formData.append("resposta", resposta);
+                const formData = new FormData();
+                formData.append("resposta", resposta);
 
                     $.ajax({
                         url: `/enviar_resposta/${cardId}`,
@@ -365,7 +364,7 @@ function loadCardInfo(cardId) {
                         success: function (response) {
                             // Limpe o campo de resposta após o envio
                             $("#resposta").val('');
-                            // Atualize a lista de mensagens
+                            // Atualize a lista de mensagens passando o cardId
                             atualizarListaMensagens(cardId);
                         },
                         error: function () {
@@ -373,6 +372,7 @@ function loadCardInfo(cardId) {
                         }
                     });
                 }
+
 
                 // Função para atualizar a lista de mensagens
                 function atualizarListaMensagens(cardId) {
