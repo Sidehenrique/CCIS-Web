@@ -4069,3 +4069,5 @@ INFO:django.utils.autoreload:D:\PROJETOS\CCIS-Web\ccis\admin.py changed, reloadi
 INFO:django.utils.autoreload:D:\PROJETOS\CCIS-Web\ccis\admin.py changed, reloading.
 INFO:django.utils.autoreload:D:\PROJETOS\CCIS-Web\ccis\admin.py changed, reloading.
 INFO:django.utils.autoreload:D:\PROJETOS\CCIS-Web\ccis\admin.py changed, reloading.
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.openweathermap.org:443
+DEBUG:urllib3.connectionpool:https://api.openweathermap.org:443 "GET /data/2.5/weather?q=bras%C3%ADlia&appid=65ea38b72e0784b11d03334985c5fac7&lang=pt_br HTTP/1.1" 200 479
