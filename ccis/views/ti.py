@@ -3,14 +3,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from ccis.forms import ModelFormNotebook
-from .. models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook
-from .. forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
+from ..models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook
+from ..forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
 import logging
+
 logging.basicConfig(filename='debug.log', level=logging.DEBUG)
 
 import logging
+
 logging.basicConfig(filename='debug.log', level=logging.DEBUG)
+
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
 @login_required(login_url="/login")
@@ -75,20 +78,17 @@ def ti_home(request):
 
 @login_required(login_url="/login")
 def new_request(request):
-
-
     acessos = modelFormAcessosTI()
     equipamentos = modelFormEquipamentosTI()
     servicos = modelFormSevicosTI()
 
-    contexto = {'acessos': acessos, 'equipamentos':equipamentos, 'servicos':servicos}
+    contexto = {'acessos': acessos, 'equipamentos': equipamentos, 'servicos': servicos}
 
     return render(request, 'ti/new_request.html', contexto)
 
 
 @login_required(login_url="/login")
 def request_acessos_ti(request):
-
     if request.method == 'POST':
         form = modelFormAcessosTI(request.POST, request.FILES)
         if form.is_valid():
@@ -130,7 +130,6 @@ def request_acessos_ti(request):
 
 @login_required(login_url="/login")
 def request_equipamentos_ti(request):
-
     if request.method == 'POST':
         form = modelFormEquipamentosTI(request.POST, request.FILES)
         if form.is_valid():
@@ -172,7 +171,6 @@ def request_equipamentos_ti(request):
 
 @login_required(login_url="/login")
 def request_servicos_ti(request):
-
     if request.method == 'POST':
         form = modelFormSevicosTI(request.POST, request.FILES)
         if form.is_valid():
@@ -210,6 +208,7 @@ def request_servicos_ti(request):
 
     return render(request, 'ti/new_request.html', {'form': form})
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -231,7 +230,6 @@ def estoque(request):
 
 @login_required(login_url="/login")
 def solicit(request):
-
     return render(request, 'ti/solicit.html')
 
 
@@ -250,5 +248,3 @@ def notebook(request):
         else:
             logging.debug("Formulário não é válido. Erros: %s", form.errors)
     return render(request, 'ti/estoque/notebook.html', {'form': form, 'dadosTable': dadosTable})
-
-
