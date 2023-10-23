@@ -2,7 +2,7 @@ import requests
 from django.db.models import Prefetch
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from ..serializers import CardSerializer, CardSetorHistorySerializer
+from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
 from django.core import serializers
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -575,3 +575,36 @@ def card_detl(request, card_id):
     }
 
     return Response(response_data)
+
+
+@api_view(['POST'])
+def enviar_resposta(request, card_id):
+
+    print(card_id)
+
+    if request.method == 'POST':
+        card = get_object_or_404(Card, idCard=card_id)
+        descricao = request.data.get('resposta')
+        attachment = request.data.get('attachment')  # Se você permitir anexos
+        remetente = request.user  # Suponha que o remetente é o usuário logado
+
+        # Crie um novo objeto MessageHistory
+        message_history = MessageHistory(
+            card=card,
+            remetente=remetente,
+            message=descricao,
+            attachment=attachment,  # Se você permitir anexos
+        )
+
+        message_history.save()
+
+        data = {'status': 'Mensagem adicionada com sucesso'}
+        return JsonResponse(data)
+
+
+@api_view(['GET'])
+def get_messages(request, card_id):
+    messages = MessageHistory.objects.filter(card__idCard=card_id)
+    message_serializer = MessageHistorySerializer(messages, many=True)  # Certifique-se de criar o serializador adequado
+
+    return Response(message_serializer.data)

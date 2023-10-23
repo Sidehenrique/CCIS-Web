@@ -27,8 +27,10 @@ urlpatterns = [
       path('', pages.home, name='home'),
       path('departamentos', pages.departamentos, name='departamentos'),
 
-      path('processos', pages.processo, name='processos'),
-      path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
+    path('processos', pages.processo, name='processos'),
+    path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
+    path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
+    path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
 
       path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
       path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
@@ -145,3 +147,4 @@ urlpatterns = [
       path('dev', pages.dev, name='dev'),
 
       ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

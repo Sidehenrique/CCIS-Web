@@ -28,6 +28,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class MessageHistorySerializer(serializers.ModelSerializer):
+    remetente_first_name = serializers.CharField(source='remetente.first_name')
+    remetente_last_name = serializers.CharField(source='remetente.last_name')
+    remetente_foto = serializers.CharField(source='remetente.dadosPessoais.foto')
+
     class Meta:
         model = MessageHistory
         fields = '__all__'
