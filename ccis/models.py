@@ -475,7 +475,7 @@ class CustomGroupInfo(models.Model):
         return self.group.name
 
 
-#-------- Tabelas de Processo ------------------------------------------------------------------------------------------
+# -------- Tabelas de Processo ------------------------------------------------------------------------------------------
 class Card(models.Model):
     idCard = models.AutoField(db_column='idCard', primary_key=True)
     assunto = models.CharField(max_length=45, blank=False, null=True)
@@ -485,8 +485,6 @@ class Card(models.Model):
     responsavel = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='chamados_responsaveis', default=None)
     status = models.CharField(max_length=20)
-    sector = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
-    colunaAtual = models.CharField(max_length=20)
 
     def __str__(self):
         return self.assunto
@@ -496,7 +494,7 @@ class MessageHistory(models.Model):
     idMessageHistory = models.AutoField(db_column='idMessageHistory', primary_key=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     remetente = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField()
+    message = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
     attachment = models.FileField(upload_to='chat/', null=True, blank=True)
 
@@ -506,24 +504,50 @@ class MessageHistory(models.Model):
 
 class CardSetorHistory(models.Model):
     idCardSetorHistory = models.AutoField(db_column='idCardSetorHistory', primary_key=True)
+    setor = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    previous_sector = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='previous_sector')
-    current_sector = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='current_sector')
-    previous_status = models.CharField(max_length=20)  # Pode usar CharField ou ChoiceField
-    current_status = models.CharField(max_length=20)  # Pode usar CharField ou ChoiceField
-    datetime = models.DateTimeField(auto_now_add=True)
+    status_anterior = models.CharField(max_length=20, null=True, blank=True)
+    status_atual = models.CharField(max_length=20)
+    setor_anterior = models.CharField(max_length=20, null=True, blank=True)
+    setor_atual = models.CharField(max_length=20)
+    data_hora = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.current_status
+        return self.setor_atual
 
 
 class OperatorRating(models.Model):
     idOperatorRating = models.AutoField(db_column='idOperatorRating', primary_key=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField(choices=[(1, '1 estrela'), (2, '2 estrelas'), (3, '3 estrelas'), (4, '4 estrelas'), (5, '5 estrelas')])
+    rating = models.PositiveIntegerField(
+        choices=[(1, '1 estrela'), (2, '2 estrelas'), (3, '3 estrelas'), (4, '4 estrelas'), (5, '5 estrelas')])
     comment = models.TextField(blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
     anonymous = models.BooleanField(default=False)
 
     def __str__(self):
         return self.rating
+
+
+# -------- Estoque ------------------------------------------------------------------------------------------------------
+
+class Notebook(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Notebook')
+    modelo = models.CharField(max_length=100)
+    marca = models.CharField(max_length=100)
+    processador = models.CharField(max_length=100)
+    geracao = models.CharField(max_length=100)
+    memoria_ram = models.CharField(max_length=100)
+    armazenamento = models.CharField(max_length=100)
+    gb = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
+    setor = models.CharField(max_length=100)
+    unidade = models.CharField(max_length=100)
+    email = models.EmailField()
+    serviceTag = models.CharField(max_length=100)
+    antiVirus = models.CharField(max_length=100)
+    chaveWin = models.CharField(max_length=100)
+    chaveOffice = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.modelo

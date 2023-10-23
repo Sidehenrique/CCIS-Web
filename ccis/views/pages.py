@@ -1,7 +1,8 @@
 import requests
+from django.db.models import Prefetch
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from ..serializers import CardSerializer
+from ..serializers import CardSerializer, CardSetorHistorySerializer
 from django.core import serializers
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -536,9 +537,7 @@ def malotes(request):
 
 
 def utilitariosHome(request):
-    context = infoClima()
-    return render(request, 'ccis/utilitarios.html', context)
-
+    return render(request, 'ccis/utilitariosHome.html')
 
 def dev(request):
     return render(request, 'ccis/dev.html')
@@ -546,35 +545,33 @@ def dev(request):
 
 @login_required(login_url="/login")
 def processo(request):
-    user = request.user
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    cards = Card.objects.all()
-
-    dados = dadosPessoais.objects.get(usuario=user)
+    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+        queryset=CardSetorHistory.objects.order_by('-data_hora'))
+    )
 
     if request.method == 'GET':
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto, 'dados': dados,
-            'username': user, 'first_name': first_name, 'last_name': last_name, 'is_superadmin': is_superadmin,
-            'cards': cards
+            'cards': cards,
         }
 
         return render(request, 'ccis/processo.html', context)
 
 
-@login_required(login_url="/login")
 @api_view(['GET'])
 def card_detl(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
-    serializer = CardSerializer(card)
-    return Response(serializer.data)
+
+    # Busque o histórico de status para o card específico
+    card_history = CardSetorHistory.objects.filter(card=card).order_by('data_hora')
+    history_serializer = CardSetorHistorySerializer(card_history, many=True)
+
+    # Serialize o card e o histórico de status
+    card_serializer = CardSerializer(card)
+
+    # Crie um dicionário que inclua os dados do card e o histórico de status
+    response_data = {
+        'card': card_serializer.data,
+        'history': history_serializer.data,
+    }
+
+    return Response(response_data)

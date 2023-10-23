@@ -94,15 +94,18 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-                {% if card.sector.id == 1 %}
-                    {% if card.colunaAtual == '1' %}
+                {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+                    {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
                     <!-- card ---------------------------->
                     <a class="d-grid processo-link mb-2"
                        type="button"
                        data-bs-toggle="modal"
                        data-bs-target="#processoModal"
-                       data-card-id="{{ card.id }}">
+                       data-card-id="{{ card.idCard }}"
+                       onclick="loadCardInfo({{ card.idCard }})"
+                       id="card-link-{{ card.idCard }}">
+                       <!-- Falta uma informação aqui referente ao id -->
 
                         <div class="processo-card">
 
@@ -114,7 +117,7 @@
                                 </div>
 
                                 <div class="col-auto">
-                                    <span class="processo-tag-setor">{{card.sector.name}}</span>
+                                    <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                                 </div>
 
                             </div>
@@ -448,7 +451,8 @@
                 <!-- header --------------------->
                 <div class="modal-header">
 
-                    <h5 class="modal-title" id="assuntoInfo">SISBR <span style="color:gray" id="servicoInfo">/ Redefinição</span></h5>
+                    <h5 class="modal-title me-1" id="assuntoInfo"></h5>
+                    <span class="ms-2" style="color:gray;" id="servicoInfo"></span>
 
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -468,10 +472,11 @@
 
                             <div class="col-auto me-auto">
 
-                                <span class="processo-tag-cod">N° 01</span>
-                                <span class="processo-tag-setor">tecnologia</span>
+                                <span class="processo-tag-cod" id="codInfo"></span>
+                                <span class="processo-tag-setor" id="sectorInfo"></span>
 
                             </div>
+
 
                             <h6 class="mt-2">Dados do Solicitante</h6>
 
@@ -482,18 +487,18 @@
                                 <ul class="card-ul">
 
                                     <li class="card-li">
-                                        <i class="fa-solid fa-user card-icon"></i>
-                                        Chaves de souza santos
+                                        <i class="fa-solid fa-user card-icon" ></i>
+                                        <span id="nomeSolicitante"></span>
                                     </li>
 
                                     <li class="card-li">
                                         <i class="fa-sharp fa-solid fa-building card-icon"></i>
-                                        012.326.157-23
+                                        <span id="cpfSolicitante"></span>
                                     </li>
 
                                     <li class="">
-                                        <i class="fa-solid fa-briefcase card-icon"></i>
-                                        Chavess4155_30
+                                        <i class="fa-solid fa-briefcase card-icon" ></i>
+                                        <span id="loginSolicitante"></span>
                                     </li>
 
                                 </ul>
@@ -504,17 +509,17 @@
 
                                     <li class="card-li">
                                         <i class="fa-solid fa-at card-icon"></i>
-                                        chaves.com@gmail.com.br
+                                        <span id="emailSolicitante"></span>
                                     </li>
 
                                     <li class="card-li">
                                         <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
-                                        201
+                                        <span id="ramalSolicitante"></span>
                                     </li>
 
                                     <li class="card-li">
                                         <i class="fa-solid fa-location-dot card-icon"></i>
-                                        Ceilandia
+                                        <span id="areaSolicitante"></span>
                                     </li>
 
                                 </ul>
@@ -528,16 +533,11 @@
 
                             <h6 class="mt-2">Histórico</h6>
 
+
                             <div class="d-flex container-buttons" onwheel="handleScroll(event)">
-
-                                <span class="processo-tag-historico me-1"><i
-                                        class="fa-regular fa-compass"></i> Triagem</span>
-                                <span class="processo-tag-historico me-1"><i
-                                        class="fa-regular fa-compass"></i> Em Atendimento</span>
-                                <span class="processo-tag-historico-active me-1"><i
-                                        class="fa-regular fa-compass"></i> Finalizado</span>
-
+                             <!-- span com os historicos aqui -->
                             </div>
+
 
                         </div>
                         <!-- Dados solicitante -->
@@ -547,7 +547,9 @@
                         <div class="col-6 overflow-auto" style="border-right:1px solid #818181; max-height:400px">
 
                             <div class="col-auto me-auto">
-                                <small><i class="fa-solid fa-clock"></i> Criado há 4 horas</small>
+                                <small><i class="fa-solid fa-clock"></i>
+                                    <span id="horarioAbertura"></span>
+                                </small>
                             </div>
 
                             <h6 class="mt-2">Descrição</h6>
@@ -744,11 +746,7 @@
                     <div class="col">
 
                         <i class="fa-solid fa-phone-volume"></i>
-                        <select>
-                            <option value="opcao1">Henrique Silva</option>
-                            <option value="opcao2">Pedro lisboa</option>
-                            <option value="opcao3">Arthur Calorio</option>
-                        </select>
+                        <span id="nomeResponsavel" >Aguardando atendimento</span>
 
                     </div>
 

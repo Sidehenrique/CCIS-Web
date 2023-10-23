@@ -144,6 +144,10 @@
                           enctype="multipart/form-data">
 
                         {% csrf_token %}
+
+                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="Tecnologia">
+
                         <div class="mb-2">
                             <label>* Selecione o Assunto:</label>
                             {{ acessos.assunto }}
@@ -222,6 +226,8 @@
                           enctype="multipart/form-data">
 
                         {% csrf_token %}
+                       <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="Tecnologia">
 
                         <div class="mb-2">
                             <label>* Selecione o Assunto:</label>
@@ -263,12 +269,14 @@
 
                 <div class="col-7">
 
-
                     <form action="{% url 'request_servicos_ti' %}"
                           method="POST"
                           enctype="multipart/form-data">
 
                         {% csrf_token %}
+
+                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="Tecnologia">
 
                         <div class="mb-2">
                             <label>* Selecione o Assunto:</label>
