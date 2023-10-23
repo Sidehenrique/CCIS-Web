@@ -25,7 +25,7 @@
     <!-- Container ------------------------------->
     <div class="row  mt-5">
 
-        <div class="col mb-5 position-relative" style="height:87vh;">
+        <div class="col m-0 position-relative" style="height:80vh;">
 
             <!-- Icon Do Setor --------------------------->
             <div class="icon-set" style="background-color:{{dadosSetor.cor}};">{{dadosSetor.sigla}}</div>
@@ -60,8 +60,15 @@
 
                                         <li class="card-li">
                                             <i class="fa-solid fa-at card-icon"></i>
+                                            {% if dadosSetor.email %}
 
                                             {{ dadosSetor.email }}
+
+                                            {% else %}
+
+                                            Email: Não informado
+
+                                            {% endif %}
 
                                         </li>
 
@@ -99,26 +106,26 @@
 
                                         <li class="card-li">
                                             <i class="fa-sharp fa-solid fa-building card-icon"></i>
-                                            {% if dadosSetor.unidade %}
+                                            {% if dadosSetor.group %}
 
-                                            {{ dadosSetor.unidade }}
+                                            {{ dadosSetor.group }}
 
                                             {% else %}
 
-                                            Não informado
+                                            Unidade: Não informada
 
                                             {% endif %}
                                         </li>
 
                                         <li class="">
                                             <i class="fa-solid fa-location-dot card-icon"></i>
-                                            {% if dadosSetor.atribuicoes %}
+                                            {% if dadosSetor.descricao %}
 
-                                            {{ dadosSetor.atribuicoes }}
+                                            {{ dadosSetor.descricao }}
 
                                             {% else %}
 
-                                            Não informado
+                                            Descrição: Não informada
 
                                             {% endif %}
 
@@ -423,8 +430,8 @@
 
                     <!-- coluna da direita --------------->
                     <div class="col mt-3 ms-2" style="border-left: 1px solid #ccc;">
-                        {% if dadosSetor.canvas %}
-                        <img src="{{ dadosSetor.canvas.url }}"
+                        {% if dadosSetor.imagem %}
+                        <img src="{{ dadosSetor.imagem.url }}"
                              alt="imagemSetor"
                              width="90%"
                              height="auto"

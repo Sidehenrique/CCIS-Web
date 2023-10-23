@@ -7,8 +7,6 @@ from ..forms import ModelFormAdmMalotes
 
 @login_required(login_url="/login")
 def adm_home(request):
-    # user = get_object_or_404(User, id=user_id)
-
     user = request.user
 
     log = request.user
@@ -20,11 +18,6 @@ def adm_home(request):
 
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
 
     superior = Group.objects.filter(id=2).first()
 
@@ -57,8 +50,8 @@ def adm_home(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'username': user, 'groupControle': groupControle,
+            'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
             'superior': superior, 'equipe': nomes_equipe
         }
 
