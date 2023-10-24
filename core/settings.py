@@ -64,6 +64,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'ccis.context_processors.controle_button',
+                'ccis.context_processors.user_data',
+                'ccis.context_processors.foto_profile',
+                'ccis.context_processors.ambiente_para_setor',
             ],
         },
     },
@@ -78,7 +82,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dados_rh',
+        'NAME': 'teste2',
         'USER': 'root',
         'PASSWORD': 'Sicoob4155@@',
         'HOST': '10.6.32.24',
@@ -111,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 

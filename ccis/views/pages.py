@@ -1,8 +1,9 @@
 import requests
-
-from django.utils import timezone
-from dateutil.relativedelta import relativedelta
-
+from django.db.models import Prefetch
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
+from django.http import JsonResponse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -10,14 +11,12 @@ from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User, Group
 
-from .. models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
+from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos, profissional, setor
+    docCertidao, docAdmissional, docPeriodico, docCursos, profissional, Card, CardSetorHistory, MessageHistory
 
-from .. forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
+from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    modelFormRg, modelFormCnh, modelFormCpf, modelFormReservista, modelFormTitulo, modelFormClt, modelFormSetor, \
-    modelFormResidencia, modelFormCertidao, modelFormAdmissional, modelFormPeriodico, modelFormCurso, \
     CustomUserCreationForm
 
 
@@ -46,7 +45,6 @@ def infoClima():
 
 
 def base(request):
-
     log = request.user
     log_id = request.user.id
     logName = request.user.first_name
@@ -56,12 +54,10 @@ def base(request):
 
     dados = dadosPessoais.objects.get(usuario=log)
 
-    groupControle = log.groups.filter(id=28).exists()
-
     context = {
         'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-        'dados': dados, 'is_superadmin': is_superadmin, 'groupControle': groupControle,
-        }
+        'dados': dados, 'is_superadmin': is_superadmin, 'log': log
+    }
 
     return render(request, 'ccis/base.html', context)
 
@@ -127,15 +123,10 @@ def solicitacao(request):
 
 
 @login_required(login_url="/login")
-def solicit(request):
-
-    return render(request, 'ccis/solicit.html')
-
-
-@login_required(login_url="/login")
 def profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
+    log = request.user
     log_id = request.user.id
     logName = request.user.first_name
     logLast = request.user.last_name
@@ -219,7 +210,6 @@ def profile(request, user_id):
 
     dados_cert = certificacao.objects.filter(usuario=user)
 
-    log = request.user
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
     is_superadmin = log.is_superuser
@@ -257,7 +247,7 @@ def profile(request, user_id):
         })
 
     contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName,
-                'logLast': logLast,
+                'logLast': logLast, 'log': log,
                 'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
                 'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
                 'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc, 'User': request.user,
@@ -407,7 +397,8 @@ def usuario(request):
                    'porcentagem_M': porcentagem_M, 'userCreation': form, 'dadosTable': dadosTable,
                    'dadosP': dados_form, 'usuario': usuario, 'end': endereco_form, 'dependentes_form': dependentes_form,
                    'profissional_form': profissional_form, 'dadosBancarios_form': dadosBancarios_form,
-                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao, 'groupControle':groupControle,
+                   'user': request.user, 'outros_form': outros_form, 'group_gestao': group_gestao,
+                   'groupControle': groupControle,
                    'is_superadmin': is_superadmin}
 
         return render(request, 'rh/usuario.html', context)
@@ -451,7 +442,7 @@ def conta(request):
     context = {'dados': dados, 'first_name': first_name, 'last_name': last_name,
                'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao': group_gestao,
-               'is_superadmin': is_superadmin, 'groupControle':groupControle,
+               'is_superadmin': is_superadmin, 'groupControle': groupControle,
                'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid}
 
     if request.method == 'GET':
@@ -471,93 +462,6 @@ def conta(request):
 
 
 @login_required(login_url="/login")
-def documentos(request):
-    # user = get_object_or_404(User, id=user_id)
-
-    user = request.user
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-
-    doc = docRg.objects.filter(usuario=user).first()
-    doc_cnh = docCnh.objects.filter(usuario=user).first()
-    doc_cpf = docCpf.objects.filter(usuario=user).first()
-    doc_reservista = docReservista.objects.filter(usuario=user).first()
-    doc_titulo = docTitulo.objects.filter(usuario=user).first()
-    doc_clt = docClt.objects.filter(usuario=user).first()
-    doc_residencia = docResidencia.objects.filter(usuario=user).first()
-    doc_certidao = docCertidao.objects.filter(usuario=user).first()
-    doc_admissional = docAdmissional.objects.filter(usuario=user).first()
-    doc_periodico = docPeriodico.objects.filter(usuario=user).first()
-
-    status = 'Concluído' if doc != None else 'Pendente'
-    statusCnh = 'Concluído' if doc_cnh != None else 'Pendente'
-    statusCpf = 'Concluído' if doc_cpf != None else 'Pendente'
-    statusReservista = 'Concluído' if doc_reservista != None else 'Pendente'
-    statusTitulo = 'Concluído' if doc_titulo != None else 'Pendente'
-    statusClt = 'Concluído' if doc_clt != None else 'Pendente'
-    statusCertidao = 'Concluído' if doc_certidao != None else 'Pendente'
-    statusAdmissional = 'Concluído' if doc_admissional != None else 'Pendente'
-
-    if doc_residencia != None:
-        statusResidencia = 'Concluído'
-        if doc_residencia.dataAtualizacao + relativedelta(years=1) < timezone.now().date():
-            statusResidencia = 'Expirado'
-    else:
-        statusResidencia = 'Pendente'
-
-    if doc_periodico != None:
-        statusPeriodico = 'Concluído'
-        if doc_periodico.dataAtualizacao + relativedelta(years=2) < timezone.now().date():
-            statusPeriodico = 'Expirado'
-    else:
-        statusPeriodico = 'Pendente'
-
-    if request.method == 'GET':
-        form = modelFormRg(instance=doc)
-        cnh_form = modelFormCnh(instance=doc_cnh)
-        cpf_form = modelFormCpf(instance=doc_cpf)
-        reservista_form = modelFormReservista(instance=doc_reservista)
-        titulo_form = modelFormTitulo(instance=doc_titulo)
-        clt_form = modelFormClt(instance=doc_clt)
-        residencia_form = modelFormResidencia(instance=doc_residencia)
-        certidao_form = modelFormCertidao(instance=doc_certidao)
-        admissional_form = modelFormAdmissional(instance=doc_admissional)
-        periodico_form = modelFormPeriodico(instance=doc_periodico)
-
-        context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'form': form, 'cnh_form': cnh_form, 'cpf_form': cpf_form, 'reservista_form': reservista_form,
-            'titulo_form': titulo_form, 'clt_form': clt_form, 'residencia_form': residencia_form,
-            'certidao_form': certidao_form, 'admissional_form': admissional_form, 'periodico_form': periodico_form,
-            'doc': doc, 'doc_cnh': doc_cnh, 'doc_cpf': doc_cpf, 'doc_reservista': doc_reservista,
-            'doc_titulo': doc_titulo,
-            'doc_clt': doc_clt, 'doc_residencia': doc_residencia, 'doc_certidao': doc_certidao,
-            'doc_admissional': doc_admissional,
-            'doc_periodico': doc_periodico, 'status': status, 'statusCnh': statusCnh, 'statusCpf': statusCpf,
-            'statusReservista': statusReservista, 'statusTitulo': statusTitulo, 'statusClt': statusClt,
-            'statusResidencia': statusResidencia, 'statusCertidao': statusCertidao,
-            'statusAdmissional': statusAdmissional,
-            'statusPeriodico': statusPeriodico, 'dados': dados, 'username': user, 'first_name': first_name,
-            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle
-        }
-
-        return render(request, 'ccis/documentos.html', context)
-
-
-@login_required(login_url="/login")
 def departamentos(request):
     # user = get_object_or_404(User, id=user_id)
 
@@ -570,9 +474,6 @@ def departamentos(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
-
     first_name = user.first_name
     last_name = user.last_name
 
@@ -581,20 +482,14 @@ def departamentos(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle':groupControle,
-            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'dados': dados, 'username': user, 'first_name': first_name, 'last_name': last_name,
         }
 
         return render(request, 'ccis/departamentos.html', context)
 
 
-def utilitarios(request):
-    context = infoClima()
-    return render(request, 'ccis/utilitarios.html', context)
-
-
 @login_required(login_url="/login")
-def gestaoMetas(request):
+def utilitariosCopy(request):
     # user = get_object_or_404(User, id=user_id)
 
     user = request.user
@@ -617,17 +512,132 @@ def gestaoMetas(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle':groupControle,
+            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
             'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
         }
 
-        return render(request, 'ccis/gestaoMetas.html', context)
+        return render(request, 'ccis/utilitariosCopy.html', context)
 
+
+@login_required(login_url="/login")
+def malotes(request):
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+
+    print(logFoto)
+
+    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+                }
+    return render(request, 'ccis/malotes.html', contexto)
+
+
+def utilitariosHome(request):
+    return render(request, 'ccis/utilitariosHome.html')
 
 def dev(request):
-    pass
+    return render(request, 'ccis/dev.html')
 
 
+@login_required(login_url="/login")
 def processo(request):
-    return render(request, 'ccis/processo.html')
-# ----------------------------------------------------------------------------------------------------------------------
+    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+        queryset=CardSetorHistory.objects.order_by('-data_hora'))
+    )
+
+    if request.method == 'GET':
+        context = {
+            'cards': cards,
+        }
+
+        return render(request, 'ccis/processo.html', context)
+
+
+@api_view(['GET'])
+def card_detl(request, card_id):
+    card = get_object_or_404(Card, idCard=card_id)
+
+    # Busque o histórico de status para o card específico
+    card_history = CardSetorHistory.objects.filter(card=card).order_by('data_hora')
+    history_serializer = CardSetorHistorySerializer(card_history, many=True)
+
+    # Serialize o card e o histórico de status
+    card_serializer = CardSerializer(card)
+
+    # Crie um dicionário que inclua os dados do card e o histórico de status
+    response_data = {
+        'card': card_serializer.data,
+        'history': history_serializer.data,
+    }
+
+    return Response(response_data)
+
+
+@api_view(['POST'])
+def enviar_resposta(request, card_id):
+
+    print(card_id)
+
+    if request.method == 'POST':
+        card = get_object_or_404(Card, idCard=card_id)
+        descricao = request.data.get('resposta')
+        attachment = request.data.get('attachment')  # Se você permitir anexos
+        remetente = request.user  # Suponha que o remetente é o usuário logado
+
+        # Crie um novo objeto MessageHistory
+        message_history = MessageHistory(
+            card=card,
+            remetente=remetente,
+            message=descricao,
+            attachment=attachment,  # Se você permitir anexos
+        )
+
+        message_history.save()
+
+        data = {'status': 'Mensagem adicionada com sucesso'}
+        return JsonResponse(data)
+
+
+@api_view(['GET'])
+def get_messages(request, card_id):
+    messages = MessageHistory.objects.filter(card__idCard=card_id)
+    message_serializer = MessageHistorySerializer(messages, many=True)  # Certifique-se de criar o serializador adequado
+
+    return Response(message_serializer.data)
+
+
+def registrar_atendimento(request, card_id):
+    card = get_object_or_404(Card, idCard=card_id)
+
+    if card.status != "Em Atendimento":
+
+        card.status = 'Em Atendimento'
+        card.responsavel = request.user
+        card.save()
+
+        groups = request.user.groups.all()
+        if groups:
+            setor_atual = groups[0]  # Se o usuário estiver em apenas um grupo
+        else:
+            setor_atual = None
+
+        print(setor_atual.name, setor_atual.id)
+
+        # Registre o histórico de movimentação
+        card_setor_history = CardSetorHistory(
+            setor_id=setor_atual.id,  # Defina o setor apropriado, se aplicável
+            card_id=card_id,
+            status_anterior="Triagem",  # Atualize com o status anterior apropriado
+            status_atual="Em Atendimento",
+            setor_anterior="Tecnologia",  # Atualize com o setor anterior apropriado
+            setor_atual=setor_atual.name,  # Atualize com o setor atual apropriado
+        )
+        card_setor_history.save()
+
+        return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
+
+    else:
+        return JsonResponse({'success': False, 'message': 'Atendimento já registrado.'})

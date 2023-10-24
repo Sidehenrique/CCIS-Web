@@ -1,0 +1,207 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container" style="margin-top:75px">
+
+    <!-- Conteúdo -------------------------------->
+    <div class="row">
+
+        <!-- Menu -------------------------------->
+        <div id="menu-inicial" class="col-3 menu-request">
+
+            <div class="">
+
+                <h5 class="text-center p-1">CADASTRO</h5>
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Malotes
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="">
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo mt-5">
+                        <a href="{% url 'cadastro_home' %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Voltar
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!-- Menu -------------------------------->
+
+
+        <!-- Informativo ------------------------->
+        <div id="informativoTI" class="col menu-request m-0 p-5">
+            <h6>Orientações para abertura de chamado - 4155. Retaguarda</h6>
+            <p>
+                Pontos a serem observados durante a abertura de chamado:
+                - Detalhar bem a sua solicitação.
+                - Se possuir evidências anexar no chamado.
+
+                Horário de Atendimento
+                - Segunda-feira a sexta-feira das 08:30hs às 17:30hs
+            </p>
+
+        </div>
+        <!-- Informativo ------------------------->
+
+
+        <!-- Formulário de Malotes -------------------------->
+        <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
+
+
+            <!-- Formulário de Malotes -------------------------->
+            <form action="{% url 'salvar_malote_cadastro' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="Retaguarda">
+
+                        <div class="">
+                            <label class="required-label">Lacre:</label>
+                            {{ form.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Descrição:</label>
+                            {{ form.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Anexar arquivo:</label>
+                            {{ form.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                    <!-- segunda col -------------------------->
+                    <div class="col">
+
+                        <h6 class="required-label">Selecione os itens desejados:</h6>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item1" id="FichaCadastral" value="Ficha Cadastral"
+                                   type="checkbox">
+                            <label class="form-check-label" for="FichaCadastral">Ficha Cadastral</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item2" id="FichaMatriculaDesligamento"
+                                   value="Ficha de Matrícula - Desligamento" type="checkbox">
+                            <label class="form-check-label" for="FichaMatriculaDesligamento">Ficha de Matrícula -
+                                Desligamento</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item3" id="FichaPropostaAberturaConta"
+                                   value="Ficha Proposta de Abertura de Conta" type="checkbox">
+                            <label class="form-check-label" for="FichaPropostaAberturaConta">Ficha Proposta de Abertura
+                                de Conta</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item4" id="FichaPropostaMatricula"
+                                   value="Ficha Proposta de Matrícula" type="checkbox">
+                            <label class="form-check-label" for="FichaPropostaMatricula">Ficha Proposta de
+                                Matrícula</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item5" id="ReciboDesligamento"
+                                   value="Recibo de Desligamento" type="checkbox">
+                            <label class="form-check-label" for="ReciboDesligamento">Recibo de Desligamento</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item6" id="ReciboTransferenciaQuotas"
+                                   value="Recibo de Transferência de Quotas" type="checkbox">
+                            <label class="form-check-label" for="ReciboTransferenciaQuotas">Recibo de Transferência de
+                                Quotas</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item8" id="SolicitacaoEncerramentoConta"
+                                   value="Solicitação de Encerramento de Conta" type="checkbox">
+                            <label class="form-check-label" for="SolicitacaoEncerramentoConta">Solicitação de
+                                Encerramento de Conta</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item9" id="TermoAdesaoProdutosServicos"
+                                   value="Termo de Adesão a Produtos e Serviços" type="checkbox">
+                            <label class="form-check-label" for="TermoAdesaoProdutosServicos">Termo de Adesão a Produtos
+                                e Serviços</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item10" id="TermoDemissao" value="Termo de Demissão"
+                                   type="checkbox">
+                            <label class="form-check-label" for="TermoDemissao">Termo de Demissão</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item11" id="TermoTransferenciaQuotas"
+                                   value="Termo de Transferência de Quotas" type="checkbox">
+                            <label class="form-check-label" for="TermoTransferenciaQuotas">Termo de Transferência de
+                                Quotas</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item7" id="SolicitacaoDevolucaoCapital"
+                                   value="Solicitação de Devolução Eventual de Capital" type="checkbox">
+                            <label class="form-check-label" for="SolicitacaoDevolucaoCapital">Solicitação de Devolução
+                                Eventual de Capital</label>
+                        </div>
+
+                    </div>
+                    <!-- segunda col -------------------------->
+
+                </div>
+            </form>
+            <!-- CheckBox list -------------------------->
+
+        </div>
+    </div>
+    <!-- Formulário de Acessos -------------------------->
+
+
+</div>
+<!-- Conteúdo -------------------------------->
+
+
+{% endblock %}

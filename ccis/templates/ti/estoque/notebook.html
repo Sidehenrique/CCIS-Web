@@ -1,0 +1,512 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content" xmlns="http://www.w3.org/1999/html">
+
+    <div class="row mt-2">
+
+        <!-- Menu -------------------------------->
+        <div class="col-12 menu-request">
+            <div class="col">
+                <h1 style="color:black; font-family:oswald; font-size:80px;" class="p-2 ">NOTEBOOK</h1>
+            </div>
+
+            <hr>
+            <!-- Lista ------------------------------->
+            <div class="container-fluid">
+
+                <!-- Card Table --------------------->
+                <div class="row mt-3">
+                    <div class="card-config p-0">
+
+                        <!-- Pesquisa table --------->
+                        <nav class="col-12 navbar mt-2">
+                            <div class="container-fluid pe-1">
+
+                                <!-- Button Adicionar -->
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#adicionarModalestoque">
+                                    + Adicionar
+                                </button>
+                                <!-- Button Adicionar end -->
+
+                                <!-- Select Option -->
+                                <div class="col ms-3 form-group">
+                                    <select class="form-control" id="exampleFormControlSelect1" onkeyup="filterTable()">
+                                        <option>Filtrar</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <!-- Select Option end -->
+
+                                <p style="font-family:Asap Regular; color:#AFAFAF;"></p>
+
+                                <!-- Pesquisa -->
+                                <div class="ms-3 navbar-nav-wrap-content-end" style="position: relative;">
+
+                                    <form class="d-flex">
+                                        <!-- input de pesquisa ----------------------->
+                                        <input class="form-control me-2" type="search" placeholder="Pesquisar"
+                                               aria-label="Search" id="inputUser" onkeyup="filterTable()">
+                                        <!-- input de pesquisa ----------------------->
+                                        <!-- Icon search ------------------------------>
+                                        <button class=""
+                                                style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
+                                                type="button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target=""
+                                                data-bs-whatever="@mdo"
+                                                onclick="filterTable()">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                        <!-- Icon search end ------------------------->
+
+                                    </form>
+                                </div>
+                                <!-- Pesquisa end -->
+
+                            </div>
+
+                        </nav>
+
+                        <!-- Tabela ----------------->
+
+                        <table class="table table-hover" id="tableUser">
+
+                            <thead class="table-header">
+                            <tr>
+                                <td class="p-3">
+
+                                    <h6></h6>
+
+                                </td>
+                                <th>Marca/Modelo</th>
+                                <th>Processador</th>
+                                <th>Memória RAM</th>
+                                <th>Armazenamento</th>
+                                <th>Usuário</th>
+                                <th>Cargo/Unidade</th>
+                                <th>Status</th>
+                                <th>Operações</th>
+
+                            </tr>
+                            </thead>
+
+                            <tbody class="table-body">
+
+                            {% for notebook in dadosTable %}
+
+
+                            <tr>
+                                <!-- checkbox --------->
+                                <td class="table-td">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="">
+                                        <label class="form-check-label"></label>
+                                    </div>
+                                </td>
+
+                                <!-- Marca/Modelo --------->
+                                <td class="table-td">
+
+                                    <p class="mb-0">{{ notebook.marca }}</p>
+                                    <small style="color:#888888;" class="mb-0">{{ notebook.modelo }}</small>
+
+                                </td>
+
+                                <!-- Processador --------->
+                                <td class="table-td">
+
+                                    <p class="mb-0">{{ notebook.processador }}</p>
+                                    <small style="color:#888888;" class="mb-0">{{ notebook.geracao }}</small>
+
+                                </td>
+
+                                <!-- Memória RAM --------->
+                                <td class="table-td">
+
+                                    <p class="mb-0">{{ notebook.memoria_ram }}</p>
+                                    <small style="color:#888888;" class="mb-0"></small>
+
+                                </td>
+
+                                <!-- Armazenamento --------->
+                                <td class="table-td">
+
+                                    <p class="mb-0">{{ notebook.armazenamento }}</p>
+                                    <small style="color:#888888;" class="mb-0">{{ notebook.gb }}</small>
+
+                                </td>
+
+                                <!-- usuario ------->
+                                <td class="table-td">
+                                    <p class="mb-0"></p>
+                                    <small style="color:#888888;" class="mb-0"></small>
+                                </td>
+
+                                <!-- Cargo e local ---->
+                                <td class="table-td">
+                                    <p class="mb-0"></p>
+                                    <small style="color:#888888;" class="mb-0"></small>
+                                </td>
+
+                                <!-- Situação --------->
+                                <td class="table-td">
+
+                                        <span style="display: inline-block; width:0.5rem; height:0.5rem; background-color:rgb(33,145,128);
+                                border-radius:50%; "></span> ÓTIMO
+
+
+                                </td>
+
+                                <!-- Botões ----------->
+                                <td class="table-td">
+
+                                    <!-- Botão usuario --------------------------------->
+                                    <a type="button" title="Responsável" class="button-style btn-sm"
+                                       href="#">
+                                        <i class="fa-solid fa-user"></i>
+                                    </a>
+
+                                    <!-- Botão Info ----------------------------->
+                                    <a type="button" title="Info"
+                                       class="button-style btn-sm"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#InfoModalNotebook">
+                                        <i class="fa-solid fa-laptop"></i>
+                                    </a>
+
+                                    <!-- Botão Editar -------------------------------->
+                                    <a type="button" title="Editar"
+                                       class="button-style btn-sm"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#editarModalestoque">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+
+                                    <!-- botão Del ----------------------------------->
+                                    <button type="button" title="Inativar" class="button-style btn-sm"
+                                            data-bs-toggle="modal" data-userid="{{ item.id }}"
+                                            data-bs-target="#inativeUserModal-{{ item.id }}">
+                                        <i class="fa-sharp fa-solid fa-trash"></i>
+                                    </button>
+
+                                    <div class="modal-dialog modal-xl">
+
+                                    </div>
+
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                        <!-- End Table Usuários ----->
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- Menu end ---------------------------->
+
+        <!-- Modal Adicionar -------------------->
+        <div class="modal fade " id="adicionarModalestoque" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Adicione o Notebook</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Body Modal Adicionar -------------------->
+                    <div class="modal-body">
+                        <!-- Forms Adicionar -------------------->
+                        <form action="{% url 'notebook' %}"
+                              method="POST">
+
+                            {% csrf_token %}
+                            <div class="row m-3">
+
+
+                                <!-- primeira coluna -------------------->
+                                <div class="col-6 form-group">
+                                    <h6 class="required-label">Modelo</h6>
+                                    {{ form.modelo }}
+                                </div>
+
+                                <div class="col-6 form-group">
+                                    <h6 class="required-label">Marca</h6>
+                                    {{ form.marca }}
+                                </div>
+
+                                <!-- segunda coluna -------------------->
+                                <div class="col-4 form-group mt-3">
+                                    <h6 class="required-label">Processador</h6>
+                                    {{ form.processador }}
+                                </div>
+
+                                <div class="col-4 form-group mt-3">
+                                    <h6 class="required-label">Geração</h6>
+                                    {{ form.geracao }}
+                                </div>
+
+                                <div class="col-4 form-group mt-3">
+                                    <h6 class="required-label">Memória RAM</h6>
+                                    {{ form.memoria_ram }}
+                                </div>
+                                <!-- terceira coluna -------------------->
+                                <div class="col-8 form-group mt-3">
+                                    <h6 class="required-label">Armazenamento</h6>
+                                    {{ form.armazenamento }}
+                                </div>
+
+                                <div class="col form-group mt-3">
+                                    <h6 class="required-label">GB</h6>
+                                    {{ form.gb }}
+                                </div>
+
+                                <div class="form-group mt-3 mb-5">
+                                    <h6 class="required-label">Status Geral</h6>
+                                    {{ form.status }}
+                                </div>
+
+                                <!-- Responsavel -------------------->
+
+                                <div class="">
+                                    <span>
+                                        Designado
+                                    </span>
+                                    <hr>
+                                </div>
+
+                                <div class="col-3 form-group mt-3">
+                                    <h6 class="required-label">Responsável</h6>
+                                    {{ form.usuario }}
+                                </div>
+
+                                <div class="col-4 form-group mt-3">
+                                    <h6 class="required-label ">Setor</h6>
+                                    {{ form.setor }}
+                                </div>
+
+                                <div class="col-5 form-group mt-3">
+                                    <h6 class="required-label ">Unidade</h6>
+                                    {{ form.unidade }}
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <h6 class="required-label">AntiVirus</h6>
+                                    {{ form.antiVirus }}
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <h6 class="">ServiceTag</h6>
+                                    {{ form.serviceTag }}
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <h6 class="">Chave Windows</h6>
+                                    {{ form.chaveWin }}
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <h6 class="">Chave Office</h6>
+                                    {{ form.chaveOffice }}
+                                </div>
+
+                            </div>
+
+                            <!-- Footer salvar ------------------------------>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                            <!-- Footer salvar end ------------------------------>
+
+                        </form>
+                        <!-- Forms Adicionar end -------------------->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- End Modal adicionar ---------------->
+
+        <!-- Modal editar -------------------->
+        <div class="modal fade " id="editarModalestoque" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Adicione o Notebook</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Body Modal Adicionar -------------------->
+                    <div class="modal-body">
+                        <!-- Forms Adicionar -------------------->
+                        <form action="{% url 'notebook' %}"
+                              method="POST">
+
+                            {% csrf_token %}
+                            <div class="row m-3">
+
+
+                                <!-- primeira coluna -------------------->
+                                <div class="col-6 form-group">
+                                    <h6 class="required-label">Modelo</h6>
+                                    {{ form.modelo }}
+                                </div>
+
+                                <div class="col-6 form-group">
+                                    <h6 class="required-label">Marca</h6>
+                                    {{ form.marca }}
+                                </div>
+
+                                <!-- segunda coluna -------------------->
+                                <div class="col-4 form-group mt-3">
+                                    <h6 class="required-label">Processador</h6>
+                                    {{ form.processador }}
+                                </div>
+
+                                <div class="col-4 form-group mt-3">
+                                    <h6 class="required-label">Geração</h6>
+                                    {{ form.geracao }}
+                                </div>
+
+                                <div class="col-4 form-group mt-3">
+                                    <h6 class="required-label">Memória RAM</h6>
+                                    {{ form.memoria_ram }}
+                                </div>
+                                <!-- terceira coluna -------------------->
+                                <div class="col-8 form-group mt-3">
+                                    <h6 class="required-label">Armazenamento</h6>
+                                    {{ form.armazenamento }}
+                                </div>
+
+                                <div class="col form-group mt-3">
+                                    <h6 class="required-label">GB</h6>
+                                    {{ form.gb }}
+                                </div>
+
+                                <div class="form-group mt-3 mb-5">
+                                    <h6 class="required-label">Status Geral</h6>
+                                    {{ form.status }}
+                                </div>
+
+                                <!-- Responsavel -------------------->
+
+                                <div class="">
+                                    <span>
+                                        Designado
+                                    </span>
+                                    <hr>
+                                </div>
+
+                                <div class="col-3 form-group mt-3">
+                                    <h6 class="required-label">Responsável</h6>
+                                    {{ form.usuario }}
+                                </div>
+
+                                <div class="col-4 form-group mt-3">
+                                    <h6 class="required-label ">Setor</h6>
+                                    {{ form.setor }}
+                                </div>
+
+                                <div class="col-5 form-group mt-3">
+                                    <h6 class="required-label ">Unidade</h6>
+                                    {{ form.unidade }}
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <h6 class="required-label">AntiVirus</h6>
+                                    {{ form.antiVirus }}
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <h6 class="">ServiceTag</h6>
+                                    {{ form.serviceTag }}
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <h6 class="">Chave Windows</h6>
+                                    {{ form.chaveWin }}
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <h6 class="">Chave Office</h6>
+                                    {{ form.chaveOffice }}
+                                </div>
+
+                            </div>
+
+                            <!-- Footer salvar ------------------------------>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                            <!-- Footer salvar end ------------------------------>
+
+                        </form>
+                        <!-- Forms Adicionar end -------------------->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- End Modal editar ---------------->
+
+        <!-- Modal Info ----------------------------->
+        <div class="modal fade" id="InfoModalNotebook" tabindex="-1" aria-labelledby="exampleModalNotebook"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalNotebook">Informaçoes Notebook</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- infos -------------------->
+                        <p><strong>Marca: </strong> <span> {{ notebook.marca }} </span></p>
+                        <p><strong>Modelo: </strong> <span> {{ notebook.modelo }} </span></p>
+                        <p><strong>Processador: </strong> <span> {{ notebook.processador }} </span></p>
+                        <p><strong>Geração: </strong> <span> {{ notebook.geracao }} </span></p>
+                        <p><strong>Memória RAM: </strong> <span> {{ notebook.memoria_ram }} </span></p>
+                        <p><strong>Armazenamento: </strong> <span> {{ notebook.armazenamento }} </span></p>
+                        <p><strong>Capacidade (GB):</strong> <span> {{ notebook.gb }} </span></p>
+                        <p><strong>Responsável: </strong> <span> </span></p>
+                        <p><strong>Setor: TI </strong> <span> </span></p>
+                        <p><strong>Unidade:  </strong> <span> </span></p>
+                        <p><strong>E-mail: </strong> <span> </span></p>
+                        <p><strong>Service Tag: </strong> <span> {{notebook.serviceTag}} </span></p>
+                        <p><strong>Anti-Vírus: </strong> <span> {{ notebook.antiVirus }} </span></p>
+                        <p><strong>Chave do Windows: </strong> <span> {{notebook.chaveWin}} </span></p>
+                        <p><strong>Chave do Office: </strong> <span> {{notebook.chaveOffice}} </span></p>
+                        <p><strong>Status: </strong> <span> </span></p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal Info ----------------------->
+</div>
+
+
+{% endblock %}

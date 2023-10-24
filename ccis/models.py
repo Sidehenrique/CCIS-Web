@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import GroupAdmin
 
 CHOICES_sexo = [
@@ -459,41 +458,96 @@ class docCursos(models.Model):
         return self.certiCurso
 
 
-# ------------------- tabela setor -----------------------------
-class setor(models.Model):
-    idSetor = models.AutoField(db_column='idSetor', primary_key=True)
+# ------------------- tabela Group -------------------------------------------------------------------------------------
+
+class CustomGroupInfo(models.Model):
+    group = models.OneToOneField(Group, on_delete=models.CASCADE)
     sigla = models.CharField(max_length=45, blank=True, null=True)
-    nome = models.CharField(db_column='nome', max_length=45, blank=True, null=True)
+    nome = models.CharField(max_length=45, blank=True, null=True)
     cor = models.CharField(max_length=45, blank=True, null=True)
-    email = models.EmailField(db_column='email', max_length=45, blank=True, null=True)
-    contato = models.CharField(choices=CHOICES_tipoDeConta, max_length=45, blank=True, null=True)
+    email = models.EmailField(max_length=45, blank=True, null=True)
     ramal = models.CharField(max_length=45, blank=True, null=True)
-    unidade = models.CharField(max_length=45, blank=True, null=True)
-    responsavel = models.CharField( max_length=45, blank=True, null=True)
-    atribuicoes = models.CharField(max_length=45, blank=True, null=True)
-    canvas = models.ImageField(upload_to='setores', null=True, blank=True)
+    contato = models.CharField(max_length=45, blank=True, null=True)
+    imagem = models.ImageField(upload_to='group/', blank=True, null=True)
+    descricao = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.sigla
+        return self.group.name
 
 
-class CustomGroupAdmin(GroupAdmin):
-    list_display = ('name', 'get_members')
-
-    def get_members(self, obj):
-        return ", ".join([user.username for user in obj.user_set.all()])
-
-
-admin.site.unregister(Group)
-admin.site.register(Group, CustomGroupAdmin)
-
-
-class solicitacoes(models.Model):
-    idSolicitacoes = models.AutoField(db_column='idrequestAcessosTI', primary_key=True)
+# -------- Tabelas de Processo ------------------------------------------------------------------------------------------
+class Card(models.Model):
+    idCard = models.AutoField(db_column='idCard', primary_key=True)
     assunto = models.CharField(max_length=45, blank=False, null=True)
-    servico = models.CharField(max_length=45, blank=False, null=True)
-    descricao = models.CharField(max_length=5000, blank=False, null=True)
-    arquivo = models.FileField(upload_to='processos', null=True, blank=True)
+    service = models.CharField(max_length=255, blank=False, null=True)
+    dataCriacao = models.DateTimeField(auto_now_add=True)
+    solicitante = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chamados_solicitados', default=None)
+    responsavel = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                                    related_name='chamados_responsaveis', default=None)
+    status = models.CharField(max_length=20)
 
     def __str__(self):
         return self.assunto
+
+
+class MessageHistory(models.Model):
+    idMessageHistory = models.AutoField(db_column='idMessageHistory', primary_key=True)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    remetente = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField(null=True, blank=True)
+    datetime = models.DateTimeField(auto_now_add=True)
+    attachment = models.FileField(upload_to='chat/', null=True, blank=True)
+
+    def __str__(self):
+        return self.message
+
+
+class CardSetorHistory(models.Model):
+    idCardSetorHistory = models.AutoField(db_column='idCardSetorHistory', primary_key=True)
+    setor = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    status_anterior = models.CharField(max_length=20, null=True, blank=True)
+    status_atual = models.CharField(max_length=20)
+    setor_anterior = models.CharField(max_length=20, null=True, blank=True)
+    setor_atual = models.CharField(max_length=20)
+    data_hora = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.setor_atual
+
+
+class OperatorRating(models.Model):
+    idOperatorRating = models.AutoField(db_column='idOperatorRating', primary_key=True)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(
+        choices=[(1, '1 estrela'), (2, '2 estrelas'), (3, '3 estrelas'), (4, '4 estrelas'), (5, '5 estrelas')])
+    comment = models.TextField(blank=True)
+    datetime = models.DateTimeField(auto_now_add=True)
+    anonymous = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.rating
+
+
+# -------- Estoque ------------------------------------------------------------------------------------------------------
+
+class Notebook(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Notebook')
+    modelo = models.CharField(max_length=100)
+    marca = models.CharField(max_length=100)
+    processador = models.CharField(max_length=100)
+    geracao = models.CharField(max_length=100)
+    memoria_ram = models.CharField(max_length=100)
+    armazenamento = models.CharField(max_length=100)
+    gb = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
+    setor = models.CharField(max_length=100)
+    unidade = models.CharField(max_length=100)
+    email = models.EmailField()
+    serviceTag = models.CharField(max_length=100)
+    antiVirus = models.CharField(max_length=100)
+    chaveWin = models.CharField(max_length=100)
+    chaveOffice = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.modelo

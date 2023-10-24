@@ -1,6 +1,7 @@
 {% extends 'ccis/base.html' %}
 {% load static %}
 
+
 {% block conteudo %}
 
 <div class="container-fluid scrollable-content">
@@ -30,16 +31,17 @@
 
             <h1 style="font-family:oswald; font-size:42px;">Bem vindo ao módulo<br>
                 <span style="color:#27DEBF; font-family:oswald; font-size:80px;">DEPARTAMENTOS</span></h1>
-            <p class="pt-3" style="color:#8a8a8a; font-size:17px;">Tenha acesso a todos os setores da cooperativa de maneira prática e
+            <p class="pt-3" style="color:#8a8a8a; font-size:17px;">Tenha acesso a todos os setores da cooperativa de
+                maneira prática e
                 fácil.<br>Abra solicitações, monitore e obtenha informações tudo em um só lugar.</p>
 
         </div>
 
         <div class="col-5 d-inline-block img-fluid">
             <img src="{% static 'ccis/Grupo 6171.png' %}"
-                alt="right"
-                width="100%"
-                height="auto">
+                 alt="right"
+                 width="100%"
+                 height="auto">
         </div>
 
     </div>
@@ -47,7 +49,7 @@
 
 
     <!-- Linha adm ------------------------------->
-    <p  style="margin-top:30px; margin-bottom:0px">Administrativo</p>
+    <p style="margin-top:30px; margin-bottom:0px">Administrativo</p>
     <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
     <!-- Linha adm ------------------------------->
 
@@ -58,7 +60,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-4 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'adm_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -77,7 +80,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-4 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'cobranca_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -96,7 +100,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'controladoria_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -135,7 +140,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'gestaoRisco_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -154,7 +160,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+               href="{% url 'retaguarda_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -167,6 +174,26 @@
             </a>
 
             <div class="icon-dep" style="background-color:#004E8C;">RG</div>
+
+        </div>
+
+        <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
+
+            <a class="links-dep"
+               href="{% url 'secretaria_home' %}"
+               type="button">
+
+                <div class="card-buttons" style="text-align:center;">
+
+                    <h6 class="pt-3">SECRETARIA</h6>
+                    <hr>
+                    <h3>ACESSAR</h3>
+
+                </div>
+
+            </a>
+
+            <div class="icon-dep" style="background-color:#498205;">SC</div>
 
         </div>
 
@@ -195,7 +222,7 @@
 
 
     <!-- Linha adm ------------------------------->
-    <p  style="margin-top:70px; margin-bottom:0px">Operacional</p>
+    <p style="margin-top:70px; margin-bottom:0px">Operacional</p>
     <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
     <!-- Linha adm ------------------------------->
 
@@ -206,7 +233,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'cadastro_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -225,7 +253,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'credito_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -244,7 +273,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'financeiro_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -263,7 +293,8 @@
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'produtoServico_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -275,14 +306,15 @@
 
             </a>
 
-            <div class="icon-dep" style="background-color:#038387;">CR</div>
+            <div class="icon-dep" style="background-color:#038387;">PS</div>
 
         </div>
 
         <div class="d-grid col-sm-6 col-md-4 col-lg-3 g-lg-5 mb-3 position-relative">
 
             <a class="links-dep"
-               type="button">
+               type="button"
+                href="{% url 'paDigital_home' %}">
 
                 <div class="card-buttons" style="text-align:center;">
 
@@ -294,7 +326,7 @@
 
             </a>
 
-            <div class="icon-dep" style="background-color:#986F0B;">CR</div>
+            <div class="icon-dep" style="background-color:#986F0B;">PD</div>
 
         </div>
 

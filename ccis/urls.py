@@ -1,32 +1,29 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from .views import ti
-from .views import cooperar
-from .views import pages
-from .views import rh
-from .views import security
-from .views import formularios
-from .views import gestaoControle
-
+from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro, gestaoNegocios,
+                    gestaoNegocios, gestaoControle, formularios, security, rh, pages, cooperar, ti, produtoServico,
+                    gestaoRisco, padigital )
 
 urlpatterns = [
     path('base', pages.base, name='base'),
 
     path('login', security.loginPage, name='login'),
     path('conta', pages.conta, name='conta'),
-    path('solicitacao', pages.solicitacao, name='solicitacao'),
     path('profile/<int:user_id>', pages.profile, name='profile'),
     path('', pages.home, name='home'),
-    path('documentos', pages.documentos, name='documentos'),
     path('departamentos', pages.departamentos, name='departamentos'),
-    path('gestaoMetas', pages.gestaoMetas, name='gestaoMetas'),
 
     path('processos', pages.processo, name='processos'),
+    path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
+    path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
+    path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
+    path('registrar_atendimento/<int:card_id>', pages.registrar_atendimento, name='registrar_atendimento'),
 
-    path('solicit', pages.solicit, name='solicit'),
+    path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
+    path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
 
-    path('utilitarios', pages.utilitarios, name='utilitarios'),
+    path('malotes', pages.malotes, name='malotes'),
 
     path('gestaoControle', gestaoControle.home, name='gestaoControle'),
     path('contabilidade', gestaoControle.contabilidade, name='contabilidade'),
@@ -36,6 +33,14 @@ urlpatterns = [
     path('lastro', gestaoControle.lastro, name='lastro'),
     path('qqs', gestaoControle.qqs, name='qqs'),
     path('pesquisa', gestaoControle.pesquisa, name='pesquisa'),
+
+    path('gestaoNegocios', gestaoNegocios.home, name='gestaoNegocios'),
+    path('gestaoMetas', gestaoNegocios.gestaoMetas, name='gestaoMetas'),
+    path('diaria', gestaoNegocios.diaria, name='diaria'),
+    path('listasPropensos', gestaoNegocios.listasPropensos, name='listasPropensos'),
+    path('pronampe', gestaoNegocios.pronampe, name='pronampe'),
+    path('relatorioVisitas', gestaoNegocios.relatorioVisitas, name='relatorioVisitas'),
+    path('planoMetas', gestaoNegocios.planoMetas, name='planoMetas'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
@@ -81,13 +86,60 @@ urlpatterns = [
     path('rh/anbima', rh.anbima, name='anbima'),
     path('rh/colaboradores', rh.colaboradores, name='colaboradores'),
     path('rh/usuario', pages.usuario, name='usuario'),
+    path('new_request_rh', rh.new_request_rh, name='new_request_rh'),
+    path('salvar_malote_rh', rh.salvar_malote_rh, name='salvar_malote_rh'),
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request', ti.new_request, name='new_request'),
+    path('ti/request_acessos_ti', ti.request_acessos_ti, name='request_acessos_ti'),
+    path('ti/request_equipamentos_ti', ti.request_equipamentos_ti, name='request_equipamentos_ti'),
+    path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
+    path('ti/estoque', ti.estoque, name='estoque'),
+    path('ti/solicit', ti.solicit, name='solicit'),
+    path('ti/estoque/notebook', ti.notebook, name='notebook'),
 
-    path('dev', pages.dev, name='dev'),
+      path('retaguarda_home', retaguarda.retaguarda_home, name='retaguarda_home'),
+      path('new_request_retaguarda', retaguarda.new_request_retaguarda, name='new_request_retaguarda'),
+      path('salvar_malote_retaguarda', retaguarda.salvar_malote_retaguarda,
+           name='salvar_malote_retaguarda'),
 
+      path('produtoServico_home', produtoServico.produtoServico_home, name='produtoServico_home'),
+      path('request_produto_servico', produtoServico.request_produto_servico,
+           name='request_produto_servico'),
+      path('salvar_malote_PS', produtoServico.salvar_malote_PS, name='salvar_malote_PS'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+      path('financeiro_home', financeiro.financeiro_home, name='financeiro_home'),
+      path('new_request_financeiro', financeiro.new_request_financeiro, name='new_request_financeiro'),
+      path('salvar_malote_financeiro', financeiro.salvar_malote_financeiro,
+           name='salvar_malote_financeiro'),
 
+    path('cadastro_home', cadastro.cadastro_home, name='cadastro_home'),
+    path('new_request_cadastro', cadastro.new_request_cadastro, name='new_request_cadastro'),
+    path('salvar_malote_cadastro', cadastro.salvar_malote_cadastro, name='salvar_malote_cadastro'),
 
+    path('adm_home', adm.adm_home, name='adm_home'),
+    path('new_request_adm', adm.new_request_adm, name='new_request_adm'),
+    path('salvar_malote_adm', adm.salvar_malote_adm, name='salvar_malote_adm'),
+
+    path('cobranca_home', cobranca.cobranca_home, name='cobranca_home'),
+    path('new_request_cobranca', cobranca.new_request_cobranca, name='new_request_cobranca'),
+    path('salvar_malote_cobranca', cobranca.salvar_malote_cobranca, name='salvar_malote_cobranca'),
+
+      path('secretaria_home', secretaria.secretaria_home, name='secretaria_home'),
+      path('new_request_secretaria', secretaria.new_request_secretaria, name='new_request_secretaria'),
+      path('salvar_malote_secretaria', secretaria.salvar_malote_secretaria,
+           name='salvar_malote_secretaria'),
+
+    path('credito_home', credito.credito_home, name='credito_home'),
+    path('new_request_credito', credito.new_request_credito, name='new_request_credito'),
+    path('salvar_malote_credito', credito.salvar_malote_credito, name='salvar_malote_credito'),
+
+      path('controladoria_home', controladoria.controladoria_home, name='controladoria_home'),
+
+      path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
+
+      path('paDigital_home', padigital.paDigital_home, name='paDigital_home'),
+
+      path('dev', pages.dev, name='dev'),
+
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

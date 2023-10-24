@@ -1,0 +1,166 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<main>
+    <!-- Container --------------------------->
+    <div class="container-fluid scrollable-content d-flex">
+
+        <!-- links --------------------------->
+        <div style="font-size: 15px;" class="row">
+
+                <!-- Header do conteúdo ---------------------->
+                <div class="row mt-3 mb-2">
+
+                <div class="col ps-4 pt-4">
+
+                    <h1 style="font-family:oswald; font-size:42px;">Bem vindo a
+                        <span style="color:#27DEBF; font-family:oswald; font-size:80px;">Links</span></h1>
+                    <p class="pt-3" style="color:#8a8a8a; font-size: 20px;">Tenha acesso a todos os links da cooperativa de maneira prática e
+                        fácil.</p>
+
+                </div>
+
+                <div class="col-5 d-inline-block img-fluid">
+                    <img src="{% static 'ccis/utilitarioscopy.png' %}"
+                        alt="right"
+                        width="70%"
+                        height="auto">
+                </div>
+
+            </div>
+            <!-- Header do conteúdo ---------------------->
+
+            
+            <div style="justify-content: center;" class="col">
+
+                    <div style="text-align: center;" class="row mt-5">
+
+                        <!-- buttons --------------------->
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://web.sipag.com.br/sipagnet/emi/site" target="_blank"
+                               class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square"
+                                   style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Sipag</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://consorcio.sisbr.com.br/" target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square" style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Sicoob<br>Consorcio</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://sisbranalitico.sisbr.coop.br/" target="_blank"
+                               class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square"
+                                   style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Sisbr <br> Analítico</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://portal.sisbr.coop.br/Citrix/XenApp/auth/loggedout.aspx?CTX_MessageType=INFORMATION&CTX_MessageKey=SessionExpired"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square"
+                                   style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Citrix</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://atendimento.sisbr.coop.br/tas/public/login/form"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square"
+                                   style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Portal de serviços <br> CCS</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="http://172.16.2.13/gestaodepessoas" target="_blank"
+                               class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square"
+                                   style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Sicoob <br> Universidade</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://www.sicoob.com.br/group/sicoob-universidade/jornadas-de-aprendizagem" target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square" style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Jornada de<br> Aprendizagem</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://www.sicoobnegocios.com.br/login-usuario.html"
+                               target="_blank"
+                               class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square"
+                                   style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Sicoob <br> Negócios</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://app.credibrasilia.lecom.com.br/sso/?redirectBackTo=https://app.credibrasilia.lecom.com.br:443/bpm/index.jsp"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square"
+                                   style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Lecom</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://portal.sisbr.coop.br/painel-comercial/pessoa-associado"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square"
+                                   style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Painel <br> Comercial</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://portalmeurh.sicoob.com.br/FrameHTML/web/app/RH/PortalMeuRH/#/login"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square" style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Ponto</div>
+                        </div>
+
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://apps.neoway.com.br/auth/login"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square" style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Neoway</div>
+                        </div>
+        
+                        <div class="col-3 col-lg-2 col-md-3 m-3 p-0">
+                            <a href="https://sisbrmobile.sicoob.com.br/sisbr/mobile/"
+                               target="_blank" class="btn flex-column">
+                                <i class="fa-solid fa-share-from-square" style="color: #00353e; font-size: 8vh;"></i>
+                            </a>
+                            <div>Sisbr Mobile <br> Download</div>
+                        </div>
+                        <!-- buttons --------------------->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>    
+        <!-- links --------------------------->
+
+    </div>
+    <!-- Container ----------------------->
+
+</main>
+
+
+{% endblock %}
