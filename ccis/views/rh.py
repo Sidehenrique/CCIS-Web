@@ -4,15 +4,13 @@ from dateutil.relativedelta import relativedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from .. models import dadosPessoais, profissional, CardSetorHistory, MessageHistory
+from .. models import dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo
 from ..forms import ModelFormRhMalotes
 
 
 # VIWER DO RH ----------------------------------------------------------------------------------------------------------
 @login_required(login_url="/login")
 def rh_home(request):
-    # user = get_object_or_404(User, id=user_id)
-
     user = request.user
 
     log = request.user
@@ -22,15 +20,19 @@ def rh_home(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
 
+    try:
+        dadosSetor = CustomGroupInfo.objects.get(nome='Gestão de Pessoas')
+
+    except CustomGroupInfo.DOESNOTEXIST:
+        dadosSetor = None
+
+    setor = dadosSetor.nome
+    print(setor)
+
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
 
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-
-    superior = Group.objects.filter(id=3).first()
+    superior = Group.objects.filter(id=2).first()
 
     nomes_equipe = []
 
@@ -61,9 +63,9 @@ def rh_home(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle':groupControle,
-            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
-            'superior': superior, 'equipe': nomes_equipe
+            'username': user, 'groupControle': groupControle, 'setor': setor,
+            'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
         return render(request, 'ccis/setor_home.html', context)
