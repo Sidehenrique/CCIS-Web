@@ -202,8 +202,6 @@ function csrfSafeMethod(method) {
 }
 
 
-
-
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
@@ -219,10 +217,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
-
-
-
 
 
 function loadCardInfo(cardId) {
@@ -355,6 +349,15 @@ function loadCardInfo(cardId) {
                 const formData = new FormData();
                 formData.append("resposta", resposta);
 
+                // Selecione o input de arquivo por ID (substitua 'attachmentInput' pelo ID real do seu input)
+                const attachmentInput = document.getElementById('attachmentInput');
+
+                // Verifique se um arquivo foi selecionado
+                if (attachmentInput.files.length > 0) {
+                    // Adicione o arquivo ao FormData
+                    formData.append('attachment', attachmentInput.files[0]);
+    }
+
                     $.ajax({
                         url: `/enviar_resposta/${cardId}`,
                         method: 'POST',
@@ -366,6 +369,9 @@ function loadCardInfo(cardId) {
                             $("#resposta").val('');
                             // Atualize a lista de mensagens passando o cardId
                             atualizarListaMensagens(cardId);
+                            // Limpe o campo de arquivo
+                            attachmentInput.value = "";
+
                         },
                         error: function () {
                             alert('Erro ao enviar a resposta');
@@ -458,6 +464,32 @@ function loadCardInfo(cardId) {
                     sectorInfo.text("Setor não encontrado");
                 }
 
+
+
+                // Preencha o nome do responsável
+                if (data.card.responsavel) {
+                    const nomeResponsavelCompleto = `${data.card.responsavel.first_name} ${data.card.responsavel.last_name}`;
+                    nomeResponsavel.text(nomeResponsavelCompleto);
+
+                } else {
+                    nomeResponsavel.text("Aguardando atendimento");
+                }
+
+
+
+                //---------------------------------------------------------------------------------------------
+
+
+                // Ouvinte de evento para o botão "Atender"
+                $("#registrarAtendimentoButton").click(function (event) {
+                    event.preventDefault(); // Impede o link de navegar para outra página
+                    registrarAtendimento(cardId); // Chama a função para registrar o atendimento
+                });
+
+
+
+                //---------------------------------------------------------------------------------------------
+
                 // Abra o modal
                 modal.modal('show');
 
@@ -466,15 +498,53 @@ function loadCardInfo(cardId) {
                     // Atualize a página
                     location.reload();
                 });
+
             } else {
                 alert('Dados do card não encontrados.');
             }
+
         },
         error: function () {
             alert('Erro ao buscar os detalhes do card');
         }
     });
 }
+
+
+function registrarAtendimento(cardId) {
+    console.log("ID do card:", cardId);
+
+    // Construa um objeto com os dados do atendimento
+    const dadosAtendimento = {
+        cardId: cardId,
+    };
+
+    // Envie uma solicitação AJAX para atualizar o status do card
+    $.ajax({
+        url: `/registrar_atendimento/${cardId}`,  // Substitua pela URL correta da sua view
+        method: 'POST',
+        dataType: 'json',
+        data: dadosAtendimento,
+
+        success: function (data) {
+            if (data.success) {
+                location.reload();
+
+                // Exibir um alerta de sucesso
+                alert(data.message);
+            } else {
+                // Exibir um alerta de erro
+                alert(data.message);
+            }
+        },
+
+        error: function () {
+            // Exibir um alerta de erro genérico
+            alert('Erro ao registrar atendimento.');
+        }
+    });
+}
+
 
 
 
