@@ -6,14 +6,6 @@ from ccis.forms import ModelFormNotebook
 from ..models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook, CustomGroupInfo
 from ..forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
-import logging
-
-logging.basicConfig(filename='debug.log', level=logging.DEBUG)
-
-import logging
-
-logging.basicConfig(filename='debug.log', level=logging.DEBUG)
-
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
 @login_required(login_url="/login")
@@ -243,10 +235,9 @@ def notebook(request):
     if request.method == 'POST':
         form = ModelFormNotebook(request.POST)
         if form.is_valid():
-            logging.debug("Formulário é válido")
+
             form.save()
-            logging.debug("Formulário salvo com sucesso")
+
             return redirect('notebook')
-        else:
-            logging.debug("Formulário não é válido. Erros: %s", form.errors)
+
     return render(request, 'ti/estoque/notebook.html', {'form': form, 'dadosTable': dadosTable})
