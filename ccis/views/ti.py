@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from ccis.forms import ModelFormNotebook
-from ..models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook
+from ..models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook, CustomGroupInfo
 from ..forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
 import logging
@@ -18,8 +18,6 @@ logging.basicConfig(filename='debug.log', level=logging.DEBUG)
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
 @login_required(login_url="/login")
 def ti_home(request):
-    # user = get_object_or_404(User, id=user_id)
-
     user = request.user
 
     log = request.user
@@ -29,13 +27,17 @@ def ti_home(request):
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
 
+    try:
+        dadosSetor = CustomGroupInfo.objects.get(nome='Tecnologia')
+
+    except CustomGroupInfo.DOESNOTEXIST:
+        dadosSetor = None
+
+    setor = dadosSetor.nome
+    print(setor)
+
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
 
     superior = Group.objects.filter(id=2).first()
 
@@ -68,9 +70,9 @@ def ti_home(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
-            'superior': superior, 'equipe': nomes_equipe
+            'username': user, 'groupControle': groupControle, 'setor': setor,
+            'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
         return render(request, 'ccis/setor_home.html', context)

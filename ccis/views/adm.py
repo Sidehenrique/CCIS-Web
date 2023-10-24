@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import dadosPessoais, CardSetorHistory, MessageHistory
+from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo
 from ..forms import ModelFormAdmMalotes
 
 
@@ -15,6 +15,14 @@ def adm_home(request):
     logLast = request.user.last_name
     logFoto = dadosPessoais.objects.get(usuario=request.user).foto
     is_superadmin = log.is_superuser
+
+    try:
+        dadosSetor = CustomGroupInfo.objects.get(nome = 'Administrativo')
+
+    except CustomGroupInfo.DOESNOTEXIST: dadosSetor = None
+
+    setor = dadosSetor.nome
+    print(setor)
 
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
@@ -50,9 +58,9 @@ def adm_home(request):
     if request.method == 'GET':
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'username': user, 'groupControle': groupControle,
+            'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
-            'superior': superior, 'equipe': nomes_equipe
+            'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
         return render(request, 'ccis/setor_home.html', context)

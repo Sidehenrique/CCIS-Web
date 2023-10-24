@@ -25,7 +25,7 @@
     <!-- Container ------------------------------->
     <div class="row  mt-5">
 
-        <div class="col m-0 position-relative" style="height:80vh;">
+        <div class="col position-relative" style="height:80%;">
 
             <!-- Icon Do Setor --------------------------->
             <div class="icon-set" style="background-color:{{dadosSetor.cor}};">{{dadosSetor.sigla}}</div>
@@ -241,186 +241,270 @@
 
                             <hr style="background-color:#C4C4C4">
 
-                            <div class="d-flex container-buttons pt-3 pb-3" onwheel="handleScroll(event)">
-
                                 <!-- Tecnologia ---------->
-                                {% if botoes == 'TECNOLOGIA' %}
-                                <div class="position-relative me-3">
+                                 <div class="d-flex container-buttons" onwheel="handleScroll(event)">
+                                    {% if dadosSetor.nome == 'TECNOLOGIA' %}
+                                    <div class="position-relative me-3">
 
-                                    <a class="links-set"
-                                       href="{% url 'new_request' %}"
-                                       type="button">
+                                        <a class="links-set"
+                                           href="{% url 'new_request' %}"
+                                           type="button">
 
-                                        <div style="background-color:#4DE89D;" class="set-buttons">
+                                            <div style="background-color:#4DE89D;" class="set-buttons">
 
-                                            <h5>NOVA</h5>
-                                            <h5>SOLICITAÇÃO</h5>
+                                                <h5>NOVA</h5>
+                                                <h5>SOLICITAÇÃO</h5>
 
-                                        </div>
+                                            </div>
 
-                                    </a>
+                                        </a>
 
+                                    </div>
+
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           href="{% url 'solicit' %}"
+                                           type="button">
+
+                                            <div class="set-buttons" style="background-color:#4DDCE8;">
+
+                                                <h5>MINHAS</h5>
+                                                <h5>SOLICITAÇÃO</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                        <span class="icon-button-set" style="background-color:red;"></span>
+
+                                    </div>
+
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           href="{% url 'processos' %}"
+                                           type="button">
+
+                                            <div style="background-color:#49ABDE;" class="set-buttons">
+
+                                                <h5>PAINEL</h5>
+                                                <h5>PROCESSOS</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                        <span class="icon-button-set" style="background-color:red;"></span>
+
+                                    </div>
+
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           type="button">
+
+                                            <div style="background-color:#49ABDE;" class="set-buttons">
+
+                                                <h5>PAINEL</h5>
+                                                <h5>ESTOQUE</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                        <span class="icon-button-set" style="background-color:red;"></span>
+
+                                    </div>
+                                    {% endif %}
                                 </div>
-
-                                <div class="position-relative me-3">
-
-                                    <a class="links-set"
-                                        href="{% url 'solicit' %}"
-                                       type="button">
-
-                                        <div class="set-buttons" style="background-color:#4DDCE8;">
-
-                                            <h5>MINHAS</h5>
-                                            <h5>SOLICITAÇÃO</h5>
-
-                                        </div>
-
-                                    </a>
-
-                                    <span class="icon-button-set" style="background-color:red;"></span>
-
-                                </div>
-
-                                <div class="position-relative me-3">
-
-                                    <a class="links-set"
-                                       href="{% url 'processos' %}"
-                                       type="button">
-
-                                        <div style="background-color:#49ABDE;" class="set-buttons">
-
-                                            <h5>PAINEL</h5>
-                                            <h5>PROCESSOS</h5>
-
-                                        </div>
-
-                                    </a>
-
-                                    <span class="icon-button-set" style="background-color:red;"></span>
-
-                                </div>
-
-                                <div class="position-relative me-3">
-
-                                    <a class="links-set"
-                                       type="button">
-
-                                        <div style="background-color:#49ABDE;" class="set-buttons">
-
-                                            <h5>PAINEL</h5>
-                                            <h5>ESTOQUE</h5>
-
-                                        </div>
-
-                                    </a>
-
-                                    <span class="icon-button-set" style="background-color:red;"></span>
-
-                                </div>
-                                {% endif %}
                                 <!-- Tecnologia ---------->
-
 
                                 <!-- Gestão de Pessoas --->
-                                {% if botoes == 'GESTÃO DE PESSOAS' %}
-                                <div class="position-relative me-3">
+                                 <div class="d-flex container-buttons " onwheel="handleScroll(event)">
+                                    {% if botoes == 'GESTÃO DE PESSOAS' %}
+                                    <div class="position-relative me-3">
 
-                                    <a class="links-set"
-                                       type="button">
+                                        <a class="links-set"
+                                           type="button">
 
-                                        <div style="background-color:#4DE89D;" class="set-buttons">
+                                            <div style="background-color:#4DE89D;" class="set-buttons">
 
-                                            <h5>NOVA</h5>
-                                            <h5>SOLICITAÇÃO</h5>
+                                                <h5>NOVA</h5>
+                                                <h5>SOLICITAÇÃO</h5>
 
-                                        </div>
+                                            </div>
 
-                                    </a>
+                                        </a>
 
+                                    </div>
+
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           type="button">
+
+                                            <div class="set-buttons" style="background-color:#4DDCE8;">
+
+                                                <h5>MINHAS</h5>
+                                                <h5>SOLICITAÇÃO</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                        <span class="icon-button-set" style="background-color:red;"></span>
+
+                                    </div>
+
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           type="button">
+
+                                            <div style="background-color:#49ABDE;" class="set-buttons">
+
+                                                <h5>PAINEL</h5>
+                                                <h5>PROCESSOS</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                        <span class="icon-button-set" style="background-color:red;"></span>
+
+                                    </div>
+
+                                    {% if group_gestao or is_superadmin %}
+                                    <div class="position-relative me-3">
+
+
+                                        <a class="links-set"
+                                           href="{% url 'rh_dashboard' %}"
+                                           type="button">
+
+                                            <div style="background-color:#038387;" class="set-buttons">
+
+                                                <h5>PAINEL</h5>
+                                                <h5>GESTÃO</h5>
+
+                                            </div>
+
+                                        </a>
+
+
+                                    </div>
+                                    {% endif %}
+
+
+                                    {% if is_superadmin %}
+                                    <div class="position-relative me-3">
+
+
+                                        <a class="links-set"
+                                           href="{% url 'documentos'%}"
+                                           type="button">
+
+                                            <div style="background-color:#7AA3FF;" class="set-buttons">
+
+                                                <h5>PAINEL</h5>
+                                                <h5>DOCUMENT...</h5>
+
+                                            </div>
+
+                                        </a>
+
+
+                                    </div>
+                                    {% endif %}
+
+                                    {% endif %}
                                 </div>
-
-                                <div class="position-relative me-3">
-
-                                    <a class="links-set"
-                                       type="button">
-
-                                        <div class="set-buttons" style="background-color:#4DDCE8;">
-
-                                            <h5>MINHAS</h5>
-                                            <h5>SOLICITAÇÃO</h5>
-
-                                        </div>
-
-                                    </a>
-
-                                    <span class="icon-button-set" style="background-color:red;"></span>
-
-                                </div>
-
-                                <div class="position-relative me-3">
-
-                                    <a class="links-set"
-                                       type="button">
-
-                                        <div style="background-color:#49ABDE;" class="set-buttons">
-
-                                            <h5>PAINEL</h5>
-                                            <h5>PROCESSOS</h5>
-
-                                        </div>
-
-                                    </a>
-
-                                    <span class="icon-button-set" style="background-color:red;"></span>
-
-                                </div>
-
-                                {% if group_gestao or is_superadmin %}
-                                <div class="position-relative me-3">
-
-
-                                    <a class="links-set"
-                                       href="{% url 'rh_dashboard' %}"
-                                       type="button">
-
-                                        <div style="background-color:#038387;" class="set-buttons">
-
-                                            <h5>PAINEL</h5>
-                                            <h5>GESTÃO</h5>
-
-                                        </div>
-
-                                    </a>
-
-
-                                </div>
-                                {% endif %}
-
-                                {% if is_superadmin %}
-                                <div class="position-relative me-3">
-
-
-                                    <a class="links-set"
-                                       href="{% url 'documentos'%}"
-                                       type="button">
-
-                                        <div style="background-color:#7AA3FF;" class="set-buttons">
-
-                                            <h5>PAINEL</h5>
-                                            <h5>DOCUMENT...</h5>
-
-                                        </div>
-
-                                    </a>
-
-
-                                </div>
-                                {% endif %}
-
-                                {% endif %}
                                 <!-- Gestão de Pessoas --->
 
-                            </div>
+                                <!-- Administrativo ---------->
+                                 <div class="d-flex pb-3 container-buttons" onwheel="handleScroll(event)">
+                                    {% if dadosSetor.nome == 'Administrativo' %}
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           href="{% url 'new_request_adm' %}"
+                                           type="button">
+
+                                            <div style="background-color:#4DE89D;" class="set-buttons">
+
+                                                <h5>NOVA</h5>
+                                                <h5>SOLICITAÇÃO</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           href="{% url 'solicit' %}"
+                                           type="button">
+
+                                            <div class="set-buttons" style="background-color:#4DDCE8;">
+
+                                                <h5>MINHAS</h5>
+                                                <h5>SOLICITAÇÃO</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                    {% endif %}
+                                </div>
+                                <!-- Administrativo ---------->
+
+                                <!-- Cobrança ---------->
+                                 <div class="d-flex pb-3 container-buttons" onwheel="handleScroll(event)">
+                                    {% if dadosSetor.nome == 'cobrança' %}
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           href="{% url 'new_request_cobranca' %}"
+                                           type="button">
+
+                                            <div style="background-color:#4DE89D;" class="set-buttons">
+
+                                                <h5>NOVA</h5>
+                                                <h5>SOLICITAÇÃO</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           href="{% url 'solicit' %}"
+                                           type="button">
+
+                                            <div class="set-buttons" style="background-color:#4DDCE8;">
+
+                                                <h5>MINHAS</h5>
+                                                <h5>SOLICITAÇÃO</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                    {% endif %}
+                                </div>
+                                <!-- Cobrança ---------->
+
+
 
                         </div>
                         <!-- Botões ---------------------->
@@ -461,4 +545,16 @@
     <!-- Container ------------------------------->
 
 </div>
+
+<script>
+function handleScroll(event) {
+    // Coloque o código que você deseja executar quando houver rolagem aqui
+    // Por exemplo, você pode adicionar auma classe CSS os botões quando a rolagem ocorrer.
+    var buttons = document.querySelectorAll('.set-buttons');
+    buttons.forEach(function(button) {
+        button.classList.add('scrolled');
+    });
+}
+</script>
+
 {% endblock %}

@@ -1,22 +1,9 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from .views import ti
-from .views import cooperar
-from .views import pages
-from .views import rh
-from .views import security
-from .views import formularios
-from .views import gestaoControle
-from .views import gestaoNegocios
-from .views import retaguarda
-from .views import produtoServico
-from .views import financeiro
-from .views import cadastro
-from .views import adm
-from .views import cobranca
-from .views import secretaria
-from .views import credito
+from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro, gestaoNegocios,
+                    gestaoNegocios, gestaoControle, formularios, security, rh, pages, cooperar, ti, produtoServico,
+                    gestaoRisco, padigital )
 
 urlpatterns = [
       path('base', pages.base, name='base'),
@@ -27,10 +14,10 @@ urlpatterns = [
       path('', pages.home, name='home'),
       path('departamentos', pages.departamentos, name='departamentos'),
 
-    path('processos', pages.processo, name='processos'),
-    path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
-    path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
-    path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
+      path('processos', pages.processo, name='processos'),
+      path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
+      path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
+      path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
 
       path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
       path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
@@ -112,15 +99,18 @@ urlpatterns = [
 
       path('retaguarda_home', retaguarda.retaguarda_home, name='retaguarda_home'),
       path('new_request_retaguarda', retaguarda.new_request_retaguarda, name='new_request_retaguarda'),
-      path('salvar_malote_retaguarda', retaguarda.salvar_malote_retaguarda, name='salvar_malote_retaguarda'),
+      path('salvar_malote_retaguarda', retaguarda.salvar_malote_retaguarda,
+           name='salvar_malote_retaguarda'),
 
       path('produtoServico_home', produtoServico.produtoServico_home, name='produtoServico_home'),
-      path('request_produto_servico', produtoServico.request_produto_servico, name='request_produto_servico'),
+      path('request_produto_servico', produtoServico.request_produto_servico,
+           name='request_produto_servico'),
       path('salvar_malote_PS', produtoServico.salvar_malote_PS, name='salvar_malote_PS'),
 
       path('financeiro_home', financeiro.financeiro_home, name='financeiro_home'),
       path('new_request_financeiro', financeiro.new_request_financeiro, name='new_request_financeiro'),
-      path('salvar_malote_financeiro', financeiro.salvar_malote_financeiro, name='salvar_malote_financeiro'),
+      path('salvar_malote_financeiro', financeiro.salvar_malote_financeiro,
+           name='salvar_malote_financeiro'),
 
       path('cadastro_home', cadastro.cadastro_home, name='cadastro_home'),
       path('new_request_cadastro', cadastro.new_request_cadastro, name='new_request_cadastro'),
@@ -136,15 +126,19 @@ urlpatterns = [
 
       path('secretaria_home', secretaria.secretaria_home, name='secretaria_home'),
       path('new_request_secretaria', secretaria.new_request_secretaria, name='new_request_secretaria'),
-      path('salvar_malote_secretaria', secretaria.salvar_malote_secretaria, name='salvar_malote_secretaria'),
+      path('salvar_malote_secretaria', secretaria.salvar_malote_secretaria,
+           name='salvar_malote_secretaria'),
 
       path('credito_home', credito.credito_home, name='credito_home'),
       path('new_request_credito', credito.new_request_credito, name='new_request_credito'),
       path('salvar_malote_credito', credito.salvar_malote_credito, name='salvar_malote_credito'),
 
+      path('controladoria_home', controladoria.controladoria_home, name='controladoria_home'),
 
+      path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
+
+      path('paDigital_home', padigital.paDigital_home, name='paDigital_home'),
 
       path('dev', pages.dev, name='dev'),
 
-      ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
