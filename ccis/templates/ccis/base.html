@@ -126,7 +126,7 @@
                                     <div class="">
                                             <span class="nav-photo">
                                                 {% if user_data.logFoto %}
-                                                <img class="nav-photo" src="{{ logFoto.url }}"
+                                                <img class="nav-photo" src="{{ user_data.logFoto.url }}"
                                                      alt="" width="36" height="36">
 
                                                 {% else %}
@@ -161,40 +161,45 @@
 
                                                 <!--foto perfil-->
                                                 <div class="d-flex m-3">
-                                                    <a class="profile-link" type="button" data-bs-toggle="modal"
-                                                       data-bs-target="#profileModal"
-                                                       data-bs-whatever="@getbootstrap" aria-expanded="false">
+
+
                                                         <div class="nav-photo-edit">
+
                                                             {% if user_data.logFoto %}
-                                                            <img class="nav-photo-edit-image" src="{{ logFoto.url }}"
-                                                                 alt="">
+                                                            <img class="nav-photo-edit" src="{{ user_data.logFoto.url }}">
+
                                                             {% else %}
+
                                                             {% if user_data.logSexo == "Masculino" %}
-                                                            <img class="nav-photo-edit-image"
-                                                                 src="{% static 'ccis/avatar.jpg' %}" alt="">
+                                                            <img class="nav-photo-edit"
+                                                                 src="{% static 'ccis/avatar.jpg' %}">
+
                                                             {% elif user_data.logSexo == "Feminino" %}
-                                                            <img class="nav-photo-edit-image"
-                                                                 src="{% static 'ccis/avatar-feminino.jpg' %}" alt="">
+                                                            <img class="nav-photo-edit"
+                                                                 src="{% static 'ccis/avatar-feminino.jpg' %}">
+
                                                             {% endif %}
+
                                                             {% endif %}
-                                                            <div class="icone-lapis-edit">
-                                                                <i class="far fa-pen-to-square"></i>
-                                                            </div>
+
+
                                                         </div>
-                                                    </a>
+
 
                                                     <!--nome perfil-->
                                                     <div class="ms-2">
+
                                                         <a href="{% url 'profile' request.user.id %}"
-                                                           class="btn custom-profile-button" data-toggle="tooltip"
-                                                           data-placement="top"
-                                                           title="Clique para ver o perfil do usuário" data-delay="100">
+                                                           class="btn custom-profile-button"
+                                                           title="Perfil" data-delay="100">
+
                                                             <strong class="">{{ user_data.logName }} {{ user_data.logLast }}</strong>
                                                             <span class="me-2">{{ user_data.logEmail }}</span>
+
                                                         </a>
 
 
-                                                        <select class="m-0" style="border: none;">
+                                                        <select class="ms-2" style="border: none;">
                                                             <option value="valor1" selected>Disponivel</option>
                                                             <option value="valor2">Ocupado</option>
                                                             <option value="valor3">Ausente</option>
