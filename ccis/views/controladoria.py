@@ -14,7 +14,7 @@ def controladoria_home(request):
     is_superadmin = log.is_superuser
 
     try:
-        dadosSetor = CustomGroupInfo.objects.get(nome='Controladoria')
+        dadosSetor = CustomGroupInfo.objects.get(nome='Performace Corporativa')
 
     except CustomGroupInfo.DOESNOTEXIST:
         dadosSetor = None
@@ -25,7 +25,7 @@ def controladoria_home(request):
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=2).first()
+    superior = Group.objects.filter(id=1).first()
 
     nomes_equipe = []
 

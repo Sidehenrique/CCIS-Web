@@ -25,7 +25,7 @@ def paDigital_home(request):
     group_gestao = log.groups.filter(id=3).exists()
     groupControle = log.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=2).first()
+    superior = Group.objects.filter(id=34).first()
 
     nomes_equipe = []
 
