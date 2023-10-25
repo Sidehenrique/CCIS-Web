@@ -506,7 +506,6 @@ def utilitariosCopy(request):
 
 @login_required(login_url="/login")
 def malotes(request):
-
     return render(request, 'ccis/malotes.html')
 
 
