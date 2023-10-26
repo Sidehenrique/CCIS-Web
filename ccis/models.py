@@ -459,13 +459,13 @@ class docCursos(models.Model):
 
 
 # ------------------- Botões ---------------------------------------------------------------------------
-class CustomButtonsSector(models.Model):
-    group = models.OneToOneField(Group, on_delete=models.CASCADE)
+class SectorButtons(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
     text1 = models.CharField(max_length=45, blank=True, null=True)
     text2 = models.CharField(max_length=45, blank=True, null=True)
     cor = models.CharField(max_length=45, blank=True, null=True)
-    link = models.CharField(max_length=45, blank=True, null=True)
-    icon = models.ImageField(upload_to='group/', blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    icon = models.CharField(max_length=45, blank=True, null=True)
     permissao = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
@@ -482,7 +482,7 @@ class CustomGroupInfo(models.Model):
     email = models.EmailField(max_length=45, blank=True, null=True)
     ramal = models.CharField(max_length=45, blank=True, null=True)
     contato = models.CharField(max_length=45, blank=True, null=True)
-    imagem = models.ImageField(upload_to='buttons/', blank=True, null=True)
+    imagem = models.ImageField(upload_to='group/', blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
 
     def __str__(self):
