@@ -241,6 +241,42 @@
 
                             <hr style="background-color:#C4C4C4">
 
+                                 <!-- Cobrança ---------->
+                                 <div class="d-flex pb-3 container-buttons" onwheel="handleScroll(event)">
+                                    {% for item in botoes %}
+                                    <div class="position-relative me-3">
+
+                                        <a class="links-set"
+                                           href="{{ item.link }}"
+                                           type="button">
+
+                                            <div style="background-color:{{ item.cor }};" class="set-buttons">
+
+                                                <h5>{{ item.text1 }}</h5>
+                                                <h5>{{ item.text2 }}</h5>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                    {% endfor %}
+                                </div>
+                                <!-- Cobrança ---------->
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 <!-- Tecnologia ---------->
                                  <div class="d-flex container-buttons" onwheel="handleScroll(event)">
                                     {% if dadosSetor.nome == 'TECNOLOGIA' %}
@@ -462,47 +498,6 @@
                                     {% endif %}
                                 </div>
                                 <!-- Administrativo ---------->
-
-                                <!-- Cobrança ---------->
-                                 <div class="d-flex pb-3 container-buttons" onwheel="handleScroll(event)">
-                                    {% if dadosSetor.nome == 'cobrança' %}
-                                    <div class="position-relative me-3">
-
-                                        <a class="links-set"
-                                           href="{% url 'new_request_cobranca' %}"
-                                           type="button">
-
-                                            <div style="background-color:#4DE89D;" class="set-buttons">
-
-                                                <h5>NOVA</h5>
-                                                <h5>SOLICITAÇÃO</h5>
-
-                                            </div>
-
-                                        </a>
-
-                                    </div>
-
-                                    <div class="position-relative me-3">
-
-                                        <a class="links-set"
-                                           href="{% url 'solicit' %}"
-                                           type="button">
-
-                                            <div class="set-buttons" style="background-color:#4DDCE8;">
-
-                                                <h5>MINHAS</h5>
-                                                <h5>SOLICITAÇÃO</h5>
-
-                                            </div>
-
-                                        </a>
-
-                                    </div>
-
-                                    {% endif %}
-                                </div>
-                                <!-- Cobrança ---------->
 
 
 

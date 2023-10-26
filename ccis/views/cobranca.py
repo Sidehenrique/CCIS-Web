@@ -1,20 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo
+from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, CustomButtonsSector
 from ..forms import ModelFormCobrancaMalotes
 
 
 @login_required(login_url="/login")
 def cobranca_home(request):
     user = request.user
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
 
     try:
         dadosSetor = CustomGroupInfo.objects.get(nome='Cobrança')
@@ -25,8 +18,8 @@ def cobranca_home(request):
     setor = dadosSetor.nome
     print(setor)
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
 
     superior = Group.objects.filter(id=5).first()
 
@@ -57,10 +50,13 @@ def cobranca_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
+        botoes = CustomButtonsSector.objects.filter(group=5)
+        print(botoes)
+
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+
             'username': user, 'groupControle': groupControle, 'setor': setor,
-            'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'group_gestao': group_gestao, 'botoes': botoes,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
