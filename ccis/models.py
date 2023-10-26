@@ -458,7 +458,21 @@ class docCursos(models.Model):
         return self.certiCurso
 
 
-# ------------------- tabela Group -------------------------------------------------------------------------------------
+# ------------------- Botões ---------------------------------------------------------------------------
+class CustomButtonsSector(models.Model):
+    group = models.OneToOneField(Group, on_delete=models.CASCADE)
+    text1 = models.CharField(max_length=45, blank=True, null=True)
+    text2 = models.CharField(max_length=45, blank=True, null=True)
+    cor = models.CharField(max_length=45, blank=True, null=True)
+    link = models.CharField(max_length=45, blank=True, null=True)
+    icon = models.ImageField(upload_to='group/', blank=True, null=True)
+    permissao = models.CharField(max_length=45, blank=True, null=True)
+
+    def __str__(self):
+        return self.group.name
+
+
+# ------------------- tabela Group ---------------------------------------------------------------------
 
 class CustomGroupInfo(models.Model):
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
@@ -468,14 +482,14 @@ class CustomGroupInfo(models.Model):
     email = models.EmailField(max_length=45, blank=True, null=True)
     ramal = models.CharField(max_length=45, blank=True, null=True)
     contato = models.CharField(max_length=45, blank=True, null=True)
-    imagem = models.ImageField(upload_to='group/', blank=True, null=True)
+    imagem = models.ImageField(upload_to='buttons/', blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.group.name
 
 
-# -------- Tabelas de Processo ------------------------------------------------------------------------------------------
+# -------- Tabelas de Processo --------------------------------------------------------------------------
 class Card(models.Model):
     idCard = models.AutoField(db_column='idCard', primary_key=True)
     assunto = models.CharField(max_length=45, blank=False, null=True)
