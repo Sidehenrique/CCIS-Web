@@ -26,7 +26,7 @@
 
     <!-- Pesquisa table -------------------------->
     <nav class="navbar align-center mb-2 " style="background-color:white">
-        <div class="container-fluid pe-1">
+        <div class="container-fluid pe-1 alert-container">
 
             <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE PROCESSOS</p>
 
@@ -104,8 +104,7 @@
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
-               onclick="loadCardInfo({{ card.idCard }})"
-               id="card-link-{{ card.idCard }}">
+               onclick="loadCardInfo({{ card.idCard }})">
                 <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
@@ -175,25 +174,29 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '2' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+               <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="mt-1"> {{ card.assunto }}</h5>
 
                         </div>
 
                         <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -202,15 +205,23 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+                        <p style="color:#818181;">
+                            {% if card.responsavel %}
+                            <i class="fa-solid fa-user me-1"></i>
+                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+                            {% endif %}
+
+
+                        </p>
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
@@ -218,11 +229,11 @@
                     <div class="row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
@@ -446,6 +457,7 @@
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
 
+
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
@@ -605,16 +617,13 @@
                             <div class="containerResposta mt-2" style="background-color:#fff">
                                 <form id="" enctype="multipart/form-data">
                                     <div class="form-group">
-                                    <textarea id="resposta" name="resposta"
-                                              class="form-control" rows="3"
-                                              placeholder="Responder"
-                                              required>
 
-                                    </textarea>
+                                        <textarea class="form-control" placeholder="Responder" id="resposta" rows="3"
+                                                  cols="70" required></textarea>
 
                                     </div>
-                                    <div class="form-group pt-2">
-                                        <input type="file" id="attachment" name="attachment">
+                                    <div class=" form-group pt-2">
+                                        <input type="file" id="attachmentInput" name="attachmentInput">
                                     </div>
 
                                 </form>
@@ -633,10 +642,11 @@
 
                             <hr style="color:#C4C0C0">
 
-                            <ul class="ul-menu-request">
+                            <ul class="ul-menu-request buttons-Acao">
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="At" class="modal-processo-link" aria-current="page">
+                                    <a type="button" id="registrarAtendimentoButton" class="modal-processo-link"
+                                       aria-current="page">
                                         <i class="fa-solid fa-phone-volume"></i>
                                         Atender
                                     </a>
@@ -725,7 +735,7 @@
                     <div class="col">
 
                         <i class="fa-solid fa-phone-volume"></i>
-                        <span id="nomeResponsavel">Aguardando atendimento</span>
+                        <span id="nomeResponsavel"></span>
 
                     </div>
 
@@ -736,6 +746,20 @@
         </div>
     </div>
     <!-- Modal Processos ------------------------->
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1">
+      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img src="..." class="rounded me-2" alt="...">
+          <strong class="me-auto">Bootstrap</strong>
+          <small>11 mins ago</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          Hello, world! This is a toast message.
+        </div>
+      </div>
+    </div>
 
 </div>
 

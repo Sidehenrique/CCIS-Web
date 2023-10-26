@@ -3,7 +3,6 @@ from django.db.models import Prefetch
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
-from django.core import serializers
 from django.http import JsonResponse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -581,3 +580,37 @@ def get_messages(request, card_id):
     message_serializer = MessageHistorySerializer(messages, many=True)  # Certifique-se de criar o serializador adequado
 
     return Response(message_serializer.data)
+
+
+def registrar_atendimento(request, card_id):
+    card = get_object_or_404(Card, idCard=card_id)
+
+    if card.status != "Em Atendimento":
+
+        card.status = 'Em Atendimento'
+        card.responsavel = request.user
+        card.save()
+
+        groups = request.user.groups.all()
+        if groups:
+            setor_atual = groups[0]  # Se o usuário estiver em apenas um grupo
+        else:
+            setor_atual = None
+
+        print(setor_atual.name, setor_atual.id)
+
+        # Registre o histórico de movimentação
+        card_setor_history = CardSetorHistory(
+            setor_id=setor_atual.id,  # Defina o setor apropriado, se aplicável
+            card_id=card_id,
+            status_anterior="Triagem",  # Atualize com o status anterior apropriado
+            status_atual="Em Atendimento",
+            setor_anterior="Tecnologia",  # Atualize com o setor anterior apropriado
+            setor_atual=setor_atual.name,  # Atualize com o setor atual apropriado
+        )
+        card_setor_history.save()
+
+        return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
+
+    else:
+        return JsonResponse({'success': False, 'message': 'Atendimento já registrado.'})
