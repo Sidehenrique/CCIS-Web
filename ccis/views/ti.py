@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from ccis.forms import ModelFormNotebook
-from ..models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook, CustomGroupInfo
+from ..models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook, CustomGroupInfo, SectorButtons
 from ..forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
 
 
@@ -60,10 +60,11 @@ def ti_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
+        sector_buttons = SectorButtons.objects.filter(group=2)
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'username': user, 'groupControle': groupControle, 'setor': setor,
-            'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
