@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django.db.models import Prefetch, F, Subquery, OuterRef
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons
+from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
 from ..forms import ModelFormAdmMalotes
+from django.db.models import Max
 
 
 @login_required(login_url="/login")
@@ -123,3 +125,59 @@ def salvar_malote_adm(request):
         form = ModelFormAdmMalotes()
 
     return render(request, 'adm/new_request_adm.html', {'form': form})
+
+
+@login_required(login_url="/login")
+def processos_adm(request):
+    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+        queryset=CardSetorHistory.objects.order_by('-data_hora'))
+    )
+
+    # Inicializa o contador
+    card_count = 0
+
+
+    q_triagem = CardSetorHistory.objects.filter(
+        status_atual="Triagem",
+        setor_atual="Administrativo"
+    ).count()
+
+    q_atendimento = CardSetorHistory.objects.filter(
+        status_atual="Em Atendimento",
+        setor_atual="Administrativo"
+    ).count()
+
+    q_encaminhado = CardSetorHistory.objects.filter(
+        status_atual="Encaminhado",
+        setor_atual="Administrativo"
+    ).count()
+
+    q_concluido = CardSetorHistory.objects.filter(
+        status_atual="Concluido",
+        setor_atual="Administrativo"
+    ).count()
+
+    q_finalizado = CardSetorHistory.objects.filter(
+        status_atual="Finalizado",
+        setor_atual="Administrativo"
+    ).count()
+
+    group = Group.objects.all()
+    setor = 'Administrativo'
+
+    # Agora, você pode exibir card_count onde quiser no seu código, por exemplo:
+    print(f"Total de cards em Triagem no setor {setor}: {card_count}")
+
+    if request.method == 'GET':
+        context = {
+            'cards': cards,
+            'group': group,
+            'setor': setor,
+            'q_triagem': q_triagem, 'q_atendimento': q_atendimento,
+            'q_encaminhado': q_encaminhado, 'q_concluido': q_concluido,
+            'q_finalizado':q_finalizado,
+
+
+        }
+
+        return render(request, 'ccis/processo.html', context)

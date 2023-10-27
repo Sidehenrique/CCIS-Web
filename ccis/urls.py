@@ -14,11 +14,12 @@ urlpatterns = [
     path('', pages.home, name='home'),
     path('departamentos', pages.departamentos, name='departamentos'),
 
-    path('processos', pages.processo, name='processos'),
+    path('processos_user', pages.processos_user, name='processos_user'),
     path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
     path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
     path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
     path('registrar_atendimento/<int:card_id>', pages.registrar_atendimento, name='registrar_atendimento'),
+    path('encaminhar_card/<int:card_id>', pages.encaminhar_card, name='encaminhar_card'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
@@ -97,6 +98,7 @@ urlpatterns = [
     path('ti/estoque', ti.estoque, name='estoque'),
     path('ti/solicit', ti.solicit, name='solicit'),
     path('ti/estoque/notebook', ti.notebook, name='notebook'),
+    path('ti/processos_ti', ti.processos_ti, name='processos_ti'),
 
     path('retaguarda_home', retaguarda.retaguarda_home, name='retaguarda_home'),
     path('new_request_retaguarda', retaguarda.new_request_retaguarda, name='new_request_retaguarda'),
@@ -120,6 +122,8 @@ urlpatterns = [
     path('adm_home', adm.adm_home, name='adm_home'),
     path('new_request_adm', adm.new_request_adm, name='new_request_adm'),
     path('salvar_malote_adm', adm.salvar_malote_adm, name='salvar_malote_adm'),
+    path('processos_adm', adm.processos_adm, name='processos_adm'),
+
 
     path('cobranca_home', cobranca.cobranca_home, name='cobranca_home'),
     path('new_request_cobranca', cobranca.new_request_cobranca, name='new_request_cobranca'),

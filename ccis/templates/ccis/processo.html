@@ -59,28 +59,40 @@
     <div class="row m-0">
 
         <div class="col me-3 processo-cabecalho" style="background-color:#E0E006; color:#fff">
-            <i class="fa-solid fa-check-to-slot"></i>
-            Triagem
+
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_triagem }}</span></div>
+            </div>
+
         </div>
 
         <div class="col me-3 processo-cabecalho" style="background-color:#2D73FF; color:#fff">
-            <i class="fa-solid fa-bars-progress"></i>
-            Em Atendimento
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_atendimento }}</span></div>
+            </div>
         </div>
 
         <div class="col me-3 processo-cabecalho" style="background-color:#4DD3E8; color:#fff">
-            <i class="fa-solid fa-angles-right"></i>
-            Encaminhado
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_encaminhado }}</span></div>
+            </div>
         </div>
 
         <div class="col me-3 processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
-            <i class="fa-solid fa-square-check"></i>
-            Concluído
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluído</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_concluido }}</span></div>
+            </div>
         </div>
 
         <div class="col processo-cabecalho" style="background-color:#d9d9d9; color:#fff">
-            <i class="fa-solid fa-square-check"></i>
-            Finalizados
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Finalizados</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_finalizado }}</span></div>
+            </div>
         </div>
 
 
@@ -95,7 +107,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
             {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
             <!-- card ---------------------------->
@@ -174,8 +186,9 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
             {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
+
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
@@ -184,7 +197,7 @@
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
 
-               <!-- Falta uma informação aqui referente ao id -->
+                <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
 
@@ -252,25 +265,30 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '3' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
+
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="mt-1"> {{ card.assunto }}</h5>
 
                         </div>
 
                         <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -279,15 +297,23 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+                        <p style="color:#818181;">
+                            {% if card.responsavel %}
+                            <i class="fa-solid fa-user me-1"></i>
+                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+                            {% endif %}
+
+
+                        </p>
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
@@ -295,11 +321,11 @@
                     <div class="row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
@@ -318,25 +344,30 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '4' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
+
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="mt-1"> {{ card.assunto }}</h5>
 
                         </div>
 
                         <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -345,15 +376,23 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+                        <p style="color:#818181;">
+                            {% if card.responsavel %}
+                            <i class="fa-solid fa-user me-1"></i>
+                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+                            {% endif %}
+
+
+                        </p>
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
@@ -361,11 +400,11 @@
                     <div class="row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
@@ -381,28 +420,33 @@
         <!-- Concluído --------------------------->
 
         <!-- Finalizado -------------------------->
-        <div class="col  overflow-auto processo-colum pt-2">
+        <div class="col overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '5' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
+
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="mt-1"> {{ card.assunto }}</h5>
 
                         </div>
 
                         <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -411,15 +455,23 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+                        <p style="color:#818181;">
+                            {% if card.responsavel %}
+                            <i class="fa-solid fa-user me-1"></i>
+                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+                            {% endif %}
+
+
+                        </p>
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
@@ -427,11 +479,11 @@
                     <div class="row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
@@ -663,7 +715,7 @@
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="En" class="modal-processo-link"
+                                    <a type="button" id="encaminharCardButton" class="modal-processo-link"
                                        aria-current="page">
                                         <i class="fa-solid fa-angles-right"></i>
                                         Encaminhar
@@ -747,19 +799,36 @@
     </div>
     <!-- Modal Processos ------------------------->
 
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1">
-      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <img src="..." class="rounded me-2" alt="...">
-          <strong class="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+
+    <!-- Modal encaminhar ------------------------>
+    <div class="modal" id="modalSelecaoSetor" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Encaminhar Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="p-3">
+                    <label>Selecione o grupo *:</label>
+                    <select id="seletorGrupo" class="form-select" required>
+                        {% for grupo in group %}
+                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button id="confirmarEncaminhamento" type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+
+            </div>
         </div>
-        <div class="toast-body">
-          Hello, world! This is a toast message.
-        </div>
-      </div>
     </div>
+    <!-- Modal encaminhar ------------------------>
+
 
 </div>
 
