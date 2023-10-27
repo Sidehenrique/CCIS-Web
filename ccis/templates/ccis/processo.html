@@ -62,7 +62,7 @@
 
             <div class="row">
                 <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>
-                <div class="col-auto"><span class="quantidadeNumber">{{q_triagem}}</span></div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_triagem }}</span></div>
             </div>
 
         </div>
@@ -70,28 +70,28 @@
         <div class="col me-3 processo-cabecalho" style="background-color:#2D73FF; color:#fff">
             <div class="row">
                 <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>
-                <div class="col-auto"><span class="quantidadeNumber">15</span></div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_atendimento }}</span></div>
             </div>
         </div>
 
         <div class="col me-3 processo-cabecalho" style="background-color:#4DD3E8; color:#fff">
             <div class="row">
                 <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>
-                <div class="col-auto"><span class="quantidadeNumber">15</span></div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_encaminhado }}</span></div>
             </div>
         </div>
 
         <div class="col me-3 processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
             <div class="row">
                 <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluído</div>
-                <div class="col-auto"><span class="quantidadeNumber">15</span></div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_concluido }}</span></div>
             </div>
         </div>
 
         <div class="col processo-cabecalho" style="background-color:#d9d9d9; color:#fff">
             <div class="row">
                 <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Finalizados</div>
-                <div class="col-auto"><span class="quantidadeNumber">15</span></div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ q_finalizado }}</span></div>
             </div>
         </div>
 
@@ -107,7 +107,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
             {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
             <!-- card ---------------------------->
@@ -186,8 +186,9 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
             {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
+
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
@@ -264,25 +265,30 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '3' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
+
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="mt-1"> {{ card.assunto }}</h5>
 
                         </div>
 
                         <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -291,15 +297,23 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+                        <p style="color:#818181;">
+                            {% if card.responsavel %}
+                            <i class="fa-solid fa-user me-1"></i>
+                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+                            {% endif %}
+
+
+                        </p>
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
@@ -307,11 +321,11 @@
                     <div class="row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
@@ -330,25 +344,30 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '4' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
+
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="mt-1"> {{ card.assunto }}</h5>
 
                         </div>
 
                         <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -357,15 +376,23 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+                        <p style="color:#818181;">
+                            {% if card.responsavel %}
+                            <i class="fa-solid fa-user me-1"></i>
+                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+                            {% endif %}
+
+
+                        </p>
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
@@ -373,11 +400,11 @@
                     <div class="row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
@@ -393,28 +420,33 @@
         <!-- Concluído --------------------------->
 
         <!-- Finalizado -------------------------->
-        <div class="col  overflow-auto processo-colum pt-2">
+        <div class="col overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '5' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
+
             <!-- card ---------------------------->
             <a class="d-grid processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <!-- Falta uma informação aqui referente ao id -->
 
                 <div class="processo-card">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="mt-1"> {{ card.assunto }}</h5>
 
                         </div>
 
                         <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -423,15 +455,23 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+                        <p style="color:#818181;">
+                            {% if card.responsavel %}
+                            <i class="fa-solid fa-user me-1"></i>
+                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+                            {% endif %}
+
+
+                        </p>
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
@@ -439,11 +479,11 @@
                     <div class="row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
@@ -772,7 +812,7 @@
                 <div class="p-3">
                     <label>Selecione o grupo *:</label>
                     <select id="seletorGrupo" class="form-select" required>
-                        {% for grupo in grupos %}
+                        {% for grupo in group %}
                         <option value="{{ grupo.id }}">{{ grupo.name }}</option>
                         {% endfor %}
                     </select>

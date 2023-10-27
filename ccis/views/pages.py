@@ -516,7 +516,7 @@ def dev(request):
 
 
 @login_required(login_url="/login")
-def processo(request):
+def processos_user(request):
     cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
         queryset=CardSetorHistory.objects.order_by('-data_hora'))
     )
