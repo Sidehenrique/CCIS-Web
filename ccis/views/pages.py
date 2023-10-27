@@ -521,9 +521,14 @@ def processo(request):
         queryset=CardSetorHistory.objects.order_by('-data_hora'))
     )
 
+
+    grupos = Group.objects.all()
+    q_triagem = CardSetorHistory.objects.filter().order_by('-data_hora').last()
+
     if request.method == 'GET':
         context = {
             'cards': cards,
+            'grupos':grupos,
         }
 
         return render(request, 'ccis/processo.html', context)
@@ -614,3 +619,40 @@ def registrar_atendimento(request, card_id):
 
     else:
         return JsonResponse({'success': False, 'message': 'Atendimento já registrado.'})
+
+
+@login_required(login_url="/login")
+def encaminhar_card(request, card_id):
+
+    try:
+        card = Card.objects.get(idCard=card_id)
+        card.status = 'Encaminhado'
+        card.responsavel = None
+        card.save()
+
+        historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+        id_group = request.POST.get('selectedGroup')
+        group = Group.objects.get(id=id_group)
+
+        print(historico.setor_atual, group.name)
+
+        # Registre o histórico de movimentação
+        card_setor_history = CardSetorHistory(
+            setor_id=group.id,
+            card_id=card_id,
+            status_anterior="Em Atendimento",
+            status_atual="Encaminhado",
+            setor_anterior=historico.setor_atual,
+            setor_atual=group.name,
+        )
+
+        card_setor_history.save()
+
+        return JsonResponse({'success': True, 'message': 'Card encaminhado com sucesso.'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'Erro ao encaminhar o card.'})

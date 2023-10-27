@@ -19,6 +19,7 @@ urlpatterns = [
     path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
     path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
     path('registrar_atendimento/<int:card_id>', pages.registrar_atendimento, name='registrar_atendimento'),
+    path('encaminhar_card/<int:card_id>', pages.encaminhar_card, name='encaminhar_card'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),

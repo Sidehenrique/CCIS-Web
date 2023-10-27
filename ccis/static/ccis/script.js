@@ -71,6 +71,7 @@ function displayFilePag(input) {
     document.getElementById('file-Page').textContent = filePage;
 }
 
+
 document.addEventListener("DOMContentLoaded", function() {
 
     const pag1 = document.getElementById("pag1");
@@ -88,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
-
 
 
 // Tratamento PAGINA TECNOLOGIA ----------------------------------------------------------------------------------------
@@ -141,7 +141,6 @@ $(modalId).find('.modal-body p').text(nomeUsuario);
 });
 
 
-
 function validarFormulario() {
     var password1 = document.getElementById('id_password1').value;
     var password2 = document.getElementById('id_password2').value;
@@ -182,9 +181,7 @@ function handleScroll(event) {
 }
 
 
-
-
-// Configure o cabeçalho CSRF para solicitações AJAX
+// Configure o cabeçalho CSRF para solicitações AJAX ---------------------------------------------------------
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -192,8 +189,6 @@ $.ajaxSetup({
         }
     }
 });
-
-
 
 
 function csrfSafeMethod(method) {
@@ -490,6 +485,54 @@ function loadCardInfo(cardId) {
 
                 //---------------------------------------------------------------------------------------------
 
+                // Ouvinte de evento para o botão "Encaminhar"
+                $("#encaminharCardButton").click(function () {
+                    // Ao clicar no botão "Encaminhar", exiba o segundo modal para seleção do setor
+                    $('#modalSelecaoSetor').modal('show');
+                });
+
+                // Ouvinte de evento para o botão "Confirmar" no segundo modal
+                $("#confirmarEncaminhamento").click(function () {
+                    const selectedGroup = $("#seletorGrupo").val(); // Obtém o valor selecionado no <select>
+
+                    // Verifique se o valor do grupo é válido
+                    if (!selectedGroup) {
+                        alert('Selecione um grupo válido.');
+                        return;
+                    }
+
+                    // Construa um objeto com os dados do encaminhamento
+                    const dadosEncaminhamento = {
+                        cardId: cardId,
+                        selectedGroup: selectedGroup,
+                    };
+
+                    // Envie uma solicitação AJAX para registrar o encaminhamento
+                   $.ajax({
+                        url: `/encaminhar_card/${cardId}`, // Substitua pela URL correta da sua view Django
+                        method: 'POST',
+                        data: dadosEncaminhamento,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+                                alert('Card encaminhado com sucesso.');
+                                // Feche o segundo modal após o encaminhamento
+                                $('#modalSelecaoSetor').modal('hide');
+                            } else {
+                                alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('ERRO: ' + error); // Exibe informações de erro do AJAX
+                        }
+                    });
+
+                });
+
+
+
+                //---------------------------------------------------------------------------------------------
+
                 // Abra o modal
                 modal.modal('show');
 
@@ -544,6 +587,7 @@ function registrarAtendimento(cardId) {
         }
     });
 }
+
 
 
 

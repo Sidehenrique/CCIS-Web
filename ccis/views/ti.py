@@ -1,3 +1,4 @@
+from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
@@ -201,6 +202,29 @@ def request_servicos_ti(request):
         form = modelFormAcessosTI()
 
     return render(request, 'ti/new_request.html', {'form': form})
+
+
+@login_required(login_url="/login")
+def processos_ti(request):
+    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+        queryset=CardSetorHistory.objects.order_by('-data_hora'))
+    )
+
+    q_triagem = CardSetorHistory.objects.filter(
+        setor_atual="Triagem",
+        setor="Tecnologia"
+    ).count()
+
+    grupos = Group.objects.all()
+
+    if request.method == 'GET':
+        context = {
+            'cards': cards,
+            'grupos': grupos,
+            'q_triagem': q_triagem,
+        }
+
+        return render(request, 'ccis/processo.html', context)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
