@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo
+from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons
 from ..forms import ModelFormSecretariaMalotes
 
 
@@ -57,9 +57,10 @@ def secretaria_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
+        sector_buttons = SectorButtons.objects.filter(group=31)
         context = {
             'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'username': user, 'groupControle': groupControle, 'setor': setor,
+            'username': user, 'groupControle': groupControle, 'setor': setor, 'sector_buttons': sector_buttons,
             'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
