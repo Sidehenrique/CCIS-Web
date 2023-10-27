@@ -458,7 +458,21 @@ class docCursos(models.Model):
         return self.certiCurso
 
 
-# ------------------- tabela Group -------------------------------------------------------------------------------------
+# ------------------- Botões ---------------------------------------------------------------------------
+class SectorButtons(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    text1 = models.CharField(max_length=45, blank=True, null=True)
+    text2 = models.CharField(max_length=45, blank=True, null=True)
+    cor = models.CharField(max_length=45, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    icon = models.CharField(max_length=45, blank=True, null=True)
+    permissao = models.CharField(max_length=45, blank=True, null=True)
+
+    def __str__(self):
+        return self.group.name
+
+
+# ------------------- tabela Group ---------------------------------------------------------------------
 
 class CustomGroupInfo(models.Model):
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
@@ -475,7 +489,7 @@ class CustomGroupInfo(models.Model):
         return self.group.name
 
 
-# -------- Tabelas de Processo ------------------------------------------------------------------------------------------
+# -------- Tabelas de Processo --------------------------------------------------------------------------
 class Card(models.Model):
     idCard = models.AutoField(db_column='idCard', primary_key=True)
     assunto = models.CharField(max_length=45, blank=False, null=True)
