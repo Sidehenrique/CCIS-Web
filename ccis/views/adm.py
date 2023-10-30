@@ -63,6 +63,7 @@ def adm_home(request):
         return render(request, 'ccis/setor_home.html', context)
 
 
+@login_required(login_url="/login")
 def new_request_adm(request):
     form = ModelFormAdmMalotes()
     context = {'form': form, }
@@ -70,6 +71,7 @@ def new_request_adm(request):
     return render(request, "adm/new_request_adm.html", context)
 
 
+@login_required(login_url="/login")
 def salvar_malote_adm(request):
     if request.method == 'POST':
 
@@ -105,10 +107,10 @@ def salvar_malote_adm(request):
                     itens_selecionados.append(request.POST.get(item))
 
             if (itens_selecionados or texto2):
-                descricao = "<h6>Este Malote contém:</h6><br>" + ", ".join(itens_selecionados)
+                descricao = "Este Malote contém:<br> " + ", ".join(itens_selecionados)
 
                 if texto2:
-                    descricao += f"<br>DESCRIÇÃO: {texto2}"
+                    descricao += texto2
 
                 # Salvar a descrição no campo message do MessageHistory
                 message_history = MessageHistory(
@@ -129,55 +131,47 @@ def salvar_malote_adm(request):
 
 @login_required(login_url="/login")
 def processos_adm(request):
-    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-        queryset=CardSetorHistory.objects.order_by('-data_hora'))
-    )
-
-    # Inicializa o contador
-    card_count = 0
-
-
-    q_triagem = CardSetorHistory.objects.filter(
-        status_atual="Triagem",
-        setor_atual="Administrativo"
-    ).count()
-
-    q_atendimento = CardSetorHistory.objects.filter(
-        status_atual="Em Atendimento",
-        setor_atual="Administrativo"
-    ).count()
-
-    q_encaminhado = CardSetorHistory.objects.filter(
-        status_atual="Encaminhado",
-        setor_atual="Administrativo"
-    ).count()
-
-    q_concluido = CardSetorHistory.objects.filter(
-        status_atual="Concluido",
-        setor_atual="Administrativo"
-    ).count()
-
-    q_finalizado = CardSetorHistory.objects.filter(
-        status_atual="Finalizado",
-        setor_atual="Administrativo"
-    ).count()
-
-    group = Group.objects.all()
-    setor = 'Administrativo'
-
-    # Agora, você pode exibir card_count onde quiser no seu código, por exemplo:
-    print(f"Total de cards em Triagem no setor {setor}: {card_count}")
 
     if request.method == 'GET':
+        cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+            queryset=CardSetorHistory.objects.order_by('-data_hora'))
+        )
+
+        group = Group.objects.all()
+        setor = 'Administrativo'
+
+        # Inicializa os contadores para cada estado
+        card_count_triagem = 0
+        card_count_atendimento = 0
+        card_count_encaminhado = 0
+        card_count_concluido = 0
+        card_count_finalizado = 0
+
+        for card in cards:
+            cardsetorhistory = card.cardsetorhistory_set.first()
+            if cardsetorhistory:
+                if cardsetorhistory.setor_atual == setor:
+                    if cardsetorhistory.status_atual == "Triagem":
+                        card_count_triagem += 1
+                    elif cardsetorhistory.status_atual == "Em Atendimento":
+                        card_count_atendimento += 1
+                    elif cardsetorhistory.status_atual == "Encaminhado":
+                        card_count_encaminhado += 1
+                    elif cardsetorhistory.status_atual == "Concluido":
+                        card_count_concluido += 1
+                    elif cardsetorhistory.status_atual == "Finalizado":
+                        card_count_finalizado += 1
+
         context = {
             'cards': cards,
             'group': group,
             'setor': setor,
-            'q_triagem': q_triagem, 'q_atendimento': q_atendimento,
-            'q_encaminhado': q_encaminhado, 'q_concluido': q_concluido,
-            'q_finalizado':q_finalizado,
-
-
+            'card_count_triagem': card_count_triagem,
+            'card_count_atendimento': card_count_atendimento,
+            'card_count_encaminhado': card_count_encaminhado,
+            'card_count_concluido': card_count_concluido,
+            'card_count_finalizado': card_count_finalizado,
         }
 
         return render(request, 'ccis/processo.html', context)
+
