@@ -1360,9 +1360,15 @@ status-negativo{
 }
 
 
-message-item{
+.message-item{
     background-color:#d9d9d9;
     margin-top:10px;
+}
+
+
+.quantidadeNumber{
+    padding:3px;
+    border-radius:50%;
 }
 
 /*-- processos ----------------------------*/
@@ -1504,6 +1510,8 @@ message-item{
 }
 
 /*-- Notebook --------------------------*/
+
+
 
 /*-- new_request_retaguarda ------------*/
 
