@@ -511,6 +511,7 @@ def malotes(request):
 def utilitariosHome(request):
     return render(request, 'ccis/utilitariosHome.html')
 
+
 def dev(request):
     return render(request, 'ccis/dev.html')
 
@@ -587,6 +588,7 @@ def get_messages(request, card_id):
     return Response(message_serializer.data)
 
 
+@login_required(login_url="/login")
 def registrar_atendimento(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
 
@@ -602,7 +604,7 @@ def registrar_atendimento(request, card_id):
         else:
             setor_atual = None
 
-        print(setor_atual.name, setor_atual.id)
+        csh = CardSetorHistory.objects.get(idCardSetorHistory=card_id)
 
         # Registre o histórico de movimentação
         card_setor_history = CardSetorHistory(
@@ -610,7 +612,7 @@ def registrar_atendimento(request, card_id):
             card_id=card_id,
             status_anterior="Triagem",  # Atualize com o status anterior apropriado
             status_atual="Em Atendimento",
-            setor_anterior="Tecnologia",  # Atualize com o setor anterior apropriado
+            setor_anterior=csh.setor_atual,  # Atualize com o setor anterior apropriado
             setor_atual=setor_atual.name,  # Atualize com o setor atual apropriado
         )
         card_setor_history.save()
@@ -618,7 +620,7 @@ def registrar_atendimento(request, card_id):
         return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
 
     else:
-        return JsonResponse({'success': False, 'message': 'Atendimento já registrado.'})
+        return JsonResponse({'success': False, 'message': 'Esse processo já esta em atendimento'})
 
 
 @login_required(login_url="/login")
@@ -635,13 +637,11 @@ def encaminhar_card(request, card_id):
         id_group = request.POST.get('selectedGroup')
         group = Group.objects.get(id=id_group)
 
-        print(historico.setor_atual, group.name)
-
         # Registre o histórico de movimentação
         card_setor_history = CardSetorHistory(
             setor_id=group.id,
             card_id=card_id,
-            status_anterior="Em Atendimento",
+            status_anterior=historico.status_atual,
             status_atual="Encaminhado",
             setor_anterior=historico.setor_atual,
             setor_atual=group.name,
@@ -656,3 +656,38 @@ def encaminhar_card(request, card_id):
 
     except Exception as e:
         return JsonResponse({'success': False, 'message': 'Erro ao encaminhar o card.'})
+
+
+@login_required(login_url="/login")
+def transferir_card(request, card_id):
+
+    try:
+        card = Card.objects.get(idCard=card_id)
+        card.status = 'Triagem'
+        card.responsavel = None
+        card.save()
+
+        historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+        id_group = request.POST.get('selectedGroup')
+        group = Group.objects.get(id=id_group)
+
+        # Registre o histórico de movimentação
+        card_setor_history = CardSetorHistory(
+            setor_id=group.id,
+            card_id=card_id,
+            status_anterior=historico.status_atual,
+            status_atual="Triagem",
+            setor_anterior=historico.setor_atual,
+            setor_atual=group.name,
+        )
+
+        card_setor_history.save()
+
+        return JsonResponse({'success': True, 'message': 'Card Transferido com sucesso.'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'Erro ao Transferir o card.'})

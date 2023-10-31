@@ -20,6 +20,7 @@ urlpatterns = [
     path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
     path('registrar_atendimento/<int:card_id>', pages.registrar_atendimento, name='registrar_atendimento'),
     path('encaminhar_card/<int:card_id>', pages.encaminhar_card, name='encaminhar_card'),
+    path('transferir_card/<int:card_id>', pages.transferir_card, name='transferir_card'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
@@ -91,7 +92,7 @@ urlpatterns = [
     path('salvar_malote_rh', rh.salvar_malote_rh, name='salvar_malote_rh'),
 
     path('ti', ti.ti_home, name='ti_home'),
-    path('ti/new_request', ti.new_request, name='new_request'),
+    path('ti/new_request_ti', ti.new_request_ti, name='new_request_ti'),
     path('ti/request_acessos_ti', ti.request_acessos_ti, name='request_acessos_ti'),
     path('ti/request_equipamentos_ti', ti.request_equipamentos_ti, name='request_equipamentos_ti'),
     path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
