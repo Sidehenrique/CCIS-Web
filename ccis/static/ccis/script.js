@@ -533,6 +533,104 @@ function loadCardInfo(cardId) {
 
                 //---------------------------------------------------------------------------------------------
 
+
+                // Ouvinte de evento para o botão "Transferir"
+                $("#transferirCardButton").click(function () {
+                    // Ao clicar no botão "Encaminhar", exiba o segundo modal para seleção do setor
+                    $('#modalSelecaoSetorTrans').modal('show');
+                });
+
+                // Ouvinte de evento para o botão "Confirmar" no segundo modal
+                $("#confirmarTransferencia").click(function () {
+                    const selectedGroupTrans = $("#seletorGrupoTrans").val(); // Obtém o valor selecionado no <select>
+
+                    // Verifique se o valor do grupo é válido
+                    if (!selectedGroupTrans) {
+                        alert('Selecione um grupo válido.');
+                        return;
+                    }
+
+                    // Construa um objeto com os dados do encaminhamento
+                    const dadosTransferencia = {
+                        cardId: cardId,
+                        selectedGroupTrans: selectedGroupTrans,
+                    };
+
+                    // Envie uma solicitação AJAX para registrar o encaminhamento
+                   $.ajax({
+                        url: `/transferir_card/${cardId}`, // Substitua pela URL correta da sua view Django
+                        method: 'POST',
+                        data: dadosTransferencia,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+                                alert('Card Transferido com sucesso.');
+                                // Feche o segundo modal após o encaminhamento
+                                $('#modalSelecaoSetorTrans').modal('hide');
+                            } else {
+                                alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('ERRO: ' + error); // Exibe informações de erro do AJAX
+                        }
+                    });
+
+                });
+
+
+                // --------------------------------------------------------------------------------------------
+
+
+                // Ouvinte de evento para o botão "Personalizar"
+                $("#PersonalizarCard").click(function () {
+                    // Ao clicar no botão "Encaminhar", exiba o segundo modal para seleção do setor
+                    $('#modalSelecaoCor').modal('show');
+                });
+
+                // Ouvinte de evento para o botão "Confirmar" no segundo modal
+                $("#confirmarCor").click(function () {
+                    const selectedColor = $("#seletorCor").val(); // Obtém o valor selecionado no <select>
+
+                    // Verifique se o valor do grupo é válido
+                    if (!selectedColor) {
+                        alert('Selecione uma cor válida.');
+                        return;
+                    }
+
+                    // Construa um objeto com os dados do encaminhamento
+                    const dadosPersonalisar = {
+                        cardId: cardId,
+                        selectedColor: selectedColor,
+                    };
+
+                    // Envie uma solicitação AJAX para registrar o encaminhamento
+                   $.ajax({
+                        url: `/presonalizar_card/${cardId}`, // Substitua pela URL correta da sua view Django
+                        method: 'POST',
+                        data: dadosPersonalisar,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+                                alert('Card Personalizado com sucesso.');
+                                // Feche o segundo modal após o encaminhamento
+                                $('#modalSelecaoCor').modal('hide');
+                            } else {
+                                alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('ERRO: ' + error); // Exibe informações de erro do AJAX
+                        }
+                    });
+
+                });
+
+
+
+                //--------------------------------------------------------------------------------------------
+
+
                 // Abra o modal
                 modal.modal('show');
 

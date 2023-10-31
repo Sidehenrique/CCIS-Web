@@ -669,7 +669,7 @@ def transferir_card(request, card_id):
 
         historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
 
-        id_group = request.POST.get('selectedGroup')
+        id_group = request.POST.get('selectedGroupTrans')
         group = Group.objects.get(id=id_group)
 
         # Registre o histórico de movimentação
@@ -691,3 +691,23 @@ def transferir_card(request, card_id):
 
     except Exception as e:
         return JsonResponse({'success': False, 'message': 'Erro ao Transferir o card.'})
+
+
+@login_required(login_url="/login")
+def presonalizar_card(request, card_id):
+
+    try:
+        cor = request.POST.get('selectedColor')
+
+        card = Card.objects.get(idCard=card_id)
+        card.cor = cor
+        card.save()
+
+        return JsonResponse({'success': True, 'message': 'Card Presonalizado com sucesso.'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'Erro ao Personalizar o card.'})
+

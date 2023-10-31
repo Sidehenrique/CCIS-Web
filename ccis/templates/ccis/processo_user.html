@@ -28,7 +28,7 @@
     <nav class="navbar align-center mb-2 " style="background-color:white">
         <div class="container-fluid pe-1 alert-container">
 
-            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL {{ setor|upper }}</p>
+            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE PROCESSOS</p>
 
             <div class="navbar-nav-wrap-content-end" style="position: relative;">
                 <form class="d-flex">
@@ -117,8 +117,9 @@
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
+                <!-- Falta uma informação aqui referente ao id -->
 
-                <div class="processo-card" style="background-color:{{ card.cor }}">
+                <div class="processo-card">
 
                     <div class="row">
 
@@ -534,17 +535,11 @@
                         <div class="col-4" style="border-right:1px solid #818181">
 
 
-                            <div class="row">
-                                <div class="col-auto me-auto">
+                            <div class="col-auto me-auto">
 
-                                    <span class="processo-tag-cod" id="codInfo"></span>
-                                    <span class="processo-tag-setor" id="sectorInfo"></span>
+                                <span class="processo-tag-cod" id="codInfo"></span>
+                                <span class="processo-tag-setor" id="sectorInfo"></span>
 
-                                </div>
-
-                                <div class="col-auto">
-
-                                </div>
                             </div>
 
 
@@ -618,25 +613,11 @@
 
                             <!-- cabeçalho ------>
                             <div>
-
-                                <div class="row">
-                                    <div class="col-auto me-auto">
-                                        <small><i class="fa-solid fa-clock"></i>
-                                            <span id="horarioAbertura"></span>
-                                        </small>
-                                    </div>
-                                    <div class="col-auto">
-
-                                        <a type="button" id="PersonalizarCard">
-                                            <span class="processo-tag-cor">
-                                                <i class="fa-solid fa-brush"></i>
-                                                Personalizar
-                                            </span>
-                                        </a>
-
-                                    </div>
+                                <div class="col-auto me-auto">
+                                    <small><i class="fa-solid fa-clock"></i>
+                                        <span id="horarioAbertura"></span>
+                                    </small>
                                 </div>
-
 
                                 <h6 class="mt-2">Descrição</h6>
 
@@ -743,14 +724,44 @@
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="transferirCardButton" class="modal-processo-link"
-                                       aria-current="page">
+                                    <a type="button" id="Tr" class="modal-processo-link" aria-current="page">
                                         <i class="fa-solid fa-arrow-right-arrow-left"></i>
                                         Transferir
                                     </a>
                                 </li>
 
-                                <li class="li-menu-request" style="margin-top:120px">
+
+                                <li class="" style="margin-top:45px">
+
+
+                                    <div class="d-flex" style="justify-content: center;">
+
+                                        <a type="button" name="1" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="2" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="3" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="4" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="5" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+
+                                    </div>
+
+                                    <p style="font-size:12px; text-align:center">Avaliar este atendimento<br>
+                                        <span style="font-size:10px; text-align:center">Sua avaliação é anônima</span>
+                                    </p>
+
+                                </li>
+
+
+                                <li class="li-menu-request mt-1">
                                     <a type="button" id="Fi" class="modal-processo-link btn-finish" aria-current="page">
                                         <i class="fa-solid fa-check-double"></i>
                                         Finalizar
@@ -773,14 +784,10 @@
                 <!-- footer --------------------->
                 <div class="modal-footer">
 
-                    <div class="col-10">
+                    <div class="col">
 
                         <i class="fa-solid fa-phone-volume"></i>
                         <span id="nomeResponsavel"></span>
-
-                    </div>
-
-                    <div class="col">
 
                     </div>
 
@@ -821,68 +828,6 @@
         </div>
     </div>
     <!-- Modal encaminhar ------------------------>
-
-    <!-- Modal Transferir ------------------------>
-    <div class="modal" id="modalSelecaoSetorTrans" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Transferir Processo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="p-3">
-                    <label>Selecione o grupo *:</label>
-                    <select id="seletorGrupoTrans" class="form-select" required>
-                        {% for grupo in group %}
-                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarTransferencia" type="submit" class="btn btn-primary">Confirmar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal Transferir ------------------------>
-
-    <!-- Modal cor ------------------------>
-    <div class="modal" id="modalSelecaoCor" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Personalizar</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="col p-3">
-                    <label>Selecione a Cor Do Card*:</label>
-                    <select id="seletorCor" class="form-select" required>
-
-                        <option></option>
-                        <option value="#f6f6f6">Padão</option>
-                        <option value="#FFCECE">Vermelho</option>
-                        <option value="#CEDFFF">Azul</option>
-                        <option value="#CEFFD3">Verde</option>
-                        <option value="#FFFCA7">Amarelo</option>
-
-                    </select>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarCor" type="submit" class="btn btn-primary">Confirmar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal cor ------------------------>
 
 
 </div>

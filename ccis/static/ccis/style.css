@@ -1284,6 +1284,23 @@ status-negativo{
 }
 
 
+
+.processo-tag-cor{
+    font-size:15px;
+    background-color:#f6f6f6;
+    padding: 3px 7px;
+    border-radius:10px;
+
+}
+
+
+.processo-tag-cor:hover{
+    transition: all .5s;
+    background-color:#d9d9d9;
+}
+
+
+
 .processo-tag-historico{
     font-size:10px;
     background-color:#d9d9d9;
@@ -1291,6 +1308,7 @@ status-negativo{
     padding: 3px 7px;
     border-radius:10px;
 }
+
 
 .processo-tag-historico-active{
     font-size:10px;
