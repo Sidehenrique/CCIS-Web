@@ -73,7 +73,7 @@ def ti_home(request):
 
 
 @login_required(login_url="/login")
-def new_request(request):
+def new_request_ti(request):
     acessos = modelFormAcessosTI()
     equipamentos = modelFormEquipamentosTI()
     servicos = modelFormSevicosTI()
@@ -207,22 +207,46 @@ def request_servicos_ti(request):
 
 @login_required(login_url="/login")
 def processos_ti(request):
-    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-        queryset=CardSetorHistory.objects.order_by('-data_hora'))
-    )
-
-    q_triagem = CardSetorHistory.objects.filter(
-        setor_atual="Triagem",
-        setor="Tecnologia"
-    ).count()
-
-    grupos = Group.objects.all()
 
     if request.method == 'GET':
+        cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+            queryset=CardSetorHistory.objects.order_by('-data_hora'))
+        )
+
+        group = Group.objects.all()
+        setor = 'Tecnologia'
+
+        # Inicializa os contadores para cada estado
+        card_count_triagem = 0
+        card_count_atendimento = 0
+        card_count_encaminhado = 0
+        card_count_concluido = 0
+        card_count_finalizado = 0
+
+        for card in cards:
+            cardsetorhistory = card.cardsetorhistory_set.first()
+            if cardsetorhistory:
+                if cardsetorhistory.setor_atual == setor:
+                    if cardsetorhistory.status_atual == "Triagem":
+                        card_count_triagem += 1
+                    elif cardsetorhistory.status_atual == "Em Atendimento":
+                        card_count_atendimento += 1
+                    elif cardsetorhistory.status_atual == "Encaminhado":
+                        card_count_encaminhado += 1
+                    elif cardsetorhistory.status_atual == "Concluido":
+                        card_count_concluido += 1
+                    elif cardsetorhistory.status_atual == "Finalizado":
+                        card_count_finalizado += 1
+
         context = {
             'cards': cards,
-            'grupos': grupos,
-            'q_triagem': q_triagem,
+            'group': group,
+            'setor': setor,
+            'card_count_triagem': card_count_triagem,
+            'card_count_atendimento': card_count_atendimento,
+            'card_count_encaminhado': card_count_encaminhado,
+            'card_count_concluido': card_count_concluido,
+            'card_count_finalizado': card_count_finalizado,
         }
 
         return render(request, 'ccis/processo.html', context)
