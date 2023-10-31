@@ -711,3 +711,69 @@ def presonalizar_card(request, card_id):
     except Exception as e:
         return JsonResponse({'success': False, 'message': 'Erro ao Personalizar o card.'})
 
+
+@login_required(login_url="/login")
+def concluir_card(request, card_id):
+    if request.method == 'POST':
+
+        card = get_object_or_404(Card, idCard=card_id)
+        if card.status != "Concluido":
+
+            try:
+                card.status = 'Concluido'
+                card.responsavel = request.user
+                card.save()
+
+                group = request.user.groups.first()
+
+                historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+                # Registre o histórico de movimentação
+                card_setor_history = CardSetorHistory(
+                    setor_id=group.id,
+                    card_id=card_id,
+                    status_anterior=historico.status_atual,
+                    status_atual="Concluido",
+                    setor_anterior=historico.setor_atual,
+                    setor_atual=group.name,
+                )
+
+                card_setor_history.save()
+                return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
+
+            except Card.DoesNotExist:
+                return JsonResponse({'success': False, 'message': 'Card não encontrado'})
+
+        else:
+            return JsonResponse({'success': False, 'message': 'Processo já Concluido'})
+
+
+@login_required(login_url="/login")
+def finalizar_card(request, card_id):
+    if request.method == 'POST':
+        try:
+            card = Card.objects.get(idCard=card_id)
+            card.status = 'Finalizado'
+            card.save()
+
+            group = request.user.groups.first()
+
+            historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+            # Registre o histórico de movimentação
+            card_setor_history = CardSetorHistory(
+                setor_id=group.id,
+                card_id=card_id,
+                status_anterior=historico.status_atual,
+                status_atual="Finalizado",
+                setor_anterior=historico.setor_atual,
+                setor_atual=group.name,
+            )
+
+            card_setor_history.save()
+            return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
+
+        except Card.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Card não encontrado'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Requisição inválida'})

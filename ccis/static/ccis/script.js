@@ -516,8 +516,8 @@ function loadCardInfo(cardId) {
                         success: function (data) {
                             if (data.success) {
                                 alert('Card encaminhado com sucesso.');
-                                // Feche o segundo modal após o encaminhamento
                                 $('#modalSelecaoSetor').modal('hide');
+                                $('#processoModal').modal('hide');
                             } else {
                                 alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
                             }
@@ -565,8 +565,8 @@ function loadCardInfo(cardId) {
                         success: function (data) {
                             if (data.success) {
                                 alert('Card Transferido com sucesso.');
-                                // Feche o segundo modal após o encaminhamento
                                 $('#modalSelecaoSetorTrans').modal('hide');
+                                $('#processoModal').modal('hide');
                             } else {
                                 alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
                             }
@@ -630,6 +630,32 @@ function loadCardInfo(cardId) {
 
                 //--------------------------------------------------------------------------------------------
 
+
+
+                // Ouvinte de evento para o botão "Finalizar" no modal
+                $("#ConcluirCardButton").click(function () {
+                    $.ajax({
+                        url: `/concluir_card/${cardId}`,
+                        method: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+
+                                alert('Card Concluido com sucesso.');
+                                $('#processoModal').modal('hide');
+
+                            } else {
+                                alert('ERRO: ' + data.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('ERRO: ' + error);
+                        }
+                    });
+                });
+
+
+                //---------------------------------------------------------------------------------------------
 
                 // Abra o modal
                 modal.modal('show');

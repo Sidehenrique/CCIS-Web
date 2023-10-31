@@ -1344,6 +1344,12 @@ status-negativo{
 }
 
 
+.modal-processo-link.btn-done:hover{
+    background-color:#00E910;
+    color:#ffffff;
+}
+
+
 .modal-processo-link.btn-finish:hover{
     background-color:red;
     color:#ffffff;
