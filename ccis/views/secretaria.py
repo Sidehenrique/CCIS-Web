@@ -2,20 +2,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
+from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
 from ..forms import ModelFormSecretariaMalotes
 
 
 @login_required(login_url="/login")
 def secretaria_home(request):
     user = request.user
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
 
     try:
         dadosSetor = CustomGroupInfo.objects.get(nome='Secretaria')
@@ -26,8 +19,8 @@ def secretaria_home(request):
     setor = dadosSetor.nome
     print(setor)
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
 
     superior = Group.objects.filter(id=31).first()
 
@@ -60,9 +53,8 @@ def secretaria_home(request):
     if request.method == 'GET':
         sector_buttons = SectorButtons.objects.filter(group=31)
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'username': user, 'groupControle': groupControle, 'setor': setor, 'sector_buttons': sector_buttons,
-            'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+            'group_gestao': group_gestao,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
@@ -135,7 +127,7 @@ def salvar_malote_secretaria(request):
 
 
 @login_required(login_url="/login")
-def processos_cadastro(request):
+def processos_secretaria(request):
 
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
@@ -143,7 +135,7 @@ def processos_cadastro(request):
         )
 
         group = Group.objects.all()
-        setor = 'Cadastro'
+        setor = 'Secretaria'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0

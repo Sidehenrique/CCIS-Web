@@ -1,20 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons
+from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
 from ..forms import ModelFormPS
 
 
 @login_required(login_url="/login")
 def produtoServico_home(request):
     user = request.user
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
 
     try:
         dadosSetor = CustomGroupInfo.objects.get(nome='Produto e Serviço')
@@ -25,8 +19,8 @@ def produtoServico_home(request):
     setor = dadosSetor.nome
     print(setor)
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
 
     superior = Group.objects.filter(id=33).first()
 
@@ -59,9 +53,9 @@ def produtoServico_home(request):
     if request.method == 'GET':
         sector_buttons = SectorButtons.objects.filter(group=33)
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+
             'username': user, 'groupControle': groupControle, 'setor': setor,
-            'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'sector_buttons': sector_buttons,
+            'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
@@ -95,7 +89,7 @@ def salvar_malote_PS(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="ProdutoServico",  # Setor atual
+                setor_atual="Produto e Serviço",  # Setor atual
             )
             history_entry.save()
 
@@ -113,10 +107,11 @@ def salvar_malote_PS(request):
                     itens_selecionados.append(request.POST.get(item))
 
             if (itens_selecionados or texto2):
-                descricao = "<h6>Este Malote contém:</h6><br>" + ", ".join(itens_selecionados)
+                descricao = "Este Malote contém:<br> " + "<br>".join(itens_selecionados)
 
                 if texto2:
-                    descricao += f"<br>DESCRIÇÃO: {texto2}"
+                    descricao += "<br><br>"
+                    descricao += "Descrição:<br>" + texto2
 
                 # Salvar a descrição no campo message do MessageHistory
                 message_history = MessageHistory(
@@ -133,3 +128,50 @@ def salvar_malote_PS(request):
         form = ModelFormPS()
 
     return render(request, 'produtoServico/request_produto_servico.html', {'form': form})
+
+
+@login_required(login_url="/login")
+def processos_PS(request):
+
+    if request.method == 'GET':
+        cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+            queryset=CardSetorHistory.objects.order_by('-data_hora'))
+        )
+
+        group = Group.objects.all()
+        setor = 'Produto e Serviço'
+
+        # Inicializa os contadores para cada estado
+        card_count_triagem = 0
+        card_count_atendimento = 0
+        card_count_encaminhado = 0
+        card_count_concluido = 0
+        card_count_finalizado = 0
+
+        for card in cards:
+            cardsetorhistory = card.cardsetorhistory_set.first()
+            if cardsetorhistory:
+                if cardsetorhistory.setor_atual == setor:
+                    if cardsetorhistory.status_atual == "Triagem":
+                        card_count_triagem += 1
+                    elif cardsetorhistory.status_atual == "Em Atendimento":
+                        card_count_atendimento += 1
+                    elif cardsetorhistory.status_atual == "Encaminhado":
+                        card_count_encaminhado += 1
+                    elif cardsetorhistory.status_atual == "Concluido":
+                        card_count_concluido += 1
+                    elif cardsetorhistory.status_atual == "Finalizado":
+                        card_count_finalizado += 1
+
+        context = {
+            'cards': cards,
+            'group': group,
+            'setor': setor,
+            'card_count_triagem': card_count_triagem,
+            'card_count_atendimento': card_count_atendimento,
+            'card_count_encaminhado': card_count_encaminhado,
+            'card_count_concluido': card_count_concluido,
+            'card_count_finalizado': card_count_finalizado,
+        }
+
+        return render(request, 'ccis/processo.html', context)
