@@ -13,13 +13,6 @@ from ..forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevico
 def ti_home(request):
     user = request.user
 
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
     try:
         dadosSetor = CustomGroupInfo.objects.get(nome='Tecnologia')
 
@@ -29,8 +22,8 @@ def ti_home(request):
     setor = dadosSetor.nome
     print(setor)
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
 
     superior = Group.objects.filter(id=2).first()
 
@@ -63,9 +56,8 @@ def ti_home(request):
     if request.method == 'GET':
         sector_buttons = SectorButtons.objects.filter(group=2)
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'username': user, 'groupControle': groupControle, 'setor': setor,
-            'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'sector_buttons': sector_buttons,
+            'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
@@ -256,17 +248,13 @@ def processos_ti(request):
 
 
 def estoque(request):
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+    user = request.user
 
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'groupControle': groupControle}
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
+
+    contexto = {
+                'group_gestao': group_gestao, 'groupControle': groupControle}
 
     return render(request, 'ti/estoque.html', contexto)
 

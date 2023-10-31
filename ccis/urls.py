@@ -90,6 +90,7 @@ urlpatterns = [
     path('rh/usuario', pages.usuario, name='usuario'),
     path('new_request_rh', rh.new_request_rh, name='new_request_rh'),
     path('salvar_malote_rh', rh.salvar_malote_rh, name='salvar_malote_rh'),
+    path('processos_rh', rh.processos_rh, name='processos_rh'),
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request_ti', ti.new_request_ti, name='new_request_ti'),
@@ -105,6 +106,7 @@ urlpatterns = [
     path('new_request_retaguarda', retaguarda.new_request_retaguarda, name='new_request_retaguarda'),
     path('salvar_malote_retaguarda', retaguarda.salvar_malote_retaguarda,
            name='salvar_malote_retaguarda'),
+    path('processos_retaguarda', retaguarda.processos_retaguarda,name='processos_retaguarda'),
 
     path('produtoServico_home', produtoServico.produtoServico_home, name='produtoServico_home'),
     path('request_produto_servico', produtoServico.request_produto_servico,
@@ -115,6 +117,7 @@ urlpatterns = [
     path('new_request_financeiro', financeiro.new_request_financeiro, name='new_request_financeiro'),
     path('salvar_malote_financeiro', financeiro.salvar_malote_financeiro,
            name='salvar_malote_financeiro'),
+    path('processos_financeiro', financeiro.processos_financeiro, name='processos_financeiro'),
 
     path('cadastro_home', cadastro.cadastro_home, name='cadastro_home'),
     path('new_request_cadastro', cadastro.new_request_cadastro, name='new_request_cadastro'),
@@ -131,6 +134,7 @@ urlpatterns = [
     path('cobranca_home', cobranca.cobranca_home, name='cobranca_home'),
     path('new_request_cobranca', cobranca.new_request_cobranca, name='new_request_cobranca'),
     path('salvar_malote_cobranca', cobranca.salvar_malote_cobranca, name='salvar_malote_cobranca'),
+    path('processos_cobranca', cobranca.processos_cobranca, name='processos_cobranca'),
 
     path('secretaria_home', secretaria.secretaria_home, name='secretaria_home'),
     path('new_request_secretaria', secretaria.new_request_secretaria, name='new_request_secretaria'),
@@ -139,12 +143,15 @@ urlpatterns = [
     path('credito_home', credito.credito_home, name='credito_home'),
     path('new_request_credito', credito.new_request_credito, name='new_request_credito'),
     path('salvar_malote_credito', credito.salvar_malote_credito, name='salvar_malote_credito'),
+    path('processos_credito', credito.processos_credito, name='processos_credito'),
 
     path('controladoria_home', controladoria.controladoria_home, name='controladoria_home'),
+    path('processos_PC', controladoria.processos_PC, name='processos_PC'),
 
     path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
 
     path('paDigital_home', padigital.paDigital_home, name='paDigital_home'),
+    path('processos_PD', padigital.processos_PD, name='processos_PD'),
 
     path('dev', pages.dev, name='dev'),
 

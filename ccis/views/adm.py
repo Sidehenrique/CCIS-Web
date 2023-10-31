@@ -107,10 +107,13 @@ def salvar_malote_adm(request):
                     itens_selecionados.append(request.POST.get(item))
 
             if (itens_selecionados or texto2):
-                descricao = "Este Malote contém:<br> " + ", ".join(itens_selecionados)
+                descricao = "Este Malote contém:<br> " + "<br>".join(itens_selecionados)
 
                 if texto2:
-                    descricao += texto2
+                    descricao += "<br><br>"
+                    descricao += "Descrição:<br>" + texto2
+
+
 
                 # Salvar a descrição no campo message do MessageHistory
                 message_history = MessageHistory(

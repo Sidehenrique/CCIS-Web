@@ -2,20 +2,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
+from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
 from ..forms import ModelFormCadastroMalotes
 
 
 @login_required(login_url="/login")
 def cadastro_home(request):
     user = request.user
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
 
     try:
         dadosSetor = CustomGroupInfo.objects.get(nome='Cadastro')
@@ -26,8 +19,8 @@ def cadastro_home(request):
     setor = dadosSetor.nome
     print(setor)
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
 
     superior = Group.objects.filter(id=7).first()
 
@@ -61,9 +54,8 @@ def cadastro_home(request):
         sector_buttons = SectorButtons.objects.filter(group=7)
 
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'username': user, 'groupControle': groupControle, 'setor': setor,
-            'group_gestao': group_gestao, 'is_superadmin': is_superadmin, 'sector_buttons': sector_buttons,
+            'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
@@ -112,10 +104,11 @@ def salvar_malote_cadastro(request):
                     itens_selecionados.append(request.POST.get(item))
 
             if (itens_selecionados or texto2):
-                descricao = "<h6>Este Malote contém:</h6><br>" + ", ".join(itens_selecionados)
+                descricao = "Este Malote contém:<br> " + "<br>".join(itens_selecionados)
 
                 if texto2:
-                    descricao += f"<br>DESCRIÇÃO: {texto2}"
+                    descricao += "<br><br>"
+                    descricao += "Descrição:<br>" + texto2
 
                 # Salvar a descrição no campo message do MessageHistory
                 message_history = MessageHistory(
