@@ -1337,6 +1337,17 @@ status-negativo{
 
 }
 
+.modal-processo-link.btn-done{
+    text-align:center;
+    border-radius:30px;
+}
+
+.modal-processo-link.btn-finish{
+    text-align:center;
+    border-radius:30px;
+}
+
+
 
 .modal-processo-link:hover{
     background-color:#16B597;
@@ -1345,7 +1356,9 @@ status-negativo{
 
 
 .modal-processo-link.btn-done:hover{
-    background-color:#00E910;
+    background-color:#4FD16E;
+    text-align:center;
+    border-radius:30px;
     color:#ffffff;
 }
 
