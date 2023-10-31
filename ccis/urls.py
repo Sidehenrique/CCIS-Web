@@ -118,6 +118,8 @@ urlpatterns = [
     path('cadastro_home', cadastro.cadastro_home, name='cadastro_home'),
     path('new_request_cadastro', cadastro.new_request_cadastro, name='new_request_cadastro'),
     path('salvar_malote_cadastro', cadastro.salvar_malote_cadastro, name='salvar_malote_cadastro'),
+    path('processos_cadastro', cadastro.processos_cadastro, name='processos_cadastro'),
+
 
     path('adm_home', adm.adm_home, name='adm_home'),
     path('new_request_adm', adm.new_request_adm, name='new_request_adm'),
