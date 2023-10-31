@@ -112,6 +112,7 @@ urlpatterns = [
     path('request_produto_servico', produtoServico.request_produto_servico,
            name='request_produto_servico'),
     path('salvar_malote_PS', produtoServico.salvar_malote_PS, name='salvar_malote_PS'),
+    path('processos_PS', produtoServico.processos_PS, name='processos_PS'),
 
     path('financeiro_home', financeiro.financeiro_home, name='financeiro_home'),
     path('new_request_financeiro', financeiro.new_request_financeiro, name='new_request_financeiro'),
@@ -139,6 +140,7 @@ urlpatterns = [
     path('secretaria_home', secretaria.secretaria_home, name='secretaria_home'),
     path('new_request_secretaria', secretaria.new_request_secretaria, name='new_request_secretaria'),
     path('salvar_malote_secretaria', secretaria.salvar_malote_secretaria,name='salvar_malote_secretaria'),
+    path('processos_secretaria', secretaria.processos_secretaria,name='processos_secretaria'),
 
     path('credito_home', credito.credito_home, name='credito_home'),
     path('new_request_credito', credito.new_request_credito, name='new_request_credito'),
@@ -149,6 +151,7 @@ urlpatterns = [
     path('processos_PC', controladoria.processos_PC, name='processos_PC'),
 
     path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
+    path('processos_GR', gestaoRisco.processos_GR, name='processos_GR'),
 
     path('paDigital_home', padigital.paDigital_home, name='paDigital_home'),
     path('processos_PD', padigital.processos_PD, name='processos_PD'),
