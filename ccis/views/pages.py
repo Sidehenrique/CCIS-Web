@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User, Group
+from collections import defaultdict
 
 from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
@@ -518,21 +519,42 @@ def dev(request):
 
 @login_required(login_url="/login")
 def processos_user(request):
-    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-        queryset=CardSetorHistory.objects.order_by('-data_hora'))
-    )
-
-
-    grupos = Group.objects.all()
-    q_triagem = CardSetorHistory.objects.filter().order_by('-data_hora').last()
 
     if request.method == 'GET':
+        cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+            queryset=CardSetorHistory.objects.order_by('-data_hora'))
+        )
+
+        group = Group.objects.all()
+        solicitante = request.user.id
+
+
+        status_counts = defaultdict(int)
+
+        for card in cards:
+            cardsetorhistory = card.cardsetorhistory_set.first()
+            if card and card.solicitante.id == solicitante and cardsetorhistory:
+                status_atual = cardsetorhistory.status_atual
+                status_counts[status_atual] += 1
+
+        card_count_triagem = status_counts["Triagem"]
+        card_count_atendimento = status_counts["Em Atendimento"]
+        card_count_encaminhado = status_counts["Encaminhado"]
+        card_count_concluido = status_counts["Concluido"]
+        card_count_finalizado = status_counts["Finalizado"]
+
         context = {
             'cards': cards,
-            'grupos':grupos,
+            'group': group,
+            'solicitante': solicitante,
+            'card_count_triagem': card_count_triagem,
+            'card_count_atendimento': card_count_atendimento,
+            'card_count_encaminhado': card_count_encaminhado,
+            'card_count_concluido': card_count_concluido,
+            'card_count_finalizado': card_count_finalizado,
         }
 
-        return render(request, 'ccis/processo.html', context)
+        return render(request, 'ccis/processo_user.html', context)
 
 
 @api_view(['GET'])

@@ -1,3 +1,5 @@
+
+// Filtrar Campos tabela -------------------------------------------------------------------------------------
 function filterTable() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("inputUser");
@@ -18,7 +20,9 @@ function filterTable() {
   }
 }
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
+
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields ---------------------
 (function () {
     'use strict'
 
@@ -40,12 +44,12 @@ form.classList.add('was-validated')
 })()
 
 
-// Tratamento da view novo_user para esconder o display
+
+// Tratamento da view novo_user para esconder o display --------------------------------------------------------
 function displayFileName(input) {
     var fileName = input.files[0].name;
     document.getElementById('file-name').textContent = fileName;
 }
-
 document.addEventListener("DOMContentLoaded", function() {
 
     const form1 = document.getElementById("form1");
@@ -65,33 +69,33 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-// Tratamento da view novo_user para esconder o display ----------------------------------------------------------------
+
+// Tratamento da view novo_user para esconder o display --------------------------------------------------------
 function displayFilePag(input) {
     var filePage = input.files[0].name;
     document.getElementById('file-Page').textContent = filePage;
-}
-
-
+    }
 document.addEventListener("DOMContentLoaded", function() {
 
-    const pag1 = document.getElementById("pag1");
-    const pag2 = document.getElementById("pag2");
+        const pag1 = document.getElementById("pag1");
+        const pag2 = document.getElementById("pag2");
 
-    document.getElementById("pagBtn1").addEventListener("click", function() {
-        pag1.style.display = "block";
-        pag2.style.display = "none";
-    });
+        document.getElementById("pagBtn1").addEventListener("click", function() {
+            pag1.style.display = "block";
+            pag2.style.display = "none";
+        });
 
 
-    document.getElementById("pagBtn2").addEventListener("click", function() {
-        pag1.style.display = "none";
-        pag2.style.display = "block";
-    });
+        document.getElementById("pagBtn2").addEventListener("click", function() {
+            pag1.style.display = "none";
+            pag2.style.display = "block";
+        });
 
 });
 
 
-// Tratamento PAGINA TECNOLOGIA ----------------------------------------------------------------------------------------
+
+// Tratamento PAGINA TECNOLOGIA ---------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function() {
 
     const menuInicial = document.getElementById("menu-inicial");
@@ -129,11 +133,11 @@ document.addEventListener("DOMContentLoaded", function() {
     //------------------------------------------------------------------------------------------------------------------
 
 });
-//----------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
 
 
-// Tratamento do modal inativar_usuario da tabela da view usuário ------------------------------------------------------
 
+// Tratamento do modal inativar_usuario da tabela da view usuário -----------------------------------------------
 $('.btn-inativar').click(function() {
 var modalId = $(this).data('bs-target');
 var nomeUsuario = $(this).siblings('.modal-body').find('p').text().trim();
@@ -141,6 +145,8 @@ $(modalId).find('.modal-body p').text(nomeUsuario);
 });
 
 
+
+// Redefinição de Senha -----------------------------------------------------------------------------------------
 function validarFormulario() {
     var password1 = document.getElementById('id_password1').value;
     var password2 = document.getElementById('id_password2').value;
@@ -174,11 +180,14 @@ function validarFormulario() {
 }
 
 
+
+// Configuração do scroll do mouse lateral -----------------------------------------------------------------------
 function handleScroll(event) {
   const container = document.querySelector('.container-buttons');
   container.scrollLeft += event.deltaY; // Ajusta a posição de rolagem horizontal
   event.preventDefault(); // Impede o comportamento padrão do scroll do mouse
 }
+
 
 
 // Configure o cabeçalho CSRF para solicitações AJAX ---------------------------------------------------------
@@ -212,6 +221,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
 
 
 function loadCardInfo(cardId) {
@@ -678,6 +688,7 @@ function loadCardInfo(cardId) {
 }
 
 
+
 function registrarAtendimento(cardId) {
     console.log("ID do card:", cardId);
 
@@ -713,8 +724,34 @@ function registrarAtendimento(cardId) {
 }
 
 
-
-
-
+//function filterCards() {
+//    var input, filter, cards, i;
+//    input = document.getElementById("filterProcesso");
+//    filter = input.value.toUpperCase();
+//    cards = document.querySelectorAll(".card-filter");
+//
+//    for (i = 0; i < cards.length; i++) {
+//        var card = cards[i];
+//        var title = card.querySelector(".card-titulo").textContent.toUpperCase();
+//        var responsavel = card.querySelector(".card-responsavel").textContent.toUpperCase();
+//        var servico = card.querySelector(".card-servico").textContent.toUpperCase();
+//        var data = card.querySelector(".card-data").textContent.toUpperCase();
+//        var setor = card.querySelector(".card-setor").textContent.toUpperCase();
+//        var isVisible = false; // Variável para rastrear se o card é visível
+//
+//        if (
+//            title.includes(filter) ||
+//            responsavel.includes(filter) ||
+//            servico.includes(filter) ||
+//            data.includes(filter) ||
+//            setor.includes(filter)
+//        ) {
+//            isVisible = true; // Define como visível se corresponder ao filtro
+//        }
+//
+//        card.style.display = isVisible ? "" : "none"; // Define o estilo de exibição com base na variável isVisible
+//    }
+//}
+//
 
 
