@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro, gestaoNegocios,
                     gestaoNegocios, gestaoControle, formularios, security, rh, pages, cooperar, ti, produtoServico,
-                    gestaoRisco, padigital )
+                    gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, )
 
 urlpatterns = [
     path('base', pages.base, name='base'),
@@ -158,6 +158,24 @@ urlpatterns = [
 
     path('paDigital_home', padigital.paDigital_home, name='paDigital_home'),
     path('processos_PD', padigital.processos_PD, name='processos_PD'),
+
+    path('padf_home', padf.padf_home, name='padf_home'),
+    path('processos_padf', padf.processos_padf, name='processos_padf'),
+
+    path('planaltina_home', planaltina.planaltina_home, name='planaltina_home'),
+    path('processos_planaltina', planaltina.processos_planaltina, name='processos_planaltina'),
+
+    path('formosa_home', formosa.formosa_home, name='formosa_home'),
+    path('processos_formosa', formosa.processos_formosa, name='processos_formosa'),
+
+    path('vicente_home', vicente.vicente_home, name='vicente_home'),
+    path('processos_vicente', vicente.processos_vicente, name='processos_vicente'),
+
+    path('SJ_home', saojoao.SJ_home, name='SJ_home'),
+    path('processos_SJ', saojoao.processos_SJ, name='processos_SJ'),
+
+    path('saosebas_home', saosebas.saosebas_home, name='saosebas_home'),
+    path('processos_SB', saosebas.processos_SB, name='processos_SB'),
 
     path('dev', pages.dev, name='dev'),
 
