@@ -3,15 +3,15 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
-from ..forms import ModelFormVicenteMalotes
+from ..forms import ModelFormMarketMalotes
 
 
 @login_required(login_url="/login")
-def vicente_home(request):
+def marketing_home(request):
     user = request.user
 
     try:
-        dadosSetor = CustomGroupInfo.objects.get(nome='Vicente Pires')
+        dadosSetor = CustomGroupInfo.objects.get(nome='Marketing')
 
     except CustomGroupInfo.DOESNOTEXIST:
         dadosSetor = None
@@ -22,7 +22,7 @@ def vicente_home(request):
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=38).first()
+    superior = Group.objects.filter(id=41).first()
 
     nomes_equipe = []
 
@@ -51,7 +51,7 @@ def vicente_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
-        sector_buttons = SectorButtons.objects.filter(group=38)
+        sector_buttons = SectorButtons.objects.filter(group=41)
         context = {
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
@@ -62,76 +62,15 @@ def vicente_home(request):
 
 
 @login_required(login_url="/login")
-def new_request_vicente(request):
-    form = ModelFormVicenteMalotes()
+def new_request_market(request):
+    form = ModelFormMarketMalotes()
     context = {'form': form, }
 
-    return render(request, "vicente/new_request_vicente.html", context)
+    return render(request, "marketing/new_request_market.html", context)
 
 
 @login_required(login_url="/login")
-def salvar_malote_vicente(request):
-    if request.method == 'POST':
-
-        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
-        request.POST['assunto'] = 'Malote'
-
-        form = ModelFormVicenteMalotes(request.POST, request.FILES)
-
-        if form.is_valid():
-            card = form.save(commit=False)
-            card.solicitante = request.user
-            card.save()
-
-            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
-            history_entry = CardSetorHistory(
-                card=card,
-                setor=get_object_or_404(Group, id=1),
-                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
-                status_atual="Triagem",  # Status atual
-                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Vicente Pires",  # Setor atual
-            )
-            history_entry.save()
-
-            texto2 = request.POST["descricao"]
-
-            attachment = request.FILES.get('attachment')
-
-            # Coletar as seleções dos checkboxes e montar a descrição
-            itens_selecionados = []
-            for item in ['item1', 'item2', 'item3', 'item4', 'item5', 'item6']:
-                if request.POST.get(item):
-                    itens_selecionados.append(request.POST.get(item))
-
-            if (itens_selecionados or texto2):
-                descricao = "Este Malote contém:<br> " + "<br>".join(itens_selecionados)
-
-                if texto2:
-                    descricao += "<br><br>"
-                    descricao += "Descrição:<br>" + texto2
-
-
-
-                # Salvar a descrição no campo message do MessageHistory
-                message_history = MessageHistory(
-                    card=card,
-                    remetente=request.user,
-                    message=descricao,
-                    attachment=attachment,
-                )
-                message_history.save()
-
-            return redirect('vicente_home')
-
-    else:
-        form = ModelFormVicenteMalotes()
-
-    return render(request, 'vicente/new_request_vicente.html', {'form': form})
-
-
-@login_required(login_url="/login")
-def processos_vicente(request):
+def processos_MK(request):
 
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
@@ -139,7 +78,7 @@ def processos_vicente(request):
         )
 
         group = Group.objects.all()
-        setor = 'Vicente Pires'
+        setor = 'Marketing'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0

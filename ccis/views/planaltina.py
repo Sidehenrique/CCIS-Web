@@ -3,6 +3,8 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
+from ..forms import ModelFormPlanaltinaMalotes
+
 @login_required(login_url="/login")
 def planaltina_home(request):
     user = request.user
@@ -56,6 +58,74 @@ def planaltina_home(request):
         }
 
         return render(request, 'ccis/setor_home.html', context)
+
+
+@login_required(login_url="/login")
+def new_request_plan(request):
+    form = ModelFormPlanaltinaMalotes()
+    context = {'form': form, }
+
+    return render(request, "planaltina/new_request_plan.html", context)
+
+@login_required(login_url="/login")
+def salvar_malote_planaltina(request):
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Malote'
+
+        form = ModelFormPlanaltinaMalotes(request.POST, request.FILES)
+
+        if form.is_valid():
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=1),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Planaltina",  # Setor atual
+            )
+            history_entry.save()
+
+            texto2 = request.POST["descricao"]
+
+            attachment = request.FILES.get('attachment')
+
+            # Coletar as seleções dos checkboxes e montar a descrição
+            itens_selecionados = []
+            for item in ['item1', 'item2', 'item3', 'item4', 'item5', 'item6']:
+                if request.POST.get(item):
+                    itens_selecionados.append(request.POST.get(item))
+
+            if (itens_selecionados or texto2):
+                descricao = "Este Malote contém:<br> " + "<br>".join(itens_selecionados)
+
+                if texto2:
+                    descricao += "<br><br>"
+                    descricao += "Descrição:<br>" + texto2
+
+
+
+                # Salvar a descrição no campo message do MessageHistory
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+            return redirect('planaltina_home')
+
+    else:
+        form = ModelFormPlanaltinaMalotes()
+
+    return render(request, 'planaltina/new_request_plan.html', {'form': form})
 
 
 @login_required(login_url="/login")
