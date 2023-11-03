@@ -790,6 +790,11 @@ def concluir_card(request, card_id):
 
 
 @login_required(login_url="/login")
+def get_user_rating(request, card_id):
+   pass
+
+
+@login_required(login_url="/login")
 def finalizar_card(request, card_id):
     if request.method == 'POST':
         try:

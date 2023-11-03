@@ -665,6 +665,8 @@ function loadCardInfo(cardId) {
                 });
 
 
+                //--------------------------------------------------------------------------------------------
+
 
                 // Ouvinte de evento para o botão "Personalizar"
                 $("#compartilharCardButton").click(function () {
@@ -713,6 +715,57 @@ function loadCardInfo(cardId) {
 
 
                 //---------------------------------------------------------------------------------------------
+
+
+                // Ouvinte de evento para o botão "Finalizar" no modal
+                $("#FinalizarAtendimentoButton").click(function () {
+                    $.ajax({
+                        url: `/finalizar_card/${cardId}`,
+                        method: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+
+                                alert('Card Finalizado com sucesso.');
+                                $('#processoModal').modal('hide');
+
+                            } else {
+                                alert('ERRO: ' + data.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('ERRO: ' + error);
+                        }
+                    });
+                });
+
+
+
+//                // Realizar uma solicitação AJAX para obter as informações de avaliação do usuário logado para o cartão
+//                $.ajax({
+//                    url: `/get_user_rating/${cardId}`,  // Substitua pela URL correta da sua view
+//                    method: 'GET',
+//                    dataType: 'json',
+//                    success: function (userRatingData) {
+//                        const userHasRatedThisCard = userRatingData.user_has_rated;
+//
+//                        // Habilitar ou desabilitar o botão "Finalizar" com base na avaliação do usuário
+//                        const finalizarButton = $("#FinalizarAtendimentoButton");
+//                        if (userHasRatedThisCard) {
+//                            finalizarButton.prop("disabled", false);
+//                        } else {
+//                            finalizarButton.prop("disabled", true);
+//                        }
+//
+//                        // Restante do seu código...
+//                    },
+//                    error: function () {
+//                        alert('Erro ao buscar informações de avaliação do usuário');
+//                    }
+//                });
+
+                //---------------------------------------------------------------------------------------------
+
 
                 // Abra o modal
                 modal.modal('show');
