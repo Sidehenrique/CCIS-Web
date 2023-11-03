@@ -665,6 +665,53 @@ function loadCardInfo(cardId) {
                 });
 
 
+
+                // Ouvinte de evento para o botão "Personalizar"
+                $("#compartilharCardButton").click(function () {
+                    // Ao clicar no botão "Encaminhar", exiba o segundo modal para seleção do setor
+                    $('#modalSeletorUser').modal('show');
+                });
+
+                // Ouvinte de evento para o botão "Confirmar" no segundo modal
+                $("#confirmarCompartilhamento").click(function () {
+                    const selectedUser = $("#seletorUser").val(); // Obtém o valor selecionado no <select>
+
+                    // Verifique se o valor do grupo é válido
+                    if (!selectedUser) {
+                        alert('Selecione um usuário válida.');
+                        return;
+                    }
+
+                    // Construa um objeto com os dados do encaminhamento
+                    const dadosUsuarios = {
+                        cardId: cardId,
+                        selectedUser: selectedUser,
+                    };
+
+                    // Envie uma solicitação AJAX para registrar o encaminhamento
+                   $.ajax({
+                        url: `/compartilhar_card/${cardId}`, // Substitua pela URL correta da sua view Django
+                        method: 'POST',
+                        data: dadosUsuarios,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+                                alert('Card Compartilhado com sucesso.');
+                                // Feche o segundo modal após o encaminhamento
+                                $('#modalSeletorUser').modal('hide');
+                            } else {
+                                alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('ERRO: ' + error); // Exibe informações de erro do AJAX
+                        }
+                    });
+
+                });
+
+
+
                 //---------------------------------------------------------------------------------------------
 
                 // Abra o modal
@@ -722,6 +769,7 @@ function registrarAtendimento(cardId) {
         }
     });
 }
+
 
 
 //function filterCards() {

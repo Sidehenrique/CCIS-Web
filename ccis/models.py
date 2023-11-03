@@ -499,6 +499,7 @@ class Card(models.Model):
     responsavel = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='chamados_responsaveis', default=None)
     status = models.CharField(max_length=20)
+    compartilhar = models.ManyToManyField(User, related_name="cards_compartilhados", blank=True)
     cor = models.CharField(max_length=20, null=True,)
 
     def __str__(self):

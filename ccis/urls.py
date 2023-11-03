@@ -20,6 +20,7 @@ urlpatterns = [
     path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
     path('registrar_atendimento/<int:card_id>', pages.registrar_atendimento, name='registrar_atendimento'),
     path('encaminhar_card/<int:card_id>', pages.encaminhar_card, name='encaminhar_card'),
+    path('compartilhar_card/<int:card_id>', pages.compartilhar_card, name='compartilhar_card'),
     path('transferir_card/<int:card_id>', pages.transferir_card, name='transferir_card'),
     path('presonalizar_card/<int:card_id>', pages.presonalizar_card, name='presonalizar_card'),
     path('concluir_card/<int:card_id>', pages.concluir_card, name='concluir_card'),
