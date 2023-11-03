@@ -220,3 +220,49 @@ def relatorioVisitas(request):
 
         return render(request, 'gestaoNegocios/relatorioVisitas.html', context)
 
+@login_required(login_url="/login")
+def lastro(request):
+    user = request.user
+
+    log = request.user
+    log_id = request.user.id
+    logName = request.user.first_name
+    logLast = request.user.last_name
+    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
+    is_superadmin = log.is_superuser
+
+    group_gestao = log.groups.filter(id=3).exists()
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    dados = dadosPessoais.objects.get(usuario=user)
+    groupControle = log.groups.filter(id=28).exists()
+
+    context = {
+        'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
+        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
+        'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
+    }
+
+    return render(request, 'gestaoNegocios/lastro.html', context)
+
+
+@login_required(login_url="/login")
+def credito(request):
+    user = request.user
+
+    group_gestao = user.groups.filter(id=3).exists()
+
+    first_name = user.first_name
+    last_name = user.last_name
+
+    dados = dadosPessoais.objects.get(usuario=user)
+    groupControle = user.groups.filter(id=28).exists()
+
+    context = {
+        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
+        'last_name': last_name, 'group_gestao': group_gestao,
+    }
+
+    return render(request, 'gestaoNegocios/credito.html', context)

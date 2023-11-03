@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro, gestaoNegocios,
                     gestaoNegocios, gestaoControle, formularios, security, rh, pages, cooperar, ti, produtoServico,
-                    gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, )
+                    gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, marketing, )
 
 urlpatterns = [
     path('base', pages.base, name='base'),
@@ -36,7 +36,6 @@ urlpatterns = [
     path('relatorios', gestaoControle.relatorios, name='relatorios'),
     path('estrategico', gestaoControle.estrategico, name='estrategico'),
     path('inadimplencia', gestaoControle.inadimplencia, name='inadimplencia'),
-    path('lastro', gestaoControle.lastro, name='lastro'),
     path('qqs', gestaoControle.qqs, name='qqs'),
     path('pesquisa', gestaoControle.pesquisa, name='pesquisa'),
 
@@ -47,6 +46,8 @@ urlpatterns = [
     path('pronampe', gestaoNegocios.pronampe, name='pronampe'),
     path('relatorioVisitas', gestaoNegocios.relatorioVisitas, name='relatorioVisitas'),
     path('planoMetas', gestaoNegocios.planoMetas, name='planoMetas'),
+    path('lastro', gestaoNegocios.lastro, name='lastro'),
+    path('credito', gestaoNegocios.credito, name='credito'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
@@ -161,22 +162,38 @@ urlpatterns = [
     path('processos_PD', padigital.processos_PD, name='processos_PD'),
 
     path('padf_home', padf.padf_home, name='padf_home'),
+    path('new_request_padf', padf.new_request_padf, name='new_request_padf'),
+    path('salvar_malote_padf', padf.salvar_malote_padf, name='salvar_malote_padf'),
     path('processos_padf', padf.processos_padf, name='processos_padf'),
 
     path('planaltina_home', planaltina.planaltina_home, name='planaltina_home'),
+    path('new_request_plan', planaltina.new_request_plan, name='new_request_plan'),
     path('processos_planaltina', planaltina.processos_planaltina, name='processos_planaltina'),
+    path('salvar_malote_planaltina', planaltina.salvar_malote_planaltina, name='salvar_malote_planaltina'),
 
     path('formosa_home', formosa.formosa_home, name='formosa_home'),
+    path('new_request_formosa', formosa.new_request_formosa, name='new_request_formosa'),
+    path('salvar_malote_formosa', formosa.salvar_malote_formosa, name='salvar_malote_formosa'),
     path('processos_formosa', formosa.processos_formosa, name='processos_formosa'),
 
     path('vicente_home', vicente.vicente_home, name='vicente_home'),
+    path('new_request_vicente', vicente.new_request_vicente, name='new_request_vicente'),
+    path('salvar_malote_vicente', vicente.salvar_malote_vicente, name='salvar_malote_vicente'),
     path('processos_vicente', vicente.processos_vicente, name='processos_vicente'),
 
     path('SJ_home', saojoao.SJ_home, name='SJ_home'),
+    path('new_request_SJ', saojoao.new_request_SJ, name='new_request_SJ'),
+    path('salvar_malote_SJ', saojoao.salvar_malote_SJ, name='salvar_malote_SJ'),
     path('processos_SJ', saojoao.processos_SJ, name='processos_SJ'),
 
     path('saosebas_home', saosebas.saosebas_home, name='saosebas_home'),
+    path('new_request_saosebas', saosebas.new_request_saosebas, name='new_request_saosebas'),
+    path('salvar_malote_saosebas', saosebas.salvar_malote_saosebas, name='salvar_malote_saosebas'),
     path('processos_SB', saosebas.processos_SB, name='processos_SB'),
+
+    path('marketing_home', marketing.marketing_home, name='marketing_home'),
+    path('new_request_market', marketing.new_request_market, name='new_request_market'),
+    path('processos_MK', marketing.processos_MK, name='processos_MK'),
 
     path('dev', pages.dev, name='dev'),
 
