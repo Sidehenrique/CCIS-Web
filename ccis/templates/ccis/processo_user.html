@@ -265,7 +265,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.solicitante.id == solicitante %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
 
             <!-- card ---------------------------->
@@ -697,15 +697,6 @@
                             <ul class="ul-menu-request buttons-Acao">
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="registrarAtendimentoButton" class="modal-processo-link"
-                                       aria-current="page">
-                                        <i class="fa-solid fa-phone-volume"></i>
-                                        Atender
-                                    </a>
-                                </li>
-
-
-                                <li class="li-menu-request">
                                     <a type="button" id="enviarMensagemButton" class="modal-processo-link"
                                        aria-current="page">
                                         <i class="fa-solid fa-paper-plane"></i>
@@ -715,18 +706,18 @@
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="encaminharCardButton" class="modal-processo-link"
+                                    <a type="button" id="compartilharCardButton" class="modal-processo-link"
                                        aria-current="page">
                                         <i class="fa-solid fa-angles-right"></i>
-                                        Encaminhar
+                                        Compartilhar
                                     </a>
                                 </li>
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="Tr" class="modal-processo-link" aria-current="page">
-                                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                                        Transferir
+                                    <a type="button" id="priorizarCardButton" class="modal-processo-link" aria-current="page">
+                                        <i class="fa-solid fa-bolt"></i>
+                                        Prioridade
                                     </a>
                                 </li>
 
@@ -800,20 +791,20 @@
     <!-- Modal Processos ------------------------->
 
 
-    <!-- Modal encaminhar ------------------------>
-    <div class="modal" id="modalSelecaoSetor" tabindex="-1">
+    <!-- Modal compartilhar ------------------------>
+    <div class="modal" id="modalSeletorUser" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Encaminhar Processo</h5>
+                    <h5 class="modal-title">Compartilhar Processo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="p-3">
-                    <label>Selecione o grupo *:</label>
-                    <select id="seletorGrupo" class="form-select" required>
-                        {% for grupo in group %}
-                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
+                    <label>Selecione o Usuario *:</label>
+                    <select id="seletorUser" class="form-select" required>
+                        {% for user in usuarios %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -821,7 +812,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarEncaminhamento" type="submit" class="btn btn-primary">Confirmar</button>
+                    <button id="confirmarCompartilhamento" type="submit" class="btn btn-primary">Confirmar</button>
                 </div>
 
             </div>

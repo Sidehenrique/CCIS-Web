@@ -525,9 +525,8 @@ def processos_user(request):
             queryset=CardSetorHistory.objects.order_by('-data_hora'))
         )
 
-        group = Group.objects.all()
+        usuarios = User.objects.all()
         solicitante = request.user.id
-
 
         status_counts = defaultdict(int)
 
@@ -545,7 +544,7 @@ def processos_user(request):
 
         context = {
             'cards': cards,
-            'group': group,
+            'usuarios': usuarios,
             'solicitante': solicitante,
             'card_count_triagem': card_count_triagem,
             'card_count_atendimento': card_count_atendimento,
@@ -670,6 +669,26 @@ def encaminhar_card(request, card_id):
         )
 
         card_setor_history.save()
+
+        return JsonResponse({'success': True, 'message': 'Card encaminhado com sucesso.'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'Erro ao encaminhar o card.'})
+
+
+@login_required(login_url="/login")
+def compartilhar_card(request, card_id):
+
+    try:
+        id_User = request.POST.get('selectedUser')
+        user = User.objects.get(id=id_User)
+
+        card = Card.objects.get(idCard=card_id)
+        card.compartilhar.add(user)
+        card.save()
 
         return JsonResponse({'success': True, 'message': 'Card encaminhado com sucesso.'})
 
