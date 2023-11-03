@@ -24,11 +24,11 @@
     <!-- End subMenu ----------------------------->
 
 
-    <!-- Pesquisa table -------------------------->
+    <!-- Pesquisa pro -------------------------->
     <nav class="navbar align-center mb-2 " style="background-color:white">
         <div class="container-fluid pe-1 alert-container">
 
-            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE PROCESSOS</p>
+            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE SOLICITAÇÕES</p>
 
             <div class="navbar-nav-wrap-content-end" style="position: relative;">
                 <form class="d-flex">
@@ -52,7 +52,7 @@
         </div>
 
     </nav>
-    <!-- Pesquisa table -------------------------->
+    <!-- Pesquisa pro -------------------------->
 
 
     <!-- cabeçalho ------------------------------->
@@ -107,7 +107,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.solicitante.id == solicitante %}
             {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
             <!-- card ---------------------------->
@@ -186,7 +186,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.solicitante.id == solicitante %}
             {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
 
             <!-- card ---------------------------->
@@ -265,7 +265,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.solicitante.id == solicitante %}
             {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
 
             <!-- card ---------------------------->
@@ -344,7 +344,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.solicitante.id == solicitante %}
             {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
 
             <!-- card ---------------------------->
@@ -423,7 +423,7 @@
         <div class="col overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.solicitante.id == solicitante %}
             {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
 
             <!-- card ---------------------------->
