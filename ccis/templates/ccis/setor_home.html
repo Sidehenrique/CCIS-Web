@@ -241,51 +241,37 @@
 
                             <hr style="background-color:#C4C4C4">
 
-                            <!-- Cobrança ---------->
                             <div class="d-flex pb-3 container-buttons" onwheel="handleScroll(event)">
 
                                 {% for button in sector_buttons %}
-
-                                {% if user.groups.all.0 == button.group %}
-
+                                {% if user.groups.all.0.id == button.group.id and button.permissao != "usuario" %}
+                                <!-- Renderize o botão -->
                                 <div class="position-relative me-3">
+                                    <a class="links-set"
+                                       href="{{ button.url }}"
+                                       type=button">
+                                        <div style="background-color:{{ button.cor }};" class="set-buttons">
+                                            <h5>{{ button.text1 }}</h5>
+                                            <h5>{{ button.text2 }}</h5>
+                                        </div>
+                                    </a>
+                                </div>
 
+                                {% elif user.groups.all.0.id != button.group.id and button.permissao == "usuario" %}
+                                <!-- Renderize o botão -->
+                                <div class="position-relative me-3">
                                     <a class="links-set"
                                        href="{{ button.url }}"
                                        type="button">
-
                                         <div style="background-color:{{ button.cor }};" class="set-buttons">
-
                                             <h5>{{ button.text1 }}</h5>
                                             <h5>{{ button.text2 }}</h5>
-
                                         </div>
-
                                     </a>
-
                                 </div>
-
-                                {% elif user.groups.all.0 != button.group %}
-                                <div class="position-relative me-3">
-
-                                    <a class="links-set"
-                                       href="{{ button.url }}"
-                                       type="button">
-
-                                        <div style="background-color:{{ button.cor }};" class="set-buttons">
-
-                                            <h5>{{ button.text1 }}</h5>
-                                            <h5>{{ button.text2 }}</h5>
-
-                                        </div>
-
-                                    </a>
-
-                                </div>
-
                                 {% endif %}
-
                                 {% endfor %}
+
 
                             </div>
 

@@ -12,14 +12,11 @@ def adm_home(request):
     user = request.user
 
     try:
-        dadosSetor = CustomGroupInfo.objects.get(nome = 'Administrativo')
+        dadosSetor = CustomGroupInfo.objects.get(nome='Administrativo')
 
     except CustomGroupInfo.DOESNOTEXIST: dadosSetor = None
 
     setor = dadosSetor.nome
-
-    group_gestao = user.groups.filter(id=3).exists()
-    groupControle = user.groups.filter(id=28).exists()
 
     superior = Group.objects.filter(id=30).first()
 
@@ -50,13 +47,15 @@ def adm_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
+
         sector_buttons = SectorButtons.objects.filter(group=30)
 
+        for button in sector_buttons:
+            print(button.group.id)
 
         context = {
 
-            'username': user, 'groupControle': groupControle, 'setor': setor,
-            'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
+            'username': user, 'setor': setor, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
         }
 
