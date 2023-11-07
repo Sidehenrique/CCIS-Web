@@ -995,3 +995,19 @@ def history_request(request):
     }
 
     return render(request, 'ccis/history_request.html', context)
+
+def get_card_details(request):
+    card_id = request.GET.get('card_id')
+    try:
+        card = Card.objects.get(id=card_id)
+        # Aqui você pode criar um dicionário com os detalhes do cartão
+        card_details = {
+            'assunto': card.assunto,
+            'service': card.service,
+            'dataCriacao': card.dataCriacao,
+            'setor_atual': card.cardsetorhistory_set.first.setor_atual,
+            # Adicione outros detalhes que deseja mostrar
+        }
+        return JsonResponse(card_details)
+    except Card.DoesNotExist:
+        return JsonResponse({'error': 'Cartão não encontrado'}, status=404)
