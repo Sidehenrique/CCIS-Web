@@ -28,6 +28,7 @@ urlpatterns = [
     path('get_user_rating/<int:card_id>', pages.get_user_rating, name='get_user_rating'),
     path('avaliar_card/<int:card_id>', pages.avaliar_card, name='avaliar_card'),
     path('reabrir_card/<int:card_id>', pages.reabrir_card, name='reabrir_card'),
+    path('history_request', pages.history_request, name='history_request'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
@@ -106,7 +107,6 @@ urlpatterns = [
     path('ti/request_equipamentos_ti', ti.request_equipamentos_ti, name='request_equipamentos_ti'),
     path('ti/request_servicos_ti', ti.request_servicos_ti, name='request_servicos_ti'),
     path('ti/estoque', ti.estoque, name='estoque'),
-    path('ti/solicit', ti.solicit, name='solicit'),
     path('ti/estoque/notebook', ti.notebook, name='notebook'),
     path('ti/processos_ti', ti.processos_ti, name='processos_ti'),
 

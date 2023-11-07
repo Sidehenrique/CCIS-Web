@@ -260,11 +260,6 @@ def estoque(request):
 
 
 @login_required(login_url="/login")
-def solicit(request):
-    return render(request, 'ti/solicit.html')
-
-
-@login_required(login_url="/login")
 def notebook(request):
     dadosTable = Notebook.objects.all()
     form = ModelFormNotebook()
