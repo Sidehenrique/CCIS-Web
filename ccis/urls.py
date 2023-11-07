@@ -156,12 +156,18 @@ urlpatterns = [
     path('processos_credito', credito.processos_credito, name='processos_credito'),
 
     path('controladoria_home', controladoria.controladoria_home, name='controladoria_home'),
+    path('new_request_PC', controladoria.new_request_PC, name='new_request_PC'),
     path('processos_PC', controladoria.processos_PC, name='processos_PC'),
+    path('request_acessos_PC', controladoria.request_acessos_PC, name='request_acessos_PC'),
 
     path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
+    path('request_acessos_risco', gestaoRisco.request_acessos_risco, name='request_acessos_risco'),
+    path('new_request_risco', gestaoRisco.new_request_risco, name='new_request_risco'),
     path('processos_GR', gestaoRisco.processos_GR, name='processos_GR'),
 
     path('paDigital_home', padigital.paDigital_home, name='paDigital_home'),
+    path('new_request_PaDigital', padigital.new_request_PaDigital, name='new_request_PaDigital'),
+    path('request_acessos_PaDigital', padigital.request_acessos_PaDigital, name='request_acessos_PaDigital'),
     path('processos_PD', padigital.processos_PD, name='processos_PD'),
 
     path('padf_home', padf.padf_home, name='padf_home'),
@@ -195,6 +201,7 @@ urlpatterns = [
     path('processos_SB', saosebas.processos_SB, name='processos_SB'),
 
     path('marketing_home', marketing.marketing_home, name='marketing_home'),
+    path('request_acessos_MK', marketing.request_acessos_MK, name='request_acessos_MK'),
     path('new_request_market', marketing.new_request_market, name='new_request_market'),
     path('processos_MK', marketing.processos_MK, name='processos_MK'),
 

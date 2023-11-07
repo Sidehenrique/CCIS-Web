@@ -13,7 +13,7 @@
 
             <div class="">
 
-                <h5 class="text-center p-1">SECRETARIA</h5>
+                <h5 class="text-center p-1">PA DIGITAL</h5>
 
                 <hr style="color:#C4C0C0">
 
@@ -22,7 +22,7 @@
                     <li class="li-menu-request">
                         <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-key"></i>
-                            Malotes
+                            A Designar
                         </a>
                     </li>
 
@@ -37,7 +37,7 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-lista-novo mt-5">
-                        <a href="{% url 'secretaria_home' %}" class="li-link-request" aria-current="page">
+                        <a href="{% url 'paDigital_home' %}" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-arrow-left"></i>
                             Voltar
                         </a>
@@ -53,7 +53,7 @@
 
         <!-- Informativo ------------------------->
         <div id="informativoTI" class="col menu-request m-0 p-5">
-            <h6>Orientações para abertura de chamado - 4155. Secretaria</h6>
+            <h6>Orientações para abertura de chamado - 4155. PA Digital</h6>
             <p>
                 Pontos a serem observados durante a abertura de chamado:
                 - Detalhar bem a sua solicitação.
@@ -69,16 +69,14 @@
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseOne" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
-                            Malote
+                            A Designar
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse show"
                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>Solicite o que contem dentro do Malote!</li>
-                                <li>Fique atento aos campos "CC deverá ser informada no campo abaixo".</li>
-                                <li>Fique atento ao seu painel de solicitações.</li>
+                                <li>A Designar!</li>
                             </ul>
                         </div>
                     </div>
@@ -89,13 +87,13 @@
         <!-- Informativo ------------------------->
 
 
-        <!-- Formulário de Malotes -------------------------->
+        <!-- Formulário -------------------------->
         <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
+            <h5 class="p-3">A Designar</h5>
 
 
-            <!-- Formulário de Malotes -------------------------->
-            <form action="{% url 'salvar_malote_secretaria' %}"
+            <!-- Formulário -------------------------->
+            <form action=""
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -103,14 +101,14 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
+                    <!-- forms col -------------------------->
                     <div class="col-7">
 
                         <!-- Alterar para o setor que a solicitações esta sendo aberta -->
                         <input type="hidden" name="ambiente" value="Retaguarda">
 
                         <div class="">
-                            <label class="required-label">Lacre:</label>
+                            <label class="required-label">Serviço:</label>
                             {{ form.service }}
                         </div>
 
@@ -127,40 +125,11 @@
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
-
-                    <!-- segunda col -------------------------->
-                    <div class="col">
-
-                        <h6 class="required-label">Selecione os itens desejados:</h6>
-
-                        <!-------------------------------------->
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item1" id="CartaBaixaGarantias"
-                                   value="Carta de Baixa de Garantias" type="checkbox">
-                            <label class="form-check-label" for="CartaBaixaGarantias">Carta de Baixa de
-                                Garantias</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item2" id="Cartao" value="Cartão" type="checkbox">
-                            <label class="form-check-label" for="Cartao">Cartão</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item3" id="TalaoCheque" value="Talão de Cheque"
-                                   type="checkbox">
-                            <label class="form-check-label" for="TalaoCheque">Talão de Cheque</label>
-                        </div>
-
-
-                    </div>
-                    <!-- segunda col -------------------------->
+                    <!-- forms col -------------------------->
 
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
+            <!-- Formulário end -------------------------->
 
         </div>
     </div>

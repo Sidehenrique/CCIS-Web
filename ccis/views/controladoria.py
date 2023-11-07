@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from django.shortcuts import render
 from django.db.models import Prefetch
-from ..models import CardSetorHistory, CustomGroupInfo, SectorButtons, Card
+from django.shortcuts import render, redirect, get_object_or_404
+from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
+from ..forms import ModelFormPCMalotes
+
 
 @login_required(login_url="/login")
 def controladoria_home(request):
@@ -58,6 +60,55 @@ def controladoria_home(request):
         }
 
         return render(request, 'ccis/setor_home.html', context)
+
+
+@login_required(login_url="/login")
+def new_request_PC(request):
+    form = ModelFormPCMalotes()
+    context = {'form': form, }
+
+    return render(request, "controladoria/new_request_PC.html", context)
+
+
+@login_required(login_url="/login")
+def request_acessos_PC(request):
+    if request.method == 'POST':
+        form = ModelFormPCMalotes(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=1),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Performace Corporativa",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+
+            descricao = form.cleaned_data.get('descricao')
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+            return redirect('controladoria_home')
+
+    else:
+        form = ModelFormPCMalotes()
+
+    return render(request, 'controladoria/new_request_PC.html', {'form': form})
 
 
 @login_required(login_url="/login")
