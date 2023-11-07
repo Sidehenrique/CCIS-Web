@@ -1392,6 +1392,10 @@ status-negativo{
 }
 
 
+.filled-star {
+    color:#FFC803;
+}
+
 .messages-container{
     background-color:white;
 }

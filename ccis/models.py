@@ -472,6 +472,19 @@ class SectorButtons(models.Model):
         return self.group.name
 
 
+# ------------------- tabela Notificação -----------------------------------------------------------------
+
+class Notification(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authorNotification', default=None)
+    description = models.TextField()
+    subject = models.CharField(max_length=255)
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications_received')
+    department = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
+    url = models.URLField()
+    date = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+
 # ------------------- tabela Group ---------------------------------------------------------------------
 
 class CustomGroupInfo(models.Model):
@@ -526,6 +539,8 @@ class CardSetorHistory(models.Model):
     status_atual = models.CharField(max_length=20)
     setor_anterior = models.CharField(max_length=20, null=True, blank=True)
     setor_atual = models.CharField(max_length=20)
+    operador = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                                  related_name='operador_history', default=None)
     data_hora = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -535,14 +550,16 @@ class CardSetorHistory(models.Model):
 class OperatorRating(models.Model):
     idOperatorRating = models.AutoField(db_column='idOperatorRating', primary_key=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField(
-        choices=[(1, '1 estrela'), (2, '2 estrelas'), (3, '3 estrelas'), (4, '4 estrelas'), (5, '5 estrelas')])
+    rating = models.TextField(blank=True)
     comment = models.TextField(blank=True)
+    operador = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                                    related_name='avaliacao_user', default=None)
+    anonymous = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                                    related_name='avaliador_anonimo', default=None)
     datetime = models.DateTimeField(auto_now_add=True)
-    anonymous = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.rating
+        return self.operador
 
 
 # -------- Estoque ------------------------------------------------------------------------------------------------------

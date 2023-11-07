@@ -34,16 +34,16 @@
 
             <div class="navbar-nav-wrap-content-end" style="position: relative;">
 
-                    <!-- input de pesquisa ----------------------->
-                    <input class="form-control me-2" type="search" placeholder="Pesquisar"
-                           aria-label="Search" id="filterProcesso"onkeyup="filterCards()">
+                <!-- input de pesquisa ----------------------->
+                <input class="form-control me-2" type="search" placeholder="Pesquisar"
+                       aria-label="Search" id="filterProcesso" onkeyup="filterCards()">
 
-                    <button class=""
-                            style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
-                            type="button"
-                            onclick="filterCards()">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
+                <button class=""
+                        style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
+                        type="button"
+                        onclick="filterCards()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
 
             </div>
 
@@ -524,87 +524,110 @@
 
                     <div class="row">
 
-                        <!-- Dados solicitante -->
-                        <div class="col-4" style="border-right:1px solid #818181">
+                        <!-- informações -->
+                        <div class="col-4 overflow-auto" style="border-right:1px solid #818181">
 
 
-                            <div class="row">
-                                <div class="col-auto me-auto">
+                            <div class="col-auto me-auto">
 
-                                    <span class="processo-tag-cod" id="codInfo"></span>
-                                    <span class="processo-tag-setor" id="sectorInfo"></span>
-
-                                </div>
-
-                                <div class="col-auto">
-
-                                </div>
-                            </div>
-
-
-                            <h6 class="mt-2">Dados do Solicitante</h6>
-
-                            <hr class="linha-custom">
-
-                            <div class="card-body-custom">
-
-                                <ul class="card-ul">
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-user card-icon"></i>
-                                        <span id="nomeSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-sharp fa-solid fa-building card-icon"></i>
-                                        <span id="cpfSolicitante"></span>
-                                    </li>
-
-                                    <li class="">
-                                        <i class="fa-solid fa-briefcase card-icon"></i>
-                                        <span id="loginSolicitante"></span>
-                                    </li>
-
-                                </ul>
-
-                                <div class="card-text-custom mt-4">CONTATO</div>
-
-                                <ul class="card-ul">
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-at card-icon"></i>
-                                        <span id="emailSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
-                                        <span id="ramalSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-location-dot card-icon"></i>
-                                        <span id="areaSolicitante"></span>
-                                    </li>
-
-                                </ul>
-
+                                <span class="processo-tag-cod" id="codInfo"></span>
+                                <span class="processo-tag-setor" id="sectorInfo"></span>
 
                             </div>
 
+
+                            <h6 class="mt-2">Informações da solicitação</h6>
 
                             <hr class="linha-custom">
 
 
-                            <h6 class="mt-2">Histórico</h6>
+                            <div class="mt-2 overflow-auto accordion accordion-flush" id="accordionFlushExample"
+                                 style="max-height:330px;">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                                aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Dados do Solicitante
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+                                        <div class="card-body-custom">
+
+                                            <ul class="card-ul">
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-user card-icon"></i>
+                                                    <span id="nomeSolicitante"></span>
+                                                </li>
+
+                                                <li class="">
+                                                    <i class="fa-solid fa-briefcase card-icon"></i>
+                                                    <span id="loginSolicitante"></span>
+                                                </li>
 
 
-                            <div class="d-flex container-buttons" onwheel="handleScroll(event)">
-                                <!-- span com os historicos aqui -->
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-at card-icon"></i>
+                                                    <span id="emailSolicitante"></span>
+                                                </li>
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-location-dot card-icon"></i>
+                                                    <span id="areaSolicitante"></span>
+                                                </li>
+
+                                                <li class="card-li">
+                                                    <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
+                                                    <span id="ramalSolicitante"></span>
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                                aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Compartilhamento
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+
+
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                                aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Historico
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+
+                                        <div class="d-flex container-buttons" onwheel="handleScroll(event)">
+                                            <!-- span com os historicos aqui -->
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-
 
                         </div>
-                        <!-- Dados solicitante -->
+                        <!-- informações -->
 
 
                         <!-- message ------------>
@@ -746,9 +769,10 @@
 
 
                                 <li class="li-menu-request" style="margin-top:120px">
-                                    <a type="button" id="ConcluirCardButton" class="modal-processo-link btn-done" aria-current="page">
+                                    <a type="button" id="ConcluirCardButton" class="modal-processo-link btn-done"
+                                       aria-current="page">
                                         <i class="fa-solid fa-check"></i>
-                                         Concluir
+                                        Concluir
                                     </a>
                                 </li>
 

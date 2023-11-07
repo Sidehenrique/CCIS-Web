@@ -107,7 +107,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.solicitante.id == solicitante %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
             <!-- card ---------------------------->
@@ -129,7 +129,7 @@
                         </div>
 
                         <div class="col-auto">
-                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                            <span class="processo-tag-setor">{{ card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -186,7 +186,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.solicitante.id == solicitante %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
 
             <!-- card ---------------------------->
@@ -344,7 +344,7 @@
         <div class="col me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.solicitante.id == solicitante %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
 
             <!-- card ---------------------------->
@@ -423,7 +423,7 @@
         <div class="col overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.solicitante.id == solicitante %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
 
             <!-- card ---------------------------->
@@ -509,7 +509,6 @@
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
 
-
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
@@ -531,8 +530,8 @@
 
                     <div class="row">
 
-                        <!-- Dados solicitante -->
-                        <div class="col-4" style="border-right:1px solid #818181">
+                        <!-- informações -->
+                        <div class="col-4 overflow-auto" style="border-right:1px solid #818181">
 
 
                             <div class="col-auto me-auto">
@@ -543,69 +542,98 @@
                             </div>
 
 
-                            <h6 class="mt-2">Dados do Solicitante</h6>
-
-                            <hr class="linha-custom">
-
-                            <div class="card-body-custom">
-
-                                <ul class="card-ul">
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-user card-icon"></i>
-                                        <span id="nomeSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-sharp fa-solid fa-building card-icon"></i>
-                                        <span id="cpfSolicitante"></span>
-                                    </li>
-
-                                    <li class="">
-                                        <i class="fa-solid fa-briefcase card-icon"></i>
-                                        <span id="loginSolicitante"></span>
-                                    </li>
-
-                                </ul>
-
-                                <div class="card-text-custom mt-4">CONTATO</div>
-
-                                <ul class="card-ul">
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-at card-icon"></i>
-                                        <span id="emailSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
-                                        <span id="ramalSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-location-dot card-icon"></i>
-                                        <span id="areaSolicitante"></span>
-                                    </li>
-
-                                </ul>
-
-
-                            </div>
-
+                            <h6 class="mt-2">Informações da solicitação</h6>
 
                             <hr class="linha-custom">
 
 
-                            <h6 class="mt-2">Histórico</h6>
+                            <div class="mt-2 overflow-auto accordion accordion-flush" id="accordionFlushExample"
+                                 style="max-height:330px;">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                                aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Dados do Solicitante
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+                                        <div class="card-body-custom">
+
+                                            <ul class="card-ul">
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-user card-icon"></i>
+                                                    <span id="nomeSolicitante"></span>
+                                                </li>
+
+                                                <li class="">
+                                                    <i class="fa-solid fa-briefcase card-icon"></i>
+                                                    <span id="loginSolicitante"></span>
+                                                </li>
 
 
-                            <div class="d-flex container-buttons" onwheel="handleScroll(event)">
-                                <!-- span com os historicos aqui -->
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-at card-icon"></i>
+                                                    <span id="emailSolicitante"></span>
+                                                </li>
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-location-dot card-icon"></i>
+                                                    <span id="areaSolicitante"></span>
+                                                </li>
+
+                                                <li class="card-li">
+                                                    <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
+                                                    <span id="ramalSolicitante"></span>
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                                aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Compartilhamento
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+
+
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                                aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Historico
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+
+                                        <div class="d-flex container-buttons" onwheel="handleScroll(event)">
+                                            <!-- span com os historicos aqui -->
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-
 
                         </div>
-                        <!-- Dados solicitante -->
+                        <!-- informações -->
 
 
                         <!-- message ------------>
@@ -715,18 +743,18 @@
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="priorizarCardButton" class="modal-processo-link" aria-current="page">
+                                    <a type="button" id="priorizarCardButton" class="modal-processo-link"
+                                       aria-current="page">
                                         <i class="fa-solid fa-bolt"></i>
                                         Prioridade
                                     </a>
                                 </li>
 
 
-                                <li class="" style="margin-top:45px">
+                                <li id="starButtons" style="margin-top:45px">
 
 
                                     <div class="d-flex" style="justify-content: center;">
-
                                         <a type="button" name="1" class="star-link">
                                             <i class="fa-solid fa-star"></i>
                                         </a>
@@ -742,8 +770,8 @@
                                         <a type="button" name="5" class="star-link">
                                             <i class="fa-solid fa-star"></i>
                                         </a>
-
                                     </div>
+
 
                                     <p style="font-size:12px; text-align:center">Avaliar este atendimento<br>
                                         <span style="font-size:10px; text-align:center">Sua avaliação é anônima</span>
@@ -753,9 +781,19 @@
 
 
                                 <li class="li-menu-request mt-1">
-                                    <a type="button" id="FinalizarAtendimentoButton" class="modal-processo-link btn-finish" aria-current="page">
-                                        <i class="fa-solid fa-check-double"></i>
-                                        Finalizar
+                                    <a type="button" id="avaliarAtendimentoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-heart"></i>
+                                        Avaliar e Finalizar
+                                    </a>
+                                </li>
+
+
+                                <li  id="reabrirChamado" class="li-menu-request mt-1" style="display: none">
+                                    <a type="button" id="reabrirChamadoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-power-off"></i>
+                                        Reabrir Solicitação
                                     </a>
                                 </li>
 

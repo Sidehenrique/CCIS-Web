@@ -13,8 +13,7 @@ from django.contrib.auth.models import User, Group
 from collections import defaultdict
 
 from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
-    dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos, profissional, Card, CardSetorHistory, MessageHistory
+    dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
@@ -631,12 +630,23 @@ def registrar_atendimento(request, card_id):
         card_setor_history = CardSetorHistory(
             setor_id=setor_atual.id,  # Defina o setor apropriado, se aplicável
             card_id=card_id,
-            status_anterior="Triagem",  # Atualize com o status anterior apropriado
+            status_anterior=csh.status_atual,  # Atualize com o status anterior apropriado
             status_atual="Em Atendimento",
             setor_anterior=csh.setor_atual,  # Atualize com o setor anterior apropriado
             setor_atual=setor_atual.name,  # Atualize com o setor atual apropriado
+            operador=request.user
         )
         card_setor_history.save()
+
+        # Crie uma notificação para informar o usuário do atendimento registrado
+        notification = Notification(
+            author=request.user,
+            description="Sua solicitação esta em Atendimento",
+            subject=card.assunto,
+            recipient=card.solicitante,  # O destinatário é o solicitante da questão
+            url='processos_user',  # URL da página atual
+        )
+        notification.save()
 
         return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
 
@@ -666,9 +676,19 @@ def encaminhar_card(request, card_id):
             status_atual="Encaminhado",
             setor_anterior=historico.setor_atual,
             setor_atual=group.name,
+            operador=request.user
         )
 
         card_setor_history.save()
+
+        notification = Notification(
+            author=request.user,
+            description="Sua solicitação foi encaminhada",
+            subject=card.assunto,
+            recipient=card.solicitante,  # O destinatário é o solicitante da questão
+            url='processos_user',  # URL da página atual
+        )
+        notification.save()
 
         return JsonResponse({'success': True, 'message': 'Card encaminhado com sucesso.'})
 
@@ -689,6 +709,15 @@ def compartilhar_card(request, card_id):
         card = Card.objects.get(idCard=card_id)
         card.compartilhar.add(user)
         card.save()
+
+        notification = Notification(
+            author=request.user,
+            description="Solicitação compartilhada com você",
+            subject=card.assunto,
+            recipient=card.solicitante,  # O destinatário é o solicitante da questão
+            url='processos_user',  # URL da página atual
+        )
+        notification.save()
 
         return JsonResponse({'success': True, 'message': 'Card encaminhado com sucesso.'})
 
@@ -721,9 +750,19 @@ def transferir_card(request, card_id):
             status_atual="Triagem",
             setor_anterior=historico.setor_atual,
             setor_atual=group.name,
+            operator=request.user,
         )
 
         card_setor_history.save()
+
+        notification = Notification(
+            author=request.user,
+            description="Sua solicitação foi compartilhada",
+            subject=card.assunto,
+            recipient=card.solicitante,  # O destinatário é o solicitante da questão
+            url='processos_user',  # URL da página atual
+        )
+        notification.save()
 
         return JsonResponse({'success': True, 'message': 'Card Transferido com sucesso.'})
 
@@ -777,7 +816,17 @@ def concluir_card(request, card_id):
                     status_atual="Concluido",
                     setor_anterior=historico.setor_atual,
                     setor_atual=group.name,
+                    operator=request.user,
                 )
+
+                notification = Notification(
+                    author=request.user,
+                    description="Eba! Sua solicitação foi concluida",
+                    subject=card.assunto,
+                    recipient=card.solicitante,  # O destinatário é o solicitante da questão
+                    url='processos_user',  # URL da página atual
+                )
+                notification.save()
 
                 card_setor_history.save()
                 return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
@@ -791,7 +840,72 @@ def concluir_card(request, card_id):
 
 @login_required(login_url="/login")
 def get_user_rating(request, card_id):
-   pass
+
+    try:
+        # Verifique se o usuário logado já avaliou o atendimento para o cartão
+        user = request.user
+        card = Card.objects.get(idCard=card_id)
+
+        user_has_rated = OperatorRating.objects.filter(card=card, remetente=user).exists()
+
+        return JsonResponse({'user_has_rated': user_has_rated})
+    except Card.DoesNotExist:
+        return JsonResponse({'error': 'Card não encontrado.'})
+    except Exception as e:
+        return JsonResponse({'error': 'Erro ao verificar a avaliação do usuário.'})
+
+
+@login_required(login_url="/login")
+def avaliar_card(request, card_id):
+
+    card = Card.objects.get(idCard=card_id)
+
+    try:
+        card.status = 'Finalizado'
+        card.save()
+
+        group = request.user.groups.first()
+
+        historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+        # Registre o histórico de movimentação
+        card_setor_history = CardSetorHistory(
+            setor_id=group.id,
+            card_id=card_id,
+            status_anterior=historico.status_atual,
+            status_atual="Finalizado",
+            setor_anterior=historico.setor_atual,
+            setor_atual=group.name,
+            operator=request.user,
+        )
+
+
+
+        notification = Notification(
+            author=request.user,
+            description="Solicitação finalizada pelo solicitante",
+            subject=card.assunto,
+            recipient=card.responsavel,  # O destinatário
+            url='processos',  # URL da página atual
+        )
+
+        notification.save()
+
+        card_setor_history.save()
+
+        avaliacao = request.POST.get('rating')
+
+        rating = OperatorRating()
+        rating.card = card
+        rating.rating = avaliacao
+        rating.operador = card.responsavel
+        rating.anonymous = request.user
+        rating.save()
+
+        return JsonResponse({'success': True})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Requisição inválida'})
 
 
 @login_required(login_url="/login")
@@ -814,6 +928,39 @@ def finalizar_card(request, card_id):
                 status_atual="Finalizado",
                 setor_anterior=historico.setor_atual,
                 setor_atual=group.name,
+                operator=request.user,
+            )
+
+            card_setor_history.save()
+            return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
+
+        except Card.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Card não encontrado'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Requisição inválida'})
+
+
+@login_required(login_url="/login")
+def reabrir_card(request, card_id):
+    if request.method == 'POST':
+        try:
+            card = Card.objects.get(idCard=card_id)
+            card.status = 'Em Atendimento'
+            card.save()
+
+            group = request.user.groups.first()
+
+            historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+            # Registre o histórico de movimentação
+            card_setor_history = CardSetorHistory(
+                setor_id=group.id,
+                card_id=card_id,
+                status_anterior=historico.status_atual,
+                status_atual="Em Atendimento",
+                setor_anterior=historico.setor_atual,
+                setor_atual=group.name,
+                operator=request.user,
             )
 
             card_setor_history.save()

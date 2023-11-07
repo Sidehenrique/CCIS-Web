@@ -26,6 +26,8 @@ urlpatterns = [
     path('concluir_card/<int:card_id>', pages.concluir_card, name='concluir_card'),
     path('finalizar_card/<int:card_id>', pages.finalizar_card, name='finalizar_card'),
     path('get_user_rating/<int:card_id>', pages.get_user_rating, name='get_user_rating'),
+    path('avaliar_card/<int:card_id>', pages.avaliar_card, name='avaliar_card'),
+    path('reabrir_card/<int:card_id>', pages.reabrir_card, name='reabrir_card'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),

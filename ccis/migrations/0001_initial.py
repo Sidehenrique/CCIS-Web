@@ -57,17 +57,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='OperatorRating',
-            fields=[
-                ('idOperatorRating', models.AutoField(db_column='idOperatorRating', primary_key=True, serialize=False)),
-                ('rating', models.PositiveIntegerField(choices=[(1, '1 estrela'), (2, '2 estrelas'), (3, '3 estrelas'), (4, '4 estrelas'), (5, '5 estrelas')])),
-                ('comment', models.TextField(blank=True)),
-                ('datetime', models.DateTimeField(auto_now_add=True)),
-                ('anonymous', models.BooleanField(default=False)),
-                ('card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ccis.card')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Notebook',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),

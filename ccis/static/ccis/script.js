@@ -235,13 +235,11 @@ function loadCardInfo(cardId) {
         dataType: 'json',
         success: function (data) {
             if (data) {
-                // Os dados do card foram retornados com sucesso
-                // Preencha o modal com esses dados
-
                 // Use variáveis para armazenar os seletores dos elementos do modal
                 const assuntoInfo = $("#assuntoInfo");
                 const servicoInfo = $("#servicoInfo");
                 const codInfo = $("#codInfo");
+                const sectorInfo = $("#sectorInfo");
                 const nomeSolicitante = $("#nomeSolicitante");
                 const sexoSolicitante = $("#sexoSolicitante");
                 const fotoSolicitante = $("#fotoSolicitante");
@@ -250,7 +248,6 @@ function loadCardInfo(cardId) {
                 const emailSolicitante = $("#emailSolicitante");
                 const ramalSolicitante = $("#ramalSolicitante");
                 const areaSolicitante = $("#areaSolicitante");
-                const sectorInfo = $("#sectorInfo");
                 const nomeResponsavel = $("#nomeResponsavel");
                 const horarioAbertura = $("#horarioAbertura");
 
@@ -461,9 +458,12 @@ function loadCardInfo(cardId) {
 
                 //---------------------------------------------------------------------------------------------
 
-                // Obtenha o setor_atual da tabela CardSetorHistory
-                if (data.card.setor_history && data.card.setor_history.length > 0) {
-                    const setorAtual = data.card.setor_history[0].setor_atual;
+
+               if (data.card.setor_history && data.card.setor_history.length > 0) {
+                    console.log(data.card.setor_history); // Adicione este log para verificar os dados do histórico de setores
+                    const ultimaEntradaSetor = data.card.setor_history[data.card.setor_history.length - 1];
+                    console.log(ultimaEntradaSetor); // Adicione este log para verificar a última entrada de setor
+                    const setorAtual = ultimaEntradaSetor.setor_atual;
                     sectorInfo.text(setorAtual);
                 } else {
                     sectorInfo.text("Setor não encontrado");
@@ -479,8 +479,6 @@ function loadCardInfo(cardId) {
                 } else {
                     nomeResponsavel.text("Aguardando atendimento");
                 }
-
-
 
                 //---------------------------------------------------------------------------------------------
 
@@ -740,31 +738,115 @@ function loadCardInfo(cardId) {
                 });
 
 
+                //---------------------------------------------------------------------------------------------
 
-//                // Realizar uma solicitação AJAX para obter as informações de avaliação do usuário logado para o cartão
-//                $.ajax({
-//                    url: `/get_user_rating/${cardId}`,  // Substitua pela URL correta da sua view
-//                    method: 'GET',
-//                    dataType: 'json',
-//                    success: function (userRatingData) {
-//                        const userHasRatedThisCard = userRatingData.user_has_rated;
-//
-//                        // Habilitar ou desabilitar o botão "Finalizar" com base na avaliação do usuário
-//                        const finalizarButton = $("#FinalizarAtendimentoButton");
-//                        if (userHasRatedThisCard) {
-//                            finalizarButton.prop("disabled", false);
-//                        } else {
-//                            finalizarButton.prop("disabled", true);
-//                        }
-//
-//                        // Restante do seu código...
-//                    },
-//                    error: function () {
-//                        alert('Erro ao buscar informações de avaliação do usuário');
-//                    }
-//                });
+
+                // Ouvinte de evento para o botão "Reabrir" no modal
+                $("#reabrirChamadoButton").click(function () {
+                    $.ajax({
+                        url: `/reabrir_card/${cardId}`,
+                        method: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+
+                                alert('Requisição Reaberta com sucesso.');
+                                $('#processoModal').modal('hide');
+
+                            } else {
+                                alert('ERRO: ' + data.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('ERRO: ' + error);
+                        }
+                    });
+                });
+
+
 
                 //---------------------------------------------------------------------------------------------
+
+
+
+                // Realizar uma solicitação AJAX para obter as informações de avaliação do usuário logado para o cartão
+                $.ajax({
+                    url: `/get_user_rating/${cardId}`,  // Substitua pela URL correta da sua view
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (userRatingData) {
+                        const userHasRatedThisCard = userRatingData.user_has_rated;
+
+                        // Habilitar ou desabilitar o botão "Finalizar" com base na avaliação do usuário
+                        const finalizarButton = $("#FinalizarAtendimentoButton");
+                        if (userHasRatedThisCard) {
+                            finalizarButton.prop("disabled", false);
+                        } else {
+                            finalizarButton.prop("disabled", true);
+                        }
+
+                        // Restante do seu código...
+                    },
+                    error: function () {
+                        alert('Erro ao buscar informações de avaliação do usuário');
+                    }
+                });
+
+
+                //---------------------------------------------------------------------------------------------
+
+
+                let selectedRating = 0; // Inicialmente, nenhuma estrela está selecionada
+
+                // Ouvinte de evento para o clique nas estrelas
+                $(".star-link").click(function () {
+                    const rating = parseInt($(this).attr("name")); // Obtenha a classificação da estrela clicada como um número inteiro
+
+                    // Adicione a classe filled-star para as estrelas até a classificação clicada
+                    for (let i = 1; i <= rating; i++) {
+                        $(`a[name="${i}"] i`).addClass('filled-star');
+
+                    }
+
+                    // Remova a classe filled-star das estrelas após a classificação clicada
+                    for (let i = rating + 1; i <= 5; i++) {
+                        $(`a[name="${i}"] i`).removeClass('filled-star');
+                    }
+
+                    selectedRating = rating;
+
+                });
+
+
+                // Ouvinte de evento para o botão "Avaliar Atendimento"
+                $("#avaliarAtendimentoButton").click(function () {
+                    if (selectedRating > 0) {
+                        // Enviar a avaliação para o servidor se uma classificação estiver selecionada
+                        enviarAvaliacao(cardId, selectedRating);
+                    } else {
+                        alert('Selecione uma classificação antes de avaliar.');
+                    }
+                });
+
+
+
+                //------------------------------------------------------------------------------------------------------
+
+
+                // Verifique o status do card
+                if (data.card.status === "Finalizado") {
+                    // Ocultar botões quando o card estiver em "Finalizado"
+                    $("#compartilharCardButton").hide();
+                    $("#priorizarCardButton").hide();
+                    $("#enviarMensagemButton").hide();
+                    $("#starButtons").css("display", "none");
+                    $("#reabrirChamado").css("display", "block");
+                    $("#avaliarAtendimentoButton").hide();
+
+                }
+
+
+                //------------------------------------------------------------------------------------------------------
 
 
                 // Abra o modal
@@ -825,34 +907,26 @@ function registrarAtendimento(cardId) {
 
 
 
-//function filterCards() {
-//    var input, filter, cards, i;
-//    input = document.getElementById("filterProcesso");
-//    filter = input.value.toUpperCase();
-//    cards = document.querySelectorAll(".card-filter");
-//
-//    for (i = 0; i < cards.length; i++) {
-//        var card = cards[i];
-//        var title = card.querySelector(".card-titulo").textContent.toUpperCase();
-//        var responsavel = card.querySelector(".card-responsavel").textContent.toUpperCase();
-//        var servico = card.querySelector(".card-servico").textContent.toUpperCase();
-//        var data = card.querySelector(".card-data").textContent.toUpperCase();
-//        var setor = card.querySelector(".card-setor").textContent.toUpperCase();
-//        var isVisible = false; // Variável para rastrear se o card é visível
-//
-//        if (
-//            title.includes(filter) ||
-//            responsavel.includes(filter) ||
-//            servico.includes(filter) ||
-//            data.includes(filter) ||
-//            setor.includes(filter)
-//        ) {
-//            isVisible = true; // Define como visível se corresponder ao filtro
-//        }
-//
-//        card.style.display = isVisible ? "" : "none"; // Define o estilo de exibição com base na variável isVisible
-//    }
-//}
-//
+function enviarAvaliacao(cardId, rating) {
+    // Envie a avaliação para o servidor por meio de uma solicitação AJAX
+    $.ajax({
+        url: `/avaliar_card/${cardId}`,
+        method: 'POST',
+        data: { rating: rating }, // Envie a classificação selecionada
+        dataType: 'json',
+        success: function (data) {
+            if (data.success) {
+                // A avaliação foi registrada com sucesso, você pode atualizar o modal ou executar outras ações necessárias
+                alert('Avaliado e Finalizado com sucesso.');
+                $('#processoModal').modal('hide');
+                location.reload();
 
-
+            } else {
+                alert('Erro ao registrar a avaliação: ' + data.message);
+            }
+        },
+        error: function () {
+            alert('Erro ao enviar a avaliação');
+        }
+    });
+}
