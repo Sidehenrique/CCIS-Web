@@ -3,6 +3,8 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
+from ..forms import ModelFormGestaoRiscoMalotes
+
 @login_required(login_url="/login")
 def gestaoRisco_home(request):
     user = request.user
@@ -58,6 +60,53 @@ def gestaoRisco_home(request):
 
         return render(request, 'ccis/setor_home.html', context)
 
+@login_required(login_url="/login")
+def new_request_risco(request):
+    form = ModelFormGestaoRiscoMalotes()
+    context = {'form': form, }
+
+    return render(request, "gestaorisco/new_request_risco.html", context)
+
+
+@login_required(login_url="/login")
+def request_acessos_risco(request):
+    if request.method == 'POST':
+        form = ModelFormGestaoRiscoMalotes(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=1),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Gestão de Risco",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+
+            descricao = form.cleaned_data.get('descricao')
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+            return redirect('gestaoRisco_home')
+
+    else:
+        form = ModelFormGestaoRiscoMalotes()
+
+    return render(request, 'gestaorisco/new_request_risco.html', {'form': form})
 
 
 @login_required(login_url="/login")
