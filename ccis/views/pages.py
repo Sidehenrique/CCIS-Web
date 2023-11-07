@@ -818,3 +818,15 @@ def finalizar_card(request, card_id):
             return JsonResponse({'success': False, 'message': 'Card não encontrado'})
     else:
         return JsonResponse({'success': False, 'message': 'Requisição inválida'})
+
+
+@login_required(login_url="/login")
+def history_request(request):
+    cards = Card.objects.all()
+
+    context = {
+        'cards': cards,
+
+    }
+
+    return render(request, 'ccis/history_request.html', context)
