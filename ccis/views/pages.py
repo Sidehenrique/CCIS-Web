@@ -13,7 +13,7 @@ from django.contrib.auth.models import User, Group
 from collections import defaultdict
 
 from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
-    dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification
+    dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification, SectorButtons
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
@@ -750,7 +750,7 @@ def transferir_card(request, card_id):
             status_atual="Triagem",
             setor_anterior=historico.setor_atual,
             setor_atual=group.name,
-            operator=request.user,
+            operador=request.user,
         )
 
         card_setor_history.save()
@@ -816,7 +816,7 @@ def concluir_card(request, card_id):
                     status_atual="Concluido",
                     setor_anterior=historico.setor_atual,
                     setor_atual=group.name,
-                    operator=request.user,
+                    operador=request.user,
                 )
 
                 notification = Notification(
@@ -876,22 +876,19 @@ def avaliar_card(request, card_id):
             status_atual="Finalizado",
             setor_anterior=historico.setor_atual,
             setor_atual=group.name,
-            operator=request.user,
+            operador=request.user,
         )
-
-
+        card_setor_history.save()
 
         notification = Notification(
             author=request.user,
             description="Solicitação finalizada pelo solicitante",
             subject=card.assunto,
             recipient=card.responsavel,  # O destinatário
-            url='processos',  # URL da página atual
+            url='',  # URL da página atual
         )
 
         notification.save()
-
-        card_setor_history.save()
 
         avaliacao = request.POST.get('rating')
 
@@ -928,7 +925,15 @@ def finalizar_card(request, card_id):
                 status_atual="Finalizado",
                 setor_anterior=historico.setor_atual,
                 setor_atual=group.name,
-                operator=request.user,
+                operador=request.user,
+            )
+
+            notification = Notification(
+                author=request.user,
+                description="Solicitação finalizada pelo solicitante",
+                subject=card.assunto,
+                recipient=card.responsavel,  # O destinatário
+                url='',  # URL da página atual
             )
 
             card_setor_history.save()
@@ -960,7 +965,15 @@ def reabrir_card(request, card_id):
                 status_atual="Em Atendimento",
                 setor_anterior=historico.setor_atual,
                 setor_atual=group.name,
-                operator=request.user,
+                operador=request.user,
+            )
+
+            notification = Notification(
+                author=request.user,
+                description="Solicitação finalizada pelo solicitante",
+                subject=card.assunto,
+                recipient=card.responsavel,  # O destinatário
+                url='',  # URL da página atual
             )
 
             card_setor_history.save()
