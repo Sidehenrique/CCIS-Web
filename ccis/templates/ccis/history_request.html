@@ -47,7 +47,8 @@
             {% for card in cards %}
             <!--bottons solicit--------------------->
             <div class="mt-4">
-                <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                <a href="" class="list-group-item list-group-item-action" aria-current="true"
+                   data-card-id="{{ card.id }}">
                     <div class="d-flex w-100 justify-content-between">
                         <h6 class="mb-2">{{ card.assunto }} / {{ card.service }} </h6>
                         <div class="" style="font-size: 13px;">
@@ -66,12 +67,44 @@
 
         <!--Campo de Formulário--------------------->
         <div class="col menu-request ">
-            <h6 style="border-bottom: 1px solid #ccc; padding-bottom: 23px;">Reinicialização de Senha</h6>
-            <h1 style="color: #C9C9C9; font-family: oswald; justify-content: center; align-items: center; height: 70vh"
-                class="text-center d-flex">CAMPOS DO FORMULÁRIO!</h1>
+            <h6 style="border-bottom: 1px solid #ccc; padding-bottom: 23px;">{{ card.assunto }} /
+                {{ card.service }}</h6>
+            <div id="formulario-content">
+
+
+            </div>
         </div>
         <!--Campo de Formulário--------------------->
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    $(".list-group-item").click(function (event) {
+        event.preventDefault();
+        var cardId = $(this).data("card-id");
+
+        $.ajax({
+            url: "/get_card_details/",
+            type: "GET",
+            data: { card_id: cardId },
+            success: function (data) {
+                console.log(data); // Adicione esta linha para depuração
+                var content = '<h6>' + data.assunto + ' / ' + data.service + '</h6>';
+                content += '<small>Departamento ' + data.setor_atual + '</small>';
+                // Adicione outros detalhes conforme necessário
+                $("#formulario-content").html(content);
+            },
+            error: function () {
+                alert("Erro ao buscar os detalhes do cartão.");
+            }
+        });
+    });
+});
+</script>
+
+
 
 {% endblock %}
