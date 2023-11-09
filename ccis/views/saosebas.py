@@ -22,7 +22,7 @@ def saosebas_home(request):
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=40).first()
+    superior = Group.objects.filter(id=26).first()
 
     nomes_equipe = []
 
@@ -51,7 +51,7 @@ def saosebas_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
-        sector_buttons = SectorButtons.objects.filter(group=40)
+        sector_buttons = SectorButtons.objects.filter(group=26)
         context = {
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,

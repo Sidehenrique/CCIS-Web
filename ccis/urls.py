@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro, gestaoNegocios,
                     gestaoNegocios, gestaoControle, formularios, security, rh, pages, cooperar, ti, produtoServico,
-                    gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, marketing, )
+                    gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, marketing, sia)
 
 urlpatterns = [
     path('base', pages.base, name='base'),
@@ -206,6 +206,11 @@ urlpatterns = [
     path('request_acessos_MK', marketing.request_acessos_MK, name='request_acessos_MK'),
     path('new_request_market', marketing.new_request_market, name='new_request_market'),
     path('processos_MK', marketing.processos_MK, name='processos_MK'),
+
+    path('sia_home', sia.sia_home, name='sia_home'),
+    path('new_request_sia', sia.new_request_sia, name='new_request_sia'),
+    path('salvar_malote_sia', sia.salvar_malote_sia, name='salvar_malote_sia'),
+    path('processos_sia', sia.processos_sia, name='processos_sia'),
 
     path('dev', pages.dev, name='dev'),
 

@@ -923,3 +923,22 @@ class ModelFormPaDigitalMalotes(forms.ModelForm):
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment',)
 
+
+class ModelFormSIAMalotes(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Malote', 'Malote'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+

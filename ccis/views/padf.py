@@ -10,7 +10,7 @@ def padf_home(request):
     user = request.user
 
     try:
-        dadosSetor = CustomGroupInfo.objects.get(nome='PADF')
+        dadosSetor = CustomGroupInfo.objects.get(nome='PAD/DF')
 
     except CustomGroupInfo.DOESNOTEXIST:
         dadosSetor = None
@@ -21,7 +21,7 @@ def padf_home(request):
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=36).first()
+    superior = Group.objects.filter(id=20).first()
 
     nomes_equipe = []
 
@@ -50,7 +50,7 @@ def padf_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
-        sector_buttons = SectorButtons.objects.filter(group=36)
+        sector_buttons = SectorButtons.objects.filter(group=20)
         context = {
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
@@ -89,7 +89,7 @@ def salvar_malote_padf(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="PADF",  # Setor atual
+                setor_atual="PAD/DF",  # Setor atual
             )
             history_entry.save()
 
@@ -138,7 +138,7 @@ def processos_padf(request):
         )
 
         group = Group.objects.all()
-        setor = 'PADF'
+        setor = 'PAD/DF'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0
