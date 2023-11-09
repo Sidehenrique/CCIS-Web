@@ -3,15 +3,15 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
-from ..forms import ModelFormVicenteMalotes
+from ..forms import ModelFormSIAMalotes
 
 
 @login_required(login_url="/login")
-def vicente_home(request):
+def sia_home(request):
     user = request.user
 
     try:
-        dadosSetor = CustomGroupInfo.objects.get(nome='Vicente Pires')
+        dadosSetor = CustomGroupInfo.objects.get(nome='Sia')
 
     except CustomGroupInfo.DOESNOTEXIST:
         dadosSetor = None
@@ -22,7 +22,7 @@ def vicente_home(request):
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=24).first()
+    superior = Group.objects.filter(id=42).first()
 
     nomes_equipe = []
 
@@ -51,7 +51,7 @@ def vicente_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
-        sector_buttons = SectorButtons.objects.filter(group=24)
+        sector_buttons = SectorButtons.objects.filter(group=39)
         context = {
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
@@ -62,21 +62,21 @@ def vicente_home(request):
 
 
 @login_required(login_url="/login")
-def new_request_vicente(request):
-    form = ModelFormVicenteMalotes()
+def new_request_sia(request):
+    form = ModelFormSIAMalotes()
     context = {'form': form, }
 
-    return render(request, "vicente/new_request_vicente.html", context)
+    return render(request, "saojoao/new_request_SJ.html", context)
 
 
 @login_required(login_url="/login")
-def salvar_malote_vicente(request):
+def salvar_malote_sia(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormVicenteMalotes(request.POST, request.FILES)
+        form = ModelFormSIAMalotes(request.POST, request.FILES)
 
         if form.is_valid():
             card = form.save(commit=False)
@@ -90,7 +90,7 @@ def salvar_malote_vicente(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Vicente Pires",  # Setor atual
+                setor_atual="Sia",  # Setor atual
             )
             history_entry.save()
 
@@ -122,16 +122,16 @@ def salvar_malote_vicente(request):
                 )
                 message_history.save()
 
-            return redirect('vicente_home')
+            return redirect('sia_home')
 
     else:
-        form = ModelFormVicenteMalotes()
+        form = ModelFormSIAMalotes()
 
-    return render(request, 'vicente/new_request_vicente.html', {'form': form})
+    return render(request, 'sia/new_request_sia.html', {'form': form})
 
 
 @login_required(login_url="/login")
-def processos_vicente(request):
+def processos_sia(request):
 
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
@@ -139,7 +139,7 @@ def processos_vicente(request):
         )
 
         group = Group.objects.all()
-        setor = 'Vicente Pires'
+        setor = 'Sia'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0

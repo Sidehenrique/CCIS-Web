@@ -21,7 +21,7 @@ def padf_home(request):
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=36).first()
+    superior = Group.objects.filter(id=19).first()
 
     nomes_equipe = []
 
@@ -50,7 +50,7 @@ def padf_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
-        sector_buttons = SectorButtons.objects.filter(group=36)
+        sector_buttons = SectorButtons.objects.filter(group=19)
         context = {
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
