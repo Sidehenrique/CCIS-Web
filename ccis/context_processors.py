@@ -1,6 +1,7 @@
 # myapp/context_processors.py
 from ccis.models import dadosPessoais, enderecoContato
 from ccis.forms import ModelFormMidia
+from .models import Notification
 
 
 def controle_button(request):
@@ -38,5 +39,17 @@ def ambiente_para_setor(request):
         'Tecnologia': 1,
         # Adicione mais mapeamentos para outros ambientes, se necessário
     }
-
     return {'ambiente_para_setor': AMBIENTE_PARA_SETOR}
+
+
+def exibir_notificacoes(request):
+    try:
+        if request.user.is_authenticated:
+            notifications = Notification.objects.filter(
+                recipient=request.user,
+                is_read=False
+            ).order_by('-date')
+            return {'notifications': notifications}
+    except:
+        pass
+    return {'notifications': []}  # Retorna uma lista vazia se não houver usuário logado ou houver algum erro

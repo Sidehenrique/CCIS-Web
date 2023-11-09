@@ -13,7 +13,8 @@ from django.contrib.auth.models import User, Group
 from collections import defaultdict
 
 from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
-    dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification, SectorButtons
+    dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification, SectorButtons, \
+    CustomGroupInfo
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
@@ -45,21 +46,7 @@ def infoClima():
 
 
 def base(request):
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    dados = dadosPessoais.objects.get(usuario=log)
-
-    context = {
-        'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-        'dados': dados, 'is_superadmin': is_superadmin, 'log': log
-    }
-
-    return render(request, 'ccis/base.html', context)
+    return render(request, 'ccis/base.html')
 
 
 def home(request):
@@ -578,23 +565,62 @@ def card_detl(request, card_id):
 @api_view(['POST'])
 def enviar_resposta(request, card_id):
 
-    print(card_id)
-
     if request.method == 'POST':
         card = get_object_or_404(Card, idCard=card_id)
         descricao = request.data.get('resposta')
-        attachment = request.data.get('attachment')  # Se você permitir anexos
-        remetente = request.user  # Suponha que o remetente é o usuário logado
+        attachment = request.data.get('attachment')
+        remetente = request.user
 
-        # Crie um novo objeto MessageHistory
         message_history = MessageHistory(
             card=card,
             remetente=remetente,
             message=descricao,
-            attachment=attachment,  # Se você permitir anexos
+            attachment=attachment,
         )
-
         message_history.save()
+
+        # Obtenha o histórico de setor mais recente para o cartão
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Obtenha o grupo associado ao histórico de setor
+        grupo_setor = historico_setor.setor
+
+        # Obtenha a URL do setor com base no grupo do responsável
+        setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+        if card.responsavel is None:
+            # Se o responsável não existe, envie a mensagem para todos os membros do grupo
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        description="Você tem uma nova mensagem",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
+        elif card.responsavel == request.user:
+            # Se o remetente é o próprio responsável, envie a mensagem para o solicitante
+            notification = Notification(
+                author=request.user,
+                description="Você tem uma nova mensagem",
+                subject=card.assunto + f" N°: {card.idCard}",
+                recipient=card.solicitante,
+                url='processos_user',  # Defina a URL apropriada
+            )
+            notification.save()
+        else:
+            # Se o remetente não é o responsável, envie a mensagem para o responsável
+            notification = Notification(
+                author=request.user,
+                description="Você tem uma nova mensagem",
+                subject=card.assunto + f" N°: {card.idCard}",
+                recipient=card.responsavel,
+                url=setor_link,
+            )
+            notification.save()
 
         data = {'status': 'Mensagem adicionada com sucesso'}
         return JsonResponse(data)
@@ -641,8 +667,8 @@ def registrar_atendimento(request, card_id):
         # Crie uma notificação para informar o usuário do atendimento registrado
         notification = Notification(
             author=request.user,
-            description="Sua solicitação esta em Atendimento",
-            subject=card.assunto,
+            description=f"Sua solicitação esta em Atendimento por {request.user.first_name} {request.user.last_name}",
+            subject=card.assunto + f" N°: {card.idCard}",
             recipient=card.solicitante,  # O destinatário é o solicitante da questão
             url='processos_user',  # URL da página atual
         )
@@ -681,14 +707,29 @@ def encaminhar_card(request, card_id):
 
         card_setor_history.save()
 
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Notificar o solicitante
         notification = Notification(
             author=request.user,
-            description="Sua solicitação foi encaminhada",
-            subject=card.assunto,
-            recipient=card.solicitante,  # O destinatário é o solicitante da questão
-            url='processos_user',  # URL da página atual
+            description="Sua solicitação foi encaminhada para" + historico_setor.setor_atual,
+            subject=card.assunto + f" N°: {card.idCard}",
+            recipient=card.solicitante,
+            url='processos_user',
         )
         notification.save()
+
+        # Notificar os usuários compartilhados
+        for user in card.compartilhar.all():
+            if user != request.user:
+                notification = Notification(
+                    author=request.user,
+                    description="Uma solicitação encaminhada para" + historico_setor.setor_atual,
+                    subject=card.assunto + f" N°: {card.idCard}",
+                    recipient=user,
+                    url='processos_user',
+                )
+                notification.save()
 
         return JsonResponse({'success': True, 'message': 'Card encaminhado com sucesso.'})
 
@@ -713,8 +754,8 @@ def compartilhar_card(request, card_id):
         notification = Notification(
             author=request.user,
             description="Solicitação compartilhada com você",
-            subject=card.assunto,
-            recipient=card.solicitante,  # O destinatário é o solicitante da questão
+            subject=card.assunto + f" N°: {card.idCard}",
+            recipient=user,  # O destinatário é o solicitante da questão
             url='processos_user',  # URL da página atual
         )
         notification.save()
@@ -755,12 +796,16 @@ def transferir_card(request, card_id):
 
         card_setor_history.save()
 
+
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Notificar o solicitante
         notification = Notification(
             author=request.user,
-            description="Sua solicitação foi compartilhada",
-            subject=card.assunto,
-            recipient=card.solicitante,  # O destinatário é o solicitante da questão
-            url='processos_user',  # URL da página atual
+            description="Sua solicitação foi Transferida para" + historico_setor.setor_atual,
+            subject=card.assunto + f" N°: {card.idCard}",
+            recipient=card.solicitante,
+            url='processos_user',
         )
         notification.save()
 
@@ -822,7 +867,7 @@ def concluir_card(request, card_id):
                 notification = Notification(
                     author=request.user,
                     description="Eba! Sua solicitação foi concluida",
-                    subject=card.assunto,
+                    subject=card.assunto + f" N°: {card.idCard}",
                     recipient=card.solicitante,  # O destinatário é o solicitante da questão
                     url='processos_user',  # URL da página atual
                 )
@@ -880,12 +925,21 @@ def avaliar_card(request, card_id):
         )
         card_setor_history.save()
 
+        # Obtenha o histórico de setor mais recente para o cartão
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Obtenha o grupo associado ao histórico de setor
+        grupo_setor = historico_setor.setor
+
+        # Obtenha a URL do setor com base no grupo do responsável
+        setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
         notification = Notification(
             author=request.user,
             description="Solicitação finalizada pelo solicitante",
-            subject=card.assunto,
+            subject=card.assunto + f" N°: {card.idCard}",
             recipient=card.responsavel,  # O destinatário
-            url='',  # URL da página atual
+            url=setor_link,  # URL da página atual
         )
 
         notification.save()
@@ -927,16 +981,26 @@ def finalizar_card(request, card_id):
                 setor_atual=group.name,
                 operador=request.user,
             )
+            card_setor_history.save()
+
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
+
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
 
             notification = Notification(
                 author=request.user,
                 description="Solicitação finalizada pelo solicitante",
                 subject=card.assunto,
                 recipient=card.responsavel,  # O destinatário
-                url='',  # URL da página atual
+                url=setor_link,  # URL da página atual
             )
+            notification.save()
 
-            card_setor_history.save()
             return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
 
         except Card.DoesNotExist:
@@ -967,16 +1031,25 @@ def reabrir_card(request, card_id):
                 setor_atual=group.name,
                 operador=request.user,
             )
+            card_setor_history.save()
+
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
+
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
 
             notification = Notification(
                 author=request.user,
-                description="Solicitação finalizada pelo solicitante",
+                description="Solicitação reaberta pelo usuário",
                 subject=card.assunto,
                 recipient=card.responsavel,  # O destinatário
-                url='',  # URL da página atual
+                url=setor_link,  # URL da página atual
             )
-
-            card_setor_history.save()
+            notification.save()
             return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
 
         except Card.DoesNotExist:
@@ -996,6 +1069,7 @@ def history_request(request):
 
     return render(request, 'ccis/history_request.html', context)
 
+
 def get_card_details(request):
     card_id = request.GET.get('card_id')
     try:
@@ -1011,3 +1085,20 @@ def get_card_details(request):
         return JsonResponse(card_details)
     except Card.DoesNotExist:
         return JsonResponse({'error': 'Cartão não encontrado'}, status=404)
+
+
+@login_required(login_url="/login")
+def notificacao_lida(request, notification_id):
+    try:
+        notification = Notification.objects.get(pk=notification_id)
+
+        if request.user == notification.recipient:
+            notification.is_read = True
+            notification.save()
+            return JsonResponse({'success': True, 'message': 'Notificação marcada como lida.'})
+
+        else:
+            return JsonResponse({'success': False, 'message': 'Você não tem permissão para marcar esta notificação como lida.'})
+
+    except Notification.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Notificação não encontrada.'})

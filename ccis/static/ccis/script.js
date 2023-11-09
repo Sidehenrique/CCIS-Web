@@ -459,7 +459,7 @@ function loadCardInfo(cardId) {
                 //---------------------------------------------------------------------------------------------
 
 
-               if (data.card.setor_history && data.card.setor_history.length > 0) {
+                if (data.card.setor_history && data.card.setor_history.length > 0) {
                     console.log(data.card.setor_history); // Adicione este log para verificar os dados do histórico de setores
                     const ultimaEntradaSetor = data.card.setor_history[data.card.setor_history.length - 1];
                     console.log(ultimaEntradaSetor); // Adicione este log para verificar a última entrada de setor
@@ -842,6 +842,10 @@ function loadCardInfo(cardId) {
                     $("#starButtons").css("display", "none");
                     $("#reabrirChamado").css("display", "block");
                     $("#avaliarAtendimentoButton").hide();
+                    $("#registrarAtendimentoButton").hide();
+                    $("#encaminharCardButton").hide();
+                    $("#transferirCardButton").hide();
+                    $("#ConcluirCardButton").hide();
 
                 }
 
@@ -930,3 +934,21 @@ function enviarAvaliacao(cardId, rating) {
         }
     });
 }
+
+
+// Exemplo de código JavaScript/jQuery para fazer a solicitação AJAX
+$('.marcar-lida-notificacao').click(function() {
+    var notificationId = $(this).data('notification-id');
+    $.ajax({
+        url: `/notificacao_lida/${notificationId}`,
+        method: 'POST',
+        success: function(data) {
+            if (data.success) {
+//                location.reload();
+                // Atualize a interface do usuário para refletir que a notificação foi marcada como lida.
+            } else {
+                alert('Erro ao registrar a avaliação: ' + data.message);
+            }
+        }
+    });
+});

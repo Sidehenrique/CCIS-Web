@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch, F, Subquery, OuterRef
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card
+from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
 from ..forms import ModelFormAdmMalotes
 from django.db.models import Max
 
@@ -122,6 +122,49 @@ def salvar_malote_adm(request):
                     attachment=attachment,
                 )
                 message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                if card.responsavel is None:
+                    # Se o responsável não existe, envie a mensagem para todos os membros do grupo
+                    recipients = User.objects.filter(groups=grupo_setor)
+                    for recipient in recipients:
+                        if recipient != request.user:
+                            notification = Notification(
+                                author=request.user,
+                                description="Você tem uma nova mensagem",
+                                subject=card.assunto + f" N°: {card.idCard}",
+                                recipient=recipient,
+                                url=setor_link,
+                            )
+                            notification.save()
+                elif card.responsavel == request.user:
+                    # Se o remetente é o próprio responsável, envie a mensagem para o solicitante
+                    notification = Notification(
+                        author=request.user,
+                        description="Você tem uma nova mensagem",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=card.solicitante,
+                        url='processos_user',  # Defina a URL apropriada
+                    )
+                    notification.save()
+                else:
+                    # Se o remetente não é o responsável, envie a mensagem para o responsável
+                    notification = Notification(
+                        author=request.user,
+                        description="Você tem uma nova mensagem",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=card.responsavel,
+                        url=setor_link,
+                    )
+                    notification.save()
 
             return redirect('adm_home')
 

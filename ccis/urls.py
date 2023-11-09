@@ -30,6 +30,7 @@ urlpatterns = [
     path('reabrir_card/<int:card_id>', pages.reabrir_card, name='reabrir_card'),
     path('history_request', pages.history_request, name='history_request'),
     path('get_card_details', pages.get_card_details, name='get_card_details'),
+    path('notificacao_lida/<int:notification_id>', pages.notificacao_lida, name='notificacao_lida'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),

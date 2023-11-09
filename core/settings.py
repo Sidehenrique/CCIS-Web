@@ -68,6 +68,7 @@ TEMPLATES = [
                 'ccis.context_processors.user_data',
                 'ccis.context_processors.foto_profile',
                 'ccis.context_processors.ambiente_para_setor',
+                'ccis.context_processors.exibir_notificacoes',
             ],
         },
     },

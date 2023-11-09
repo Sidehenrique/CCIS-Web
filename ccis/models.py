@@ -484,6 +484,9 @@ class Notification(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.description
+
 
 # ------------------- tabela Group ---------------------------------------------------------------------
 
@@ -496,6 +499,7 @@ class CustomGroupInfo(models.Model):
     ramal = models.CharField(max_length=45, blank=True, null=True)
     contato = models.CharField(max_length=45, blank=True, null=True)
     imagem = models.ImageField(upload_to='group/', blank=True, null=True)
+    url = models.TextField(blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
 
     def __str__(self):
