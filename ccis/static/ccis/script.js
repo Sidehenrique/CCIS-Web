@@ -832,6 +832,13 @@ function loadCardInfo(cardId) {
 
                 //------------------------------------------------------------------------------------------------------
 
+                // Verifique o status do card
+                if (data.card.status === "Triagem") {
+                    $("#encaminharCardButton").hide();
+                    $("#ConcluirCardButton").hide();
+
+                }
+
 
                 // Verifique o status do card
                 if (data.card.status === "Finalizado") {

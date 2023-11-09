@@ -712,7 +712,7 @@ def encaminhar_card(request, card_id):
         # Notificar o solicitante
         notification = Notification(
             author=request.user,
-            description="Sua solicitação foi encaminhada para" + historico_setor.setor_atual,
+            description="Sua solicitação foi encaminhada para " + historico_setor.setor_atual,
             subject=card.assunto + f" N°: {card.idCard}",
             recipient=card.solicitante,
             url='processos_user',
@@ -802,7 +802,7 @@ def transferir_card(request, card_id):
         # Notificar o solicitante
         notification = Notification(
             author=request.user,
-            description="Sua solicitação foi Transferida para" + historico_setor.setor_atual,
+            description="Sua solicitação foi Transferida para " + historico_setor.setor_atual,
             subject=card.assunto + f" N°: {card.idCard}",
             recipient=card.solicitante,
             url='processos_user',

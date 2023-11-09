@@ -118,39 +118,17 @@ def request_acessos_ti(request):
                 # Obtenha a URL do setor com base no grupo do responsável
                 setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
 
-                if card.responsavel is None:
-                    # Se o responsável não existe, envie a mensagem para todos os membros do grupo
-                    recipients = User.objects.filter(groups=grupo_setor)
-                    for recipient in recipients:
-                        if recipient != request.user:
-                            notification = Notification(
-                                author=request.user,
-                                description="Você tem uma nova mensagem",
-                                subject=card.assunto + f" N°: {card.idCard}",
-                                recipient=recipient,
-                                url=setor_link,
-                            )
-                            notification.save()
-                elif card.responsavel == request.user:
-                    # Se o remetente é o próprio responsável, envie a mensagem para o solicitante
-                    notification = Notification(
-                        author=request.user,
-                        description="Você tem uma nova mensagem",
-                        subject=card.assunto + f" N°: {card.idCard}",
-                        recipient=card.solicitante,
-                        url='processos_user',  # Defina a URL apropriada
-                    )
-                    notification.save()
-                else:
-                    # Se o remetente não é o responsável, envie a mensagem para o responsável
-                    notification = Notification(
-                        author=request.user,
-                        description="Você tem uma nova mensagem",
-                        subject=card.assunto + f" N°: {card.idCard}",
-                        recipient=card.responsavel,
-                        url=setor_link,
-                    )
-                    notification.save()
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
 
             return redirect('ti_home')
 
@@ -173,7 +151,7 @@ def request_equipamentos_ti(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=2),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -192,6 +170,27 @@ def request_equipamentos_ti(request):
                     attachment=attachment,
                 )
                 message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
 
             return redirect('ti_home')
 
@@ -214,7 +213,7 @@ def request_servicos_ti(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=2),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -233,6 +232,27 @@ def request_servicos_ti(request):
                     attachment=attachment,
                 )
                 message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} abriu uma nova solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
 
             return redirect('ti_home')
     else:
@@ -289,8 +309,6 @@ def processos_ti(request):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-
-
 def estoque(request):
     user = request.user
 
