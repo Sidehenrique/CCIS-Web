@@ -22,7 +22,7 @@ def sia_home(request):
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=42).first()
+    superior = Group.objects.filter(id=19).first()
 
     nomes_equipe = []
 
@@ -51,7 +51,7 @@ def sia_home(request):
                                                            x['cargo'] != 'Encarregado(a)'))
 
     if request.method == 'GET':
-        sector_buttons = SectorButtons.objects.filter(group=39)
+        sector_buttons = SectorButtons.objects.filter(group=19)
         context = {
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
@@ -66,7 +66,7 @@ def new_request_sia(request):
     form = ModelFormSIAMalotes()
     context = {'form': form, }
 
-    return render(request, "saojoao/new_request_SJ.html", context)
+    return render(request, "sia/new_request_sia.html", context)
 
 
 @login_required(login_url="/login")
