@@ -517,7 +517,8 @@ class Card(models.Model):
                                     related_name='chamados_responsaveis', default=None)
     status = models.CharField(max_length=20)
     compartilhar = models.ManyToManyField(User, related_name="cards_compartilhados", blank=True)
-    cor = models.CharField(max_length=20, null=True,)
+    anonymous = models.BooleanField(default=False)
+    cor = models.CharField(max_length=20, null=True)
 
     def __str__(self):
         return self.assunto

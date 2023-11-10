@@ -26,7 +26,7 @@
 
 <body style="background-color:#F1F2F5">
 
-<!-- start container-fluid ---------------------------------------------------------------------------------------->
+<!-- start container-fluid --------------------------------------------->
 <div class="container-fluid">
 
     <!-- topMenu ------------------------------------------------------->
@@ -344,8 +344,60 @@
 
             <div class="row">
 
-                <!-- Menu Lateral -------------------------------------------------------------------->
-                <div id="menu_lateral" class="col-lg-2 col-md-3 col-12 menu-background" style="padding-top:80px">
+                <!-- Menu Lateral ------------------------------->
+                <div id="menu_lateral" class="col-1 menu-background" style="padding-top:80px">
+
+                    <!-- Menu -->
+                    <ul class="ul-lista-novo">
+
+                        <!-- Departamentos -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'departamentos' %}"
+                               class="menu_oculto_link" aria-current="page">
+                                <i class="fa-solid fa-network-wired"></i>
+                                <small>Departamentos</small>
+                            </a>
+                        </li>
+
+                        <!-- Gestão e Controle -->
+                        {% if controle %}
+                        <li class="li-lista-novo">
+
+                            <a href="{% url 'gestaoControle' %}"
+                               class="menu_oculto_link" aria-current="page">
+                                <i class="fa-solid fa-handshake"></i>
+                                <small>Gestão e Controle</small>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <!-- Gestão de Metas -->
+                        <li class="li-lista-novo">
+                            <a href="{% url 'gestaoNegocios' %}"
+                               class="menu_oculto_link" aria-current="page">
+                                <i class="fa-solid fa-bullseye"></i>
+                                <small>Gestão de Negócios</small>
+                            </a>
+                        </li>
+
+                        <!-- coopera -->
+                        <li class="li-lista-novo">
+
+                            <a href="{% url 'coopera' %}"
+                               class="menu_oculto_link" aria-current="page">
+                                <i class="fa-solid fa-infinity"></i>
+                                <small>Cooperar</small>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <!-- End Menu Lateral --------------------------->
+
+
+                <!-- Menu Lateral ------------------------------->
+                <div id="menu_oculto" class="col-2 menu-background" style="display:none; padding-top:80px">
 
                     <!-- Menu -->
                     <ul class="ul-lista-novo">
@@ -353,7 +405,7 @@
                         <!-- Departamentos -->
                         <li class="li-lista-novo">
                             <a style="font-family: asap; color: #00353e;" href="{% url 'departamentos' %}"
-                               class="li-link-novo" aria-current="page">
+                               class="li-link-novo menu-text" aria-current="page">
                                 <i class="fa-solid fa-network-wired"></i>
                                 Departamentos
                             </a>
@@ -364,7 +416,7 @@
                         <li class="li-lista-novo">
 
                             <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoControle' %}"
-                               class="li-link-novo" aria-current="page">
+                               class="li-link-novo menu-text" aria-current="page">
                                 <i class="fa-solid fa-handshake"></i>
                                 Gestão & Controle
                             </a>
@@ -375,7 +427,7 @@
                         <!-- Gestão de Metas -->
                         <li class="li-lista-novo">
                             <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoNegocios' %}"
-                               class="li-link-novo" aria-current="page">
+                               class="li-link-novo menu-text" aria-current="page">
                                 <i class="fa-solid fa-bullseye"></i>
                                 Gestão de Negócios
                             </a>
@@ -385,7 +437,7 @@
                         <li class="li-lista-novo">
 
                             <a style="font-family: asap; color: #00353e;" href="{% url 'ferias' %}"
-                               class="li-link-novo" aria-current="page">
+                               class="li-link-novo menu-text" aria-current="page">
                                 <i class="fa-solid fa-umbrella-beach"></i>
                                 Férias
                             </a>
@@ -395,7 +447,7 @@
                         <li class="li-lista-novo">
 
                             <a style="font-family: asap; color: #00353e; font-size: 15px;" href="{% url 'anbima' %}"
-                               class="li-link-novo" aria-current="page">
+                               class="li-link-novo menu-text" aria-current="page">
                                 <i class="fa-solid fa-certificate"></i>
                                 Certificações Anbima
                             </a>
@@ -407,7 +459,7 @@
                         <li class="li-lista-novo">
 
                             <a style="font-family: asap; color: #00353e;" href="{% url 'coopera' %}"
-                               class="li-link-novo" aria-current="page">
+                               class="li-link-novo menu-text" aria-current="page">
                                 <i class="fa-solid fa-infinity"></i>
                                 Cooperar+
                             </a>
@@ -417,7 +469,7 @@
                         <li class="li-lista-novo">
 
                             <a style="font-family: asap; color: #00353e;" href="{%url 'malotes'%}"
-                               class="li-link-novo" aria-current="page">
+                               class="li-link-novo menu-text" aria-current="page">
                                 <i class="fa-solid fa-sack-dollar"></i>
                                 Controle de Malotes
                             </a>
@@ -426,11 +478,11 @@
                     </ul>
 
                 </div>
-                <!-- End Menu Lateral ---------------------------------------------------------------->
+                <!-- End Menu Lateral --------------------------->
 
 
-                <!-- Conteúdo -------------------------------------------------------------------->
-                <div class="col-lg-10 col-md-9 col-12 mt-lg-0" style="padding: 0 0 0 0;">
+                <!-- Conteúdo ----------------------------------->
+                <div id="conteudo_container" class="col mt-lg-0">
 
                     <!-- Modal foto e banner -------------------->
                     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModal"
@@ -489,7 +541,7 @@
                     {% endblock %}
 
                 </div>
-                <!-- End Conteúdo ---------------------------------------------------------------->
+                <!-- End Conteúdo ------------------------------->
 
             </div>
 
