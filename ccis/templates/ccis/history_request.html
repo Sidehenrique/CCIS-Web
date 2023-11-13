@@ -40,6 +40,8 @@
         </div>
         <!-- Menu -------------------------------->
 
+
+
         <!--Solicitações--------------------->
         <div class="col-3 menu-request p-0">
             <h6 class="mb-4 pt-4 ps-2">SOLICITAÇÕES</h6>
@@ -67,42 +69,12 @@
 
         <!--Campo de visualização--------------------->
         <div id="formulario-content" class="col menu-request ">
+
             <h6 style="border-bottom: 1px solid #ccc; padding-bottom: 23px;"></h6>
 
         </div>
         <!--Campo de visualização--------------------->
     </div>
 </div>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const cardButtons = document.querySelectorAll(".list-group-item");
-
-        cardButtons.forEach(button => {
-            button.addEventListener("click", function(event) {
-                event.preventDefault();
-                const cardId = this.getAttribute("data-card-id");
-                // Agora você pode fazer uma solicitação AJAX ao servidor para obter os detalhes do card com o cardId e, em seguida, atualizar o elemento "#formulario-content" com os detalhes do card.
-                // Exemplo:
-                fetch(`/get_card_details/${cardId}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Atualize o elemento "#formulario-content" com os detalhes do card
-                        const formularioContent = document.querySelector("#formulario-content");
-                        formularioContent.innerHTML = `
-                            <h6 style="border-bottom: 1px solid #ccc; padding-bottom: 23px;"></h6>
-                            <!-- Exibir os detalhes do card aqui, usando os dados recebidos de data -->
-                        `;
-                    })
-                    .catch(error => {
-                        console.error("Erro ao obter detalhes do card:", error);
-                    });
-            });
-        });
-    });
-</script>
-
-
 
 {% endblock %}

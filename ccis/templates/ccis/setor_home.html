@@ -281,8 +281,36 @@
                     </div>
                     <!-- coluna da esquerda -------------->
 
+
                     <!-- coluna da direita --------------->
                     <div class="col mt-3 ms-2" style="border-left: 1px solid #ccc;">
+
+                        <div class="row justify-content-around">
+
+                            <div class="col-3 info_setor_perform">
+                                <i class="fa-solid fa-layer-group"></i>
+                                <span>16</span>
+                                <small>Processos</small>
+
+                            </div>
+
+                            <div class="col-3 info_setor_perform">
+                                <i class="fa-regular fa-clock"></i>
+                                <span>25 mm</span>
+                                <small>Tempo Medio de Atendimento</small>
+                            </div>
+
+                            <div class="col-3 info_setor_perform">
+                                <i class="fa-solid fa-ranking-star"></i>
+                                <span>4.8</span>
+                                <small>Avaliação do Setor</small>
+                            </div>
+
+
+                        </div>
+
+
+
                         {% if dadosSetor.imagem %}
                         <img src="{{ dadosSetor.imagem.url }}"
                              alt="imagemSetor"
