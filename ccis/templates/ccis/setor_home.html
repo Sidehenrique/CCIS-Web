@@ -257,7 +257,7 @@
                                     </a>
                                 </div>
 
-                                {% elif user.groups.all.0.id != button.group.id and button.permissao == "usuario" %}
+                                {% elif user.groups.all.0.id != button.group.id and button.permissao != "operador" %}
                                 <!-- Renderize o botão -->
                                 <div class="position-relative me-3">
                                     <a class="links-set"
