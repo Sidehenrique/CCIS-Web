@@ -420,28 +420,8 @@ body {
 }
 
 .col-2 {
-    width: 200px;
+    width: 100px;
     transition: width 0.5s;
-}
-
-
-.menu-text {
-    opacity: 1;
-    display:block;
-    transition: opacity 0.3s ease;
-}
-
-
-.col-1 .menu-text {
-    opacity: 0;
-    display:none;
-    pointer-events: none;
-}
-
-
-
-#menu_oculto {
-    padding: 0;
 }
 
 
@@ -453,9 +433,10 @@ body {
     display: flex;
     text-align: center;
     border-bottom: 1px #d9d9d9 solid;
-    color: #d9d9d9;
+    color: #333;
     transition: height 0.3s;
     text-decoration:none;
+
 }
 
 
@@ -465,18 +446,38 @@ body {
     color: #333;
 }
 
+
 .menu_oculto_link small {
     font-size: 12px;
     margin-top: 5px;
 }
 
 
-/* Adicione estas classes ao seu CSS para controlar a transição e a transparência */
-#menu_lateral.col-1,
-#menu_oculto.col-2 {
-    transition: all 0.3s ease; /* Adiciona uma transição de 0.3 segundos com efeito de suavização */
-    opacity: 0.7; /* Define a opacidade quando recolhido */
+.menu_oculto_2 {
+    text-align:left;
+    border-bottom: 1px #d9d9d9 solid;
+    color: #333;
+    transition: height 0.3s;
+    text-decoration: none;
+    padding:10px 10px 10px 20px;
+    box-sizing: border-box;
+    display: block;
+
 }
+
+.menu_oculto_2:hover{
+    border: 1px #d9d9d9 solid;
+    background-color: #f5f5f5;
+    color: #333;
+
+}
+
+
+
+.menu_oculto_link:active {
+    background-color: #243326
+}
+
 
 
 /*-------------------------------------------*/

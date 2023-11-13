@@ -962,46 +962,11 @@ $('.marcar-lida-notificacao').click(function() {
 
 
 
-//// script.js
-//$(document).ready(function () {
-//    // Manipule o clique no botão para recolher ou expandir o menu com efeito de slide
-//    $('#toggleMenu').click(function () {
-//        $('#menu_lateral').toggleClass('col-1 col-2');
-//        $('.menu-text').toggleClass('hide-text'); // Adicione a classe hide-text aos textos do menu
-//    });
-//});
-
 // script.js
 $(document).ready(function () {
     // Manipule o clique no botão para recolher ou expandir o menu com efeito de slide
     $('#toggleMenu').click(function () {
-        $('#menu_lateral, #menu_oculto').toggleClass('col-1 col-2'); // Alternar classes em ambos os menus
-        $('#menu_oculto').toggle(); // Alternar visibilidade do menu oculto
+        $('#menu_lateral').toggleClass('col-1 col-2');
+        $('.menu_oculto_link').toggleClass('menu_oculto_2'); // Adicione a classe hide-text aos textos do menu
     });
 });
-
-
-//$(document).ready(function () {
-//    // Manipule o clique no botão para recolher ou expandir o menu
-//    $('#toggleMenu').click(function () {
-//        // Alterna entre col-2 e col-1 para ambos os menus
-//        $('#menu_lateral, #menu_oculto').toggleClass('col-2 col-1');
-//
-//        // Se o menu_lateral estiver em col-1, oculte-o
-//        if ($('#menu_lateral').hasClass('col-1')) {
-//            $('#menu_lateral').hide();
-//        } else {
-//            $('#menu_lateral').show();
-//        }
-//
-//        // Se o menu_lateral estiver recolhido, exiba o menu_oculto
-//        if ($('#menu_lateral').hasClass('col-1')) {
-//            $('#menu_oculto').show();
-//        } else {
-//            $('#menu_oculto').hide();
-//        }
-//    });
-//});
-
-
-
