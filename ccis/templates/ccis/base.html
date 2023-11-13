@@ -40,6 +40,10 @@
                     <img src="{% static 'ccis/logonav.png' %}" alt="logo" width="47" height="54"
                          class="d-inline-block align-text-center;">
                 </a>
+
+<!--                <button id="toggleMenu" class="action_button_menu">-->
+<!--                    <i class="fa-solid fa-bars"></i>-->
+<!--                </button>-->
                 <!-- End Logo do Menu --------------------------------------------------------------------------------->
 
 
@@ -48,9 +52,7 @@
                     <ul class="navbar-nav">
 
                         <li class="ms-5 me-4">
-                            <button id="toggleMenu" class="btn btn-primary">
-                                <i class="fa-solid fa-bars"></i>
-                            </button>
+
                         </li>
 
                     </ul>
@@ -337,17 +339,18 @@
     </header>
     <!-- End topMenu --------------------------------------------------->
 
-
     <main>
 
         <div class="container-fluid  ps-0 pe-0">
 
             <div class="row">
 
-
-
                 <!-- Menu Lateral ------------------------------->
-                <div id="menu_lateral" class="col-1 ps-0 pe-0 menu-background" style="padding-top:80px">
+                <div id="menu_lateral"
+                     class="col-1 position-relative ps-0 pe-0 menu-background"
+                     style="padding-top:80px;">
+
+
 
                     <!-- Menu -->
                     <ul class="ul-lista-novo">
@@ -398,112 +401,12 @@
                 <!-- End Menu Lateral --------------------------->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <!-- Menu Lateral ------------------------------->
-                <div id="menu_oculto" class="col-2 menu-background" style="display:none; padding-top:80px">
-
-                    <!-- Menu -->
-                    <ul class="ul-lista-novo">
-
-                        <!-- Departamentos -->
-                        <li class="li-lista-novo">
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'departamentos' %}"
-                               class="li-link-novo menu-text" aria-current="page">
-                                <i class="fa-solid fa-network-wired"></i>
-                                Departamentos
-                            </a>
-                        </li>
-
-                        <!-- Gestão e Controle -->
-                        {% if controle %}
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoControle' %}"
-                               class="li-link-novo menu-text" aria-current="page">
-                                <i class="fa-solid fa-handshake"></i>
-                                Gestão & Controle
-                            </a>
-
-                        </li>
-                        {% endif %}
-
-                        <!-- Gestão de Metas -->
-                        <li class="li-lista-novo">
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoNegocios' %}"
-                               class="li-link-novo menu-text" aria-current="page">
-                                <i class="fa-solid fa-bullseye"></i>
-                                Gestão de Negócios
-                            </a>
-                        </li>
-
-                        <!-- ferias -->
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'ferias' %}"
-                               class="li-link-novo menu-text" aria-current="page">
-                                <i class="fa-solid fa-umbrella-beach"></i>
-                                Férias
-                            </a>
-                        </li>
-
-                        <!-- anbima -->
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e; font-size: 15px;" href="{% url 'anbima' %}"
-                               class="li-link-novo menu-text" aria-current="page">
-                                <i class="fa-solid fa-certificate"></i>
-                                Certificações Anbima
-                            </a>
-                        </li>
-
-                        <hr>
-
-                        <!-- cooperar -->
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'coopera' %}"
-                               class="li-link-novo menu-text" aria-current="page">
-                                <i class="fa-solid fa-infinity"></i>
-                                Cooperar+
-                            </a>
-                        </li>
-
-                        <!-- Malotes -->
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{%url 'malotes'%}"
-                               class="li-link-novo menu-text" aria-current="page">
-                                <i class="fa-solid fa-sack-dollar"></i>
-                                Controle de Malotes
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-                <!-- End Menu Lateral --------------------------->
-
-
                 <!-- Conteúdo ----------------------------------->
-                <div id="conteudo_container" class="col mt-lg-0">
+                <div id="conteudo_container" class="col mt-lg-0 position-relative p-0">
+
+                    <button id="toggleMenu" class="action_button_menu">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    </button>
 
                     <!-- Modal foto e banner -------------------->
                     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModal"
@@ -556,6 +459,7 @@
                         </div>
                     </div>
                     <!-- End Modal foto e banner ---------------->
+
                     {% block conteudo %}
 
 

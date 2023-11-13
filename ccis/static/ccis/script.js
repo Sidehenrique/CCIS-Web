@@ -943,7 +943,7 @@ function enviarAvaliacao(cardId, rating) {
 }
 
 
-// Exemplo de código JavaScript/jQuery para fazer a solicitação AJAX
+// Tratamento de Notificações
 $('.marcar-lida-notificacao').click(function() {
     var notificationId = $(this).data('notification-id');
     $.ajax({
@@ -962,11 +962,12 @@ $('.marcar-lida-notificacao').click(function() {
 
 
 
-// script.js
+// Tratamento do recolhimento do menu lateral
 $(document).ready(function () {
     // Manipule o clique no botão para recolher ou expandir o menu com efeito de slide
     $('#toggleMenu').click(function () {
         $('#menu_lateral').toggleClass('col-1 col-2');
         $('.menu_oculto_link').toggleClass('menu_oculto_2'); // Adicione a classe hide-text aos textos do menu
+//        $('#toggleIcon').toggleClass('fa-solid fa-arrow-left');
     });
 });
