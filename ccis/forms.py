@@ -393,6 +393,7 @@ class modelFormAcessosTI(forms.ModelForm):
         ('Alteração', 'Alteração'),
         ('Redefinição', 'Redefinição'),
         ('Exclusão', 'Exclusão'),
+        ('Liberação Celular', 'Liberação Celular'),
     ]
 
     CHOICES_AssuntoAcessos = [
@@ -432,8 +433,29 @@ class modelFormEquipamentosTI(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                                 required=False)
+    attachment = forms.ImageField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                  required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormDesenvolvimentoTI(forms.ModelForm):
+    CHOICES_Servico = [
+        ('Intranet', 'Intranet'),
+        ('Bot', 'Bot'),
+    ]
+
+    CHOICES_Assunto = [
+        ('Desenvolvimento', 'Desenvolvimento'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.ImageField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                  required=False)
 
     class Meta:
         model = Card

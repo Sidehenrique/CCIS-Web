@@ -94,54 +94,39 @@ def salvar_malote_vicente(request):
             )
             history_entry.save()
 
-            texto2 = request.POST["descricao"]
-
+            descricao = request.POST["descricao"]
             attachment = request.FILES.get('attachment')
 
-            # Coletar as seleções dos checkboxes e montar a descrição
-            itens_selecionados = []
-            for item in ['item1', 'item2', 'item3', 'item4', 'item5', 'item6']:
-                if request.POST.get(item):
-                    itens_selecionados.append(request.POST.get(item))
 
-            if (itens_selecionados or texto2):
-                descricao = "Este Malote contém:<br> " + "<br>".join(itens_selecionados)
+            # Salvar a descrição no campo message do MessageHistory
+            message_history = MessageHistory(
+                card=card,
+                remetente=request.user,
+                message=descricao,
+                attachment=attachment,
+            )
+            message_history.save()
 
-                if texto2:
-                    descricao += "<br><br>"
-                    descricao += "Descrição:<br>" + texto2
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
 
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
 
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
 
-                # Salvar a descrição no campo message do MessageHistory
-                message_history = MessageHistory(
-                    card=card,
-                    remetente=request.user,
-                    message=descricao,
-                    attachment=attachment,
-                )
-                message_history.save()
-
-                # Obtenha o histórico de setor mais recente para o cartão
-                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
-
-                # Obtenha o grupo associado ao histórico de setor
-                grupo_setor = historico_setor.setor
-
-                # Obtenha a URL do setor com base no grupo do responsável
-                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
-
-                recipients = User.objects.filter(groups=grupo_setor)
-                for recipient in recipients:
-                    if recipient != request.user:
-                        notification = Notification(
-                            author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
-                            recipient=recipient,
-                            url=setor_link,
-                        )
-                        notification.save()
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        description=f"{card.solicitante} Abri uma nova Solicitação",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
 
             return redirect('vicente_home')
 

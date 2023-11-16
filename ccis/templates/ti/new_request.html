@@ -34,6 +34,13 @@
                     </li>
 
                     <li class="li-menu-request">
+                        <a type="button" id="btnDesenvolvimento" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-code"></i>
+                            Desenvolvimento
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
                         <a type="button" id="btnServicos" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-server"></i>
                             Serviços
@@ -247,6 +254,54 @@
                         <div class="">
                             <label>Anexar arquivo:</label>
                             {{ equipamentos.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </form>
+
+                </div>
+
+
+            </div>
+        </div>
+        <!-- Formulário de Equipamentos --------------------->
+
+        <!-- Formulário de Equipamentos --------------------->
+        <div id="formularioDesenvolvimento" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE DESENVOLVIMENTO</h5>
+
+            <div class="row p-3 ">
+
+                <div class="col-7">
+
+
+                   <form action="{% url 'request_desenvolvimento_ti' %}"
+                          method="POST"
+                          enctype="multipart/form-data">
+
+                        {% csrf_token %}
+                       <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="Tecnologia">
+
+                        <div class="mb-2">
+                            <label>* Selecione o Assunto:</label>
+                            {{ desenvolvimento.assunto }}
+                        </div>
+
+                        <div class="mb-2">
+                            <label>* Selecione o Serviço:</label>
+                            {{ desenvolvimento.service }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label>* Descrição:</label><br>
+                            {{ desenvolvimento.descricao }}
+                        </div>
+
+                        <div class="">
+                            <label>Anexar arquivo:</label>
+                            {{ desenvolvimento.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">

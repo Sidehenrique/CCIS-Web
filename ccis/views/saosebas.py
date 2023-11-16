@@ -66,7 +66,7 @@ def new_request_saosebas(request):
     form = ModelFormSaoSebasMalotes()
     context = {'form': form, }
 
-    return render(request, "saojoao/new_request_SJ.html", context)
+    return render(request, "saosebas/new_request_saosebas.html", context)
 
 
 @login_required(login_url="/login")
@@ -148,7 +148,7 @@ def salvar_malote_saosebas(request):
     else:
         form = ModelFormSaoSebasMalotes()
 
-    return render(request, 'saojoao/new_request_SJ.html', {'form': form})
+    return render(request, 'saosebas/new_request_saosebas.html', {'form': form})
 
 
 @login_required(login_url="/login")

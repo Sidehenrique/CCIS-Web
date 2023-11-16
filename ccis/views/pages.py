@@ -1072,6 +1072,8 @@ def history_request(request):
 
 def get_card_details(request):
     card_id = request.GET.get('card_id')
+
+
 def get_card_details(request, card_id):
     try:
         card = Card.objects.get(id=card_id)

@@ -116,7 +116,7 @@
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
 
-               <div class="processo-card" style="background-color:{{ card.cor }}">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
@@ -595,7 +595,6 @@
                                     </div>
 
 
-
                                 </div>
 
                                 <div class="accordion-item">
@@ -913,5 +912,33 @@
 
 
 </div>
+
+<script>
+function filterCards() {
+    var input, filter, cards, card, subject, service, userName, i;
+    input = document.getElementById('filterProcesso');
+    filter = input.value.toUpperCase();
+    cards = document.getElementsByClassName('processo-card');
+
+    for (i = 0; i < cards.length; i++) {
+        card = cards[i];
+        subject = card.querySelector('.card-titulo').textContent.toUpperCase();
+        service = card.querySelector('.card-servico').textContent.toUpperCase();
+        userName = card.querySelector('.card-responsavel').textContent.toUpperCase();
+
+        if (
+            subject.indexOf(filter) > -1 ||
+            service.indexOf(filter) > -1 ||
+            userName.indexOf(filter) > -1
+        ) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    }
+}
+
+</script>
+
 
 {% endblock %}
