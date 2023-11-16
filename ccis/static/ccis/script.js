@@ -136,6 +136,46 @@ document.addEventListener("DOMContentLoaded", function() {
 //---------------------------------------------------------------------------------------------------------------
 
 
+// Tratamento PAGINA DE REQUISIÇÕES SETORES ---------------------------------------------------------------------
+document.addEventListener("DOMContentLoaded", function() {
+
+    const menu_Inicial = document.getElementById("menu_inicial");
+    const informativo = document.getElementById("informativo");
+
+    const formulario1 = document.getElementById("formulario1");
+    const formulario2 = document.getElementById("formulario2");
+    const formulario3 = document.getElementById("formulario3");
+
+    //------------------------------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------------------------------
+    document.getElementById("btn_request_1").addEventListener("click", function() {
+        informativo.style.display = "none";
+        formulario1.style.display = "block";
+        formulario2.style.display = "none";
+        formulario3.style.display = "none";
+    });
+
+
+    document.getElementById("btn_request_2").addEventListener("click", function() {
+        informativo.style.display = "none";
+        formulario1.style.display = "none";
+        formulario2.style.display = "block";
+        formulario3.style.display = "none";
+    });
+
+
+    document.getElementById("btn_request_3").addEventListener("click", function() {
+        informativo.style.display = "none";
+        formulario1.style.display = "none";
+        formulario2.style.display = "none";
+        formulario3.style.display = "block";
+    });
+
+});
+//---------------------------------------------------------------------------------------------------------------
+
 
 // Tratamento do modal inativar_usuario da tabela da view usuário -----------------------------------------------
 $('.btn-inativar').click(function() {
@@ -143,7 +183,6 @@ var modalId = $(this).data('bs-target');
 var nomeUsuario = $(this).siblings('.modal-body').find('p').text().trim();
 $(modalId).find('.modal-body p').text(nomeUsuario);
 });
-
 
 
 // Redefinição de Senha -----------------------------------------------------------------------------------------
@@ -189,7 +228,6 @@ function handleScroll(event) {
 }
 
 
-
 // Configure o cabeçalho CSRF para solicitações AJAX ---------------------------------------------------------
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
@@ -221,7 +259,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 
 
 function loadCardInfo(cardId) {
@@ -256,37 +293,49 @@ function loadCardInfo(cardId) {
                 servicoInfo.text(` / ${data.card.service}`);
                 codInfo.text(`N° ${data.card.idCard}`);
 
-                // Preencha os campos relacionados ao solicitante
-                nomeSolicitante.text(data.card.solicitante_dados_pessoais.nomeCompleto);
-                sexoSolicitante.text(data.card.solicitante_dados_pessoais.sexo);
-                cpfSolicitante.text(data.card.solicitante_dados_pessoais.cpf);
 
-                // Verifique se a foto do solicitante existe
-                if (data.card.solicitante_dados_pessoais.foto) {
-                    fotoSolicitante.attr("src", data.card.solicitante_dados_pessoais.foto);
+                // Preencha os campos relacionados ao solicitante ---------------------
+                if (data.card.anonymous === false) {
+                    nomeSolicitante.text(data.card.solicitante_dados_pessoais.nomeCompleto);
+                    sexoSolicitante.text(data.card.solicitante_dados_pessoais.sexo);
+                    cpfSolicitante.text(data.card.solicitante_dados_pessoais.cpf);
+
+                    // Verifique se a foto do solicitante existe
+                    if (data.card.solicitante_dados_pessoais.foto) {
+                        fotoSolicitante.attr("src", data.card.solicitante_dados_pessoais.foto);
+                    } else {
+                        // Caso não haja foto, defina um valor padrão ou oculte o elemento
+                        fotoSolicitante.attr("src", "caminho_para_foto_padrao.jpg");
+                        // Ou, se preferir, esconda o elemento completamente
+                        // fotoSolicitante.hide();
+                    }
+
+                    // Preencha os campos relacionados ao solicitante
+                    loginSolicitante.text(data.card.solicitante.username);
+                    emailSolicitante.text(data.card.solicitante.email);
+
+                    // Verifique se o ramal do solicitante existe
+                    if (data.card.solicitante_contato.ramal) {
+                        ramalSolicitante.text(data.card.solicitante_contato.ramal);
+                    } else {
+                        ramalSolicitante.text("N/A");
+                    }
+
+                    // Verifique se a área do solicitante existe
+                    if (data.card.solicitante_profissional.area) {
+                        areaSolicitante.text(data.card.solicitante_profissional.area);
+                    } else {
+                        areaSolicitante.text("N/A");
+                    }
+
                 } else {
-                    // Caso não haja foto, defina um valor padrão ou oculte o elemento
-                    fotoSolicitante.attr("src", "caminho_para_foto_padrao.jpg");
-                    // Ou, se preferir, esconda o elemento completamente
-                    // fotoSolicitante.hide();
+                    // Oculte a ul
+                    $(".card-ul").hide();
+
+                    // Adicione um elemento p com a mensagem "Solicitante Anônimo"
+                    $(".card-body-custom").append("<p class='p-5'>Solicitante Anônimo</p>");
                 }
 
-                // Preencha os campos relacionados ao solicitante
-                loginSolicitante.text(data.card.solicitante.username);
-                emailSolicitante.text(data.card.solicitante.email);
-
-                // Verifique se o ramal do solicitante existe
-                if (data.card.solicitante_contato.ramal) {
-                    ramalSolicitante.text(data.card.solicitante_contato.ramal);
-                } else {
-                    ramalSolicitante.text("N/A");
-                }
-
-                if (data.card.solicitante_contato.ramal) {
-                    areaSolicitante.text(data.card.solicitante_profissional.area);
-                } else {
-                    areaSolicitante.text("N/A");
-                }
 
                 // Preencha o histórico de status
                 const statusHistory = modalBody.find(".container-buttons");
@@ -332,6 +381,10 @@ function loadCardInfo(cardId) {
 
                 atualizarListaMensagens(cardId);
 
+                //--------------------------------------------------------------------------------------------
+
+
+
 
                 //--------------------------------------------------------------------------------------------
 
@@ -358,7 +411,7 @@ function loadCardInfo(cardId) {
                 if (attachmentInput.files.length > 0) {
                     // Adicione o arquivo ao FormData
                     formData.append('attachment', attachmentInput.files[0]);
-    }
+                    }
 
                     $.ajax({
                         url: `/enviar_resposta/${cardId}`,
@@ -415,8 +468,14 @@ function loadCardInfo(cardId) {
                                     const colElementEsquerda = $("<div>").addClass("col-auto me-auto");
 
                                     // Adicionar o nome completo do autor
-                                    const nomeCompleto = `<h6>${message.remetente_first_name} ${message.remetente_last_name}</h6>`;
-                                    colElementEsquerda.append(nomeCompleto);
+                                    if (data.card.anonymous === false) {
+                                        const nomeCompleto = `<h6>${message.remetente_first_name} ${message.remetente_last_name}</h6>`;
+                                        colElementEsquerda.append(nomeCompleto);
+                                    } else {
+                                        const nomeCompleto = "<h6>Usuario Anônimo</h6>";
+                                        colElementEsquerda.append(nomeCompleto);
+                                    }
+
 
                                     // Verificar se há anexo
                                     if (message.attachment) {
@@ -829,13 +888,29 @@ function loadCardInfo(cardId) {
                 });
 
 
-
                 //------------------------------------------------------------------------------------------------------
 
                 // Verifique o status do card
-                if (data.card.status === "Triagem") {
+                if (data.card.setor_history.length > 0 && data.card.setor_history[0].status_atual === "Triagem") {
                     $("#encaminharCardButton").hide();
                     $("#ConcluirCardButton").hide();
+                    $("#avaliarAtendimentoButton").hide();
+                    $("#starButtons").css("display", "none");
+                }
+
+                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Em Atendimento") {
+
+                    $("#encaminharCardButton").show();
+                    $("#ConcluirCardButton").show();
+                    $("#avaliarAtendimentoButton").show();
+                    $("#starButtons").css("display", "block");
+
+                }
+
+                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Concluido") {
+
+                    $("#avaliarAtendimentoButton").show();
+                    $("#starButtons").css("display", "block");
 
                 }
 
@@ -881,7 +956,6 @@ function loadCardInfo(cardId) {
 }
 
 
-
 function registrarAtendimento(cardId) {
     console.log("ID do card:", cardId);
 
@@ -915,7 +989,6 @@ function registrarAtendimento(cardId) {
         }
     });
 }
-
 
 
 function enviarAvaliacao(cardId, rating) {
@@ -961,7 +1034,6 @@ $('.marcar-lida-notificacao').click(function() {
 });
 
 
-
 // Tratamento do recolhimento do menu lateral
 $(document).ready(function () {
     // Manipule o clique no botão para recolher ou expandir o menu com efeito de slide
@@ -971,3 +1043,4 @@ $(document).ready(function () {
 //        $('#toggleIcon').toggleClass('fa-solid fa-arrow-left');
     });
 });
+

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from .. models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,
                        Card, Notification)
-from ..forms import ModelFormRhMalotes
+from ..forms import ModelFormRhMalotes, ModelFormRhEtica
 
 
 # VIWER DO RH ----------------------------------------------------------------------------------------------------------
@@ -145,13 +145,20 @@ def colaboradores(request):
     return render(request, 'rh/colaboradores.html', contexto)
 # ----------------------------------------------------------------------------------------------------------------------
 
+
+@login_required(login_url="/login")
 def new_request_rh(request):
     form = ModelFormRhMalotes()
-    context = {'form': form, }
+    form_Etica = ModelFormRhEtica()
+
+    context = {'form': form,
+               'form_Etica': form_Etica,
+    }
 
     return render(request, "rh/new_request_rh.html", context)
 
 
+@login_required(login_url="/login")
 def salvar_malote_rh(request):
     if request.method == 'POST':
 
@@ -228,6 +235,76 @@ def salvar_malote_rh(request):
     else:
         form = ModelFormRhMalotes()
 
+    return render(request, 'rh/new_request_rh.html', {'form': form})@login_required(login_url="/login")
+
+
+@login_required(login_url="/login")
+def salvar_etica_rh(request):
+    if request.method == 'POST':
+
+        form = ModelFormRhEtica(request.POST, request.FILES)
+        anonymous = request.POST.get('anonymous')
+
+        if form.is_valid():
+            card = form.save(commit=False)
+            card.solicitante = request.user
+
+            if anonymous == 'True':
+                card.anonymous = anonymous
+                card.save()
+
+            else:
+                card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=3),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Gestão de Pessoas",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+            descricao = request.POST.get('descricao')
+
+            # Salvar a descrição no campo message do MessageHistory
+            message_history = MessageHistory(
+                card=card,
+                remetente=request.user,
+                message=descricao,
+                attachment=attachment,
+            )
+            message_history.save()
+
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
+
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        description=f"{card.solicitante} Abri uma nova Solicitação",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
+
+        return redirect('rh_home')
+
+    else:
+        form = ModelFormRhEtica()
+
     return render(request, 'rh/new_request_rh.html', {'form': form})
 
 
@@ -263,6 +340,8 @@ def processos_rh(request):
                         card_count_concluido += 1
                     elif cardsetorhistory.status_atual == "Finalizado":
                         card_count_finalizado += 1
+
+        print(card.anonymous)
 
         context = {
             'cards': cards,

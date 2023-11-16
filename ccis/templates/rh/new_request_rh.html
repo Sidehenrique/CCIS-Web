@@ -9,7 +9,7 @@
     <div class="row">
 
         <!-- Menu -------------------------------->
-        <div id="menu-inicial" class="col-3 menu-request">
+        <div id="menu_inicial" class="col-3 menu-request">
 
             <div class="">
 
@@ -20,9 +20,16 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-key"></i>
                             Malotes
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                            Violação de Ética
                         </a>
                     </li>
 
@@ -52,8 +59,9 @@
 
 
         <!-- Informativo ------------------------->
-        <div id="informativoTI" class="col menu-request m-0 p-5">
+        <div id="informativo" class="col menu-request m-0 p-5">
             <h6>Orientações para abertura de chamado - 4155. Gestão de Pessoas</h6>
+
             <p>
                 Pontos a serem observados durante a abertura de chamado:
                 - Detalhar bem a sua solicitação.
@@ -64,6 +72,7 @@
             </p>
 
             <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -72,7 +81,7 @@
                             Malote
                         </button>
                     </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse show"
+                    <div id="flush-collapseOne" class="accordion-collapse collapse"
                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
@@ -83,6 +92,40 @@
                         </div>
                     </div>
                 </div>
+
+                 <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                aria-controls="flush-collapseTwo">
+                            Comissão de Ética do Sicoob
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse show"
+                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExampleTwo">
+                        <div class="accordion-body">
+                            <ul>
+                                <li><h6>Registre sua Ocorrência</h6></li>
+                                <p>É assegurado o tratamento confidencial à ocorrência registrada e a proteção da identidade,
+bem como das informações relativas à apuração das ocorrências, caso assim escolha na abertura do chamado.
+Aquele que de boa-fé manifestar-se quanto à possíveis violações ao Pacto de Ética
+e/ou Programa de Integridade não sofrerá retaliações.</p>
+                                <li>o quê? (descrição da situação COM REFERÊNCIA AO PACTO DE ÉTICA
+                                    (disponível <a href="https://www.sicoob.com.br/documents/1279641/109706781/Pacto+de+E%CC%81tica.pdf" target="_blank">aqui</a>)<br> e/ou do Programa de Integridade (disponível
+                                    <a  href="https://www.sicoob.com.br/diretorio/assets/programa_integridade/#page/12" target="_blank">aqui</a>)</li>
+                                <li>quem? (nome das pessoas/organizações envolvidas)</li>
+                                <li>quando? (data em que aconteceu, acontece ou acontecerá o ocorrido)</li>
+                                <li>onde? (local do ocorrido)</li>
+                                <li>por que? (a causa ou motivo)</li>
+                                <li>evidências ou documentos/informações que podem ser relevantes</li>
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -90,7 +133,7 @@
 
 
         <!-- Formulário de Malotes -------------------------->
-        <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
+        <div id="formulario1" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
 
 
@@ -169,8 +212,71 @@
             <!-- CheckBox list -------------------------->
 
         </div>
+
+        <div id="formulario2" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE VIOLAÇÃO OA PACTO DE ÉTICA</h5>
+
+            <!-- Formulário de Etica -------------------------->
+            <form action="{% url 'salvar_etica_rh' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ form_Etica.assunto }}
+                        </div>
+
+                        <div class="mt-3">
+                            <label class="required-label">Categoria da ocorrência:</label>
+                            {{ form_Etica.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Descrição:</label>
+                            {{ form_Etica.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Anexar arquivo:</label>
+                            {{ form_Etica.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                    <!-- segunda col --------------------------->
+                    <div class="col">
+
+                        <h6 class="required-label">Escolha um tipo de identificação:</h6>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="anonymous" id="anonymous" value="True"
+                                   type="checkbox">
+                            <label class="form-check-label" for="AtestadoMedico">Anônimo?</label>
+                        </div>
+
+                    </div>
+                    <!-- segunda col -------------------------->
+
+                </div>
+            </form>
+            <!-- CheckBox list -------------------------->
+
+        </div>
+
     </div>
-    <!-- Formulário de Acessos -------------------------->
+    <!-- Formulário -------------------------->
 
 
 </div>

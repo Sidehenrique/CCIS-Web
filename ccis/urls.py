@@ -102,6 +102,7 @@ urlpatterns = [
     path('new_request_rh', rh.new_request_rh, name='new_request_rh'),
     path('salvar_malote_rh', rh.salvar_malote_rh, name='salvar_malote_rh'),
     path('processos_rh', rh.processos_rh, name='processos_rh'),
+    path('salvar_etica_rh', rh.salvar_etica_rh, name='salvar_etica_rh'),
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request_ti', ti.new_request_ti, name='new_request_ti'),

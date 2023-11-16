@@ -697,6 +697,38 @@ class ModelFormRhMalotes(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment',)
 
 
+class ModelFormRhEtica(forms.ModelForm):
+
+
+    CHOICES_Assunto = [
+        ('Violações ao Pacto de Ética', 'Violações ao Pacto de Ética'),
+    ]
+
+    CHOICES_Service = [
+        ('', ''),
+        ('Descumprimento de leis, políticas, normas ou definições estratégicas', 'Descumprimento de leis, políticas, normas ou definições estratégicas'),
+        ('Destruição, danos ou mau uso do patrimônio da empresa', 'Destruição, danos ou mau uso do patrimônio da empresa'),
+        ('Desvio de conduta ou comportamento', 'Desvio de conduta ou comportamento'),
+        ('Home office', 'Home office'),
+        ('Ocorrências de fraudes', 'Ocorrências de fraudes'),
+        ('Outras ocorrências', 'Outras ocorrências'),
+        ('Promoções, benefícios dos empregados e horas-extras', 'Promoções, benefícios dos empregados e horas-extras'),
+        ('recebimento de brindes, favorecimentos ou conflito de interesses', 'recebimento de brindes, favorecimentos ou conflito de interesses'),
+        ('Uso ou tráfico de substâncias proibidas', 'Uso ou tráfico de substâncias proibidas'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Service, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
+                                required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
 class ModelFormSecretariaMalotes(forms.ModelForm):
 
 
