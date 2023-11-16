@@ -530,8 +530,7 @@ class MessageHistory(models.Model):
     remetente = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
-    attachment = models.FileField(upload_to='chat/', null=True, blank=True)
-
+    attachment = models.ImageField(upload_to='chat/', null=True, blank=True)  # Alterado para ImageField
     def __str__(self):
         return self.message
 

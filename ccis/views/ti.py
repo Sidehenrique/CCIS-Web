@@ -1,12 +1,12 @@
 from django.db.models import Prefetch
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from ccis.forms import ModelFormNotebook
-from ..models import dadosPessoais, Card, MessageHistory, CardSetorHistory, Notebook, CustomGroupInfo, SectorButtons, \
+from ..models import Card, MessageHistory, CardSetorHistory, Notebook, CustomGroupInfo, SectorButtons, \
     Notification
-from ..forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI
+from ..forms import modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI, modelFormDesenvolvimentoTI
 
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
@@ -69,9 +69,11 @@ def ti_home(request):
 def new_request_ti(request):
     acessos = modelFormAcessosTI()
     equipamentos = modelFormEquipamentosTI()
+    desenvolvimento = modelFormDesenvolvimentoTI()
     servicos = modelFormSevicosTI()
 
-    contexto = {'acessos': acessos, 'equipamentos': equipamentos, 'servicos': servicos}
+    contexto = {'acessos': acessos, 'equipamentos': equipamentos, 'servicos': servicos,
+                'desenvolvimento': desenvolvimento}
 
     return render(request, 'ti/new_request.html', contexto)
 
@@ -195,7 +197,69 @@ def request_equipamentos_ti(request):
             return redirect('ti_home')
 
     else:
-        form = modelFormAcessosTI()
+        form = modelFormEquipamentosTI()
+
+    return render(request, 'ti/new_request.html', {'form': form})
+
+
+@login_required(login_url="/login")
+def request_desenvolvimento_ti(request):
+    if request.method == 'POST':
+        form = modelFormDesenvolvimentoTI(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=2),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Tecnologia",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+
+            descricao = form.cleaned_data.get('descricao')
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
+
+            return redirect('ti_home')
+
+    else:
+        form = modelFormDesenvolvimentoTI()
 
     return render(request, 'ti/new_request.html', {'form': form})
 
@@ -247,7 +311,7 @@ def request_servicos_ti(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} abriu uma nova solicitação",
+                            description=f"{card.solicitante} Abriu uma nova solicitação",
                             subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
@@ -256,7 +320,7 @@ def request_servicos_ti(request):
 
             return redirect('ti_home')
     else:
-        form = modelFormAcessosTI()
+        form = modelFormSevicosTI()
 
     return render(request, 'ti/new_request.html', {'form': form})
 

@@ -28,13 +28,13 @@
     <nav class="navbar align-center mb-2 " style="background-color:white">
         <div class="container-fluid pe-1 alert-container">
 
-            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE SOLICITAÇÕES</p>
+            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> MINHAS SOLICITAÇÕES</p>
 
             <div class="navbar-nav-wrap-content-end" style="position: relative;">
                 <form class="d-flex">
                     <!-- input de pesquisa ----------------------->
                     <input class="form-control me-2" type="search" placeholder="Pesquisar"
-                           aria-label="Search" id="inputUser" onkeyup="filterTable()">
+                           aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
 
                     <!-- Botão Novo Usuário ---------------------->
                     <button class=""
@@ -42,17 +42,16 @@
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target=""
-                            data-bs-whatever="@mdo"
-                            onclick="filterTable()">
+                            data-bs-whatever="@mdo">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </form>
             </div>
 
         </div>
-
     </nav>
     <!-- Pesquisa pro -------------------------->
+
 
 
     <!-- cabeçalho ------------------------------->
@@ -101,7 +100,7 @@
 
 
     <!-- Processo -------------------------------->
-    <div class="row ms-0 me-0">
+    <div class="row ms-0 me-0" id="tabelaProcessos">
 
         <!-- Triagem ----------------------------->
         <div class="col me-3 overflow-auto processo-colum pt-2">
@@ -790,7 +789,7 @@
                                 </li>
 
 
-                                <li  id="reabrirChamado" class="li-menu-request mt-1" style="display: none">
+                                <li id="reabrirChamado" class="li-menu-request mt-1" style="display: none">
                                     <a type="button" id="reabrirChamadoButton"
                                        class="modal-processo-link btn-finish" aria-current="page">
                                         <i class="fa-solid fa-power-off"></i>
@@ -861,5 +860,35 @@
 
 
 </div>
+
+<script>
+    function filterProcesses() {
+        // Captura o valor digitado no campo de pesquisa
+        var input = document.getElementById('inputUser');
+        var filter = input.value.toUpperCase();
+
+        // Captura os elementos de coluna de processo (cada estágio)
+        var processColumns = document.querySelectorAll('.processo-colum');
+
+        // Loop por cada coluna de processo para filtrar os processos dentro delas
+        processColumns.forEach(column => {
+            var processes = column.getElementsByClassName('processo-card');
+
+            // Loop pelos processos na coluna e exibe/oculta com base no filtro
+            Array.from(processes).forEach(process => {
+                var textData = process.textContent || process.innerText;
+                if (textData.toUpperCase().indexOf(filter) > -1) {
+                    process.style.display = "";
+                } else {
+                    process.style.display = "none";
+                }
+            });
+        });
+    }
+
+    // Adiciona um ouvinte de eventos para acionar a função de filtro ao digitar
+    var inputField = document.getElementById('inputUser');
+    inputField.addEventListener('keyup', filterProcesses);
+</script>
 
 {% endblock %}

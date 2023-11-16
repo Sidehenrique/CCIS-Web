@@ -1636,3 +1636,50 @@ status-negativo{
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
 }
 /*-- new_request_retaguarda ------------*/
+
+/*-- Mais Negócios --------------------*/
+
+.meu-botao {
+    display: inline-block;
+    white-space: nowrap;
+    padding:10px;
+    width: 100%;
+    display: flex; /* Usa flexbox para alinhar conteúdo */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    font-size: 16px;
+    color: #fff;
+    background-color: #27DEBF;
+    border: 2px solid transparent;
+    border-radius: 25px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.meu-botao:hover {
+    animation: pulse 1s ease infinite;
+    color: black;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.linha-vertical {
+    border: none;
+    border-left: 2px solid #000; /* Estilo da linha */
+    height: 100px; /* Altura da linha vertical */
+    margin: 0 20px; /* Espaçamento em relação a outros elementos */
+}
+
+/*-- Mais Negócios --------------------*/
