@@ -891,32 +891,70 @@ function loadCardInfo(cardId) {
                 //------------------------------------------------------------------------------------------------------
 
                 // Verifique o status do card
-                if (data.card.setor_history.length > 0 && data.card.setor_history[0].status_atual === "Triagem") {
-                    $("#encaminharCardButton").hide();
-                    $("#ConcluirCardButton").hide();
-                    $("#avaliarAtendimentoButton").hide();
+                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Triagem") {
+                    $("#compartilharCardButton").show();
+                    $("#priorizarCardButton").show();
+                    $("#enviarMensagemButton").show();
                     $("#starButtons").css("display", "none");
+                    $("#reabrirChamado").css("display", "none");
+                    $("#avaliarAtendimentoButton").hide();
+                    $("#registrarAtendimentoButton").show();
+                    $("#encaminharCardButton").hide();
+                    $("#transferirCardButton").show();
+                    $("#ConcluirCardButton").hide();
                 }
-
+//
+//
                 if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Em Atendimento") {
 
+                    $("#compartilharCardButton").show();
+                    $("#priorizarCardButton").show();
+                    $("#enviarMensagemButton").show();
+                    $("#starButtons").css("display", "none");
+                    $("#reabrirChamado").css("display", "none");
+                    $("#avaliarAtendimentoButton").hide();
+                    $("#registrarAtendimentoButton").hide();
                     $("#encaminharCardButton").show();
+                    $("#transferirCardButton").hide();
                     $("#ConcluirCardButton").show();
-                    $("#avaliarAtendimentoButton").show();
-                    $("#starButtons").css("display", "block");
 
                 }
+//
+//
+                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Emcaminhado") {
 
+                    $("#compartilharCardButton").show();
+                    $("#priorizarCardButton").show();
+                    $("#enviarMensagemButton").show();
+                    $("#starButtons").css("display", "none");
+                    $("#reabrirChamado").css("display", "none");
+                    $("#avaliarAtendimentoButton").hide();
+                    $("#registrarAtendimentoButton").show();
+                    $("#encaminharCardButton").show();
+                    $("#transferirCardButton").show();
+                    $("#ConcluirCardButton").hide();
+
+                }
+//
+//
                 if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Concluido") {
 
-                    $("#avaliarAtendimentoButton").show();
+                    $("#compartilharCardButton").show();
+                    $("#priorizarCardButton").hide();
+                    $("#enviarMensagemButton").show();
                     $("#starButtons").css("display", "block");
+                    $("#reabrirChamado").css("display", "none");
+                    $("#avaliarAtendimentoButton").show();
+                    $("#registrarAtendimentoButton").hide();
+                    $("#encaminharCardButton").show();
+                    $("#transferirCardButton").hide();
+                    $("#ConcluirCardButton").hide();
 
                 }
 
 
                 // Verifique o status do card
-                if (data.card.status === "Finalizado") {
+                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Finalizado") {
                     // Ocultar botões quando o card estiver em "Finalizado"
                     $("#compartilharCardButton").hide();
                     $("#priorizarCardButton").hide();
@@ -1044,3 +1082,35 @@ $(document).ready(function () {
     });
 });
 
+
+$(document).ready(function () {
+        function filtrarCardsRecentes() {
+            console.log("Iniciando a filtragem dos cards...");
+
+            var hoje = new Date();
+
+            $('#pro_finalizado .processo-link').each(function () {
+                var dataCriacao = new Date($(this).find('#dataCriacao').text().trim());
+                var diferencaDias = Math.floor((hoje - dataCriacao) / (1000 * 60 * 60 * 24));
+
+                console.log("Data de criação do card:", dataCriacao);
+                console.log("Diferença de dias:", diferencaDias);
+
+                if (diferencaDias > 5) {
+                    console.log("Escondendo o card devido à diferença de dias maior que 5");
+                    $(this).hide();
+                }
+            });
+
+            console.log("Filtragem concluída.");
+        }
+
+        // Chame a função após a renderização dos cards
+        filtrarCardsRecentes();
+
+        // Exemplo de como você pode chamar a função ao clicar em um botão
+        $('#seuBotaoDeFiltrar').on('click', function () {
+            console.log("Botão de filtro clicado.");
+            filtrarCardsRecentes();
+        });
+    });

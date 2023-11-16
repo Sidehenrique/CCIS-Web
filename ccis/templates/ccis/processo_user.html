@@ -111,7 +111,7 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid processo-link mb-3"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -190,7 +190,7 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid processo-link mb-3"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -269,7 +269,7 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid processo-link mb-3"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -348,7 +348,7 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid processo-link mb-3"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -420,14 +420,14 @@
         <!-- Concluído --------------------------->
 
         <!-- Finalizado -------------------------->
-        <div class="col overflow-auto processo-colum pt-2">
+        <div class="col overflow-auto processo-colum pt-2"  id="pro_finalizado">
 
             {% for card in cards %}
             {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid processo-link mb-3"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -478,11 +478,11 @@
 
                     <div class="row" style="color:#818181; font-size:13px">
 
-                        <div class="col-auto me-auto">
+                        <div class="col-auto me-auto" id="dataCriacao">
                             <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
-                        <div class="col-auto">
+                        <div class="col-auto" id="horaCriacao">
                             <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
@@ -491,6 +491,7 @@
                 </div>
             </a>
             <!-- card ---------------------------->
+
             {% endif %}
             {% endif %}
             {% endfor %}

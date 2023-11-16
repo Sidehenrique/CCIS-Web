@@ -1,5 +1,6 @@
 import requests
 from django.db.models import Prefetch
+from datetime import timedelta, datetime, timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
@@ -1070,8 +1071,6 @@ def history_request(request):
     return render(request, 'ccis/history_request.html', context)
 
 
-def get_card_details(request):
-    card_id = request.GET.get('card_id')
 def get_card_details(request, card_id):
     try:
         card = Card.objects.get(id=card_id)
