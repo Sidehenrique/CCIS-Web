@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
-from ..forms import ModelFormPCMalotes
+from ..forms import modelFormPowerPC
 
 
 @login_required(login_url="/login")
@@ -64,16 +64,18 @@ def controladoria_home(request):
 
 @login_required(login_url="/login")
 def new_request_PC(request):
-    form = ModelFormPCMalotes()
-    context = {'form': form, }
+
+    power = modelFormPowerPC()
+
+    context = {'power': power,}
 
     return render(request, "controladoria/new_request_PC.html", context)
 
 
 @login_required(login_url="/login")
-def request_acessos_PC(request):
+def request_power_PC(request):
     if request.method == 'POST':
-        form = ModelFormPCMalotes(request.POST, request.FILES)
+        form = modelFormPowerPC(request.POST, request.FILES)
         if form.is_valid():
 
             card = form.save(commit=False)
@@ -87,7 +89,7 @@ def request_acessos_PC(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Performace Corporativa",  # Setor atual
+                setor_atual="Marketing",  # Setor atual
             )
             history_entry.save()
 
@@ -124,12 +126,12 @@ def request_acessos_PC(request):
                         )
                         notification.save()
 
-            return redirect('controladoria_home')
+            return redirect('marketing_home')
 
     else:
-        form = ModelFormPCMalotes()
+        form = modelFormPowerPC()
 
-    return render(request, 'controladoria/new_request_PC.html', {'form': form})
+    return render(request, 'controladoria/new_request_PC.html', {'form': form,})
 
 
 @login_required(login_url="/login")

@@ -9,7 +9,7 @@
     <div class="row">
 
         <!-- Menu -------------------------------->
-        <div id="menu-inicial" class="col-3 menu-request">
+        <div id="menu_inicial" class="col-3 menu-request">
 
             <div class="">
 
@@ -20,9 +20,23 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-key"></i>
-                            A Designar
+                        <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-comment"></i>
+                            Acessoria
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-desktop"></i>
+                            Comunicação Digital
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-pen-nib"></i>
+                            Criação gráfica
                         </a>
                     </li>
 
@@ -50,9 +64,8 @@
         </div>
         <!-- Menu -------------------------------->
 
-
         <!-- Informativo ------------------------->
-        <div id="informativoTI" class="col menu-request m-0 p-5">
+        <div id="informativo" class="col menu-request m-0 p-5">
             <h6>Orientações para abertura de chamado - 4155. Marketing</h6>
             <p>
                 Pontos a serem observados durante a abertura de chamado:
@@ -64,36 +77,80 @@
             </p>
 
             <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="true"
                                 aria-controls="flush-collapseOne">
-                            A Designar
+                            Acessoria
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse show"
                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>A Designar</li>
+                                <li>Apoio em roteiro para vídeo</li>
+                                <li>Cobertura de eventos (apoio)</li>
+                                <li>Cobertura fotográfica</li>
+                                <li>Criação de release</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restante dos itens com as classes modificadas -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTow">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTow" aria-expanded="false"
+                                aria-controls="flush-collapseTow">
+                            Comunicação Digital
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTow" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingTow" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Anúncio nas redes sociais</li>
+                                <li>Criação de artes e textos para posts</li>
+                                <li>Envio de e-mail marketing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adicione classes similares aos outros itens -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTree" aria-expanded="false"
+                                aria-controls="flush-collapseTree">
+                            Criação gráfica
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingTree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Adaptação de peças</li>
+                                <li>Criação de campanhas</li>
+                                <li>Apresentação de power point</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
 
+
         </div>
         <!-- Informativo ------------------------->
 
+        <!-- Formulário de Acessoria -------------------------->
+        <div id="formulario1" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">Formulario Acessoria</h5>
 
-        <!-- Formulário de Malotes -------------------------->
-        <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">A Designar</h5>
-
-
-            <!-- Formulário de Malotes -------------------------->
-            <form action="{% url 'request_acessos_MK' %}"
+            <form action="{% url 'request_acessoria_MK' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -105,21 +162,26 @@
                     <div class="col-7">
 
                         <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Retaguarda">
+                        <input type="hidden" name="ambiente" value="Marketing">
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ acessoria.assunto }}
+                        </div>
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
-                            {{ form.service }}
+                            {{ acessoria.service }}
                         </div>
 
                         <div class="mt-2">
                             <label class="">Descrição:</label>
-                            {{ form.descricao }}
+                            {{ acessoria.descricao }}
                         </div>
 
                         <div class="mt-2">
                             <label class="">Anexar arquivo:</label>
-                            {{ form.attachment }}
+                            {{ acessoria.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
@@ -132,12 +194,111 @@
             <!-- CheckBox list -------------------------->
 
         </div>
-    </div>
-    <!-- Formulário de Acessos -------------------------->
+        <!-- Formulário de Acessoria -------------------------->
 
+        <!-- Formulário de Acessoria -------------------------->
+        <div id="formulario2" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">Formulario de Comunicação Digital</h5>
+
+            <form action="{% url 'request_digital_MK' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="Marketing">
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ digital.assunto }}
+                        </div>
+
+                        <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ digital.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Descrição:</label>
+                            {{ digital.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Anexar arquivo:</label>
+                            {{ digital.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                </div>
+            </form>
+            <!-- CheckBox list -------------------------->
+
+        </div>
+        <!-- Formulário de Acessoria -------------------------->
+
+        <!-- Formulário de Acessoria -------------------------->
+        <div id="formulario3" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">Formulario Criação Gráfica</h5>
+
+            <form action="{% url 'request_gráfica_MK' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="Marketing">
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ grafica.assunto }}
+                        </div>
+
+                        <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ grafica.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Descrição:</label>
+                            {{ grafica.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Anexar arquivo:</label>
+                            {{ grafica.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                </div>
+            </form>
+            <!-- CheckBox list -------------------------->
+
+        </div>
+        <!-- Formulário de Acessoria -------------------------->
+
+    </div>
 
 </div>
-<!-- Conteúdo -------------------------------->
 
 
 {% endblock %}

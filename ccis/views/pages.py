@@ -84,10 +84,6 @@ def new_login_page(request):
 
 @login_required(login_url="/login")
 def solicitacao(request):
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
 
     user = request.user.username
     dados = User.objects.filter(username=user).select_related('dadosPessoais, profissional').values \
@@ -113,12 +109,6 @@ def solicitacao(request):
 @login_required(login_url="/login")
 def profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
 
     first_name = user.first_name if user.first_name else 'Não informado'
     last_name = user.last_name if user.last_name else ''
@@ -198,9 +188,9 @@ def profile(request, user_id):
 
     dados_cert = certificacao.objects.filter(usuario=user)
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
-    is_superadmin = log.is_superuser
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
+    is_superadmin = user.is_superuser
 
     dadosCards_cert = []
     for item in dados_cert:
@@ -209,7 +199,7 @@ def profile(request, user_id):
         conclusao = item.dataEmissao
 
         dadosCards_cert.append({
-            'id': log_id,
+            'id': user_id,
             'nome': nome,
             'instituicao': instituicao,
             'conclusao': conclusao,
@@ -226,7 +216,7 @@ def profile(request, user_id):
         conclusao = item.dataConclusao
 
         dadosCards_esc.append({
-            'id': log_id,
+            'id': user_id,
             'entidade': entidade,
             'curso': curso,
             'graduacao': graduacao,
@@ -234,9 +224,8 @@ def profile(request, user_id):
             'conclusao': conclusao,
         })
 
-    contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName,
-                'logLast': logLast, 'log': log,
-                'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
+    contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name,
+                 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
                 'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
                 'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc, 'User': request.user,
                 'is_superadmin': is_superadmin, 'group_gestao': group_gestao, 'groupControle': groupControle}
@@ -397,15 +386,8 @@ def conta(request):
     # user = get_object_or_404(User, id=user_id)
     user = request.user
 
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
 
     first_name = user.first_name
     last_name = user.last_name
@@ -428,9 +410,8 @@ def conta(request):
     mid = ModelFormMidia(instance=pk_dados)
 
     context = {'dados': dados, 'first_name': first_name, 'last_name': last_name,
-               'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao': group_gestao,
-               'is_superadmin': is_superadmin, 'groupControle': groupControle,
+                'groupControle': groupControle,
                'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid}
 
     if request.method == 'GET':
@@ -1059,13 +1040,11 @@ def reabrir_card(request, card_id):
         return JsonResponse({'success': False, 'message': 'Requisição inválida'})
 
 
-@login_required(login_url="/login")
 def history_request(request):
-    cards = Card.objects.all()
+    cards = Card.objects.prefetch_related('messagehistory_set').all()
 
     context = {
         'cards': cards,
-
     }
 
     return render(request, 'ccis/history_request.html', context)
