@@ -9,7 +9,7 @@
     <div class="row">
 
         <!-- Menu -------------------------------->
-        <div id="menu-inicial" class="col-3 menu-request">
+        <div id="menu_inicial" class="col-3 menu-request">
 
             <div class="">
 
@@ -20,9 +20,9 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-key"></i>
-                            A Designar
+                            Serviços
                         </a>
                     </li>
 
@@ -52,7 +52,7 @@
 
 
         <!-- Informativo ------------------------->
-        <div id="informativoTI" class="col menu-request m-0 p-5">
+        <div id="informativo" class="col menu-request m-0 p-5">
             <h6>Orientações para abertura de chamado - 4155. Performace Corporativa</h6>
             <p>
                 Pontos a serem observados durante a abertura de chamado:
@@ -69,31 +69,77 @@
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseOne" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
-                            A Designar
+                            Power BI
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse show"
                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>A Designar!</li>
+                                <li>Criação de painel</li>
+                                <li>Ajuste</li>
+                                <li>Erros</li>
+                                <li>Sugestões</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+                <!-- Restante dos itens com as classes modificadas -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTow">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTow" aria-expanded="false"
+                                aria-controls="flush-collapseTow">
+                            Lista de Propensos
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTow" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingTow" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Criação Lista de Propensos</li>
+                                <li>Ajuste</li>
+                                <li>Erros</li>
+                                <li>Sugetões</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adicione classes similares aos outros itens -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTree" aria-expanded="false"
+                                aria-controls="flush-collapseTree">
+                            Relatórios
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingTree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Criação de Relatórios</li>
+                                <li>Ajuste</li>
+                                <li>Erros</li>
+                                <li>Sugestões</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
         <!-- Informativo ------------------------->
 
 
-        <!-- Formulário -------------------------->
-        <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">A Designar</h5>
+        <!-- Formulário de Power BI -------------------------->
+        <div id="formulario1" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">Formulario Power BI</h5>
 
-
-            <!-- Formulário -------------------------->
-            <form action="{% url 'request_acessos_PC' %}"
+            <form action="#"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -101,37 +147,44 @@
 
                 <div class="row p-3 ">
 
-                    <!-- forms col -------------------------->
+                    <!-- primeira col -------------------------->
                     <div class="col-7">
 
                         <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Retaguarda">
+                        <input type="hidden" name="ambiente" value="Performace Corporativa">
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ power.assunto }}
+                        </div>
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
-                            {{ form.service }}
+                            {{ power.service }}
                         </div>
 
                         <div class="mt-2">
                             <label class="">Descrição:</label>
-                            {{ form.descricao }}
+                            {{ power.descricao }}
                         </div>
 
                         <div class="mt-2">
                             <label class="">Anexar arquivo:</label>
-                            {{ form.attachment }}
+                            {{ power.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- forms col -------------------------->
+                    <!-- primeira col -------------------------->
 
                 </div>
             </form>
-            <!-- Formulário end -------------------------->
+            <!-- CheckBox list -------------------------->
 
         </div>
+        <!-- Formulário de Power BI -------------------------->
+
     </div>
     <!-- Formulário de Acessos -------------------------->
 

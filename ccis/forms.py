@@ -488,6 +488,107 @@ class modelFormSevicosTI(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment')
 
 
+# ESTOQUE Performace Corporativa  -------------------------------------------------------------->
+
+class modelFormPowerPC(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Criação de painel', 'Criação de painel'),
+        ('Ajuste', 'Ajuste'),
+        ('Erros', 'Erros'),
+        ('Sugestões', 'Sugestões'),
+    ]
+
+    CHOICES_Assunto = [
+        ('Power BI', 'Power BI'),
+        ('Lista de Propensos', 'Lista de Propensos'),
+        ('Relatórios', 'Relatórios'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+# ESTOQUE Marketing  -------------------------------------------------------------->
+
+class modelFormAcessoriaMK(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Apoio em roteiro para vídeo', 'Apoio em roteiro para vídeo'),
+        ('Cobertura de eventos (apoio)', 'Cobertura de eventos (apoio)'),
+        ('Cobertura fotográfica', 'Cobertura fotográfica'),
+        ('Criação de release', 'Criação de release'),
+    ]
+
+    CHOICES_Assunto = [
+        ('Assessoria', 'Assessoria'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormDigitalMK(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Anúncio nas redes sociais', 'Anúncio nas redes sociais'),
+        ('Criação de artes e textos para posts', 'Criação de artes e textos para posts'),
+        ('Envio de e-mail marketing', 'Envio de e-mail marketing'),
+    ]
+
+    CHOICES_Assunto = [
+        ('Comunicação Digital', 'Comunicação Digital'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormGraficaMK(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Adaptação de peças', 'Adaptação de peças'),
+        ('Criação de campanhas', 'Criação de campanhas'),
+        ('Apresentação de power point', 'Apresentação de power point'),
+    ]
+
+    CHOICES_Assunto = [
+        ('Criação gráfica', 'Criação gráfica'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+
 # ESTOQUE TI  -------------------------------------------------------------->
 
 class ModelFormNotebook(forms.ModelForm):
@@ -995,4 +1096,6 @@ class ModelFormSIAMalotes(forms.ModelForm):
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
 

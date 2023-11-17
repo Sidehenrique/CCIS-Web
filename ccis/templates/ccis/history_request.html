@@ -4,10 +4,8 @@
 {% block conteudo %}
 
 <div class="container-fluid scrollable-content">
-
     <div class="row mt-2">
-
-        <!-- Menu -------------------------------->
+        <!-- Menu de filtragem -------------------------------->
         <div class="col-1 menu-request p-2">
             <h6 style="text-align: center;" class="pt-3 pb-2">FILTRO</h6>
             <!--Botões----------------------->
@@ -17,64 +15,80 @@
                         Todos
                     </a>
                 </li>
-
-                <li class="li-novo-solicit">
-                    <a href="" class="link-solicit">
-                        Abertos
-                    </a>
-                </li>
-
-                <li class="li-novo-solicit">
-                    <a href="" class="link-solicit">
-                        Fechados
-                    </a>
-                </li>
-
-                <li class="li-novo-solicit">
-                    <a href="" class="link-solicit">
-                        Concluído
-                    </a>
-                </li>
+                <!-- Adicione os outros filtros aqui -->
             </ul>
-            <!--Botões end----------------------->
+            <!--Botões de filtragem end----------------------->
         </div>
         <!-- Menu -------------------------------->
 
-
-
-        <!--Solicitações--------------------->
+        <!-- Solicitações ------------------------->
         <div class="col-3 menu-request p-0">
             <h6 class="mb-4 pt-4 ps-2">SOLICITAÇÕES</h6>
-
             {% for card in cards %}
-            <!--bottons solicit--------------------->
-            <div class="">
-                <a href="" class="list-group-item list-group-item-action" aria-current="true"
-                   data-card-id="{{ card.id }}">
+            <div style="text-decoration: none;" class="list-group-item" id="btn_request_{{ card.id }}"
+                 data-card-id="{{ card.id }}">
+                <a href="#" class="list-group-item-action" aria-current="true">
                     <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-2">{{ card.assunto }} / {{ card.service }} </h6>
-                        <div class="" style="font-size: 13px;">
-                            {{ card.dataCriacao|timesince }} Atrás
-                        </div>
+                        <h6 class="mb-2">{{ card.assunto }} / {{ card.service }}</h6>
+                        <div style="font-size: 13px;">{{ card.dataCriacao|timesince }} Atrás</div>
                     </div>
-
                     <small class="mb-2">Departamento {{ card.cardsetorhistory_set.first.setor_atual }}</small>
                 </a>
             </div>
-            <!--bottons solicit end--------------------->
             {% endfor %}
-
         </div>
-        <!--Solicitações--------------------->
+        <!-- Solicitações ------------------------->
 
-        <!--Campo de visualização--------------------->
-        <div id="formulario-content" class="col menu-request ">
+        <!-- Campo de visualização ---------------->
+        <div id="formulario1" class="col menu-request" style="display: none;">
+            <!-- header -->
+            <div class="modal-header">
+                <h5 class="modal-title me-1" id="assuntoInfo"></h5>
+                <span class="ms-2" style="color: gray;" id="servicoInfo"></span>
+                <span class="ms-2" style="color: gray;" id="departamentoInfo"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- header -->
 
-            <h6 style="border-bottom: 1px solid #ccc; padding-bottom: 23px;"></h6>
-
+            <!-- Exibição das mensagens -->
+            <div class="card-message">
+                <ul id="cardMessages">
+                    <!-- Aqui aparecerão as mensagens -->
+                </ul>
+            </div>
         </div>
-        <!--Campo de visualização--------------------->
+        <!-- Campo de visualização ---------------->
+
     </div>
 </div>
 
 {% endblock %}
+
+<script>
+    fetch(`/get_card_details/${cardId}/`)
+    .then(response => response.json())
+    .then(data => {
+        const formulario1 = document.getElementById("formulario1");
+        const assuntoInfo = formulario1.querySelector('#assuntoInfo');
+        const servicoInfo = formulario1.querySelector('#servicoInfo');
+        const departamentoInfo = formulario1.querySelector('#departamentoInfo');
+        const cardMessages = formulario1.querySelector('#cardMessages');
+
+        assuntoInfo.textContent = data.card.assunto;
+        servicoInfo.textContent = data.card.service;
+        departamentoInfo.textContent = `Departamento ${data.card.cardsetorhistory_set.first.setor_atual}`;
+
+        cardMessages.innerHTML = '';
+
+        data.messages.forEach(message => {
+            const li = document.createElement('li');
+            li.textContent = message.message;
+            cardMessages.appendChild(li);
+        });
+
+        formulario1.style.display = "block"; // Exibindo o campo de visualização
+    })
+    .catch(error => {
+        console.error('Erro ao buscar detalhes do card:', error);
+    });
+</script>
