@@ -1097,45 +1097,38 @@ $('.marcar-lida-notificacao').click(function() {
 });
 
 
-// Tratamento do recolhimento do menu lateral
-$(document).ready(function () {
-    // Manipule o clique no botão para recolher ou expandir o menu com efeito de slide
-    $('#toggleMenu').click(function () {
-        $('#menu_lateral').toggleClass('col-1 col-2');
-        $('.menu_oculto_link').toggleClass('menu_oculto_2'); // Adicione a classe hide-text aos textos do menu
-//        $('#toggleIcon').toggleClass('fa-solid fa-arrow-left');
+//// Tratamento do recolhimento do menu lateral
+//$(document).ready(function () {
+//    // Manipule o clique no botão para recolher ou expandir o menu com efeito de slide
+//    $('#toggleMenu').click(function () {
+//        $('#menu_lateral').toggleClass('col-1 col-2');
+//        $('.menu_oculto_link').toggleClass('menu_oculto_2'); // Adicione a classe hide-text aos textos do menu
+////        $('#toggleIcon').toggleClass('fa-solid fa-arrow-left');
+//    });
+//});
+
+
+<!-- Script para lidar com a animação do recolhimento do menu -->
+
+  $(document).ready(function () {
+    // Verifica se há um estado salvo no localStorage
+    var menuState = localStorage.getItem('menuState');
+
+    if (menuState === 'active') {
+      $('#menu_lateral').addClass('active');
+      $('#toggleMenu i').addClass('fa-times');
+      $('#menu_lateral a').addClass('menu-toggle');
+    }
+
+    $('#toggleMenu').on('click', function () {
+      $('#menu_lateral').toggleClass('active');
+      // Alterna a classe do ícone conforme o estado do menu
+      $(this).find('i').toggleClass('fa-bars fa-times');
+      // Adiciona ou remove a classe menu-toggle aos itens do menu lateral
+      $('#menu_lateral a').toggleClass('menu-toggle');
+
+      // Salva o estado no localStorage
+      var currentState = $('#menu_lateral').hasClass('active') ? 'active' : 'inactive';
+      localStorage.setItem('menuState', currentState);
     });
-});
-
-
-$(document).ready(function () {
-        function filtrarCardsRecentes() {
-            console.log("Iniciando a filtragem dos cards...");
-
-            var hoje = new Date();
-
-            $('#pro_finalizado .processo-link').each(function () {
-                var dataCriacao = new Date($(this).find('#dataCriacao').text().trim());
-                var diferencaDias = Math.floor((hoje - dataCriacao) / (1000 * 60 * 60 * 24));
-
-                console.log("Data de criação do card:", dataCriacao);
-                console.log("Diferença de dias:", diferencaDias);
-
-                if (diferencaDias > 5) {
-                    console.log("Escondendo o card devido à diferença de dias maior que 5");
-                    $(this).hide();
-                }
-            });
-
-            console.log("Filtragem concluída.");
-        }
-
-        // Chame a função após a renderização dos cards
-        filtrarCardsRecentes();
-
-        // Exemplo de como você pode chamar a função ao clicar em um botão
-        $('#seuBotaoDeFiltrar').on('click', function () {
-            console.log("Botão de filtro clicado.");
-            filtrarCardsRecentes();
-        });
-    });
+  });

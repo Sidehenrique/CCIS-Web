@@ -40,10 +40,6 @@
                     <img src="{% static 'ccis/logonav.png' %}" alt="logo" width="47" height="54"
                          class="d-inline-block align-text-center;">
                 </a>
-
-<!--                <button id="toggleMenu" class="action_button_menu">-->
-<!--                    <i class="fa-solid fa-bars"></i>-->
-<!--                </button>-->
                 <!-- End Logo do Menu --------------------------------------------------------------------------------->
 
 
@@ -345,51 +341,39 @@
 
             <div class="row">
 
-                <!-- Menu Lateral ------------------------------->
-                <div id="menu_lateral"
-                     class="col-1 position-relative ps-0 pe-0 menu-background"
-                     style="padding-top:80px;">
+                <div id="menu_lateral" class="position-relative ps-0 pe-0">
 
+                    <button id="toggleMenu" class="menu-toggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
 
+                    <ul>
 
-                    <!-- Menu -->
-                    <ul class="ul-lista-novo">
-
-                        <!-- Departamentos -->
-                        <li class="li-lista-novo">
-                            <a href="{% url 'departamentos' %}"
-                               class="menu_oculto_link" aria-current="page">
+                        <li>
+                            <a href="{% url 'departamentos' %}" aria-current="page">
                                 <i class="fa-solid fa-network-wired"></i>
                                 <small>Departamentos</small>
                             </a>
                         </li>
 
-                        <!-- Gestão e Controle -->
                         {% if controle %}
-                        <li class="li-lista-novo">
-
-                            <a href="{% url 'gestaoControle' %}"
-                               class="menu_oculto_link" aria-current="page">
+                        <li>
+                            <a href="{% url 'gestaoControle' %}" aria-current="page">
                                 <i class="fa-solid fa-handshake"></i>
                                 <small>Gestão e Controle</small>
                             </a>
                         </li>
                         {% endif %}
 
-                        <!-- Gestão de Metas -->
-                        <li class="li-lista-novo">
-                            <a href="{% url 'gestaoNegocios' %}"
-                               class="menu_oculto_link" aria-current="page">
+                        <li>
+                            <a href="{% url 'gestaoNegocios' %}" aria-current="page">
                                 <i class="fa-solid fa-bullseye"></i>
                                 <small>Gestão de Negócios</small>
                             </a>
                         </li>
 
-                        <!-- coopera -->
-                        <li class="li-lista-novo">
-
-                            <a href="{% url 'coopera' %}"
-                               class="menu_oculto_link" aria-current="page">
+                        <li>
+                            <a href="{% url 'coopera' %}" aria-current="page">
                                 <i class="fa-solid fa-infinity"></i>
                                 <small>Cooperar</small>
                             </a>
@@ -398,15 +382,10 @@
                     </ul>
 
                 </div>
-                <!-- End Menu Lateral --------------------------->
 
 
                 <!-- Conteúdo ----------------------------------->
                 <div id="conteudo_container" class="col mt-lg-0 position-relative p-0">
-
-                    <button id="toggleMenu" class="action_button_menu">
-                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                    </button>
 
                     <!-- Modal foto e banner -------------------->
                     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModal"
