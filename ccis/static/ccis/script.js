@@ -487,46 +487,29 @@ function loadCardInfo(cardId) {
                                     } else {
                                         const nomeCompleto = "<h6>Usuario Anônimo</h6>";
                                         colElementEsquerda.append(nomeCompleto);
-                                    }
-
-
-//                                    // Verificar se há anexo
-//                                    if (message.attachment) {
-//                                        // Se houver anexo, criar um link para download
-//                                        const attachmentLink = $("<a>")
-//                                            .attr("href", message.attachment)
-//                                            .attr("download", "anexo.pdf") // Define um nome padrão para o anexo
-//                                            .html('<button><i class="fa-solid fa-circle-down"></i> </button>');
-//
-//                                        // Adicionar o link de anexo ao container
-//                                        colElementEsquerda.append(attachmentLink);
-//                                    }
-
+                                    }''
 
                                     // Verificar se há anexo
-if (message.attachment) {
-    // Obter o nome original do arquivo a partir do campo 'name' (se disponível)
-    const attachmentName = message.attachment.name || message.attachment.split('/').pop();
+                                    if (message.attachment) {
+                                        // Obter o nome original do arquivo a partir do campo 'name' (se disponível)
+                                        const attachmentName = message.attachment.name || message.attachment.split('/').pop();
 
-    // Certificar-se de que o nome não é 'null' ou 'undefined'
-    if (attachmentName && attachmentName !== 'null' && attachmentName !== 'undefined') {
-        // Criar um link para download
-        const attachmentLink = $("<a>")
-            .attr("href", message.attachment)
-            .attr("download", attachmentName)
-            .html('<button title="' + attachmentName + '"><i class="fa-solid fa-circle-down"></i> Baixar</button>');
+                                        // Certificar-se de que o nome não é 'null' ou 'undefined'
+                                        if (attachmentName && attachmentName !== 'null' && attachmentName !== 'undefined') {
+                                            // Criar um link para download
+                                            const attachmentLink = $("<a>")
+                                                .attr("href", message.attachment)
+                                                .attr("download", attachmentName)
+                                                .html('<button title=" ' + attachmentName
+                                                + ' "style="padding:2px 5px; border:none; border-radius:20px"><i class="fa-solid fa-circle-down"></i> '
+                                                + attachmentName + '</button>');
 
-        // Adicionar o link de anexo ao container
-        colElementEsquerda.append(attachmentLink);
-    } else {
-        console.error("Não foi possível extrair o nome do arquivo.");
-    }
-}
-
-
-
-
-
+                                            // Adicionar o link de anexo ao container
+                                            colElementEsquerda.append(attachmentLink);
+                                        } else {
+                                            console.error("Não foi possível extrair o nome do arquivo.");
+                                        }
+                                    }
 
                                     const colElementDireita = $("<div>").addClass("col-auto");
                                     const dataElement = $(`<small>${dataFormatada} ${horarioFormatado}</small>`);
