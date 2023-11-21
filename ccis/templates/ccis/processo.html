@@ -126,6 +126,7 @@
                         </div>
 
                         <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
                             <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
@@ -135,17 +136,26 @@
 
 
                     <div class="col-auto mb-2">
+
                         <p class="card-responsavel" style="color:#818181;">
-                            {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% else %}
-                            <i class="fa-solid fa-user-slash"></i>
-                            Aguardando ...
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% endif %}
-
-
+                            {% endif %}
+                            {% endif %}
                         </p>
+
                     </div>
 
 
@@ -188,7 +198,7 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -200,12 +210,13 @@
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="card-titulo mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
                         <div class="col-auto mb-1">
-                            <span class="card-setor processo-tag-setor">{{ card.cardsetorhistory_set.first.setor_atual }}</span>
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -214,17 +225,26 @@
 
 
                     <div class="col-auto mb-2">
+
                         <p class="card-responsavel" style="color:#818181;">
-                            {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% else %}
-                            <i class="fa-solid fa-user-slash"></i>
-                            Aguardando ...
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% endif %}
-
-
+                            {% endif %}
+                            {% endif %}
                         </p>
+
                     </div>
 
 
@@ -248,6 +268,7 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
 
@@ -266,7 +287,7 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -278,11 +299,12 @@
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="card-titulo mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
                         <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
                             <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
@@ -292,17 +314,26 @@
 
 
                     <div class="col-auto mb-2">
+
                         <p class="card-responsavel" style="color:#818181;">
-                            {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% else %}
-                            <i class="fa-solid fa-user-slash"></i>
-                            Aguardando ...
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% endif %}
-
-
+                            {% endif %}
+                            {% endif %}
                         </p>
+
                     </div>
 
 
@@ -326,6 +357,7 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
 
@@ -344,7 +376,7 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -356,11 +388,12 @@
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="card-titulo mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
                         <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
                             <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
@@ -370,17 +403,26 @@
 
 
                     <div class="col-auto mb-2">
+
                         <p class="card-responsavel" style="color:#818181;">
-                            {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% else %}
-                            <i class="fa-solid fa-user-slash"></i>
-                            Aguardando ...
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% endif %}
-
-
+                            {% endif %}
+                            {% endif %}
                         </p>
+
                     </div>
 
 
@@ -404,6 +446,7 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
 
@@ -422,7 +465,7 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
@@ -434,11 +477,12 @@
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="card-titulo mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
                         <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
                             <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
@@ -448,17 +492,26 @@
 
 
                     <div class="col-auto mb-2">
+
                         <p class="card-responsavel" style="color:#818181;">
-                            {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% else %}
-                            <i class="fa-solid fa-user-slash"></i>
-                            Aguardando ...
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% endif %}
-
-
+                            {% endif %}
+                            {% endif %}
                         </p>
+
                     </div>
 
 
@@ -482,6 +535,7 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
 

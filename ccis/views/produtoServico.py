@@ -68,7 +68,7 @@ def request_produto_servico(request):
 
     return render(request, "produtoServico/request_produto_servico.html", context)
 
-
+@login_required(login_url="/login")
 def salvar_malote_PS(request):
     if request.method == 'POST':
 
@@ -93,7 +93,7 @@ def salvar_malote_PS(request):
             )
             history_entry.save()
 
-            texto2 = request.POST["descricao"]
+            texto2 = request.POST["descricao-dinamica"]
 
             attachment = request.FILES.get('attachment')
 
@@ -101,8 +101,8 @@ def salvar_malote_PS(request):
             itens_selecionados = []
             for item in ['item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', 'item8', 'item9', 'item10',
                          'item11', 'item12', 'item13', 'item14', 'item15', 'item16', 'item17', 'item18',
-                         'item19','item20','item21', 'item22', 'item23', 'item24', 'item25', 'item26', 'item27',
-                         'item28','item29','item30', 'item31']:
+                         'item19', 'item20', 'item21', 'item22', 'item23', 'item24', 'item25', 'item26', 'item27',
+                         'item28', 'item29', 'item30', 'item31']:
                 if request.POST.get(item):
                     itens_selecionados.append(request.POST.get(item))
 
@@ -145,10 +145,12 @@ def salvar_malote_PS(request):
 
             return redirect('produtoServico_home')
 
+        else:
+            print(form.errors)
+
     else:
         form = ModelFormPS()
-
-    return render(request, 'produtoServico/request_produto_servico.html', {'form': form})
+        return render(request, 'produtoServico/request_produto_servico.html', {'form': form})
 
 
 @login_required(login_url="/login")

@@ -111,7 +111,7 @@
 
                         <div class="mb-2" id="service-dinamico">
                             <label class="required-label">Informe o lacre:</label>
-                            <input class="input-new" name="service-dinamico" type="text">
+                            {{ form.service }}
                         </div>
 
                         <div id="descricao-dinamica" class="mb-3">
@@ -125,7 +125,6 @@
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
-
 
                     </div>
                     <!-- primeira col -------------------------->
@@ -348,8 +347,10 @@
 
                         <!-- segunda col -------------------------->
                     </div>
+
             </form>
             <!-- CheckBox list -------------------------->
+
         </div>
     </div>
     <!-- Formulário de Acessos -------------------------->

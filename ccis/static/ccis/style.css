@@ -1247,6 +1247,13 @@ status-negativo{
 
 
 /*-- processos ----------------------------*/
+.foto_card {
+    border-radius:50%;
+    cursor:pointer;
+    width:30px;
+    height:30px;
+}
+
 
 .processo-cabecalho{
     padding:5px;
