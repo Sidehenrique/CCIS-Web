@@ -178,7 +178,7 @@
         <div id="formulario1" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">Formulario Power BI</h5>
 
-            <form action="#"
+            <form action="{% url 'request_power_PC' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -191,11 +191,6 @@
 
                         <!-- Alterar para o setor que a solicitações esta sendo aberta -->
                         <input type="hidden" name="ambiente" value="Performace Corporativa">
-
-                        <div class="">
-                            <label class="required-label">Assunto:</label>
-                            {{ power.assunto }}
-                        </div>
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
@@ -228,7 +223,7 @@
         <div id="formulario2" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">Formulario Lista de Propensos</h5>
 
-            <form action="#"
+            <form action="{% url 'request_propenso_PC' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -241,11 +236,6 @@
 
                         <!-- Alterar para o setor que a solicitações esta sendo aberta -->
                         <input type="hidden" name="ambiente" value="Performace Corporativa">
-
-                        <div class="">
-                            <label class="required-label">Assunto:</label>
-                            {{ propenso.assunto }}
-                        </div>
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
@@ -278,7 +268,7 @@
         <div id="formulario3" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">Formulario Relatórios</h5>
 
-            <form action="#"
+            <form action="{% url 'request_relatorio_PC' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -291,11 +281,6 @@
 
                         <!-- Alterar para o setor que a solicitações esta sendo aberta -->
                         <input type="hidden" name="ambiente" value="Performace Corporativa">
-
-                        <div class="">
-                            <label class="required-label">Assunto:</label>
-                            {{ relatorio.assunto }}
-                        </div>
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
@@ -328,7 +313,7 @@
         <div id="formulario4" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">Formulario Pesquisa/Estudos</h5>
 
-            <form action="#"
+            <form action="{% url 'request_estudo_PC' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -341,11 +326,6 @@
 
                         <!-- Alterar para o setor que a solicitações esta sendo aberta -->
                         <input type="hidden" name="ambiente" value="Performace Corporativa">
-
-                        <div class="">
-                            <label class="required-label">Assunto:</label>
-                            {{ estudo.assunto }}
-                        </div>
 
                         <div class="">
                             <label class="required-label">Serviço:</label>

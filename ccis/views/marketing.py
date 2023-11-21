@@ -74,6 +74,10 @@ def new_request_market(request):
 @login_required(login_url="/login")
 def request_acessoria_MK(request):
     if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Acessoria'
+
         form = modelFormAcessoriaMK(request.POST, request.FILES)
         if form.is_valid():
 
@@ -136,6 +140,10 @@ def request_acessoria_MK(request):
 @login_required(login_url="/login")
 def request_digital_MK(request):
     if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Comunicação Digital'
+
         form = modelFormDigitalMK(request.POST, request.FILES)
         if form.is_valid():
 
@@ -198,6 +206,10 @@ def request_digital_MK(request):
 @login_required(login_url="/login")
 def request_gráfica_MK(request):
     if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Criação gráfica'
+
         form = modelFormGraficaMK(request.POST, request.FILES)
         if form.is_valid():
 

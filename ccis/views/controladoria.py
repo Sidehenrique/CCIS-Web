@@ -78,6 +78,10 @@ def new_request_PC(request):
 @login_required(login_url="/login")
 def request_power_PC(request):
     if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Power BI'
+
         form = modelFormPowerPC(request.POST, request.FILES)
         if form.is_valid():
 
@@ -94,11 +98,13 @@ def request_power_PC(request):
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
                 setor_atual="Performace Corporativa",  # Setor atual
             )
+            print(history_entry)
             history_entry.save()
 
             attachment = request.FILES.get('attachment')
 
             descricao = form.cleaned_data.get('descricao')
+
             if descricao:
                 message_history = MessageHistory(
                     card=card,
@@ -140,6 +146,10 @@ def request_power_PC(request):
 @login_required(login_url="/login")
 def request_propenso_PC(request):
     if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Lista de Propenso'
+
         form = modelFormPropensoPC(request.POST, request.FILES)
         if form.is_valid():
 
@@ -202,6 +212,10 @@ def request_propenso_PC(request):
 @login_required(login_url="/login")
 def request_estudo_PC(request):
     if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Estudo/Pesquisa'
+
         form = modelFormEstudoPC(request.POST, request.FILES)
         if form.is_valid():
 
@@ -264,6 +278,10 @@ def request_estudo_PC(request):
 @login_required(login_url="/login")
 def request_relatorio_PC(request):
     if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Relatórios'
+
         form = modelFormRelatorioPC(request.POST, request.FILES)
         if form.is_valid():
 

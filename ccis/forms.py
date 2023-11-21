@@ -597,7 +597,7 @@ class modelFormAcessoriaMK(forms.ModelForm):
     ]
 
     CHOICES_Assunto = [
-        ('Assessoria', 'Assessoria'),
+        ('Acessoria', 'Acessoria'),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))

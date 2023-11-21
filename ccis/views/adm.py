@@ -4,7 +4,6 @@ from django.db.models import Prefetch, F, Subquery, OuterRef
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
 from ..forms import ModelFormAdmMalotes
-from django.db.models import Max
 
 
 @login_required(login_url="/login")
