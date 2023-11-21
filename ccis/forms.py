@@ -493,7 +493,7 @@ class modelFormSevicosTI(forms.ModelForm):
 class modelFormPowerPC(forms.ModelForm):
     CHOICES_Servico = [
         ('', ''),
-        ('Criação de painel', 'Criação de painel'),
+        ('Criação de Painel', 'Criação de Painel'),
         ('Ajuste', 'Ajuste'),
         ('Erros', 'Erros'),
         ('Sugestões', 'Sugestões'),
@@ -501,8 +501,77 @@ class modelFormPowerPC(forms.ModelForm):
 
     CHOICES_Assunto = [
         ('Power BI', 'Power BI'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormPropensoPC(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Criação de Propensos', 'Criação de Propensos'),
+        ('Ajuste', 'Ajuste'),
+        ('Erros', 'Erros'),
+        ('Sugestões', 'Sugestões'),
+    ]
+
+    CHOICES_Assunto = [
         ('Lista de Propensos', 'Lista de Propensos'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormRelatorioPC(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Criação de Relatório', 'Criação de Relatório'),
+        ('Ajuste', 'Ajuste'),
+        ('Erros', 'Erros'),
+        ('Sugestões', 'Sugestões'),
+    ]
+
+    CHOICES_Assunto = [
         ('Relatórios', 'Relatórios'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormEstudoPC(forms.ModelForm):
+    CHOICES_Servico = [
+        ('', ''),
+        ('Estudo de Viabilidade de Região', 'Estudo de Viabilidade de Região'),
+        ('Estudo de Rentabilidade de Produto ou Serviço', 'Estudo de Rentabilidade de Produto ou Serviço'),
+        ('Pesquisa de Mercado', 'Pesquisa de Mercado'),
+    ]
+
+    CHOICES_Assunto = [
+        ('Pesquisas/Estudos', 'Pesquisas/Estudos'),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
@@ -1041,11 +1110,12 @@ class ModelFormPCMalotes(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment',)
 
 
-class ModelFormGestaoRiscoMalotes(forms.ModelForm):
+class ModelFormGestaoRisco(forms.ModelForm):
+
 
 
     CHOICES_Assunto = [
-        ('Malote', 'Malote'),
+        ('Análise de PLD/FT', 'Análise de PLD/FT'),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
@@ -1057,7 +1127,7 @@ class ModelFormGestaoRiscoMalotes(forms.ModelForm):
 
     class Meta:
         model = Card
-        fields = ('assunto', 'service', 'descricao', 'attachment',)
+        fields = ('assunto', 'service', 'descricao', 'attachment')
 
 
 class ModelFormPaDigitalMalotes(forms.ModelForm):

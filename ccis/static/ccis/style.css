@@ -1574,12 +1574,20 @@ status-negativo{
 }
 
 .input-new {
-  width: 100%;
-  padding: 10px; /* Espaçamento interno do input */
-  border: 1px solid #ccc; /* Borda do input */
-  border-radius: 4px; /* Cantos arredondados */
-  font-size: 16px; /* Tamanho da fonte */
+  width: 100%; /* Altere o tamanho conforme necessário */
+  padding: 7px; /* Reduzi um pouco o padding para deixar mais estreito */
+  border: 1px solid #ccc; /* cinza para a borda */
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box; /* Mantém o tamanho total incluindo padding e borda */
 }
+
+.input-new:focus {
+  outline: none;
+  border-color: #66afe9; /* Altere a cor quando estiver focado, se desejar */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
+}
+
 
 .new-desc {
   width: 100%;
@@ -1610,10 +1618,6 @@ status-negativo{
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
 }
 
-.input-new:focus {
-  border-color: #007bff; /* Cor da borda quando focado */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
-}
 /*-- new_request_retaguarda ------------*/
 
 /*-- Mais Negócios --------------------*/
@@ -1664,48 +1668,60 @@ status-negativo{
 
 /*-- Mais Negócios --------------------*/
 
-
-
-
 #sidebar {
-      height: 100vh;
-      width: 70px; /* Largura inicial do menu recolhido */
-      position: fixed;
-      left: 0;
-      top: 0;
-      background-color: #333;
-      transition: all 0.3s;
-    }
+  height: 100vh;
+  width: 70px; /* Largura inicial do menu recolhido */
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #333;
+  transition: all 0.3s;
+}
 
-    #sidebar.active {
-      width: 200px; /* Largura expandida do menu ao ser aberto */
-    }
+#sidebar.active {
+  width: 200px; /* Largura expandida do menu ao ser aberto */
+}
 
-    #sidebar ul.components {
-      padding: 8px 0;
-    }
+#sidebar ul.components {
+  padding: 8px 0;
+}
 
-    #sidebar ul li {
-      padding: 10px;
-      font-size: 18px;
-      display: block;
-    }
+#sidebar ul li {
+  padding: 10px;
+  font-size: 18px;
+  display: block;
+}
 
-    #sidebar ul li a {
-      color: #fff;
-      text-decoration: none;
-    }
+#sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
 
-    #sidebar ul li:hover {
-      background: #555;
-    }
+#sidebar ul li:hover {
+  background: #555;
+}
 
-    #content {
-      margin-left: 70px; /* Ajuste de margem para conteúdo principal */
-      padding: 15px;
-    }
-
-
+#content {
+  margin-left: 70px; /* Ajuste de margem para conteúdo principal */
+  padding: 15px;
+}
 
 
+/*-- history request --------------------*/
+.item-action {
+    display: block;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    color: black;
+}
 
+.item-action:hover {
+    background-color: #f0f0f0;
+    color: #4FD1B8;
+}
+
+
+.item-action .mb-2,
+.item-action .mb-4 {
+    margin-bottom: 0;
+}
