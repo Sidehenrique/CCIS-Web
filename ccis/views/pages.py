@@ -620,46 +620,42 @@ def get_messages(request, card_id):
 def registrar_atendimento(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
 
-    if card.status != "Em Atendimento":
+    card.status = 'Em Atendimento'
+    card.responsavel = request.user
+    card.save()
 
-        card.status = 'Em Atendimento'
-        card.responsavel = request.user
-        card.save()
-
-        groups = request.user.groups.all()
-        if groups:
-            setor_atual = groups[0]  # Se o usuário estiver em apenas um grupo
-        else:
-            setor_atual = None
-
-        csh = CardSetorHistory.objects.get(idCardSetorHistory=card_id)
-
-        # Registre o histórico de movimentação
-        card_setor_history = CardSetorHistory(
-            setor_id=setor_atual.id,  # Defina o setor apropriado, se aplicável
-            card_id=card_id,
-            status_anterior=csh.status_atual,  # Atualize com o status anterior apropriado
-            status_atual="Em Atendimento",
-            setor_anterior=csh.setor_atual,  # Atualize com o setor anterior apropriado
-            setor_atual=setor_atual.name,  # Atualize com o setor atual apropriado
-            operador=request.user
-        )
-        card_setor_history.save()
-
-        # Crie uma notificação para informar o usuário do atendimento registrado
-        notification = Notification(
-            author=request.user,
-            description=f"Sua solicitação esta em Atendimento por {request.user.first_name} {request.user.last_name}",
-            subject=card.assunto + f" N°: {card.idCard}",
-            recipient=card.solicitante,  # O destinatário é o solicitante da questão
-            url='processos_user',  # URL da página atual
-        )
-        notification.save()
-
-        return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
-
+    groups = request.user.groups.all()
+    if groups:
+        setor_atual = groups[0]  # Se o usuário estiver em apenas um grupo
     else:
-        return JsonResponse({'success': False, 'message': 'Esse processo já esta em atendimento'})
+        setor_atual = None
+
+    historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+    # Registre o histórico de movimentação
+    card_setor_history = CardSetorHistory(
+        setor_id=setor_atual.id,
+        card_id=card_id,
+        status_anterior=historico.status_atual,
+        status_atual="Em Atendimento",
+        setor_anterior=historico.setor_atual,
+        setor_atual=setor_atual.name,
+        operador=request.user
+    )
+
+    card_setor_history.save()
+
+    # Crie uma notificação para informar o usuário do atendimento registrado
+    notification = Notification(
+        author=request.user,
+        description=f"Sua solicitação esta em Atendimento por {request.user.first_name} {request.user.last_name}",
+        subject=card.assunto + f" N°: {card.idCard}",
+        recipient=card.solicitante,  # O destinatário é o solicitante da questão
+        url='processos_user',  # URL da página atual
+    )
+    notification.save()
+
+    return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
 
 
 @login_required(login_url="/login")

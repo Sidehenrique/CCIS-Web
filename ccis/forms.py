@@ -758,12 +758,7 @@ class ModelFormNotebook(forms.ModelForm):
 
 class ModelFormRetaguardaMalotes(forms.ModelForm):
 
-
-    CHOICES_Assunto = [
-        ('Malote', 'Malote'),
-    ]
-
-    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    assunto = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
                                 required=False)
@@ -777,12 +772,7 @@ class ModelFormRetaguardaMalotes(forms.ModelForm):
 
 class ModelFormPS(forms.ModelForm):
 
-
-    CHOICES_Assunto = [
-        ('Malote', 'Malote'),
-    ]
-
-    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    assunto = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
                                 required=False)

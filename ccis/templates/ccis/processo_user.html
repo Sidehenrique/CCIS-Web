@@ -109,26 +109,26 @@
             {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
-            <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-3"
+             <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
-                <!-- Falta uma informação aqui referente ao id -->
 
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="col-7 mt-1 "> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
                         <div class="col-auto mb-1">
-                            <span class="processo-tag-setor">{{ card.cardsetorhistory_set.first.setor_atual }}</span>
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -137,28 +137,47 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;">
+
+                        <p class="card-responsavel" style="color:#818181;">
                             {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
                             {% else %}
                             <i class="fa-solid fa-user-slash"></i>
                             Aguardando ...
+
                             {% endif %}
-
-
                         </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
                             <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
@@ -171,6 +190,7 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
 
@@ -188,27 +208,26 @@
             {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
 
-            <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-3"
+             <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
 
-                <!-- Falta uma informação aqui referente ao id -->
-
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -217,28 +236,47 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;">
+
+                        <p class="card-responsavel" style="color:#818181;">
                             {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
                             {% else %}
                             <i class="fa-solid fa-user-slash"></i>
                             Aguardando ...
+
                             {% endif %}
-
-
                         </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
                             <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
@@ -251,8 +289,10 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
+
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -267,27 +307,26 @@
             {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
 
-            <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-3"
+             <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
 
-                <!-- Falta uma informação aqui referente ao id -->
-
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -296,28 +335,47 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;">
+
+                        <p class="card-responsavel" style="color:#818181;">
                             {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
                             {% else %}
                             <i class="fa-solid fa-user-slash"></i>
                             Aguardando ...
+
                             {% endif %}
-
-
                         </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
                             <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
@@ -330,8 +388,10 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
+
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -346,27 +406,26 @@
             {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
 
-            <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-3"
+             <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
 
-                <!-- Falta uma informação aqui referente ao id -->
-
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -375,28 +434,47 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;">
+
+                        <p class="card-responsavel" style="color:#818181;">
                             {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
                             {% else %}
                             <i class="fa-solid fa-user-slash"></i>
                             Aguardando ...
+
                             {% endif %}
-
-
                         </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
                             <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
@@ -409,8 +487,10 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
+
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -426,26 +506,25 @@
             {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-3"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
 
-                <!-- Falta uma informação aqui referente ao id -->
-
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -454,40 +533,60 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;">
+
+                        <p class="card-responsavel" style="color:#818181;">
                             {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
                             {% else %}
                             <i class="fa-solid fa-user-slash"></i>
                             Aguardando ...
+
                             {% endif %}
-
-
                         </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
-                        <div class="col-auto me-auto" id="dataCriacao">
+                        <div class="col-auto me-auto">
                             <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
-                        <div class="col-auto" id="horaCriacao">
+                        <div class="col-auto">
                             <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
 
