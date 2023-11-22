@@ -104,6 +104,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const formularioEquipamentos = document.getElementById("formularioEquipamentos");
     const formularioDesenvolvimento = document.getElementById("formularioDesenvolvimento");
     const formularioServicos = document.getElementById("formularioServicos");
+    const formularioCI = document.getElementById("formularioCI");
+    const formularioApontamentos = document.getElementById("formularioApontamentos");
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -115,6 +117,8 @@ document.addEventListener("DOMContentLoaded", function() {
         formularioEquipamentos.style.display = "none";
         formularioServicos.style.display = "none";
         formularioDesenvolvimento.style.display = "none";
+        formularioCI.style.display = "none";
+        formularioApontamentos.style.display = "none";
     });
 
 
@@ -124,8 +128,9 @@ document.addEventListener("DOMContentLoaded", function() {
         formularioEquipamentos.style.display = "block";
         formularioServicos.style.display = "none";
         formularioDesenvolvimento.style.display = "none";
+        formularioCI.style.display = "none";
+        formularioApontamentos.style.display = "none";
     });
-
 
     document.getElementById("btnServicos").addEventListener("click", function() {
         informativoTI.style.display = "none";
@@ -133,6 +138,8 @@ document.addEventListener("DOMContentLoaded", function() {
         formularioEquipamentos.style.display = "none";
         formularioServicos.style.display = "block";
         formularioDesenvolvimento.style.display = "none";
+        formularioCI.style.display = "none";
+        formularioApontamentos.style.display = "none";
     });
 
     document.getElementById("btnDesenvolvimento").addEventListener("click", function() {
@@ -141,7 +148,30 @@ document.addEventListener("DOMContentLoaded", function() {
         formularioEquipamentos.style.display = "none";
         formularioServicos.style.display = "none";
         formularioDesenvolvimento.style.display = "block";
+        formularioCI.style.display = "none";
+        formularioApontamentos.style.display = "none";
     });
+
+    document.getElementById("btnCI").addEventListener("click", function() {
+        informativoTI.style.display = "none";
+        formularioAcessos.style.display = "none";
+        formularioEquipamentos.style.display = "none";
+        formularioServicos.style.display = "none";
+        formularioDesenvolvimento.style.display = "none";
+        formularioCI.style.display = "block";
+        formularioApontamentos.style.display = "none";
+    });
+
+    document.getElementById("btnApontamentos").addEventListener("click", function() {
+        informativoTI.style.display = "none";
+        formularioAcessos.style.display = "none";
+        formularioEquipamentos.style.display = "none";
+        formularioServicos.style.display = "none";
+        formularioDesenvolvimento.style.display = "none";
+        formularioCI.style.display = "none";
+        formularioApontamentos.style.display = "block";
+    });
+
     //------------------------------------------------------------------------------------------------------------------
 
 });

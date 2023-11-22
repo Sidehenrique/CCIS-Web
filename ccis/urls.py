@@ -119,6 +119,8 @@ urlpatterns = [
     path('ti/estoque', ti.estoque, name='estoque'),
     path('ti/estoque/notebook', ti.notebook, name='notebook'),
     path('ti/processos_ti', ti.processos_ti, name='processos_ti'),
+    path('ti/request_ci_ti', ti.request_ci_ti, name='request_ci_ti'),
+    path('ti/request_apontamentos_ti', ti.request_apontamentos_ti, name='request_apontamentos_ti'),
 
     path('retaguarda_home', retaguarda.retaguarda_home, name='retaguarda_home'),
     path('new_request_retaguarda', retaguarda.new_request_retaguarda, name='new_request_retaguarda'),
