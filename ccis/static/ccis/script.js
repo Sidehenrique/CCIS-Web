@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const formulario1 = document.getElementById("formulario1");
     const formulario2 = document.getElementById("formulario2");
     const formulario3 = document.getElementById("formulario3");
+    const formulario4 = document.getElementById("formulario4");
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -167,6 +168,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario1.style.display = "block";
         formulario2.style.display = "none";
         formulario3.style.display = "none";
+        formulario4.style.display = "none";
     });
 
 
@@ -175,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario1.style.display = "none";
         formulario2.style.display = "block";
         formulario3.style.display = "none";
+        formulario4.style.display = "none";
     });
 
 
@@ -183,6 +186,15 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario1.style.display = "none";
         formulario2.style.display = "none";
         formulario3.style.display = "block";
+        formulario4.style.display = "none";
+    });
+
+    document.getElementById("btn_request_4").addEventListener("click", function() {
+        informativo.style.display = "none";
+        formulario1.style.display = "none";
+        formulario2.style.display = "none";
+        formulario3.style.display = "none";
+        formulario4.style.display = "block";
     });
 
 });
@@ -1347,3 +1359,53 @@ function GraficoBarra() {
     });
 }
 GraficoBarra();
+
+
+
+
+
+
+
+
+
+//history request
+
+const itemActions = document.querySelectorAll('.item-action');
+
+itemActions.forEach(item => {
+    item.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const cardId = item.getAttribute('data-card-id');
+
+        if (cardId) {
+            fetch(`/get_message_history/${cardId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // ... seu código existente para detalhesAssunto
+
+                    let detalhesMensagens = '';
+                    if (data && data.length > 0) {
+                        // Iterar sobre as mensagens para adicionar ao detalhesMensagens
+                        detalhesMensagens = data.map(msg => msg.message).join('<br>');
+                    } else {
+                        detalhesMensagens = 'Nenhuma mensagem encontrada';
+                    }
+
+                    // Restante do seu código para criar o HTML para exibir no campo de visualização
+
+                    // Atualizar o campo de visualização com as mensagens
+                    document.getElementById('detalhes-mensagens').innerHTML = detalhesMensagens;
+                })
+
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        } else {
+            console.error('ID do card não encontrado.');
+        }
+    });
+});
+
+
+

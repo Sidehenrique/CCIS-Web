@@ -4,57 +4,59 @@
 {% block conteudo %}
 
 <div class="container-fluid scrollable-content">
+
     <div class="row mt-2">
-        <!-- Menu de filtragem -------------------------------->
+
+        <!-- Menu de filtragem -------------------->
         <div class="col-1 menu-request p-2">
             <h6 style="text-align: center;" class="pt-3 pb-2">FILTRO</h6>
-            <!--Botões----------------------->
+
+            <!--Botões de filtragem start----------------------->
             <ul class="ul-novo-solicit mt-3 ">
                 <li class="li-novo-solicit">
                     <a href="" class="link-solicit">
                         Todos
                     </a>
                 </li>
-                <!-- Adicione os outros filtros aqui -->
             </ul>
             <!--Botões de filtragem end----------------------->
+
         </div>
-        <!-- Menu -------------------------------->
+        <!-- Menu de filtragem end ---------------->
 
         <!-- Solicitações ------------------------->
         <div class="col-3 menu-request p-0">
             <h6 class="mb-4 pt-4 ps-2">SOLICITAÇÕES</h6>
+
             {% for card in cards %}
-            <div style="text-decoration: none;" class="list-group-item" id="btn_request_{{ card.id }}"
-                 data-card-id="{{ card.id }}">
-                <a href="#" class="list-group-item-action" aria-current="true">
+
+            <a href="{% url 'get_message_history' card.idCard %}" class="item-action p-2"
+            id="solicitacao-{{ card.id }}" data-card-id="{{ card.idCard }}">
+
+                <div class="d-flex flex-column">
                     <div class="d-flex w-100 justify-content-between">
                         <h6 class="mb-2">{{ card.assunto }} / {{ card.service }}</h6>
                         <div style="font-size: 13px;">{{ card.dataCriacao|timesince }} Atrás</div>
                     </div>
                     <small class="mb-2">Departamento {{ card.cardsetorhistory_set.first.setor_atual }}</small>
-                </a>
-            </div>
+                    <small class="mb-2">N°{{ card.idCard }}</small>
+                </div>
+            </a>
+
             {% endfor %}
+
         </div>
         <!-- Solicitações ------------------------->
 
-        <!-- Campo de visualização ---------------->
-        <div id="formulario1" class="col menu-request" style="display: none;">
-            <!-- header -->
-            <div class="modal-header">
-                <h5 class="modal-title me-1" id="assuntoInfo"></h5>
-                <span class="ms-2" style="color: gray;" id="servicoInfo"></span>
-                <span class="ms-2" style="color: gray;" id="departamentoInfo"></span>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- header -->
 
-            <!-- Exibição das mensagens -->
-            <div class="card-message">
-                <ul id="cardMessages">
-                    <!-- Aqui aparecerão as mensagens -->
-                </ul>
+        <!-- Campo de visualização ---------------->
+        <div class="col menu-request">
+            <div class="visualizacao-solicitacao">
+                <h4>Detalhes da Solicitação</h4>
+                <div class="detalhes-solicitacao">
+                    <h5 id="detalhes-assunto"></h5>
+                    <p id="detalhes-mensagens"></p>
+                </div>
             </div>
         </div>
         <!-- Campo de visualização ---------------->
@@ -64,31 +66,6 @@
 
 {% endblock %}
 
-<script>
-    fetch(`/get_card_details/${cardId}/`)
-    .then(response => response.json())
-    .then(data => {
-        const formulario1 = document.getElementById("formulario1");
-        const assuntoInfo = formulario1.querySelector('#assuntoInfo');
-        const servicoInfo = formulario1.querySelector('#servicoInfo');
-        const departamentoInfo = formulario1.querySelector('#departamentoInfo');
-        const cardMessages = formulario1.querySelector('#cardMessages');
 
-        assuntoInfo.textContent = data.card.assunto;
-        servicoInfo.textContent = data.card.service;
-        departamentoInfo.textContent = `Departamento ${data.card.cardsetorhistory_set.first.setor_atual}`;
 
-        cardMessages.innerHTML = '';
 
-        data.messages.forEach(message => {
-            const li = document.createElement('li');
-            li.textContent = message.message;
-            cardMessages.appendChild(li);
-        });
-
-        formulario1.style.display = "block"; // Exibindo o campo de visualização
-    })
-    .catch(error => {
-        console.error('Erro ao buscar detalhes do card:', error);
-    });
-</script>

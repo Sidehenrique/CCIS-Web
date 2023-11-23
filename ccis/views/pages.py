@@ -611,7 +611,7 @@ def enviar_resposta(request, card_id):
 @api_view(['GET'])
 def get_messages(request, card_id):
     messages = MessageHistory.objects.filter(card__idCard=card_id)
-    message_serializer = MessageHistorySerializer(messages, many=True)  # Certifique-se de criar o serializador adequado
+    message_serializer = MessageHistorySerializer(messages, many=True)
 
     return Response(message_serializer.data)
 
@@ -1044,6 +1044,22 @@ def history_request(request):
     }
 
     return render(request, 'ccis/history_request.html', context)
+
+
+def get_message_history(request, card_id):
+    if card_id:
+        try:
+            card_id = int(card_id)
+            messages = MessageHistory.objects.filter(card_id=card_id).values('message')
+
+            messages_list = [{'message': msg['message']} for msg in messages]
+            return JsonResponse(messages_list, safe=False)
+
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({'error': 'Invalid card ID'}, status=400)
+    return JsonResponse({'error': 'Card ID not provided'}, status=400)
+
 
 
 def get_card_details(request, card_id):

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
-from ..forms import ModelFormGestaoRiscoMalotes
+from ..forms import ModelFormGestaoRisco
 
 @login_required(login_url="/login")
 def gestaoRisco_home(request):
@@ -62,8 +62,10 @@ def gestaoRisco_home(request):
 
 @login_required(login_url="/login")
 def new_request_risco(request):
-    form = ModelFormGestaoRiscoMalotes()
-    context = {'form': form, }
+
+    analise = ModelFormGestaoRisco()
+
+    context = {'analise': analise, }
 
     return render(request, "gestaorisco/new_request_risco.html", context)
 
@@ -71,7 +73,11 @@ def new_request_risco(request):
 @login_required(login_url="/login")
 def request_acessos_risco(request):
     if request.method == 'POST':
-        form = ModelFormGestaoRiscoMalotes(request.POST, request.FILES)
+
+        request.POST = request.POST.copy()
+        request.POST['assunto'] = 'Análise de PLD/FT'
+
+        form = ModelFormGestaoRisco(request.POST, request.FILES)
         if form.is_valid():
 
             card = form.save(commit=False)
@@ -90,8 +96,12 @@ def request_acessos_risco(request):
             history_entry.save()
 
             attachment = request.FILES.get('attachment')
-
             descricao = form.cleaned_data.get('descricao')
+            cpf = request.POST.get('cpf-cooperado')
+
+            if (cpf):
+                descricao += f"<br><br>CPF ou CNPJ do Cooperado: {cpf}<br>"
+
             if descricao:
                 message_history = MessageHistory(
                     card=card,
@@ -123,11 +133,12 @@ def request_acessos_risco(request):
                         notification.save()
 
             return redirect('gestaoRisco_home')
-
+        else:
+            print(form.errors)
     else:
-        form = ModelFormGestaoRiscoMalotes()
+        form = ModelFormGestaoRisco()
 
-    return render(request, 'gestaorisco/new_request_risco.html', {'form': form})
+    return render(request, 'gestaorisco/new_request_risco.html', {'form': form, 'cpf': cpf})
 
 
 @login_required(login_url="/login")
@@ -139,7 +150,7 @@ def processos_GR(request):
         )
 
         group = Group.objects.all()
-        setor = 'Gestão de RiscoGestão de Risco'
+        setor = 'Gestão de Risco'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0

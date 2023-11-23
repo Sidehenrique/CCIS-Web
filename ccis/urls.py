@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro, gestaoNegocios,
+from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro,
                     gestaoNegocios, gestaoControle, formularios, security, rh, pages, cooperar, ti, produtoServico,
                     gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, marketing, sia, gestaoRecursos)
 
@@ -31,6 +31,7 @@ urlpatterns = [
     path('history_request', pages.history_request, name='history_request'),
     path('get_card_details', pages.get_card_details, name='get_card_details'),
     path('notificacao_lida/<int:notification_id>', pages.notificacao_lida, name='notificacao_lida'),
+    path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
@@ -168,6 +169,9 @@ urlpatterns = [
     path('new_request_PC', controladoria.new_request_PC, name='new_request_PC'),
     path('processos_PC', controladoria.processos_PC, name='processos_PC'),
     path('request_power_PC', controladoria.request_power_PC, name='request_power_PC'),
+    path('request_propenso_PC', controladoria.request_propenso_PC, name='request_propenso_PC'),
+    path('request_relatorio_PC', controladoria.request_relatorio_PC, name='request_relatorio_PC'),
+    path('request_estudo_PC', controladoria.request_estudo_PC, name='request_estudo_PC'),
 
     path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
     path('request_acessos_risco', gestaoRisco.request_acessos_risco, name='request_acessos_risco'),

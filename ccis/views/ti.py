@@ -286,8 +286,8 @@ def request_servicos_ti(request):
             history_entry.save()
 
             attachment = request.FILES.get('attachment')
-
             descricao = form.cleaned_data.get('descricao')
+
             if descricao:
                 message_history = MessageHistory(
                     card=card,

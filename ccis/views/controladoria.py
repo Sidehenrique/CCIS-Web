@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
-from ..forms import modelFormPowerPC
+from ..forms import modelFormPowerPC, modelFormPropensoPC, modelFormRelatorioPC, modelFormEstudoPC
 
 
 @login_required(login_url="/login")
@@ -66,8 +66,11 @@ def controladoria_home(request):
 def new_request_PC(request):
 
     power = modelFormPowerPC()
+    propenso = modelFormPropensoPC()
+    relatorio = modelFormRelatorioPC()
+    estudo = modelFormEstudoPC()
 
-    context = {'power': power,}
+    context = {'power': power, 'propenso': propenso, 'relatorio': relatorio, 'estudo': estudo,}
 
     return render(request, "controladoria/new_request_PC.html", context)
 
@@ -75,6 +78,10 @@ def new_request_PC(request):
 @login_required(login_url="/login")
 def request_power_PC(request):
     if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Power BI'
+
         form = modelFormPowerPC(request.POST, request.FILES)
         if form.is_valid():
 
@@ -89,7 +96,141 @@ def request_power_PC(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Marketing",  # Setor atual
+                setor_atual="Performace Corporativa",  # Setor atual
+            )
+            print(history_entry)
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+
+            descricao = form.cleaned_data.get('descricao')
+
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
+
+            return redirect('controladoria_home')
+
+    else:
+        form = modelFormPowerPC()
+
+    return render(request, 'controladoria/new_request_PC.html', {'form': form,})
+
+
+@login_required(login_url="/login")
+def request_propenso_PC(request):
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Lista de Propenso'
+
+        form = modelFormPropensoPC(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=1),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Performace Corporativa",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+
+            descricao = form.cleaned_data.get('descricao')
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
+
+            return redirect('controladoria_home')
+
+    else:
+        form = modelFormPropensoPC()
+
+    return render(request, 'controladoria/new_request_PC.html', {'form': form,})
+
+
+@login_required(login_url="/login")
+def request_estudo_PC(request):
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Estudo/Pesquisa'
+
+        form = modelFormEstudoPC(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=1),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Performace Corporativa",  # Setor atual
             )
             history_entry.save()
 
@@ -129,7 +270,73 @@ def request_power_PC(request):
             return redirect('marketing_home')
 
     else:
-        form = modelFormPowerPC()
+        form = modelFormEstudoPC()
+
+    return render(request, 'controladoria/new_request_PC.html', {'form': form,})
+
+
+@login_required(login_url="/login")
+def request_relatorio_PC(request):
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Relatórios'
+
+        form = modelFormRelatorioPC(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=1),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Performace Corporativa",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+
+            descricao = form.cleaned_data.get('descricao')
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
+
+            return redirect('controladoria_home')
+
+    else:
+        form = modelFormRelatorioPC()
 
     return render(request, 'controladoria/new_request_PC.html', {'form': form,})
 
