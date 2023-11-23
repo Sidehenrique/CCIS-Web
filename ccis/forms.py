@@ -488,6 +488,52 @@ class modelFormSevicosTI(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment')
 
 
+class modelFormCITI(forms.ModelForm):
+    CHOICES_Servico = [
+        ('Controle Interno', 'Controle Interno'),
+        ('Auditoria CNAC', 'Auditoria CNAC'),
+        ('Risco Operacional', 'Risco Operacional'),
+
+    ]
+
+    CHOICES_Assunto = [
+        ('CI/CNAC/R.O', 'CI/CNAC/R.O'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormApontamentosTI(forms.ModelForm):
+    CHOICES_Servico = [
+        ('Controle Interno', 'Controle Interno'),
+        ('Auditoria CNAC', 'Auditoria CNAC'),
+        ('Risco Operacional', 'Risco Operacional'),
+
+    ]
+
+    CHOICES_Assunto = [
+        ('Assunto', 'Assunto'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
 # ESTOQUE Performace Corporativa  -------------------------------------------------------------->
 
 class modelFormPowerPC(forms.ModelForm):

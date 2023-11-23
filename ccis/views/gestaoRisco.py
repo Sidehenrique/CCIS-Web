@@ -138,7 +138,7 @@ def request_acessos_risco(request):
     else:
         form = ModelFormGestaoRisco()
 
-    return render(request, 'gestaorisco/new_request_risco.html', {'form': form, 'cpf': cpf})
+    return render(request, 'gestaorisco/new_request_risco.html', {'form': form})
 
 
 @login_required(login_url="/login")

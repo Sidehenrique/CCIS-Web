@@ -1732,3 +1732,9 @@ status-negativo{
 .item-action .mb-4 {
     margin-bottom: 0;
 }
+
+
+.card-apontamento {
+    background-color: red;
+    /* Outros estilos específicos para esse tipo de card */
+}
