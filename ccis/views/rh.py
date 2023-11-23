@@ -179,7 +179,7 @@ def salvar_malote_rh(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Gestão de Pessoas",  # Setor atual
+                setor_atual="Gestao de Pessoas",  # Setor atual
             )
             history_entry.save()
 
@@ -263,7 +263,7 @@ def salvar_etica_rh(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Gestão de Pessoas",  # Setor atual
+                setor_atual="Gestao de Pessoas",  # Setor atual
             )
             history_entry.save()
 
@@ -317,7 +317,7 @@ def processos_rh(request):
         )
 
         group = Group.objects.all()
-        setor = 'Gestão de Pessoas'
+        setor = 'Gestao de Pessoas'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0

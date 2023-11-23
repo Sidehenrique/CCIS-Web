@@ -1097,20 +1097,8 @@ $('.marcar-lida-notificacao').click(function() {
 });
 
 
-//// Tratamento do recolhimento do menu lateral
-//$(document).ready(function () {
-//    // Manipule o clique no botão para recolher ou expandir o menu com efeito de slide
-//    $('#toggleMenu').click(function () {
-//        $('#menu_lateral').toggleClass('col-1 col-2');
-//        $('.menu_oculto_link').toggleClass('menu_oculto_2'); // Adicione a classe hide-text aos textos do menu
-////        $('#toggleIcon').toggleClass('fa-solid fa-arrow-left');
-//    });
-//});
-
-
-<!-- Script para lidar com a animação do recolhimento do menu -->
-
-  $(document).ready(function () {
+//Menu -----------------------------
+$(document).ready(function () {
     // Verifica se há um estado salvo no localStorage
     var menuState = localStorage.getItem('menuState');
 
@@ -1132,3 +1120,230 @@ $('.marcar-lida-notificacao').click(function() {
       localStorage.setItem('menuState', currentState);
     });
   });
+
+
+$(document).ready(function() {
+        $('#calendario').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+
+            locale: 'pt-br',
+
+            // Adicione seus eventos ao calendário
+            events: [
+                {
+                    title: 'Férias do João',
+                    start: '2023-11-01',
+                    end: '2023-11-05'
+                },
+
+                {
+                    title: 'Férias do Henrique',
+                    start: '2023-11-01',
+                    end: '2023-11-15'
+                },
+            ]
+        });
+    });
+
+
+// Função para criar o gráfico
+function criarGrafico(data) {
+    // Obtenha o contexto do canvas
+    var ctx = document.getElementById('feriasChart').getContext('2d');
+
+    // Configurações do gráfico
+    var options = {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+
+    // Crie o gráfico de área
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+
+    // Calcular a média e exibi-la
+    var media = data.datasets[0].data.reduce((a, b) => a + b, 0) / data.datasets[0].data.length;
+    document.getElementById('mediaFerias').innerText = media.toFixed(2); // Exibe a média com 2 casas decimais
+}
+
+
+// Dados do gráfico de rosquinha
+function criarGraficoDeRosquinha() {
+    // Parte config ---------------------
+    var config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [10, 20, 30],
+                backgroundColor: ['red', 'green', 'blue']
+            }],
+            labels: ['Red', 'Green', 'Blue']
+        },
+
+        options: {
+            responsive: true,
+               plugins: {
+                  legend: {
+                    position: 'left',
+                  }
+               },
+
+            title: {
+                display: false,
+                text: 'Doughnut Chart'
+            },
+
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    };
+
+    // Parte setup --------------------------
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        window.myDoughnut = new Chart(ctx, config);
+    });
+
+    // Parte actions -----------------------
+    document.getElementById('randomizeData').addEventListener('click', function() {
+        config.data.datasets.forEach(function(dataset) {
+            dataset.data = dataset.data.map(function() {
+                return randomScalingFactor();
+            });
+        });
+
+        window.myDoughnut.update();
+    });
+
+    var colorNames = Object.keys(window.chartColors);
+    document.getElementById('addDataset').addEventListener('click', function() {
+        var newDataset = {
+            backgroundColor: [],
+            data: [],
+            label: 'New dataset ' + config.data.datasets.length,
+        };
+
+        for (var index = 0; index < config.data.labels.length; ++index) {
+            newDataset.data.push(randomScalingFactor());
+
+            var colorName = colorNames[index % colorNames.length];
+            var newColor = window.chartColors[colorName];
+            newDataset.backgroundColor.push(newColor);
+        }
+
+        config.data.datasets.push(newDataset);
+        window.myDoughnut.update();
+    });
+}
+
+// Chame a função para criar o gráfico ao carregar a
+criarGraficoDeRosquinha();
+
+
+// script.js
+function criarGraficoDeBarraComBordasArredondadas() {
+    // Parte config
+    var config = {
+        type: 'bar',
+        data: {
+            labels: ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4'],
+            datasets: [{
+                label: 'Valores',
+                data: [15, 25, 10, 30],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)', // Cor de fundo das barras
+                borderColor: 'rgba(75, 192, 192, 1)', // Cor da borda das barras
+                borderWidth: 2, // Largura da borda das barras
+                borderRadius: 10 // Raio da borda para torná-la arredondada
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 10,
+                    bottom: 10
+                }
+            }
+        }
+    };
+
+    // Parte setup
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('myBarChart').getContext('2d');
+        window.myBarChart = new Chart(ctx, config);
+    });
+}
+criarGraficoDeBarraComBordasArredondadas();
+
+
+
+
+function GraficoBarra() {
+    // Parte config
+    var config = {
+        type: 'bar',
+        data: {
+            labels: ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4'],
+            datasets: [{
+                label: 'Valores',
+                data: [15, 25, 10, 30],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)', // Cor de fundo das barras
+                borderColor: 'rgba(75, 192, 192, 1)', // Cor da borda das barras
+                borderWidth: 2, // Largura da borda das barras
+                borderRadius: 10 // Raio da borda para torná-la arredondada
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 10,
+                    bottom: 10
+                }
+            }
+        }
+    };
+
+    // Parte setup
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('Grafico_barras').getContext('2d');
+        window.myBarChart = new Chart(ctx, config);
+    });
+}
+GraficoBarra();
