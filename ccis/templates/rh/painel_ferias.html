@@ -1,0 +1,183 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+<!--Container------------>
+<div class="container-fluid scrollable-content">
+
+    <!-- subMenu --------------------------------->
+    <div class="row">
+
+        <nav class="navbar paragrafo-style">
+            <div class="container-fluid">
+
+                <div class="navbar-nav-wrap-content-end">
+
+                </div>
+            </div>
+
+        </nav>
+
+
+    </div>
+    <!-- End subMenu ----------------------------->
+
+    <!-- Pesquisa table -------------------------->
+    <nav class="navbar align-center mb-2 " style="background-color:white">
+
+        <div class="container-fluid pe-1 alert-container">
+
+            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE FÉRIAS</p>
+
+            <p id="numeroCartoesFiltrados"></p>
+
+            <div class="navbar-nav-wrap-content-end" style="position: relative;">
+
+                <!-- input de pesquisa ----------------------->
+                <input class="form-control me-2" type="search" placeholder="Pesquisar"
+                       aria-label="Search" id="filterProcesso" onkeyup="filterCards()">
+
+                <button class=""
+                        style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
+                        type="button"
+                        onclick="filterCards()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+    <!-- Pesquisa table -------------------------->
+
+    <div class="row mt-2">
+
+        <div class="col-8">
+
+            <!-- info -------------->
+            <div class="row mt-2">
+
+                <div class="col">
+                    <div class="card-graph text-center">
+
+                        <h6 style="background-color: #3A7DDD;" class="p-estoque p-3">EM FÉRIAS</h6>
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card-graph text-center">
+
+                        <h6 style="background-color: #3A7DDD;" class="p-estoque p-3">FÉRIAS TIRADAS</h6>
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card-graph text-center">
+
+                        <h6 style="background-color: #3A7DDD;" class="p-estoque p-3">FÉRIAS PROGRAMADAS</h6>
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card-graph text-center">
+
+                        <h6 style="background-color: #3A7DDD;" class="p-estoque p-3">FÉRIAS PROGRAMADAS</h6>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- info -------------->
+
+
+            <div class="row">
+
+                <div class="container">
+
+                    <div class="col-3 p-3 mt-3" style="background-color:#fff">
+                        <canvas id="myChart" width="auto" height="auto"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-4">
+
+            <!-- Gráficos ---------->
+            <div class="col p-3 mt-2" style="background-color:#fff">
+                <!-- Adicionando um canvas para o gráfico -->
+                <canvas id="feriasChart" width="300" height="100"></canvas>
+
+                <script>
+                    // Obtenha o contexto do canvas
+                    var ctx = document.getElementById('feriasChart').getContext('2d');
+
+                    // Dados do gráfico (substitua isso pelos seus dados reais)
+                    var data = {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Número de Pessoas de Férias',
+                            backgroundColor: 'rgba(58, 125, 221, 0.3)', // Cor de preenchimento da área
+                            borderColor: '#3A7DDD', // Cor da linha
+                            borderWidth: 2, // Largura da linha
+                            fill: true, // Preencher abaixo da linha
+                            data: [5, 7, 8, 10, 6, 12, 15, 9, 8, 6, 5, 7] // Substitua esses valores pelos dados reais
+                        }]
+                    };
+
+                    // Configurações do gráfico
+                    var options = {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    };
+
+                    // Crie o gráfico de área
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: data,
+                        options: options
+                    });
+                </script>
+
+                <div class="d-flex mt-2">
+                    <!-- Calcular a média dos dados -->
+                    <h3 style="color: gray;" class="mt-4">
+                        Média:
+                        <span id="mediaFerias"></span>
+                    </h3>
+                    <h3 style="color: gray;" class="mt-4">Pessoas</h3>
+                </div>
+
+
+            </div>
+            <!-- Gráficos ---------->
+
+            <!-- Calendario -------->
+            <div class="col p-4 mt-3" id="calendario" style="background-color:#fff"></div>
+            <!-- Calendario -------->
+
+        </div>
+
+
+        <!-- Conteúdo ---------->
+        <div class="row justify-content-start mt-1">
+
+        </div>
+        <!-- Conteúdo ---------->
+
+    </div>
+
+</div>
+<!--Container------------>
+{% endblock %}
