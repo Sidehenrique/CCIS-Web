@@ -157,7 +157,7 @@
 
 
             <!-- Formulário de Malotes -------------------------->
-            <form action="{% url 'salvar_malote_rh' %}"
+            <form action="{% url 'salvar_malote' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -167,9 +167,6 @@
 
                     <!-- primeira col -------------------------->
                     <div class="col-7">
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Retaguarda">
 
                         <div class="">
                             <label class="required-label">Lacre:</label>
@@ -238,7 +235,7 @@
             <h5 class="p-3">FORMULÁRIO DE VIOLAÇÃO AO PACTO DE ÉTICA</h5>
 
             <!-- Formulário de Etica -------------------------->
-            <form action="{% url 'salvar_etica_rh' %}"
+            <form action="{% url 'salvar_etica' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -305,7 +302,7 @@
 
                 <div class="col-7">
 
-                    <form action="{% url 'request_ci_rh' %}"
+                    <form action="{% url 'request_ci' %}"
                           method="POST"
                           enctype="multipart/form-data">
 
@@ -347,7 +344,7 @@
         <div id="formulario4" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
-            <form action="{% url 'request_apontamentos_rh' %}"
+            <form action="{% url 'request_apontamentos' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
