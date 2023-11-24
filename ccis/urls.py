@@ -109,6 +109,8 @@ urlpatterns = [
     path('salvar_malote_rh', rh.salvar_malote_rh, name='salvar_malote_rh'),
     path('processos_rh', rh.processos_rh, name='processos_rh'),
     path('salvar_etica_rh', rh.salvar_etica_rh, name='salvar_etica_rh'),
+    path('request_ci_rh', rh.request_ci_rh, name='request_ci_rh'),
+    path('request_apontamentos_rh', rh.request_apontamentos_rh, name='request_apontamentos_rh'),
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request_ti', ti.new_request_ti, name='new_request_ti'),
@@ -127,44 +129,60 @@ urlpatterns = [
     path('salvar_malote_retaguarda', retaguarda.salvar_malote_retaguarda,
            name='salvar_malote_retaguarda'),
     path('processos_retaguarda', retaguarda.processos_retaguarda,name='processos_retaguarda'),
+    path('request_apontamentos_ret', retaguarda.request_apontamentos_ret,name='request_apontamentos_ret'),
+    path('request_ci_ret', retaguarda.request_ci_ret,name='request_ci_ret'),
 
     path('produtoServico_home', produtoServico.produtoServico_home, name='produtoServico_home'),
     path('request_produto_servico', produtoServico.request_produto_servico,
            name='request_produto_servico'),
     path('salvar_malote_PS', produtoServico.salvar_malote_PS, name='salvar_malote_PS'),
     path('processos_PS', produtoServico.processos_PS, name='processos_PS'),
+    path('request_ci_ps', produtoServico.request_ci_ps, name='request_ci_ps'),
+    path('request_apontamentos_ps', produtoServico.request_apontamentos_ps, name='request_apontamentos_ps'),
 
     path('financeiro_home', financeiro.financeiro_home, name='financeiro_home'),
     path('new_request_financeiro', financeiro.new_request_financeiro, name='new_request_financeiro'),
     path('salvar_malote_financeiro', financeiro.salvar_malote_financeiro,
            name='salvar_malote_financeiro'),
     path('processos_financeiro', financeiro.processos_financeiro, name='processos_financeiro'),
+    path('request_ci_fi', financeiro.request_ci_fi, name='request_ci_fi'),
+    path('request_apontamentos_fi', financeiro.request_apontamentos_fi, name='request_apontamentos_fi'),
 
     path('cadastro_home', cadastro.cadastro_home, name='cadastro_home'),
     path('new_request_cadastro', cadastro.new_request_cadastro, name='new_request_cadastro'),
     path('salvar_malote_cadastro', cadastro.salvar_malote_cadastro, name='salvar_malote_cadastro'),
     path('processos_cadastro', cadastro.processos_cadastro, name='processos_cadastro'),
+    path('request_ci_cad', cadastro.request_ci_cad, name='request_ci_cad'),
+    path('request_apontamentos_cad', cadastro.request_apontamentos_cad, name='request_apontamentos_cad'),
 
 
     path('adm_home', adm.adm_home, name='adm_home'),
     path('new_request_adm', adm.new_request_adm, name='new_request_adm'),
     path('salvar_malote_adm', adm.salvar_malote_adm, name='salvar_malote_adm'),
     path('processos_adm', adm.processos_adm, name='processos_adm'),
+    path('request_ci_adm', adm.request_ci_adm, name='request_ci_adm'),
+    path('request_apontamentos_adm', adm.request_apontamentos_adm, name='request_apontamentos_adm'),
 
 
     path('cobranca_home', cobranca.cobranca_home, name='cobranca_home'),
     path('new_request_cobranca', cobranca.new_request_cobranca, name='new_request_cobranca'),
     path('salvar_malote_cobranca', cobranca.salvar_malote_cobranca, name='salvar_malote_cobranca'),
     path('processos_cobranca', cobranca.processos_cobranca, name='processos_cobranca'),
+    path('request_ci_cob', cobranca.request_ci_cob, name='request_ci_cob'),
+    path('request_apontamentos_cob', cobranca.request_apontamentos_cob, name='request_apontamentos_cob'),
 
     path('secretaria_home', secretaria.secretaria_home, name='secretaria_home'),
     path('new_request_secretaria', secretaria.new_request_secretaria, name='new_request_secretaria'),
     path('salvar_malote_secretaria', secretaria.salvar_malote_secretaria,name='salvar_malote_secretaria'),
     path('processos_secretaria', secretaria.processos_secretaria,name='processos_secretaria'),
+    path('request_ci_sec', secretaria.request_ci_sec,name='request_ci_sec'),
+    path('request_apontamentos_sec', secretaria.request_apontamentos_sec,name='request_apontamentos_sec'),
 
     path('credito_home', credito.credito_home, name='credito_home'),
     path('new_request_credito', credito.new_request_credito, name='new_request_credito'),
     path('salvar_malote_credito', credito.salvar_malote_credito, name='salvar_malote_credito'),
+    path('processos_credito', credito.processos_credito, name='processos_credito'),
+    path('request_ci_cre', credito.request_ci_cre, name='request_ci_cre'),
     path('processos_credito', credito.processos_credito, name='processos_credito'),
 
     path('controladoria_home', controladoria.controladoria_home, name='controladoria_home'),
@@ -174,6 +192,8 @@ urlpatterns = [
     path('request_propenso_PC', controladoria.request_propenso_PC, name='request_propenso_PC'),
     path('request_relatorio_PC', controladoria.request_relatorio_PC, name='request_relatorio_PC'),
     path('request_estudo_PC', controladoria.request_estudo_PC, name='request_estudo_PC'),
+    path('request_apontamentos_pc', controladoria.request_apontamentos_pc, name='request_apontamentos_pc'),
+    path('request_ci_pc', controladoria.request_ci_pc, name='request_ci_pc'),
 
     path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
     path('request_acessos_risco', gestaoRisco.request_acessos_risco, name='request_acessos_risco'),
@@ -221,6 +241,8 @@ urlpatterns = [
     path('request_acessoria_MK', marketing.request_acessoria_MK, name='request_acessoria_MK'),
     path('request_digital_MK', marketing.request_digital_MK, name='request_digital_MK'),
     path('request_gráfica_MK', marketing.request_gráfica_MK, name='request_gráfica_MK'),
+    path('request_ci_mk', marketing.request_ci_mk, name='request_ci_mk'),
+    path('request_apontamentos_mk', marketing.request_apontamentos_mk, name='request_apontamentos_mk'),
 
     path('sia_home', sia.sia_home, name='sia_home'),
     path('new_request_sia', sia.new_request_sia, name='new_request_sia'),
@@ -228,7 +250,10 @@ urlpatterns = [
     path('processos_sia', sia.processos_sia, name='processos_sia'),
 
     path('gestaoRecurso_home', gestaoRecursos.gestaoRecurso_home, name='gestaoRecurso_home'),
-    path('new_request_GR', gestaoRecursos.new_request_GR, name='new_request_GR'),
+    path('new_request_recurso', gestaoRecursos.new_request_recurso, name='new_request_recurso'),
+    path('request_ci_recurso', gestaoRecursos.request_ci_recurso, name='request_ci_recurso'),
+    path('request_apontamentos_recurso', gestaoRecursos.request_apontamentos_recurso, name='request_apontamentos_recurso'),
+    path('processos_recurso', gestaoRecursos.processos_recurso, name='processos_recurso'),
 
     path('dev', pages.dev, name='dev'),
 

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch, F, Subquery, OuterRef
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import dadosPessoais, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
-from ..forms import ModelFormAdmMalotes
+from ..forms import ModelFormAdmMalotes, modelFormCI, modelFormApontamentos
 
 
 @login_required(login_url="/login")
@@ -64,7 +64,10 @@ def adm_home(request):
 @login_required(login_url="/login")
 def new_request_adm(request):
     form = ModelFormAdmMalotes()
-    context = {'form': form, }
+    apontamentos = modelFormApontamentos()
+    ci = modelFormCI()
+
+    context = {'form': form, 'apontamentos': apontamentos, 'ci': ci}
 
     return render(request, "adm/new_request_adm.html", context)
 
@@ -149,6 +152,167 @@ def salvar_malote_adm(request):
         form = ModelFormAdmMalotes()
 
     return render(request, 'adm/new_request_adm.html', {'form': form})
+
+
+@login_required(login_url="/login")
+def request_ci_adm(request):
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()
+        request.POST['assunto'] = 'CI/CNAC/R.O'
+
+        form = modelFormCI(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=30),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Administrativo",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+            descricao = form.cleaned_data.get('descricao')
+            assunto = request.POST.get('assunto-input')
+
+            if(assunto):
+                descricao = f"<strong>Assunto:</strong> {assunto} <br><br>" + descricao
+
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abriu uma nova solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
+
+            return redirect('adm_home')
+    else:
+        form = modelFormCI()
+
+    return render(request, 'adm/new_request_adm', {'form': form})
+
+
+@login_required(login_url="/login")
+def request_apontamentos_adm(request):
+    descricao = ""
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()
+        request.POST['assunto'] = 'Apontamentos'
+
+        form = modelFormApontamentos(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.cor = "#FFCECE"
+            card.save()
+
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=30),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Administrativo",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+            assunto = request.POST.get('input')
+
+            reincidente = request.POST.get('reincidente')
+
+            reagendamentos_selecionados = []
+
+            for i in range(1, 5):  # Altere o range para o número correto de checkboxes
+                checkbox_name = f'reagendamento{i}'
+                if checkbox_name in request.POST:
+                    reagendamentos_selecionados.append(request.POST.get(checkbox_name))
+
+            if assunto or reincidente is not None or reagendamentos_selecionados or form.cleaned_data.get('descricao'):
+
+                if assunto:
+                    descricao += f"<strong>Assunto:</strong> {assunto}<br>"
+
+                if reincidente is not None:
+                    descricao += f"Reincidente: {reincidente}<br>"
+
+                if reagendamentos_selecionados:
+                    descricao += f"Reagendamentos: {', '.join(reagendamentos_selecionados)}<br>"
+
+                if form.cleaned_data.get('descricao'):
+                    descricao += f"Descrição: {form.cleaned_data.get('descricao')}<br>"
+
+
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abriu uma nova solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
+
+            return redirect('adm_home')
+    else:
+        form = modelFormApontamentos()
+
+    return render(request, 'adm/new_request_adm.html', {'form': form, 'is_apontamento': True})
 
 
 @login_required(login_url="/login")

@@ -7,7 +7,7 @@ from ccis.forms import ModelFormNotebook
 from ..models import Card, MessageHistory, CardSetorHistory, Notebook, CustomGroupInfo, SectorButtons, \
     Notification
 from ..forms import (modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI, modelFormDesenvolvimentoTI,
-                     modelFormCITI, modelFormApontamentosTI)
+                     modelFormCI, modelFormApontamentos)
 
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
@@ -68,8 +68,8 @@ def new_request_ti(request):
     equipamentos = modelFormEquipamentosTI()
     desenvolvimento = modelFormDesenvolvimentoTI()
     servicos = modelFormSevicosTI()
-    ci = modelFormCITI()
-    apontamentos = modelFormApontamentosTI()
+    ci = modelFormCI()
+    apontamentos = modelFormApontamentos()
 
     contexto = {'acessos': acessos, 'equipamentos': equipamentos, 'servicos': servicos,
                 'desenvolvimento': desenvolvimento, 'ci': ci, 'apontamentos': apontamentos}
@@ -331,7 +331,7 @@ def request_ci_ti(request):
         request.POST = request.POST.copy()
         request.POST['assunto'] = 'CI/CNAC/R.O'
 
-        form = modelFormCITI(request.POST, request.FILES)
+        form = modelFormCI(request.POST, request.FILES)
         if form.is_valid():
 
             card = form.save(commit=False)
@@ -388,7 +388,7 @@ def request_ci_ti(request):
 
             return redirect('ti_home')
     else:
-        form = modelFormCITI()
+        form = modelFormCI()
 
     return render(request, 'ti/new_request.html', {'form': form})
 
@@ -399,9 +399,9 @@ def request_apontamentos_ti(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()
-        request.POST['assunto'] = 'Assunto'
+        request.POST['assunto'] = 'Apontamentos'
 
-        form = modelFormApontamentosTI(request.POST, request.FILES)
+        form = modelFormApontamentos(request.POST, request.FILES)
         if form.is_valid():
 
             card = form.save(commit=False)
@@ -480,7 +480,7 @@ def request_apontamentos_ti(request):
 
             return redirect('ti_home')
     else:
-        form = modelFormApontamentosTI()
+        form = modelFormApontamentos()
 
     return render(request, 'ti/new_request.html', {'form': form, 'is_apontamento': True})
 
