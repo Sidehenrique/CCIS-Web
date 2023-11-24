@@ -188,6 +188,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const formulario2 = document.getElementById("formulario2");
     const formulario3 = document.getElementById("formulario3");
     const formulario4 = document.getElementById("formulario4");
+    const formulario5 = document.getElementById("formulario5");
+    const formulario6 = document.getElementById("formulario6");
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -199,6 +201,8 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario2.style.display = "none";
         formulario3.style.display = "none";
         formulario4.style.display = "none";
+        formulario5.style.display = "none";
+        formulario6.style.display = "none";
     });
 
 
@@ -208,6 +212,8 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario2.style.display = "block";
         formulario3.style.display = "none";
         formulario4.style.display = "none";
+        formulario5.style.display = "none";
+        formulario6.style.display = "none";
     });
 
 
@@ -217,6 +223,8 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario2.style.display = "none";
         formulario3.style.display = "block";
         formulario4.style.display = "none";
+        formulario5.style.display = "none";
+        formulario6.style.display = "none";
     });
 
     document.getElementById("btn_request_4").addEventListener("click", function() {
@@ -225,6 +233,28 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario2.style.display = "none";
         formulario3.style.display = "none";
         formulario4.style.display = "block";
+        formulario5.style.display = "none";
+        formulario6.style.display = "none";
+    });
+
+    document.getElementById("btn_request_5").addEventListener("click", function() {
+        informativo.style.display = "none";
+        formulario1.style.display = "none";
+        formulario2.style.display = "none";
+        formulario3.style.display = "none";
+        formulario4.style.display = "none";
+        formulario5.style.display = "block";
+        formulario6.style.display = "none";
+    });
+
+    document.getElementById("btn_request_6").addEventListener("click", function() {
+        informativo.style.display = "none";
+        formulario1.style.display = "none";
+        formulario2.style.display = "none";
+        formulario3.style.display = "none";
+        formulario4.style.display = "none";
+        formulario5.style.display = "none";
+        formulario6.style.display = "block";
     });
 
 });

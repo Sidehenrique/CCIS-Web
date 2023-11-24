@@ -488,7 +488,9 @@ class modelFormSevicosTI(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment')
 
 
-class modelFormCITI(forms.ModelForm):
+# new request gestao de risco ------------------------------------------------------------------------------------------
+
+class modelFormCI(forms.ModelForm):
     CHOICES_Servico = [
         ('Controle Interno', 'Controle Interno'),
         ('Auditoria CNAC', 'Auditoria CNAC'),
@@ -511,7 +513,7 @@ class modelFormCITI(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment')
 
 
-class modelFormApontamentosTI(forms.ModelForm):
+class modelFormApontamentos(forms.ModelForm):
     CHOICES_Servico = [
         ('Controle Interno', 'Controle Interno'),
         ('Auditoria CNAC', 'Auditoria CNAC'),
@@ -520,7 +522,7 @@ class modelFormApontamentosTI(forms.ModelForm):
     ]
 
     CHOICES_Assunto = [
-        ('Assunto', 'Assunto'),
+        ('Apontamentos', 'Apontamentos'),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
@@ -534,7 +536,7 @@ class modelFormApontamentosTI(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment')
 
 
-# ESTOQUE Performace Corporativa  -------------------------------------------------------------->
+# Performace Corporativa  ----------------------------------------------------------------------------------------------->
 
 class modelFormPowerPC(forms.ModelForm):
     CHOICES_Servico = [
@@ -564,9 +566,14 @@ class modelFormPropensoPC(forms.ModelForm):
     CHOICES_Servico = [
         ('', ''),
         ('Criação de Propensos', 'Criação de Propensos'),
-        ('Ajuste', 'Ajuste'),
-        ('Erros', 'Erros'),
-        ('Sugestões', 'Sugestões'),
+        ('Cartão de Crédito', 'Cartão de Crédito'),
+        ('Cheque Especial', 'Cheque Especial'),
+        ('Conta Garantida', 'Conta Garantida'),
+        ('Seguros Consórcio', 'Seguros Consórcio'),
+        ('Crédito Comercial', 'Crédito Comercial'),
+        ('Crédito Rural Sipag', 'Crédito Rural Sipag'),
+        ('Cobrança Consignado', 'Cobrança Consignado'),
+        ('Tarifas', 'Tarifas'),
     ]
 
     CHOICES_Assunto = [
@@ -867,6 +874,7 @@ class ModelFormCadastroMalotes(forms.ModelForm):
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment',)
 
+#-------Administrativo---------------------------------------------------------------------------------------------------------
 
 class ModelFormAdmMalotes(forms.ModelForm):
 
@@ -887,6 +895,10 @@ class ModelFormAdmMalotes(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment',)
 
 
+#-------Administrativo---------------------------------------------------------------------------------------------------------
+
+# -------Cobrança---------------------------------------------------------------------------------------------------------
+
 class ModelFormCobrancaMalotes(forms.ModelForm):
 
 
@@ -904,6 +916,8 @@ class ModelFormCobrancaMalotes(forms.ModelForm):
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+# -------RH---------------------------------------------------------------------------------------------------------
 
 
 class ModelFormRhMalotes(forms.ModelForm):
@@ -955,6 +969,9 @@ class ModelFormRhEtica(forms.ModelForm):
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment',)
+
+
+# -------Secretaria---------------------------------------------------------------------------------------------------------
 
 
 class ModelFormSecretariaMalotes(forms.ModelForm):
