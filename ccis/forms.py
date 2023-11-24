@@ -565,7 +565,6 @@ class modelFormPowerPC(forms.ModelForm):
 class modelFormPropensoPC(forms.ModelForm):
     CHOICES_Servico = [
         ('', ''),
-        ('Criação de Propensos', 'Criação de Propensos'),
         ('Cartão de Crédito', 'Cartão de Crédito'),
         ('Cheque Especial', 'Cheque Especial'),
         ('Conta Garantida', 'Conta Garantida'),
