@@ -185,6 +185,7 @@ urlpatterns = [
     path('salvar_malote_credito', credito.salvar_malote_credito, name='salvar_malote_credito'),
     path('processos_credito', credito.processos_credito, name='processos_credito'),
     path('request_ci_cre', credito.request_ci_cre, name='request_ci_cre'),
+    path('request_apontamentos_cre', credito.request_apontamentos_cre, name='request_apontamentos_cre'),
     path('processos_credito', credito.processos_credito, name='processos_credito'),
 
     path('controladoria_home', controladoria.controladoria_home, name='controladoria_home'),

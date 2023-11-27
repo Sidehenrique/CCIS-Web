@@ -121,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function() {
         formularioApontamentos.style.display = "none";
     });
 
-
     document.getElementById("btnEquipamentos").addEventListener("click", function() {
         informativoTI.style.display = "none";
         formularioAcessos.style.display = "none";
