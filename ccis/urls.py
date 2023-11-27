@@ -32,6 +32,8 @@ urlpatterns = [
     path('get_card_details', pages.get_card_details, name='get_card_details'),
     path('notificacao_lida/<int:notification_id>', pages.notificacao_lida, name='notificacao_lida'),
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
+    path('kanban/', pages.kanban_view, name='kanban_view'),
+
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
@@ -250,7 +252,7 @@ urlpatterns = [
     path('processos_sia', sia.processos_sia, name='processos_sia'),
 
     path('gestaoRecurso_home', gestaoRecursos.gestaoRecurso_home, name='gestaoRecurso_home'),
-    path('new_request_recurso', gestaoRecursos.new_request_recurso, name='new_request_recurso'),
+    path('recurso/new_request', gestaoRecursos.new_request_recurso, name='new_request_recurso'),
     path('request_ci_recurso', gestaoRecursos.request_ci_recurso, name='request_ci_recurso'),
     path('request_apontamentos_recurso', gestaoRecursos.request_apontamentos_recurso, name='request_apontamentos_recurso'),
     path('processos_recurso', gestaoRecursos.processos_recurso, name='processos_recurso'),

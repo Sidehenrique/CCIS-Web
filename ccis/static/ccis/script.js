@@ -345,6 +345,62 @@ function getCookie(name) {
 }
 
 
+async function fetchCardData(cardId, columnId) {
+    try {
+        const response = await fetch(`/card_detl/${cardId}/?setor=${setor_do_usuario}`);
+        const data = await response.json();
+
+        // Adicione o card ao kanban na coluna específica
+        addCardToKanban(columnId, data.card);
+    } catch (error) {
+        console.error('Erro ao buscar dados do card:', error);
+    }
+}
+
+
+function addCardToKanban(columnId, card) {
+    const kanbanBody = document.getElementById(columnId);
+
+    const cardElement = document.createElement("div");
+    cardElement.classList.add("kanban-card");
+
+    const cardContent = `
+        <div class="processo-card" style="background-color:${card.cor}">
+            <div class="row">
+                <div class="col-auto me-auto">
+                    <h5 class="card-titulo mt-2">${card.assunto}</h5>
+                </div>
+                <div class="col-auto mb-1">
+                    <span class="card-setor processo-tag-setor">N° ${card.idCard}</span>
+                    <span class="card-setor processo-tag-setor">${card.service}</span>
+                </div>
+            </div>
+            <hr style="color:#C4C0C0; margin-top:0px;">
+            <div class="col-auto mb-2">
+                <p class="card-responsavel" style="color:#818181;">
+                    <img class="foto_card" src="${card.solicitante_dados_pessoais.foto}" alt="" width="25" height="25">
+                    ${card.solicitante_dados_pessoais.nomeCompleto}
+                </p>
+            </div>
+            <div class="" style="color:#818181; font-size:13px;">
+                <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> ${card.service}</p>
+            </div>
+            <div class="card-data row" style="color:#818181; font-size:13px">
+                <div class="col-auto me-auto">
+                    <i class="fa-solid fa-calendar-days"></i> ${card.dataCriacao}
+                </div>
+                <div class="col-auto">
+                    <i class="fa-solid fa-clock"></i> ${card.horaCriacao}
+                </div>
+            </div>
+        </div>
+    `;
+
+    cardElement.innerHTML = cardContent;
+    kanbanBody.appendChild(cardElement);
+}
+
+
 function loadCardInfo(cardId) {
     const modal = $('#processoModal');
     const modalBody = modal.find('.modal-body');
@@ -1371,101 +1427,6 @@ function criarGraficoDeBarraComBordasArredondadas() {
 }
 criarGraficoDeBarraComBordasArredondadas();
 
-
-
-
-function GraficoBarra() {
-    // Parte config
-    var config = {
-        type: 'bar',
-        data: {
-            labels: ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4'],
-            datasets: [{
-                label: 'Valores',
-                data: [15, 25, 10, 30],
-                backgroundColor: 'rgba(75, 192, 192, 0.7)', // Cor de fundo das barras
-                borderColor: 'rgba(75, 192, 192, 1)', // Cor da borda das barras
-                borderWidth: 2, // Largura da borda das barras
-                borderRadius: 10 // Raio da borda para torná-la arredondada
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    }
-                },
-                y: {
-                    beginAtZero: true
-                }
-            },
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 10,
-                    top: 10,
-                    bottom: 10
-                }
-            }
-        }
-    };
-
-    // Parte setup
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('Grafico_barras').getContext('2d');
-        window.myBarChart = new Chart(ctx, config);
-    });
-}
-GraficoBarra();
-
-
-
-
-
-
-
-
-
-//history request
-
-const itemActions = document.querySelectorAll('.item-action');
-
-itemActions.forEach(item => {
-    item.addEventListener('click', function(event) {
-        event.preventDefault();
-
-        const cardId = item.getAttribute('data-card-id');
-
-        if (cardId) {
-            fetch(`/get_message_history/${cardId}`)
-                .then(response => response.json())
-                .then(data => {
-                    // ... seu código existente para detalhesAssunto
-
-                    let detalhesMensagens = '';
-                    if (data && data.length > 0) {
-                        // Iterar sobre as mensagens para adicionar ao detalhesMensagens
-                        detalhesMensagens = data.map(msg => msg.message).join('<br>');
-                    } else {
-                        detalhesMensagens = 'Nenhuma mensagem encontrada';
-                    }
-
-                    // Restante do seu código para criar o HTML para exibir no campo de visualização
-
-                    // Atualizar o campo de visualização com as mensagens
-                    document.getElementById('detalhes-mensagens').innerHTML = detalhesMensagens;
-                })
-
-                .catch(error => {
-                    console.error('Erro:', error);
-                });
-        } else {
-            console.error('ID do card não encontrado.');
-        }
-    });
-});
 
 
 

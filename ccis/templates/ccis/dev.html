@@ -2,182 +2,198 @@
 {% load static %}
 
 {% block conteudo %}
+
+{% if dados.canvas %}
+    <img class="profile-img" src="{{ dados.canvas.url }}">
+    {% else %}
+    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+{% endif %}
+
 <!--Container------------>
 <div class="container-fluid scrollable-content">
 
-    <!-- subMenu --------------------------------->
-    <div class="row">
+    <!-- Menu settings --------->
+    <div class="row g-2 mt-2">
 
-        <nav class="navbar paragrafo-style">
-            <div class="container-fluid">
+        <div class="col-2 d-flex">
 
-                <div class="navbar-nav-wrap-content-end">
+            <a href="#" class="btn-menu-settings"><i class="fa-solid fa-house"></i> Home</a>
 
-                </div>
+            <div class="text-menu-settings">
+                <h6 class="m-0" style="font-size:20px;">Tecnologia</h6>
             </div>
 
-        </nav>
+        </div>
 
+        <div class="col-2 d-flex">
 
-    </div>
-    <!-- End subMenu ----------------------------->
+            <div class="dropdown">
 
-    <!-- Pesquisa table -------------------------->
-    <nav class="navbar align-center mb-2 " style="background-color:white">
-
-        <div class="container-fluid pe-1 alert-container">
-
-            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE FÉRIAS</p>
-
-            <p id="numeroCartoesFiltrados"></p>
-
-            <div class="navbar-nav-wrap-content-end" style="position: relative;">
-
-                <!-- input de pesquisa ----------------------->
-                <input class="form-control me-2" type="search" placeholder="Pesquisar"
-                       aria-label="Search" id="filterProcesso" onkeyup="filterCards()">
-
-                <button class=""
-                        style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
-                        type="button"
-                        onclick="filterCards()">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                <button class="drop-menu-settings dropdown-toggle" type="button" id="dropdownMenuSettings"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Área de Trabalho
                 </button>
 
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
+                    <li><a class="dropdown-item" href="#">Processos</a></li>
+                    <li><a class="dropdown-item" href="#">Minhas solicitações</a></li>
+                </ul>
+
             </div>
+
+            <button class="btn-menu-settings ms-3"><i class="fa-solid fa-palette"></i></button>
 
         </div>
 
-    </nav>
-    <!-- Pesquisa table -------------------------->
+        <div class="col col-auto me-auto d-flex">
 
-    <div class="row mt-2">
+            <!-- Equipe -------------------------->
+            {% if equipe %}
 
-        <div class="col-8">
+                {% for usuario in equipe %}
+                    <a href="{% url 'profile' user_id=usuario.id %}" class="equipe-menu-settings">
 
-            <!-- info -------------->
-            <div class="row mt-2">
+                        {% if usuario.foto %}
+                            <img class="avatar-img" src="{{ usuario.foto.url }}"
+                                 alt="" width="40" height="40">
 
-                <div class="col">
-                    <div class="card-graph text-center">
+                            {% else %}
 
-                        <h6 style="background-color: #3A7DDD;" class="p-estoque p-3">EM FÉRIAS</h6>
+                            {% if usuario.sexo == "Masculino" %}
+                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                 alt="" width="40" height="40">
 
-                    </div>
-                </div>
+                            {% elif usuario.sexo == "Feminino" %}
+                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                 alt="" width="40" height="40">
+                            {% endif %}
 
-                <div class="col">
-                    <div class="card-graph text-center">
+                            {% endif %}
 
-                        <h6 style="background-color: #3A7DDD;" class="p-estoque p-3">FÉRIAS TIRADAS</h6>
+                    </a>
+                    {% endfor %}
+            {% endif %}
+            <!-- Equipe -------------------------->
 
-                    </div>
-                </div>
+        </div>
 
-                <div class="col">
-                    <div class="card-graph text-center">
+        <div class="col d-flex col-auto">
 
-                        <h6 style="background-color: #3A7DDD;" class="p-estoque p-3">FÉRIAS PROGRAMADAS</h6>
+            <button class="btn-menu-settings"><i class="fa-solid fa-filter"></i> Filtro</button>
 
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card-graph text-center">
-
-                        <h6 style="background-color: #3A7DDD;" class="p-estoque p-3">FÉRIAS PROGRAMADAS</h6>
-
-                    </div>
-                </div>
-
-            </div>
-            <!-- info -------------->
-
-
-            <div class="row">
-
-                <div class="container">
-
-                    <div class="col-3 p-3 mt-3" style="background-color:#fff">
-                        <canvas id="myChart" width="auto" height="auto"></canvas>
-                    </div>
-
-                </div>
-
+            <div class="position-relative">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa...">
             </div>
 
 
         </div>
-
-        <div class="col-4">
-
-            <!-- Gráficos ---------->
-            <div class="col p-3 mt-2" style="background-color:#fff">
-                <!-- Adicionando um canvas para o gráfico -->
-                <canvas id="feriasChart" width="300" height="100"></canvas>
-
-                <script>
-                    // Obtenha o contexto do canvas
-                    var ctx = document.getElementById('feriasChart').getContext('2d');
-
-                    // Dados do gráfico (substitua isso pelos seus dados reais)
-                    var data = {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                        datasets: [{
-                            label: 'Número de Pessoas de Férias',
-                            backgroundColor: 'rgba(58, 125, 221, 0.3)', // Cor de preenchimento da área
-                            borderColor: '#3A7DDD', // Cor da linha
-                            borderWidth: 2, // Largura da linha
-                            fill: true, // Preencher abaixo da linha
-                            data: [5, 7, 8, 10, 6, 12, 15, 9, 8, 6, 5, 7] // Substitua esses valores pelos dados reais
-                        }]
-                    };
-
-                    // Configurações do gráfico
-                    var options = {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    };
-
-                    // Crie o gráfico de área
-                    var myChart = new Chart(ctx, {
-                        type: 'line',
-                        data: data,
-                        options: options
-                    });
-                </script>
-
-                <div class="d-flex mt-2">
-                    <!-- Calcular a média dos dados -->
-                    <h3 style="color: gray;" class="mt-4">
-                        Média:
-                        <span id="mediaFerias"></span>
-                    </h3>
-                    <h3 style="color: gray;" class="mt-4">Pessoas</h3>
-                </div>
-
-
-            </div>
-            <!-- Gráficos ---------->
-
-            <!-- Calendario -------->
-            <div class="col p-4 mt-3" id="calendario" style="background-color:#fff"></div>
-            <!-- Calendario -------->
-
-        </div>
-
-
-        <!-- Conteúdo ---------->
-        <div class="row justify-content-start mt-1">
-
-        </div>
-        <!-- Conteúdo ---------->
 
     </div>
+    <!-- Menu settings --------->
+
+    <!-- kanban ---------------->
+    <div class="row mt-4">
+
+        <!-- Triagem --------->
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>
+                    <div class="col-auto"><span class="">{{ card_count_triagem }} 0</span></div>
+                </div>
+            </div>
+            <div id="kanban-body-triagem" class="kanban-body p-2">
+
+                 fetchCardData(${card.idCard}, 'kanban-body');
+
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Triagem --------->
+
+        <!-- Em atendimento -->
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>
+                    <div class="col-auto"><span class="">{{ card_count_triagem }} 0</span></div>
+                </div>
+            </div>
+            <div id="kanban-body-atendimento" class="kanban-body">
+
+
+
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Em atendimento -->
+
+        <!-- Encaminhado ----->
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>
+                    <div class="col-auto"><span class="">{{ card_count_triagem }} 0</span></div>
+                </div>
+            </div>
+            <div id="kanban-body-encaminhado" class="kanban-body">
+
+
+
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Encaminhado ----->
+
+        <!-- Concluido ------->
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluido</div>
+                    <div class="col-auto"><span class="">{{ card_count_triagem }} 0</span></div>
+                </div>
+            </div>
+            <div id="kanban-body-concluido" class="kanban-body">
+
+
+
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Concluido ------->
+
+        <!-- Finalizado ------>
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-check-double"></i> Finalizado</div>
+                    <div class="col-auto"><span class="">{{ card_count_triagem }} 0</span></div>
+                </div>
+            </div>
+            <div id="kanban-body-finalizado "class="kanban-body">
+
+
+
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Finalizado ------>
+
+    </div>
+    <!-- kanban ---------------->
 
 </div>
 <!--Container------------>
+
 {% endblock %}

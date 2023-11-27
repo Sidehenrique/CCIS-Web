@@ -482,7 +482,57 @@ def utilitariosHome(request):
 
 
 def dev(request):
-    return render(request, 'ccis/dev.html')
+    user = request.user
+
+    try:
+        dadosSetor = CustomGroupInfo.objects.get(nome='Tecnologia')
+
+    except CustomGroupInfo.DOESNOTEXIST:
+        dadosSetor = None
+
+    setor = dadosSetor.nome
+    print(setor)
+
+    superior = Group.objects.filter(id=2).first()
+
+    nomes_equipe = []
+
+    if superior is None:
+        pass
+
+    else:
+        equipe = User.objects.filter(groups=superior)
+        # Resto do código
+        for usuario in equipe:
+            first_nameA = usuario.first_name
+            last_nameA = usuario.last_name
+            sexo = usuario.dadosPessoais.sexo
+            foto = usuario.dadosPessoais.foto
+            cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+            nomes_equipe.append(
+                {'id': usuario.id,
+                 'foto': foto,
+                 'first_name': first_nameA,
+                 'last_name': last_nameA,
+                 'sexo': sexo,
+                 'cargo': cargo})
+
+        # Ordenar a equipe com o supervisor no topo
+        nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                           x['cargo'] != 'Encarregado(a)'))
+
+    if request.method == 'GET':
+        sector_buttons = SectorButtons.objects.filter(group=2)
+
+        print(sector_buttons)
+
+        context = {
+            'username': user, 'setor': setor, 'sector_buttons': sector_buttons,
+            'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
+        }
+
+
+        return render(request, 'ccis/dev.html', context)
 
 
 @login_required(login_url="/login")
@@ -522,6 +572,16 @@ def processos_user(request):
         }
 
         return render(request, 'ccis/processo_user.html', context)
+
+
+def kanban_view(request):
+    # Suponha que você tenha uma relação entre usuários e setores
+    setor_do_usuario = request.user.setor
+
+    cards = Card.objects.filter(setor=setor_do_usuario)
+
+    return render(request, 'seu_template.html', {'cards': cards})
+
 
 
 @api_view(['GET'])
