@@ -63,7 +63,7 @@ def ti_home(request):
 
 
 @login_required(login_url="/login")
-def new_request_ti(request):
+def new_request(request):
     acessos = modelFormAcessosTI()
     equipamentos = modelFormEquipamentosTI()
     desenvolvimento = modelFormDesenvolvimentoTI()
@@ -78,7 +78,7 @@ def new_request_ti(request):
 
 
 @login_required(login_url="/login")
-def request_acessos_ti(request):
+def request_acessos(request):
     if request.method == 'POST':
         form = modelFormAcessosTI(request.POST, request.FILES)
         if form.is_valid():
@@ -90,7 +90,7 @@ def request_acessos_ti(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=2),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -140,7 +140,7 @@ def request_acessos_ti(request):
 
 
 @login_required(login_url="/login")
-def request_equipamentos_ti(request):
+def request_equipamentos(request):
     if request.method == 'POST':
         form = modelFormEquipamentosTI(request.POST, request.FILES)
         if form.is_valid():
@@ -152,7 +152,7 @@ def request_equipamentos_ti(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=2),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -202,7 +202,7 @@ def request_equipamentos_ti(request):
 
 
 @login_required(login_url="/login")
-def request_desenvolvimento_ti(request):
+def request_desenvolvimento(request):
     if request.method == 'POST':
         form = modelFormDesenvolvimentoTI(request.POST, request.FILES)
         if form.is_valid():
@@ -214,7 +214,7 @@ def request_desenvolvimento_ti(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=2),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -264,7 +264,7 @@ def request_desenvolvimento_ti(request):
 
 
 @login_required(login_url="/login")
-def request_servicos_ti(request):
+def request_servicos(request):
     if request.method == 'POST':
         form = modelFormSevicosTI(request.POST, request.FILES)
         if form.is_valid():
@@ -276,7 +276,7 @@ def request_servicos_ti(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=2),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -325,7 +325,7 @@ def request_servicos_ti(request):
 
 
 @login_required(login_url="/login")
-def request_ci_ti(request):
+def request_ci(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()
@@ -341,7 +341,7 @@ def request_ci_ti(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=2),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -394,7 +394,7 @@ def request_ci_ti(request):
 
 
 @login_required(login_url="/login")
-def request_apontamentos_ti(request):
+def request_apontamentos(request):
     descricao = ""
     if request.method == 'POST':
 
@@ -413,7 +413,7 @@ def request_apontamentos_ti(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=2),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
@@ -486,7 +486,7 @@ def request_apontamentos_ti(request):
 
 
 @login_required(login_url="/login")
-def processos_ti(request):
+def processos(request):
 
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',

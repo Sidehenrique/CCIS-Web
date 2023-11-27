@@ -149,7 +149,7 @@ def colaboradores(request):
 
 
 @login_required(login_url="/login")
-def new_request_rh(request):
+def new_request(request):
     form = ModelFormRhMalotes()
     form_Etica = ModelFormRhEtica()
     apontamentos = modelFormApontamentos()
@@ -161,11 +161,11 @@ def new_request_rh(request):
                'ci': ci,
     }
 
-    return render(request, "rh/new_request_rh.html", context)
+    return render(request, "rh/new_request.html", context)
 
 
 @login_required(login_url="/login")
-def salvar_malote_rh(request):
+def salvar_malote(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
@@ -241,11 +241,11 @@ def salvar_malote_rh(request):
     else:
         form = ModelFormRhMalotes()
 
-    return render(request, 'rh/new_request_rh.html', {'form': form})@login_required(login_url="/login")
+    return render(request, 'rh/new_request.html', {'form': form})@login_required(login_url="/login")
 
 
 @login_required(login_url="/login")
-def salvar_etica_rh(request):
+def salvar_etica(request):
     if request.method == 'POST':
 
         form = ModelFormRhEtica(request.POST, request.FILES)
@@ -311,11 +311,11 @@ def salvar_etica_rh(request):
     else:
         form = ModelFormRhEtica()
 
-    return render(request, 'rh/new_request_rh.html', {'form': form})
+    return render(request, 'rh/new_request.html', {'form': form})
 
 
 @login_required(login_url="/login")
-def request_ci_rh(request):
+def request_ci(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()
@@ -380,11 +380,11 @@ def request_ci_rh(request):
     else:
         form = modelFormCI()
 
-    return render(request, 'adm/new_request_adm', {'form': form})
+    return render(request, 'rh/new_request', {'form': form})
 
 
 @login_required(login_url="/login")
-def request_apontamentos_rh(request):
+def request_apontamentos(request):
     descricao = ""
     if request.method == 'POST':
 
@@ -468,15 +468,15 @@ def request_apontamentos_rh(request):
                         )
                         notification.save()
 
-            return redirect('adm_home')
+            return redirect('rh_home')
     else:
         form = modelFormApontamentos()
 
-    return render(request, 'adm/new_request_adm.html', {'form': form, 'is_apontamento': True})
+    return render(request, 'rh/new_request.html', {'form': form, 'is_apontamento': True})
 
 
 @login_required(login_url="/login")
-def processos_rh(request):
+def processos(request):
 
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
