@@ -84,7 +84,7 @@ def request_power_PC(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
-        request.POST['assunto'] = 'Power BI'
+        request.POST['assunto'] = 'Painéis'
 
         form = modelFormPowerPC(request.POST, request.FILES)
         if form.is_valid():

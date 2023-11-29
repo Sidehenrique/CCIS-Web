@@ -1065,9 +1065,12 @@ status-negativo{
 }
 
 
-.container-buttons{
-    overflow-x: auto;
-    white-space: nowrap;
+.container-buttons {
+    overflow-y: auto; /* Permite rolagem vertical */
+    max-height: 300px; /* Altura máxima para ativar a rolagem vertical */
+    display: flex;
+    flex-direction: column; /* Alinha os itens verticalmente */
+    gap: 10px; /* Espaçamento entre os itens, se desejado */
 }
 
 .equipe-setor{
@@ -1318,16 +1321,16 @@ status-negativo{
 
 
 .processo-tag-historico{
-    font-size:10px;
+    font-size:15px;
     background-color:#d9d9d9;
     color:black;
-    padding: 3px 7px;
+    padding: 5px 7px;
     border-radius:10px;
 }
 
 
 .processo-tag-historico-active{
-    font-size:10px;
+    font-size:15px;
     background-color:#FF5019;
     color:white;
     padding: 3px 7px;

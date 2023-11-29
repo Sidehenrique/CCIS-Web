@@ -9,7 +9,7 @@
     <div class="row">
 
         <!-- Menu -------------------------------->
-        <div id="menu-inicial" class="col-3 menu-request">
+        <div id="menu_inicial" class="col-3 menu-request">
 
             <div class="">
 
@@ -20,42 +20,42 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-key"></i>
                             Acessos
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnEquipamentos" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-computer"></i>
                             Equipamentos
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnDesenvolvimento" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-code"></i>
                             Desenvolvimento
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnServicos" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_4" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-server"></i>
                             Serviços
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnCI" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_5" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-file-pen"></i>
                             Solicitções CI/CNAC/R.O
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnApontamentos" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_6" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-scale-unbalanced-flip"></i>
                             Apontamentos
                         </a>
@@ -87,7 +87,7 @@
 
 
         <!-- Informativo ------------------------->
-        <div id="informativoTI" class="col menu-request m-0 p-5">
+        <div id="informativo" class="col menu-request m-0 p-5">
             <h6>Orientações para abertura de chamado - 4155. Tecnologia</h6>
             <p>
                 Pontos a serem observados durante a abertura de chamado:
@@ -168,7 +168,7 @@
 
 
         <!-- Formulário de Acessos -------------------------->
-        <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
+        <div id="formulario1" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE ACESSOS</h5>
 
             <div class="row p-3 ">
@@ -248,7 +248,7 @@
         <!-- Formulário de Acessos -------------------------->
 
         <!-- Formulário de Equipamentos --------------------->
-        <div id="formularioEquipamentos" class="col menu-request m-0" style="display:none">
+        <div id="formulario2" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE EQUIPAMENTOS</h5>
 
             <div class="row p-3 ">
@@ -296,7 +296,7 @@
         <!-- Formulário de Equipamentos --------------------->
 
         <!-- Formulário de Desenvolvimento --------------------->
-        <div id="formularioDesenvolvimento" class="col menu-request m-0" style="display:none">
+        <div id="formulario3" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE DESENVOLVIMENTO</h5>
 
             <div class="row p-3 ">
@@ -344,7 +344,7 @@
         <!-- Formulário de Desenvolvimento --------------------->
 
         <!-- Formulário de Serviços --------------------->
-        <div id="formularioServicos" class="col menu-request m-0" style="display:none">
+        <div id="formulario4" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE SERVIÇOS</h5>
 
             <div class="row p-3 ">
@@ -391,7 +391,7 @@
         <!-- Formulário de Serviços --------------------->
 
         <!-- Formulário de CI --------------------->
-        <div id="formularioCI" class="col menu-request m-0" style="display:none">
+        <div id="formulario5" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE SOLICITÇÕES CI/CNAC/R.O</h5>
 
             <div class="row p-3 ">
@@ -403,9 +403,6 @@
                           enctype="multipart/form-data">
 
                         {% csrf_token %}
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
 
                         <div class="mb-2">
                             <label class="required-label">Assunto:</label>
@@ -438,7 +435,7 @@
         <!-- Formulário de CI --------------------->
 
         <!-- Formulário de Apontamentos --------------------->
-        <div id="formularioApontamentos" class="col menu-request m-0" style="display:none">
+        <div id="formulario6" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
             <form action="{% url 'request_apontamentos' %}"

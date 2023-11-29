@@ -57,6 +57,7 @@ def home(request):
 
 @login_required(login_url="/login")
 def new_login_page(request):
+
     if request.method == 'POST':
 
         first_name = request.POST.get('first-name').capitalize()
@@ -76,10 +77,20 @@ def new_login_page(request):
         user = request.user
         user.set_password(nova_senha)
         user.save()
+
+
         return redirect('profile', user_id=request.user.id)
 
     else:
-        return render(request, 'ccis/new_login_page.html')
+        dadosPessoais = modelFormDadosPessoais()
+        enderecoContato = modelFormEnderecoContato()
+        profissional = modelFormProfissional()
+
+        context={'dadosPessoais': dadosPessoais,
+                 'enderecoContato': enderecoContato,
+                 'profissional': profissional}
+
+        return render(request, 'ccis/new_login_page.html', context)
 
 
 @login_required(login_url="/login")
@@ -581,7 +592,6 @@ def kanban_view(request):
     cards = Card.objects.filter(setor=setor_do_usuario)
 
     return render(request, 'seu_template.html', {'cards': cards})
-
 
 
 @api_view(['GET'])

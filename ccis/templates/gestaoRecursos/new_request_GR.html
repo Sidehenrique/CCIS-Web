@@ -5,10 +5,10 @@
 
 <div class="container" style="margin-top:75px">
 
-    <!-- Conteúdo -------------------------------->
+    <!-- Conteúdo ----------------------------------------------->
     <div class="row">
 
-        <!-- Menu --------------------------------------------->
+        <!-- Menu ----------------------------------------------->
         <div id="menu_inicial" class="col-3 menu-request">
 
             <div class="">
@@ -21,20 +21,34 @@
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-comment"></i>
-                            A Designar
+                            <i class="fa-solid fa-envelopes-bulk"></i>
+                            Portifólios
                         </a>
                     </li>
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-up-wide-short"></i>
+                            Acompanhamento de Basileia
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-percent"></i>
+                            Monitoramento de Risco
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_4" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-file-pen"></i>
                             Solicitções CI/CNAC/R.O
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_5" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-scale-unbalanced-flip"></i>
                             Apontamentos
                         </a>
@@ -51,7 +65,7 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-lista-novo mt-5">
-                        <a href="{% url 'marketing_home' %}" class="li-link-request" aria-current="page">
+                        <a href="{% url 'gestaoRecurso_home' %}" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-arrow-left"></i>
                             Voltar
                         </a>
@@ -62,10 +76,10 @@
             </div>
 
         </div>
-        <!-- Menu --------------------------------------------->
+        <!-- Menu ----------------------------------------------->
 
 
-        <!-- Informativo -------------------------------------->
+        <!-- Informativo ---------------------------------------->
         <div id="informativo" class="col menu-request m-0 p-5">
             <h6>Orientações para abertura de chamado - 4155. Gestão de Recursos</h6>
             <p>
@@ -78,34 +92,76 @@
             </p>
 
             <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
-
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="true"
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
-                            A Designar
+                            Portifólios
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse show"
                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>A Designar</li>
+                                <li>
+                                    Portfólio de Captação e Portifólio de Crédito, onde será possível solicitar inclusão
+                                    e alteração de linhas.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                aria-controls="flush-collapseTwo">
+                            Acompanhamento de Basileia
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                         data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Solicitar estudos a cerca do impacto que pode ocasionar uma liberação.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                            Monitoramento de Risco
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>
+                                    Solicitar estudos a cerca dos impactos ocasionados com a liberação ou renegociação
+                                    de alguma operação.
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
-        <!-- Informativo -------------------------------------->
+        <!-- Informativo ---------------------------------------->
 
 
-        <!-- Formulário de Acessoria -------------------------->
+        <!-- Formulário de Portifólios -------------------------->
         <div id="formulario1" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">A Designar</h5>
+            <h5 class="p-3">FORMULÁRIO PORTIFÓLIOS</h5>
 
-            <form action="#"
+            <form action="{% url 'request_portifolios' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -116,27 +172,25 @@
                     <!-- primeira col -------------------------->
                     <div class="col-7">
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Marketing">
 
                         <div class="">
                             <label class="required-label">Assunto:</label>
-                            {{ acessoria.assunto }}
+                            {{ portifolio.assunto }}
                         </div>
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
-                            {{ acessoria.service }}
+                            {{ portifolio.service }}
                         </div>
 
                         <div class="mt-2">
                             <label class="">Descrição:</label>
-                            {{ acessoria.descricao }}
+                            {{ portifolio.descricao }}
                         </div>
 
                         <div class="mt-2">
                             <label class="">Anexar arquivo:</label>
-                            {{ acessoria.attachment }}
+                            {{ portifolio.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
@@ -148,10 +202,104 @@
             </form>
 
         </div>
-        <!-- Formulário de Acessoria -------------------------->
+        <!-- Formulário de Portifólios -------------------------->
 
-        <!-- Formulário de CI --------------------------------->
+        <!-- Formulário de Basileia ----------------------------->
         <div id="formulario2" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO ACOMPANHAMENTO DE BASILEIA</h5>
+
+            <form action="{% url 'request_basileia' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ basileia.assunto }}
+                        </div>
+
+                        <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ basileia.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Descrição:</label>
+                            {{ basileia.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Anexar arquivo:</label>
+                            {{ basileia.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                </div>
+            </form>
+
+        </div>
+        <!-- Formulário de Basileia -------------------------->
+
+        <!-- Formulário de Monitoramento de Risco ----------------------------->
+        <div id="formulario3" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO MONITORAMENTO DE RISCO</h5>
+
+            <form action="{% url 'request_risco' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ risco.assunto }}
+                        </div>
+
+                        <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ risco.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Descrição:</label>
+                            {{ risco.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Anexar arquivo:</label>
+                            {{ risco.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                </div>
+            </form>
+
+        </div>
+        <!-- Formulário de Monitoramento de Risco -------------------------->
+
+        <!-- Formulário de CI ---------------------------------->
+        <div id="formulario4" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE SOLICITÇÕES CI/CNAC/R.O</h5>
 
             <div class="row p-3 ">
@@ -194,10 +342,10 @@
                 </div>
             </div>
         </div>
-        <!-- Formulário de CI --------------------------------->
+        <!-- Formulário de CI ---------------------------------->
 
-        <!-- Formulário de Apontamentos ----------------------->
-        <div id="formulario3" class="col menu-request m-0" style="display:none">
+        <!-- Formulário de Apontamentos ------------------------>
+        <div id="formulario5" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
             <form action="{% url 'request_apontamentos_recurso' %}"
@@ -290,10 +438,10 @@
             </form>
 
         </div>
-        <!-- Formulário de Apontamentos ----------------------->
+        <!-- Formulário de Apontamentos ------------------------>
 
     </div>
-
+    <!-- Conteúdo ----------------------------------------------->
 </div>
 
 

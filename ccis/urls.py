@@ -256,6 +256,9 @@ urlpatterns = [
     path('request_ci_recurso', gestaoRecursos.request_ci_recurso, name='request_ci_recurso'),
     path('request_apontamentos_recurso', gestaoRecursos.request_apontamentos_recurso, name='request_apontamentos_recurso'),
     path('processos_recurso', gestaoRecursos.processos_recurso, name='processos_recurso'),
+    path('request_portifolios', gestaoRecursos.request_portifolios, name='request_portifolios'),
+    path('request_basileia', gestaoRecursos.request_basileia, name='request_basileia'),
+    path('request_risco', gestaoRecursos.request_risco, name='request_risco'),
 
     path('dev', pages.dev, name='dev'),
 

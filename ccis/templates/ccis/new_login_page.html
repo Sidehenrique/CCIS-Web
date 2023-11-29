@@ -25,65 +25,21 @@
 
 <body style="background-color:#F1F2F5;">
 
-<!-- topMenu ------------------------------------------------------->
-<header class="menu-new-login">
-
-    <nav class="col p-0 navbar ">
-        <div class="container-fluid">
-
-            <!-- Logo do Menu ------------------------------------------------------------------------------------->
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="{% static 'ccis/logonav.png' %}"
-                     alt="logo"
-                     width="47"
-                     height="54"
-                     class="d-inline-block align-text-center;">
-            </a>
-            <!-- End Logo do Menu --------------------------------------------------------------------------------->
-
-
-            <!-- Esquerda do Menu --------------------------------------------------------------------------------->
-            <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
-                <ul class="navbar-nav">
-
-                    <li class="  ms-5 me-4">
-                        <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"
-                           href="#"></a>
-                    </li>
-
-                </ul>
-            </div>
-            <!-- End Esquerda do Menu ----------------------------------------------------------------------------->
-
-
-            <!-- Direita do Menu ---------------------------------------------------------------------------------->
-            <div class="navbar-nav-wrap-content-end">
-
-
-            </div>
-            <!-- End Direita do Menu ------------------------------------------------------------------------------>
-
-        </div>
-    </nav>
-
-</header>
-<!-- End topMenu --------------------------------------------------->
-
-
 <!-- start container-fluid ----------------------------------------->
 <main class="container-fluid p-5">
 
     <div class="row">
 
         <!-- coluna da esquerda ---------------------->
-        <div class="col-md-8">
+        <div class="col-12 text-center">
 
-            <div class="ms-5">
+            <div class="mb-2">
 
-                <h1 style="font-family:Oswald medium ">Seja muito <span
-                        style="color:#27DEBF; font-family:Oswald medium ">BEM-VINDO</span></h1>
-                <p style="color:#8a8a8a;">Antes de Começar, queremos saber mais sobre você.<br>
-
+                <h1 style="font-family:oswald; font-size:60px;">Seja muito
+                    <span style="color:#27DEBF; font-family:oswald; font-size: 70px;">BEM-VINDO</span>
+                </h1>
+                <p style="color:#8a8a8a; font-size: 20px;">
+                    Antes de Começar, queremos saber mais sobre você.<br>
                 </p>
 
             </div>
@@ -91,7 +47,7 @@
             <div style="text-align: center">
                 <img src="{% static 'ccis/Grupo 2633.png' %}"
                      alt="rh"
-                     width="70%"
+                     width="50%%"
                      height="auto"
                      class="d-inline-block;">
             </div>
@@ -100,7 +56,7 @@
 
 
         <!-- coluna da direita ----------------------->
-        <div class="col-md-4">
+        <div class="col-4 mt-3 text-center mx-auto">
 
             <div class="container-fluid pt-2 p-5">
 
@@ -110,13 +66,13 @@
 
                     <div id="form1">
 
-                        <div class="col mb-5" style="text-align: center;">
-                            <h1 style="font-family:Oswald medium; ">
-                                Como você gostaria de ser chamado?
-                            </h1>
+                        <div>
+                            <h2 style="font-family:asap semibold;">
+                                Preencha os Campos para Prosseguir:
+                            </h2>
                         </div>
 
-                        <div class="col mb-2">
+                        <div class="col mt-4 mb-2">
                             <label for="first-name">Primeiro Nome:</label>
                             <input
                                 type="text"
@@ -127,8 +83,8 @@
                                 >
                         </div>
 
-                        <div class="col mb-5">
-                            <label for="last-name">Segundo Nome:</label>
+                        <div class="col mb-2">
+                            <label for="last-name">Sobrenome:</label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -136,6 +92,41 @@
                                 id="last-name"
                                 placeholder=""
                                 >
+                        </div>
+
+                        <div class="col mb-2">
+                            <label>Nome Completo:</label>
+                            {{ dadosPessoais.nomeCompleto }}
+                        </div>
+
+                        <div class="col mb-2">
+                            <label>Sexo:</label>
+                            {{ dadosPessoais.sexo }}
+                        </div>
+
+                        <div class="col mb-2">
+                            <label>CPF:</label>
+                            {{ dadosPessoais.cpf }}
+                        </div>
+
+                        <div class="col mb-2">
+                            <label>Email Coorporativo:</label>
+                            {{ enderecoContato.emailCorporativo }}
+                        </div>
+
+                        <div class="col mb-2">
+                            <label>Cargo:</label>
+                            {{ profissional.cargo }}
+                        </div>
+
+                        <div class="col mb-2">
+                            <label>Area:</label>
+                            {{ profissional.area }}
+                        </div>
+
+                        <div class="col mb-2">
+                            <label>Situação:</label>
+                            {{ profissional.situacao }}
                         </div>
 
                         <div class="col mt-5 d-grid align-self-end">
