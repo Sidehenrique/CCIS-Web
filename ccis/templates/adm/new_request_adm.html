@@ -126,12 +126,12 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ form.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ form.attachment }}
                         </div>
 
@@ -144,8 +144,6 @@
                     <div class="col">
 
                         <h6 class="required-label">Selecione os itens desejados:</h6>
-
-                        <!-------------------------------------->
 
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="item1" id="Brindes" value="Brindes" type="checkbox">
@@ -185,8 +183,6 @@
 
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
-
         </div>
         <!-- Formulário de Malotes -------------------------->
 
@@ -204,9 +200,6 @@
 
                         {% csrf_token %}
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
                         <div class="mb-2">
                             <label class="required-label">Assunto:</label>
                             <input class="input-new" type="text" id="assunto-input" name="assunto-input" required>
@@ -218,7 +211,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ ci.descricao }}
                         </div>
 
@@ -260,7 +253,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ apontamentos.descricao }}
                         </div>
 

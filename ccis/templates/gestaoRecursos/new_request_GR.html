@@ -169,9 +169,7 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
-
 
                         <div class="">
                             <label class="required-label">Assunto:</label>
@@ -184,23 +182,21 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ portifolio.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ portifolio.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
 
                 </div>
             </form>
-
         </div>
         <!-- Formulário de Portifólios -------------------------->
 
@@ -216,7 +212,6 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
 
 
@@ -231,23 +226,21 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ basileia.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ basileia.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
 
                 </div>
             </form>
-
         </div>
         <!-- Formulário de Basileia -------------------------->
 
@@ -263,9 +256,7 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
-
 
                         <div class="">
                             <label class="required-label">Assunto:</label>
@@ -278,23 +269,21 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ risco.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ risco.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
 
                 </div>
             </form>
-
         </div>
         <!-- Formulário de Monitoramento de Risco -------------------------->
 
@@ -312,9 +301,6 @@
 
                         {% csrf_token %}
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
                         <div class="mb-2">
                             <label class="required-label">Assunto:</label>
                             <input class="input-new" type="text" id="assunto-input" name="assunto-input" required>
@@ -326,11 +312,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ ci.descricao }}
                         </div>
 
-                        <div class="">
+                        <div>
                             <label>Anexar arquivo:</label>
                             {{ ci.attachment }}
                         </div>
@@ -355,6 +341,7 @@
                 {% csrf_token %}
                 <div class="row p-3 ">
 
+                    <!-- Primeira col -------------------------------->
                     <div class="col-7">
 
                         <div class="mb-2">
@@ -368,18 +355,20 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ apontamentos.descricao }}
                         </div>
 
-                        <div class="">
+                        <div>
                             <label>Anexar arquivo:</label>
                             {{ apontamentos.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
                     </div>
+                    <!-- Primeira col -------------------------------->
 
+                    <!-- Segunda col -------------------------------->
                     <div class="col">
 
                         <p>Reincidente:</p>
@@ -434,6 +423,8 @@
                         </div>
 
                     </div>
+                    <!-- Segunda col -------------------------------->
+
                 </div>
             </form>
 

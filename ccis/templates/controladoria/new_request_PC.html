@@ -22,7 +22,7 @@
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-chart-line"></i>
-                            Power BI
+                            Painéis
                         </a>
                     </li>
 
@@ -200,11 +200,7 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Performace Corporativa">
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
@@ -212,24 +208,20 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ power.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ power.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
-
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
-
         </div>
         <!-- Formulário de Power BI -------------------------->
 
@@ -245,7 +237,6 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
 
                         <div class="">
@@ -254,23 +245,20 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ propenso.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ propenso.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
-
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
 
         </div>
         <!-- Formulário de Lista Propenso -------------------------->
@@ -287,11 +275,7 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Performace Corporativa">
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
@@ -299,24 +283,20 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label >Descrição:</label>
                             {{ relatorio.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label >Anexar arquivo:</label>
                             {{ relatorio.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
-
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
-
         </div>
         <!-- Formulário de Relatório -------------------------->
 
@@ -332,11 +312,7 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Performace Corporativa">
 
                         <div class="">
                             <label class="required-label">Serviço:</label>
@@ -344,24 +320,20 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ estudo.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ estudo.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
-
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
-
         </div>
         <!-- Formulário de Pesquisa/Estudos -------------------------->
 
@@ -379,9 +351,6 @@
 
                         {% csrf_token %}
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
                         <div class="mb-2">
                             <label class="required-label">Assunto:</label>
                             <input class="input-new" type="text" id="assunto-input" name="assunto-input" required>
@@ -393,7 +362,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ ci.descricao }}
                         </div>
 
@@ -435,11 +404,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ apontamentos.descricao }}
                         </div>
 
-                        <div class="">
+                        <div>
                             <label>Anexar arquivo:</label>
                             {{ apontamentos.attachment }}
                         </div>
