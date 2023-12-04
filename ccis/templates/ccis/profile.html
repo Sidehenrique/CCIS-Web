@@ -43,27 +43,27 @@
         <!-- avatar -------------------------->
         <div class="col-3 profile-info mb-3">
 
-                {% if dados.foto %}
-                <img class="profile-user"
-                     src="{{ dados.foto.url }}">
+            {% if dados.foto %}
+            <img class="profile-user"
+                 src="{{ dados.foto.url }}">
 
-                {% else %}
+            {% else %}
 
-                {% if dados.sexo == "Masculino" %}
-                <img class="profile-user"
-                     src="{% static 'ccis/avatar.jpg' %}">
+            {% if dados.sexo == "Masculino" %}
+            <img class="profile-user"
+                 src="{% static 'ccis/avatar.jpg' %}">
 
-                {% elif dados.sexo == "Feminino" %}
-                <img class="profile-user"
-                     src="{% static 'ccis/avatar-feminino.jpg' %}">
+            {% elif dados.sexo == "Feminino" %}
+            <img class="profile-user"
+                 src="{% static 'ccis/avatar-feminino.jpg' %}">
 
-                {% endif %}
+            {% endif %}
 
-                {% endif %}
+            {% endif %}
 
-                <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
+            <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
 
-                <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
+            <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
 
 
         </div>
@@ -90,7 +90,6 @@
                         <div class="progress-bar custom-progress-bar" style="width: {{ pf }}%;"></div>
 
                     </div>
-
                 </div>
                 <!-- Barra de progresso -->
 
@@ -207,14 +206,43 @@
 
             <hr class="linha-custom">
 
+            <div class="card-timeline">
+            <div class="card-body" style="margin-top: 30px;">
 
-            <div class="card-body-custom" style="text-align: center;">
-
-                <img src="{% static 'ccis/Grupo 2410.png' %}"
-                     width="100%"
-                     height="auto">
-
+                <div class="hori-timeline" dir="ltr">
+                    <ul class="list-inline events">
+                        <li class="list-inline-item event-list">
+                            <div class="px-4">
+                                <div class="event-date bg-soft-primary" style="color: white;">01/12/23</div>
+                                <h5 class="font-size-16">Primeiro Evento</h5>
+                                <p class="text-muted">Sua Time-line está ficando pronta...</p>
+                            </div>
+                        </li>
+                        <li class="list-inline-item event-list">
+                            <div class="px-4">
+                                <div class="event-date bg-soft-success" style="color: white;">01/12/23</div>
+                                <h5 class="font-size-16">Segundo Evento</h5>
+                                <p class="text-muted">Sua Time-line está ficando pronta...</p>
+                            </div>
+                        </li>
+                        <li class="list-inline-item event-list">
+                            <div class="px-4">
+                                <div class="event-date bg-soft-danger" style="color: white;">01/12/23</div>
+                                <h5 class="font-size-16">Terceiro Evento</h5>
+                                <p class="text-muted">Sua Time-line está ficando pronta...</p>
+                            </div>
+                        </li>
+                        <li class="list-inline-item event-list">
+                            <div class="px-4">
+                                <div class="event-date bg-soft-warning" style="color: white;">01/12/23</div>
+                                <h5 class="font-size-16">Quarto Evento</h5>
+                                <p class="text-muted">Sua Time-line está ficando pronta...</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </div>
 
         </div>
         <!-- Histórico Corporativ ------------>
@@ -302,7 +330,6 @@
                             <h6 class="m-0">{{ usuario.first_name }} {{usuario.last_name}}</h6>
                             <small class="m-0">{{ usuario.cargo }}</small>
                         </div>
-
                     </div>
 
                 </a>
@@ -335,25 +362,29 @@
 
         <!-- Histórico Corporativo ----------->
         <div class="col card-custom">
-
             <div class="card-header-custom">
-                Atividade | Em breve
+                Atividades
             </div>
-
             <hr class="linha-custom">
+            <div class="card-body-custom">
+                <ul class="list-group list-group-flush">
 
+                    <li class="list-group-item">
+                        <h5>Painel de Solicitações</h5>
+                        <p>Verifique seu painel de solicitações sempre que puder!</p>
+                    </li>
 
-            <div class="card-body-custom" style="text-align: center;">
+                    <li class="list-group-item">
+                        Não há eventos para exibir.
+                    </li>
 
-
+                </ul>
             </div>
-
         </div>
         <!-- Histórico Corporativ ------------>
 
     </div>
     <!-- Cards ------------------------------->
-
 
 </div>
 <!-- Conteúdo Pagina 1 ------------------------------->

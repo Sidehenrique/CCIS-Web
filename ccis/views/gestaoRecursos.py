@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
 from ..forms import modelFormCI, modelFormApontamentos, modelFormAcessosGR, modelFormBasileiaGR, modelFormRiscoGR
 
+
 @login_required(login_url="/login")
 def gestaoRecurso_home(request):
     user = request.user
@@ -288,7 +289,7 @@ def request_ci_recurso(request):
             descricao = form.cleaned_data.get('descricao')
             assunto = request.POST.get('assunto-input')
 
-            if(assunto):
+            if (assunto):
                 descricao = f"<strong>Assunto:</strong> {assunto} <br><br>" + descricao
 
             if descricao:
@@ -344,7 +345,6 @@ def request_apontamentos_recurso(request):
             card.cor = "#FFCECE"
             card.save()
 
-
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
@@ -381,7 +381,6 @@ def request_apontamentos_recurso(request):
 
                 if form.cleaned_data.get('descricao'):
                     descricao += f"Descrição: {form.cleaned_data.get('descricao')}<br>"
-
 
             if descricao:
                 message_history = MessageHistory(
@@ -422,11 +421,10 @@ def request_apontamentos_recurso(request):
 
 @login_required(login_url="/login")
 def processos_recurso(request):
-
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-            queryset=CardSetorHistory.objects.order_by('-data_hora'))
-        )
+                                                             queryset=CardSetorHistory.objects.order_by('-data_hora'))
+                                                    )
 
         group = Group.objects.all()
         setor = 'Gestão de Recursos'
@@ -465,4 +463,3 @@ def processos_recurso(request):
         }
 
         return render(request, 'ccis/processo.html', context)
-
