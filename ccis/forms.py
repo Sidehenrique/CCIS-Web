@@ -42,7 +42,7 @@ class modelFormDadosPessoais(forms.ModelForm):
             'tipoSanguineo': forms.Select(attrs={'class': 'form-select'}),
             'nomePai': forms.TextInput(attrs={'class': 'form-control'}),
             'nomeMae': forms.TextInput(attrs={'class': 'form-control'}),
-            'cpf': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cpf': forms.TextInput(attrs={'class': 'form-control'}),
             'rg': forms.NumberInput(attrs={'class': 'form-control'}),
             'expedidor': forms.TextInput(attrs={'class': 'form-control'}),
             'cnh': forms.TextInput(attrs={'class': 'form-control'}),
@@ -542,13 +542,17 @@ class modelFormPowerPC(forms.ModelForm):
     CHOICES_Servico = [
         ('', ''),
         ('Criação de Painel', 'Criação de Painel'),
-        ('Ajuste', 'Ajuste'),
-        ('Erros', 'Erros'),
+        ('Ajuste/Erros', 'Ajuste/Erros'),
         ('Sugestões', 'Sugestões'),
+        ('Dashboard de Crédito', 'Dashboard de Crédito'),
+        ('Dashboard de Captações', 'Dashboard de Captações'),
+        ('Dashboard de Capital', 'Dashboard de Capital'),
+        ('Gestão de Capital ', 'Gestão de Capital '),
+        ('Contabilidade ', 'Contabilidade '),
     ]
 
     CHOICES_Assunto = [
-        ('Power BI', 'Power BI'),
+        ('Painéis', 'Painéis'),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
@@ -1220,4 +1224,70 @@ class ModelFormSIAMalotes(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment',)
 
 
+class modelFormAcessosGR(forms.ModelForm):
+    CHOICES_ServicoAcessos = [
+        ('', ''),
+        ('inclusão e alteração de linhas', 'inclusão e alteração de linhas'),
+    ]
+
+    CHOICES_AssuntoAcessos = [
+        ('', ''),
+        ('Portfólio de Captação ', 'Portfólio de Captação '),
+        ('Portifólio de Crédito', 'Portifólio de Crédito'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormBasileiaGR(forms.ModelForm):
+    CHOICES_ServicoAcessos = [
+        ('', ''),
+        ('Estudos a cerca do impacto', 'Estudos a cerca do impacto'),
+    ]
+
+    CHOICES_AssuntoAcessos = [
+        ('', ''),
+        ('Acompanhamento Basileia ', 'Acompanhamento Basileia '),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormRiscoGR(forms.ModelForm):
+    CHOICES_ServicoAcessos = [
+        ('', ''),
+        ('Estudos a cerca dos impactos', 'Estudos a cerca dos impactos'),
+        ('Renegociação', 'Renegociação'),
+    ]
+
+    CHOICES_AssuntoAcessos = [
+        ('', ''),
+        ('Monitoramento do Risco ', 'Monitoramento do Risco '),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
 

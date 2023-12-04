@@ -107,7 +107,6 @@
         <div id="formulario1" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
 
-            <!-- Formulário de Malotes -------------------------->
             <form action="{% url 'salvar_malote_PS' %}"
                   method="POST"
                   enctype="multipart/form-data">
@@ -119,21 +118,18 @@
                     <!-- primeira col -------------------------->
                     <div class="col-7">
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="produtoServico">
-
                         <div class="mb-2" id="service-dinamico">
                             <label class="required-label">Informe o lacre:</label>
                             {{ form.service }}
                         </div>
 
                         <div id="descricao-dinamica" class="mb-3">
-                            <label class="">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             <textarea class="new-desc" name="descricao-dinamica"></textarea>
                         </div>
 
-                        <div class="">
-                            <label class="">Anexar arquivo:</label>
+                        <div>
+                            <label>Anexar arquivo:</label>
                             {{ form.attachment }}
                         </div>
 
@@ -146,8 +142,6 @@
                     <div class="col">
 
                         <h6 class="required-label">Selecione os itens desejados:</h6>
-
-                        <!-------------------------------------->
 
                         <div class="form-check form-switch mb-1">
                             <input class="form-check-input" name="item1" id="Acordo" value="Acordo de Incentivo Sipag"
@@ -364,11 +358,8 @@
 
                 </div>
             </form>
-
-
         </div>
         <!-- Formulário de Malotes -------------------------->
-
 
         <!-- Formulário de CI ------------------------------->
         <div id="formulario2" class="col menu-request m-0" style="display:none">
@@ -398,7 +389,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ ci.descricao }}
                         </div>
 
@@ -410,12 +401,10 @@
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </form>
-
                 </div>
             </div>
         </div>
         <!-- Formulário de CI ------------------------------->
-
 
         <!-- Formulário de Apontamentos --------------------->
         <div id="formulario3" class="col menu-request m-0" style="display:none">
@@ -428,6 +417,7 @@
                 {% csrf_token %}
                 <div class="row p-3 ">
 
+                    <!-- Primeira col -------------------------->
                     <div class="col-7">
 
                         <div class="mb-2">
@@ -441,18 +431,21 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ apontamentos.descricao }}
                         </div>
 
-                        <div class="">
+                        <div>
                             <label>Anexar arquivo:</label>
                             {{ apontamentos.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
-                    </div>
 
+                    </div>
+                    <!-- Primeira col -------------------------->
+
+                    <!-- Segunda col -------------------------->
                     <div class="col">
 
                         <p>Reincidente:</p>
@@ -507,12 +500,12 @@
                         </div>
 
                     </div>
+                    <!-- Segunda col -------------------------->
+
                 </div>
             </form>
-
         </div>
         <!-- Formulário de Apontamentos --------------------->
-
 
     </div>
 

@@ -173,36 +173,29 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Marketing">
-
-                        <div class="">
+                        <div>
                             <label class="required-label">Serviço:</label>
                             {{ acessoria.service }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ acessoria.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ acessoria.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
 
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
-
         </div>
         <!-- Formulário de Acessoria ------------------------>
 
@@ -218,7 +211,6 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
 
                         <div class="">
@@ -227,24 +219,21 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ digital.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ digital.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
 
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
-
         </div>
         <!-- Formulário de Comunicação Digital -------------->
 
@@ -260,11 +249,7 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Marketing">
 
                         <div class="">
                             <label class="required-label">Assunto:</label>
@@ -277,7 +262,7 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ grafica.descricao }}
                         </div>
 
@@ -289,12 +274,9 @@
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
 
                 </div>
             </form>
-            <!-- CheckBox list -------------------------->
-
         </div>
         <!-- Formulário de Criação Gráfica ------------------>
 
@@ -312,9 +294,6 @@
 
                         {% csrf_token %}
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
                         <div class="mb-2">
                             <label class="required-label">Assunto:</label>
                             <input class="input-new" type="text" id="assunto-input" name="assunto-input" required>
@@ -326,7 +305,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ ci.descricao }}
                         </div>
 
@@ -340,6 +319,7 @@
                     </form>
 
                 </div>
+
             </div>
         </div>
         <!-- Formulário de CI ------------------------------->
@@ -355,6 +335,7 @@
                 {% csrf_token %}
                 <div class="row p-3 ">
 
+                    <!-- Primeira col --------------------->
                     <div class="col-7">
 
                         <div class="mb-2">
@@ -368,7 +349,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ apontamentos.descricao }}
                         </div>
 
@@ -379,7 +360,9 @@
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
                     </div>
+                    <!-- Primeira col --------------------->
 
+                    <!-- Segunda col --------------------->
                     <div class="col">
 
                         <p>Reincidente:</p>
@@ -434,15 +417,14 @@
                         </div>
 
                     </div>
+                    <!-- Segunda col --------------------->
+
                 </div>
             </form>
-
         </div>
         <!-- Formulário de Apontamentos --------------------->
 
     </div>
-
 </div>
-
 
 {% endblock %}

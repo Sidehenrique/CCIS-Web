@@ -119,21 +119,18 @@
                     <!-- primeira col -------------------------->
                     <div class="col-7">
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Retaguarda">
-
                         <div class="">
                             <label class="required-label">Lacre:</label>
                             {{ form.service }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ form.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ form.attachment }}
                         </div>
 
@@ -146,8 +143,6 @@
                     <div class="col">
 
                         <h6 class="required-label">Selecione os itens desejados:</h6>
-
-                        <!-------------------------------------->
 
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="item1" id="DossieCredito"
@@ -181,9 +176,6 @@
 
                         {% csrf_token %}
 
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
                         <div class="mb-2">
                             <label class="required-label">Assunto:</label>
                             <input class="input-new" type="text" id="assunto-input" name="assunto-input" required>
@@ -195,7 +187,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ ci.descricao }}
                         </div>
 
@@ -225,6 +217,7 @@
                 {% csrf_token %}
                 <div class="row p-3 ">
 
+                    <!-- Primeira col -------------------------->
                     <div class="col-7">
 
                         <div class="mb-2">
@@ -238,18 +231,20 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="required-label">Descrição:</label><br>
+                            <label>Descrição:</label><br>
                             {{ apontamentos.descricao }}
                         </div>
 
-                        <div class="">
+                        <div>
                             <label>Anexar arquivo:</label>
                             {{ apontamentos.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
                     </div>
+                    <!-- Primeira col -------------------------->
 
+                    <!-- Segunda col --------------------------->
                     <div class="col">
 
                         <p>Reincidente:</p>
@@ -304,6 +299,8 @@
                         </div>
 
                     </div>
+                    <!-- Segunda col --------------------------->
+
                 </div>
             </form>
 

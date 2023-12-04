@@ -87,7 +87,7 @@ def salvar_malote_secretaria(request):
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=1),
+                setor=get_object_or_404(Group, id=31),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)

@@ -9,7 +9,7 @@
     <div class="row">
 
         <!-- Menu -------------------------------->
-        <div id="menu-inicial" class="col-3 menu-request">
+        <div id="menu_inicial" class="col-3 menu-request">
 
             <div class="">
 
@@ -20,7 +20,7 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-menu-request">
-                        <a type="button" id="btnAcessos" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-key"></i>
                             Malotes
                         </a>
@@ -52,7 +52,7 @@
 
 
         <!-- Informativo ------------------------->
-        <div id="informativoTI" class="col menu-request m-0 p-5">
+        <div id="informativo" class="col menu-request m-0 p-5">
             <h6>Orientações para abertura de chamado - 4155. PADF</h6>
             <p>
                 Pontos a serem observados durante a abertura de chamado:
@@ -90,11 +90,10 @@
 
 
         <!-- Formulário de Malotes -------------------------->
-        <div id="formularioAcessos" class="col menu-request m-0" style="display:none">
+        <div id="formulario1" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
 
 
-            <!-- Formulário de Malotes -------------------------->
             <form action="{% url 'salvar_malote_padf' %}"
                   method="POST"
                   enctype="multipart/form-data">
@@ -103,11 +102,7 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Retaguarda">
 
                         <div class="">
                             <label class="required-label">Lacre:</label>
@@ -115,33 +110,29 @@
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Descrição:</label>
+                            <label>Descrição:</label>
                             {{ form.descricao }}
                         </div>
 
                         <div class="mt-2">
-                            <label class="">Anexar arquivo:</label>
+                            <label>Anexar arquivo:</label>
                             {{ form.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
 
                 </div>
-            </form>
-            <!-- CheckBox list -------------------------->
 
+            </form>
         </div>
         <!-- Formulário de Malotes -------------------------->
 
     </div>
-    <!-- Formulário de Acessos -------------------------->
-
 
 </div>
-<!-- Conteúdo -------------------------------->
+<!-- Conteúdo --------------------------------------->
 
 
 {% endblock %}
