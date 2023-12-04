@@ -302,7 +302,6 @@ function validarFormulario() {
 }
 
 
-
 // Configuração do scroll do mouse lateral -----------------------------------------------------------------------
 function handleScroll(event) {
   const container = document.querySelector('.container-buttons');
@@ -344,62 +343,153 @@ function getCookie(name) {
 }
 
 
-async function fetchCardData(cardId, columnId) {
-    try {
-        const response = await fetch(`/card_detl/${cardId}/?setor=${setor_do_usuario}`);
-        const data = await response.json();
 
-        // Adicione o card ao kanban na coluna específica
-        addCardToKanban(columnId, data.card);
-    } catch (error) {
-        console.error('Erro ao buscar dados do card:', error);
+
+//Cards ----------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', function () {
+  const toggleBtn = document.getElementById('toggleBtn');
+  const cardContent = document.querySelector('.kanban-card-content');
+
+  toggleBtn.addEventListener('click', function () {
+    cardContent.style.display = cardContent.style.display === 'none' ? 'block' : 'none';
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Chame a função para carregar os cards quando a página for carregada
+    loadCards();
+
+    function loadCards() {
+        $.ajax({
+            type: 'GET',
+            url: '/card_kanban_api',  // Substitua pela URL correta
+            success: function (data) {
+                renderCards(data);
+            },
+            error: function (error) {
+                console.error('Erro ao carregar cards:', error);
+            }
+        });
     }
-}
+
+    function renderCards(data) {
+
+        // Função para formatar a data
+        function formatarData(dataString) {
+            const data = new Date(dataString);
+            const dia = data.getDate();
+            const mes = data.getMonth() + 1; // Os meses são indexados de 0 a 11
+            const ano = data.getFullYear();
+            return `${dia}/${mes}/${ano}`;
+        }
+
+        // Função para formatar o horário
+        function formatarHorario(dataString) {
+            const data = new Date(dataString);
+            const hora = data.getHours();
+            const minuto = data.getMinutes();
+            return `${hora}:${minuto}`;
+        }
+
+        // Itera sobre os dados por status
+        for (const [status, cards] of Object.entries(data)) {
+            const container = document.getElementById('kanban-body-' + status.toLowerCase());
+
+            if (container) {
+                container.innerHTML = '';
+
+                 // Adiciona os cards ao container
+                cards.forEach((card, index) => { // Adicionado 'index' para criar IDs únicos
+                const cardId = `card-${status.toLowerCase()}-${index}`;
+                const cardHtml = `
+                    <div class="kanban-card m-2">
+
+                        <!-- header do card --------->
+                        <a id="toggleBtn-${cardId}" type="button" class="d-grid kanban-card-header">
+                            <div class="row">
+                                <div class="col-auto me-auto">
+                                    <h5 class="card-titulo mt-1">${card.assunto}</h5>
+                                </div>
+                                <div class="col-auto mb-1">
+                                    <span class="card-setor processo-tag-setor">N° ${card.idCard}</span>
+                                    <span class="card-setor processo-tag-setor">${card.setor_history.length > 0 ? card.setor_history[card.setor_history.length - 1].setor_atual : 'N/A'}</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- header do card --------->
+
+                        <!-- conteúdo card --------->
+                        <div id="cardContent-${cardId}" class="kanban-card-content">
+
+                            <hr style="color:#C4C0C0; margin:0px;">
+
+                            <a class="d-grid kanban-card-header card-filter"
+                               type="button"
+                               data-bs-toggle="modal"
+                               data-bs-target="#processoModal"
+                               data-card-id="${card.idCard}"
+                               onclick="loadCardInfo(${card.idCard})">
+
+                                <!-- foto --------->
+                                <div class="col-auto">
+                                   <p class="card-responsavel" style="color:#818181;">
+                                        <img class="foto_card" src="${card.solicitante_dados_pessoais.foto}" alt="" width="25" height="25">
+                                        ${card.solicitante.first_name} ${card.solicitante.last_name}
+                                    </p>
+                                </div>
+                                <!-- foto --------->
+
+                                <!-- serviço ------>
+                                <div style="color:#818181; font-size:13px;">
+                                    <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> ${card.service}</p>
+                                </div>
+                                <!-- serviço ------>
+
+                                <!-- data --------->
+                                <div class="card-data row" style="color:#818181; font-size:13px">
+                                    <div class="col-auto me-auto">
+                                        <i class="fa-solid fa-calendar-days"></i> ${formatarData(card.dataCriacao)}
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-clock"></i> ${formatarHorario(card.dataCriacao)}
+                                    </div>
+                                </div>
+                                <!-- data --------->
+
+                            </a>
+
+                        </div>
+                        <!-- conteúdo card --------->
+
+                    </div>
+                    <!-- Card ----------------->
+                `;
+
+                container.insertAdjacentHTML('beforeend', cardHtml);
+
+                // Adicionando o evento de clique para o toggle do collapse
+                $(`#toggleBtn-${cardId}`).on('click', function () {
+                    $(`#cardContent-${cardId}`).toggle();
+                });
+            });
+
+            // Restante do seu código para adicionar os cards ao container
+            } else {
+                console.error('Elemento não encontrado:', 'kanban-body-' + status.toLowerCase());
+            }
 
 
-function addCardToKanban(columnId, card) {
-    const kanbanBody = document.getElementById(columnId);
+        }
+    }
 
-    const cardElement = document.createElement("div");
-    cardElement.classList.add("kanban-card");
-
-    const cardContent = `
-        <div class="processo-card" style="background-color:${card.cor}">
-            <div class="row">
-                <div class="col-auto me-auto">
-                    <h5 class="card-titulo mt-2">${card.assunto}</h5>
-                </div>
-                <div class="col-auto mb-1">
-                    <span class="card-setor processo-tag-setor">N° ${card.idCard}</span>
-                    <span class="card-setor processo-tag-setor">${card.service}</span>
-                </div>
-            </div>
-            <hr style="color:#C4C0C0; margin-top:0px;">
-            <div class="col-auto mb-2">
-                <p class="card-responsavel" style="color:#818181;">
-                    <img class="foto_card" src="${card.solicitante_dados_pessoais.foto}" alt="" width="25" height="25">
-                    ${card.solicitante_dados_pessoais.nomeCompleto}
-                </p>
-            </div>
-            <div class="" style="color:#818181; font-size:13px;">
-                <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> ${card.service}</p>
-            </div>
-            <div class="card-data row" style="color:#818181; font-size:13px">
-                <div class="col-auto me-auto">
-                    <i class="fa-solid fa-calendar-days"></i> ${card.dataCriacao}
-                </div>
-                <div class="col-auto">
-                    <i class="fa-solid fa-clock"></i> ${card.horaCriacao}
-                </div>
-            </div>
-        </div>
-    `;
-
-    cardElement.innerHTML = cardContent;
-    kanbanBody.appendChild(cardElement);
-}
+});
+//----------------------------------------------------------------------
 
 
+
+
+//Modal do Card --------------------------------------------------------
 function loadCardInfo(cardId) {
     const modal = $('#processoModal');
     const modalBody = modal.find('.modal-body');
@@ -1043,82 +1133,73 @@ function loadCardInfo(cardId) {
                 //------------------------------------------------------------------------------------------------------
 
                 // Verifique o status do card
-                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Triagem") {
-                    $("#compartilharCardButton").show();
-                    $("#priorizarCardButton").show();
-                    $("#enviarMensagemButton").show();
-                    $("#starButtons").css("display", "none");
-                    $("#reabrirChamado").css("display", "none");
-                    $("#avaliarAtendimentoButton").hide();
-                    $("#registrarAtendimentoButton").show();
-                    $("#encaminharCardButton").hide();
-                    $("#transferirCardButton").show();
-                    $("#ConcluirCardButton").hide();
-                }
-//
-//
-                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Em Atendimento") {
+                const statusAtual = data.card.status;
 
-                    $("#compartilharCardButton").show();
-                    $("#priorizarCardButton").show();
-                    $("#enviarMensagemButton").show();
-                    $("#starButtons").css("display", "none");
-                    $("#reabrirChamado").css("display", "none");
-                    $("#avaliarAtendimentoButton").hide();
-                    $("#registrarAtendimentoButton").hide();
-                    $("#encaminharCardButton").show();
-                    $("#transferirCardButton").hide();
-                    $("#ConcluirCardButton").show();
-
-                }
-//
-//
-                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Emcaminhado") {
-
-                    $("#compartilharCardButton").show();
-                    $("#priorizarCardButton").show();
-                    $("#enviarMensagemButton").show();
-                    $("#starButtons").css("display", "none");
-                    $("#reabrirChamado").css("display", "none");
-                    $("#avaliarAtendimentoButton").hide();
-                    $("#registrarAtendimentoButton").show();
-                    $("#encaminharCardButton").show();
-                    $("#transferirCardButton").show();
-                    $("#ConcluirCardButton").hide();
-
-                }
-//
-//
-                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Concluido") {
-
-                    $("#compartilharCardButton").show();
-                    $("#priorizarCardButton").hide();
-                    $("#enviarMensagemButton").show();
-                    $("#starButtons").css("display", "block");
-                    $("#reabrirChamado").css("display", "none");
-                    $("#avaliarAtendimentoButton").show();
-                    $("#registrarAtendimentoButton").hide();
-                    $("#encaminharCardButton").show();
-                    $("#transferirCardButton").hide();
-                    $("#ConcluirCardButton").hide();
-
-                }
-
-
-                // Verifique o status do card
-                if (data.card.setor_history.length > 0 && data.card.setor_history[data.card.setor_history.length - 1].status_atual === "Finalizado") {
-                    // Ocultar botões quando o card estiver em "Finalizado"
-                    $("#compartilharCardButton").hide();
-                    $("#priorizarCardButton").hide();
-                    $("#enviarMensagemButton").hide();
-                    $("#starButtons").css("display", "none");
-                    $("#reabrirChamado").css("display", "block");
-                    $("#avaliarAtendimentoButton").hide();
-                    $("#registrarAtendimentoButton").hide();
-                    $("#encaminharCardButton").hide();
-                    $("#transferirCardButton").hide();
-                    $("#ConcluirCardButton").hide();
-
+                switch (statusAtual) {
+                    case "Triagem":
+                        $("#compartilharCardButton").show();
+                        $("#priorizarCardButton").show();
+                        $("#enviarMensagemButton").show();
+                        $("#starButtons").css("display", "none");
+                        $("#reabrirChamado").css("display", "none");
+                        $("#avaliarAtendimentoButton").hide();
+                        $("#registrarAtendimentoButton").show();
+                        $("#encaminharCardButton").hide();
+                        $("#transferirCardButton").show();
+                        $("#ConcluirCardButton").hide();
+                        break;
+                    case "Em Atendimento":
+                        $("#compartilharCardButton").show();
+                        $("#priorizarCardButton").show();
+                        $("#enviarMensagemButton").show();
+                        $("#starButtons").css("display", "none");
+                        $("#reabrirChamado").css("display", "none");
+                        $("#avaliarAtendimentoButton").hide();
+                        $("#registrarAtendimentoButton").hide();
+                        $("#encaminharCardButton").show();
+                        $("#transferirCardButton").hide();
+                        $("#ConcluirCardButton").show();
+                        break;
+                    case "Encaminhado":
+                        $("#compartilharCardButton").show();
+                        $("#priorizarCardButton").show();
+                        $("#enviarMensagemButton").show();
+                        $("#starButtons").css("display", "none");
+                        $("#reabrirChamado").css("display", "none");
+                        $("#avaliarAtendimentoButton").hide();
+                        $("#registrarAtendimentoButton").show();
+                        $("#encaminharCardButton").show();
+                        $("#transferirCardButton").show();
+                        $("#ConcluirCardButton").hide();
+                        break;
+                    case "Concluido":
+                        $("#compartilharCardButton").show();
+                        $("#priorizarCardButton").hide();
+                        $("#enviarMensagemButton").show();
+                        $("#starButtons").css("display", "block");
+                        $("#reabrirChamado").css("display", "none");
+                        $("#avaliarAtendimentoButton").show();
+                        $("#registrarAtendimentoButton").hide();
+                        $("#encaminharCardButton").show();
+                        $("#transferirCardButton").hide();
+                        $("#ConcluirCardButton").hide();
+                        break;
+                    case "Finalizado":
+                        // Ocultar botões quando o card estiver em "Finalizado"
+                        $("#compartilharCardButton").hide();
+                        $("#priorizarCardButton").hide();
+                        $("#enviarMensagemButton").hide();
+                        $("#starButtons").css("display", "none");
+                        $("#reabrirChamado").css("display", "block");
+                        $("#avaliarAtendimentoButton").hide();
+                        $("#registrarAtendimentoButton").hide();
+                        $("#encaminharCardButton").hide();
+                        $("#transferirCardButton").hide();
+                        $("#ConcluirCardButton").hide();
+                        break;
+                    default:
+                        // Lógica para um status desconhecido (pode adicionar conforme necessário)
+                        break;
                 }
 
 
@@ -1205,7 +1286,6 @@ function enviarAvaliacao(cardId, rating) {
     });
 }
 
-
 // Tratamento de Notificações
 $('.marcar-lida-notificacao').click(function() {
     var notificationId = $(this).data('notification-id');
@@ -1222,9 +1302,12 @@ $('.marcar-lida-notificacao').click(function() {
         }
     });
 });
+//----------------------------------------------------------------------
 
 
-//Menu -----------------------------
+
+
+//Menu -----------------------------------------------------------------
 $(document).ready(function () {
     // Verifica se há um estado salvo no localStorage
     var menuState = localStorage.getItem('menuState');
@@ -1247,6 +1330,7 @@ $(document).ready(function () {
       localStorage.setItem('menuState', currentState);
     });
   });
+//----------------------------------------------------------------------
 
 
 $(document).ready(function() {
@@ -1275,157 +1359,5 @@ $(document).ready(function() {
             ]
         });
     });
-
-
-// Função para criar o gráfico
-function criarGrafico(data) {
-    // Obtenha o contexto do canvas
-    var ctx = document.getElementById('feriasChart').getContext('2d');
-
-    // Configurações do gráfico
-    var options = {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    };
-
-    // Crie o gráfico de área
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: options
-    });
-
-    // Calcular a média e exibi-la
-    var media = data.datasets[0].data.reduce((a, b) => a + b, 0) / data.datasets[0].data.length;
-    document.getElementById('mediaFerias').innerText = media.toFixed(2); // Exibe a média com 2 casas decimais
-}
-
-
-// Dados do gráfico de rosquinha
-function criarGraficoDeRosquinha() {
-    // Parte config ---------------------
-    var config = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [10, 20, 30],
-                backgroundColor: ['red', 'green', 'blue']
-            }],
-            labels: ['Red', 'Green', 'Blue']
-        },
-
-        options: {
-            responsive: true,
-               plugins: {
-                  legend: {
-                    position: 'left',
-                  }
-               },
-
-            title: {
-                display: false,
-                text: 'Doughnut Chart'
-            },
-
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    };
-
-    // Parte setup --------------------------
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('myChart').getContext('2d');
-        window.myDoughnut = new Chart(ctx, config);
-    });
-
-    // Parte actions -----------------------
-    document.getElementById('randomizeData').addEventListener('click', function() {
-        config.data.datasets.forEach(function(dataset) {
-            dataset.data = dataset.data.map(function() {
-                return randomScalingFactor();
-            });
-        });
-
-        window.myDoughnut.update();
-    });
-
-    var colorNames = Object.keys(window.chartColors);
-    document.getElementById('addDataset').addEventListener('click', function() {
-        var newDataset = {
-            backgroundColor: [],
-            data: [],
-            label: 'New dataset ' + config.data.datasets.length,
-        };
-
-        for (var index = 0; index < config.data.labels.length; ++index) {
-            newDataset.data.push(randomScalingFactor());
-
-            var colorName = colorNames[index % colorNames.length];
-            var newColor = window.chartColors[colorName];
-            newDataset.backgroundColor.push(newColor);
-        }
-
-        config.data.datasets.push(newDataset);
-        window.myDoughnut.update();
-    });
-}
-
-// Chame a função para criar o gráfico ao carregar a
-criarGraficoDeRosquinha();
-
-
-// script.js
-function criarGraficoDeBarraComBordasArredondadas() {
-    // Parte config
-    var config = {
-        type: 'bar',
-        data: {
-            labels: ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4'],
-            datasets: [{
-                label: 'Valores',
-                data: [15, 25, 10, 30],
-                backgroundColor: 'rgba(75, 192, 192, 0.7)', // Cor de fundo das barras
-                borderColor: 'rgba(75, 192, 192, 1)', // Cor da borda das barras
-                borderWidth: 2, // Largura da borda das barras
-                borderRadius: 10 // Raio da borda para torná-la arredondada
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    }
-                },
-                y: {
-                    beginAtZero: true
-                }
-            },
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 10,
-                    top: 10,
-                    bottom: 10
-                }
-            }
-        }
-    };
-
-    // Parte setup
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('myBarChart').getContext('2d');
-        window.myBarChart = new Chart(ctx, config);
-    });
-}
-criarGraficoDeBarraComBordasArredondadas();
-
-
 
 

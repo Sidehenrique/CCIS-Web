@@ -13,9 +13,9 @@ urlpatterns = [
     path('profile/<int:user_id>', pages.profile, name='profile'),
     path('', pages.home, name='home'),
     path('departamentos', pages.departamentos, name='departamentos'),
-
     path('processos_user', pages.processos_user, name='processos_user'),
     path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
+    path('card_kanban_api', pages.card_kanban_api, name='card_kanban_api'),
     path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
     path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
     path('registrar_atendimento/<int:card_id>', pages.registrar_atendimento, name='registrar_atendimento'),
@@ -32,12 +32,9 @@ urlpatterns = [
     path('get_card_details', pages.get_card_details, name='get_card_details'),
     path('notificacao_lida/<int:notification_id>', pages.notificacao_lida, name='notificacao_lida'),
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
-    path('kanban/', pages.kanban_view, name='kanban_view'),
-
-
+    path('kanban', pages.kanban_view, name='kanban'),
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
-
     path('malotes', pages.malotes, name='malotes'),
 
     path('gestaoControle', gestaoControle.home, name='gestaoControle'),
@@ -132,7 +129,7 @@ urlpatterns = [
            name='salvar_malote_retaguarda'),
     path('processos_retaguarda', retaguarda.processos_retaguarda,name='processos_retaguarda'),
     path('request_apontamentos_ret', retaguarda.request_apontamentos_ret,name='request_apontamentos_ret'),
-    path('request_ci_ret', retaguarda.request_ci_ret,name='request_ci_ret'),
+    path('request_ci_ret', retaguarda.request_ci_ret, name='request_ci_ret'),
 
     path('produtoServico_home', produtoServico.produtoServico_home, name='produtoServico_home'),
     path('request_produto_servico', produtoServico.request_produto_servico,

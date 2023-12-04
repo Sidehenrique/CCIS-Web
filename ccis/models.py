@@ -515,7 +515,8 @@ class Card(models.Model):
     solicitante = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chamados_solicitados', default=None)
     responsavel = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='chamados_responsaveis', default=None)
-    status = models.CharField(max_length=20)
+    setor = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=50, default='Triagem')
     compartilhar = models.ManyToManyField(User, related_name="cards_compartilhados", blank=True)
     anonymous = models.BooleanField(default=False)
     cor = models.CharField(max_length=20, null=True)
@@ -531,6 +532,7 @@ class MessageHistory(models.Model):
     message = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
     attachment = models.ImageField(upload_to='chat/', null=True, blank=True)  # Alterado para ImageField
+
     def __str__(self):
         return self.message
 

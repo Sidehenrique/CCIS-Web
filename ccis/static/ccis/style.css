@@ -92,11 +92,25 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background-color:white;
+    height:50px;
+    background-color:rgba(255,255,255,.80);
     box-shadow: 0px -5px 20px #707070;
     z-index: 100;
 }
 
+.menu-icon{
+    height:auto;
+    width:28px;
+    padding:5px;
+    display:block;
+}
+
+.logo-menu{
+    padding:14px 5px;
+    display:block;
+    height:auto;
+    width:88px;
+}
 
 .scrollable-content {
     padding-top:65px;
@@ -366,15 +380,15 @@ body {
 
 /*--Novo Menu Lateral -----------------------*/
 #menu_lateral {
-  padding-top: 55px;
+  padding-top: 60px;
   height: 100vh;
-  width: 60px; /* Largura inicial do menu recolhido */
+  width: 45px; /* Largura inicial do menu recolhido */
   position: fixed;
   left: 0;
   top: 0;
-  background-color: #4FD1B8;
+  background-color: rgba(255,255,255,.00);
   transition: width 0.5s;
-  overflow: hidden;
+  overflow: auto;
 }
 
 #menu_lateral.active {
@@ -388,14 +402,14 @@ body {
 }
 
 #menu_lateral li {
-  font-size: 18px;
+  font-size: 15px;
   display: block;
   white-space: nowrap;
-  border-bottom: 1px #f9f9f9 solid;
+
 }
 
 #menu_lateral a {
-  color: #fff;
+  color: #5E6E82;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -405,11 +419,15 @@ body {
 
 #menu_lateral a i {
   display: block;
-  padding: 18px;
+  padding: 13px;
 }
 
 #menu_lateral li:hover {
-  background: #219180;
+    background: #EBEBEB;
+}
+
+#menu_lateral li:active {
+    background: #d3d3d3;
 }
 
 #menu_lateral:not(.active) a small {
@@ -422,21 +440,17 @@ body {
 }
 
 #toggleMenu {
-  border: none;
-  border-bottom: 1px solid #f9f9f9;
-  width: 100%;
-  padding: 10px;
-  display: block;
-  background-color: #219180;
-  margin-top: 10px;
-  color: #fff;
-  font-size: 20px;
-  transition: background-color 0.5s;
-  justify-content: center;
+    margin-right:0px;
 }
 
 #toggleMenu:hover {
-  background-color: #1B796A;
+  background-color: #F7FAF9;
+  border-radius:7px;
+}
+
+#toggleMenu:active {
+  background-color: #fff;
+  border-radius:7px;
 }
 
 
@@ -1444,6 +1458,17 @@ status-negativo{
 
 .btn-menu-settings{
     color:#333;
+    min-width:90px;
+    background-color:white !important;
+    border:none;
+    border-radius:5px;
+    padding:8px;
+    text-decoration:none;
+}
+
+.btn-personalize-settings{
+    color:#333;
+    min-width:40px;
     background-color:white !important;
     border:none;
     border-radius:5px;
@@ -1510,7 +1535,9 @@ status-negativo{
 
 
 .kanban-body {
-    background-color: rgba(255, 255, 255, 0.7);
+    height:auto;
+    overflow:auto;
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
 
@@ -1532,21 +1559,44 @@ status-negativo{
     border-radius:20px;
 }
 
-
 .kanban-btn:hover {
     color:#333;
     background-color:#DCDDDD;
     transition: all .5s;
 }
 
-
-.kanban-card:{
-    background-color:#f6f6f6;
+.kanban-card {
+    border: none;
+    overflow: hidden;
     border-radius:10px;
-    padding:7px;
+    background-color: #f1f1f1;
+    transition: height 0.3s ease;
 }
 
+.kanban-card-header {
+    color:black;
+    padding: 10px;
+    text-decoration:none;
+    cursor: pointer;
+}
 
+.kanban-card:hover {
+    color:#333;
+    background-color:#DCDDDD;
+    transition: all .5s;
+}
+
+.kanban-card-header:hover {
+    color:black;
+}
+
+.kanban-card-header:active {
+    background-color:#CECECE;
+}
+
+.kanban-card-content {
+    height: auto;
+}
 
 
 /*-- processos ----------------------------*/

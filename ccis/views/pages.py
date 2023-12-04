@@ -1,8 +1,13 @@
+import json
+
 import requests
+from rest_framework import status
 from django.db.models import Prefetch
-from datetime import timedelta, datetime, timezone
+from dateutil.parser import parse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+
 from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -575,13 +580,43 @@ def processos_user(request):
 
 
 def kanban_view(request):
-    # Suponha que você tenha uma relação entre usuários e setores
-    setor_do_usuario = request.user.setor
+    usuarios = User.objects.all()
+    group = Group.objects.all()
 
-    cards = Card.objects.filter(setor=setor_do_usuario)
+    context = {
+        'usuarios': usuarios,
+        'group': group
+    }
+    return render(request, 'ccis/kanban.html', context)
 
-    return render(request, 'seu_template.html', {'cards': cards})
 
+@api_view(['GET'])
+@login_required(login_url="/login")
+def card_kanban_api(request):
+    # Recuperar o setor do usuário logado
+    user_setor = request.user.groups.first()
+
+    # Filtrar os cards com base no setor do usuário
+    cards = Card.objects.filter(setor=user_setor)
+
+    # Serializar os dados dos cards
+    serializer = CardSerializer(cards, many=True)
+
+    # Organizar os cards por status
+    kanban_data = {
+        'Triagem': [],
+        'Em Atendimento': [],
+        'Encaminhado': [],
+        'Concluido': [],
+        'Finalizado': [],
+    }
+
+    for card in serializer.data:
+        card_status = card['status']  # Renomeie a variável aqui
+        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)  # Converte para um objeto datetime
+        kanban_data[card_status].append(card)
+
+    return Response(kanban_data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -681,6 +716,7 @@ def registrar_atendimento(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
 
     card.status = 'Em Atendimento'
+    card.setor = request.user.groups.first()
     card.responsavel = request.user
     card.save()
 
@@ -722,15 +758,16 @@ def registrar_atendimento(request, card_id):
 def encaminhar_card(request, card_id):
 
     try:
+        id_group = request.POST.get('selectedGroup')
+        group = Group.objects.get(id=id_group)
+
         card = Card.objects.get(idCard=card_id)
         card.status = 'Encaminhado'
+        card.setor = group
         card.responsavel = None
         card.save()
 
         historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
-
-        id_group = request.POST.get('selectedGroup')
-        group = Group.objects.get(id=id_group)
 
         # Registre o histórico de movimentação
         card_setor_history = CardSetorHistory(
@@ -811,15 +848,16 @@ def compartilhar_card(request, card_id):
 def transferir_card(request, card_id):
 
     try:
+        id_group = request.POST.get('selectedGroupTrans')
+        group = Group.objects.get(id=id_group)
+
         card = Card.objects.get(idCard=card_id)
         card.status = 'Triagem'
+        card.setor = group
         card.responsavel = None
         card.save()
 
         historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
-
-        id_group = request.POST.get('selectedGroupTrans')
-        group = Group.objects.get(id=id_group)
 
         # Registre o histórico de movimentação
         card_setor_history = CardSetorHistory(
@@ -833,7 +871,6 @@ def transferir_card(request, card_id):
         )
 
         card_setor_history.save()
-
 
         historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
 
@@ -877,48 +914,45 @@ def presonalizar_card(request, card_id):
 
 @login_required(login_url="/login")
 def concluir_card(request, card_id):
+
     if request.method == 'POST':
-
         card = get_object_or_404(Card, idCard=card_id)
-        if card.status != "Concluido":
 
-            try:
-                card.status = 'Concluido'
-                card.responsavel = request.user
-                card.save()
+        try:
+            card.status = 'Concluido'
+            card.setor = request.user.groups.first()
+            card.responsavel = request.user
+            card.save()
 
-                group = request.user.groups.first()
+            group = request.user.groups.first()
 
-                historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+            historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
 
-                # Registre o histórico de movimentação
-                card_setor_history = CardSetorHistory(
-                    setor_id=group.id,
-                    card_id=card_id,
-                    status_anterior=historico.status_atual,
-                    status_atual="Concluido",
-                    setor_anterior=historico.setor_atual,
-                    setor_atual=group.name,
-                    operador=request.user,
-                )
+            # Registre o histórico de movimentação
+            card_setor_history = CardSetorHistory(
+                setor_id=group.id,
+                card_id=card_id,
+                status_anterior=historico.status_atual,
+                status_atual="Concluido",
+                setor_anterior=historico.setor_atual,
+                setor_atual=group.name,
+                operador=request.user,
+            )
 
-                notification = Notification(
-                    author=request.user,
-                    description="Eba! Sua solicitação foi concluida",
-                    subject=card.assunto + f" N°: {card.idCard}",
-                    recipient=card.solicitante,  # O destinatário é o solicitante da questão
-                    url='processos_user',  # URL da página atual
-                )
-                notification.save()
+            notification = Notification(
+                author=request.user,
+                description="Eba! Sua solicitação foi concluida",
+                subject=card.assunto + f" N°: {card.idCard}",
+                recipient=card.solicitante,  # O destinatário é o solicitante da questão
+                url='processos_user',  # URL da página atual
+            )
+            notification.save()
 
-                card_setor_history.save()
-                return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
+            card_setor_history.save()
+            return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
 
-            except Card.DoesNotExist:
-                return JsonResponse({'success': False, 'message': 'Card não encontrado'})
-
-        else:
-            return JsonResponse({'success': False, 'message': 'Processo já Concluido'})
+        except Card.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Card não encontrado'})
 
 
 @login_required(login_url="/login")
@@ -1119,7 +1153,6 @@ def get_message_history(request, card_id):
             print(f"Error: {e}")
             return JsonResponse({'error': 'Invalid card ID'}, status=400)
     return JsonResponse({'error': 'Card ID not provided'}, status=400)
-
 
 
 def get_card_details(request, card_id):
