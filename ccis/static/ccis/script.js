@@ -1389,3 +1389,42 @@ $(document).ready(function(){
 });
 
 
+// History request
+const itemActions = document.querySelectorAll('.item-action');
+
+// Função para buscar e exibir detalhes do cartão
+function showCardDetails(cardId) {
+    fetch(`/get_card_details/${cardId}`)
+        .then(response => response.json())
+        .then(data => {
+            const detalhesAssunto = document.getElementById('detalhes-assunto');
+            const detalhesService = document.getElementById('detalhes-service');
+
+            // Verifica se os elementos HTML existem
+            if (detalhesAssunto && detalhesService) {
+                detalhesAssunto.textContent = `Assunto: ${data.assunto}`;
+                detalhesService.textContent = `Serviço: ${data.service}`;
+                // Adicione outros detalhes do cartão conforme necessário
+            } else {
+                console.error('Elementos de detalhes não encontrados.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao obter detalhes do cartão:', error);
+        });
+}
+
+// Iterar sobre os elementos e adicionar um event listener para cada um
+itemActions.forEach(item => {
+    item.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const cardId = item.getAttribute('data-card-id');
+
+        if (cardId) {
+            showCardDetails(cardId);
+        } else {
+            console.error('ID do cartão não encontrado.');
+        }
+    });
+});

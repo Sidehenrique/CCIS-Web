@@ -1121,18 +1121,16 @@ def get_message_history(request, card_id):
         try:
             card_id = int(card_id)
             messages = MessageHistory.objects.filter(card_id=card_id).values('message')
-
+            # Convertendo queryset em lista de dicionários
             messages_list = [{'message': msg['message']} for msg in messages]
             return JsonResponse(messages_list, safe=False)
-
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({'error': 'Invalid card ID'}, status=400)
     return JsonResponse({'error': 'Card ID not provided'}, status=400)
 
 
-
-def get_card_details(request, card_id):
+def get_card_details(card_id):
     try:
         card = Card.objects.get(id=card_id)
         # Obtenha os detalhes do card e retorne como JSON

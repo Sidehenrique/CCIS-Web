@@ -24,6 +24,7 @@
         </div>
         <!-- Menu de filtragem end ---------------->
 
+
         <!-- Solicitações ------------------------->
         <div class="col-3 menu-request p-0">
             <h6 class="mb-4 pt-4 ps-2">SOLICITAÇÕES</h6>
@@ -31,7 +32,7 @@
             {% for card in cards %}
 
             <a href="{% url 'get_message_history' card.idCard %}" class="item-action p-2"
-            id="solicitacao-{{ card.id }}" data-card-id="{{ card.idCard }}">
+               id="solicitacao-{{ card.id }}" data-card-id="{{ card.idCard }}">
 
                 <div class="d-flex flex-column">
                     <div class="d-flex w-100 justify-content-between">
@@ -55,7 +56,9 @@
                 <h4>Detalhes da Solicitação</h4>
                 <div class="detalhes-solicitacao">
                     <h5 id="detalhes-assunto"></h5>
+                    <p id="detalhes-service"></p>
                     <p id="detalhes-mensagens"></p>
+                    <!-- Adicione outros elementos para exibir detalhes do cartão, se necessário -->
                 </div>
             </div>
         </div>
