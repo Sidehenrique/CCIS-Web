@@ -4,16 +4,11 @@
 {% block conteudo %}
 
 <!--Background profile ------------------------------->
-<div class="profile-background">
-
-    {% if dados.canvas %}
+{% if dados.canvas %}
     <img class="profile-img" src="{{ dados.canvas.url }}">
     {% else %}
-    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="profile-img">
-    {% endif %}
-
-
-</div>
+    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+{% endif %}
 <!--Background profile ------------------------------->
 
 
@@ -924,7 +919,6 @@
     <!-- End Modal foto e banner ------------------------->
 
 </div>
-
 
 {% endblock %}
 

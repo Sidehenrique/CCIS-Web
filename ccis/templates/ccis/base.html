@@ -10,13 +10,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <!-- link css -->
     <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
 
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -39,12 +36,12 @@
             <div class="container-fluid">
 
                 <!-- Logo do Menu ------------------------------------------------------------------------------------->
-                <a class="navbar-brand" href="{% url 'home' %}">
-                    <img src="{% static 'ccis/logonav.png' %}" alt="logo" width="47" height="54"
-                         class="d-inline-block align-text-center;">
+                <a id="toggleMenu" type="button" class="navbar-brand">
+                    <img class="menu-icon" src="{% static 'ccis/menu.png' %}" alt="icon-menu">
                 </a>
                 <!-- End Logo do Menu --------------------------------------------------------------------------------->
 
+                <img class="logo-menu" src="{% static 'ccis/logo-menu.png' %}" alt="logo-menu">
 
                 <!-- Esquerda do Menu --------------------------------------------------------------------------------->
                 <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
@@ -346,18 +343,17 @@
 
                 <div id="menu_lateral" class="position-relative ps-0 pe-0">
 
-                    <button id="toggleMenu" class="menu-toggle">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-
                     <ul>
 
                         <li>
                             <a href="{% url 'departamentos' %}" aria-current="page">
-                                <i class="fa-solid fa-network-wired"></i>
+                                <i class="fa-solid fa-cubes"></i>
                                 <small>Departamentos</small>
                             </a>
+
                         </li>
+
+                        <hr class="m-1" style=" width: 33px; color:#b3b3b3;" >
 
                         {% if controle %}
                         <li>
@@ -379,6 +375,15 @@
                             <a href="{% url 'coopera' %}" aria-current="page">
                                 <i class="fa-solid fa-infinity"></i>
                                 <small>Cooperar</small>
+                            </a>
+                        </li>
+
+                        <hr class="m-1" style=" width: 33px; color:#b3b3b3;" >
+
+                        <li>
+                            <a href="#" aria-current="page">
+                                <i class="fa-solid fa-comments"></i>
+                                <small>Chat</small>
                             </a>
                         </li>
 
