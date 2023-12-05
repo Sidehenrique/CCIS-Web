@@ -9,7 +9,7 @@ from rest_framework.response import Response
 
 
 from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -498,16 +498,6 @@ def utilitariosHome(request):
 
 
 def dev(request):
-    user = request.user
-
-    try:
-        dadosSetor = CustomGroupInfo.objects.get(nome='Tecnologia')
-
-    except CustomGroupInfo.DOESNOTEXIST:
-        dadosSetor = None
-
-    setor = dadosSetor.nome
-    print(setor)
 
     superior = Group.objects.filter(id=2).first()
 
@@ -543,8 +533,7 @@ def dev(request):
         print(sector_buttons)
 
         context = {
-            'username': user, 'setor': setor, 'sector_buttons': sector_buttons,
-            'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
+            'sector_buttons': sector_buttons,'superior': superior, 'equipe': nomes_equipe,
         }
 
 
@@ -590,16 +579,58 @@ def processos_user(request):
         return render(request, 'ccis/processo_user.html', context)
 
 
+@login_required(login_url="/login")
 def kanban_view(request):
     usuarios = User.objects.all()
     group = Group.objects.all()
 
-    context = {
-        'usuarios': usuarios,
-        'group': group
-    }
+    try:
+        id_setor = request.user.groups.first().id
+        group_info = CustomGroupInfo.objects.get(group_id=id_setor)
 
-    return render(request, 'ccis/kanban.html', context)
+        superior = Group.objects.filter(id=id_setor).first()
+
+        nomes_equipe = []
+
+        if superior is None:
+            pass
+
+        else:
+            equipe = User.objects.filter(groups=superior)
+            # Resto do código
+            for usuario in equipe:
+                first_nameA = usuario.first_name
+                last_nameA = usuario.last_name
+                sexo = usuario.dadosPessoais.sexo
+                foto = usuario.dadosPessoais.foto
+                cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+                nomes_equipe.append(
+                    {'id': usuario.id,
+                     'foto': foto,
+                     'first_name': first_nameA,
+                     'last_name': last_nameA,
+                     'sexo': sexo,
+                     'cargo': cargo})
+
+            # Ordenar a equipe com o supervisor no topo
+            nomes_equipe = sorted(nomes_equipe,
+                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                 x['cargo'] != 'Encarregado(a)'))
+
+            context = {
+                'superior': superior,
+                'equipe': nomes_equipe,
+                'group_info': group_info,
+                'usuarios': usuarios,
+                'group': group
+            }
+
+            return render(request, 'ccis/kanban.html', context)
+
+
+
+    except AttributeError:
+        return HttpResponseNotFound('O usuário não pertence a nenhum setor.')
 
 
 @api_view(['GET'])
@@ -629,6 +660,7 @@ def card_kanban_api(request):
         kanban_data[card_status].append(card)
 
     return Response(kanban_data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def card_detl(request, card_id):

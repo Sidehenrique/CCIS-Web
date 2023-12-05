@@ -500,6 +500,7 @@ class CustomGroupInfo(models.Model):
     contato = models.CharField(max_length=45, blank=True, null=True)
     imagem = models.ImageField(upload_to='group/', blank=True, null=True)
     url = models.TextField(blank=True, null=True)
+    url_home = models.URLField(blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
 
     def __str__(self):
