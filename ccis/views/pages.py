@@ -1108,6 +1108,7 @@ def avaliar_card(request, card_id):
         rating.rating = avaliacao
         rating.operador = card.responsavel
         rating.anonymous = request.user
+        rating.group = card.setor
         rating.save()
 
         return JsonResponse({'success': True})

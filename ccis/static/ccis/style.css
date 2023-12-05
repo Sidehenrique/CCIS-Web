@@ -1544,7 +1544,7 @@ status-negativo{
 
 
 .kanban-body {
-    height:auto;
+    max-height:78%;
     overflow:auto;
     background-color: rgba(255, 255, 255, 0.6);
 }

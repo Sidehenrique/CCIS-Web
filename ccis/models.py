@@ -561,6 +561,7 @@ class OperatorRating(models.Model):
     comment = models.TextField(blank=True)
     operador = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='avaliacao_user', default=None)
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True)
     anonymous = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='avaliador_anonimo', default=None)
     datetime = models.DateTimeField(auto_now_add=True)
