@@ -598,6 +598,7 @@ def kanban_view(request):
         'usuarios': usuarios,
         'group': group
     }
+
     return render(request, 'ccis/kanban.html', context)
 
 
