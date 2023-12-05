@@ -7,6 +7,8 @@ from dateutil.parser import parse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from reportlab.pdfgen import canvas
+from io import BytesIO
 
 from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
 from django.http import JsonResponse, HttpResponseNotFound
@@ -20,7 +22,7 @@ from collections import defaultdict
 
 from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification, SectorButtons, \
-    CustomGroupInfo
+    CustomGroupInfo, Cupons
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
@@ -58,6 +60,46 @@ def base(request):
 def home(request):
     context = infoClima()
     return render(request, 'ccis/home.html', context)
+
+
+def ccc(request):
+    return render(request, "ccis/ccc.html")
+
+
+def processa_cupons(request):
+    cpf = request.GET.get('cpf')
+    cupons = None
+
+    if cpf:
+        cupons = Cupons.objects.filter(cpf=cpf)
+        buffer = BytesIO()
+        p = canvas.Canvas(buffer)
+
+        p.drawString(100, 750, "Cooperar+ - Campanha de Capital Colaboradores")
+        p.drawString(100, 700, f"Cupons para o CPF: {cpf}")
+
+        if cupons:
+            y_position = 650
+            for cupom in cupons:
+                p.drawString(100, y_position, f"Cupom: {cupom.numero_cupom}")
+                y_position -= 20
+
+        p.showPage()
+        p.save()
+
+        buffer.seek(0)
+
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="cupons_{cpf}.pdf'
+        response.write(buffer.read())
+
+        return response  # Retorna o PDF como resposta
+
+    context = {
+        'cupons': cupons
+    }
+
+    return render(request, 'index.html', context)
 
 
 @login_required(login_url="/login")

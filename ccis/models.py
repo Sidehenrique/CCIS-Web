@@ -591,3 +591,15 @@ class Notebook(models.Model):
 
     def __str__(self):
         return self.modelo
+
+
+#-------------------------------------------------------------------------------------
+
+class Cupons(models.Model):
+    criado = models.DateTimeField('Data de Criação', auto_now_add=True)
+    modificado = models.DateTimeField('Data de modificação', auto_now=True)
+    cpf = models.CharField('CPF', max_length=14)
+    numero_cupom = models.CharField('Numero Cupom', max_length=5, unique=True)
+
+    def __str__(self):
+        return self.cpf
