@@ -12,6 +12,7 @@
 <!--Container------------>
 <div class="container-fluid scrollable-content">
 
+
     <!-- Menu settings --------->
     <div class="row mt-1">
 
@@ -30,14 +31,14 @@
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
-                    <li><a class="dropdown-item" id="kanban_processos">Processos</a></li>
+                    <li><a class="dropdown-item" href="{% url 'kanban' %}">Processos</a></li>
                     <li><a class="dropdown-item" id="minhasSolicitacoesLink">Minhas solicitações</a></li>
                 </ul>
 
             </div>
 
             <div class="text-menu-settings">
-                <h5 class="m-0" id="area-trabalho-kanban"></h5>
+                <h5 class="m-0" >Minhas Solicitações</h5>
             </div>
 
 
@@ -95,7 +96,7 @@
 
 
     <!-- kanban ---------------->
-    <div class="row mt-4 ">
+    <div class="row mt-4 " id="userCards">
 
         <!-- Triagem --------->
         <div class="col">
@@ -105,7 +106,7 @@
                     <div class="col-auto"></div>
                 </div>
             </div>
-            <div id="kanban-body-triagem" class="kanban-body">
+            <div id="kanban-body-triagem-user" class="kanban-body">
 
             </div>
             <div class="kanban-footer">
@@ -122,7 +123,7 @@
                     <div class="col-auto"></div>
                 </div>
             </div>
-            <div id="kanban-body-em atendimento" class="kanban-body">
+            <div id="kanban-body-em atendimento-user" class="kanban-body">
 
             </div>
             <div class="kanban-footer">
@@ -139,7 +140,7 @@
                     <div class="col-auto"></div>
                 </div>
             </div>
-            <div id="kanban-body-encaminhado" class="kanban-body">
+            <div id="kanban-body-encaminhado-user" class="kanban-body">
 
 
 
@@ -158,7 +159,7 @@
                     <div class="col-auto"></div>
                 </div>
             </div>
-            <div id="kanban-body-concluido" class="kanban-body">
+            <div id="kanban-body-concluido-user" class="kanban-body">
 
             </div>
             <div class="kanban-footer">
@@ -175,7 +176,7 @@
                     <div class="col-auto"></div>
                 </div>
             </div>
-            <div id="kanban-body-finalizado" class="kanban-body">
+            <div id="kanban-body-finalizado-user" class="kanban-body">
 
             </div>
             <div class="kanban-footer">
@@ -188,98 +189,98 @@
     <!-- kanban ---------------->
 
 
-<!--    &lt;!&ndash; kanban &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--    <div class="row mt-4 " id="sectorCards" style="display:none">-->
+    <!-- kanban ---------------->
+    <div class="row mt-4 " id="sectorCards">
 
-<!--        &lt;!&ndash; Triagem -&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-triagem" class="kanban-body">-->
+        <!-- Triagem --------->
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>
+                    <div class="col-auto"></div>
+                </div>
+            </div>
+            <div id="kanban-body-triagem-user" class="kanban-body">
 
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Triagem -&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Triagem --------->
 
-<!--        &lt;!&ndash; Em atendimento &ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-em atendimento" class="kanban-body">-->
+        <!-- Em atendimento -->
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>
+                    <div class="col-auto"></div>
+                </div>
+            </div>
+            <div id="kanban-body-em atendimento-user" class="kanban-body">
 
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Em atendimento &ndash;&gt;-->
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Em atendimento -->
 
-<!--        &lt;!&ndash; Encaminhado -&#45;&#45;&ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-encaminhado" class="kanban-body">-->
+        <!-- Encaminhado ----->
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>
+                    <div class="col-auto"></div>
+                </div>
+            </div>
+            <div id="kanban-body-encaminhado-user" class="kanban-body">
 
 
 
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Encaminhado -&#45;&#45;&ndash;&gt;-->
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Encaminhado ----->
 
-<!--        &lt;!&ndash; Concluido -&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluido</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-concluido" class="kanban-body">-->
+        <!-- Concluido ------->
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluido</div>
+                    <div class="col-auto"></div>
+                </div>
+            </div>
+            <div id="kanban-body-concluido-user" class="kanban-body">
 
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Concluido -&#45;&#45;&#45;&#45;&ndash;&gt;-->
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Concluido ------->
 
-<!--        &lt;!&ndash; Finalizado &#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-check-double"></i> Finalizado</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-finalizado" class="kanban-body">-->
+        <!-- Finalizado ------>
+        <div class="col">
+            <div class="kanban-title">
+                <div class="row">
+                    <div class="col-auto me-auto"><i class="fa-solid fa-check-double"></i> Finalizado</div>
+                    <div class="col-auto"></div>
+                </div>
+            </div>
+            <div id="kanban-body-finalizado-user" class="kanban-body">
 
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Finalizado &#45;&#45;&#45;&#45;&ndash;&gt;-->
+            </div>
+            <div class="kanban-footer">
+                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
+            </div>
+        </div>
+        <!-- Finalizado ------>
 
-<!--    </div>-->
-<!--    &lt;!&ndash; kanban &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+    </div>
+    <!-- kanban ---------------->
 
 
     <!-- Modal Processos ------------------------->
@@ -288,7 +289,6 @@
          tabindex="-1"
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
-
 
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -338,8 +338,6 @@
                                             Dados do Solicitante
                                         </button>
                                     </h2>
-
-
                                     <div id="flush-collapseOne" class="accordion-collapse collapse"
                                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 
@@ -379,8 +377,6 @@
 
 
                                     </div>
-
-
                                 </div>
 
                                 <div class="accordion-item">
@@ -426,27 +422,13 @@
 
                             <!-- cabeçalho ------>
                             <div>
-
-                                <div class="row">
-                                    <div class="col-auto me-auto">
-                                        <small><i class="fa-solid fa-clock"></i>
-                                            <span id="horarioAbertura"></span>
-                                        </small>
-                                    </div>
-                                    <div class="col-auto">
-
-                                        <a type="button" id="PersonalizarCard">
-                                            <span class="processo-tag-cor">
-                                                <i class="fa-solid fa-brush"></i>
-                                                Personalizar
-                                            </span>
-                                        </a>
-
-                                    </div>
+                                <div class="col-auto me-auto">
+                                    <small><i class="fa-solid fa-clock"></i>
+                                        <span id="horarioAbertura"></span>
+                                    </small>
                                 </div>
 
-
-                                <h6 class="mt-2" >Descrição</h6>
+                                <h6 class="mt-2">Descrição</h6>
 
                                 <hr class="linha-custom">
                             </div>
@@ -524,15 +506,6 @@
                             <ul class="ul-menu-request buttons-Acao">
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="registrarAtendimentoButton" class="modal-processo-link"
-                                       aria-current="page">
-                                        <i class="fa-solid fa-phone-volume"></i>
-                                        Atender
-                                    </a>
-                                </li>
-
-
-                                <li class="li-menu-request">
                                     <a type="button" id="enviarMensagemButton" class="modal-processo-link"
                                        aria-current="page">
                                         <i class="fa-solid fa-paper-plane"></i>
@@ -542,28 +515,66 @@
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="encaminharCardButton" class="modal-processo-link"
+                                    <a type="button" id="compartilharCardButton" class="modal-processo-link"
                                        aria-current="page">
                                         <i class="fa-solid fa-angles-right"></i>
-                                        Encaminhar
+                                        Compartilhar
                                     </a>
                                 </li>
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="transferirCardButton" class="modal-processo-link"
+                                    <a type="button" id="priorizarCardButton" class="modal-processo-link"
                                        aria-current="page">
-                                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                                        Transferir
+                                        <i class="fa-solid fa-bolt"></i>
+                                        Prioridade
                                     </a>
                                 </li>
 
 
-                                <li class="li-menu-request" style="margin-top:120px">
-                                    <a type="button" id="ConcluirCardButton" class="modal-processo-link btn-done"
-                                       aria-current="page">
-                                        <i class="fa-solid fa-check"></i>
-                                        Concluir
+                                <li id="starButtons" style="margin-top:45px">
+
+
+                                    <div class="d-flex" style="justify-content: center;">
+                                        <a type="button" name="1" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="2" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="3" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="4" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="5" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                    </div>
+
+
+                                    <p style="font-size:12px; text-align:center">Avaliar este atendimento<br>
+                                        <span style="font-size:10px; text-align:center">Sua avaliação é anônima</span>
+                                    </p>
+
+                                </li>
+
+
+                                <li class="li-menu-request mt-1">
+                                    <a type="button" id="avaliarAtendimentoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-heart"></i>
+                                        Avaliar e Finalizar
+                                    </a>
+                                </li>
+
+
+                                <li id="reabrirChamado" class="li-menu-request mt-1" style="display: none">
+                                    <a type="button" id="reabrirChamadoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-power-off"></i>
+                                        Reabrir Solicitação
                                     </a>
                                 </li>
 
@@ -583,14 +594,10 @@
                 <!-- footer --------------------->
                 <div class="modal-footer">
 
-                    <div class="col-10">
+                    <div class="col">
 
                         <i class="fa-solid fa-phone-volume"></i>
                         <span id="nomeResponsavel"></span>
-
-                    </div>
-
-                    <div class="col">
 
                     </div>
 
@@ -603,20 +610,20 @@
     <!-- Modal Processos ------------------------->
 
 
-    <!-- Modal encaminhar ------------------------>
-    <div class="modal" id="modalSelecaoSetor" tabindex="-1">
+    <!-- Modal compartilhar ------------------------>
+    <div class="modal" id="modalSeletorUser" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Encaminhar Processo</h5>
+                    <h5 class="modal-title">Compartilhar Processo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="p-3">
-                    <label>Selecione o grupo *:</label>
-                    <select id="seletorGrupo" class="form-select" required>
-                        {% for grupo in group %}
-                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
+                    <label>Selecione o Usuario *:</label>
+                    <select id="seletorUser" class="form-select" required>
+                        {% for user in usuarios %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -624,77 +631,13 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarEncaminhamento" type="submit" class="btn btn-primary">Confirmar</button>
+                    <button id="confirmarCompartilhamento" type="submit" class="btn btn-primary">Confirmar</button>
                 </div>
 
             </div>
         </div>
     </div>
     <!-- Modal encaminhar ------------------------>
-
-
-    <!-- Modal Transferir ------------------------>
-    <div class="modal" id="modalSelecaoSetorTrans" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Transferir Processo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="p-3">
-                    <label>Selecione o grupo *:</label>
-                    <select id="seletorGrupoTrans" class="form-select" required>
-                        {% for grupo in group %}
-                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarTransferencia" type="submit" class="btn btn-primary">Confirmar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal Transferir ------------------------>
-
-
-    <!-- Modal cor ------------------------>
-    <div class="modal" id="modalSelecaoCor" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Personalizar</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="col p-3">
-                    <label>Selecione a Cor Do Card*:</label>
-                    <select id="seletorCor" class="form-select" required>
-
-                        <option></option>
-                        <option value="#f6f6f6">Padão</option>
-                        <option value="#FFCECE">Vermelho</option>
-                        <option value="#CEDFFF">Azul</option>
-                        <option value="#CEFFD3">Verde</option>
-                        <option value="#FFFCA7">Amarelo</option>
-
-                    </select>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarCor" type="submit" class="btn btn-primary">Confirmar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal cor ------------------------>
 
 
 </div>

@@ -109,7 +109,7 @@
             {% if card.solicitante == user or user in card.compartilhar.all %}
             {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
-             <!-- card ---------------------------->
+            <!-- card ---------------------------->
             <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
@@ -123,7 +123,6 @@
 
                         <div class="col-auto me-auto">
                             <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
-
                         </div>
 
                         <div class="col-auto mb-1">

@@ -61,7 +61,7 @@ def home(request):
     context = infoClima()
     return render(request, 'ccis/home.html', context)
 
-
+@login_required(login_url="/login")
 def ccc(request):
     return render(request, "ccis/ccc.html")
 
@@ -670,6 +670,57 @@ def kanban_view(request):
             return render(request, 'ccis/kanban.html', context)
 
 
+    except AttributeError:
+        return HttpResponseNotFound('O usuário não pertence a nenhum setor.')
+
+
+@login_required(login_url="/login")
+def kanban_user_view(request):
+    usuarios = User.objects.all()
+    group = Group.objects.all()
+
+    try:
+        id_setor = request.user.groups.first().id
+        group_info = CustomGroupInfo.objects.get(group_id=id_setor)
+
+        superior = Group.objects.filter(id=id_setor).first()
+
+        nomes_equipe = []
+
+        if superior is None:
+            pass
+
+        else:
+            equipe = User.objects.filter(groups=superior)
+            # Resto do código
+            for usuario in equipe:
+                first_nameA = usuario.first_name
+                last_nameA = usuario.last_name
+                sexo = usuario.dadosPessoais.sexo
+                foto = usuario.dadosPessoais.foto
+                cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+                nomes_equipe.append(
+                    {'id': usuario.id,
+                     'foto': foto,
+                     'first_name': first_nameA,
+                     'last_name': last_nameA,
+                     'sexo': sexo,
+                     'cargo': cargo})
+
+            # Ordenar a equipe com o supervisor no topo
+            nomes_equipe = sorted(nomes_equipe,
+                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                 x['cargo'] != 'Encarregado(a)'))
+
+            context = {
+                'superior': superior,
+                'equipe': nomes_equipe,
+                'group_info': group_info,
+                'usuarios': usuarios,
+                'group': group
+            }
+
+            return render(request, 'ccis/kanban_user.html', context)
 
     except AttributeError:
         return HttpResponseNotFound('O usuário não pertence a nenhum setor.')
@@ -697,8 +748,38 @@ def card_kanban_api(request):
     }
 
     for card in serializer.data:
-        card_status = card['status']  # Renomeie a variável aqui
-        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)  # Converte para um objeto datetime
+        card_status = card['status']
+        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)
+
+        # Adiciona o setor do usuário aos dados do card
+        card['user_setor'] = str(user_setor)
+
+        kanban_data[card_status].append(card)
+
+    return Response(kanban_data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@login_required(login_url="/login")
+def user_card_kanban_api(request):
+    # Recuperar os cards abertos pelo usuário logado
+    user_cards = Card.objects.filter(solicitante=request.user)
+
+    # Serializar os dados dos cards
+    serializer = CardSerializer(user_cards, many=True)
+
+    # Organizar os cards por status
+    kanban_data = {
+        'Triagem': [],
+        'Em Atendimento': [],
+        'Encaminhado': [],
+        'Concluido': [],
+        'Finalizado': [],
+    }
+
+    for card in serializer.data:
+        card_status = card['status']
+        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)
         kanban_data[card_status].append(card)
 
     return Response(kanban_data, status=status.HTTP_200_OK)
@@ -763,6 +844,7 @@ def enviar_resposta(request, card_id):
                         url=setor_link,
                     )
                     notification.save()
+
         elif card.responsavel == request.user:
             # Se o remetente é o próprio responsável, envie a mensagem para o solicitante
             notification = Notification(

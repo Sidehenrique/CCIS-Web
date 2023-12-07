@@ -253,6 +253,8 @@ function getCookie(name) {
 
 
 //Cards ----------------------------------------------------------------------------------------------
+
+//Colapse card --------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
   const toggleBtn = document.getElementById('toggleBtn');
   const cardContent = document.querySelector('.kanban-card-content');
@@ -263,14 +265,169 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Chame a função para carregar os cards quando a página for carregada
-    loadCards();
+//Cards do usuário-----------------------------------------------
+document.addEventListener('DOMContentLoaded', function () {
+    const minhasSolicitacoesLink = document.getElementById('minhasSolicitacoesLink');
 
+    // Adicione um evento de clique para o link "minhas solicitações"
+    minhasSolicitacoesLink.addEventListener('click', function (event) {
+        event.preventDefault(); // Evitar a ação padrão de redirecionamento
+//        document.getElementById('userCards').style.display = 'flex';
+//        document.getElementById('sectorCards').style.display = 'none';
+        loadUserCards(); // Chame a função para carregar os cards normais
+    });
+
+
+    // Função para carregar os cards do usuário
+    function loadUserCards() {
+        $.ajax({
+            type: 'GET',
+            url: '/user_card_kanban_api',
+            success: function (data) {
+                renderUserCards(data);
+            },
+            error: function (error) {
+                console.error('Erro ao carregar cards do usuário:', error);
+            }
+        });
+    }
+
+    function renderUserCards(data) {
+
+        // Função para formatar a data
+        function formatarData(dataString) {
+            const data = new Date(dataString);
+            const dia = data.getDate();
+            const mes = data.getMonth() + 1; // Os meses são indexados de 0 a 11
+            const ano = data.getFullYear();
+            return `${dia}/${mes}/${ano}`;
+        }
+
+        // Função para formatar o horário
+        function formatarHorario(dataString) {
+            const data = new Date(dataString);
+            const hora = data.getHours();
+            const minuto = data.getMinutes();
+            return `${hora}:${minuto}`;
+        }
+
+        // Exemplo: Exibir o setor do usuário
+        const userSetor = 'Minhas Solicitações'
+        document.getElementById('area-trabalho-kanban').innerText = userSetor;
+
+
+        // Itera sobre os dados por status
+        for (const [status, cards] of Object.entries(data)) {
+            const container = document.getElementById('kanban-body-' + status.toLowerCase());
+
+            if (container) {
+                container.innerHTML = '';
+
+                 // Adiciona os cards ao container
+                cards.forEach((card, index) => { // Adicionado 'index' para criar IDs únicos
+                const cardId = `card-${status.toLowerCase()}-${index}`;
+                const cardHtml = `
+                    <div class="kanban-card m-2">
+
+                        <!-- header do card --------->
+                        <a id="toggleBtn-${cardId}" type="button" class="d-grid kanban-card-header">
+                            <div class="row">
+                                <div class="col-auto me-auto">
+                                    <h5 class="card-titulo mt-1">${card.assunto}</h5>
+                                </div>
+                                <div class="col-auto mb-1">
+                                    <span class="card-setor processo-tag-setor">N° ${card.idCard}</span>
+                                    <span class="card-setor processo-tag-setor">${card.setor_history.length > 0 ? card.setor_history[card.setor_history.length - 1].setor_atual : 'N/A'}</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- header do card --------->
+
+                        <!-- conteúdo card --------->
+                        <div id="cardContent-${cardId}" class="kanban-card-content">
+
+                            <hr style="color:#C4C0C0; margin:0px;">
+
+                            <a class="d-grid kanban-card-header card-filter"
+                               type="button"
+                               data-bs-toggle="modal"
+                               data-bs-target="#processoModal"
+                               data-card-id="${card.idCard}"
+                               onclick="loadCardInfo(${card.idCard})">
+
+                                <!-- foto --------->
+                                <div class="col-auto">
+                                   <p class="card-responsavel" style="color:#818181;">
+                                        <img class="foto_card" src="${card.responsavel_dados_pessoais.foto}" alt="" width="25" height="25">
+                                        ${card.responsavel.first_name} ${card.responsavel.last_name}
+                                    </p>
+                                </div>
+                                <!-- foto --------->
+
+                                <!-- serviço ------>
+                                <div style="color:#818181; font-size:13px;">
+                                    <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> ${card.service}</p>
+                                </div>
+                                <!-- serviço ------>
+
+                                <!-- data --------->
+                                <div class="card-data row" style="color:#818181; font-size:13px">
+                                    <div class="col-auto me-auto">
+                                        <i class="fa-solid fa-calendar-days"></i> ${formatarData(card.dataCriacao)}
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-clock"></i> ${formatarHorario(card.dataCriacao)}
+                                    </div>
+                                </div>
+                                <!-- data --------->
+
+                            </a>
+
+                        </div>
+                        <!-- conteúdo card --------->
+
+                    </div>
+                    <!-- Card ----------------->
+                `;
+
+                container.insertAdjacentHTML('beforeend', cardHtml);
+
+                // Adicionando o evento de clique para o toggle do collapse
+                $(`#toggleBtn-${cardId}`).on('click', function () {
+                    $(`#cardContent-${cardId}`).toggle();
+                });
+            });
+
+            // Restante do seu código para adicionar os cards ao container
+            } else {
+                console.error('Elemento não encontrado:', 'kanban-body-' + status.toLowerCase());
+            }
+
+
+        }
+    }
+
+});
+
+
+//Cards do setor-------------------------------------------------
+document.addEventListener('DOMContentLoaded', function () {
+    const processos = document.getElementById('kanban_processos');
+
+    // Adicione um evento de clique para o link "minhas solicitações"
+    processos.addEventListener('click', function (event) {
+        event.preventDefault(); // Evitar a ação padrão de redirecionamento
+//        document.getElementById('userCards').style.display = 'none';
+//        document.getElementById('sectorCards').style.display = 'flex';
+        loadCards(); // Chame a função para carregar os cards normais
+    });
+
+
+    // Restante do seu código JavaScript
     function loadCards() {
         $.ajax({
             type: 'GET',
-            url: '/card_kanban_api',  // Substitua pela URL correta
+            url: '/card_kanban_api',
             success: function (data) {
                 renderCards(data);
             },
@@ -279,6 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
 
     function renderCards(data) {
 
@@ -298,6 +456,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const minuto = data.getMinutes();
             return `${hora}:${minuto}`;
         }
+
+
+        // Exemplo: Exibir o setor do usuário
+        const userSetor = data['Triagem'].length > 0 ? data['Triagem'][0].user_setor : 'N/A';
+        document.getElementById('area-trabalho-kanban').innerText = userSetor;
+
 
         // Itera sobre os dados por status
         for (const [status, cards] of Object.entries(data)) {
@@ -391,7 +555,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-//----------------------------------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------------------------------
 
 
 function loadCardInfo(cardId) {
