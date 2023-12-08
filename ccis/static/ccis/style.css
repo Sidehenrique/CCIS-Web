@@ -1999,41 +1999,50 @@ status-negativo{
 }
 
 
-.li-dropdown-green a{
+/* ------------------------------ CCC ------------------------------- */
+
+:root {
+    --verde-escuro: #003641;
+    --verde-claro: #C9D200;
+    --branco: #ffffff;
+}
+
+.input_ccc{
     display: block;
-    text-decoration: none;
-    color: black;
-    padding: 8px 105px;
-    transition: background-color 0.3s;
+    width: 120%;
+    margin: 10px 0 10px 0;
+    width: 100%;
+    border-radius: 15px;
+    padding: 10px;
 }
 
-.li-dropdown-green a:hover{
-    background-color: #C9C9C9;
-    color: green;
+.logo_container{
+    text-align:left;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--branco);
+    height: 90%;
+
 }
 
-.li-dropdown-pink a{
-    display: block;
-    text-decoration: none;
-    color: black;
-    padding: 8px 105px;
-    transition: background-color 0.3s;
+.input_container{
+    text-align:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--verde-escuro);
+
 }
 
-.li-dropdown-pink a:hover{
-    background-color: #C9C9C9;
-    color: pink;
+#btn-buscar{
+    background-color: #C9D200;
+    text-transform: uppercase;
+    color: white;
+    font-weight: bolder;
 }
 
-.li-dropdown-gray a{
-    display: black;
-    text-decoration: none;
-    color: black;
-    padding: 8px 105px;
-    transition: background-color 0.3s;
-}
-
-.li-dropdown-gray a:hover{
-    background-color: #C9C9C9;
-    color: gray;
-}
+/* ------------------------------ CCC ------------------------------- */

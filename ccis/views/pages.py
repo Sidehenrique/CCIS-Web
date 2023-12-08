@@ -7,9 +7,11 @@ from dateutil.parser import parse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from reportlab.pdfgen import canvas
+from io import BytesIO
 
 from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -20,7 +22,7 @@ from collections import defaultdict
 
 from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification, SectorButtons, \
-    CustomGroupInfo
+    CustomGroupInfo, Cupons
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
@@ -58,6 +60,46 @@ def base(request):
 def home(request):
     context = infoClima()
     return render(request, 'ccis/home.html', context)
+
+
+def ccc(request):
+    return render(request, "ccis/ccc.html")
+
+
+def processa_cupons(request):
+    cpf = request.GET.get('cpf')
+    cupons = None
+
+    if cpf:
+        cupons = Cupons.objects.filter(cpf=cpf)
+        buffer = BytesIO()
+        p = canvas.Canvas(buffer)
+
+        p.drawString(100, 750, "Cooperar+ - Campanha de Capital Colaboradores")
+        p.drawString(100, 700, f"Cupons para o CPF: {cpf}")
+
+        if cupons:
+            y_position = 650
+            for cupom in cupons:
+                p.drawString(100, y_position, f"Cupom: {cupom.numero_cupom}")
+                y_position -= 20
+
+        p.showPage()
+        p.save()
+
+        buffer.seek(0)
+
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="cupons_{cpf}.pdf'
+        response.write(buffer.read())
+
+        return response  # Retorna o PDF como resposta
+
+    context = {
+        'cupons': cupons
+    }
+
+    return render(request, 'index.html', context)
 
 
 @login_required(login_url="/login")
@@ -498,16 +540,6 @@ def utilitariosHome(request):
 
 
 def dev(request):
-    user = request.user
-
-    try:
-        dadosSetor = CustomGroupInfo.objects.get(nome='Tecnologia')
-
-    except CustomGroupInfo.DOESNOTEXIST:
-        dadosSetor = None
-
-    setor = dadosSetor.nome
-    print(setor)
 
     superior = Group.objects.filter(id=2).first()
 
@@ -543,8 +575,7 @@ def dev(request):
         print(sector_buttons)
 
         context = {
-            'username': user, 'setor': setor, 'sector_buttons': sector_buttons,
-            'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
+            'sector_buttons': sector_buttons,'superior': superior, 'equipe': nomes_equipe,
         }
 
 
@@ -590,18 +621,60 @@ def processos_user(request):
         return render(request, 'ccis/processo_user.html', context)
 
 
+@login_required(login_url="/login")
 def kanban_view(request):
     usuarios = User.objects.all()
     group = Group.objects.all()
     clock = modelFormClock()
 
-    context = {
-        'usuarios': usuarios,
-        'group': group,
-        'clock': clock,
-    }
+    try:
+        id_setor = request.user.groups.first().id
+        group_info = CustomGroupInfo.objects.get(group_id=id_setor)
 
-    return render(request, 'ccis/kanban.html', context)
+        superior = Group.objects.filter(id=id_setor).first()
+
+        nomes_equipe = []
+
+        if superior is None:
+            pass
+
+        else:
+            equipe = User.objects.filter(groups=superior)
+            # Resto do código
+            for usuario in equipe:
+                first_nameA = usuario.first_name
+                last_nameA = usuario.last_name
+                sexo = usuario.dadosPessoais.sexo
+                foto = usuario.dadosPessoais.foto
+                cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+                nomes_equipe.append(
+                    {'id': usuario.id,
+                     'foto': foto,
+                     'first_name': first_nameA,
+                     'last_name': last_nameA,
+                     'sexo': sexo,
+                     'cargo': cargo})
+
+            # Ordenar a equipe com o supervisor no topo
+            nomes_equipe = sorted(nomes_equipe,
+                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                 x['cargo'] != 'Encarregado(a)'))
+
+            context = {
+                'clock': clock,
+                'superior': superior,
+                'equipe': nomes_equipe,
+                'group_info': group_info,
+                'usuarios': usuarios,
+                'group': group
+            }
+
+            return render(request, 'ccis/kanban.html', context)
+
+
+
+    except AttributeError:
+        return HttpResponseNotFound('O usuário não pertence a nenhum setor.')
 
 
 @api_view(['GET'])
@@ -631,6 +704,7 @@ def card_kanban_api(request):
         kanban_data[card_status].append(card)
 
     return Response(kanban_data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def card_detl(request, card_id):
@@ -1036,6 +1110,7 @@ def avaliar_card(request, card_id):
         rating.rating = avaliacao
         rating.operador = card.responsavel
         rating.anonymous = request.user
+        rating.group = card.setor
         rating.save()
 
         return JsonResponse({'success': True})
@@ -1161,6 +1236,7 @@ def get_message_history(request, card_id):
 
             messages_list = [{'message': msg['message']} for msg in messages]
             return JsonResponse(messages_list, safe=False)
+
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({'error': 'Invalid card ID'}, status=400)

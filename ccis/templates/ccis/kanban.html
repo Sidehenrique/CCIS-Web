@@ -4,9 +4,9 @@
 {% block conteudo %}
 
 {% if dados.canvas %}
-<img class="profile-img" src="{{ dados.canvas.url }}">
-{% else %}
-<img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+    <img class="profile-img" src="{{ dados.canvas.url }}">
+    {% else %}
+    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
 
 <!--Container------------>
@@ -18,7 +18,7 @@
         <!-- Home e Area de trabalho --------->
         <div class="col d-flex">
 
-            <a href="{% url 'departamentos' %}" class="btn-menu-settings">
+            <a href="{{ group_info.url_home }}" class="btn-menu-settings">
                 <i class="fa-solid fa-house"></i>
                 Home
             </a>
@@ -38,7 +38,7 @@
             </div>
 
             <div class="text-menu-settings">
-                <h5 class="m-0">Gestão de pessoas</h5>
+                <h5 class="m-0" >{{ group_info.nome }}</h5>
             </div>
 
         </div>
