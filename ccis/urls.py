@@ -46,6 +46,7 @@ urlpatterns = [
     path('inadimplencia', gestaoControle.inadimplencia, name='inadimplencia'),
     path('qqs', gestaoControle.qqs, name='qqs'),
     path('pesquisa', gestaoControle.pesquisa, name='pesquisa'),
+    path('gestaoRelatorios', gestaoControle.gestaoRelatorios, name='gestaoRelatorios'),
 
     path('gestaoNegocios', gestaoNegocios.home, name='gestaoNegocios'),
     path('gestaoMetas', gestaoNegocios.gestaoMetas, name='gestaoMetas'),
@@ -259,6 +260,8 @@ urlpatterns = [
     path('request_portifolios', gestaoRecursos.request_portifolios, name='request_portifolios'),
     path('request_basileia', gestaoRecursos.request_basileia, name='request_basileia'),
     path('request_risco', gestaoRecursos.request_risco, name='request_risco'),
+    path('request_contabilidade', gestaoRecursos.request_contabilidade, name='request_contabilidade'),
+
 
     path('dev', pages.dev, name='dev'),
 

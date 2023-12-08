@@ -2046,3 +2046,22 @@ status-negativo{
 }
 
 /* ------------------------------ CCC ------------------------------- */
+
+/* ----- Tema ------------------------------- */
+
+.tema {
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tema:hover {
+  transform: translateY(-3px);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}

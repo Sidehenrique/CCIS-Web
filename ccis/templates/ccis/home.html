@@ -93,7 +93,7 @@
 
     <div class="text-center mt-2">
 
-        <img src="{% static 'ccis/Grupo 6384.png' %}"
+        <img src="{% static 'ccis/intranetNatal.png' %}"
          alt="logo"
          width="90%"
          height="auto"
@@ -186,3 +186,17 @@
 </body>
 </html>
 
+<script>
+
+const snowflakes = 200;
+
+for (let i = 0; i < snowflakes; i++) {
+    const snowflake = document.createElement('i');
+    snowflake.classList.add('fas', 'fa-snowflake'); // Se usar Font Awesome
+    snowflake.style.left = `${Math.random() * 100}%`;
+    snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+    snowflake.style.opacity = Math.random();
+    document.querySelector('.snow').appendChild(snowflake);
+}
+
+</script>
