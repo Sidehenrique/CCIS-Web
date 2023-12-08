@@ -24,7 +24,7 @@ from ..models import dadosPessoais, dependentes, enderecoContato, outros, escola
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    CustomUserCreationForm
+    CustomUserCreationForm, modelFormClock
 
 
 # PAGINAS --------------------------------------------------------------------------------------------------------------
@@ -593,10 +593,12 @@ def processos_user(request):
 def kanban_view(request):
     usuarios = User.objects.all()
     group = Group.objects.all()
+    clock = modelFormClock()
 
     context = {
         'usuarios': usuarios,
-        'group': group
+        'group': group,
+        'clock': clock,
     }
 
     return render(request, 'ccis/kanban.html', context)

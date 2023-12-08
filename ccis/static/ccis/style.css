@@ -722,6 +722,13 @@ status-negativo{
     border-radius: 50%;
 }
 
+.nav-photo-filter {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
 /*-- New Profile ----------------------------*/
 
 
@@ -1775,6 +1782,20 @@ status-negativo{
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
 }
 
+.palavra-passe {
+  width: 300px; /* Altere o tamanho conforme necessário */
+  padding: 3px; /* Reduzi um pouco o padding para deixar mais estreito */
+  border: 1px solid #ccc; /* cinza para a borda */
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box; /* Mantém o tamanho total incluindo padding e borda */
+}
+
+.palavra-passe:focus {
+  outline: none;
+  border-color: #66afe9; /* Altere a cor quando estiver focado, se desejar */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
+}
 
 .new-desc {
   width: 100%;
@@ -1975,4 +1996,44 @@ status-negativo{
     margin-bottom: 24px;
     -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
     box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+}
+
+
+.li-dropdown-green a{
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding: 8px 105px;
+    transition: background-color 0.3s;
+}
+
+.li-dropdown-green a:hover{
+    background-color: #C9C9C9;
+    color: green;
+}
+
+.li-dropdown-pink a{
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding: 8px 105px;
+    transition: background-color 0.3s;
+}
+
+.li-dropdown-pink a:hover{
+    background-color: #C9C9C9;
+    color: pink;
+}
+
+.li-dropdown-gray a{
+    display: black;
+    text-decoration: none;
+    color: black;
+    padding: 8px 105px;
+    transition: background-color 0.3s;
+}
+
+.li-dropdown-gray a:hover{
+    background-color: #C9C9C9;
+    color: gray;
 }

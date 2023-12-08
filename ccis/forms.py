@@ -1291,3 +1291,34 @@ class modelFormRiscoGR(forms.ModelForm):
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment')
 
+
+class modelFormClock(forms.ModelForm):
+    CHOICES_ServicoAcessos = [
+        ('', ''),
+        ('30MIN', '30MIN'),
+        ('1H', '1H'),
+        ('1:30H', '1:30H'),
+        ('2H', '2H'),
+        ('3H', '3H'),
+        ('5D', '5D'),
+    ]
+
+    CHOICES_AssuntoAcessos = [
+        ('', ''),
+        ('30MIN', '30MIN'),
+        ('1H', '1H'),
+        ('1:30H', '1:30H'),
+        ('2H', '2H'),
+        ('3H', '3H'),
+        ('5D', '5D'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service')
+
+
+
