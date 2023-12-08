@@ -1,10 +1,10 @@
 import json
 
 import requests
-from rest_framework import status
+from rest_framework import status, generics, permissions
 from django.db.models import Prefetch
 from dateutil.parser import parse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from reportlab.pdfgen import canvas
@@ -60,6 +60,7 @@ def base(request):
 def home(request):
     context = infoClima()
     return render(request, 'ccis/home.html', context)
+
 
 @login_required(login_url="/login")
 def ccc(request):
@@ -674,56 +675,56 @@ def kanban_view(request):
         return HttpResponseNotFound('O usuário não pertence a nenhum setor.')
 
 
-@login_required(login_url="/login")
-def kanban_user_view(request):
-    usuarios = User.objects.all()
-    group = Group.objects.all()
+
+
+
+
+
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def card_list_view(request):
+    # Obtém o ID do usuário logado
+    user_id = request.user.id
+
+    # Obtém a opção da solicitação (processos ou minhas_solicitacoes)
+    option = request.query_params.get('option', None)
+
+    # Lógica para filtrar os cards com base na opção
+    if option == 'processos':
+        # Filtra os cards relacionados ao setor do usuário
+        queryset = Card.objects.filter(setor__user=user_id)
+    elif option == 'minhas_solicitacoes':
+        # Filtra os cards criados pelo próprio usuário
+        queryset = Card.objects.filter(solicitante__id=user_id)
+    else:
+        # Lógica adicional conforme necessário
+        queryset = Card.objects.all()
+
+    serializer = CardSerializer(queryset, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def card_detail_view(request, pk):
 
     try:
-        id_setor = request.user.groups.first().id
-        group_info = CustomGroupInfo.objects.get(group_id=id_setor)
+        card = Card.objects.get(pk=pk)
 
-        superior = Group.objects.filter(id=id_setor).first()
+    except Card.DoesNotExist:
+        return Response(status=404)
 
-        nomes_equipe = []
+    serializer = CardSerializer(card)
+    return Response(serializer.data)
 
-        if superior is None:
-            pass
 
-        else:
-            equipe = User.objects.filter(groups=superior)
-            # Resto do código
-            for usuario in equipe:
-                first_nameA = usuario.first_name
-                last_nameA = usuario.last_name
-                sexo = usuario.dadosPessoais.sexo
-                foto = usuario.dadosPessoais.foto
-                cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
-                nomes_equipe.append(
-                    {'id': usuario.id,
-                     'foto': foto,
-                     'first_name': first_nameA,
-                     'last_name': last_nameA,
-                     'sexo': sexo,
-                     'cargo': cargo})
 
-            # Ordenar a equipe com o supervisor no topo
-            nomes_equipe = sorted(nomes_equipe,
-                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
-                                                 x['cargo'] != 'Encarregado(a)'))
 
-            context = {
-                'superior': superior,
-                'equipe': nomes_equipe,
-                'group_info': group_info,
-                'usuarios': usuarios,
-                'group': group
-            }
 
-            return render(request, 'ccis/kanban_user.html', context)
 
-    except AttributeError:
-        return HttpResponseNotFound('O usuário não pertence a nenhum setor.')
+
 
 
 @api_view(['GET'])

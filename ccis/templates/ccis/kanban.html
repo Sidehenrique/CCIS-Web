@@ -188,100 +188,6 @@
     <!-- kanban ---------------->
 
 
-<!--    &lt;!&ndash; kanban &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--    <div class="row mt-4 " id="sectorCards" style="display:none">-->
-
-<!--        &lt;!&ndash; Triagem -&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-triagem" class="kanban-body">-->
-
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Triagem -&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-
-<!--        &lt;!&ndash; Em atendimento &ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-em atendimento" class="kanban-body">-->
-
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Em atendimento &ndash;&gt;-->
-
-<!--        &lt;!&ndash; Encaminhado -&#45;&#45;&ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-encaminhado" class="kanban-body">-->
-
-
-
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Encaminhado -&#45;&#45;&ndash;&gt;-->
-
-<!--        &lt;!&ndash; Concluido -&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluido</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-concluido" class="kanban-body">-->
-
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Concluido -&#45;&#45;&#45;&#45;&ndash;&gt;-->
-
-<!--        &lt;!&ndash; Finalizado &#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--        <div class="col">-->
-<!--            <div class="kanban-title">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-auto me-auto"><i class="fa-solid fa-check-double"></i> Finalizado</div>-->
-<!--                    <div class="col-auto"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div id="kanban-body-finalizado" class="kanban-body">-->
-
-<!--            </div>-->
-<!--            <div class="kanban-footer">-->
-<!--                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Finalizado &#45;&#45;&#45;&#45;&ndash;&gt;-->
-
-<!--    </div>-->
-<!--    &lt;!&ndash; kanban &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-
-
     <!-- Modal Processos ------------------------->
     <div class="modal fade"
          id="processoModal"
@@ -699,5 +605,14 @@
 
 </div>
 <!--Container------------>
+
+
+<script>
+    var userData = {
+        userId: {{ user_data.log_id }},
+        userGroup: '{{ user_data.logGroup }}'
+    };
+</script>
+
 
 {% endblock %}

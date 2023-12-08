@@ -1,609 +1,80 @@
-{% extends 'ccis/base.html' %}
-{% load static %}
-
-{% block conteudo %}
-
-{% if dados.canvas %}
-    <img class="profile-img" src="{{ dados.canvas.url }}">
-    {% else %}
-    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
-{% endif %}
-
-<!--Container------------>
-<div class="container-fluid scrollable-content">
-
-    <!-- Menu settings --------->
-    <div class="row mt-1">
-
-        <div class="col d-flex">
-
-            <a href="#" class="btn-menu-settings">
-                <i class="fa-solid fa-house"></i>
-                Home
-            </a>
-
-            <div class="ms-3 dropdown">
-
-                <button class="drop-menu-settings dropdown-toggle" type="button" id="dropdownMenuSettings"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                    Área de Trabalho
-                </button>
-
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
-                    <li><a class="dropdown-item" href="{% url 'processos_user' %}">Processos</a></li>
-                    <li><a class="dropdown-item" href="{% url 'processos_user' %}">Minhas solicitações</a></li>
-                </ul>
-
-            </div>
-
-            <div class="text-menu-settings">
-                <h5 class="m-0" >Gestão de pessoas</h5>
-            </div>
-
-
-        </div>
-
-        <div class="col col-auto me-auto d-flex">
-
-            <!-- Equipe -------------------------->
-            {% if equipe %}
-
-                {% for usuario in equipe %}
-                    <a href="{% url 'profile' user_id=usuario.id %}" class=" equipe-menu-settings">
-
-                        {% if usuario.foto %}
-                            <img class="avatar-img" src="{{ usuario.foto.url }}"
-                                 alt="" width="40" height="40">
-
-                            {% else %}
-
-                            {% if usuario.sexo == "Masculino" %}
-                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-                                 alt="" width="40" height="40">
-
-                            {% elif usuario.sexo == "Feminino" %}
-                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
-                                 alt="" width="40" height="40">
-                            {% endif %}
-
-                            {% endif %}
-
-                    </a>
-                {% endfor %}
-
-            {% endif %}
-            <!-- Equipe -------------------------->
-
-        </div>
-
-        <div class="col d-flex col-auto">
-
-            <button class="me-3 btn-personalize-settings ms-3"><i class="fa-solid fa-palette"></i></button>
-
-            <button class="btn-menu-settings"><i class="fa-solid fa-filter"></i> Filtro</button>
-
-            <div class="position-relative">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa...">
-            </div>
-
-
-        </div>
-
-    </div>
-    <!-- Menu settings --------->
-
-
-    <!-- kanban ---------------->
-    <div class="row mt-4">
-
-        <!-- Triagem --------->
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-triagem" class="kanban-body">
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Triagem --------->
-
-        <!-- Em atendimento -->
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-em atendimento" class="kanban-body">
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Em atendimento -->
-
-        <!-- Encaminhado ----->
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-encaminhado" class="kanban-body">
-
-
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Encaminhado ----->
-
-        <!-- Concluido ------->
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluido</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-concluido" class="kanban-body">
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Concluido ------->
-
-        <!-- Finalizado ------>
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-check-double"></i> Finalizado</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-finalizado" class="kanban-body">
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Finalizado ------>
-
-    </div>
-    <!-- kanban ---------------->
-
-
-    <!-- Modal Processos ------------------------->
-    <div class="modal fade"
-         id="processoModal"
-         tabindex="-1"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-
-
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-
-                <!-- header --------------------->
-                <div class="modal-header">
-
-                    <h5 class="modal-title me-1" id="assuntoInfo"></h5>
-                    <span class="ms-2" style="color:gray;" id="servicoInfo"></span>
-
-
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                </div>
-                <!-- header --------------------->
-
-
-                <!-- body ----------------------->
-                <div class="modal-body">
-
-                    <div class="row">
-
-                        <!-- informações -->
-                        <div class="col-4 overflow-auto" style="border-right:1px solid #818181">
-
-
-                            <div class="col-auto me-auto">
-
-                                <span class="processo-tag-cod" id="codInfo"></span>
-                                <span class="processo-tag-setor" id="sectorInfo"></span>
-
-                            </div>
-
-
-                            <h6 class="mt-2">Informações da solicitação</h6>
-
-                            <hr class="linha-custom">
-
-
-                            <div class="mt-2 overflow-auto accordion accordion-flush" id="accordionFlushExample"
-                                 style="max-height:330px;">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingOne">
-                                        <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-                                                aria-expanded="false" aria-controls="flush-collapseOne">
-                                            Dados do Solicitante
-                                        </button>
-                                    </h2>
-
-
-                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-
-                                        <div class="card-body-custom">
-
-                                            <ul class="card-ul">
-
-                                                <li class="card-li">
-                                                    <i class="fa-solid fa-user card-icon"></i>
-                                                    <span id="nomeSolicitante"></span>
-                                                </li>
-
-                                                <li class="">
-                                                    <i class="fa-solid fa-briefcase card-icon"></i>
-                                                    <span id="loginSolicitante"></span>
-                                                </li>
-
-
-                                                <li class="card-li">
-                                                    <i class="fa-solid fa-at card-icon"></i>
-                                                    <span id="emailSolicitante"></span>
-                                                </li>
-
-                                                <li class="card-li">
-                                                    <i class="fa-solid fa-location-dot card-icon"></i>
-                                                    <span id="areaSolicitante"></span>
-                                                </li>
-
-                                                <li class="card-li">
-                                                    <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
-                                                    <span id="ramalSolicitante"></span>
-                                                </li>
-
-                                            </ul>
-
-                                        </div>
-
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingTwo">
-                                        <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
-                                                aria-expanded="false" aria-controls="flush-collapseTwo">
-                                            Compartilhamento
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-
-
-                                    </div>
-                                </div>
-
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingThree">
-                                        <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
-                                                aria-expanded="false" aria-controls="flush-collapseThree">
-                                            Historico
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-
-                                        <div class="d-flex container-buttons" onwheel="handleScroll(event)">
-                                            <!-- span com os historicos aqui -->
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- informações -->
-
-
-                        <!-- message ------------>
-                        <div class="col-6" style="border-right:1px solid #818181;">
-
-                            <!-- cabeçalho ------>
-                            <div>
-
-                                <div class="row">
-                                    <div class="col-auto me-auto">
-                                        <small><i class="fa-solid fa-clock"></i>
-                                            <span id="horarioAbertura"></span>
-                                        </small>
-                                    </div>
-                                    <div class="col-auto">
-
-                                        <a type="button" id="PersonalizarCard">
-                                            <span class="processo-tag-cor">
-                                                <i class="fa-solid fa-brush"></i>
-                                                Personalizar
-                                            </span>
-                                        </a>
-
-                                    </div>
-                                </div>
-
-
-                                <h6 class="mt-2" >Descrição</h6>
-
-                                <hr class="linha-custom">
-                            </div>
-                            <!-- cabeçalho ------>
-
-
-                            <!-- Descrição ------>
-                            <div class="overflow-auto" style=" max-height:200px">
-
-                                <!-- Chat ---------->
-                                <div class="messages-container mt-2 p-2">
-
-                                    <div class="message-item">
-                                        <!-- Cabeçalho -->
-                                        <div class="row pt-1">
-
-                                            <div class="col-auto me-auto">
-
-                                                <h6 id="nomeRemetente"></h6>
-
-                                            </div>
-
-
-                                            <div class="col-auto">
-                                                <small id="dataRemetente"></small>
-                                            </div>
-
-
-                                        </div>
-                                        <!-- Cabeçalho -->
-
-                                        <!-- texto -->
-                                        <div class="p-2">
-                                            <p id="messageContainer"></p>
-                                        </div>
-                                        <!-- texto -->
-                                    </div>
-
-                                </div>
-                                <!-- Chat ---------->
-
-                            </div>
-                            <!-- Descrição ------>
-
-
-                            <!-- Resposta ------>
-                            <div class="containerResposta mt-2" style="background-color:#fff">
-                                <form id="" enctype="multipart/form-data">
-                                    <div class="form-group">
-
-                                        <textarea class="form-control" placeholder="Responder" id="resposta" rows="3"
-                                                  cols="70" required></textarea>
-
-                                    </div>
-                                    <div class=" form-group pt-2">
-                                        <input type="file" id="attachmentInput" name="attachmentInput">
-                                    </div>
-
-                                </form>
-                            </div>
-                            <!-- Resposta ------>
-
-
-                        </div>
-                        <!-- message ------------>
-
-
-                        <!-- Ações -------------->
-                        <div class="col">
-
-                            <h5 class="text-center p-2">AÇÕES</h5>
-
-                            <hr style="color:#C4C0C0">
-
-                            <ul class="ul-menu-request buttons-Acao">
-
-                                <li class="li-menu-request">
-                                    <a type="button" id="registrarAtendimentoButton" class="modal-processo-link"
-                                       aria-current="page">
-                                        <i class="fa-solid fa-phone-volume"></i>
-                                        Atender
-                                    </a>
-                                </li>
-
-
-                                <li class="li-menu-request">
-                                    <a type="button" id="enviarMensagemButton" class="modal-processo-link"
-                                       aria-current="page">
-                                        <i class="fa-solid fa-paper-plane"></i>
-                                        Responder
-                                    </a>
-                                </li>
-
-
-                                <li class="li-menu-request">
-                                    <a type="button" id="encaminharCardButton" class="modal-processo-link"
-                                       aria-current="page">
-                                        <i class="fa-solid fa-angles-right"></i>
-                                        Encaminhar
-                                    </a>
-                                </li>
-
-
-                                <li class="li-menu-request">
-                                    <a type="button" id="transferirCardButton" class="modal-processo-link"
-                                       aria-current="page">
-                                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                                        Transferir
-                                    </a>
-                                </li>
-
-
-                                <li class="li-menu-request" style="margin-top:120px">
-                                    <a type="button" id="ConcluirCardButton" class="modal-processo-link btn-done"
-                                       aria-current="page">
-                                        <i class="fa-solid fa-check"></i>
-                                        Concluir
-                                    </a>
-                                </li>
-
-
-                            </ul>
-
-                        </div>
-                        <!-- Ações -------------->
-
-                    </div>
-
-
-                </div>
-                <!-- body ----------------------->
-
-
-                <!-- footer --------------------->
-                <div class="modal-footer">
-
-                    <div class="col-10">
-
-                        <i class="fa-solid fa-phone-volume"></i>
-                        <span id="nomeResponsavel"></span>
-
-                    </div>
-
-                    <div class="col">
-
-                    </div>
-
-                </div>
-                <!-- footer --------------------->
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal Processos ------------------------->
-
-
-    <!-- Modal encaminhar ------------------------>
-    <div class="modal" id="modalSelecaoSetor" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Encaminhar Processo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="p-3">
-                    <label>Selecione o grupo *:</label>
-                    <select id="seletorGrupo" class="form-select" required>
-                        {% for grupo in group %}
-                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarEncaminhamento" type="submit" class="btn btn-primary">Confirmar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal encaminhar ------------------------>
-
-
-    <!-- Modal Transferir ------------------------>
-    <div class="modal" id="modalSelecaoSetorTrans" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Transferir Processo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="p-3">
-                    <label>Selecione o grupo *:</label>
-                    <select id="seletorGrupoTrans" class="form-select" required>
-                        {% for grupo in group %}
-                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarTransferencia" type="submit" class="btn btn-primary">Confirmar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal Transferir ------------------------>
-
-
-    <!-- Modal cor ------------------------>
-    <div class="modal" id="modalSelecaoCor" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Personalizar</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="col p-3">
-                    <label>Selecione a Cor Do Card*:</label>
-                    <select id="seletorCor" class="form-select" required>
-
-                        <option></option>
-                        <option value="#f6f6f6">Padão</option>
-                        <option value="#FFCECE">Vermelho</option>
-                        <option value="#CEDFFF">Azul</option>
-                        <option value="#CEFFD3">Verde</option>
-                        <option value="#FFFCA7">Amarelo</option>
-
-                    </select>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="confirmarCor" type="submit" class="btn btn-primary">Confirmar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal cor ------------------------>
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Kanban</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .kanban {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .column {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px;
+      min-width: 200px;
+    }
+
+    .card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="kanban">
+  <div class="column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h3>A fazer</h3>
+    <div class="card" draggable="true" ondragstart="drag(event)">Tarefa 1</div>
+    <div class="card" draggable="true" ondragstart="drag(event)">Tarefa 2</div>
+  </div>
+
+  <div class="column" id="inProgress" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h3>Em andamento</h3>
+  </div>
+
+  <div class="column" id="review" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h3>Revisão</h3>
+  </div>
+
+  <div class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h3>Concluído</h3>
+    <div class="card" draggable="true" ondragstart="drag(event)">Tarefa 3</div>
+    <div class="card" draggable="true" ondragstart="drag(event)">Tarefa 4</div>
+  </div>
 </div>
-<!--Container------------>
 
-{% endblock %}
+<script>
+  function allowDrop(event) {
+    event.preventDefault();
+  }
+
+  function drag(event) {
+    event.dataTransfer.setData("text", event.target.textContent);
+  }
+
+  function drop(event) {
+    event.preventDefault();
+    const data = event.dataTransfer.getData("text");
+    const draggedElement = document.createElement("div");
+    draggedElement.className = "card";
+    draggedElement.textContent = data;
+    event.target.appendChild(draggedElement);
+  }
+</script>
+
+</body>
+</html>
