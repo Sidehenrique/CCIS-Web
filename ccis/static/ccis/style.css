@@ -1544,7 +1544,7 @@ status-negativo{
 
 
 .kanban-body {
-    height:auto;
+    max-height:78%;
     overflow:auto;
     background-color: rgba(255, 255, 255, 0.6);
 }
@@ -1976,3 +1976,52 @@ status-negativo{
     -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
     box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
 }
+
+
+/* ------------------------------ CCC ------------------------------- */
+
+:root {
+    --verde-escuro: #003641;
+    --verde-claro: #C9D200;
+    --branco: #ffffff;
+}
+
+.input_ccc{
+    display: block;
+    width: 120%;
+    margin: 10px 0 10px 0;
+    width: 100%;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.logo_container{
+    text-align:left;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--branco);
+    height: 90%;
+
+}
+
+.input_container{
+    text-align:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--verde-escuro);
+
+}
+
+#btn-buscar{
+    background-color: #C9D200;
+    text-transform: uppercase;
+    color: white;
+    font-weight: bolder;
+}
+
+/* ------------------------------ CCC ------------------------------- */

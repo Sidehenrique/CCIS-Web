@@ -36,6 +36,8 @@ urlpatterns = [
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
     path('malotes', pages.malotes, name='malotes'),
+    path('ccc', pages.ccc, name='ccc'),
+    path('processa_cupons', pages.processa_cupons, name='processa_cupons'),
 
     path('gestaoControle', gestaoControle.home, name='gestaoControle'),
     path('contabilidade', gestaoControle.contabilidade, name='contabilidade'),

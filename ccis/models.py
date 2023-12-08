@@ -500,6 +500,7 @@ class CustomGroupInfo(models.Model):
     contato = models.CharField(max_length=45, blank=True, null=True)
     imagem = models.ImageField(upload_to='group/', blank=True, null=True)
     url = models.TextField(blank=True, null=True)
+    url_home = models.URLField(blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -560,6 +561,7 @@ class OperatorRating(models.Model):
     comment = models.TextField(blank=True)
     operador = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='avaliacao_user', default=None)
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True)
     anonymous = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='avaliador_anonimo', default=None)
     datetime = models.DateTimeField(auto_now_add=True)
@@ -590,3 +592,15 @@ class Notebook(models.Model):
 
     def __str__(self):
         return self.modelo
+
+
+#-------------------------------------------------------------------------------------
+
+class Cupons(models.Model):
+    criado = models.DateTimeField('Data de Criação', auto_now_add=True)
+    modificado = models.DateTimeField('Data de modificação', auto_now=True)
+    cpf = models.CharField('CPF', max_length=14)
+    numero_cupom = models.CharField('Numero Cupom', max_length=5, unique=True)
+
+    def __str__(self):
+        return self.cpf
