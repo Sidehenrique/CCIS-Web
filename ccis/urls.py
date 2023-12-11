@@ -47,6 +47,7 @@ urlpatterns = [
     path('qqs', gestaoControle.qqs, name='qqs'),
     path('pesquisa', gestaoControle.pesquisa, name='pesquisa'),
     path('gestaoRelatorios', gestaoControle.gestaoRelatorios, name='gestaoRelatorios'),
+    path('rankingsicoob', gestaoControle.rankingsicoob, name='rankingsicoob'),
 
     path('gestaoNegocios', gestaoNegocios.home, name='gestaoNegocios'),
     path('gestaoMetas', gestaoNegocios.gestaoMetas, name='gestaoMetas'),
