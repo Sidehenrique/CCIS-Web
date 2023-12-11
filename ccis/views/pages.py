@@ -672,7 +672,7 @@ def kanban_view(request):
 
 
     except AttributeError:
-        return HttpResponseNotFound('O usuário não pertence a nenhum setor.')
+        return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
 
 
 

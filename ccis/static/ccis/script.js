@@ -574,11 +574,13 @@ $('#minhasSolicitacoesLink').on('click', function() {
 
 // Função para buscar cards com base na opção selecionada
 function fetchCards(option) {
-    const userId = getLoggedInUserId(); // Substitua isso pela lógica real de obtenção do ID do usuário
+    const userId = getLoggedInUserId();
+    const groupName = getLoggedInUserGroup();
+
 
     // Defina o texto do elemento h5 com base na opção selecionada
     if (option === 'processos') {
-        document.getElementById('area-trabalho-kanban').innerText = 'Setor do Usuário';
+        document.getElementById('area-trabalho-kanban').innerText = groupName;
     } else if (option === 'minhas_solicitacoes') {
         document.getElementById('area-trabalho-kanban').innerText = 'Minhas solicitações';
     } else {
@@ -609,8 +611,6 @@ function fetchCards(option) {
 function updateKanban(cards) {
     // Limpe os corpos do kanban
     clearKanbanBodies();
-
-    console.log(cards);
 
     // Atualize cada coluna do kanban com os novos cards
     cards.forEach(card => {
@@ -718,17 +718,14 @@ function clearKanbanBodies() {
 
 // Função para obter o ID do usuário logado
 function getLoggedInUserId() {
-    console.log(userData.userId)
     return userData.userId
 }
-
 
 
 // Função para obter o nome do grupo do usuário logado
 function getLoggedInUserGroup() {
     return userData.userGroup;
 }
-
 
 
 //---------------------------------------------------------------------------------------------------
