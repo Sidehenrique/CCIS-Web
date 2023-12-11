@@ -26,7 +26,7 @@ from ..models import dadosPessoais, dependentes, enderecoContato, outros, escola
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    CustomUserCreationForm
+    CustomUserCreationForm, modelFormClock
 
 
 # PAGINAS --------------------------------------------------------------------------------------------------------------
@@ -626,6 +626,7 @@ def processos_user(request):
 def kanban_view(request):
     usuarios = User.objects.all()
     group = Group.objects.all()
+    clock = modelFormClock()
 
     try:
         id_setor = request.user.groups.first().id
@@ -661,6 +662,7 @@ def kanban_view(request):
                                                  x['cargo'] != 'Encarregado(a)'))
 
             context = {
+                'clock': clock,
                 'superior': superior,
                 'equipe': nomes_equipe,
                 'group_info': group_info,

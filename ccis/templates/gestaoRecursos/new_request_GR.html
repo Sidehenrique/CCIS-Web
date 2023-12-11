@@ -42,13 +42,20 @@
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_4" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-file-signature"></i>
+                            Contabilidade
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_5" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-file-pen"></i>
                             Solicitções CI/CNAC/R.O
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btn_request_5" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_6" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-scale-unbalanced-flip"></i>
                             Apontamentos
                         </a>
@@ -287,8 +294,51 @@
         </div>
         <!-- Formulário de Monitoramento de Risco -------------------------->
 
-        <!-- Formulário de CI ---------------------------------->
+        <!-- Formulário de Contabilidade ----------------------------->
         <div id="formulario4" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO MONITORAMENTO DE RISCO</h5>
+
+            <form action="{% url 'request_risco' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <div class="col-7">
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ contabilidade.assunto }}
+                        </div>
+
+                        <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ contabilidade.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Descrição:</label>
+                            {{ contabilidade.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Anexar arquivo:</label>
+                            {{ contabilidade.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <!-- Formulário de Monitoramento de Risco -------------------------->
+
+        <!-- Formulário de CI ---------------------------------->
+        <div id="formulario5" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE SOLICITÇÕES CI/CNAC/R.O</h5>
 
             <div class="row p-3 ">
@@ -331,7 +381,7 @@
         <!-- Formulário de CI ---------------------------------->
 
         <!-- Formulário de Apontamentos ------------------------>
-        <div id="formulario5" class="col menu-request m-0" style="display:none">
+        <div id="formulario6" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
             <form action="{% url 'request_apontamentos_recurso' %}"

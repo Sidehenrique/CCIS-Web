@@ -753,6 +753,13 @@ status-negativo{
     border-radius: 50%;
 }
 
+.nav-photo-filter {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
 /*-- New Profile ----------------------------*/
 
 
@@ -1575,7 +1582,7 @@ status-negativo{
 
 
 .kanban-body {
-    max-height:78%;
+    height:auto;
     overflow:auto;
     background-color: rgba(255, 255, 255, 0.6);
 }
@@ -1806,6 +1813,20 @@ status-negativo{
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
 }
 
+.palavra-passe {
+  width: 300px; /* Altere o tamanho conforme necessário */
+  padding: 3px; /* Reduzi um pouco o padding para deixar mais estreito */
+  border: 1px solid #ccc; /* cinza para a borda */
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box; /* Mantém o tamanho total incluindo padding e borda */
+}
+
+.palavra-passe:focus {
+  outline: none;
+  border-color: #66afe9; /* Altere a cor quando estiver focado, se desejar */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Sombra quando focado */
+}
 
 .new-desc {
   width: 100%;
@@ -2056,3 +2077,22 @@ status-negativo{
 }
 
 /* ------------------------------ CCC ------------------------------- */
+
+/* ----- Tema ------------------------------- */
+
+.tema {
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tema:hover {
+  transform: translateY(-3px);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}

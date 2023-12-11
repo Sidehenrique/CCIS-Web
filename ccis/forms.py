@@ -1227,13 +1227,15 @@ class ModelFormSIAMalotes(forms.ModelForm):
 class modelFormAcessosGR(forms.ModelForm):
     CHOICES_ServicoAcessos = [
         ('', ''),
-        ('inclusão e alteração de linhas', 'inclusão e alteração de linhas'),
+        ('Portifólio de crédito', 'Portifólio de crédito'),
     ]
 
     CHOICES_AssuntoAcessos = [
         ('', ''),
-        ('Portfólio de Captação ', 'Portfólio de Captação '),
-        ('Portifólio de Crédito', 'Portifólio de Crédito'),
+        ('Dúvidas em geral', 'Dúvidas em geral'),
+        ('Inclusão de linhas', 'Inclusão de linhas'),
+        ('Alteração nas linhas', 'Alteração nas linhas'),
+        ('Sugestões', 'Sugestões'),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
@@ -1250,12 +1252,15 @@ class modelFormAcessosGR(forms.ModelForm):
 class modelFormBasileiaGR(forms.ModelForm):
     CHOICES_ServicoAcessos = [
         ('', ''),
-        ('Estudos a cerca do impacto', 'Estudos a cerca do impacto'),
+        ('Dúvidas em geral', 'Dúvidas em geral'),
+        ('Inclusão de modalidade', 'Inclusão de modalidade'),
+        ('Alteração nas taxas', 'Alteração nas taxas'),
+        ('Sugetões', 'Sugetões'),
     ]
 
     CHOICES_AssuntoAcessos = [
         ('', ''),
-        ('Acompanhamento Basileia ', 'Acompanhamento Basileia '),
+        ('Portifólio de Investimentos', 'Portifólio de Investimentos '),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
@@ -1272,13 +1277,14 @@ class modelFormBasileiaGR(forms.ModelForm):
 class modelFormRiscoGR(forms.ModelForm):
     CHOICES_ServicoAcessos = [
         ('', ''),
+        ('Dúvidas em geral', 'Dúvidas em geral'),
         ('Estudos a cerca dos impactos', 'Estudos a cerca dos impactos'),
-        ('Renegociação', 'Renegociação'),
+        ('Sugestões', 'Sugestões'),
     ]
 
     CHOICES_AssuntoAcessos = [
         ('', ''),
-        ('Monitoramento do Risco ', 'Monitoramento do Risco '),
+        ('Planilha de Monitoramento do Risco', 'Planilha de Monitoramento do Risco'),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
@@ -1290,4 +1296,58 @@ class modelFormRiscoGR(forms.ModelForm):
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormContabilidadeGR(forms.ModelForm):
+    CHOICES_ServicoAcessos = [
+        ('', ''),
+        ('Dúvidas acerca do resultado contábil', 'Dúvidas acerca do resultado contábil'),
+        ('Sugestões', 'Sugestões'),
+    ]
+
+    CHOICES_AssuntoAcessos = [
+        ('', ''),
+        ('Plano de Metas', 'Plano de Metas'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
+class modelFormClock(forms.ModelForm):
+    CHOICES_ServicoAcessos = [
+        ('', ''),
+        ('30MIN', '30MIN'),
+        ('1H', '1H'),
+        ('1:30H', '1:30H'),
+        ('2H', '2H'),
+        ('3H', '3H'),
+        ('5D', '5D'),
+    ]
+
+    CHOICES_AssuntoAcessos = [
+        ('', ''),
+        ('30MIN', '30MIN'),
+        ('1H', '1H'),
+        ('1:30H', '1:30H'),
+        ('2H', '2H'),
+        ('3H', '3H'),
+        ('5D', '5D'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service')
+
+
 

@@ -15,6 +15,7 @@
     <!-- Menu settings --------->
     <div class="row mt-1">
 
+        <!-- Home e Area de trabalho --------->
         <div class="col d-flex">
 
             <a href="{{ group_info.url_home }}" class="btn-menu-settings">
@@ -40,9 +41,10 @@
                 <h5 class="m-0" id="area-trabalho-kanban"></h5>
             </div>
 
-
         </div>
+        <!-- Home e Area de trabalho --------->
 
+        <!-- Equipe -------------------------->
         <div class="col col-auto me-auto d-flex">
 
             <!-- Equipe -------------------------->
@@ -75,27 +77,167 @@
             <!-- Equipe -------------------------->
 
         </div>
+        <!-- Equipe -------------------------->
 
+        <!-- Filtros ------------------------->
         <div class="col d-flex col-auto">
 
-            <button class="me-3 btn-personalize-settings ms-3"><i class="fa-solid fa-palette"></i></button>
+            <!-- Configurações ---------->
+            <button class="ms-3 btn-personalize-settings me-3" type="button" data-bs-toggle="modal"
+                    data-bs-target="#temasModal"><i class="fa-solid fa-gear"></i>
+            </button>
+            <!-- Configurações ---------->
 
-            <button class="btn-menu-settings"><i class="fa-solid fa-filter"></i> Filtro</button>
+            <!-- Filtro ----------------->
+            <div class="dropdown">
+                <button class="btn-menu-settings" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <i class="fa-solid fa-filter"></i>
+                    Filtro
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
 
+                    <!-- Titulo Filtro ------------>
+                    <div style="text-align: center;">
+                        <h6>
+                            Filtro
+                            <span class="pe-3" style="float: right; cursor: pointer;"
+                                  onclick="fecharDropdown()">X</span>
+                        </h6>
+                    </div>
+                    <!-- Titulo Filtro ------------>
+
+                    <!-- input -------------------->
+                    <div class="p-3">
+                        <span>Palavra Chave:</span>
+                        <input class="bg-dark palavra-passe" type="text" id="palavra-passe" name="palavra-passe"
+                               required>
+                        <span style="font-size: 12px; color: #999999">Pesquise por assunto, serviço, atendente e N° do card...</span>
+                    </div>
+                    <!-- input -------------------->
+
+                    <!-- Membros ------------------>
+                    <div class="p-3">
+                        <span>Membros</span>
+
+                        <div class="mt-1 form-check">
+                            <input class="bg-dark form-check-input" type="checkbox" value="" id="flexCheckDefault">
+
+                            <!--foto perfil-->
+                            <div class="d-flex">
+
+                                <div class="nav-photo-filter">
+
+                                    {% if user_data.logFoto %}
+                                    <img class="nav-photo-filter" src="{{ user_data.logFoto.url }}">
+
+                                    {% else %}
+
+                                    {% if user_data.logSexo == "Masculino" %}
+                                    <img class="nav-photo-filter"
+                                         src="{% static 'ccis/avatar.jpg' %}">
+
+                                    {% elif user_data.logSexo == "Feminino" %}
+                                    <img class="nav-photo-filter"
+                                         src="{% static 'ccis/avatar-feminino.jpg' %}">
+
+                                    {% endif %}
+
+                                    {% endif %}
+
+                                </div>
+
+                                <label class="ms-1 form-check-label" for="flexCheckDefault">
+                                    Atribuídos por mim
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Membros ------------------>
+
+                    <!-- Data --------------------->
+                    <div class="p-3">
+
+                        <span>Data de entrega</span>
+
+                        <div class="form-check">
+                            <input class="bg-dark form-check-input" type="checkbox" value="" id="data1">
+                            <label class="form-check-label" for="data1">
+                                <i style="color: #037C28;" class="fa-solid fa-clock"></i>
+                                Sem Data
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="bg-dark form-check-input" type="checkbox" value="" id="data2">
+                            <label class="form-check-label" for="data2">
+                                <i style="color: #A37C00;" class="fa-solid fa-clock"></i>
+                                Pendente
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="bg-dark form-check-input" type="checkbox" value="" id="data3">
+                            <label class="form-check-label" for="data3">
+                                <i style="color: #AE2E24;" class="fa-solid fa-clock"></i>
+                                Em atraso
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Data --------------------->
+
+                    <!-- Etiquetas --------------------->
+                    <div class="p-3">
+                        <span>Prioridade</span>
+
+                        <div class="form-check">
+                            <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta1">
+                            <label style="background-color: #037C28; border-radius: 3px; padding: 2px 207px 2px 10px;"
+                                   class="form-check-label" for="etiqueta1">
+                                Baixa
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta2">
+                            <label style="background-color: #A37C00; border-radius: 3px; padding: 2px 200px 2px 10px;"
+                                   class="form-check-label" for="etiqueta2">
+                                Média
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta3">
+                            <label style="background-color: #AE2E24; border-radius: 3px; padding: 2px 216px 2px 10px;"
+                                   class="form-check-label" for="etiqueta3">
+                                Alta
+                            </label>
+                        </div>
+
+                    </div>
+                    <!-- Etiquetas --------------------->
+
+                </ul>
+            </div>
+            <!-- Filtro ----------------->
+
+            <!-- Pesquisa Rápida ----------------->
             <div class="position-relative">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="text" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa...">
             </div>
-
+            <!-- Pesquisa Rápida ----------------->
 
         </div>
+        <!-- Filtros ------------------------->
 
     </div>
     <!-- Menu settings --------->
 
 
     <!-- kanban ---------------->
-    <div class="row mt-4 ">
+    <div class="row mt-4">
 
         <!-- Triagem --------->
         <div class="col">
@@ -313,7 +455,8 @@
                                         </button>
                                     </h2>
                                     <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                         aria-labelledby="flush-headingThree"
+                                         data-bs-parent="#accordionFlushExample">
 
                                         <div class="d-flex container-buttons" onwheel="handleScroll(event)">
                                             <!-- span com os historicos aqui -->
@@ -352,7 +495,7 @@
                                 </div>
 
 
-                                <h6 class="mt-2" >Descrição</h6>
+                                <h6 class="mt-2">Descrição</h6>
 
                                 <hr class="linha-custom">
                             </div>
@@ -600,10 +743,95 @@
             </div>
         </div>
     </div>
-    <!-- Modal cor ------------------------>
+    <!-- Modal cor ------------------------------->
 
+
+    <!-- Modal Temas e Hora ---------------------->
+    <div class="modal fade" id="temasModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Configurações</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- Temas ------------------->
+                    <div class="me-4">
+
+                        <!-- Titulo Temas ------------>
+                        <h6>Temas</h6>
+                        <!-- Titulo Temas ------------>
+
+                        <!-- Botões ------------------>
+                        <div class="row mt-3 ms-3">
+
+                            <div class="col tema">
+                                <a href="#" class="botao">
+                                    <img src="{% static 'ccis/defPadrao.png' %}"
+                                         width="80%"
+                                         height="auto">
+                                </a>
+                                Padrão
+                            </div>
+
+                            <div class="col tema">
+                                <a href="#" class="botao">
+                                    <img src="{% static 'ccis/defRoxa.png' %}"
+                                         width="82%"
+                                         height="auto">
+                                </a>
+                                Roxo
+                            </div>
+
+                            <div class="col tema">
+                                <a href="#" class="botao">
+                                    <img src="{% static 'ccis/defCinza.png' %}"
+                                         width="80%"
+                                         height="auto">
+                                </a>
+                                Cinza
+                            </div>
+                        </div>
+                        <!-- Botões ------------------>
+
+                    </div>
+                    <!-- Temas ------------------->
+
+                    <!-- Determinar Hora --------->
+                    <div class="mt-3">
+
+                        <!-- Titulo Clock ------------>
+                        <h6>Horários</h6>
+                        <!-- Titulo Clock ------------>
+
+                        <!-- Forms Clock-------------->
+                        <div class="row">
+                            <div class="col-6 p-3">
+                                <span>Atenção: <i style="color: #A37C00;" class="fa-solid fa-clock"></i></span>
+                                {{ clock.service }}
+                            </div>
+                            <div class="col p-3">
+                                <span>Atraso: <i style="color: #AE2E24;" class="fa-solid fa-clock"></i></span>
+                                {{ clock.assunto }}
+                            </div>
+                        </div>
+                        <!-- Forms Clock-------------->
+
+                    </div>
+                    <!-- Determinar Hora --------->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal Temas e Hora ---------------------->
 
 </div>
+
 <!--Container------------>
 
 

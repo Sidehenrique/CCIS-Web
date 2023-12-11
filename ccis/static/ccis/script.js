@@ -1599,3 +1599,237 @@ $(document).ready(function() {
     });
 
 
+// Função para criar o gráfico
+function criarGrafico(data) {
+    // Obtenha o contexto do canvas
+    var ctx = document.getElementById('feriasChart').getContext('2d');
+
+    // Configurações do gráfico
+    var options = {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+
+    // Crie o gráfico de área
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+
+    // Calcular a média e exibi-la
+    var media = data.datasets[0].data.reduce((a, b) => a + b, 0) / data.datasets[0].data.length;
+    document.getElementById('mediaFerias').innerText = media.toFixed(2); // Exibe a média com 2 casas decimais
+}
+
+
+// Dados do gráfico de rosquinha
+function criarGraficoDeRosquinha() {
+    // Parte config ---------------------
+    var config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [10, 20, 30],
+                backgroundColor: ['red', 'green', 'blue']
+            }],
+            labels: ['Red', 'Green', 'Blue']
+        },
+
+        options: {
+            responsive: true,
+               plugins: {
+                  legend: {
+                    position: 'left',
+                  }
+               },
+
+            title: {
+                display: false,
+                text: 'Doughnut Chart'
+            },
+
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    };
+
+    // Parte setup --------------------------
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        window.myDoughnut = new Chart(ctx, config);
+    });
+
+    // Parte actions -----------------------
+    document.getElementById('randomizeData').addEventListener('click', function() {
+        config.data.datasets.forEach(function(dataset) {
+            dataset.data = dataset.data.map(function() {
+                return randomScalingFactor();
+            });
+        });
+
+        window.myDoughnut.update();
+    });
+
+    var colorNames = Object.keys(window.chartColors);
+    document.getElementById('addDataset').addEventListener('click', function() {
+        var newDataset = {
+            backgroundColor: [],
+            data: [],
+            label: 'New dataset ' + config.data.datasets.length,
+        };
+
+        for (var index = 0; index < config.data.labels.length; ++index) {
+            newDataset.data.push(randomScalingFactor());
+
+            var colorName = colorNames[index % colorNames.length];
+            var newColor = window.chartColors[colorName];
+            newDataset.backgroundColor.push(newColor);
+        }
+
+        config.data.datasets.push(newDataset);
+        window.myDoughnut.update();
+    });
+}
+
+// Chame a função para criar o gráfico ao carregar a
+criarGraficoDeRosquinha();
+
+
+// script.js
+function criarGraficoDeBarraComBordasArredondadas() {
+    // Parte config
+    var config = {
+        type: 'bar',
+        data: {
+            labels: ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4'],
+            datasets: [{
+                label: 'Valores',
+                data: [15, 25, 10, 30],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)', // Cor de fundo das barras
+                borderColor: 'rgba(75, 192, 192, 1)', // Cor da borda das barras
+                borderWidth: 2, // Largura da borda das barras
+                borderRadius: 10 // Raio da borda para torná-la arredondada
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 10,
+                    bottom: 10
+                }
+            }
+        }
+    };
+
+    // Parte setup
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('myBarChart').getContext('2d');
+        window.myBarChart = new Chart(ctx, config);
+    });
+}
+criarGraficoDeBarraComBordasArredondadas();
+
+
+// time line
+$(document).ready(function(){
+var $animation_elements = $('.anim');
+var $window = $(window);
+
+function check_if_in_view() {
+var window_height = $window.height();
+var window_top_position = $window.scrollTop();
+var window_bottom_position = (window_top_position + window_height);
+
+$.each($animation_elements, function() {
+var $element = $(this);
+var element_height = $element.outerHeight();
+var element_top_position = $element.offset().top;
+var element_bottom_position = (element_top_position + element_height);
+
+if ((element_bottom_position >= window_top_position) &&
+(element_top_position <= window_bottom_position)) {
+$element.addClass('animated');
+} else {
+$element.removeClass('animated');
+}
+});
+}
+
+$window.on('scroll resize', check_if_in_view);
+$window.trigger('scroll');
+});
+
+$(document).ready(function(){
+    $(" .debits").hover(function(){
+        $(" .center-right").css("background-color", "#4997cd");
+        }, function(){
+        $(" .center-right").css("background-color", "#fff");
+    });
+});
+$(document).ready(function(){
+    $(".credits").hover(function(){
+        $(".center-left").css("background-color", "#4997cd");
+        }, function(){
+        $(".center-left").css("background-color", "#fff");
+    });
+});
+
+
+// History request
+const itemActions = document.querySelectorAll('.item-action');
+
+// Função para buscar e exibir detalhes do cartão
+function showCardDetails(cardId) {
+    fetch(`/get_card_details/${cardId}`)
+        .then(response => response.json())
+        .then(data => {
+            const detalhesAssunto = document.getElementById('detalhes-assunto');
+            const detalhesService = document.getElementById('detalhes-service');
+
+            // Verifica se os elementos HTML existem
+            if (detalhesAssunto && detalhesService) {
+                detalhesAssunto.textContent = `Assunto: ${data.assunto}`;
+                detalhesService.textContent = `Serviço: ${data.service}`;
+                // Adicione outros detalhes do cartão conforme necessário
+            } else {
+                console.error('Elementos de detalhes não encontrados.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao obter detalhes do cartão:', error);
+        });
+}
+
+// Iterar sobre os elementos e adicionar um event listener para cada um
+itemActions.forEach(item => {
+    item.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const cardId = item.getAttribute('data-card-id');
+
+        if (cardId) {
+            showCardDetails(cardId);
+        } else {
+            console.error('ID do cartão não encontrado.');
+        }
+    });
+});
