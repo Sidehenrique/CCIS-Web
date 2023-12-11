@@ -8,6 +8,13 @@
 }
 
 @font-face {
+    font-family:'Network';
+    src: url('./fonts/Network.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family:'asap bold';
     src: url('./fonts/Asap-Bold.ttf') format('truetype');
     font-weight: normal;
@@ -105,12 +112,35 @@ body {
     display:block;
 }
 
+
+.font_logo{
+    color: #0A363F;
+    font-size:23px;
+    font-family: Network;
+    margin:0;
+
+}
+
+
+@keyframes changeColor {
+    0% { color: #00A194; }
+    50% { color: #00353E; }
+    100% { color: #00A194; }
+}
+
+
+.font_logo span {
+    animation: changeColor 3s infinite; /* 3s é a duração da animação, infinite faz ela repetir indefinidamente */
+}
+
+
 .logo-menu{
     padding:14px 5px;
     display:block;
     height:auto;
     width:88px;
 }
+
 
 .scrollable-content {
     padding-top:65px;
@@ -382,13 +412,14 @@ body {
 #menu_lateral {
   padding-top: 60px;
   height: 100vh;
-  width: 45px; /* Largura inicial do menu recolhido */
+  width: 46px; /* Largura inicial do menu recolhido */
   position: fixed;
   left: 0;
   top: 0;
   background-color: rgba(255,255,255,.00);
   transition: width 0.5s;
   overflow: auto;
+  border-right: 1px solid #d9d9d9;
 }
 
 #menu_lateral.active {
