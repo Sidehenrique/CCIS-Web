@@ -3,14 +3,14 @@
 
 {% block conteudo %}
 
+<!-- Conteúdo ----------------------------------------------->
 <div class="container" style="margin-top:75px">
-
-    <!-- Conteúdo ----------------------------------------------->
     <div class="row">
 
-        <!-- Menu ----------------------------------------------->
+        <!-- Menu ------------------------------------------->
         <div id="menu_inicial" class="col-3 menu-request">
 
+            <!-- Botões ------------------------------------->
             <div class="">
 
                 <h5 class="text-center p-1">Gestão de Recurosos</h5>
@@ -64,7 +64,9 @@
                 </ul>
 
             </div>
+            <!-- Botões ------------------------------------->
 
+            <!-- Voltar ------------------------------------->
             <div class="">
 
                 <hr style="color:#C4C0C0">
@@ -81,24 +83,34 @@
                 </ul>
 
             </div>
+            <!-- Voltar ------------------------------------->
 
         </div>
-        <!-- Menu ----------------------------------------------->
+        <!-- Menu ------------------------------------------->
 
 
-        <!-- Informativo ---------------------------------------->
+        <!-- Informativo ------------------------------------>
         <div id="informativo" class="col menu-request m-0 p-5">
-            <h6>Orientações para abertura de chamado - 4155. Gestão de Recursos</h6>
-            <p>
-                Pontos a serem observados durante a abertura de chamado:
-                - Detalhar bem a sua solicitação.
-                - Se possuir evidências anexar no chamado.
 
-                Horário de Atendimento
-                - Segunda-feira a sexta-feira das 08:30hs às 17:30hs
-            </p>
+            <!-- Texto ------------------------------------------>
+            <div class="">
 
+                <h6>Orientações para abertura de chamado - 4155. Gestão de Recursos</h6>
+                <p>
+                    Pontos a serem observados durante a abertura de chamado:
+                    - Detalhar bem a sua solicitação.
+                    - Se possuir evidências anexar no chamado.
+
+                    Horário de Atendimento
+                    - Segunda-feira a sexta-feira das 08:30hs às 17:30hs
+                </p>
+
+            </div>
+            <!-- Texto ------------------------------------------>
+
+            <!-- Acordeões ------------------------------------------>
             <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -158,13 +170,35 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseFour" aria-expanded="false"
+                                aria-controls="flush-collapseFour">
+                            Contabilidade
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>
+                                    Tire suas dúvidadas acerca dos resultados contábeis e faça sugestões
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <!-- Acordeões ------------------------------------------>
 
         </div>
-        <!-- Informativo ---------------------------------------->
+        <!-- Informativo ------------------------------------>
 
 
-        <!-- Formulário de Portifólios -------------------------->
+        <!-- Formulário de Portifólios ---------------------->
         <div id="formulario1" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO PORTIFÓLIOS</h5>
 
@@ -205,9 +239,9 @@
                 </div>
             </form>
         </div>
-        <!-- Formulário de Portifólios -------------------------->
+        <!-- Formulário de Portifólios ---------------------->
 
-        <!-- Formulário de Basileia ----------------------------->
+        <!-- Formulário de Basileia ------------------------->
         <div id="formulario2" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO ACOMPANHAMENTO DE BASILEIA</h5>
 
@@ -249,9 +283,9 @@
                 </div>
             </form>
         </div>
-        <!-- Formulário de Basileia -------------------------->
+        <!-- Formulário de Basileia ------------------------->
 
-        <!-- Formulário de Monitoramento de Risco ----------------------------->
+        <!-- Formulário de Monitoramento de Risco ----------->
         <div id="formulario3" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO MONITORAMENTO DE RISCO</h5>
 
@@ -292,11 +326,11 @@
                 </div>
             </form>
         </div>
-        <!-- Formulário de Monitoramento de Risco -------------------------->
+        <!-- Formulário de Monitoramento de Risco ----------->
 
-        <!-- Formulário de Contabilidade ----------------------------->
+        <!-- Formulário de Contabilidade -------------------->
         <div id="formulario4" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO MONITORAMENTO DE RISCO</h5>
+            <h5 class="p-3">FORMULÁRIO CONTABILIDADE</h5>
 
             <form action="{% url 'request_risco' %}"
                   method="POST"
@@ -335,9 +369,9 @@
                 </div>
             </form>
         </div>
-        <!-- Formulário de Monitoramento de Risco -------------------------->
+        <!-- Formulário de Contabilidade -------------------->
 
-        <!-- Formulário de CI ---------------------------------->
+        <!-- Formulário de CI ------------------------------->
         <div id="formulario5" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE SOLICITÇÕES CI/CNAC/R.O</h5>
 
@@ -378,9 +412,9 @@
                 </div>
             </div>
         </div>
-        <!-- Formulário de CI ---------------------------------->
+        <!-- Formulário de CI ------------------------------->
 
-        <!-- Formulário de Apontamentos ------------------------>
+        <!-- Formulário de Apontamentos --------------------->
         <div id="formulario6" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
@@ -479,11 +513,10 @@
             </form>
 
         </div>
-        <!-- Formulário de Apontamentos ------------------------>
+        <!-- Formulário de Apontamentos --------------------->
 
     </div>
-    <!-- Conteúdo ----------------------------------------------->
 </div>
-
+<!-- Conteúdo ----------------------------------------------->
 
 {% endblock %}
