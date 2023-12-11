@@ -1,10 +1,10 @@
 import json
 
 import requests
-from rest_framework import status
+from rest_framework import status, generics, permissions
 from django.db.models import Prefetch
 from dateutil.parser import parse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from reportlab.pdfgen import canvas
@@ -26,7 +26,7 @@ from ..models import dadosPessoais, dependentes, enderecoContato, outros, escola
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    CustomUserCreationForm
+    CustomUserCreationForm, modelFormClock
 
 
 # PAGINAS --------------------------------------------------------------------------------------------------------------
@@ -62,6 +62,7 @@ def home(request):
     return render(request, 'ccis/home.html', context)
 
 
+@login_required(login_url="/login")
 def ccc(request):
     return render(request, "ccis/ccc.html")
 
@@ -625,6 +626,7 @@ def processos_user(request):
 def kanban_view(request):
     usuarios = User.objects.all()
     group = Group.objects.all()
+    clock = modelFormClock()
 
     try:
         id_setor = request.user.groups.first().id
@@ -660,6 +662,7 @@ def kanban_view(request):
                                                  x['cargo'] != 'Encarregado(a)'))
 
             context = {
+                'clock': clock,
                 'superior': superior,
                 'equipe': nomes_equipe,
                 'group_info': group_info,
@@ -670,9 +673,60 @@ def kanban_view(request):
             return render(request, 'ccis/kanban.html', context)
 
 
-
     except AttributeError:
-        return HttpResponseNotFound('O usuário não pertence a nenhum setor.')
+        return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
+
+
+
+
+
+
+
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def card_list_view(request):
+    # Obtém o ID do usuário logado
+    user_id = request.user.id
+
+    # Obtém a opção da solicitação (processos ou minhas_solicitacoes)
+    option = request.query_params.get('option', None)
+
+    # Lógica para filtrar os cards com base na opção
+    if option == 'processos':
+        # Filtra os cards relacionados ao setor do usuário
+        queryset = Card.objects.filter(setor__user=user_id)
+    elif option == 'minhas_solicitacoes':
+        # Filtra os cards criados pelo próprio usuário
+        queryset = Card.objects.filter(solicitante__id=user_id)
+    else:
+        # Lógica adicional conforme necessário
+        queryset = Card.objects.all()
+
+    serializer = CardSerializer(queryset, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def card_detail_view(request, pk):
+
+    try:
+        card = Card.objects.get(pk=pk)
+
+    except Card.DoesNotExist:
+        return Response(status=404)
+
+    serializer = CardSerializer(card)
+    return Response(serializer.data)
+
+
+
+
+
+
+
 
 
 @api_view(['GET'])
@@ -697,8 +751,38 @@ def card_kanban_api(request):
     }
 
     for card in serializer.data:
-        card_status = card['status']  # Renomeie a variável aqui
-        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)  # Converte para um objeto datetime
+        card_status = card['status']
+        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)
+
+        # Adiciona o setor do usuário aos dados do card
+        card['user_setor'] = str(user_setor)
+
+        kanban_data[card_status].append(card)
+
+    return Response(kanban_data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@login_required(login_url="/login")
+def user_card_kanban_api(request):
+    # Recuperar os cards abertos pelo usuário logado
+    user_cards = Card.objects.filter(solicitante=request.user)
+
+    # Serializar os dados dos cards
+    serializer = CardSerializer(user_cards, many=True)
+
+    # Organizar os cards por status
+    kanban_data = {
+        'Triagem': [],
+        'Em Atendimento': [],
+        'Encaminhado': [],
+        'Concluido': [],
+        'Finalizado': [],
+    }
+
+    for card in serializer.data:
+        card_status = card['status']
+        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)
         kanban_data[card_status].append(card)
 
     return Response(kanban_data, status=status.HTTP_200_OK)
@@ -763,6 +847,7 @@ def enviar_resposta(request, card_id):
                         url=setor_link,
                     )
                     notification.save()
+
         elif card.responsavel == request.user:
             # Se o remetente é o próprio responsável, envie a mensagem para o solicitante
             notification = Notification(
@@ -1234,6 +1319,7 @@ def get_message_history(request, card_id):
 
             messages_list = [{'message': msg['message']} for msg in messages]
             return JsonResponse(messages_list, safe=False)
+
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({'error': 'Invalid card ID'}, status=400)

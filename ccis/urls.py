@@ -15,7 +15,10 @@ urlpatterns = [
     path('departamentos', pages.departamentos, name='departamentos'),
     path('processos_user', pages.processos_user, name='processos_user'),
     path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
-    path('card_kanban_api', pages.card_kanban_api, name='card_kanban_api'),
+
+    path('cards_kanban_api/', pages.card_list_view, name='cards_kanban_api'),
+    path('cards_kanban_api/<int:pk>', pages.card_detail_view, name='cards_kanban_detail'),
+
     path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
     path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
     path('registrar_atendimento/<int:card_id>', pages.registrar_atendimento, name='registrar_atendimento'),
@@ -46,6 +49,7 @@ urlpatterns = [
     path('inadimplencia', gestaoControle.inadimplencia, name='inadimplencia'),
     path('qqs', gestaoControle.qqs, name='qqs'),
     path('pesquisa', gestaoControle.pesquisa, name='pesquisa'),
+    path('gestaoRelatorios', gestaoControle.gestaoRelatorios, name='gestaoRelatorios'),
 
     path('gestaoNegocios', gestaoNegocios.home, name='gestaoNegocios'),
     path('gestaoMetas', gestaoNegocios.gestaoMetas, name='gestaoMetas'),
@@ -259,6 +263,8 @@ urlpatterns = [
     path('request_portifolios', gestaoRecursos.request_portifolios, name='request_portifolios'),
     path('request_basileia', gestaoRecursos.request_basileia, name='request_basileia'),
     path('request_risco', gestaoRecursos.request_risco, name='request_risco'),
+    path('request_contabilidade', gestaoRecursos.request_contabilidade, name='request_contabilidade'),
+
 
     path('dev', pages.dev, name='dev'),
 
