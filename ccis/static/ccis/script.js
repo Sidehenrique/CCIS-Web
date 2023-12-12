@@ -1563,3 +1563,25 @@ itemActions.forEach(item => {
         }
     });
 });
+
+
+function filterProcesses() {
+    const searchText = document.getElementById('inputUser').value.toLowerCase();
+    const cards = document.querySelectorAll('.kanban-card');
+
+    cards.forEach(card => {
+        const assunto = card.querySelector('.card-titulo').innerText.toLowerCase();
+        const servico = card.querySelector('.card-servico').innerText.toLowerCase();
+        const nomeSolicitante = card.querySelector('.card-responsavel').innerText.toLowerCase();
+
+        if (
+            assunto.includes(searchText) ||
+            servico.includes(searchText) ||
+            nomeSolicitante.includes(searchText)
+        ) {
+            card.style.display = 'block'; // Mostrar o card
+        } else {
+            card.style.display = 'none'; // Esconder o card
+        }
+    });
+}
