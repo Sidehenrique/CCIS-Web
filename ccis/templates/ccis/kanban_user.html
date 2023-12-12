@@ -189,100 +189,6 @@
     <!-- kanban ---------------->
 
 
-    <!-- kanban ---------------->
-    <div class="row mt-4 " id="sectorCards">
-
-        <!-- Triagem --------->
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-triagem-user" class="kanban-body">
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Triagem --------->
-
-        <!-- Em atendimento -->
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-em atendimento-user" class="kanban-body">
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Em atendimento -->
-
-        <!-- Encaminhado ----->
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-encaminhado-user" class="kanban-body">
-
-
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Encaminhado ----->
-
-        <!-- Concluido ------->
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluido</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-concluido-user" class="kanban-body">
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Concluido ------->
-
-        <!-- Finalizado ------>
-        <div class="col">
-            <div class="kanban-title">
-                <div class="row">
-                    <div class="col-auto me-auto"><i class="fa-solid fa-check-double"></i> Finalizado</div>
-                    <div class="col-auto"></div>
-                </div>
-            </div>
-            <div id="kanban-body-finalizado-user" class="kanban-body">
-
-            </div>
-            <div class="kanban-footer">
-                <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
-            </div>
-        </div>
-        <!-- Finalizado ------>
-
-    </div>
-    <!-- kanban ---------------->
-
-
     <!-- Modal Processos ------------------------->
     <div class="modal fade"
          id="processoModal"
@@ -642,5 +548,20 @@
 
 </div>
 <!--Container------------>
+
+
+<script>
+    var userData = {
+        userId: {{ user_data.log_id }},
+        userGroup: '{{ user_data.logGroup }}',
+    };
+
+    // Espera que o documento esteja completamente carregado
+    document.addEventListener('DOMContentLoaded', function () {
+        // Chama a função fetchCards com a opção 'processos' ao carregar a página
+        fetchCards('minhas_solicitacoes');
+
+    });
+</script>
 
 {% endblock %}

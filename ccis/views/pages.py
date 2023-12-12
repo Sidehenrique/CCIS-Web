@@ -677,16 +677,9 @@ def kanban_view(request):
         return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
 
 
-
-
-
-
-
-
-
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
-def card_list_view(request):
+def card_kanban_api(request):
     # Obtém o ID do usuário logado
     user_id = request.user.id
 
@@ -706,86 +699,6 @@ def card_list_view(request):
 
     serializer = CardSerializer(queryset, many=True)
     return Response(serializer.data)
-
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def card_detail_view(request, pk):
-
-    try:
-        card = Card.objects.get(pk=pk)
-
-    except Card.DoesNotExist:
-        return Response(status=404)
-
-    serializer = CardSerializer(card)
-    return Response(serializer.data)
-
-
-
-
-
-
-
-
-
-@api_view(['GET'])
-@login_required(login_url="/login")
-def card_kanban_api(request):
-    # Recuperar o setor do usuário logado
-    user_setor = request.user.groups.first()
-
-    # Filtrar os cards com base no setor do usuário
-    cards = Card.objects.filter(setor=user_setor)
-
-    # Serializar os dados dos cards
-    serializer = CardSerializer(cards, many=True)
-
-    # Organizar os cards por status
-    kanban_data = {
-        'Triagem': [],
-        'Em Atendimento': [],
-        'Encaminhado': [],
-        'Concluido': [],
-        'Finalizado': [],
-    }
-
-    for card in serializer.data:
-        card_status = card['status']
-        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)
-
-        # Adiciona o setor do usuário aos dados do card
-        card['user_setor'] = str(user_setor)
-
-        kanban_data[card_status].append(card)
-
-    return Response(kanban_data, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-@login_required(login_url="/login")
-def user_card_kanban_api(request):
-    # Recuperar os cards abertos pelo usuário logado
-    user_cards = Card.objects.filter(solicitante=request.user)
-
-    # Serializar os dados dos cards
-    serializer = CardSerializer(user_cards, many=True)
-
-    # Organizar os cards por status
-    kanban_data = {
-        'Triagem': [],
-        'Em Atendimento': [],
-        'Encaminhado': [],
-        'Concluido': [],
-        'Finalizado': [],
-    }
-
-    for card in serializer.data:
-        card_status = card['status']
-        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)
-        kanban_data[card_status].append(card)
-
-    return Response(kanban_data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

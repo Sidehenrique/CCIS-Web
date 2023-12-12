@@ -572,6 +572,12 @@ $('#minhasSolicitacoesLink').on('click', function() {
 });
 
 
+$('#kanban-minhas-solicitacoes').on('click', function() {
+    fetchCards('minhas_solicitacoes');
+});
+
+
+
 // Função para buscar cards com base na opção selecionada
 function fetchCards(option) {
     const userId = getLoggedInUserId();

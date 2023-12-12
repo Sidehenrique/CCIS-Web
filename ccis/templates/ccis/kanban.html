@@ -831,7 +831,6 @@
     <!-- Modal Temas e Hora ---------------------->
 
 </div>
-
 <!--Container------------>
 
 
@@ -840,6 +839,13 @@
         userId: {{ user_data.log_id }},
         userGroup: '{{ user_data.logGroup }}',
     };
+
+    // Espera que o documento esteja completamente carregado
+    document.addEventListener('DOMContentLoaded', function () {
+        // Chama a função fetchCards com a opção 'processos' ao carregar a página
+        fetchCards('processos');
+
+    });
 </script>
 
 

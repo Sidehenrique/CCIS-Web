@@ -14,11 +14,10 @@ urlpatterns = [
     path('', pages.home, name='home'),
     path('departamentos', pages.departamentos, name='departamentos'),
     path('processos_user', pages.processos_user, name='processos_user'),
+
+    path('kanban/', pages.kanban_view, name='kanban'),
+    path('cards_kanban_api/', pages.card_kanban_api, name='cards_kanban_api'),
     path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
-
-    path('cards_kanban_api/', pages.card_list_view, name='cards_kanban_api'),
-    path('cards_kanban_api/<int:pk>', pages.card_detail_view, name='cards_kanban_detail'),
-
     path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
     path('get_messages/<int:card_id>', pages.get_messages, name='get_messages'),
     path('registrar_atendimento/<int:card_id>', pages.registrar_atendimento, name='registrar_atendimento'),
@@ -35,7 +34,7 @@ urlpatterns = [
     path('get_card_details', pages.get_card_details, name='get_card_details'),
     path('notificacao_lida/<int:notification_id>', pages.notificacao_lida, name='notificacao_lida'),
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
-    path('kanban/', pages.kanban_view, name='kanban'),
+
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
     path('malotes', pages.malotes, name='malotes'),
