@@ -61,6 +61,7 @@ def cadastro_home(request):
 
         return render(request, 'ccis/setor_home.html', context)
 
+
 def new_request_cadastro(request):
     form = ModelFormCadastroMalotes()
     apontamentos = modelFormApontamentos()
@@ -82,6 +83,8 @@ def salvar_malote_cadastro(request):
         if form.is_valid():
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=7)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -163,6 +166,8 @@ def request_ci_cad(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=7)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -233,6 +238,8 @@ def request_apontamentos_cad(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=7)
+            card.status = 'Triagem'
             card.cor = "#FFCECE"
             card.save()
 

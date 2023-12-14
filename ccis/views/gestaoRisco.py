@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
 from ..forms import ModelFormGestaoRisco
 
+
 @login_required(login_url="/login")
 def gestaoRisco_home(request):
     user = request.user
@@ -60,6 +61,7 @@ def gestaoRisco_home(request):
 
         return render(request, 'ccis/setor_home.html', context)
 
+
 @login_required(login_url="/login")
 def new_request_risco(request):
 
@@ -82,6 +84,8 @@ def request_acessos_risco(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=4)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card

@@ -81,6 +81,8 @@ def salvar_malote_formosa(request):
         if form.is_valid():
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=21)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -149,6 +151,7 @@ def salvar_malote_formosa(request):
         form = ModelFormFormosaMalotes()
 
     return render(request, 'formosa/new_request_formosa.html', {'form': form})
+
 
 @login_required(login_url="/login")
 def processos_formosa(request):

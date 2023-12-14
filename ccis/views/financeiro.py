@@ -61,6 +61,7 @@ def financeiro_home(request):
         return render(request, 'ccis/setor_home.html', context)
 
 
+@login_required(login_url="/login")
 def new_request_financeiro(request):
     form = ModelFormFinanceiroMalotes()
     apontamentos = modelFormApontamentos()
@@ -71,6 +72,7 @@ def new_request_financeiro(request):
     return render(request, "financeiro/new_request_financeiro.html", context)
 
 
+@login_required(login_url="/login")
 def salvar_malote_financeiro(request):
     if request.method == 'POST':
 
@@ -82,6 +84,8 @@ def salvar_malote_financeiro(request):
         if form.is_valid():
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=32)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -163,6 +167,8 @@ def request_ci_fi(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=32)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -233,6 +239,8 @@ def request_apontamentos_fi(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=32)
+            card.status = 'Triagem'
             card.cor = "#FFCECE"
             card.save()
 

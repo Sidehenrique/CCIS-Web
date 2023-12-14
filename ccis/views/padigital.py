@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
 from ..forms import ModelFormPaDigitalMalotes
 
+
 @login_required(login_url="/login")
 def paDigital_home(request):
     user = request.user
@@ -76,6 +77,8 @@ def request_acessos_PaDigital(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=25)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card

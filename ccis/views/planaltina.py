@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
 from ..forms import ModelFormPlanaltinaMalotes
 
+
 @login_required(login_url="/login")
 def planaltina_home(request):
     user = request.user
@@ -67,6 +68,7 @@ def new_request_plan(request):
 
     return render(request, "planaltina/new_request_plan.html", context)
 
+
 @login_required(login_url="/login")
 def salvar_malote_planaltina(request):
     if request.method == 'POST':
@@ -79,6 +81,8 @@ def salvar_malote_planaltina(request):
         if form.is_valid():
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=23)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
