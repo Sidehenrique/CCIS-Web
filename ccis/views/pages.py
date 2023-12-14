@@ -677,6 +677,61 @@ def kanban_view(request):
         return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
 
 
+@login_required(login_url="/login")
+def kanban_view_user(request):
+    usuarios = User.objects.all()
+    group = Group.objects.all()
+    clock = modelFormClock()
+
+    try:
+        id_setor = request.user.groups.first().id
+        group_info = CustomGroupInfo.objects.get(group_id=id_setor)
+
+        superior = Group.objects.filter(id=id_setor).first()
+
+        nomes_equipe = []
+
+        if superior is None:
+            pass
+
+        else:
+            equipe = User.objects.filter(groups=superior)
+            # Resto do código
+            for usuario in equipe:
+                first_nameA = usuario.first_name
+                last_nameA = usuario.last_name
+                sexo = usuario.dadosPessoais.sexo
+                foto = usuario.dadosPessoais.foto
+                cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+                nomes_equipe.append(
+                    {'id': usuario.id,
+                     'foto': foto,
+                     'first_name': first_nameA,
+                     'last_name': last_nameA,
+                     'sexo': sexo,
+                     'cargo': cargo})
+
+            # Ordenar a equipe com o supervisor no topo
+            nomes_equipe = sorted(nomes_equipe,
+                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                 x['cargo'] != 'Encarregado(a)'))
+
+            context = {
+                'clock': clock,
+                'superior': superior,
+                'equipe': nomes_equipe,
+                'group_info': group_info,
+                'usuarios': usuarios,
+                'group': group
+            }
+
+            return render(request, 'ccis/kanban_user.html', context)
+
+
+    except AttributeError:
+        return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
+
+
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def card_kanban_api(request):

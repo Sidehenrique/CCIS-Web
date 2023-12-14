@@ -254,328 +254,27 @@ function getCookie(name) {
 
 //Cards ----------------------------------------------------------------------------------------------
 
-//Colapse card --------------------------------------------------
-document.addEventListener('DOMContentLoaded', function () {
-  const toggleBtn = document.getElementById('toggleBtn');
-  const cardContent = document.querySelector('.kanban-card-content');
+//botão de recolhimento do card --------------------------------------------
+$(document).ready(function () {
+    // Seu código existente...
 
-  toggleBtn.addEventListener('click', function () {
-    cardContent.style.display = cardContent.style.display === 'none' ? 'block' : 'none';
-  });
+    // Função para recolher ou exibir o conteúdo ao clicar no header do card
+    $(document).on('click', '[id^="toggleBtn-"]', function () {
+
+        const cardId = this.id.split('-').pop(); // Obtém o número do cardId
+        console.log(cardId);
+        const cardContent = $(`#cardContent-${cardId}`);
+
+        // Adicione um teste para verificar se o elemento foi encontrado
+        if (cardContent.length) {
+            cardContent.slideToggle();
+        } else {
+            console.error('Elemento não encontrado:', `#cardContent-${cardId}`);
+        }
+    });
+
+    // Mais do seu código...
 });
-
-//
-////Cards do usuário-----------------------------------------------
-//document.addEventListener('DOMContentLoaded', function () {
-//    const minhasSolicitacoesLink = document.getElementById('minhasSolicitacoesLink');
-//
-//    // Adicione um evento de clique para o link "minhas solicitações"
-//    minhasSolicitacoesLink.addEventListener('click', function (event) {
-//        event.preventDefault(); // Evitar a ação padrão de redirecionamento
-////        document.getElementById('userCards').style.display = 'flex';
-////        document.getElementById('sectorCards').style.display = 'none';
-//        loadUserCards(); // Chame a função para carregar os cards normais
-//    });
-//
-//    setInterval(loadUserCards, 7000);
-//
-//    // Função para carregar os cards do usuário
-//    function loadUserCards() {
-//        $.ajax({
-//            type: 'GET',
-//            url: '/user_card_kanban_api',
-//            success: function (data) {
-//                renderUserCards(data);
-//            },
-//            error: function (error) {
-//                console.error('Erro ao carregar cards do usuário:', error);
-//            }
-//        });
-//    }
-//
-//    function renderUserCards(data) {
-//
-//        // Função para formatar a data
-//        function formatarData(dataString) {
-//            const data = new Date(dataString);
-//            const dia = data.getDate();
-//            const mes = data.getMonth() + 1; // Os meses são indexados de 0 a 11
-//            const ano = data.getFullYear();
-//            return `${dia}/${mes}/${ano}`;
-//        }
-//
-//        // Função para formatar o horário
-//        function formatarHorario(dataString) {
-//            const data = new Date(dataString);
-//            const hora = data.getHours();
-//            const minuto = data.getMinutes();
-//            return `${hora}:${minuto}`;
-//        }
-//
-//        // Exemplo: Exibir o setor do usuário
-//        const userSetor = 'Minhas Solicitações'
-//        document.getElementById('area-trabalho-kanban').innerText = userSetor;
-//
-//
-//        // Itera sobre os dados por status
-//        for (const [status, cards] of Object.entries(data)) {
-//            const container = document.getElementById('kanban-body-' + status.toLowerCase());
-//
-//            if (container) {
-//                container.innerHTML = '';
-//
-//                 // Adiciona os cards ao container
-//                cards.forEach((card, index) => { // Adicionado 'index' para criar IDs únicos
-//                const cardId = `card-${status.toLowerCase()}-${index}`;
-//                const cardHtml = `
-//                    <div class="kanban-card m-2">
-//
-//                        <!-- header do card --------->
-//                        <a id="toggleBtn-${cardId}" type="button" class="d-grid kanban-card-header">
-//                            <div class="row">
-//                                <div class="col-auto me-auto">
-//                                    <h5 class="card-titulo mt-1">${card.assunto}</h5>
-//                                </div>
-//                                <div class="col-auto mb-1">
-//                                    <span class="card-setor processo-tag-setor">N° ${card.idCard}</span>
-//                                    <span class="card-setor processo-tag-setor">${card.setor_history.length > 0 ? card.setor_history[card.setor_history.length - 1].setor_atual : 'N/A'}</span>
-//                                </div>
-//                            </div>
-//                        </a>
-//                        <!-- header do card --------->
-//
-//                        <!-- conteúdo card --------->
-//                        <div id="cardContent-${cardId}" class="kanban-card-content">
-//
-//                            <hr style="color:#C4C0C0; margin:0px;">
-//
-//                            <a class="d-grid kanban-card-header card-filter"
-//                               type="button"
-//                               data-bs-toggle="modal"
-//                               data-bs-target="#processoModal"
-//                               data-card-id="${card.idCard}"
-//                               onclick="loadCardInfo(${card.idCard})">
-//
-//                                <!-- foto --------->
-//                                <div class="col-auto">
-//                                   <p class="card-responsavel" style="color:#818181;">
-//                                        <img class="foto_card" src="${card.responsavel_dados_pessoais.foto}" alt="" width="25" height="25">
-//                                        ${card.responsavel.first_name} ${card.responsavel.last_name}
-//                                    </p>
-//                                </div>
-//                                <!-- foto --------->
-//
-//                                <!-- serviço ------>
-//                                <div style="color:#818181; font-size:13px;">
-//                                    <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> ${card.service}</p>
-//                                </div>
-//                                <!-- serviço ------>
-//
-//                                <!-- data --------->
-//                                <div class="card-data row" style="color:#818181; font-size:13px">
-//                                    <div class="col-auto me-auto">
-//                                        <i class="fa-solid fa-calendar-days"></i> ${formatarData(card.dataCriacao)}
-//                                    </div>
-//                                    <div class="col-auto">
-//                                        <i class="fa-solid fa-clock"></i> ${formatarHorario(card.dataCriacao)}
-//                                    </div>
-//                                </div>
-//                                <!-- data --------->
-//
-//                            </a>
-//
-//                        </div>
-//                        <!-- conteúdo card --------->
-//
-//                    </div>
-//                    <!-- Card ----------------->
-//                `;
-//
-//                container.insertAdjacentHTML('beforeend', cardHtml);
-//
-//                // Adicionando o evento de clique para o toggle do collapse
-//                $(`#toggleBtn-${cardId}`).on('click', function () {
-//                    $(`#cardContent-${cardId}`).toggle();
-//                });
-//            });
-//
-//            // Restante do seu código para adicionar os cards ao container
-//            } else {
-//                console.error('Elemento não encontrado:', 'kanban-body-' + status.toLowerCase());
-//            }
-//
-//
-//        }
-//    }
-//
-//});
-//
-//
-////Cards do setor-------------------------------------------------
-//document.addEventListener('DOMContentLoaded', function () {
-//    const processos = document.getElementById('kanban_processos');
-//
-//    // Adicione um evento de clique para o link "minhas solicitações"
-//    processos.addEventListener('click', function (event) {
-//        event.preventDefault(); // Evitar a ação padrão de redirecionamento
-////        document.getElementById('userCards').style.display = 'none';
-////        document.getElementById('sectorCards').style.display = 'flex';
-//        loadCards(); // Chame a função para carregar os cards normais
-//    });
-//
-//    setInterval(loadCards, 7000);
-//
-//    // Restante do seu código JavaScript
-//    function loadCards() {
-//        $.ajax({
-//            type: 'GET',
-//            url: '/card_kanban_api',
-//            success: function (data) {
-//                renderCards(data);
-//            },
-//            error: function (error) {
-//                console.error('Erro ao carregar cards:', error);
-//            }
-//        });
-//    }
-//
-//
-//    function renderCards(data) {
-//
-//        // Função para formatar a data
-//        function formatarData(dataString) {
-//            const data = new Date(dataString);
-//            const dia = data.getDate();
-//            const mes = data.getMonth() + 1; // Os meses são indexados de 0 a 11
-//            const ano = data.getFullYear();
-//            return `${dia}/${mes}/${ano}`;
-//        }
-//
-//        // Função para formatar o horário
-//        function formatarHorario(dataString) {
-//            const data = new Date(dataString);
-//            const hora = data.getHours();
-//            const minuto = data.getMinutes();
-//            return `${hora}:${minuto}`;
-//        }
-//
-//
-//        // Exemplo: Exibir o setor do usuário
-//        const userSetor = data['Triagem'].length > 0 ? data['Triagem'][0].user_setor : 'N/A';
-//        document.getElementById('area-trabalho-kanban').innerText = userSetor;
-//
-//
-//        // Itera sobre os dados por status
-//        for (const [status, cards] of Object.entries(data)) {
-//            const container = document.getElementById('kanban-body-' + status.toLowerCase());
-//
-//            if (container) {
-//                container.innerHTML = '';
-//
-//                 // Adiciona os cards ao container
-//                cards.forEach((card, index) => { // Adicionado 'index' para criar IDs únicos
-//                const cardId = `card-${status.toLowerCase()}-${index}`;
-//                const cardHtml = `
-//                    <div class="kanban-card m-2">
-//
-//                        <!-- header do card --------->
-//                        <a id="toggleBtn-${cardId}" type="button" class="d-grid kanban-card-header">
-//                            <div class="row">
-//                                <div class="col-auto me-auto">
-//                                    <h5 class="card-titulo mt-1">${card.assunto}</h5>
-//                                </div>
-//                                <div class="col-auto mb-1">
-//                                    <span class="card-setor processo-tag-setor">N° ${card.idCard}</span>
-//                                    <span class="card-setor processo-tag-setor">${card.setor_history.length > 0 ? card.setor_history[card.setor_history.length - 1].setor_atual : 'N/A'}</span>
-//                                </div>
-//                            </div>
-//                        </a>
-//                        <!-- header do card --------->
-//
-//                        <!-- conteúdo card --------->
-//                        <div id="cardContent-${cardId}" class="kanban-card-content">
-//
-//                            <hr style="color:#C4C0C0; margin:0px;">
-//
-//                            <a class="d-grid kanban-card-header card-filter"
-//                               type="button"
-//                               data-bs-toggle="modal"
-//                               data-bs-target="#processoModal"
-//                               data-card-id="${card.idCard}"
-//                               onclick="loadCardInfo(${card.idCard})">
-//
-//                                <!-- foto --------->
-//                                <div class="col-auto">
-//                                   <p class="card-responsavel" style="color:#818181;">
-//                                        <img class="foto_card" src="${card.solicitante_dados_pessoais.foto}" alt="" width="25" height="25">
-//                                        ${card.solicitante.first_name} ${card.solicitante.last_name}
-//                                    </p>
-//                                </div>
-//                                <!-- foto --------->
-//
-//                                <!-- serviço ------>
-//                                <div style="color:#818181; font-size:13px;">
-//                                    <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> ${card.service}</p>
-//                                </div>
-//                                <!-- serviço ------>
-//
-//                                <!-- data --------->
-//                                <div class="card-data row" style="color:#818181; font-size:13px">
-//                                    <div class="col-auto me-auto">
-//                                        <i class="fa-solid fa-calendar-days"></i> ${formatarData(card.dataCriacao)}
-//                                    </div>
-//                                    <div class="col-auto">
-//                                        <i class="fa-solid fa-clock"></i> ${formatarHorario(card.dataCriacao)}
-//                                    </div>
-//                                </div>
-//                                <!-- data --------->
-//
-//                            </a>
-//
-//                        </div>
-//                        <!-- conteúdo card --------->
-//
-//                    </div>
-//                    <!-- Card ----------------->
-//                `;
-//
-//                container.insertAdjacentHTML('beforeend', cardHtml);
-//
-//                // Adicionando o evento de clique para o toggle do collapse
-//                $(`#toggleBtn-${cardId}`).on('click', function () {
-//                    $(`#cardContent-${cardId}`).toggle();
-//                });
-//            });
-//
-//            // Restante do seu código para adicionar os cards ao container
-//            } else {
-//                console.error('Elemento não encontrado:', 'kanban-body-' + status.toLowerCase());
-//            }
-//
-//
-//        }
-//    }
-//
-//});
-
-
-
-
-
-// Adicione um evento de clique para os links de menu
-$('#kanban_processos').on('click', function() {
-    fetchCards('processos'); // Chama a função para buscar cards relacionados aos processos
-});
-
-$('#minhasSolicitacoesLink').on('click', function() {
-    fetchCards('minhas_solicitacoes'); // Chama a função para buscar as próprias solicitações do usuário
-});
-
-
-$('#kanban-minhas-solicitacoes').on('click', function() {
-    fetchCards('minhas_solicitacoes');
-});
-
 
 
 // Função para buscar cards com base na opção selecionada
@@ -632,7 +331,7 @@ function updateKanban(cards) {
 
 // Função para criar um elemento de card HTML com base nas informações do card
 function createCardElement(card) {
-    const cardId = `card-${card.idCard}`;
+    const cardId = `${card.idCard}`;
 
     // Função para formatar a data
     function formatarData(dataString) {
@@ -656,7 +355,7 @@ function createCardElement(card) {
     const cardElement = `
         <div class="kanban-card m-2" id="${cardId}">
             <!-- header do card --------->
-            <a id="toggleBtn-${cardId}" type="button" class="d-grid kanban-card-header">
+            <a id="toggleBtn-${cardId}" type="button" class="d-grid kanban-card-header toggle-button">
                 <div class="row">
                     <div class="col-auto me-auto">
                         <h5 class="card-titulo mt-1">${card.assunto}</h5>
@@ -670,7 +369,7 @@ function createCardElement(card) {
             <!-- header do card --------->
 
             <!-- conteúdo card --------->
-            <div id="cardContent-${cardId}" class="kanban-card-content">
+            <div id="cardContent-${cardId}" class="kanban-card-content card-container">
                 <hr style="color:#C4C0C0; margin:0px;">
 
                 <a class="d-grid kanban-card-header card-filter"
@@ -704,6 +403,7 @@ function createCardElement(card) {
             <!-- conteúdo card --------->
         </div>
         <!-- Card ----------------->
+
     `;
 
     // Retorne o elemento do card
@@ -1605,157 +1305,8 @@ $(document).ready(function() {
     });
 
 
-// Função para criar o gráfico
-function criarGrafico(data) {
-    // Obtenha o contexto do canvas
-    var ctx = document.getElementById('feriasChart').getContext('2d');
 
-    // Configurações do gráfico
-    var options = {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    };
-
-    // Crie o gráfico de área
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: options
-    });
-
-    // Calcular a média e exibi-la
-    var media = data.datasets[0].data.reduce((a, b) => a + b, 0) / data.datasets[0].data.length;
-    document.getElementById('mediaFerias').innerText = media.toFixed(2); // Exibe a média com 2 casas decimais
-}
-
-
-// Dados do gráfico de rosquinha
-function criarGraficoDeRosquinha() {
-    // Parte config ---------------------
-    var config = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [10, 20, 30],
-                backgroundColor: ['red', 'green', 'blue']
-            }],
-            labels: ['Red', 'Green', 'Blue']
-        },
-
-        options: {
-            responsive: true,
-               plugins: {
-                  legend: {
-                    position: 'left',
-                  }
-               },
-
-            title: {
-                display: false,
-                text: 'Doughnut Chart'
-            },
-
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    };
-
-    // Parte setup --------------------------
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('myChart').getContext('2d');
-        window.myDoughnut = new Chart(ctx, config);
-    });
-
-    // Parte actions -----------------------
-    document.getElementById('randomizeData').addEventListener('click', function() {
-        config.data.datasets.forEach(function(dataset) {
-            dataset.data = dataset.data.map(function() {
-                return randomScalingFactor();
-            });
-        });
-
-        window.myDoughnut.update();
-    });
-
-    var colorNames = Object.keys(window.chartColors);
-    document.getElementById('addDataset').addEventListener('click', function() {
-        var newDataset = {
-            backgroundColor: [],
-            data: [],
-            label: 'New dataset ' + config.data.datasets.length,
-        };
-
-        for (var index = 0; index < config.data.labels.length; ++index) {
-            newDataset.data.push(randomScalingFactor());
-
-            var colorName = colorNames[index % colorNames.length];
-            var newColor = window.chartColors[colorName];
-            newDataset.backgroundColor.push(newColor);
-        }
-
-        config.data.datasets.push(newDataset);
-        window.myDoughnut.update();
-    });
-}
-
-// Chame a função para criar o gráfico ao carregar a
-criarGraficoDeRosquinha();
-
-
-// script.js
-function criarGraficoDeBarraComBordasArredondadas() {
-    // Parte config
-    var config = {
-        type: 'bar',
-        data: {
-            labels: ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4'],
-            datasets: [{
-                label: 'Valores',
-                data: [15, 25, 10, 30],
-                backgroundColor: 'rgba(75, 192, 192, 0.7)', // Cor de fundo das barras
-                borderColor: 'rgba(75, 192, 192, 1)', // Cor da borda das barras
-                borderWidth: 2, // Largura da borda das barras
-                borderRadius: 10 // Raio da borda para torná-la arredondada
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    }
-                },
-                y: {
-                    beginAtZero: true
-                }
-            },
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 10,
-                    top: 10,
-                    bottom: 10
-                }
-            }
-        }
-    };
-
-    // Parte setup
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('myBarChart').getContext('2d');
-        window.myBarChart = new Chart(ctx, config);
-    });
-}
-criarGraficoDeBarraComBordasArredondadas();
-
-
-// time line
+// time line ---------------------------------------------------------------------------------------------
 $(document).ready(function(){
 var $animation_elements = $('.anim');
 var $window = $(window);
@@ -1791,6 +1342,7 @@ $(document).ready(function(){
         $(" .center-right").css("background-color", "#fff");
     });
 });
+
 $(document).ready(function(){
     $(".credits").hover(function(){
         $(".center-left").css("background-color", "#4997cd");

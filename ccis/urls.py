@@ -16,6 +16,7 @@ urlpatterns = [
     path('processos_user', pages.processos_user, name='processos_user'),
 
     path('kanban/', pages.kanban_view, name='kanban'),
+    path('kanban_user/', pages.kanban_view_user, name='kanban_user'),
     path('cards_kanban_api/', pages.card_kanban_api, name='cards_kanban_api'),
     path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
     path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
