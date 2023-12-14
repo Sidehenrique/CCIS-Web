@@ -853,7 +853,7 @@ def get_messages(request, card_id):
 def registrar_atendimento(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
 
-    card.status = 'Em Atendimento'
+    card.status = 'Atendimento'
     card.setor = request.user.groups.first()
     card.responsavel = request.user
     card.save()
@@ -1225,7 +1225,7 @@ def reabrir_card(request, card_id):
     if request.method == 'POST':
         try:
             card = Card.objects.get(idCard=card_id)
-            card.status = 'Em Atendimento'
+            card.status = 'Atendimento'
             card.save()
 
             group = request.user.groups.first()

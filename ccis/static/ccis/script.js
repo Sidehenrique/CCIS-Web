@@ -321,7 +321,6 @@ function updateKanban(cards) {
     cards.forEach(card => {
         // Use o valor do status para formar o ID da coluna
         const columnId = card.status.toLowerCase();
-
         // Adicione o card ao corpo da coluna correspondente
         const kanbanBody = $(`#kanban-body-${columnId}`);
         kanbanBody.append(createCardElement(card));
@@ -415,7 +414,7 @@ function createCardElement(card) {
 function clearKanbanBodies() {
     // Adapte isso conforme a estrutura real do seu HTML
     $('#kanban-body-triagem').empty();
-    $('#kanban-body-em atendimento').empty();
+    $('#kanban-body-em-atendimento').empty();
     $('#kanban-body-encaminhado').empty();
     $('#kanban-body-concluido').empty();
     $('#kanban-body-finalizado').empty();
