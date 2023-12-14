@@ -434,8 +434,6 @@ function getLoggedInUserGroup() {
 
 
 //---------------------------------------------------------------------------------------------------
-
-
 function loadCardInfo(cardId) {
     const modal = $('#processoModal');
     const modalBody = modal.find('.modal-body');
@@ -1094,7 +1092,7 @@ function loadCardInfo(cardId) {
                         $("#transferirCardButton").show();
                         $("#ConcluirCardButton").hide();
                         break;
-                    case "Em Atendimento":
+                    case "Atendimento":
                         $("#compartilharCardButton").show();
                         $("#priorizarCardButton").show();
                         $("#enviarMensagemButton").show();
@@ -1334,6 +1332,7 @@ $window.on('scroll resize', check_if_in_view);
 $window.trigger('scroll');
 });
 
+
 $(document).ready(function(){
     $(" .debits").hover(function(){
         $(" .center-right").css("background-color", "#4997cd");
@@ -1341,6 +1340,7 @@ $(document).ready(function(){
         $(" .center-right").css("background-color", "#fff");
     });
 });
+
 
 $(document).ready(function(){
     $(".credits").hover(function(){
