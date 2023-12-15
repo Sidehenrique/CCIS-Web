@@ -321,7 +321,6 @@ function updateKanban(cards) {
     cards.forEach(card => {
         // Use o valor do status para formar o ID da coluna
         const columnId = card.status.toLowerCase();
-
         // Adicione o card ao corpo da coluna correspondente
         const kanbanBody = $(`#kanban-body-${columnId}`);
         kanbanBody.append(createCardElement(card));
@@ -427,12 +426,11 @@ function getLoggedInUserId() {
     return userData.userId
 }
 
+
 // Função para obter o nome do grupo do usuário logado
 function getLoggedInUserGroup() {
     return userData.userGroup;
 }
-
-});
 
 function filterProcesses() {
     const searchText = document.getElementById('inputUser').value.toLowerCase();
@@ -1325,7 +1323,6 @@ $(document).ready(function() {
     });
 
 
-
 // time line ---------------------------------------------------------------------------------------------
 $(document).ready(function(){
 var $animation_elements = $('.anim');
@@ -1399,6 +1396,7 @@ function showCardDetails(cardId) {
             console.error('Erro ao obter detalhes do cartão:', error);
         });
 }
+
 
 // Iterar sobre os elementos e adicionar um event listener para cada um
 itemActions.forEach(item => {
