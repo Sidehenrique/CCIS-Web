@@ -87,6 +87,8 @@ def request_acessoria_MK(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=41)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -153,6 +155,8 @@ def request_digital_MK(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=41)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -219,6 +223,8 @@ def request_gráfica_MK(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=41)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -284,6 +290,8 @@ def request_ci_mk(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=41)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -354,6 +362,8 @@ def request_apontamentos_mk(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=41)
+            card.status = 'Triagem'
             card.cor = "#FFCECE"
             card.save()
 

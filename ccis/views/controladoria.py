@@ -91,6 +91,8 @@ def request_power_PC(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=1)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -159,6 +161,8 @@ def request_propenso_PC(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=1)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -225,6 +229,8 @@ def request_estudo_PC(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=1)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -291,6 +297,8 @@ def request_relatorio_PC(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=1)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -357,6 +365,8 @@ def request_ci_pc(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=1)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -427,6 +437,8 @@ def request_apontamentos_pc(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=1)
+            card.status = 'Triagem'
             card.cor = "#FFCECE"
             card.save()
 

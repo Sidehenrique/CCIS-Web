@@ -85,6 +85,8 @@ def request_portifolios(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=43)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -147,6 +149,8 @@ def request_basileia(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=43)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -209,6 +213,8 @@ def request_risco(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=43)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -271,6 +277,8 @@ def request_contabilidade(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=43)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -337,6 +345,8 @@ def request_ci_recurso(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=43)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -407,6 +417,8 @@ def request_apontamentos_recurso(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=43)
+            card.status = 'Triagem'
             card.cor = "#FFCECE"
             card.save()
 

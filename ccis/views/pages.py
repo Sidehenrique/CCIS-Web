@@ -677,16 +677,64 @@ def kanban_view(request):
         return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
 
 
+@login_required(login_url="/login")
+def kanban_view_user(request):
+    usuarios = User.objects.all()
+    group = Group.objects.all()
+    clock = modelFormClock()
+
+    try:
+        id_setor = request.user.groups.first().id
+        group_info = CustomGroupInfo.objects.get(group_id=id_setor)
+
+        superior = Group.objects.filter(id=id_setor).first()
+
+        nomes_equipe = []
+
+        if superior is None:
+            pass
+
+        else:
+            equipe = User.objects.filter(groups=superior)
+            # Resto do código
+            for usuario in equipe:
+                first_nameA = usuario.first_name
+                last_nameA = usuario.last_name
+                sexo = usuario.dadosPessoais.sexo
+                foto = usuario.dadosPessoais.foto
+                cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+                nomes_equipe.append(
+                    {'id': usuario.id,
+                     'foto': foto,
+                     'first_name': first_nameA,
+                     'last_name': last_nameA,
+                     'sexo': sexo,
+                     'cargo': cargo})
+
+            # Ordenar a equipe com o supervisor no topo
+            nomes_equipe = sorted(nomes_equipe,
+                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                 x['cargo'] != 'Encarregado(a)'))
+
+            context = {
+                'clock': clock,
+                'superior': superior,
+                'equipe': nomes_equipe,
+                'group_info': group_info,
+                'usuarios': usuarios,
+                'group': group
+            }
+
+            return render(request, 'ccis/kanban_user.html', context)
 
 
-
-
-
+    except AttributeError:
+        return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
 
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
-def card_list_view(request):
+def card_kanban_api(request):
     # Obtém o ID do usuário logado
     user_id = request.user.id
 
@@ -706,86 +754,6 @@ def card_list_view(request):
 
     serializer = CardSerializer(queryset, many=True)
     return Response(serializer.data)
-
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def card_detail_view(request, pk):
-
-    try:
-        card = Card.objects.get(pk=pk)
-
-    except Card.DoesNotExist:
-        return Response(status=404)
-
-    serializer = CardSerializer(card)
-    return Response(serializer.data)
-
-
-
-
-
-
-
-
-
-@api_view(['GET'])
-@login_required(login_url="/login")
-def card_kanban_api(request):
-    # Recuperar o setor do usuário logado
-    user_setor = request.user.groups.first()
-
-    # Filtrar os cards com base no setor do usuário
-    cards = Card.objects.filter(setor=user_setor)
-
-    # Serializar os dados dos cards
-    serializer = CardSerializer(cards, many=True)
-
-    # Organizar os cards por status
-    kanban_data = {
-        'Triagem': [],
-        'Em Atendimento': [],
-        'Encaminhado': [],
-        'Concluido': [],
-        'Finalizado': [],
-    }
-
-    for card in serializer.data:
-        card_status = card['status']
-        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)
-
-        # Adiciona o setor do usuário aos dados do card
-        card['user_setor'] = str(user_setor)
-
-        kanban_data[card_status].append(card)
-
-    return Response(kanban_data, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-@login_required(login_url="/login")
-def user_card_kanban_api(request):
-    # Recuperar os cards abertos pelo usuário logado
-    user_cards = Card.objects.filter(solicitante=request.user)
-
-    # Serializar os dados dos cards
-    serializer = CardSerializer(user_cards, many=True)
-
-    # Organizar os cards por status
-    kanban_data = {
-        'Triagem': [],
-        'Em Atendimento': [],
-        'Encaminhado': [],
-        'Concluido': [],
-        'Finalizado': [],
-    }
-
-    for card in serializer.data:
-        card_status = card['status']
-        card['dataCriacao'] = parse(card['dataCriacao']).replace(tzinfo=None)
-        kanban_data[card_status].append(card)
-
-    return Response(kanban_data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -855,7 +823,7 @@ def enviar_resposta(request, card_id):
                 description="Você tem uma nova mensagem",
                 subject=card.assunto + f" N°: {card.idCard}",
                 recipient=card.solicitante,
-                url='processos_user',  # Defina a URL apropriada
+                url='kanban_user',  # Defina a URL apropriada
             )
             notification.save()
         else:
@@ -885,7 +853,7 @@ def get_messages(request, card_id):
 def registrar_atendimento(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
 
-    card.status = 'Em Atendimento'
+    card.status = 'Atendimento'
     card.setor = request.user.groups.first()
     card.responsavel = request.user
     card.save()
@@ -917,7 +885,7 @@ def registrar_atendimento(request, card_id):
         description=f"Sua solicitação esta em Atendimento por {request.user.first_name} {request.user.last_name}",
         subject=card.assunto + f" N°: {card.idCard}",
         recipient=card.solicitante,  # O destinatário é o solicitante da questão
-        url='processos_user',  # URL da página atual
+        url='kanban_user',  # URL da página atual
     )
     notification.save()
 
@@ -960,7 +928,7 @@ def encaminhar_card(request, card_id):
             description="Sua solicitação foi encaminhada para " + historico_setor.setor_atual,
             subject=card.assunto + f" N°: {card.idCard}",
             recipient=card.solicitante,
-            url='processos_user',
+            url='kanban_user',
         )
         notification.save()
 
@@ -972,7 +940,7 @@ def encaminhar_card(request, card_id):
                     description="Uma solicitação encaminhada para" + historico_setor.setor_atual,
                     subject=card.assunto + f" N°: {card.idCard}",
                     recipient=user,
-                    url='processos_user',
+                    url='kanban_user',
                 )
                 notification.save()
 
@@ -1001,7 +969,7 @@ def compartilhar_card(request, card_id):
             description="Solicitação compartilhada com você",
             subject=card.assunto + f" N°: {card.idCard}",
             recipient=user,  # O destinatário é o solicitante da questão
-            url='processos_user',  # URL da página atual
+            url='kanban_user',  # URL da página atual
         )
         notification.save()
 
@@ -1050,7 +1018,7 @@ def transferir_card(request, card_id):
             description="Sua solicitação foi Transferida para " + historico_setor.setor_atual,
             subject=card.assunto + f" N°: {card.idCard}",
             recipient=card.solicitante,
-            url='processos_user',
+            url='kanban_user',
         )
         notification.save()
 
@@ -1114,7 +1082,7 @@ def concluir_card(request, card_id):
                 description="Eba! Sua solicitação foi concluida",
                 subject=card.assunto + f" N°: {card.idCard}",
                 recipient=card.solicitante,  # O destinatário é o solicitante da questão
-                url='processos_user',  # URL da página atual
+                url='kanban_user',  # URL da página atual
             )
             notification.save()
 
@@ -1257,7 +1225,7 @@ def reabrir_card(request, card_id):
     if request.method == 'POST':
         try:
             card = Card.objects.get(idCard=card_id)
-            card.status = 'Em Atendimento'
+            card.status = 'Atendimento'
             card.save()
 
             group = request.user.groups.first()

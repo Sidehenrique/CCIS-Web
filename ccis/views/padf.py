@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
 from ..forms import ModelFormPADFMalotes
 
+
 @login_required(login_url="/login")
 def padf_home(request):
     user = request.user
@@ -80,6 +81,8 @@ def salvar_malote_padf(request):
         if form.is_valid():
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=20)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card

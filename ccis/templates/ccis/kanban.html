@@ -31,8 +31,8 @@
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
-                    <li><a class="dropdown-item" id="kanban_processos">Processos</a></li>
-                    <li><a class="dropdown-item" id="minhasSolicitacoesLink">Minhas solicitações</a></li>
+                    <li><a class="dropdown-item" href="{% url 'kanban' %}">Processos</a></li>
+                    <li><a class="dropdown-item" href="{% url 'kanban_user' %}">Minhas solicitações</a></li>
                 </ul>
 
             </div>
@@ -265,7 +265,7 @@
                     <div class="col-auto"></div>
                 </div>
             </div>
-            <div id="kanban-body-em atendimento" class="kanban-body">
+            <div id="kanban-body-atendimento" class="kanban-body">
 
             </div>
             <div class="kanban-footer">
@@ -832,7 +832,6 @@
     <!-- Modal Temas e Hora ---------------------->
 
 </div>
-
 <!--Container------------>
 
 
@@ -841,6 +840,13 @@
         userId: {{ user_data.log_id }},
         userGroup: '{{ user_data.logGroup }}',
     };
+
+    // Espera que o documento esteja completamente carregado
+    document.addEventListener('DOMContentLoaded', function () {
+        // Chama a função fetchCards com a opção 'processos' ao carregar a página
+        fetchCards('processos');
+
+    });
 </script>
 
 
