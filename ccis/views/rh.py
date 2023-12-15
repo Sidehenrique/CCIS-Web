@@ -319,7 +319,7 @@ def salvar_etica(request):
 
 
 @login_required(login_url="/login")
-def request_ci(request):
+def request_ci_rh(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()
@@ -390,7 +390,7 @@ def request_ci(request):
 
 
 @login_required(login_url="/login")
-def request_apontamentos(request):
+def request_apontamentos_rh(request):
     descricao = ""
     if request.method == 'POST':
 

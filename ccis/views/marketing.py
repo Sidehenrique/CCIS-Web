@@ -203,7 +203,7 @@ def request_digital_MK(request):
                         )
                         notification.save()
 
-            return redirect('ti_home')
+            return redirect('marketing_home')
 
     else:
         form = modelFormDigitalMK()
@@ -271,7 +271,7 @@ def request_gráfica_MK(request):
                         )
                         notification.save()
 
-            return redirect('ti_home')
+            return redirect('marketing_home')
     else:
         form = modelFormGraficaMK()
 
@@ -436,7 +436,7 @@ def request_apontamentos_mk(request):
                         )
                         notification.save()
 
-            return redirect('Marketing_home')
+            return redirect('marketing_home')
     else:
         form = modelFormApontamentos()
 

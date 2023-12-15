@@ -115,8 +115,8 @@ urlpatterns = [
     path('rh/salvar_malote', rh.salvar_malote, name='salvar_malote'),
     path('rh/processos', rh.processos, name='processos'),
     path('rh/salvar_etica', rh.salvar_etica, name='salvar_etica'),
-    path('rh/request_ci', rh.request_ci, name='request_ci'),
-    path('rh/request_apontamentos', rh.request_apontamentos, name='request_apontamentos'),
+    path('rh/request_ci_rh', rh.request_ci_rh, name='request_ci_rh'),
+    path('rh/request_apontamentos_rh', rh.request_apontamentos_rh, name='request_apontamentos_rh'),
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request', ti.new_request, name='new_request'),

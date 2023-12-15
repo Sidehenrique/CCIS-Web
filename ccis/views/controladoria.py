@@ -277,7 +277,7 @@ def request_estudo_PC(request):
                         )
                         notification.save()
 
-            return redirect('marketing_home')
+            return redirect('controladoria_home')
 
     else:
         form = modelFormEstudoPC()

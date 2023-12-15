@@ -223,7 +223,7 @@ def request_ci_ps(request):
                         )
                         notification.save()
 
-            return redirect('produtoServico_home_home')
+            return redirect('produtoServico_home')
     else:
         form = modelFormCI()
 

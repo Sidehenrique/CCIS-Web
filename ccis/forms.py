@@ -627,7 +627,7 @@ class modelFormEstudoPC(forms.ModelForm):
     ]
 
     CHOICES_Assunto = [
-        ('Pesquisas/Estudos', 'Pesquisas/Estudos'),
+        ('Estudo/Pesquisa', 'Estudo/Pesquisa'),
     ]
 
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
