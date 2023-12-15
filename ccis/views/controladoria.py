@@ -86,6 +86,7 @@ def request_power_PC(request):
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Painéis'
 
+
         form = modelFormPowerPC(request.POST, request.FILES)
         if form.is_valid():
 
@@ -154,9 +155,12 @@ def request_propenso_PC(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
-        request.POST['assunto'] = 'Lista de Propenso'
+        request.POST['assunto'] = 'Lista de Propensos'
 
         form = modelFormPropensoPC(request.POST, request.FILES)
+
+        print(form)
+
         if form.is_valid():
 
             card = form.save(commit=False)
