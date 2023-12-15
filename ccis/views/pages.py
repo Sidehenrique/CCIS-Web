@@ -823,7 +823,7 @@ def enviar_resposta(request, card_id):
                 description="Você tem uma nova mensagem",
                 subject=card.assunto + f" N°: {card.idCard}",
                 recipient=card.solicitante,
-                url='processos_user',  # Defina a URL apropriada
+                url='kanban_user',  # Defina a URL apropriada
             )
             notification.save()
         else:
@@ -853,7 +853,7 @@ def get_messages(request, card_id):
 def registrar_atendimento(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
 
-    card.status = 'Em Atendimento'
+    card.status = 'Atendimento'
     card.setor = request.user.groups.first()
     card.responsavel = request.user
     card.save()
@@ -885,7 +885,7 @@ def registrar_atendimento(request, card_id):
         description=f"Sua solicitação esta em Atendimento por {request.user.first_name} {request.user.last_name}",
         subject=card.assunto + f" N°: {card.idCard}",
         recipient=card.solicitante,  # O destinatário é o solicitante da questão
-        url='processos_user',  # URL da página atual
+        url='kanban_user',  # URL da página atual
     )
     notification.save()
 
@@ -928,7 +928,7 @@ def encaminhar_card(request, card_id):
             description="Sua solicitação foi encaminhada para " + historico_setor.setor_atual,
             subject=card.assunto + f" N°: {card.idCard}",
             recipient=card.solicitante,
-            url='processos_user',
+            url='kanban_user',
         )
         notification.save()
 
@@ -940,7 +940,7 @@ def encaminhar_card(request, card_id):
                     description="Uma solicitação encaminhada para" + historico_setor.setor_atual,
                     subject=card.assunto + f" N°: {card.idCard}",
                     recipient=user,
-                    url='processos_user',
+                    url='kanban_user',
                 )
                 notification.save()
 
@@ -969,7 +969,7 @@ def compartilhar_card(request, card_id):
             description="Solicitação compartilhada com você",
             subject=card.assunto + f" N°: {card.idCard}",
             recipient=user,  # O destinatário é o solicitante da questão
-            url='processos_user',  # URL da página atual
+            url='kanban_user',  # URL da página atual
         )
         notification.save()
 
@@ -1018,7 +1018,7 @@ def transferir_card(request, card_id):
             description="Sua solicitação foi Transferida para " + historico_setor.setor_atual,
             subject=card.assunto + f" N°: {card.idCard}",
             recipient=card.solicitante,
-            url='processos_user',
+            url='kanban_user',
         )
         notification.save()
 
@@ -1082,7 +1082,7 @@ def concluir_card(request, card_id):
                 description="Eba! Sua solicitação foi concluida",
                 subject=card.assunto + f" N°: {card.idCard}",
                 recipient=card.solicitante,  # O destinatário é o solicitante da questão
-                url='processos_user',  # URL da página atual
+                url='kanban_user',  # URL da página atual
             )
             notification.save()
 
@@ -1225,7 +1225,7 @@ def reabrir_card(request, card_id):
     if request.method == 'POST':
         try:
             card = Card.objects.get(idCard=card_id)
-            card.status = 'Em Atendimento'
+            card.status = 'Atendimento'
             card.save()
 
             group = request.user.groups.first()

@@ -79,8 +79,11 @@ def salvar_malote_sia(request):
         form = ModelFormSIAMalotes(request.POST, request.FILES)
 
         if form.is_valid():
+
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=19)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card

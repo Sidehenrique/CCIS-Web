@@ -34,7 +34,6 @@ def home(request):
     return render(request, 'gestaoNegocios/home.html', context)
 
 
-
 @login_required(login_url="/login")
 def gestaoMetas(request):
     # user = get_object_or_404(User, id=user_id)
@@ -196,6 +195,7 @@ def relatorioVisitas(request):
         }
 
         return render(request, 'gestaoNegocios/relatorioVisitas.html', context)
+
 
 @login_required(login_url="/login")
 def lastro(request):

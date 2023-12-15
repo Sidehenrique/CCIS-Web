@@ -61,6 +61,7 @@ def secretaria_home(request):
         return render(request, 'ccis/setor_home.html', context)
 
 
+@login_required(login_url="/login")
 def new_request_secretaria(request):
     form = ModelFormSecretariaMalotes()
     apontamentos = modelFormApontamentos()
@@ -71,6 +72,7 @@ def new_request_secretaria(request):
     return render(request, "secretaria/new_request_secretaria.html", context)
 
 
+@login_required(login_url="/login")
 def salvar_malote_secretaria(request):
     if request.method == 'POST':
 
@@ -82,6 +84,8 @@ def salvar_malote_secretaria(request):
         if form.is_valid():
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=31)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -141,6 +145,8 @@ def request_ci_sec(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=31)
+            card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
@@ -211,6 +217,8 @@ def request_apontamentos_sec(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=31)
+            card.status = 'Triagem'
             card.cor = "#FFCECE"
             card.save()
 
