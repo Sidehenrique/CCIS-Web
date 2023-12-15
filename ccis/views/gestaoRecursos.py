@@ -144,7 +144,7 @@ def request_portifolios(request):
 @login_required(login_url="/login")
 def request_basileia(request):
     if request.method == 'POST':
-        form = modelFormAcessosGR(request.POST, request.FILES)
+        form = modelFormBasileiaGR(request.POST, request.FILES)
         if form.is_valid():
 
             card = form.save(commit=False)
@@ -200,7 +200,7 @@ def request_basileia(request):
             return redirect('gestaoRecurso_home')
 
     else:
-        form = modelFormAcessosGR()
+        form = modelFormBasileiaGR()
 
     return render(request, 'gestaoRecursos/new_request_recurso.html', {'form': form})
 
@@ -208,7 +208,7 @@ def request_basileia(request):
 @login_required(login_url="/login")
 def request_risco(request):
     if request.method == 'POST':
-        form = modelFormAcessosGR(request.POST, request.FILES)
+        form = modelFormRiscoGR(request.POST, request.FILES)
         if form.is_valid():
 
             card = form.save(commit=False)
@@ -264,7 +264,7 @@ def request_risco(request):
             return redirect('gestaoRecurso_home')
 
     else:
-        form = modelFormAcessosGR()
+        form = modelFormRiscoGR()
 
     return render(request, 'gestaoRecursos/new_request_recurso.html', {'form': form})
 

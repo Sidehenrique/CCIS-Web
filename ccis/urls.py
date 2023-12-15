@@ -37,7 +37,6 @@ urlpatterns = [
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
 
     path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
-    path('utilitariosCopy', pages.utilitariosCopy, name='utilitariosCopy'),
     path('malotes', pages.malotes, name='malotes'),
     path('ccc', pages.ccc, name='ccc'),
     path('processa_cupons', pages.processa_cupons, name='processa_cupons'),

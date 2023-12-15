@@ -509,29 +509,6 @@ def departamentos(request):
 
 
 @login_required(login_url="/login")
-def utilitariosCopy(request):
-    # user = get_object_or_404(User, id=user_id)
-
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-    groupControle = user.groups.filter(id=28).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-
-    if request.method == 'GET':
-        context = {
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-            'last_name': last_name, 'group_gestao': group_gestao,
-        }
-
-        return render(request, 'ccis/utilitariosCopy.html', context)
-
-
-@login_required(login_url="/login")
 def malotes(request):
     return render(request, 'ccis/malotes.html')
 
