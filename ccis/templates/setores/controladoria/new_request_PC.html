@@ -3,9 +3,9 @@
 
 {% block conteudo %}
 
-<!-- Conteúdo -------------------------------->
 <div class="container" style="margin-top:75px">
 
+    <!-- Conteúdo -------------------------------->
     <div class="row">
 
         <!-- Menu -------------------------------->
@@ -14,7 +14,7 @@
             <!-- Botões -------------------------->
             <div class="">
 
-                <h5 class="text-center p-1">TECNOLOGIA</h5>
+                <h5 class="text-center p-1">PERFORMACE CORPORATIVA</h5>
 
                 <hr style="color:#C4C0C0">
 
@@ -22,36 +22,36 @@
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-key"></i>
-                            Acessos
+                            <i class="fa-solid fa-chart-line"></i>
+                            Painéis
                         </a>
                     </li>
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-computer"></i>
-                            Equipamentos
+                            <i class="fa-solid fa-diagram-project"></i>
+                            Lista de Propensos
                         </a>
                     </li>
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-code"></i>
-                            Desenvolvimento
+                            <i class="fa-solid fa-square-poll-vertical"></i>
+                            Relatórios
                         </a>
                     </li>
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_4" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-server"></i>
-                            Serviços
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Pesquisas/Estudos
                         </a>
                     </li>
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_5" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-file-pen"></i>
-                            Solicitções CI/CNAC/R.O
+                            Solicitações CI/CNAC/R.O
                         </a>
                     </li>
 
@@ -75,7 +75,7 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-lista-novo mt-5">
-                        <a href="{% url 'ti_home' %}" class="li-link-request" aria-current="page">
+                        <a href="{% url 'controladoria_home' %}" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-arrow-left"></i>
                             Voltar
                         </a>
@@ -89,13 +89,12 @@
         </div>
         <!-- Menu -------------------------------->
 
-
         <!-- Informativo ------------------------->
         <div id="informativo" class="col menu-request m-0 p-5">
 
-            <!-- Texto --------------------------->
+            <!-- Texto ------------------------->
             <div class="">
-                <h6>Orientações para abertura de chamado - 4155. Tecnologia</h6>
+                <h6>Orientações para abertura de chamado - 4155. Performace Corporativa</h6>
                 <p>
                     Pontos a serem observados durante a abertura de chamado:
                     - Detalhar bem a sua solicitação.
@@ -105,7 +104,7 @@
                     - Segunda-feira a sexta-feira das 08:30hs às 17:30hs
                 </p>
             </div>
-            <!-- Texto --------------------------->
+            <!-- Texto ------------------------->
 
             <!-- Acordeões ----------------------->
             <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
@@ -114,303 +113,251 @@
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseOne" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
-                            Acessos
+                            Power BI
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse show"
                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>Sisbr: Solicitar Permisões, Criar, Liberação, Redefinição de Senha e Exclusão de
-                                    Usuário.
-                                </li>
-                                <li>VPN: Solicitar Criação de Usuário, Redefinição de Senha e Exclusão de Conta</li>
-                                <li>Email: Solicitar Criação de Usuário, Redefinição de Senha e Exclusão de Conta</li>
-                                <li>Itranet: Solicitar Alterar Grupo/Setor, Criar, Redefinição de Senha e Exclusão de
-                                    Usuário.
-                                </li>
+                                <li>Criação de painel</li>
+                                <li>Ajuste</li>
+                                <li>Erros</li>
+                                <li>Sugestões</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+                <!-- Restante dos itens com as classes modificadas -->
                 <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
+                    <h2 class="accordion-header" id="flush-headingTow">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                aria-controls="flush-collapseTwo">
-                            Equipamentos
+                                data-bs-target="#flush-collapseTow" aria-expanded="false"
+                                aria-controls="flush-collapseTow">
+                            Lista de Propensos
                         </button>
                     </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-                         data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapseTow" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingTow" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>Instalação: Solicitação de Softweres</li>
-                                <li>Manutenção: Atualizãção de Softweres, Troca de Computadores antigos e Troca de
-                                    Periféricos
-                                </li>
+                                <li>Criação Lista de Propensos</li>
+                                <li>Ajuste</li>
+                                <li>Erros</li>
+                                <li>Sugetões</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+                <!-- Adicione classes similares aos outros itens -->
                 <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingThree">
+                    <h2 class="accordion-header" id="flush-headingTree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                aria-controls="flush-collapseThree">
-                            Serviços
+                                data-bs-target="#flush-collapseTree" aria-expanded="false"
+                                aria-controls="flush-collapseTree">
+                            Relatórios
                         </button>
                     </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapseTree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingTree" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>Implementação de Melhorias: Descreva suas nececidades dentro da Intranet.</li>
-                                <li>Solicitação de visita: Solicite um técnico da TI</li>
-                                <li>Outros: Descreva suas nececidades.</li>
+                                <li>Criação de Relatórios</li>
+                                <li>Ajuste</li>
+                                <li>Erros</li>
+                                <li>Sugestões</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseFour" aria-expanded="false"
+                                aria-controls="flush-collapseFour">
+                            Pesquisa/Estudos
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Estudo de Viabilidade de Região</li>
+                                <li>Estudo de Rentabilidade de Produto ou Serviço</li>
+                                <li>Pesquisa de Mercado</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- Acordeões ----------------------->
 
         </div>
         <!-- Informativo ------------------------->
 
-
-        <!-- Formulário de Acessos --------------->
+        <!-- Formulário de Power BI -------------->
         <div id="formulario1" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE ACESSOS</h5>
+            <h5 class="p-3">FORMULÁRIO PAINÉIS</h5>
 
-            <div class="row p-3 ">
+            <form action="{% url 'request_power_PC' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
 
-                <div class="col-7">
+                {% csrf_token %}
 
-                    <form action="{% url 'request_acessos' %}"
-                          method="POST"
-                          enctype="multipart/form-data">
+                <div class="row p-3 ">
 
-                        {% csrf_token %}
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
-                        <div class="mb-2">
-                            <label class="required-label">Assunto:</label>
-                            {{ acessos.assunto }}
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="required-label">Serviço:</label>
-                            {{ acessos.service }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Descrição:</label><br>
-                            {{ acessos.descricao }}
-                        </div>
+                    <div class="col-7">
 
                         <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ power.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Descrição:</label>
+                            {{ power.descricao }}
+                        </div>
+
+                        <div class="mt-2">
                             <label>Anexar arquivo:</label>
-                            {{ acessos.attachment }}
+                            {{ power.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
-                    </form>
-
-                </div>
-
-                <!--
-                <div class="col-1"></div>
-
-                <div class="col">
-
-                    <div>
-                        <h6>Dados do Setor</h6>
-
-                        <p class="m-0">Setor:</p>
-                        <p class="m-0">Responsável:</p>
-                        <p class="m-0">Email:</p>
-                        <p class="m-0">Telefone Corporativo:</p>
-                        <p class="m-0">Ramal:</p>
-
                     </div>
-
-                    <div class="mt-5">
-
-                        <h6>Dados do Solicitante</h6>
-
-                        <p class="m-0">Nome:</p>
-                        <p class="m-0">CPF:</p>
-                        <p class="m-0">Sisbr:</p>
-                        <p class="m-0">Email:</p>
-                        <p class="m-0">Telefone Corporativo:</p>
-                        <p class="m-0">Ramal:</p>
-                        <p class="m-0">Unidade:</p>
-
-                    </div>
-
                 </div>
-                -->
-
-            </div>
+            </form>
         </div>
-        <!-- Formulário de Acessos --------------->
+        <!-- Formulário de Power BI -------------->
 
-        <!-- Formulário de Equipamentos ---------->
+        <!-- Formulário de Lista Propenso -------->
         <div id="formulario2" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE EQUIPAMENTOS</h5>
+            <h5 class="p-3">FORMULÁRIO LISTA DE PROPENSOS</h5>
 
-            <div class="row p-3 ">
+            <form action="{% url 'request_propenso_PC' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
 
-                <div class="col-7">
+                {% csrf_token %}
 
+                <div class="row p-3 ">
 
-                    <form action="{% url 'request_equipamentos' %}"
-                          method="POST"
-                          enctype="multipart/form-data">
-
-                        {% csrf_token %}
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
-                        <div class="mb-2">
-                            <label class="required-label">Assunto:</label>
-                            {{ equipamentos.assunto }}
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="required-label">Serviço:</label>
-                            {{ equipamentos.service }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Descrição:</label><br>
-                            {{ equipamentos.descricao }}
-                        </div>
+                    <div class="col-7">
 
                         <div class="">
+                            <label class="required-label">Produtos:</label>
+                            {{ propenso.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Descrição:</label>
+                            {{ propenso.descricao }}
+                        </div>
+
+                        <div class="mt-2">
                             <label>Anexar arquivo:</label>
-                            {{ equipamentos.attachment }}
+                            {{ propenso.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
-                    </form>
-
+                    </div>
                 </div>
+            </form>
 
-
-            </div>
         </div>
-        <!-- Formulário de Equipamentos ---------->
+        <!-- Formulário de Lista Propenso -------->
 
-        <!-- Formulário de Desenvolvimento ------->
+        <!-- Formulário de Relatório ------------->
         <div id="formulario3" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE DESENVOLVIMENTO</h5>
+            <h5 class="p-3">FORMULÁRIO RELATÓRIOS</h5>
 
-            <div class="row p-3 ">
+            <form action="{% url 'request_relatorio_PC' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
 
-                <div class="col-7">
+                {% csrf_token %}
 
+                <div class="row p-3 ">
 
-                    <form action="{% url 'request_desenvolvimento' %}"
-                          method="POST"
-                          enctype="multipart/form-data">
-
-                        {% csrf_token %}
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
-                        <div class="mb-2">
-                            <label class="required-label">Assunto:</label>
-                            {{ desenvolvimento.assunto }}
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="required-label">Serviço:</label>
-                            {{ desenvolvimento.service }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Descrição:</label><br>
-                            {{ desenvolvimento.descricao }}
-                        </div>
+                    <div class="col-7">
 
                         <div class="">
-                            <label>Anexar arquivo:</label>
-                            {{ desenvolvimento.attachment }}
+                            <label class="required-label">Serviço:</label>
+                            {{ relatorio.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label >Descrição:</label>
+                            {{ relatorio.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label >Anexar arquivo:</label>
+                            {{ relatorio.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
-                    </form>
-
+                    </div>
                 </div>
-
-
-            </div>
+            </form>
         </div>
-        <!-- Formulário de Desenvolvimento ------->
+        <!-- Formulário de Relatório ------------->
 
-        <!-- Formulário de Serviços -------------->
+        <!-- Formulário de Pesquisa/Estudos ------>
         <div id="formulario4" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE SERVIÇOS</h5>
+            <h5 class="p-3">FORMULÁRIO PESQUISA/ESTUDOS</h5>
 
-            <div class="row p-3 ">
+            <form action="{% url 'request_estudo_PC' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
 
-                <div class="col-7">
+                {% csrf_token %}
 
-                    <form action="{% url 'request_servicos' %}"
-                          method="POST"
-                          enctype="multipart/form-data">
+                <div class="row p-3 ">
 
-                        {% csrf_token %}
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
-
-                        <div class="mb-2">
-                            <label class="required-label">Assunto:</label>
-                            {{ servicos.assunto }}
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="required-label">Serviço:</label>
-                            {{ servicos.service }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Descrição:</label><br>
-                            {{ servicos.descricao }}
-                        </div>
+                    <div class="col-7">
 
                         <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ estudo.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Descrição:</label>
+                            {{ estudo.descricao }}
+                        </div>
+
+                        <div class="mt-2">
                             <label>Anexar arquivo:</label>
-                            {{ servicos.attachment }}
+                            {{ estudo.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
-                    </form>
-
+                    </div>
                 </div>
 
-            </div>
+            </form>
         </div>
-        <!-- Formulário de Serviços -------------->
+        <!-- Formulário de Pesquisa/Estudos ------>
 
         <!-- Formulário de CI -------------------->
         <div id="formulario5" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE SOLICITÇÕES CI/CNAC/R.O</h5>
+            <h5 class="p-3">FORMULÁRIO DE SOLICITAÇÕES CI/CNAC/R.O</h5>
 
             <div class="row p-3 ">
 
                 <div class="col-7">
 
-                    <form action="{% url 'request_ci' %}"
+                    <form action="{% url 'request_ci_pc' %}"
                           method="POST"
                           enctype="multipart/form-data">
 
@@ -441,7 +388,6 @@
                     </form>
 
                 </div>
-
             </div>
         </div>
         <!-- Formulário de CI -------------------->
@@ -450,7 +396,7 @@
         <div id="formulario6" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
-            <form action="{% url 'request_apontamentos' %}"
+            <form action="{% url 'request_apontamentos_pc' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -474,7 +420,7 @@
                             {{ apontamentos.descricao }}
                         </div>
 
-                        <div class="">
+                        <div>
                             <label>Anexar arquivo:</label>
                             {{ apontamentos.attachment }}
                         </div>
@@ -487,7 +433,7 @@
                         <p>Reincidente:</p>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="reincidenteti" id="reincidenteti" value="Sim"
+                            <input class="form-check-input" name="reincidente" id="reincidente" value="Sim"
                                    type="checkbox">
                             <label class="form-check-label">Sim?</label>
                         </div>
@@ -534,6 +480,7 @@
                                 4
                             </label>
                         </div>
+
                     </div>
                 </div>
             </form>
@@ -542,9 +489,9 @@
         <!-- Formulário de Apontamentos ---------->
 
     </div>
-    <!-- Formulário de Equipamentos --------------------->
 
 </div>
 <!-- Conteúdo -------------------------------->
+
 
 {% endblock %}

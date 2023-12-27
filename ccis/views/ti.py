@@ -5,9 +5,10 @@ from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from ccis.forms import ModelFormNotebook
 from ..models import Card, MessageHistory, CardSetorHistory, Notebook, CustomGroupInfo, SectorButtons, \
-    Notification
+    Notification,OperatorRating
 from ..forms import (modelFormAcessosTI, modelFormEquipamentosTI, modelFormSevicosTI, modelFormDesenvolvimentoTI,
                      modelFormCI, modelFormApontamentos)
+from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
 # VIWER DO TI ----------------------------------------------------------------------------------------------------------
@@ -52,11 +53,79 @@ def ti_home(request):
         nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
                                                            x['cargo'] != 'Encarregado(a)'))
 
+    # Contagem dos processos que estão em triagem e em andamento no setor
+    ultimos_status = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id')
+    ).order_by('-data_hora').values('status_atual')[:1]
+
+    contagem_condicional = CardSetorHistory.objects.filter(
+        status_atual__in=['Triagem', 'Em Atendimento'],
+        setor_atual='Tecnologia',
+        status_atual=Subquery(ultimos_status)
+    ).count()
+    
+    # Tempo médio de atendimento
+    triagem_subquery = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id'),
+        status_atual='Triagem'
+    ).order_by('-data_hora').values('data_hora')[:1]
+
+
+    concluido_subquery = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id'),
+        status_atual='Concluido'
+    ).order_by('-data_hora').values('data_hora')[:1]
+
+
+    diferenca_tempo = CardSetorHistory.objects.filter(
+        setor_atual='Tecnologia',
+        status_atual__in=['Triagem', 'Concluido']
+    ).values('setor_atual').annotate(
+        tempo_atendimento=Avg(ExpressionWrapper(
+            Subquery(concluido_subquery) - Subquery(triagem_subquery),
+            output_field=fields.DurationField()
+        )),
+        qtd_cards=Count('card_id', distinct=True)
+    )
+
+    resultados = []
+
+    for resultado in diferenca_tempo:
+        media_tempo = resultado["tempo_atendimento"]
+
+        if media_tempo is not None:
+            media_tempo_em_microssegundos = media_tempo.total_seconds() * 10**6
+            media_tempo_em_dias = media_tempo_em_microssegundos / (1000000 * 60 * 60 * 24)  # Convertendo microssegundos para dias
+            media_tempo_dias = round(media_tempo_em_dias)
+
+            resultados.append(
+                int(media_tempo_dias)
+                
+            )
+            
+        else:
+            resultados.append(
+                '-',
+            )
+    if resultados:
+        tempo = resultados[0]
+    else:
+        tempo = "-"
+    
+
+# média da avaliação por setor
+
+    media_grupo_2 = OperatorRating.objects.filter(group_id=2).aggregate(
+        media_rating=ExpressionWrapper(Avg('rating'), output_field=FloatField())
+    )['media_rating']
+    media_grupo_2 = '-' if media_grupo_2 is None else media_grupo_2
+
     if request.method == 'GET':
         sector_buttons = SectorButtons.objects.filter(group=2)
         context = {
             'username': user, 'setor': setor, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
+            'contagem':contagem_condicional,'tempo': tempo,'avaliacao': media_grupo_2
         }
 
         return render(request, 'ccis/setor_home.html', context)
@@ -74,7 +143,7 @@ def new_request(request):
     contexto = {'acessos': acessos, 'equipamentos': equipamentos, 'servicos': servicos,
                 'desenvolvimento': desenvolvimento, 'ci': ci, 'apontamentos': apontamentos}
 
-    return render(request, 'ti/new_request.html', contexto)
+    return render(request, 'setores/ti/new_request.html', contexto)
 
 
 @login_required(login_url="/login")
@@ -138,7 +207,7 @@ def request_acessos(request):
     else:
         form = modelFormAcessosTI()
 
-    return render(request, 'ti/new_request.html', {'form': form})
+    return render(request, 'setores/ti/new_request.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -202,7 +271,7 @@ def request_equipamentos(request):
     else:
         form = modelFormEquipamentosTI()
 
-    return render(request, 'ti/new_request.html', {'form': form})
+    return render(request, 'setores/ti/new_request.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -266,7 +335,7 @@ def request_desenvolvimento(request):
     else:
         form = modelFormDesenvolvimentoTI()
 
-    return render(request, 'ti/new_request.html', {'form': form})
+    return render(request, 'setores/ti/new_request.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -329,7 +398,7 @@ def request_servicos(request):
     else:
         form = modelFormSevicosTI()
 
-    return render(request, 'ti/new_request.html', {'form': form})
+    return render(request, 'setores/ti/new_request.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -400,7 +469,7 @@ def request_ci(request):
     else:
         form = modelFormCI()
 
-    return render(request, 'ti/new_request.html', {'form': form})
+    return render(request, 'setores/ti/new_request.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -493,7 +562,7 @@ def request_apontamentos(request):
     else:
         form = modelFormApontamentos()
 
-    return render(request, 'ti/new_request.html', {'form': form, 'is_apontamento': True})
+    return render(request, 'setores/ti/new_request.html', {'form': form, 'is_apontamento': True})
 
 
 @login_required(login_url="/login")
@@ -553,7 +622,7 @@ def estoque(request):
     contexto = {
                 'group_gestao': group_gestao, 'groupControle': groupControle}
 
-    return render(request, 'ti/estoque.html', contexto)
+    return render(request, 'setores/ti/estoque.html', contexto)
 
 
 @login_required(login_url="/login")
@@ -569,4 +638,4 @@ def notebook(request):
 
             return redirect('notebook')
 
-    return render(request, 'ti/estoque/notebook.html', {'form': form, 'dadosTable': dadosTable})
+    return render(request, 'setores/ti/estoque/notebook.html', {'form': form, 'dadosTable': dadosTable})

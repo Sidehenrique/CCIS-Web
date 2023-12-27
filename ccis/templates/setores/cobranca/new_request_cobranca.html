@@ -3,18 +3,18 @@
 
 {% block conteudo %}
 
+<!-- Conteúdo ------------------------------------>
 <div class="container" style="margin-top:75px">
 
-    <!-- Conteúdo -------------------------------->
     <div class="row">
 
         <!-- Menu -------------------------------->
         <div id="menu_inicial" class="col-3 menu-request">
 
-            <!-- Botões -------------------------------->
+            <!-- Botões -------------------------->
             <div class="">
 
-                <h5 class="text-center p-1">FINANCEIRO</h5>
+                <h5 class="text-center p-1">COBRANÇA</h5>
 
                 <hr style="color:#C4C0C0">
 
@@ -30,7 +30,7 @@
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-file-pen"></i>
-                            Solicitções CI/CNAC/R.O
+                            Solicitações CI/CNAC/R.O
                         </a>
                     </li>
 
@@ -44,9 +44,9 @@
                 </ul>
 
             </div>
-            <!-- Botões -------------------------------->
+            <!-- Botões -------------------------->
 
-            <!-- Voltar -------------------------------->
+            <!-- Voltar -------------------------->
             <div class="">
 
                 <hr style="color:#C4C0C0">
@@ -54,7 +54,7 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-lista-novo mt-5">
-                        <a href="{% url 'financeiro_home' %}" class="li-link-request" aria-current="page">
+                        <a href="{% url 'cobranca_home' %}" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-arrow-left"></i>
                             Voltar
                         </a>
@@ -63,7 +63,8 @@
                 </ul>
 
             </div>
-            <!-- Voltar -------------------------------->
+            <!-- Voltar -------------------------->
+
         </div>
         <!-- Menu -------------------------------->
 
@@ -73,7 +74,7 @@
 
             <!-- Texto --------------------------->
             <div class="">
-                <h6>Orientações para abertura de chamado - 4155. Financeiro</h6>
+                <h6>Orientações para abertura de chamado - 4155. Cobrança</h6>
                 <p>
                     Pontos a serem observados durante a abertura de chamado:
                     - Detalhar bem a sua solicitação.
@@ -117,7 +118,9 @@
         <div id="formulario1" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
 
-            <form action="{% url 'salvar_malote_financeiro' %}"
+
+            <!-- Formulário de Malotes -------------------------->
+            <form action="{% url 'salvar_malote_cobranca' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -128,23 +131,22 @@
                     <!-- primeira col -------------------------->
                     <div class="col-7">
 
-                        <div class="mb-2" id="service-dinamico">
-                            <label class="required-label">Informe o lacre:</label>
+                        <div class="">
+                            <label class="required-label">Lacre:</label>
                             {{ form.service }}
                         </div>
 
-                        <div id="descricao-dinamica" class="mb-3">
-                            <label>Descrição:</label><br>
-                            <textarea class="new-desc" name="descricao"></textarea>
+                        <div class="mt-2">
+                            <label>Descrição:</label>
+                            {{ form.descricao }}
                         </div>
 
-                        <div class="">
+                        <div class="mt-2">
                             <label>Anexar arquivo:</label>
                             {{ form.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
-
 
                     </div>
                     <!-- primeira col -------------------------->
@@ -155,119 +157,82 @@
                         <h6 class="required-label">Selecione os itens desejados:</h6>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="item1" id="AutorizacaoDebito"
-                                   value="Autorização de Débito - FBTEC" type="checkbox">
-                            <label class="form-check-label" for="AutorizacaoDebito">Autorização de Débito -
-                                FBTEC</label>
+                            <input class="form-check-input" name="item2" id="CedulaCreditoBancario"
+                                   value="Cédula de Crédito Bancário - CCB" type="checkbox">
+                            <label class="form-check-label" for="CedulaCreditoBancario">Cédula de Crédito Bancário -
+                                CCB</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="item2" id="CCBCotas" value="CCB - Cotas Partes"
-                                   type="checkbox">
-                            <label class="form-check-label" for="CCBCotas">CCB - Cotas Partes</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item3" id="CCBViaNegociavel"
-                                   value="CCB - Via Negociável" type="checkbox">
-                            <label class="form-check-label" for="CCBViaNegociavel">CCB - Via Negociável</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item4" id="CedulaSuspeita" value="Cédula Suspeita"
-                                   type="checkbox">
-                            <label class="form-check-label" for="CedulaSuspeita">Cédula Suspeita</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item5" id="ContasPagar" value="Contas a Pagar"
-                                   type="checkbox">
-                            <label class="form-check-label" for="ContasPagar">Contas a Pagar</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item6" id="DemonstrativoPagamento"
-                                   value="Demonstrativo de Pagamento" type="checkbox">
-                            <label class="form-check-label" for="DemonstrativoPagamento">Demonstrativo de
-                                Pagamento</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item7" id="DespesaAdiantamento"
-                                   value="Despesa e Adiantamento" type="checkbox">
-                            <label class="form-check-label" for="DespesaAdiantamento">Despesa e Adiantamento</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item8" id="DPS" value="DPS" type="checkbox">
+                            <input class="form-check-input" name="item3" id="DPS" value="DPS" type="checkbox">
                             <label class="form-check-label" for="DPS">DPS</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="item9" id="GuiaRecolhimento"
-                                   value="Guia de Recolhimento" type="checkbox">
-                            <label class="form-check-label" for="GuiaRecolhimento">Guia de Recolhimento</label>
+                            <input class="form-check-input" name="item4" id="NotificacaoExtrajudicial"
+                                   value="Notificação Extrajudicial" type="checkbox">
+                            <label class="form-check-label" for="NotificacaoExtrajudicial">Notificação
+                                Extrajudicial</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="item10" id="MovimentoReserva"
-                                   value="Movimento com Reserva" type="checkbox">
-                            <label class="form-check-label" for="MovimentoReserva">Movimento com Reserva</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item11" id="NFCartaoCorporativo"
-                                   value="NF Cartão Corporativo" type="checkbox">
-                            <label class="form-check-label" for="NFCartaoCorporativo">NF Cartão Corporativo</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item12" id="NFReembolso" value="NF Reembolso"
+                            <input class="form-check-input" name="item5" id="PlanoPagamento" value="Plano de Pagamento"
                                    type="checkbox">
-                            <label class="form-check-label" for="NFReembolso">NF Reembolso</label>
+                            <label class="form-check-label" for="PlanoPagamento">Plano de Pagamento</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="item13" id="TermoAditivo" value="Termo Aditivo"
+                            <input class="form-check-input" name="item6" id="TermoAditivo" value="Termo Aditivo"
                                    type="checkbox">
                             <label class="form-check-label" for="TermoAditivo">Termo Aditivo</label>
                         </div>
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="item14" id="TermoConferenciaCaixa"
-                                   value="Termo de Conferência - Caixa" type="checkbox">
-                            <label class="form-check-label" for="TermoConferenciaCaixa">Termo de Conferência -
-                                Caixa</label>
+                            <input class="form-check-input" name="item1" id="DossieCredito"
+                                   value="Dossiê de Crédito - Via não negociável (Instrumento de crédito, Plano de Pagamento, DPS, projeto)"
+                                   type="checkbox">
+                            <label class="form-check-label" for="DossieCredito">Dossiê de Crédito - Via não negociável
+                                (Instrumento de crédito, Plano de Pagamento, DPS, projeto)</label>
                         </div>
+
+                        <!-- Linha Cobrança judicial ------------------------------->
+                        <p style="margin-top:20px; margin-bottom:0px">Cobrança Judicial</p>
+                        <hr class="mb-1" style="background-color:#C4C4C4">
+                        <!-- Linha Cobrança judicial ------------------------------->
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="item15" id="TermoConferenciaConselhoFiscal"
-                                   value="Termo de Conferência - Conselho Fiscal" type="checkbox">
-                            <label class="form-check-label" for="TermoConferenciaConselhoFiscal">Termo de Conferência -
-                                Conselho Fiscal</label>
+                            <input class="form-check-input" name="item1" id="AcordoJudicial" value="Acordo Judicial"
+                                   type="checkbox">
+                            <label class="form-check-label" for="AcordoJudicial">Acordo Judicial</label>
                         </div>
 
-                        <!-- segunda col -------------------------->
 
                     </div>
+                    <!-- segunda col -------------------------->
+
                 </div>
             </form>
+            <!-- CheckBox list -------------------------->
+
         </div>
         <!-- Formulário de Malotes --------------->
 
         <!-- Formulário de CI -------------------->
         <div id="formulario2" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE SOLICITÇÕES CI/CNAC/R.O</h5>
+            <h5 class="p-3">FORMULÁRIO DE SOLICITAÇÕES CI/CNAC/R.O</h5>
 
             <div class="row p-3 ">
 
                 <div class="col-7">
 
-                    <form action="{% url 'request_ci_fi' %}"
+                    <form action="{% url 'request_ci_cob' %}"
                           method="POST"
                           enctype="multipart/form-data">
 
                         {% csrf_token %}
+
+                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
+                        <input type="hidden" name="ambiente" value="Tecnologia">
 
                         <div class="mb-2">
                             <label class="required-label">Assunto:</label>
@@ -294,6 +259,7 @@
                     </form>
 
                 </div>
+
             </div>
         </div>
         <!-- Formulário de CI -------------------->
@@ -302,14 +268,13 @@
         <div id="formulario3" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
-            <form action="{% url 'request_apontamentos_fi' %}"
+            <form action="{% url 'request_apontamentos_cob' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
                 {% csrf_token %}
                 <div class="row p-3 ">
 
-                    <!-- Primeira col -------------------------->
                     <div class="col-7">
 
                         <div class="mb-2">
@@ -327,16 +292,14 @@
                             {{ apontamentos.descricao }}
                         </div>
 
-                        <div>
+                        <div class="">
                             <label>Anexar arquivo:</label>
                             {{ apontamentos.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
                     </div>
-                    <!-- Primeira col -------------------------->
 
-                    <!-- Segunda col -------------------------->
                     <div class="col">
 
                         <p>Reincidente:</p>
@@ -391,17 +354,16 @@
                         </div>
 
                     </div>
-                    <!-- Segunda col -------------------------->
-
                 </div>
             </form>
+
         </div>
         <!-- Formulário de Apontamentos ---------->
 
     </div>
 
 </div>
-<!-- Conteúdo -------------------------------->
+<!-- Conteúdo ------------------------------------>
 
 
 {% endblock %}

@@ -3,7 +3,8 @@ from django.conf.urls.static import static
 from django.urls import path
 from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro,
                     gestaoNegocios, gestaoControle, formularios, security, rh, pages, cooperar, ti, produtoServico,
-                    gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, marketing, sia, gestaoRecursos)
+                    gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, marketing, sia, gestaoRecursos,
+                    recepcao)
 
 urlpatterns = [
     path('base', pages.base, name='base'),
@@ -36,7 +37,6 @@ urlpatterns = [
     path('notificacao_lida/<int:notification_id>', pages.notificacao_lida, name='notificacao_lida'),
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
 
-    path('utilitariosHome', pages.utilitariosHome, name='utilitarios'),
     path('malotes', pages.malotes, name='malotes'),
     path('ccc', pages.ccc, name='ccc'),
     path('processa_cupons', pages.processa_cupons, name='processa_cupons'),
@@ -264,6 +264,13 @@ urlpatterns = [
     path('request_basileia', gestaoRecursos.request_basileia, name='request_basileia'),
     path('request_risco', gestaoRecursos.request_risco, name='request_risco'),
     path('request_contabilidade', gestaoRecursos.request_contabilidade, name='request_contabilidade'),
+
+    path('recepcao_home', recepcao.recepcao_home, name='recepcao_home'),
+    path('new_request_recepcao', recepcao.new_request_recepcao, name='new_request_recepcao'),
+    path('salvar_malote_recepcao', recepcao.salvar_malote_recepcao, name='salvar_malote_recepcao'),
+    path('request_ci_rec', recepcao.request_ci_rec, name='request_ci_rec'),
+    path('request_apontamentos_rec', recepcao.request_apontamentos_rec, name='request_apontamentos_rec'),
+    path('processos_recepcao', recepcao.processos_recepcao, name='processos_recepcao'),
 
 
     path('dev', pages.dev, name='dev'),

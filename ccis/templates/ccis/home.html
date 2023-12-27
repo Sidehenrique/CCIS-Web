@@ -57,10 +57,10 @@
                     <a href="#">Sobre</a>
                 </li>
                 <li>
-                    <a href="#contato">Contato</a>
+                    <a href="#footer">Contato</a>
                 </li>
                 <li>
-                    <a href="{% url 'utilitarios' %}">Utilitários</a>
+                    <a href="#footer">Utilitários</a>
                 </li>
                 <li>
                     <a class="login-button" href="{% url 'login' %}">Login</a>
@@ -81,8 +81,10 @@
     <div class="text-center font-sicoob">
 
         <h2 style="font-family: 'asap semibold'; color: #04343D;">CCIS - Comunicação e Controle Interno Sicoob</h2>
-        <p style="font-family: 'asap'; color: #04343D;">Seja muito bem vindo ao CCIS a nova plataforma do Sicoob Credibrasília que foi desenvolvida com paixão para trazer mais simplicidade<br>
-            e eficiência a todos os nosso colaboradores. Aqui, a tecnologia se une à comunicação de maneira harmoniosa, permitindo que <br>
+        <p style="font-family: 'asap'; color: #04343D;">Seja muito bem vindo ao CCIS a nova plataforma do Sicoob
+            Credibrasília que foi desenvolvida com paixão para trazer mais simplicidade<br>
+            e eficiência a todos os nosso colaboradores. Aqui, a tecnologia se une à comunicação de maneira harmoniosa,
+            permitindo que <br>
             todos os setores se conectem de forma contínua e otimizada.</p>
 
         <a class="learn-more" href="#">
@@ -94,10 +96,10 @@
     <div class="text-center mt-2">
 
         <img src="{% static 'ccis/intranetNatal.png' %}"
-         alt="logo"
-         width="90%"
-         height="auto"
-         class="d-inline-block align-text-center;">
+             alt="logo"
+             width="90%"
+             height="auto"
+             class="d-inline-block align-text-center;">
 
     </div>
 
@@ -140,34 +142,181 @@
     <!-- end Carousel ------------------------------------->
 
 
-
 </div>
 <!-- End Conteúdo -------------------------------------------------------------------->
 
 <!-- footer ------------------------------------------------------------------------------->
-<footer class=" p-0 navbar" style="background-color:#04343D; color:white; height:200px;">
+<section id="footer">
+    <footer class="footer">
+        <div class="footer-top py-8">
+            <div class="container">
+                <div class="row gy-5">
+                    <div class="col-lg-8 pe-xxl-10">
+                        <div class="row gy-5">
 
-    <div class="container-fluid">
+                            <div class="col-6 col-lg-4">
+                                <h5 class="text-white footer-title-01">Links</h5>
+                                <ul class="list-unstyled footer-link-01 m-0">
 
-        <section id="contato" class="ms-5 mt-3">
-            
-            <h6>Unidade de Tecnologia</h6>
-            <p>Suporte 3361-6130 <br> Ramal 206</p>
+                                    <li>
+                                        <a class="text-white text-opacity-75"
+                                           href="https://portal.sisbr.coop.br/Citrix/XenApp/auth/loggedout.aspx?CTX_MessageType=INFORMATION&CTX_MessageKey=SessionExpired"
+                                           target="_blank">
+                                            Citrix
+                                        </a>
+                                    </li>
 
-            <p class="mt-4">© Sicoob Credibrasília Todos os direitos reservados</p>
-        
-        </section>
+                                    <li>
+                                        <a class="text-white text-opacity-75"
+                                           href="https://www.sicoob.com.br/group/sicoob-universidade/jornadas-de-aprendizagem"
+                                           target="_blank">
+                                            Jornada de Aprendizagem
+                                        </a>
+                                    </li>
 
-        <div class="me-4">
-            <img src="{% static 'ccis/LOGO2.png' %}"
-             alt="logo"
-             width="350px"
-             height="auto">
+                                    <li>
+                                        <a class="text-white text-opacity-75"
+                                           href="https://app.credibrasilia.lecom.com.br/sso/?redirectBackTo=https://app.credibrasilia.lecom.com.br:443/bpm/index.jsp"
+                                           target="_blank">
+                                            Lecom
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="text-white text-opacity-75" href="https://apps.neoway.com.br/auth/login"
+                                           target="_blank">
+                                            Neoway
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="text-white text-opacity-75"
+                                           href="https://portal.sisbr.coop.br/painel-comercial/pessoa-associado"
+                                           target="_blank">
+                                            Painel Comercial
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class=""
+                                           href="https://portalmeurh.sicoob.com.br/FrameHTML/web/app/RH/PortalMeuRH/#/login"
+                                           target="_blank">
+                                            Ponto
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="col-6 col-lg-4 pt-4">
+                                <h5 class="text-white footer-title-01"></h5>
+                                <ul class="list-unstyled footer-link-01 m-0">
+
+                                    <li>
+                                        <a href="https://atendimento.sisbr.coop.br/tas/public/login/form"
+                                           target="_blank">
+                                            Portal de serviços CCS
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="https://www.sicoobnegocios.com.br/login-usuario.html"
+                                           target="_blank">
+                                            Sicoob Negócios
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="http://172.16.2.13/gestaodepessoas" target="_blank">
+                                            Sicoob Universidade
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="https://web.sipag.com.br/sipagnet/emi/site"
+                                           target="_blank">
+                                            Sipag
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="https://sisbranalitico.sisbr.coop.br/" target="_blank">
+                                            Sisbr Analítico
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="col-6 col-lg-4">
+
+                                <section class="widget widget-light-skin">
+
+                                    <h3 class="widget-title">App Sisbr Mobile</h3>
+
+                                    <a
+                                            class="market-button apple-button mb-light-skin"
+                                            href="https://sisbrmobile.sicoob.com.br/sisbr/mobile/"
+                                            target="_blank"><span class="mb-subtitle">Download on the</span><span
+                                            class="mb-title">Apple</span>
+                                    </a>
+
+                                    <a
+                                            class="market-button google-button mb-light-skin"
+                                            href="https://sisbrmobile.sicoob.com.br/sisbr/mobile/"
+                                            target="_blank"><span
+                                            class="mb-subtitle">Download on the</span><span class="mb-title">Android</span>
+                                    </a>
+
+                                </section>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-4 sicoob ps-5">
+                        <div class="me-4">
+                            <img src="{% static 'ccis/LOGO2.png' %}"
+                                 alt="logo"
+                                 width="350px"
+                                 height="auto">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
-    </div>
+        <div class="footer-bottom small py-3 border-top border-white border-opacity-10">
+            <div class="container">
+                <div class="row">
 
-</footer>
+                    <div class="col-md-6 text-center text-md-start py-1">
+                        <p class="m-0 text-white text-opacity-75">© 2011 Centro Cooperativo Sicoob - Todos os Direitos
+                            Reservados. <a class="text-reset" href="#">Intranet.com.br</a>
+                        </p>
+                    </div>
+
+                    <div class="col-md-6 text-center text-md-end py-1">
+
+                        <ul class="nav justify-content-center justify-content-md-end list-unstyled footer-link-01 m-0">
+
+                            <li class="p-0 mx-3 ms-md-0 me-md-3">
+                                <a href="#" class="text-white text-opacity-75">Política &amp; Privacidade</a>
+                            </li>
+
+                            <li class="p-0 mx-3 ms-md-0 me-md-3">
+                                <a href="{% url 'new_request' %}" class="text-white text-opacity-75">Faq's</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</section>
 <!-- end footer ----------------------------------------------------------------------------->
 
 
@@ -188,15 +337,15 @@
 
 <script>
 
-const snowflakes = 200;
+    const snowflakes = 200;
 
-for (let i = 0; i < snowflakes; i++) {
-    const snowflake = document.createElement('i');
-    snowflake.classList.add('fas', 'fa-snowflake'); // Se usar Font Awesome
-    snowflake.style.left = `${Math.random() * 100}%`;
-    snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-    snowflake.style.opacity = Math.random();
-    document.querySelector('.snow').appendChild(snowflake);
-}
+    for (let i = 0; i < snowflakes; i++) {
+        const snowflake = document.createElement('i');
+        snowflake.classList.add('fas', 'fa-snowflake'); // Se usar Font Awesome
+        snowflake.style.left = `${Math.random() * 100}%`;
+        snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        snowflake.style.opacity = Math.random();
+        document.querySelector('.snow').appendChild(snowflake);
+    }
 
 </script>

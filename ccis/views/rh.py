@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
-from .. models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,
+from .. models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,OperatorRating,
                        Card, Notification)
 from ..forms import ModelFormRhMalotes, ModelFormRhEtica, modelFormCI, modelFormApontamentos
+from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
 # VIWER DO RH ----------------------------------------------------------------------------------------------------------
@@ -52,6 +53,70 @@ def rh_home(request):
         nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
                                                            x['cargo'] != 'Encarregado(a)'))
 
+    # Contagem dos processos que estão em triagem e em andamento no setor
+    ultimos_status = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id')
+    ).order_by('-data_hora').values('status_atual')[:1]
+
+    contagem_condicional = CardSetorHistory.objects.filter(
+        status_atual__in=['Triagem', 'Em Atendimento'],
+        setor_atual='Gestão de Pessoas',
+        status_atual=Subquery(ultimos_status)
+    ).count()
+    
+    # Tempo médio de atendimento
+    triagem_subquery = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id'),
+        status_atual='Triagem'
+    ).order_by('-data_hora').values('data_hora')[:1]
+
+
+    concluido_subquery = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id'),
+        status_atual='Concluido'
+    ).order_by('-data_hora').values('data_hora')[:1]
+
+
+    diferenca_tempo = CardSetorHistory.objects.filter(
+        setor_atual='Gestão de Pessoas',
+        status_atual__in=['Triagem', 'Concluido']
+    ).values('setor_atual').annotate(
+        tempo_atendimento=Avg(ExpressionWrapper(
+            Subquery(concluido_subquery) - Subquery(triagem_subquery),
+            output_field=fields.DurationField()
+        )),
+        qtd_cards=Count('card_id', distinct=True)
+    )
+
+    resultados = []
+
+    for resultado in diferenca_tempo:
+        media_tempo = resultado["tempo_atendimento"]
+
+        if media_tempo is not None:
+            media_tempo_em_microssegundos = media_tempo.total_seconds() * 10**6
+            media_tempo_em_dias = media_tempo_em_microssegundos / (1000000 * 60 * 60 * 24)  # Convertendo microssegundos para dias
+            media_tempo_dias = round(media_tempo_em_dias)
+
+            resultados.append(
+                int(media_tempo_dias)
+                
+            )
+            
+        else:
+            resultados.append(
+                '-',
+            )
+    tempo = resultados[0]
+    
+
+# média da avaliação por setor
+
+    media_grupo_2 = OperatorRating.objects.filter(group_id=3).aggregate(
+        media_rating=ExpressionWrapper(Avg('rating'), output_field=FloatField())
+    )['media_rating']
+    media_grupo_2 = '-' if media_grupo_2 is None else media_grupo_2
+
     if request.method == 'GET':
         sector_buttons = SectorButtons.objects.filter(group=3)
         context = {
@@ -59,6 +124,7 @@ def rh_home(request):
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
+            'contagem':contagem_condicional,'tempo': tempo,'avaliacao': media_grupo_2
         }
 
         return render(request, 'ccis/setor_home.html', context)
@@ -89,7 +155,7 @@ def rh_dash(request):
             'last_name': last_name, 'group_gestao': group_gestao,
         }
 
-        return render(request, 'rh/dashboard.html', context)
+        return render(request, 'setores/rh/dashboard.html', context)
 
 
 @login_required(login_url="/login")
@@ -103,7 +169,7 @@ def pro_seletivo(request):
                 'groupControle':groupControle, 'group_gestao': group_gestao,
                 }
 
-    return render(request, 'rh/processo-seletivo.html', contexto)
+    return render(request, 'setores/rh/processo-seletivo.html', contexto)
 
 
 @login_required(login_url="/login")
@@ -116,7 +182,7 @@ def ferias(request):
     contexto = {
                 'groupControle': groupControle, 'group_gestao': group_gestao,
                 }
-    return render(request, 'rh/ferias.html', contexto)
+    return render(request, 'setores/rh/ferias.html', contexto)
 
 
 @login_required(login_url="/login")
@@ -129,7 +195,7 @@ def anbima(request):
     contexto = {
                 'groupControle': groupControle, 'group_gestao': group_gestao,
                 }
-    return render(request, 'rh/certificacoes-anbima.html', contexto)
+    return render(request, 'setores/rh/certificacoes-anbima.html', contexto)
 
 
 @login_required(login_url="/login")
@@ -142,7 +208,7 @@ def colaboradores(request):
     contexto = {
                 'groupControle': groupControle, 'group_gestao': group_gestao,
                 }
-    return render(request, 'rh/colaboradores.html', contexto)
+    return render(request, 'setores/rh/colaboradores.html', contexto)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -161,7 +227,7 @@ def new_request(request):
                'ci': ci,
     }
 
-    return render(request, "rh/new_request.html", context)
+    return render(request, "setores/rh/new_request.html", context)
 
 
 @login_required(login_url="/login")
@@ -243,7 +309,7 @@ def salvar_malote(request):
     else:
         form = ModelFormRhMalotes()
 
-    return render(request, 'rh/new_request.html', {'form': form})@login_required(login_url="/login")
+    return render(request, 'setores/rh/new_request.html', {'form': form})@login_required(login_url="/login")
 
 
 @login_required(login_url="/login")
@@ -315,7 +381,7 @@ def salvar_etica(request):
     else:
         form = ModelFormRhEtica()
 
-    return render(request, 'rh/new_request.html', {'form': form})
+    return render(request, 'setores/rh/new_request.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -386,7 +452,7 @@ def request_ci_rh(request):
     else:
         form = modelFormCI()
 
-    return render(request, 'rh/new_request', {'form': form})
+    return render(request, 'setores/rh/new_request', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -480,7 +546,7 @@ def request_apontamentos_rh(request):
     else:
         form = modelFormApontamentos()
 
-    return render(request, 'rh/new_request.html', {'form': form, 'is_apontamento': True})
+    return render(request, 'setores/rh/new_request.html', {'form': form, 'is_apontamento': True})
 
 
 @login_required(login_url="/login")

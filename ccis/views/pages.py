@@ -513,10 +513,6 @@ def malotes(request):
     return render(request, 'ccis/malotes.html')
 
 
-def utilitariosHome(request):
-    return render(request, 'ccis/utilitariosHome.html')
-
-
 def dev(request):
 
     superior = Group.objects.filter(id=2).first()

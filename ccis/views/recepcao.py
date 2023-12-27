@@ -1,18 +1,19 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Prefetch
-from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
-from ..forms import ModelFormCobrancaMalotes, modelFormCI, modelFormApontamentos
-from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
+from django.shortcuts import render, redirect, get_object_or_404
+from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification, \
+    OperatorRating
+from ..forms import ModelFormSecretariaMalotes, modelFormCI, modelFormApontamentos
+from django.db.models import OuterRef, Subquery, F, ExpressionWrapper, fields, Avg, Count, FloatField
 
 
 @login_required(login_url="/login")
-def cobranca_home(request):
+def recepcao_home(request):
     user = request.user
 
     try:
-        dadosSetor = CustomGroupInfo.objects.get(nome='Cobrança')
+        dadosSetor = CustomGroupInfo.objects.get(nome='Recepção')
 
     except CustomGroupInfo.DOESNOTEXIST:
         dadosSetor = None
@@ -23,7 +24,7 @@ def cobranca_home(request):
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
-    superior = Group.objects.filter(id=5).first()
+    superior = Group.objects.filter(id=44).first()
 
     nomes_equipe = []
 
@@ -47,125 +48,123 @@ def cobranca_home(request):
                  'sexo': sexo,
                  'cargo': cargo})
 
-        # Ordenar a equipe com o supervisor no topo
-        nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
-                                                           x['cargo'] != 'Encarregado(a)'))
+            # Ordenar a equipe com o supervisor no topo
+            nomes_equipe = sorted(nomes_equipe,
+                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                 x['cargo'] != 'Encarregado(a)'))
 
-    # Contagem dos processos que estão em triagem e em andamento no setor
-    ultimos_status = CardSetorHistory.objects.filter(
-        card_id=OuterRef('card_id')
-    ).order_by('-data_hora').values('status_atual')[:1]
+        # Contagem dos processos que estão em triagem e em andamento no setor
+        ultimos_status = CardSetorHistory.objects.filter(
+            card_id=OuterRef('card_id')
+        ).order_by('-data_hora').values('status_atual')[:1]
 
-    contagem_condicional = CardSetorHistory.objects.filter(
-        status_atual__in=['Triagem', 'Em Atendimento'],
-        setor_atual='Cobrança',
-        status_atual=Subquery(ultimos_status)
-    ).count()
-    
-    # Tempo médio de atendimento
-    triagem_subquery = CardSetorHistory.objects.filter(
-        card_id=OuterRef('card_id'),
-        status_atual='Triagem'
-    ).order_by('-data_hora').values('data_hora')[:1]
+        contagem_condicional = CardSetorHistory.objects.filter(
+            status_atual__in=['Triagem', 'Em Atendimento'],
+            setor_atual='Recepção',
+            status_atual=Subquery(ultimos_status)
+        ).count()
 
+        # Tempo médio de atendimento
+        triagem_subquery = CardSetorHistory.objects.filter(
+            card_id=OuterRef('card_id'),
+            status_atual='Triagem'
+        ).order_by('-data_hora').values('data_hora')[:1]
 
-    concluido_subquery = CardSetorHistory.objects.filter(
-        card_id=OuterRef('card_id'),
-        status_atual='Concluido'
-    ).order_by('-data_hora').values('data_hora')[:1]
+        concluido_subquery = CardSetorHistory.objects.filter(
+            card_id=OuterRef('card_id'),
+            status_atual='Concluido'
+        ).order_by('-data_hora').values('data_hora')[:1]
 
-    diferenca_tempo = CardSetorHistory.objects.filter(
-        setor_atual='Cobrança',
-        status_atual__in=['Triagem', 'Concluido']
-    ).values('setor_atual').annotate(
-        tempo_atendimento=Avg(ExpressionWrapper(
-            Subquery(concluido_subquery) - Subquery(triagem_subquery),
-            output_field=fields.DurationField()
-        )),
-        qtd_cards=Count('card_id', distinct=True)
-    )
+        diferenca_tempo = CardSetorHistory.objects.filter(
+            setor_atual='Recepção',
+            status_atual__in=['Triagem', 'Concluido']
+        ).values('setor_atual').annotate(
+            tempo_atendimento=Avg(ExpressionWrapper(
+                Subquery(concluido_subquery) - Subquery(triagem_subquery),
+                output_field=fields.DurationField()
+            )),
+            qtd_cards=Count('card_id', distinct=True)
+        )
 
-    resultados = []
+        resultados = []
 
-    for resultado in diferenca_tempo:
-        media_tempo = resultado["tempo_atendimento"]
+        for resultado in diferenca_tempo:
+            media_tempo = resultado["tempo_atendimento"]
 
-        if media_tempo is not None:
-            media_tempo_em_microssegundos = media_tempo.total_seconds() * 10**6
-            media_tempo_em_dias = media_tempo_em_microssegundos / (1000000 * 60 * 60 * 24)  # Convertendo microssegundos para dias
-            media_tempo_dias = round(media_tempo_em_dias)
+            if media_tempo is not None:
+                media_tempo_em_microssegundos = media_tempo.total_seconds() * 10 ** 6
+                media_tempo_em_dias = media_tempo_em_microssegundos / (
+                        1000000 * 60 * 60 * 24)  # Convertendo microssegundos para dias
+                media_tempo_dias = round(media_tempo_em_dias)
 
-            resultados.append(
-                int(media_tempo_dias)
-                
-            )
-            
+                resultados.append(
+                    int(media_tempo_dias)
+
+                )
+
+            else:
+                resultados.append(
+                    '-',
+                )
+        if resultados:
+            tempo = resultados[0]
         else:
-            resultados.append(
-                '-',
-            )
-    if resultados:
-        tempo = resultados[0]
-    else:
-        tempo = "-" 
-    
+            tempo = "-"
 
-# média da avaliação por setor
+    # média da avaliação por setor
 
-    media_grupo_2 = OperatorRating.objects.filter(group_id=5).aggregate(
+    media_grupo_2 = OperatorRating.objects.filter(group_id=44).aggregate(
         media_rating=ExpressionWrapper(Avg('rating'), output_field=FloatField())
     )['media_rating']
     media_grupo_2 = '-' if media_grupo_2 is None else media_grupo_2
 
     if request.method == 'GET':
-        sector_buttons = (SectorButtons.objects.filter(group=5))
-
+        sector_buttons = SectorButtons.objects.filter(group=44)
         context = {
-            'username': user, 'groupControle': groupControle, 'setor': setor,
-            'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
+            'username': user, 'groupControle': groupControle, 'setor': setor, 'sector_buttons': sector_buttons,
+            'group_gestao': group_gestao,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
-            'contagem':contagem_condicional,'tempo': tempo,'avaliacao': media_grupo_2
+            'contagem': contagem_condicional, 'tempo': tempo, 'avaliacao': media_grupo_2
         }
 
         return render(request, 'ccis/setor_home.html', context)
 
 
 @login_required(login_url="/login")
-def new_request_cobranca(request):
-
-    form = ModelFormCobrancaMalotes()
+def new_request_recepcao(request):
+    form = ModelFormSecretariaMalotes()
     apontamentos = modelFormApontamentos()
     ci = modelFormCI()
 
     context = {'form': form, 'apontamentos': apontamentos, 'ci': ci}
 
-    return render(request, "setores/cobranca/new_request_cobranca.html", context)
+    return render(request, "setores/recepcao/new_request_recepcao.html", context)
 
 
 @login_required(login_url="/login")
-def salvar_malote_cobranca(request):
+def salvar_malote_recepcao(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormCobrancaMalotes(request.POST, request.FILES)
+        form = ModelFormSecretariaMalotes(request.POST, request.FILES)
 
         if form.is_valid():
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.setor = get_object_or_404(Group, id=5)
+            card.setor = get_object_or_404(Group, id=44)
             card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=5),
+                setor=get_object_or_404(Group, id=44),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Cobrança",  # Setor atual
+                setor_atual="Recepção",  # Setor atual
             )
             history_entry.save()
 
@@ -175,7 +174,7 @@ def salvar_malote_cobranca(request):
 
             # Coletar as seleções dos checkboxes e montar a descrição
             itens_selecionados = []
-            for item in ['item1', 'item2', 'item3', 'item4', 'item5', 'item6']:
+            for item in ['item1', 'item2', 'item3']:
                 if request.POST.get(item):
                     itens_selecionados.append(request.POST.get(item))
 
@@ -195,37 +194,16 @@ def salvar_malote_cobranca(request):
                 )
                 message_history.save()
 
-                # Obtenha o histórico de setor mais recente para o cartão
-                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
-
-                # Obtenha o grupo associado ao histórico de setor
-                grupo_setor = historico_setor.setor
-
-                # Obtenha a URL do setor com base no grupo do responsável
-                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
-
-                recipients = User.objects.filter(groups=grupo_setor)
-                for recipient in recipients:
-                    if recipient != request.user:
-                        notification = Notification(
-                            author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
-                            recipient=recipient,
-                            url=setor_link,
-                        )
-                        notification.save()
-
-            return redirect('cobranca_home')
+            return redirect('recepcao_home')
 
     else:
-        form = ModelFormCobrancaMalotes()
+        form = ModelFormSecretariaMalotes()
 
-    return render(request, 'setores/cobranca/new_request_cobranca.html', {'form': form})
+    return render(request, 'setores/recepcao/new_request_recepcao.html', {'form': form})
 
 
 @login_required(login_url="/login")
-def request_ci_cob(request):
+def request_ci_rec(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()
@@ -236,18 +214,18 @@ def request_ci_cob(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.setor = get_object_or_404(Group, id=5)
+            card.setor = get_object_or_404(Group, id=44)
             card.status = 'Triagem'
             card.save()
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=5),
+                setor=get_object_or_404(Group, id=44),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Cobrança",  # Setor atual
+                setor_atual="Recepção",  # Setor atual
             )
             history_entry.save()
 
@@ -255,7 +233,7 @@ def request_ci_cob(request):
             descricao = form.cleaned_data.get('descricao')
             assunto = request.POST.get('assunto-input')
 
-            if(assunto):
+            if (assunto):
                 descricao = f"<strong>Assunto:</strong> {assunto} <br><br>" + descricao
 
             if descricao:
@@ -288,15 +266,15 @@ def request_ci_cob(request):
                         )
                         notification.save()
 
-            return redirect('cobranca_home')
+            return redirect('recepcao_home')
     else:
         form = modelFormCI()
 
-    return render(request, 'setores/cobranca/new_request_cobranca', {'form': form})
+    return render(request, 'setores/recepcao/new_request_recepcao', {'form': form})
 
 
 @login_required(login_url="/login")
-def request_apontamentos_cob(request):
+def request_apontamentos_rec(request):
     descricao = ""
     if request.method == 'POST':
 
@@ -308,20 +286,19 @@ def request_apontamentos_cob(request):
 
             card = form.save(commit=False)
             card.solicitante = request.user
-            card.setor = get_object_or_404(Group, id=5)
+            card.setor = get_object_or_404(Group, id=44)
             card.status = 'Triagem'
             card.cor = "#FFCECE"
             card.save()
 
-
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
-                setor=get_object_or_404(Group, id=5),
+                setor=get_object_or_404(Group, id=44),
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Cobrança",  # Setor atual
+                setor_atual="Recepção",  # Setor atual
             )
             history_entry.save()
 
@@ -350,7 +327,6 @@ def request_apontamentos_cob(request):
 
                 if form.cleaned_data.get('descricao'):
                     descricao += f"Descrição: {form.cleaned_data.get('descricao')}<br>"
-
 
             if descricao:
                 message_history = MessageHistory(
@@ -382,23 +358,22 @@ def request_apontamentos_cob(request):
                         )
                         notification.save()
 
-            return redirect('cobranca_home')
+            return redirect('recepcao_home')
     else:
         form = modelFormApontamentos()
 
-    return render(request, 'setores/cobranca/new_request_cobranca.html', {'form': form, 'is_apontamento': True})
+    return render(request, 'setores/recepcao/new_request_recepcao.html', {'form': form, 'is_apontamento': True})
 
 
 @login_required(login_url="/login")
-def processos_cobranca(request):
-
+def processos_recepcao(request):
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-            queryset=CardSetorHistory.objects.order_by('-data_hora'))
-        )
+                                                             queryset=CardSetorHistory.objects.order_by('-data_hora'))
+                                                    )
 
         group = Group.objects.all()
-        setor = 'Cobrança'
+        setor = 'Recepção'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0

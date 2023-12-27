@@ -3,17 +3,18 @@
 
 {% block conteudo %}
 
-<!-- Conteúdo -------------------------------->
+<!-- Conteúdo ----------------------------------------------->
 <div class="container" style="margin-top:75px">
 
     <div class="row">
 
-        <!-- Menu -------------------------------->
+        <!-- Menu ------------------------------------------->
         <div id="menu_inicial" class="col-3 menu-request">
-            <!-- Botões -------------------------->
+
+            <!-- Botões ------------------------------------->
             <div class="">
 
-                <h5 class="text-center p-1">SECRETARIA</h5>
+                <h5 class="text-center p-1">MARKETING</h5>
 
                 <hr style="color:#C4C0C0">
 
@@ -21,31 +22,46 @@
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-key"></i>
-                            Malotes
+                            <i class="fa-solid fa-comment"></i>
+                            Assessoria
                         </a>
                     </li>
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-file-pen"></i>
-                            Solicitções CI/CNAC/R.O
+                            <i class="fa-solid fa-desktop"></i>
+                            Comunicação Digital
                         </a>
                     </li>
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-pen-nib"></i>
+                            Criação gráfica
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_4" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-file-pen"></i>
+                            Solicitações CI/CNAC/R.O
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_5" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-scale-unbalanced-flip"></i>
                             Apontamentos
                         </a>
                     </li>
 
+
                 </ul>
 
             </div>
-            <!-- Botões -------------------------->
+            <!-- Botões ------------------------------------->
 
-            <!-- Voltar -------------------------->
+            <!-- Voltar ------------------------------------->
             <div class="">
 
                 <hr style="color:#C4C0C0">
@@ -53,7 +69,7 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-lista-novo mt-5">
-                        <a href="{% url 'secretaria_home' %}" class="li-link-request" aria-current="page">
+                        <a href="{% url 'marketing_home' %}" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-arrow-left"></i>
                             Voltar
                         </a>
@@ -62,18 +78,18 @@
                 </ul>
 
             </div>
-            <!-- Voltar -------------------------->
+            <!-- Voltar ------------------------------------->
 
         </div>
-        <!-- Menu -------------------------------->
+        <!-- Menu ------------------------------------------->
 
 
-        <!-- Informativo ------------------------->
+        <!-- Informativo ------------------------------------>
         <div id="informativo" class="col menu-request m-0 p-5">
 
-            <!-- Texto --------------------------->
+            <!-- Texto -------------------------------------->
             <div class="">
-                <h6>Orientações para abertura de chamado - 4155. Secretaria</h6>
+                <h6>Orientações para abertura de chamado - 4155. Marketing</h6>
                 <p>
                     Pontos a serem observados durante a abertura de chamado:
                     - Detalhar bem a sua solicitação.
@@ -83,41 +99,85 @@
                     - Segunda-feira a sexta-feira das 08:30hs às 17:30hs
                 </p>
             </div>
-            <!-- Texto --------------------------->
+            <!-- Texto -------------------------------------->
 
-            <!-- Acordeões ----------------------->
+            <!-- Acordeões ---------------------------------->
             <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="true"
                                 aria-controls="flush-collapseOne">
-                            Malote
+                            Assessoria
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse show"
                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>Solicite o que contem dentro do Malote!</li>
-                                <li>Fique atento aos campos "CC deverá ser informada no campo abaixo".</li>
-                                <li>Fique atento ao seu painel de solicitações.</li>
+                                <li>Apoio em roteiro para vídeo</li>
+                                <li>Cobertura de eventos (apoio)</li>
+                                <li>Cobertura fotográfica</li>
+                                <li>Criação de release</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restante dos itens com as classes modificadas -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTow">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTow" aria-expanded="false"
+                                aria-controls="flush-collapseTow">
+                            Comunicação Digital
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTow" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingTow" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Anúncio nas redes sociais</li>
+                                <li>Criação de artes e textos para posts</li>
+                                <li>Envio de e-mail marketing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adicione classes similares aos outros itens -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTree" aria-expanded="false"
+                                aria-controls="flush-collapseTree">
+                            Criação gráfica
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTree" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingTree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Adaptação de peças</li>
+                                <li>Criação de campanhas</li>
+                                <li>Apresentação de power point</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Acordeões ----------------------->
+            <!-- Acordeões ---------------------------------->
 
         </div>
-        <!-- Informativo ------------------------->
+        <!-- Informativo ------------------------------------>
 
 
-        <!-- Formulário de Malotes --------------->
+        <!-- Formulário de Assessoria ------------------------>
         <div id="formulario1" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
+            <h5 class="p-3">FORMULÁRIO ASSESSORIA</h5>
 
-            <form action="{% url 'salvar_malote_secretaria' %}"
+            <form action="{% url 'request_acessoria_MK' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -125,79 +185,126 @@
 
                 <div class="row p-3 ">
 
-                    <!-- primeira col -------------------------->
                     <div class="col-7">
 
-                        <div class="">
-                            <label class="required-label">Lacre:</label>
-                            {{ form.service }}
+                        <div>
+                            <label class="required-label">Serviço:</label>
+                            {{ acessoria.service }}
                         </div>
 
                         <div class="mt-2">
                             <label>Descrição:</label>
-                            {{ form.descricao }}
+                            {{ acessoria.descricao }}
                         </div>
 
                         <div class="mt-2">
                             <label>Anexar arquivo:</label>
-                            {{ form.attachment }}
+                            {{ acessoria.attachment }}
                         </div>
 
                         <input class="mt-5 button-request" type="submit" value="Enviar">
 
                     </div>
-                    <!-- primeira col -------------------------->
-
-                    <!-- segunda col -------------------------->
-                    <div class="col">
-
-                        <h6 class="required-label">Selecione os itens desejados:</h6>
-
-                        <!-------------------------------------->
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item1" id="CartaBaixaGarantias"
-                                   value="Carta de Baixa de Garantias" type="checkbox">
-                            <label class="form-check-label" for="CartaBaixaGarantias">Carta de Baixa de
-                                Garantias</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item2" id="Cartao" value="Cartão" type="checkbox">
-                            <label class="form-check-label" for="Cartao">Cartão</label>
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="item3" id="TalaoCheque" value="Talão de Cheque"
-                                   type="checkbox">
-                            <label class="form-check-label" for="TalaoCheque">Talão de Cheque</label>
-                        </div>
-
-
-                    </div>
-                    <!-- segunda col -------------------------->
 
                 </div>
             </form>
         </div>
-        <!-- Formulário de Malotes --------------->
+        <!-- Formulário de Assessoria ------------------------>
 
-        <!-- Formulário de CI -------------------->
+        <!-- Formulário de Comunicação Digital -------------->
         <div id="formulario2" class="col menu-request m-0" style="display:none">
-            <h5 class="p-3">FORMULÁRIO DE SOLICITÇÕES CI/CNAC/R.O</h5>
+            <h5 class="p-3">FORMULÁRIO DE COMUNICAÇÃO DIGITAL</h5>
+
+            <form action="{% url 'request_digital_MK' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <div class="col-7">
+
+                        <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ digital.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Descrição:</label>
+                            {{ digital.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Anexar arquivo:</label>
+                            {{ digital.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <!-- Formulário de Comunicação Digital -------------->
+
+        <!-- Formulário de Criação Gráfica ------------------>
+        <div id="formulario3" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO CRIAÇÃO GRÁFICA</h5>
+
+            <form action="{% url 'request_gráfica_MK' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <div class="col-7">
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ grafica.assunto }}
+                        </div>
+
+                        <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ grafica.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Descrição:</label>
+                            {{ grafica.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="">Anexar arquivo:</label>
+                            {{ grafica.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <!-- Formulário de Criação Gráfica ------------------>
+
+        <!-- Formulário de CI ------------------------------->
+        <div id="formulario4" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE SOLICITAÇÕES CI/CNAC/R.O</h5>
 
             <div class="row p-3 ">
 
                 <div class="col-7">
 
-                    <form action="{% url 'request_ci_sec' %}"
+                    <form action="{% url 'request_ci_mk' %}"
                           method="POST"
                           enctype="multipart/form-data">
 
                         {% csrf_token %}
-
-                        <!-- Alterar para o setor que a solicitações esta sendo aberta -->
-                        <input type="hidden" name="ambiente" value="Tecnologia">
 
                         <div class="mb-2">
                             <label class="required-label">Assunto:</label>
@@ -224,15 +331,16 @@
                     </form>
 
                 </div>
+
             </div>
         </div>
-        <!-- Formulário de CI -------------------->
+        <!-- Formulário de CI ------------------------------->
 
-        <!-- Formulário de Apontamentos ---------->
-        <div id="formulario3" class="col menu-request m-0" style="display:none">
+        <!-- Formulário de Apontamentos --------------------->
+        <div id="formulario5" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
-            <form action="{% url 'request_apontamentos_sec' %}"
+            <form action="{% url 'request_apontamentos_mk' %}"
                   method="POST"
                   enctype="multipart/form-data">
 
@@ -268,7 +376,7 @@
 
                     <!-- Segunda col --------------------->
                     <div class="col">
-                    <!-- Segunda col --------------------->
+
                         <p>Reincidente:</p>
 
                         <div class="form-check form-switch">
@@ -325,13 +433,12 @@
 
                 </div>
             </form>
-
         </div>
-        <!-- Formulário de Apontamentos ---------->
+        <!-- Formulário de Apontamentos --------------------->
 
     </div>
 
 </div>
-<!-- Conteúdo ------------------------------------>
+<!-- Conteúdo ----------------------------------------------->
 
 {% endblock %}

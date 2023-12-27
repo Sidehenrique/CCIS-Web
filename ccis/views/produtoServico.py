@@ -2,8 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
+from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification, \
+    OperatorRating
 from ..forms import ModelFormPS, modelFormApontamentos, modelFormCI
+from django.db.models import OuterRef, Subquery, F, ExpressionWrapper, fields, Avg, Count, FloatField
 
 
 @login_required(login_url="/login")
@@ -11,7 +13,7 @@ def produtoServico_home(request):
     user = request.user
 
     try:
-        dadosSetor = CustomGroupInfo.objects.get(nome='Produto e Serviço')
+        dadosSetor = CustomGroupInfo.objects.get(nome='Produtos e Serviços')
 
     except CustomGroupInfo.DOESNOTEXIST:
         dadosSetor = None
@@ -50,6 +52,71 @@ def produtoServico_home(request):
         nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
                                                            x['cargo'] != 'Encarregado(a)'))
 
+    # Contagem dos processos que estão em triagem e em andamento no setor
+    ultimos_status = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id')
+    ).order_by('-data_hora').values('status_atual')[:1]
+
+    contagem_condicional = CardSetorHistory.objects.filter(
+        status_atual__in=['Triagem', 'Em Atendimento'],
+        setor_atual='Produtos e Serviços',
+        status_atual=Subquery(ultimos_status)
+    ).count()
+
+    # Tempo médio de atendimento
+    triagem_subquery = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id'),
+        status_atual='Triagem'
+    ).order_by('-data_hora').values('data_hora')[:1]
+
+    concluido_subquery = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id'),
+        status_atual='Concluido'
+    ).order_by('-data_hora').values('data_hora')[:1]
+
+    diferenca_tempo = CardSetorHistory.objects.filter(
+        setor_atual='Produtos e Serviços',
+        status_atual__in=['Triagem', 'Concluido']
+    ).values('setor_atual').annotate(
+        tempo_atendimento=Avg(ExpressionWrapper(
+            Subquery(concluido_subquery) - Subquery(triagem_subquery),
+            output_field=fields.DurationField()
+        )),
+        qtd_cards=Count('card_id', distinct=True)
+    )
+
+    resultados = []
+
+    for resultado in diferenca_tempo:
+        media_tempo = resultado["tempo_atendimento"]
+
+        if media_tempo is not None:
+            media_tempo_em_microssegundos = media_tempo.total_seconds() * 10 ** 6
+            media_tempo_em_dias = media_tempo_em_microssegundos / (
+                        1000000 * 60 * 60 * 24)  # Convertendo microssegundos para dias
+            media_tempo_dias = round(media_tempo_em_dias)
+
+            resultados.append(
+                int(media_tempo_dias)
+
+            )
+
+        else:
+            resultados.append(
+                '-',
+            )
+    if resultados:
+        tempo = resultados[0]
+    else:
+        tempo = "-"
+
+    # média da avaliação por setor
+
+    media_grupo_2 = OperatorRating.objects.filter(group_id=33).aggregate(
+        media_rating=ExpressionWrapper(Avg('rating'), output_field=FloatField())
+    )['media_rating']
+    media_grupo_2 = '-' if media_grupo_2 is None else media_grupo_2
+
     if request.method == 'GET':
         sector_buttons = SectorButtons.objects.filter(group=33)
         context = {
@@ -57,6 +124,7 @@ def produtoServico_home(request):
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
+            'contagem': contagem_condicional, 'tempo': tempo, 'avaliacao': media_grupo_2
         }
 
         return render(request, 'ccis/setor_home.html', context)
@@ -69,7 +137,7 @@ def request_produto_servico(request):
 
     context = {'form': form, 'apontamentos': apontamentos, 'ci': ci}
 
-    return render(request, "produtoServico/request_produto_servico.html", context)
+    return render(request, "setores/produtoServico/request_produto_servico.html", context)
 
 
 @login_required(login_url="/login")
@@ -95,7 +163,7 @@ def salvar_malote_PS(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Produto e Serviço",  # Setor atual
+                setor_atual="Produtos e Serviços",  # Setor atual
             )
             history_entry.save()
 
@@ -156,7 +224,7 @@ def salvar_malote_PS(request):
 
     else:
         form = ModelFormPS()
-        return render(request, 'produtoServico/request_produto_servico.html', {'form': form})
+        return render(request, 'setores/produtoServico/request_produto_servico.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -182,7 +250,7 @@ def request_ci_ps(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Produto e Serviço",  # Setor atual
+                setor_atual="Produtos e Serviços",  # Setor atual
             )
             history_entry.save()
 
@@ -190,7 +258,7 @@ def request_ci_ps(request):
             descricao = form.cleaned_data.get('descricao')
             assunto = request.POST.get('assunto-input')
 
-            if(assunto):
+            if (assunto):
                 descricao = f"<strong>Assunto:</strong> {assunto} <br><br>" + descricao
 
             if descricao:
@@ -227,7 +295,7 @@ def request_ci_ps(request):
     else:
         form = modelFormCI()
 
-    return render(request, 'produtoServico/request_produto_servico', {'form': form})
+    return render(request, 'setores/produtoServico/request_produto_servico', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -248,7 +316,6 @@ def request_apontamentos_ps(request):
             card.cor = "#FFCECE"
             card.save()
 
-
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
@@ -256,7 +323,7 @@ def request_apontamentos_ps(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Produto e Serviço",  # Setor atual
+                setor_atual="Produtos e Serviços",  # Setor atual
             )
             history_entry.save()
 
@@ -285,7 +352,6 @@ def request_apontamentos_ps(request):
 
                 if form.cleaned_data.get('descricao'):
                     descricao += f"Descrição: {form.cleaned_data.get('descricao')}<br>"
-
 
             if descricao:
                 message_history = MessageHistory(
@@ -321,19 +387,18 @@ def request_apontamentos_ps(request):
     else:
         form = modelFormApontamentos()
 
-    return render(request, 'produtoServico/request_produto_servico.html', {'form': form, 'is_apontamento': True})
+    return render(request, 'setores/produtoServico/request_produto_servico.html', {'form': form, 'is_apontamento': True})
 
 
 @login_required(login_url="/login")
 def processos_PS(request):
-
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-            queryset=CardSetorHistory.objects.order_by('-data_hora'))
-        )
+                                                             queryset=CardSetorHistory.objects.order_by('-data_hora'))
+                                                    )
 
         group = Group.objects.all()
-        setor = 'Produto e Serviço'
+        setor = 'Produtos e Serviços'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0

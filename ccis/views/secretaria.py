@@ -2,8 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification
+from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
 from ..forms import ModelFormSecretariaMalotes, modelFormCI, modelFormApontamentos
+from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
 @login_required(login_url="/login")
@@ -50,12 +51,77 @@ def secretaria_home(request):
         nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
                                                            x['cargo'] != 'Encarregado(a)'))
 
+    # Contagem dos processos que estão em triagem e em andamento no setor
+    ultimos_status = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id')
+    ).order_by('-data_hora').values('status_atual')[:1]
+
+    contagem_condicional = CardSetorHistory.objects.filter(
+        status_atual__in=['Triagem', 'Em Atendimento'],
+        setor_atual='Secretaria',
+        status_atual=Subquery(ultimos_status)
+    ).count()
+    
+    # Tempo médio de atendimento
+    triagem_subquery = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id'),
+        status_atual='Triagem'
+    ).order_by('-data_hora').values('data_hora')[:1]
+
+
+    concluido_subquery = CardSetorHistory.objects.filter(
+        card_id=OuterRef('card_id'),
+        status_atual='Concluido'
+    ).order_by('-data_hora').values('data_hora')[:1]
+
+
+    diferenca_tempo = CardSetorHistory.objects.filter(
+        setor_atual='Secretaria',
+        status_atual__in=['Triagem', 'Concluido']
+    ).values('setor_atual').annotate(
+        tempo_atendimento=Avg(ExpressionWrapper(
+            Subquery(concluido_subquery) - Subquery(triagem_subquery),
+            output_field=fields.DurationField()
+        )),
+        qtd_cards=Count('card_id', distinct=True)
+    )
+
+    resultados = []
+
+    for resultado in diferenca_tempo:
+        media_tempo = resultado["tempo_atendimento"]
+
+        if media_tempo is not None:
+            media_tempo_em_microssegundos = media_tempo.total_seconds() * 10**6
+            media_tempo_em_dias = media_tempo_em_microssegundos / (1000000 * 60 * 60 * 24)  # Convertendo microssegundos para dias
+            media_tempo_dias = round(media_tempo_em_dias)
+
+            resultados.append(
+                int(media_tempo_dias)
+                
+            )
+            
+        else:
+            resultados.append(
+                '-',
+            )
+    tempo = resultados[0]
+    
+
+# média da avaliação por setor
+
+    media_grupo_2 = OperatorRating.objects.filter(group_id=31).aggregate(
+        media_rating=ExpressionWrapper(Avg('rating'), output_field=FloatField())
+    )['media_rating']
+    media_grupo_2 = '-' if media_grupo_2 is None else media_grupo_2
+
     if request.method == 'GET':
         sector_buttons = SectorButtons.objects.filter(group=31)
         context = {
             'username': user, 'groupControle': groupControle, 'setor': setor, 'sector_buttons': sector_buttons,
             'group_gestao': group_gestao,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
+            'contagem':contagem_condicional,'tempo': tempo,'avaliacao': media_grupo_2
         }
 
         return render(request, 'ccis/setor_home.html', context)
@@ -69,7 +135,7 @@ def new_request_secretaria(request):
 
     context = {'form': form, 'apontamentos': apontamentos, 'ci': ci }
 
-    return render(request, "secretaria/new_request_secretaria.html", context)
+    return render(request, "setores/secretaria/new_request_secretaria.html", context)
 
 
 @login_required(login_url="/login")
@@ -130,7 +196,7 @@ def salvar_malote_secretaria(request):
     else:
         form = ModelFormSecretariaMalotes()
 
-    return render(request, 'secretaria/new_request_secretaria.html', {'form': form})
+    return render(request, 'setores/secretaria/new_request_secretaria.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -201,7 +267,7 @@ def request_ci_sec(request):
     else:
         form = modelFormCI()
 
-    return render(request, 'secretaria/new_request_secretaria', {'form': form})
+    return render(request, 'setores/secretaria/new_request_secretaria', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -293,7 +359,7 @@ def request_apontamentos_sec(request):
     else:
         form = modelFormApontamentos()
 
-    return render(request, 'secretaria/new_request_secretaria.html', {'form': form, 'is_apontamento': True})
+    return render(request, 'setores/secretaria/new_request_secretaria.html', {'form': form, 'is_apontamento': True})
 
 
 @login_required(login_url="/login")

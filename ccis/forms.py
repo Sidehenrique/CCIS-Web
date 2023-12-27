@@ -1255,7 +1255,7 @@ class modelFormBasileiaGR(forms.ModelForm):
         ('Dúvidas em geral', 'Dúvidas em geral'),
         ('Inclusão de modalidade', 'Inclusão de modalidade'),
         ('Alteração nas taxas', 'Alteração nas taxas'),
-        ('Sugetões', 'Sugetões'),
+        ('Sugestões', 'Sugestões'),
     ]
 
     CHOICES_AssuntoAcessos = [
