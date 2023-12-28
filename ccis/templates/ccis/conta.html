@@ -8,6 +8,7 @@
 
     <div class="row gutters">
 
+        <!-- Conta ------------------------->
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
                 <div class="card-body">
@@ -98,7 +99,7 @@
                                     <ul class="ul-menu-request">
 
                                         <li class="li-lista-novo mt-5">
-                                            <a href="" class="li-link-conta"
+                                            <a href="{% url 'profile' request.user.id %}" class="li-link-back"
                                                aria-current="page">
                                                 <i class="fa-solid fa-arrow-left"></i>
                                                 Voltar
@@ -117,6 +118,7 @@
                 </div>
             </div>
         </div>
+        <!-- Conta ------------------------->
 
         <!-- Informativo ------------------------->
         <div id="informativo" class="col menu-request m-0 p-5">
@@ -408,7 +410,7 @@
                             </div>
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary" id="botao-enviar">
+                                <button type="submit" class="confirm" id="botao-enviar">
                                     Confirmar
                                 </button>
                             </div>
@@ -466,7 +468,7 @@
                             </div>
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
+                                <button type="submit" class="confirm">Confirmar</button>
                             </div>
 
                         </form>
@@ -566,7 +568,7 @@
                             </div>
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
+                                <button type="submit" class="confirm">Confirmar</button>
                             </div>
 
                         </form>
@@ -654,7 +656,7 @@
                             </div>
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
+                                <button type="submit" class="confirm">Confirmar</button>
                             </div>
 
                         </form>
@@ -708,7 +710,7 @@
 
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
+                                <button type="submit" class="confirm">Confirmar</button>
                             </div>
 
                         </form>
