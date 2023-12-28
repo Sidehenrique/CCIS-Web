@@ -2343,7 +2343,7 @@ status-negativo{
 
 
 .li-link-conta:hover{
-    background-color:#00A194;
+    background-color:#d9d9d9;
     color:#ffffff;
 }
 
@@ -2351,6 +2351,11 @@ status-negativo{
 .li-link-conta:active{
     color:#ffffff;
     background-color:#16B597;
+}
+
+.li-link-conta.hoverAtivo {
+    background-color: #00A194;
+    color: #ffffff;
 }
 
     .account-settings .user-profile {

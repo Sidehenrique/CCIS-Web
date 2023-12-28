@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
-from ..forms import ModelFormFormosaMalotes
+from ..forms import ModelFormMalotes
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
@@ -129,7 +129,7 @@ def formosa_home(request):
 
 @login_required(login_url="/login")
 def new_request_formosa(request):
-    form = ModelFormFormosaMalotes()
+    form = ModelFormMalotes()
     context = {'form': form, }
 
     return render(request, "pa/formosa/new_request_formosa.html", context)
@@ -142,7 +142,7 @@ def salvar_malote_formosa(request):
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormFormosaMalotes(request.POST, request.FILES)
+        form = ModelFormMalotes(request.POST, request.FILES)
 
         if form.is_valid():
             card = form.save(commit=False)
@@ -214,7 +214,7 @@ def salvar_malote_formosa(request):
             return redirect('formosa_home')
 
     else:
-        form = ModelFormFormosaMalotes()
+        form = ModelFormMalotes()
 
     return render(request, 'pa/formosa/new_request_formosa.html', {'form': form})
 

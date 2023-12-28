@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
-from ..forms import ModelFormVicenteMalotes
+from ..forms import ModelFormMalotes
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
@@ -129,7 +129,7 @@ def vicente_home(request):
 
 @login_required(login_url="/login")
 def new_request_vicente(request):
-    form = ModelFormVicenteMalotes()
+    form = ModelFormMalotes()
     context = {'form': form, }
 
     return render(request, "pa/vicente/new_request_vicente.html", context)
@@ -142,7 +142,7 @@ def salvar_malote_vicente(request):
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormVicenteMalotes(request.POST, request.FILES)
+        form = ModelFormMalotes(request.POST, request.FILES)
 
         if form.is_valid():
 
@@ -200,7 +200,7 @@ def salvar_malote_vicente(request):
             return redirect('vicente_home')
 
     else:
-        form = ModelFormVicenteMalotes()
+        form = ModelFormMalotes()
 
     return render(request, 'pa/vicente/new_request_vicente.html', {'form': form})
 

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Prefetch
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
-from ..forms import ModelFormCobrancaMalotes, modelFormCI, modelFormApontamentos
+from ..forms import ModelFormMalotes, modelFormCI, modelFormApontamentos
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
@@ -133,7 +133,7 @@ def cobranca_home(request):
 @login_required(login_url="/login")
 def new_request_cobranca(request):
 
-    form = ModelFormCobrancaMalotes()
+    form = ModelFormMalotes()
     apontamentos = modelFormApontamentos()
     ci = modelFormCI()
 
@@ -149,7 +149,7 @@ def salvar_malote_cobranca(request):
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormCobrancaMalotes(request.POST, request.FILES)
+        form = ModelFormMalotes(request.POST, request.FILES)
 
         if form.is_valid():
             card = form.save(commit=False)
@@ -219,7 +219,7 @@ def salvar_malote_cobranca(request):
             return redirect('cobranca_home')
 
     else:
-        form = ModelFormCobrancaMalotes()
+        form = ModelFormMalotes()
 
     return render(request, 'setores/cobranca/new_request_cobranca.html', {'form': form})
 

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
-from ..forms import ModelFormCadastroMalotes, modelFormCI, modelFormApontamentos
+from ..forms import ModelFormMalotes, modelFormCI, modelFormApontamentos
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
@@ -129,7 +129,7 @@ def cadastro_home(request):
 
 
 def new_request_cadastro(request):
-    form = ModelFormCadastroMalotes()
+    form = ModelFormMalotes()
     apontamentos = modelFormApontamentos()
     ci = modelFormCI()
 
@@ -144,7 +144,7 @@ def salvar_malote_cadastro(request):
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormCadastroMalotes(request.POST, request.FILES)
+        form = ModelFormMalotes(request.POST, request.FILES)
 
         if form.is_valid():
             card = form.save(commit=False)
@@ -215,7 +215,7 @@ def salvar_malote_cadastro(request):
             return redirect('cadastro_home')
 
     else:
-        form = ModelFormCadastroMalotes()
+        form = ModelFormMalotes()
 
     return render(request, 'setores/cadastro/new_request_cadastro.html', {'form': form})
 

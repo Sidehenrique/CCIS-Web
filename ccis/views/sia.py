@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
-from ..forms import ModelFormSIAMalotes
+from ..forms import ModelFormMalotes
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
@@ -129,7 +129,7 @@ def sia_home(request):
 
 @login_required(login_url="/login")
 def new_request_sia(request):
-    form = ModelFormSIAMalotes()
+    form = ModelFormMalotes()
     context = {'form': form, }
 
     return render(request, "pa/sia/new_request_sia.html", context)
@@ -142,7 +142,7 @@ def salvar_malote_sia(request):
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormSIAMalotes(request.POST, request.FILES)
+        form = ModelFormMalotes(request.POST, request.FILES)
 
         if form.is_valid():
 
@@ -215,7 +215,7 @@ def salvar_malote_sia(request):
             return redirect('sia_home')
 
     else:
-        form = ModelFormSIAMalotes()
+        form = ModelFormMalotes()
 
     return render(request, 'pa/sia/new_request_sia.html', {'form': form})
 

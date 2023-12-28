@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from .. models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,OperatorRating,
                        Card, Notification)
-from ..forms import ModelFormRhMalotes, ModelFormRhEtica, modelFormCI, modelFormApontamentos
+from ..forms import ModelFormMalotes, ModelFormRhEtica, modelFormCI, modelFormApontamentos
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
@@ -216,7 +216,7 @@ def colaboradores(request):
 
 @login_required(login_url="/login")
 def new_request(request):
-    form = ModelFormRhMalotes()
+    form = ModelFormMalotes()
     form_Etica = ModelFormRhEtica()
     apontamentos = modelFormApontamentos()
     ci = modelFormCI()
@@ -237,7 +237,7 @@ def salvar_malote(request):
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormRhMalotes(request.POST, request.FILES)
+        form = ModelFormMalotes(request.POST, request.FILES)
 
         if form.is_valid():
             card = form.save(commit=False)
@@ -307,7 +307,7 @@ def salvar_malote(request):
             return redirect('rh_home')
 
     else:
-        form = ModelFormRhMalotes()
+        form = ModelFormMalotes()
 
     return render(request, 'setores/rh/new_request.html', {'form': form})@login_required(login_url="/login")
 
@@ -581,8 +581,6 @@ def processos(request):
                         card_count_concluido += 1
                     elif cardsetorhistory.status_atual == "Finalizado":
                         card_count_finalizado += 1
-
-        print(card.anonymous)
 
         context = {
             'cards': cards,

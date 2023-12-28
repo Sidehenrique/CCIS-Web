@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
-from ..forms import ModelFormPaDigitalMalotes
+from ..forms import ModelFormMalotes
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 @login_required(login_url="/login")
@@ -131,7 +131,7 @@ def paDigital_home(request):
 
 @login_required(login_url="/login")
 def new_request_PaDigital(request):
-    form = ModelFormPaDigitalMalotes()
+    form = ModelFormMalotes()
     context = {'form': form, }
 
     return render(request, "pa/padigital/new_request_padigital.html", context)
@@ -140,7 +140,7 @@ def new_request_PaDigital(request):
 @login_required(login_url="/login")
 def request_acessos_PaDigital(request):
     if request.method == 'POST':
-        form = ModelFormPaDigitalMalotes(request.POST, request.FILES)
+        form = ModelFormMalotes(request.POST, request.FILES)
         if form.is_valid():
 
             card = form.save(commit=False)
@@ -196,7 +196,7 @@ def request_acessos_PaDigital(request):
             return redirect('paDigital_home')
 
     else:
-        form = ModelFormPaDigitalMalotes()
+        form = ModelFormMalotes()
 
     return render(request, 'pa/padigital/new_request_padigital.html', {'form': form})
 

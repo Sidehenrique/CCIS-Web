@@ -722,4 +722,26 @@
     </div>
 </div>
 
+<script>
+    // Obtém todos os botões
+const botoes = document.querySelectorAll('.li-link-conta');
+
+// Função para adicionar classe ao botão após o clique
+function manterHover(event) {
+    // Impede o redirecionamento do link após o clique
+    event.preventDefault();
+    const botao = event.target;
+    // Remove a classe 'hoverAtivo' de todos os botões
+    botoes.forEach(btn => btn.classList.remove('hoverAtivo'));
+    // Adiciona a classe 'hoverAtivo' ao botão clicado
+    botao.classList.add('hoverAtivo');
+}
+
+// Adiciona um ouvinte de eventos de clique a cada botão
+botoes.forEach(botao => {
+    botao.addEventListener('click', manterHover);
+});
+
+</script>
+
 {% endblock %}

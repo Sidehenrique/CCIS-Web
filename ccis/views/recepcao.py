@@ -4,7 +4,7 @@ from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification, \
     OperatorRating
-from ..forms import ModelFormSecretariaMalotes, modelFormCI, modelFormApontamentos
+from ..forms import ModelFormMalotes, modelFormCI, modelFormApontamentos
 from django.db.models import OuterRef, Subquery, F, ExpressionWrapper, fields, Avg, Count, FloatField
 
 
@@ -132,7 +132,7 @@ def recepcao_home(request):
 
 @login_required(login_url="/login")
 def new_request_recepcao(request):
-    form = ModelFormSecretariaMalotes()
+    form = ModelFormMalotes()
     apontamentos = modelFormApontamentos()
     ci = modelFormCI()
 
@@ -148,7 +148,7 @@ def salvar_malote_recepcao(request):
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
         request.POST['assunto'] = 'Malote'
 
-        form = ModelFormSecretariaMalotes(request.POST, request.FILES)
+        form = ModelFormMalotes(request.POST, request.FILES)
 
         if form.is_valid():
             card = form.save(commit=False)
@@ -197,7 +197,7 @@ def salvar_malote_recepcao(request):
             return redirect('recepcao_home')
 
     else:
-        form = ModelFormSecretariaMalotes()
+        form = ModelFormMalotes()
 
     return render(request, 'setores/recepcao/new_request_recepcao.html', {'form': form})
 
