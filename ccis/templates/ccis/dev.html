@@ -4,728 +4,150 @@
 
 {% block conteudo %}
 
+<style>
+    .body{
+        margin-top:20px;
+        background:#eee;
+    }
 
-<body>
+    .team-style1 {
+        position: relative;
+        display: block;
+        overflow: hidden
+    }
+
+    .team-style1 img {
+    width: 100%; /* Ajusta a imagem para preencher o contêiner */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+    .team-style1 .team-info {
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        border-radius: 5px;
+        transform: translate3d(0px, 0%, 0px);
+        transition: all 800ms ease 0.35s;
+        padding: 10px;
+        box-shadow: 0px 5px 24.25px 0.75px rgba(0,0,0,0.1);
+        background: #ffffff;
+        position: absolute
+    }
+
+    .team-style1 .team-overlay {
+        left: 15px;
+        right: 15px;
+        opacity: 1;
+        padding: 0 20px;
+        position: absolute;
+        top: 15px;
+        bottom: 15px;
+        transform: translate3d(0px, -110%, 0px);
+        transition: all 500ms ease 0.35s;
+        box-shadow: 0px 5px 24.25px 0.75px rgba(0,0,0,0.1)
+    }
+
+    .team-style1:hover .team-overlay {
+        transform: translate3d(0px, 0, 0px);
+        transition-delay: 0.1s;
+        background: rgba(47,191,167,0.9);
+        border-radius: 5px
+    }
+
+    .team-style1:hover .team-info {
+        transform: translate3d(0px, 130px, 0px);
+        transition-delay: 0.2s
+    }
+
+    .team-bg-shape img {
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        z-index: 0
+    }
+
+    a {
+    text-decoration:none;
+    }
+</style>
 
 <div class="container-fluid scrollable-content">
 
-    <div class="row gutters">
+    <div class="row position-relative mt-n1-9">
 
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="account-settings">
+        <div class="col-2">
+            <div class="team-style1 text-center" style="width: 200px; height: 200px;">
 
-                        <div class="user-profile">
+                <img src="{% static 'ccis/testedev.png' %}" alt="...">
 
-                            <div class="user-avatar">
+                <div class="team-info">
+                    <h3 class="text-primary mb-1 h4">Contabilidade</h3>
+                    <span class="font-weight-600 text-secondary">Gestão & Controle</span>
+                </div>
 
-                                {% if user_data.logFoto %}
-                                <img class="nav-photo-edit" src="{{ user_data.logFoto.url }}">
-
-                                {% else %}
-
-                                {% if user_data.logSexo == "Masculino" %}
-                                <img class="nav-photo-edit"
-                                     src="{% static 'ccis/avatar.jpg' %}">
-
-                                {% elif user_data.logSexo == "Feminino" %}
-                                <img class="nav-photo-edit"
-                                     src="{% static 'ccis/avatar-feminino.jpg' %}">
-
-                                {% endif %}
-
-                                {% endif %}
-
-
-                            </div>
-                            <h5 class="user-name">{{ user_data.logName }} {{ user_data.logLast }}</h5>
-                            <h6 class="user-email">{{ user_data.logEmail }}</h6>
-
+                <div class="team-overlay">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a href="{% url 'contabilidade' %}" class="text-white">
+                                <h5>Contabilidade</h5>
+                                <p style="font-size: 13px;">Acompanhamento de Orçamentos e<br>Relatórios Contábeis</p>
+                            </a>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="about">
-                            <h5>Sobre</h5>
-                            <div id="menu_inicial" class="">
+            </div>
+        </div>
 
-                                <!-- Botões -------------------------->
-                                <div class="">
+        <div class="col-2">
+            <div class="team-style1 text-center" style="width: 200px; height: 200px;">
 
-                                    <ul class="ul-menu-request">
+                <img src="{% static 'ccis/testedev2.png' %}" alt="...">
 
-                                        <li class="li-menu-request">
-                                            <a type="button" id="btn_request_1" class="li-link-conta"
-                                               aria-current="page">
-                                                Dados Pessoais
-                                            </a>
-                                        </li>
+                <div class="team-info">
+                    <h4 class="text-primary mb-1 h4">OQS</h4>
+                    <span class="font-weight-600 text-secondary">Gestão & Controle</span>
+                </div>
 
-                                        <li class="li-menu-request">
-                                            <a type="button" id="btn_request_2" class="li-link-conta"
-                                               aria-current="page">
-                                                Dependentes
-                                            </a>
-                                        </li>
-
-                                        <li class="li-menu-request">
-                                            <a type="button" id="btn_request_3" class="li-link-conta"
-                                               aria-current="page">
-                                                Endereço e Contatos
-                                            </a>
-                                        </li>
-
-                                        <li class="li-menu-request">
-                                            <a type="button" id="btn_request_4" class="li-link-conta"
-                                               aria-current="page">
-                                                Profissional
-                                            </a>
-                                        </li>
-
-                                        <li class="li-menu-request">
-                                            <a type="button" id="btn_request_5" class="li-link-conta"
-                                               aria-current="page">
-                                                Dados Bancários
-                                            </a>
-                                        </li>
-
-                                    </ul>
-
-                                </div>
-                                <!-- Botões -------------------------->
-
-                                <!-- Voltar -------------------------->
-                                <div class="">
-
-                                    <hr style="color:#C4C0C0">
-
-                                    <ul class="ul-menu-request">
-
-                                        <li class="li-lista-novo mt-5">
-                                            <a href="" class="li-link-conta"
-                                               aria-current="page">
-                                                <i class="fa-solid fa-arrow-left"></i>
-                                                Voltar
-                                            </a>
-                                        </li>
-
-                                    </ul>
-
-                                </div>
-                                <!-- Voltar -------------------------->
-
-                            </div>
+                <div class="team-overlay">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a href="{% url 'qqs' %}" class="text-white">
+                                <h4>OQS</h4>
+                                <p style="font-size: 13px;">Principais Números,<br>Análise Quantitativa e<br> Análise
+                                    Qualitativa</p>
+                            </a>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Informativo ------------------------->
-        <div id="informativo" class="col menu-request m-0 p-5">
+         <div class="col-2">
+            <div class="team-style1 text-center" style="width: 200px; height: 200px;">
 
-            <!-- Texto --------------------------->
-            <div class="">
+                <img src="{% static 'ccis/testedev2.png' %}" alt="...">
 
-                <h6>Orientações para atualizações de Dados Pessoais:</h6>
-                <p>Campos obrigatrórios:</p>
+                <div class="team-info">
+                    <h3 class="text-primary mb-1 h4">Planejamento Estrarégico</h3>
+                    <span class="font-weight-600 text-secondary">Gestão & Controle</span>
+                </div>
 
-                <ul>
-                    <li>Nome e último nome.</li>
-                    <li>E-mail.</li>
-                    <li>CPF</li>
-                    <li>Cargo.</li>
-                    <li>Área/Setor</li>
-                    <li>Situação: Ativo ou Inativo</li>
-                </ul>
-
-            </div>
-            <!-- Texto --------------------------->
-
-            <!-- Acordeões ----------------------->
-            <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                aria-controls="flush-collapseOne">
-                            Dados Pessoais
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse show"
-                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <ul>
-                                <li>
-                                    Nome Completo, Sexo, Estado Civil, Raça/Cor, Nascimento, Naturalidade, Tipo
-                                    Sanguíneo
-                                </li>
-                            </ul>
+                <div class="team-overlay">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a href="#" class="text-white">
+                                <h5>Planejamento Estratégico</h5>
+                                <p style="font-size: 13px;">Principais Números,<br>Análise Quantitativa e<br> Análise
+                                    Qualitativa</p>
+                            </a>
                         </div>
                     </div>
-
-
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                aria-controls="flush-collapseTwo">
-                            Dependentes
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                        <li>
-                            Nome Completo, CPF,
-                            Nascimento,
-                            Email,
-                            Relação,
-                            Contato,
-                            Fins de IRPF.
-                        </li>
-                    </div>
-
-
-                    <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                aria-controls="flush-collapseThree">
-                            Endereço e Contatos
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                        <li>
-                            Endereço,
-                            Bairro,
-                            Cidade,
-                            Cep,
-                            Estado
-                        </li>
-                    </div>
-
-                    <h2 class="accordion-header" id="flush-headingFour">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseFour" aria-expanded="false"
-                                aria-controls="flush-collapseFour">
-                            Profissional
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFour" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                        <li>
-                            Matricula,
-                            Cargo,
-                            Área,
-                            Situação
-                        </li>
-                    </div>
-
-                    <h2 class="accordion-header" id="flush-headingFive">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseFive" aria-expanded="false"
-                                aria-controls="flush-collapseFive">
-                            Dados Bancários
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFive" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                        <li>
-                            Conta,
-                            Digito,
-                            Banco,
-                            Agencia,
-                            Tipo de Conta
-                        </li>
-                    </div>
-
                 </div>
-
             </div>
-            <!-- Acordeões ----------------------->
-
         </div>
-        <!-- Informativo ------------------------->
-
-        <!-- Formularios contas ------------------------->
-        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-
-            <div class="row gutters">
-
-                <!-- card dados pessoais -->
-                <div id="formulario1" class="col menu-request m-0" style="display:none">
-                    <h5 class="p-3">DADOS PESSOAIS</h5>
-
-                    <div class="card-body">
-                        <p class="card-text"></p>
-
-                        <form method="post"
-                              action=" {% url 'conta' %} "
-                              class="row g-3 needs-validation"
-                              enctype="multipart/form-data"
-                              novalidate>
-                            {% csrf_token %}
-
-                            <div class="col-lg-6 col-md-12">
-                                <label class="form-label">Nome Completo:</label>
-                                {{form.nomeCompleto}}
-                            </div>
-
-
-                            <div class="col-lg-2 col-md-6">
-                                <label class="form-label">Sexo:</label>
-                                {{form.sexo}}
-                            </div>
-
-                            <div class="col-lg-2 col-md-6">
-                                <label class="form-label">Estado Civil:</label>
-                                {{form.estadoCivil}}
-                            </div>
-
-                            <div class="col-lg-2 col-md-6">
-                                <label class="form-label">Raça/Cor:</label>
-                                {{form.corRaca}}
-                            </div>
-
-                            <div class="col-lg-4 col-md-6">
-                                <label class="form-label">Nascimento:</label>
-                                {{form.dataNascimento}}
-                            </div>
-
-                            <div class="col-lg-4 col-md-6">
-                                <label class="form-label">Naturalidade:</label>
-                                {{form.naturalidade}}
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <label class="form-label">Tipo Sanguíneo:</label>
-                                {{form.tipoSanguineo}}
-                            </div>
-
-                            <hr>
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Nome Pai:</label>
-                                {{form.nomePai}}
-                            </div>
-
-                            <div class="col-lg-6 mb-4">
-                                <label class="form-label">Nome Mãe:</label>
-                                {{form.nomeMae}}
-                            </div>
-
-                            <hr>
-
-                            <div class="col-lg-4 col-md-8">
-                                <label class="form-label">CPF:</label>
-                                {{form.cpf}}
-                            </div>
-
-                            <div class="col-lg-3 col-md-4">
-                                <label class="form-label">RG:</label>
-                                {{form.rg}}
-                            </div>
-
-                            <div class="col-lg-5">
-                                <label class="form-label">Órgão Expedidor:</label>
-                                {{form.expedidor}}
-                            </div>
-
-                            <div class="col-lg-7">
-                                <label class="form-label">CNH:</label>
-                                {{form.cnh}}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Validade:</label>
-                                {{form.validadeCnh}}
-                            </div>
-
-                            <div class="col-lg-2 col-md-6">
-                                <label class="form-label">Categoria:</label>
-                                {{form.categoria}}
-                            </div>
-
-
-                            <div class="col-lg-7">
-                                <label class="form-label">Titulo de Eleitor:</label>
-                                {{form.tituloEleitor}}
-                            </div>
-
-                            <div class="col-lg-3 col-md-8">
-                                <label class="form-label">Zona:</label>
-                                {{form.zona}}
-                            </div>
-
-                            <div class="col-lg-2 col-md-4">
-                                <label class="form-label">Seção:</label>
-                                {{form.secao}}
-                            </div>
-
-                            <div class="col-lg-7">
-                                <label class="form-label">CTPS:</label>
-                                {{form.ctps}}
-                            </div>
-
-                            <div class="col-lg-2 col-md-8">
-                                <label class="form-label">Serie:</label>
-                                {{form.serieCTPS}}
-                            </div>
-
-                            <div class="col-lg-3 col-md-4">
-                                <label class="form-label">Data:</label>
-                                {{form.dataCTPS}}
-                            </div>
-
-
-                            <div class="col-lg-7">
-                                <label class="form-label">Reservista:</label>
-                                {{form.reservista}}
-                            </div>
-
-                            <div class="col-lg-2 col-md-6">
-                                <label class="form-label">RA:</label>
-                                {{form.ra}}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Serie:</label>
-                                {{form.serieReservista}}
-                            </div>
-
-                            <div class="col-lg-7">
-                                <label class="form-label">PIS:</label>
-                                {{form.pis}}
-                            </div>
-
-                            <div class="col-lg-5">
-                                <label class="form-label">Carteira Nacional de Saúde:</label>
-                                {{form.cns}}
-                            </div>
-
-                            <div class="form-check pt-3">
-                                {{form.pcd}}
-                                <label class="form-check-label">
-                                    Possui Deficiência Física?
-                                </label>
-                            </div>
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary" id="botao-enviar">
-                                    Confirmar
-                                </button>
-                            </div>
-
-                        </form>
-
-                    </div>
-                </div>
-
-                <!-- card Dependentes -->
-                <div id="formulario2" class="col menu-request m-0" style="display:none">
-                    <h5 class="p-3">DEPENDENTES</h5>
-
-                    <div class="card-body">
-
-                        <form method="post"
-                              action="{% url 'formDep' %}"
-                              class="row g-3 needs-validation"
-                              novalidate>
-                            {% csrf_token %}
-
-                            <div class="col-lg-6 col-md-12">
-                                <label class="form-label">Nome Completo:</label>
-                                {{dependentes.nomeCompleto}}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">CPF:</label>
-                                {{dependentes.cpf}}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Nascimento:</label>
-                                {{dependentes.dataNascimento}}
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Email:</label>
-                                {{dependentes.email}}
-                            </div>
-
-                            <div class="col-lg-2 col-md-5">
-                                <label class="form-label">Relação:</label>
-                                {{dependentes.relacao}}
-                            </div>
-
-                            <div class="col-lg-2 col-md-7">
-                                <label class="form-label">Contato:</label>
-                                {{dependentes.contato}}
-                            </div>
-
-                            <div class="col-lg-2">
-                                <label class="form-label">Fins de IRPF:</label>
-                                {{dependentes.declaracao}}
-                            </div>
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
-                            </div>
-
-                        </form>
-
-                    </div>
-                </div>
-
-                <!-- card End Contatos -->
-                <div id="formulario3" class="col menu-request m-0" style="display:none">
-                    <h5 class="p-3">ENDEREÇO e CONTATOS</h5>
-
-                    <div class="card-body">
-
-                        <form method="post" action="{% url 'formEnd' %}" class="row g-3 needs-validation"
-                              novalidate>
-                            {% csrf_token %}
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Endereço:</label>
-                                {{ contatoEndereco.endereco }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Bairro:</label>
-                                {{ contatoEndereco.bairro }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Cidade:</label>
-                                {{ contatoEndereco.cidade }}
-                            </div>
-
-                            <div class="col-lg-6 col-md-6">
-                                <label class="form-label">Cep:</label>
-                                {{ contatoEndereco.cep }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Estado:</label>
-                                {{ contatoEndereco.estado }}
-                            </div>
-
-                            <div class="col-lg-3 mb-3">
-                                <label class="form-label">Ramal:</label>
-                                {{ contatoEndereco.ramal }}
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Email Corporativo:</label>
-                                {{ contatoEndereco.emailCorporativo }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Tel. Corporativo:</label>
-                                {{ contatoEndereco.telefoneCorporativo }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Cel. Corporativo:</label>
-                                {{ contatoEndereco.celularCorporativo }}
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Email Pessoal:</label>
-                                {{ contatoEndereco.emailPessoal }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Tel. Pessoal:</label>
-                                {{ contatoEndereco.telefonePessoal }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6 mb-3">
-                                <label class="form-label">Cel. Pessoal:</label>
-                                {{ contatoEndereco.celularPessoal }}
-                            </div>
-
-
-                            <span><small>Contato de Emergência</small></span>
-                            <hr>
-
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Nome Completo:</label>
-                                {{ contatoEndereco.nomeCompleto }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Contato:</label>
-                                {{ contatoEndereco.telefoneDeEmergencia }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Relação:</label>
-                                {{ contatoEndereco.relacao }}
-                            </div>
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-                <!-- card Profissional -->
-                <div id="formulario4" class="col menu-request m-0" style="display:none">
-                    <h5 class="p-3">PROFISSIONAL </h5>
-
-                    <div class="card-body">
-
-                        <form method="post" action="{% url 'formProf' %}" class="row g-3 needs-validation"
-                              novalidate>
-                            {% csrf_token %}
-
-                            <div class="col-lg-6 col-md-12">
-                                <label class="form-label">Matricula:</label>
-                                {{ profissional.matricula }}
-                            </div>
-
-                            <div class="col-lg-2 col-md-4">
-                                <label class="form-label">Cargo:</label>
-                                {{ profissional.cargo }}
-                            </div>
-
-                            <div class="col-lg-2 col-md-4">
-                                <label class="form-label">Área:</label>
-                                {{ profissional.area }}
-                            </div>
-
-                            <div class="col-lg-2 col-md-4">
-                                <label class="form-label">PA|Unidade:</label>
-                                {{ profissional.paUnidade }}
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Centro de custo:</label>
-                                {{ profissional.centroDeCusto }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Colaborador:</label>
-                                {{ profissional.colaborador }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Superior Imediato:</label>
-                                {{ profissional.superiorImediato }}
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Folha de pagamento:</label>
-                                {{ profissional.folhaDePagamento }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Admissão:</label>
-                                {{ profissional.admissao }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Desligamento:</label>
-                                {{ profissional.desligamento }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Situação:</label>
-                                {{ profissional.situacao }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Empregador:</label>
-                                {{ profissional.empregador }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Horário Entrada:</label>
-                                {{ profissional.horarioEntrada }}
-                            </div>
-
-                            <div class="col-lg-3 col-md-6">
-                                <label class="form-label">Horário Saída:</label>
-                                {{ profissional.horarioSaida }}
-                            </div>
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-                <!-- card Dados Bancarios -->
-                <div id="formulario5" class="col menu-request m-0" style="display:none">
-                    <h5 class="p-3">DADOS BANCÁRIOS </h5>
-
-                    <div class="card-body">
-
-                        <form method="post" action="{% url 'formBanc' %}" class="row g-3 needs-validation"
-                              novalidate>
-                            {% csrf_token %}
-
-                            <div class="col-lg-6">
-                                <label class="form-label">Conta:</label>
-                                {{ dadosBancarios.conta }}
-                            </div>
-
-                            <div class="col-lg-2 col-md-4">
-                                <label class="form-label">Digito:</label>
-                                {{ dadosBancarios.digito }}
-                            </div>
-
-                            <div class="col-lg-2 col-md-4">
-                                <label class="form-label">Banco:</label>
-                                {{ dadosBancarios.banco }}
-                            </div>
-
-                            <div class="col-lg-2 col-md-4">
-                                <label class="form-label">Agencia:</label>
-                                {{ dadosBancarios.agencia }}
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 ">
-                                <label class="form-label">Tipo de Conta:</label>
-                                {{ dadosBancarios.tipoDeConta }}
-                            </div>
-
-                            <div class="col-lg-4 col-md-6">
-                                <label class="form-label">Modalidade:</label>
-                                {{ dadosBancarios.modalidade }}
-                            </div>
-
-                            <div class="col-lg-4">
-                                <label class="form-label">Chave Pix:</label>
-                                {{ dadosBancarios.chavePix }}
-                            </div>
-
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-        <!-- Formularios contas ------------------------->
     </div>
 </div>
 
-
-</body>
 
 {% endblock %}
