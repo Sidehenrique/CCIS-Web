@@ -13,7 +13,7 @@
 <div class="container-fluid scrollable-content">
 
     <!-- Titulo ----------------------------------->
-    <div class="row mt-3 mb-2">
+    <div class="row mb-2">
 
         <div class="col-8 ps-5 pt-4">
 
@@ -30,35 +30,32 @@
     <!--- titulo end ------------------------------->
 
     <!--- linha gerencia --------------------------->
-    <div class="m-5">
+    <div class="mb-5 ">
         <hr>
     </div>
     <!---linha gerencia----------------------------->
 
     <!--- Botões ----------------------------------->
-    <div class="col m-5">
+    <div class="col m-3">
 
-        <div class="row position-relative mt-n1-9">
+        <div class="row position-relative ">
 
             <!--- Gestão de Carteiras -------------->
-            <div class="col-2">
+            <div class="col-1 ms-4 me-5">
 
-                <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
                     <img src="{% static 'ccis/carteiras.png' %}">
 
                     <div class="team-info">
-                        <h3 style="color: #27DEBF;" class="mb-1 h4">Gestão de Carteiras</h3>
-                        <span class="font-weight-600 text-secondary">Gestão de Negócios</span>
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Gestão de Carteiras</h3>
                     </div>
 
                     <div class="team-overlay">
                         <div class="d-table h-100 w-100">
                             <div class="d-table-cell align-middle">
                                 <a style="text-decoration: none;" href="{% url 'gestaoCarteira' %}" class="text-white">
-                                    <h5>Gestão de Carteiras</h5>
-                                    <p style="font-size: 13px;">Sub Módulo Gestão de Metas, Gestão de Agendamento e
-                                        Calendário de Vencimentos.
+                                    <p style="font-size: 13px;">Sub Módulo Gestão de Metas, Gestão de Agendamento, etc...
                                     </p>
                                 </a>
                             </div>
@@ -70,15 +67,14 @@
             <!--- Gestão de Carteiras -------------->
 
             <!--- Relatorio Visitas ---------------->
-            <div class="col-2">
+            <div class="col-1 ms-3 me-5">
 
-                <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
                     <img src="{% static 'ccis/relatorioConselho.png' %}" alt="...">
 
                     <div class="team-info">
-                        <h3 style="color: #27DEBF;" class="mb-1 h4">Relatório Visitas</h3>
-                        <span class="font-weight-600 text-secondary">Gestão de Negócios</span>
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Relatório Visitas</h3>
                     </div>
 
                     <div class="team-overlay">
@@ -86,7 +82,6 @@
                             <div class="d-table-cell align-middle">
                                 <a style="text-decoration: none;" href="{%url 'relatorioVisitas'%}"
                                    class="text-white">
-                                    <h5>Relatório Visitas</h5>
                                     <p style="font-size: 13px;">Pessoa Jurídica ou Produtor Rural.</p>
                                 </a>
                             </div>
@@ -98,24 +93,22 @@
             <!--- Relatorio Visitas ---------------->
 
             <!--- Gestão das Captações ------------->
-            <div class="col-2">
+            <div class="col-1 ms-3 me-5">
 
-                <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
                     <img src="{% static 'ccis/captacoes.png' %}" alt="...">
 
                     <div class="team-info">
-                        <h4 style="color: #27DEBF;" class="mb-1 h4">Gestão das Captações</h4>
-                        <span class="font-weight-600 text-secondary">Gestão de Negócios</span>
+                        <h4 style="color: #003641; font-size: 15px;" class="mb-1 h4">Gestão das Captações</h4>
                     </div>
 
                     <div class="team-overlay">
                         <div class="d-table h-100 w-100">
                             <div class="d-table-cell align-middle">
                                 <a style="text-decoration: none;" href="{% url 'lastro' %}" class="text-white">
-                                    <h4>Gestão das Captações</h4>
                                     <p style="font-size: 13px;">Gestão dos Ativos, Gestão do custo LCA e Relação de
-                                        Aplicações Atuais.</p>
+                                        Aplicações.</p>
                                 </a>
                             </div>
                         </div>
@@ -126,24 +119,22 @@
             <!--- Gestão das Captações ------------->
 
             <!--- Gestão Crédito ------------------->
-            <div class="col-2">
+            <div class="col-1 ms-3 me-5">
 
-                <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
-                    <img src="{% static 'ccis/gestaoCredito.png' %}" alt="...">
+                    <img src="{% static 'ccis/gestaoCredito.png' %}">
 
                     <div class="team-info">
-                        <h3 style="color: #27DEBF;" class="mb-1 h4">Gestão de Crédito</h3>
-                        <span class="font-weight-600 text-secondary">Gestão de Negócios</span>
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Gestão de Crédito</h3>
                     </div>
 
                     <div class="team-overlay">
                         <div class="d-table h-100 w-100">
                             <div class="d-table-cell align-middle">
                                 <a style="text-decoration: none;" href="{% url 'credito' %}" class="text-white">
-                                    <h5>Gestão de Crédito</h5>
                                     <p style="font-size: 13px;">Sub Módulo Liberações Mensais de Crédito e Operações de
-                                        Crédito Vigentes.</p>
+                                        Crédito.</p>
                                 </a>
                             </div>
                         </div>
@@ -154,22 +145,20 @@
             <!--- Gestão Crédito ------------------->
 
             <!--- inadimplencia Diária ------------->
-            <div class="col-2">
+            <div class="col-1 ms-3 me-5">
 
-                <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
                     <img src="{% static 'ccis/inadimplencia.png' %}">
 
                     <div class="team-info">
-                        <h3 style="color: #27DEBF;" class="mb-1 h4">Inadimplência Diária</h3>
-                        <span class="font-weight-600 text-secondary">Gestão de Negócios</span>
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Inadimplência Diária</h3>
                     </div>
 
                     <div class="team-overlay">
                         <div class="d-table h-100 w-100">
                             <div class="d-table-cell align-middle">
                                 <a style="text-decoration: none;" href="{%url 'diaria'%}" class="text-white">
-                                    <h5>Inadimplência Diária</h5>
                                     <p style="font-size: 13px;">Geral, Operações em atraso e garantias, Prejuízo e
                                         Cartões</p>
                                 </a>
@@ -182,22 +171,20 @@
             <!--- inadimplencia Diária ------------->
 
             <!--- Plano de Metas ------------------->
-            <div class="col-2">
+            <div class="col-1 ms-3 me-5">
 
-                <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
-                    <img src="{% static 'ccis/metas.png' %}" alt="...">
+                    <img src="{% static 'ccis/metas.png' %}">
 
                     <div class="team-info">
-                        <h3 style="color: #27DEBF;" class="mb-1 h4">Plano de Metas</h3>
-                        <span class="font-weight-600 text-secondary">Gestão de Negócios</span>
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Plano de Metas</h3>
                     </div>
 
                     <div class="team-overlay">
                         <div class="d-table h-100 w-100">
                             <div class="d-table-cell align-middle">
                                 <a style="text-decoration: none;" href="{%url 'planoMetas'%}" class="text-white">
-                                    <h5>Plano de Metas</h5>
                                     <p style="font-size: 13px;">Índice de Basiléia, Patrimônio de Referência e Contas de
                                         Referência</p>
                                 </a>
@@ -212,24 +199,21 @@
             <!--- Coluna a Baixo ------------------->
 
             <!--- Listas de Propensos -------------->
-            <div class="col-2 mt-3">
+            <div class="col-1 ms-3 me-5">
 
-                <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
-                    <img src="{% static 'ccis/propensos.png' %}" alt="...">
+                    <img src="{% static 'ccis/propensos.png' %}">
 
                     <div class="team-info">
-                        <h3 style="color: #27DEBF;" class="mb-1 h4">Listas de Propensos</h3>
-                        <span class="font-weight-600 text-secondary">Gestão de Negócios</span>
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Listas de Propensos</h3>
                     </div>
 
                     <div class="team-overlay">
                         <div class="d-table h-100 w-100">
                             <div class="d-table-cell align-middle">
                                 <a style="text-decoration: none;" href="{%url 'listasPropensos'%}" class="text-white">
-                                    <h5>Listas de Propensos</h5>
-                                    <p style="font-size: 13px;">Consórcio Auto, Consórcio Imóvel, Cheque especial &
-                                        conta garantida. </p>
+                                    <p style="font-size: 13px;">Consórcio Auto, Consórcio Imóvel, Cheque especial. </p>
                                 </a>
                             </div>
                         </div>
@@ -240,24 +224,22 @@
             <!--- Listas de Propensos -------------->
 
             <!--- Lista de Pronampe ---------------->
-            <div class="col-2 mt-3">
+            <div class="col-1 mt-3 ms-4 me-5">
 
-                <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
-                    <img src="{% static 'ccis/pronampe.png' %}" alt="...">
+                    <img src="{% static 'ccis/pronampe.png' %}">
 
                     <div class="team-info">
-                        <h3 style="color: #27DEBF;" class="mb-1 h4">Lista de Pronampe</h3>
-                        <span class="font-weight-600 text-secondary">Gestão de Negócios</span>
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Lista de Pronampe</h3>
                     </div>
 
                     <div class="team-overlay">
                         <div class="d-table h-100 w-100">
                             <div class="d-table-cell align-middle">
                                 <a style="text-decoration: none;" href="{%url 'pronampe'%}" class="text-white">
-                                    <h5>Lista de Pronampe</h5>
                                     <p style="font-size: 13px;">Universo de Limite por PA, Produtos adquiridos pelo
-                                        cooperado e a serem ofertados</p>
+                                        cooperado</p>
                                 </a>
                             </div>
                         </div>

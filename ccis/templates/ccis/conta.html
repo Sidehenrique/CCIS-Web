@@ -4,11 +4,13 @@
 
 {% block conteudo %}
 
+<!-- Conteúdo ------------------------------------------->
 <div class="container-fluid scrollable-content">
 
+    <!-- Row -------------------------------------------->
     <div class="row gutters">
 
-        <!-- Conta ------------------------->
+        <!-- Conta -------------------------------------->
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
                 <div class="card-body">
@@ -118,25 +120,38 @@
                 </div>
             </div>
         </div>
-        <!-- Conta ------------------------->
+        <!-- Conta -------------------------------------->
 
-        <!-- Informativo ------------------------->
+        <!-- Informativo -------------------------------->
         <div id="informativo" class="col menu-request m-0 p-5">
 
             <div class="row">
+
                 <!-- Texto --------------------------->
                 <div class="col-6 mt-5">
 
                     <h6>Orientações para atualizações de Dados Pessoais:</h6>
                     <p>Campos obrigatrórios:</p>
 
-                    <ul>
-                        <li>Nome e último nome.</li>
-                        <li>E-mail.</li>
-                        <li>CPF</li>
-                        <li>Cargo.</li>
-                        <li>Área/Setor</li>
-                        <li>Situação: Ativo ou Inativo</li>
+                    <ul class="marcadores">
+
+                        <li>
+                            <strong>Nome e último nome</strong> - Dados Pessoais
+                        </li>
+
+                        <li>
+                            <strong>E-mail Coorporativo</strong> - Dependentes
+                        </li>
+                        <li>
+                            <strong>CPF</strong> - Dados Pessoais e Dependentes
+                        </li>
+                        <li>
+                            <strong>Cargo e Área</strong> - Profissional
+                        </li>
+                        <li>
+                            <strong>Situação: Ativo ou Inativo</strong> - Profissional
+                        </li>
+
                     </ul>
 
                 </div>
@@ -150,8 +165,9 @@
                 </div>
 
             </div>
+
         </div>
-        <!-- Informativo ------------------------->
+        <!-- Informativo -------------------------------->
 
         <!-- Formularios contas ------------------------->
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
@@ -628,8 +644,12 @@
 
         </div>
         <!-- Formularios contas ------------------------->
+
     </div>
+    <!-- Row -------------------------------------------->
+
 </div>
+<!-- Conteúdo ------------------------------------------->
 
 <script>
     // Obtém todos os botões
