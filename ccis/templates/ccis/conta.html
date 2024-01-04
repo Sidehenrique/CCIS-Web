@@ -4,11 +4,13 @@
 
 {% block conteudo %}
 
+<!-- Conteúdo ------------------------------------------->
 <div class="container-fluid scrollable-content">
 
+    <!-- Row -------------------------------------------->
     <div class="row gutters">
 
-        <!-- Conta ------------------------->
+        <!-- Conta -------------------------------------->
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
                 <div class="card-body">
@@ -118,133 +120,54 @@
                 </div>
             </div>
         </div>
-        <!-- Conta ------------------------->
+        <!-- Conta -------------------------------------->
 
-        <!-- Informativo ------------------------->
+        <!-- Informativo -------------------------------->
         <div id="informativo" class="col menu-request m-0 p-5">
 
-            <!-- Texto --------------------------->
-            <div class="">
+            <div class="row">
 
-                <h6>Orientações para atualizações de Dados Pessoais:</h6>
-                <p>Campos obrigatrórios:</p>
+                <!-- Texto --------------------------->
+                <div class="col-6 mt-5">
 
-                <ul>
-                    <li>Nome e último nome.</li>
-                    <li>E-mail.</li>
-                    <li>CPF</li>
-                    <li>Cargo.</li>
-                    <li>Área/Setor</li>
-                    <li>Situação: Ativo ou Inativo</li>
-                </ul>
+                    <h6>Orientações para atualizações de Dados Pessoais:</h6>
+                    <p>Campos obrigatrórios:</p>
 
-            </div>
-            <!-- Texto --------------------------->
+                    <ul class="marcadores">
 
-            <!-- Acordeões ----------------------->
-            <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                aria-controls="flush-collapseOne">
-                            Dados Pessoais
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse show"
-                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <ul>
-                                <li>
-                                    Nome Completo, Sexo, Estado Civil, Raça/Cor, Nascimento, Naturalidade, Tipo
-                                    Sanguíneo
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                aria-controls="flush-collapseTwo">
-                            Dependentes
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                         <li>
-                            Nome Completo, CPF,
-                            Nascimento,
-                            Email,
-                            Relação,
-                            Contato,
-                            Fins de IRPF.
+                            <strong>Nome e último nome</strong> - Dados Pessoais
                         </li>
-                    </div>
 
-
-                    <h2 class="accordion-header" id="flush-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                aria-controls="flush-collapseThree">
-                            Endereço e Contatos
-                        </button>
-                    </h2>
-                    <div id="flush-collapseThree" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                         <li>
-                            Endereço,
-                            Bairro,
-                            Cidade,
-                            Cep,
-                            Estado
+                            <strong>E-mail Coorporativo</strong> - Dependentes
                         </li>
-                    </div>
-
-                    <h2 class="accordion-header" id="flush-headingFour">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseFour" aria-expanded="false"
-                                aria-controls="flush-collapseFour">
-                            Profissional
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFour" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                         <li>
-                            Matricula,
-                            Cargo,
-                            Área,
-                            Situação
+                            <strong>CPF</strong> - Dados Pessoais e Dependentes
                         </li>
-                    </div>
-
-                    <h2 class="accordion-header" id="flush-headingFive">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseFive" aria-expanded="false"
-                                aria-controls="flush-collapseFive">
-                            Dados Bancários
-                        </button>
-                    </h2>
-                    <div id="flush-collapseFive" class="accordion-collapse collapse"
-                         aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
                         <li>
-                            Conta,
-                            Digito,
-                            Banco,
-                            Agencia,
-                            Tipo de Conta
+                            <strong>Cargo e Área</strong> - Profissional
                         </li>
-                    </div>
+                        <li>
+                            <strong>Situação: Ativo ou Inativo</strong> - Profissional
+                        </li>
 
+                    </ul>
+
+                </div>
+                <!-- Texto --------------------------->
+
+                <div style="text-align: center;" class="col-6 d-inline-block img-fluid m-0">
+                    <img src="{% static 'ccis/account.png' %}"
+                         alt="right"
+                         width="77%"
+                         height="auto">
                 </div>
 
             </div>
-            <!-- Acordeões ----------------------->
 
         </div>
-        <!-- Informativo ------------------------->
+        <!-- Informativo -------------------------------->
 
         <!-- Formularios contas ------------------------->
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
@@ -721,8 +644,12 @@
 
         </div>
         <!-- Formularios contas ------------------------->
+
     </div>
+    <!-- Row -------------------------------------------->
+
 </div>
+<!-- Conteúdo ------------------------------------------->
 
 <script>
     // Obtém todos os botões

@@ -3,26 +3,25 @@
 
 {% block conteudo %}
 
-    <div class="cotainer-fluid" style="padding-top: 90px">
+<div class="cotainer-fluid" style="padding-top: 90px">
 
-        <div class="logo_container">
-            <img class="img_ccc" src="{% static 'ccis/cooperarNatal.png' %}" width="270" alt="">
-            <h4 style="color:#003641; margin-top:30px; text-align:center">Campanha de Capital <br> Colaboradores</h4>
-        </div>
+    <div class="logo_container">
+        <img class="img_ccc" src="{% static 'ccis/Grupo 6330.png' %}" width="270" alt="">
+        <h4 style="color:#003641; margin-top:30px; text-align:center">Campanha de Capital <br> Colaboradores</h4>
+    </div>
 
-        <div class="input_container">
+    <div class="input_container">
 
-            <form action="{% url 'processa_cupons' %}" method="GET">
-                <input class="input_ccc" type="text" name="cpf" id="input-cpf" placeholder="Digite o CPF" required>
-                <input class="input_ccc" type="submit" value="Buscar Cupons" id="btn-buscar">
-            </form>
+        <form action="{% url 'processa_cupons' %}" method="GET">
+            <input class="input_ccc" type="text" name="cpf" id="input-cpf" placeholder="Digite o CPF" required>
+            <input class="input_ccc" type="submit" value="Buscar Cupons" id="btn-buscar">
+        </form>
 
-            <smal class="mt-3">Informe o CPF e gere <br>seus cupons!</smal>
-
-        </div>
+        <smal class="mt-3">Informe o CPF e gere <br>seus cupons!</smal>
 
     </div>
 
+</div>
 
 
 <script>
