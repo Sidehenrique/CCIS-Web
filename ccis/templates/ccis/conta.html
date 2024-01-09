@@ -325,9 +325,10 @@
                                 {{form.cns}}
                             </div>
 
+                            <input type="hidden" name="pcd" value="{{ form.pcd.value }}">
                             <div class="form-check pt-3">
-                                {{form.pcd}}
-                                <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" id="id_pcd" name="pcd_checkbox">
+                                <label class="form-check-label" for="id_pcd">
                                     Possui Deficiência Física?
                                 </label>
                             </div>

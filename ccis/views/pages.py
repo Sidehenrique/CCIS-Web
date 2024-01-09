@@ -480,9 +480,14 @@ def conta(request):
         form = modelFormDadosPessoais(request.POST, instance=pk_dados)
 
         if form.is_valid():
+            # Verifica se o checkbox foi marcado
+            if 'pcd_checkbox' in request.POST:
+                form.instance.pcd = True
+            else:
+                form.instance.pcd = False
+
             form.save()
             return redirect('conta')
-
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Dados Pessoais'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
