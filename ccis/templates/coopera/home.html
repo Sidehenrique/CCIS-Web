@@ -13,211 +13,210 @@
 <div class="container-fluid scrollable-content ps-0 pe-0">
 
     <!-- Titulo ------------------------------>
-    <div class="row m-3">
+    <div class="row m-3 text-center">
 
         <div class="col ps-5 pt-4">
 
-            <h1 style="font-family: oswald ; font-size:42px;">Bem vindo ao módulo<br>
-                <div class="col p-0">
-                    <img src="{% static 'ccis/Grupo 6330.png' %}" alt="logo-COOPERA" width="500px">
-                </div>
-            </h1>
+            <div class="col p-0">
+                <img src="{% static 'ccis/Grupo 6330.png' %}" alt="logo-COOPERA" width="350px">
+            </div>
+
         </div>
 
     </div>
     <!---titulo ------------------------------>
 
     <!--- Botões ----------------------------->
-    <div class="col ps-5 pb-5 pt-3">
 
-        <div class="row position-relative">
+    <div class="row justify-content-center position-relative me-1 p-5">
 
-            <!--- Relacionamento --------->
-            <div class="col-1 ms-4 me-5">
+        <!--- Relacionamento --------->
+        <div class="col-1 me-5">
 
-                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
 
-                    <img src="{% static 'ccis/relacionamento.png' %}">
+                <img src="{% static 'ccis/relacionamento.png' %}">
 
-                    <div class="team-info">
-                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Relacionamento</h3>
-                    </div>
-
-                    <div class="team-overlay">
-                        <div class="d-table h-100 w-100">
-                            <div class="d-table-cell align-middle">
-                                <a style="text-decoration: none;" href="{% url 'relacionamento' %}" class="text-white">
-                                    <p style="font-size: 12px;">Relacionamento com o cooperado</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 13px;" class="mb-1 h4">Relacionamento</h3>
                 </div>
 
-            </div>
-            <!--- Relacionamento --------->
-
-            <!--- india ------------------>
-            <div class="col-1 ms-1 me-5">
-
-                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
-
-                    <img src="{% static 'ccis/india.png' %}" alt="...">
-
-                    <div class="team-info">
-                        <h4 style="color: #003641; font-size: 15px;" class="mb-1 h4">India</h4>
-                    </div>
-
-                    <div class="team-overlay">
-                        <div class="d-table h-100 w-100">
-                            <div class="d-table-cell align-middle">
-                                <a style="text-decoration: none;" href="{% url 'india' %}" class="text-white">
-                                    <p style="font-size: 12px;">Inativos de propensos à eliminação, Inativos à
-                                        trabalhar, etc...</p>
-                                </a>
-                            </div>
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'relacionamento' %}" class="text-white">
+                                <p style="font-size: 12px;">Relacionamento com o cooperado</p>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--- india ------------------>
-
-            <!--- Dados Consolidados ----->
-            <div class="col-1 ms-1 me-5">
-
-                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
-
-                    <img src="{% static 'ccis/consolidados.png' %}">
-
-                    <div class="team-info">
-                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Dados Consolidados</h3>
-                    </div>
-
-                    <div class="team-overlay">
-                        <div class="d-table h-100 w-100">
-                            <div class="d-table-cell align-middle">
-                                <a style="text-decoration: none;" href="{% url 'dados' %}" class="text-white">
-                                    <p style="font-size: 13px;">Parecer técnico</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!--- Dados Consolidados ----->
-
-            <!--- Linhas e Produtos ------>
-            <div class="col-1 ms-1 me-5">
-
-                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
-
-                    <img src="{% static 'ccis/linhasProdutos.png' %}" alt="...">
-
-                    <div class="team-info">
-                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Linhas e Produtos</h3>
-                    </div>
-
-                    <div class="team-overlay">
-                        <div class="d-table h-100 w-100">
-                            <div class="d-table-cell align-middle">
-                                <a style="text-decoration: none;" href="{% url 'portifolio' %}" class="text-white">
-                                    <p style="font-size: 12px;">Portifólio de linhas de crédito, taxas de juros e
-                                        condições básicas...</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!--- Linhas e Produtos ------>
-
-            <!--- PDxLGD ----------------->
-            <div class="col-1 ms-1 me-5">
-
-                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
-
-                    <img src="{% static 'ccis/PDxLGD.png' %}" alt="...">
-
-                    <div class="team-info">
-                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">PDxLGD</h3>
-                    </div>
-
-                    <div class="team-overlay">
-                        <div class="d-table h-100 w-100">
-                            <div class="d-table-cell align-middle">
-                                <a style="text-decoration: none;" href="{% url 'tabela' %}" class="text-white">
-                                    <p style="font-size: 12px;">Modelo de classificação do risco das operações -
-                                        Reclassificação automática</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!--- PDxLGD ----------------->
-
-            <!--- Gestão de Capital ------>
-            <div class="col-1 ms-1 me-5">
-
-                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
-
-                    <img src="{% static 'ccis/capital.png' %}" alt="...">
-
-                    <div class="team-info">
-                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Gestão de Capital</h3>
-                    </div>
-
-                    <div class="team-overlay">
-                        <div class="d-table h-100 w-100">
-                            <div class="d-table-cell align-middle">
-                                <a style="text-decoration: none;" href="{% url 'capital' %}" class="text-white">
-                                    <p style="font-size: 13px;">Análise de indicadores</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!--- Gestão de Capítal ------>
-
-            <!--- Simulador -------------->
-            <div class="col-1 ms-1 me-5">
-
-                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
-
-                    <img src="{% static 'ccis/simulador.png' %}" alt="...">
-
-                    <div class="team-info">
-                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Simulador</h3>
-                    </div>
-
-                    <div class="team-overlay">
-                        <div class="d-table h-100 w-100">
-                            <div class="d-table-cell align-middle">
-                                <a style="text-decoration: none;" href="{% url 'simulador' %}"
-                                   class="text-white">
-                                    <p style="font-size: 13px;">Simulador de taxas, linha de crédito, etc...</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!--- Simulador -------------->
-
 
         </div>
+        <!--- Relacionamento --------->
+
+        <!--- india ------------------>
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/india.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h4 style="color: white; font-size: 13px;" class="mb-1 h4">India</h4>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'india' %}" class="text-white">
+                                <p style="font-size: 12px;">Inativos de propensos à eliminação, Inativos à
+                                    trabalhar, etc...</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--- india ------------------>
+
+        <!--- Dados Consolidados ----->
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/consolidados.png' %}">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 12px;" class="mb-1 h4">Dados Consolidados</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'dados' %}" class="text-white">
+                                <p style="font-size: 13px;">Parecer técnico</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!--- Dados Consolidados ----->
+
+        <!--- Linhas e Produtos ------>
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/linhasProdutos.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 13px;" class="mb-1 h4">Linhas e Produtos</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'portifolio' %}" class="text-white">
+                                <p style="font-size: 12px;">Portifólio de linhas de crédito, taxas de juros e
+                                    condições básicas...</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--- Linhas e Produtos ------>
+
+        <!--- PDxLGD ----------------->
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/PDxLGD.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 13px;" class="mb-1 h4">PDxLGD</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'tabela' %}" class="text-white">
+                                <p style="font-size: 12px;">Modelo de classificação do risco das operações -
+                                    Reclassificação automática</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--- PDxLGD ----------------->
+
+        <!--- Gestão de Capital ------>
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/capital.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 13px;" class="mb-1 h4">Gestão de Capital</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'capital' %}" class="text-white">
+                                <p style="font-size: 13px;">Análise de indicadores</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--- Gestão de Capítal ------>
+
+        <!--- Simulador -------------->
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/simulador.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 15px;" class="mb-1 h4">Simulador</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'simulador' %}"
+                               class="text-white">
+                                <p style="font-size: 13px;">Simulador de taxas, linha de crédito, etc...</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--- Simulador -------------->
+
 
     </div>
+
+
     <!--- Botões ----------------------------->
 
     <!-- Faixas ------------------------------>
-    <div class="row text-center ms-4">
+    <div class="row justify-content-center">
 
         <div class="col-2 ms-5 box-coopera" style="background-color:#7DB61C;">
 
