@@ -1,6 +1,5 @@
 from django import forms
 from django.forms import FileInput
-
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
     docCertidao, docAdmissional, docPeriodico, docCursos, Card, Notebook
@@ -876,6 +875,20 @@ class ModelFormRhEtica(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment',)
 
 
+class modelFormRhFerias(forms.ModelForm):
+    CHOICES_ServicoAcessos = [
+        ('Férias', 'Férias'),
+    ]
+
+    assunto = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+                                 required=False)
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
+
 # -------Secretaria---------------------------------------------------------------------------------------------------------
 
 
@@ -1023,6 +1036,5 @@ class modelFormClock(forms.ModelForm):
     class Meta:
         model = Card
         fields = ('assunto', 'service')
-
 
 

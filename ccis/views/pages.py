@@ -1304,3 +1304,34 @@ def notificacao_lida(request, notification_id):
 
         return JsonResponse({"error": "Card não encontrado"}, status=404)
 
+
+@login_required(login_url="/login")
+def chat(request):
+    return render(request, 'ccis/chat.html')
+
+@api_view(['POST'])
+def chat_send_message(request):
+
+    if request.method == 'POST':
+        input = request.data.get('resposta')
+        attachment = request.data.get('attachment')
+        remetente = request.user
+
+        message_history = MessageHistory(
+            remetente=remetente,
+            message=input,
+            attachment=attachment,
+        )
+        message_history.save()
+
+
+        data = {'status': 'Mensagem adicionada com sucesso'}
+        return JsonResponse(data)
+
+
+@api_view(['GET'])
+def chat_get_messages(request):
+    messages = MessageHistory.objects.filter()
+    message_serializer = MessageHistorySerializer(messages, many=True)
+
+    return Response(message_serializer.data)

@@ -1304,6 +1304,7 @@ $(document).ready(function() {
             },
 
             locale: 'pt-br',
+            selectable: true, // Adiciona a opção para selecionar datas
 
             // Adicione seus eventos ao calendário
             events: [

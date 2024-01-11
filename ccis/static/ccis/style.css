@@ -1026,7 +1026,7 @@ status-negativo{
 }
 
 .custom-nav-link {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0);
     position: relative;
     display: flex;
     align-items: center;
@@ -1038,7 +1038,7 @@ status-negativo{
 
 .custom-nav-item {
     font-size: 20px;
-    border-bottom: 1px solid rgb(230, 230, 230);
+    border-bottom: 1px solid gray;
     width: 100%;
 }
 
@@ -1097,7 +1097,7 @@ status-negativo{
 
 .search-menu-settings-dep {
   width: 100%;
-  padding-right: 30px; /* Espaço para o ícone "x" */
+  padding-right: 50px; /* Espaço para o ícone "x" */
   border: none; /* Remove as bordas */
   border-radius: 20px; /* Arredonda as bordas */
   font-size: 16px; /* Ajusta o tamanho da fonte */
@@ -1122,7 +1122,7 @@ status-negativo{
 .search-icon-dep {
   position: absolute;
   top: 50%;
-  right: 10px; /* Ajuste o valor conforme necessário para o espaçamento do ícone */
+  right: 25px; /* Ajuste o valor conforme necessário para o espaçamento do ícone */
   transform: translateY(-50%);
 }
 

@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
-from .. models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,OperatorRating,
-                       Card, Notification)
-from ..forms import ModelFormMalotes, ModelFormRhEtica, modelFormCI, modelFormApontamentos
-from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
+from ..models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,
+                      OperatorRating,
+                      Card, Notification)
+from ..forms import ModelFormMalotes, ModelFormRhEtica, modelFormCI, modelFormApontamentos, modelFormRhFerias
+from django.db.models import OuterRef, Subquery, F, ExpressionWrapper, fields, Avg, Count, FloatField
 
 
 # VIWER DO RH ----------------------------------------------------------------------------------------------------------
@@ -63,19 +64,17 @@ def rh_home(request):
         setor_atual='Gestão de Pessoas',
         status_atual=Subquery(ultimos_status)
     ).count()
-    
+
     # Tempo médio de atendimento
     triagem_subquery = CardSetorHistory.objects.filter(
         card_id=OuterRef('card_id'),
         status_atual='Triagem'
     ).order_by('-data_hora').values('data_hora')[:1]
 
-
     concluido_subquery = CardSetorHistory.objects.filter(
         card_id=OuterRef('card_id'),
         status_atual='Concluido'
     ).order_by('-data_hora').values('data_hora')[:1]
-
 
     diferenca_tempo = CardSetorHistory.objects.filter(
         setor_atual='Gestão de Pessoas',
@@ -94,23 +93,23 @@ def rh_home(request):
         media_tempo = resultado["tempo_atendimento"]
 
         if media_tempo is not None:
-            media_tempo_em_microssegundos = media_tempo.total_seconds() * 10**6
-            media_tempo_em_dias = media_tempo_em_microssegundos / (1000000 * 60 * 60 * 24)  # Convertendo microssegundos para dias
+            media_tempo_em_microssegundos = media_tempo.total_seconds() * 10 ** 6
+            media_tempo_em_dias = media_tempo_em_microssegundos / (
+                        1000000 * 60 * 60 * 24)  # Convertendo microssegundos para dias
             media_tempo_dias = round(media_tempo_em_dias)
 
             resultados.append(
                 int(media_tempo_dias)
-                
+
             )
-            
+
         else:
             resultados.append(
                 '-',
             )
     tempo = resultados[0]
-    
 
-# média da avaliação por setor
+    # média da avaliação por setor
 
     media_grupo_2 = OperatorRating.objects.filter(group_id=3).aggregate(
         media_rating=ExpressionWrapper(Avg('rating'), output_field=FloatField())
@@ -124,7 +123,7 @@ def rh_home(request):
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
-            'contagem':contagem_condicional,'tempo': tempo,'avaliacao': media_grupo_2
+            'contagem': contagem_condicional, 'tempo': tempo, 'avaliacao': media_grupo_2
         }
 
         return render(request, 'ccis/setor_home.html', context)
@@ -166,8 +165,8 @@ def pro_seletivo(request):
     groupControle = user.groups.filter(id=28).exists()
 
     contexto = {
-                'groupControle':groupControle, 'group_gestao': group_gestao,
-                }
+        'groupControle': groupControle, 'group_gestao': group_gestao,
+    }
 
     return render(request, 'setores/rh/processo-seletivo.html', contexto)
 
@@ -180,8 +179,8 @@ def ferias(request):
     groupControle = user.groups.filter(id=28).exists()
 
     contexto = {
-                'groupControle': groupControle, 'group_gestao': group_gestao,
-                }
+        'groupControle': groupControle, 'group_gestao': group_gestao,
+    }
     return render(request, 'setores/rh/ferias.html', contexto)
 
 
@@ -193,8 +192,8 @@ def anbima(request):
     groupControle = user.groups.filter(id=28).exists()
 
     contexto = {
-                'groupControle': groupControle, 'group_gestao': group_gestao,
-                }
+        'groupControle': groupControle, 'group_gestao': group_gestao,
+    }
     return render(request, 'setores/rh/certificacoes-anbima.html', contexto)
 
 
@@ -206,8 +205,8 @@ def colaboradores(request):
     groupControle = user.groups.filter(id=28).exists()
 
     contexto = {
-                'groupControle': groupControle, 'group_gestao': group_gestao,
-                }
+        'groupControle': groupControle, 'group_gestao': group_gestao,
+    }
     return render(request, 'setores/rh/colaboradores.html', contexto)
 
 
@@ -220,12 +219,14 @@ def new_request(request):
     form_Etica = ModelFormRhEtica()
     apontamentos = modelFormApontamentos()
     ci = modelFormCI()
+    ferias = modelFormRhFerias()
 
     context = {'form': form,
                'form_Etica': form_Etica,
                'apontamentos': apontamentos,
                'ci': ci,
-    }
+               'ferias': ferias,
+               }
 
     return render(request, "setores/rh/new_request.html", context)
 
@@ -309,7 +310,90 @@ def salvar_malote(request):
     else:
         form = ModelFormMalotes()
 
-    return render(request, 'setores/rh/new_request.html', {'form': form})@login_required(login_url="/login")
+    return render(request, 'setores/rh/new_request.html', {'form': form}) @ login_required(login_url="/login")
+
+
+@login_required(login_url="/login")
+def request_ferias(request):
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['service'] = 'Férias'
+
+        form = ModelFormMalotes(request.POST, request.FILES)
+
+        if form.is_valid():
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=3)
+            card.status = 'Triagem'
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=3),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Gestao de Pessoas",  # Setor atual
+            )
+            history_entry.save()
+
+            dias_uteis_selecionados = request.POST.get('dias_uteis', "")
+            observacoes = request.POST.get("descricao", "")  # Use get para evitar exceção se não houver descrição
+            cpf_cooperado = request.POST.get('cpf_cooperado', "")
+            data_ferias = request.POST.get('data_saída', "")
+            descricao = f"{dias_uteis_selecionados} dias úteis."
+
+            if cpf_cooperado:
+                descricao += f"<br>CPF do cooperado: {cpf_cooperado}"
+
+            if data_ferias:
+                descricao += f"<br>Data de saída: {data_ferias}"
+
+            if observacoes:
+                descricao += "<br><br>"
+                descricao += "Descrição:<br>" + observacoes
+
+            attachment = request.FILES.get('attachment')
+
+            # Salvar a descrição no campo message do MessageHistory
+            message_history = MessageHistory(
+                card=card,
+                remetente=request.user,
+                message=descricao,
+                attachment=attachment,
+            )
+            message_history.save()
+
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
+
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        description=f"{card.solicitante} Abri uma nova Solicitação",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
+
+        return redirect('rh_home')
+
+    else:
+        form = ModelFormMalotes()
+
+    return render(request, 'setores/rh/new_request.html', {'form': form}) @ login_required(login_url="/login")
 
 
 @login_required(login_url="/login")
@@ -415,7 +499,7 @@ def request_ci_rh(request):
             descricao = form.cleaned_data.get('descricao')
             assunto = request.POST.get('assunto-input')
 
-            if(assunto):
+            if (assunto):
                 descricao = f"<strong>Assunto:</strong> {assunto} <br><br>" + descricao
 
             if descricao:
@@ -473,7 +557,6 @@ def request_apontamentos_rh(request):
             card.cor = "#FFCECE"
             card.save()
 
-
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
@@ -510,7 +593,6 @@ def request_apontamentos_rh(request):
 
                 if form.cleaned_data.get('descricao'):
                     descricao += f"Descrição: {form.cleaned_data.get('descricao')}<br>"
-
 
             if descricao:
                 message_history = MessageHistory(
@@ -551,11 +633,10 @@ def request_apontamentos_rh(request):
 
 @login_required(login_url="/login")
 def processos(request):
-
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-            queryset=CardSetorHistory.objects.order_by('-data_hora'))
-        )
+                                                             queryset=CardSetorHistory.objects.order_by('-data_hora'))
+                                                    )
 
         group = Group.objects.all()
         setor = 'Gestao de Pessoas'
