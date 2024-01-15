@@ -669,7 +669,7 @@ function loadCardInfo(cardId) {
                                     } else {
                                         const nomeCompleto = "<h6>Usuario Anônimo</h6>";
                                         colElementEsquerda.append(nomeCompleto);
-                                    }''
+                                    }
 
                                     // Verificar se há anexo
                                     if (message.attachment) {
@@ -695,13 +695,12 @@ function loadCardInfo(cardId) {
 
                                     const colElementDireita = $("<div>").addClass("col-auto");
                                     const dataElement = $(`<small>${dataFormatada} ${horarioFormatado}</small>`);
-                                    const messageElement = $(`<p>${message.message}</p>`);
+                                    const messageElement = $(`<div>${message.message.replace(/\n/g, '<br>')}</div>`);
 
                                     // Adicionar os elementos à estrutura desejada
                                     colElementDireita.append(dataElement);
 
-                                    rowElement.append(colElementEsquerda, colElementDireita);
-                                    rowElement.append(messageElement);
+                                    rowElement.append(colElementEsquerda, colElementDireita, messageElement);
 
                                     // Adicionar a rowElement ao seu container de mensagens
                                     messagesContainer.append(rowElement);

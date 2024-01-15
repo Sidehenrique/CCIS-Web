@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block conteudo %}
-    <!-- Conteúdo ---------------------------->
+<!-- Conteúdo ---------------------------->
 <div class="container" style="margin-top:75px">
 
 
@@ -166,7 +166,9 @@
                             <label style="color: red;">CC deverá ser informada no campo abaixo:</label><br>
                             <textarea class="new-desc-extra" name="descricao-agendamento"></textarea>
                         </div>
+
                         <!-------------------------------------->
+
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="item2" value="Autorização de débito" type="checkbox"
                                    id="flexSwitchCheckDefault4">
@@ -177,6 +179,7 @@
                             <textarea class="new-desc-extra" name="descricao-debito"></textarea>
                         </div>
                         <!-------------------------------------->
+
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="item3" value="Requisições de talão de
                                 cheques" type="checkbox"
@@ -204,7 +207,6 @@
                         </div>
 
                         <!-------------------------------------->
-
 
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="item5" id="Ata" value="Ata de fragmentação de cheques"
@@ -275,11 +277,19 @@
                                 cheques</label>
                         </div>
 
+                        <!-------------------------------------->
+
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="item15" id="TalaoCheque" value="Talão de Cheque"
-                                   type="checkbox">
-                            <label class="form-check-label" for="TalaoCheque">Talão de Cheque</label>
+                            <input class="form-check-input" name="item15" value="Talão de Cheque" type="checkbox"
+                                   id="flexSwitchCheckDefault8">
+                            <label class="form-check-label" for="flexSwitchCheckDefault8">Talão de Cheque</label>
                         </div>
+                        <div id="descricao-talao" style="display: none;">
+                            <label style="color: red;">Número da Conta:</label><br>
+                            <textarea class="new-desc-extra" name="descricao-talao"></textarea>
+                        </div>
+
+                        <!-------------------------------------->
 
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="item16" id="Exclusao"
@@ -287,6 +297,14 @@
                                    type="checkbox">
                             <label class="form-check-label" for="Exclusao">Exclusão ccf/ Sustação/ Inutilização de
                                 cheques;</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item16" id="Relatório de TD"
+                                   value="Relatório de TD - Título descontado"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Relatório de TD">Relatório de TD - Título
+                                descontado;</label>
                         </div>
 
                     </div>
@@ -481,8 +499,8 @@
       }
     });
 
-    document.getElementById('flexSwitchCheckDefault7').addEventListener('change', function() {
-      var descricao = document.getElementById('descricao-outros');
+    document.getElementById('flexSwitchCheckDefault8').addEventListener('change', function() {
+      var descricao = document.getElementById('descricao-talao');
       if (this.checked) {
         descricao.style.display = 'block';
       } else {

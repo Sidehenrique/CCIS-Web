@@ -860,7 +860,7 @@ def registrar_atendimento(request, card_id):
     # Crie uma notificação para informar o usuário do atendimento registrado
     notification = Notification(
         author=request.user,
-        description=f"Sua solicitação esta em Atendimento por {request.user.first_name} {request.user.last_name}",
+        description=f"Sua solicitação está em Atendimento por {request.user.first_name} {request.user.last_name}",
         subject=card.assunto + f" N°: {card.idCard}",
         recipient=card.solicitante,  # O destinatário é o solicitante da questão
         url='kanban_user',  # URL da página atual
@@ -1309,29 +1309,3 @@ def notificacao_lida(request, notification_id):
 def chat(request):
     return render(request, 'ccis/chat.html')
 
-@api_view(['POST'])
-def chat_send_message(request):
-
-    if request.method == 'POST':
-        input = request.data.get('resposta')
-        attachment = request.data.get('attachment')
-        remetente = request.user
-
-        message_history = MessageHistory(
-            remetente=remetente,
-            message=input,
-            attachment=attachment,
-        )
-        message_history.save()
-
-
-        data = {'status': 'Mensagem adicionada com sucesso'}
-        return JsonResponse(data)
-
-
-@api_view(['GET'])
-def chat_get_messages(request):
-    messages = MessageHistory.objects.filter()
-    message_serializer = MessageHistorySerializer(messages, many=True)
-
-    return Response(message_serializer.data)

@@ -4,12 +4,12 @@
 {% block conteudo %}
 
 {% if dados.canvas %}
-    <img class="profile-img" src="{{ dados.canvas.url }}">
-    {% else %}
-    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+<img class="profile-img" src="{{ dados.canvas.url }}">
+{% else %}
+<img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
 
-<!--Container------------>
+<!--Container------------------------------------->
 <div class="container-fluid scrollable-content">
 
     <!-- Menu settings --------->
@@ -50,45 +50,45 @@
             <!-- Equipe -------------------------->
             {% if equipe %}
 
-                {% for usuario in equipe %}
-                    <a href="{% url 'profile' user_id=usuario.id %}" class=" equipe-menu-settings">
+            {% for usuario in equipe %}
+            <a href="{% url 'profile' user_id=usuario.id %}" class=" equipe-menu-settings">
 
-                        {% if usuario.foto %}
-                            <img class="avatar-img" src="{{ usuario.foto.url }}"
-                                 alt="" width="40" height="40">
+                {% if usuario.foto %}
+                <img class="avatar-img" src="{{ usuario.foto.url }}"
+                     alt="" width="40" height="40">
 
-                            {% else %}
+                {% else %}
 
-                            {% if usuario.sexo == "Masculino" %}
-                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-                                 alt="" width="40" height="40">
+                {% if usuario.sexo == "Masculino" %}
+                <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                     alt="" width="40" height="40">
 
-                            {% elif usuario.sexo == "Feminino" %}
-                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
-                                 alt="" width="40" height="40">
-                            {% endif %}
+                {% elif usuario.sexo == "Feminino" %}
+                <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                     alt="" width="40" height="40">
+                {% endif %}
 
-                            {% endif %}
+                {% endif %}
 
-                    </a>
-                {% endfor %}
+            </a>
+            {% endfor %}
 
             {% endif %}
             <!-- Equipe -------------------------->
 
         </div>
-        <!-- Equipe -------------------------->
+        <!-- Equipe ------------------------------>
 
-        <!-- Filtros ------------------------->
+        <!-- Filtros ----------------------------->
         <div class="col d-flex col-auto">
 
-            <!-- Configurações ---------->
+            <!-- Configurações ------------------->
             <button class="ms-3 btn-personalize-settings me-3" type="button" data-bs-toggle="modal"
                     data-bs-target="#temasModal"><i class="fa-solid fa-gear"></i>
             </button>
-            <!-- Configurações ---------->
+            <!-- Configurações ------------------->
 
-            <!-- Filtro ----------------->
+            <!-- Filtro -------------------------->
             <div class="dropdown">
                 <button class="btn-menu-settings" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -97,7 +97,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
 
-                    <!-- Titulo Filtro ------------>
+                    <!-- Titulo Filtro ----------->
                     <div style="text-align: center;">
                         <h6>
                             Filtro
@@ -105,58 +105,56 @@
                                   onclick="fecharDropdown()">X</span>
                         </h6>
                     </div>
-                    <!-- Titulo Filtro ------------>
+                    <!-- Titulo Filtro ----------->
 
-                    <!-- input -------------------->
+                    <!-- input ------------------->
                     <div class="p-3">
                         <span>Palavra Chave:</span>
                         <input class="bg-dark palavra-passe" type="text" id="palavra-passe" name="palavra-passe"
                                required>
                         <span style="font-size: 12px; color: #999999">Pesquise por assunto, serviço, atendente e N° do card...</span>
                     </div>
-                    <!-- input -------------------->
+                    <!-- input ------------------->
 
-                    <!-- Membros ------------------>
+                    <!-- Membros ----------------->
                     <div class="p-3">
                         <span>Membros</span>
 
-                        <div class="mt-1 form-check">
-                            <input class="bg-dark form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <!--foto perfil-->
+                        <div class="d-flex">
 
-                            <!--foto perfil-->
-                            <div class="d-flex">
+                            <div class="nav-photo-filter">
 
-                                <div class="nav-photo-filter">
+                                {% if user_data.logFoto %}
+                                <img class="nav-photo-filter" src="{{ user_data.logFoto.url }}">
 
-                                    {% if user_data.logFoto %}
-                                    <img class="nav-photo-filter" src="{{ user_data.logFoto.url }}">
+                                {% else %}
 
-                                    {% else %}
+                                {% if user_data.logSexo == "Masculino" %}
+                                <img class="nav-photo-filter"
+                                     src="{% static 'ccis/avatar.jpg' %}">
 
-                                    {% if user_data.logSexo == "Masculino" %}
-                                    <img class="nav-photo-filter"
-                                         src="{% static 'ccis/avatar.jpg' %}">
+                                {% elif user_data.logSexo == "Feminino" %}
+                                <img class="nav-photo-filter"
+                                     src="{% static 'ccis/avatar-feminino.jpg' %}">
 
-                                    {% elif user_data.logSexo == "Feminino" %}
-                                    <img class="nav-photo-filter"
-                                         src="{% static 'ccis/avatar-feminino.jpg' %}">
+                                {% endif %}
 
-                                    {% endif %}
-
-                                    {% endif %}
-
-                                </div>
-
-                                <label class="ms-1 form-check-label" for="flexCheckDefault">
-                                    Atribuídos por mim
-                                </label>
+                                {% endif %}
 
                             </div>
+
+                            <div class="ms-3 mt-1 form-check">
+                                <input class="bg-dark form-check-input" type="checkbox" value=""
+                                       id="flexCheckResponsavel" onchange="filtrarCardsPorResponsavel()">
+                                <label class="form-check-label" for="flexCheckResponsavel">Atribuídos por mim</label>
+                            </div>
+
                         </div>
                     </div>
-                    <!-- Membros ------------------>
+                    <!-- Membros ----------------->
 
-                    <!-- Data --------------------->
+                    <!-- Data -------------------->
                     <div class="p-3">
 
                         <span>Data de entrega</span>
@@ -185,9 +183,9 @@
                             </label>
                         </div>
                     </div>
-                    <!-- Data --------------------->
+                    <!-- Data -------------------->
 
-                    <!-- Etiquetas --------------------->
+                    <!-- Etiquetas --------------->
                     <div class="p-3">
                         <span>Prioridade</span>
 
@@ -216,31 +214,32 @@
                         </div>
 
                     </div>
-                    <!-- Etiquetas --------------------->
+                    <!-- Etiquetas --------------->
 
                 </ul>
+
             </div>
-            <!-- Filtro ----------------->
+            <!-- Filtro -------------------------->
 
             <!-- Pesquisa Rápida ----------------->
             <div class="position-relative">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="search" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa..."
-                        aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
+                       aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
             </div>
             <!-- Pesquisa Rápida ----------------->
 
         </div>
-        <!-- Filtros ------------------------->
+        <!-- Filtros ----------------------------->
 
     </div>
-    <!-- Menu settings --------->
+    <!-- Menu settings --------------------------->
 
 
-    <!-- kanban ---------------->
+    <!-- kanban ---------------------------------->
     <div class="row mt-4">
 
-        <!-- Triagem --------->
+        <!-- Triagem ----------------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -249,15 +248,14 @@
                 </div>
             </div>
             <div id="kanban-body-triagem" class="kanban-body">
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Triagem --------->
+        <!-- Triagem ----------------------------->
 
-        <!-- Em atendimento -->
+        <!-- Em atendimento ---------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -266,15 +264,14 @@
                 </div>
             </div>
             <div id="kanban-body-atendimento" class="kanban-body">
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Em atendimento -->
+        <!-- Em atendimento ---------------------->
 
-        <!-- Encaminhado ----->
+        <!-- Encaminhado ------------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -283,17 +280,14 @@
                 </div>
             </div>
             <div id="kanban-body-encaminhado" class="kanban-body">
-
-
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Encaminhado ----->
+        <!-- Encaminhado ------------------------->
 
-        <!-- Concluido ------->
+        <!-- Concluido --------------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -302,15 +296,14 @@
                 </div>
             </div>
             <div id="kanban-body-concluido" class="kanban-body">
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Concluido ------->
+        <!-- Concluido --------------------------->
 
-        <!-- Finalizado ------>
+        <!-- Finalizado -------------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -319,16 +312,15 @@
                 </div>
             </div>
             <div id="kanban-body-finalizado" class="kanban-body">
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Finalizado ------>
+        <!-- Finalizado -------------------------->
 
     </div>
-    <!-- kanban ---------------->
+    <!-- kanban ---------------------------------->
 
 
     <!-- Modal Processos ------------------------->
@@ -510,6 +502,7 @@
                                 <div class="messages-container mt-2 p-2">
 
                                     <div class="message-item">
+
                                         <!-- Cabeçalho -->
                                         <div class="row pt-1">
 
@@ -533,6 +526,7 @@
                                             <p id="messageContainer"></p>
                                         </div>
                                         <!-- texto -->
+
                                     </div>
 
                                 </div>
@@ -823,7 +817,9 @@
 
                     </div>
                     <!-- Determinar Hora --------->
-
+                    <footer>
+                        <button class="btn btn-primary">Confirmar</button>
+                    </footer>
                 </div>
 
             </div>
@@ -832,7 +828,7 @@
     <!-- Modal Temas e Hora ---------------------->
 
 </div>
-<!--Container------------>
+<!--Container------------------------------------->
 
 
 <script>
@@ -847,6 +843,8 @@
         fetchCards('processos');
 
     });
+
+
 </script>
 
 
