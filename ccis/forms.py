@@ -1,6 +1,5 @@
 from django import forms
 from django.forms import FileInput
-
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
     dadosBancarios, outros, User, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
     docCertidao, docAdmissional, docPeriodico, docCursos, Card, Notebook
@@ -407,7 +406,7 @@ class modelFormAcessosTI(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -433,8 +432,8 @@ class modelFormEquipamentosTI(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.ImageField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                                  required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
+                                 required=False)
 
     class Meta:
         model = Card
@@ -454,8 +453,8 @@ class modelFormDesenvolvimentoTI(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.ImageField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-                                  required=False)
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
+                                 required=False)
 
     class Meta:
         model = Card
@@ -480,7 +479,7 @@ class modelFormSevicosTI(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -505,7 +504,7 @@ class modelFormCI(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -528,7 +527,7 @@ class modelFormApontamentos(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -558,7 +557,7 @@ class modelFormPowerPC(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -586,7 +585,7 @@ class modelFormPropensoPC(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -610,7 +609,7 @@ class modelFormRelatorioPC(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -633,7 +632,7 @@ class modelFormEstudoPC(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -659,9 +658,8 @@ class modelFormAcessoriaMK(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
-
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment')
@@ -682,7 +680,7 @@ class modelFormDigitalMK(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -705,7 +703,7 @@ class modelFormGraficaMK(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -820,7 +818,7 @@ class ModelFormMalotes(forms.ModelForm):
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
         required=True
     )
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -834,7 +832,7 @@ class ModelFormPS(forms.ModelForm):
     service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
                                 required=False)
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -868,13 +866,27 @@ class ModelFormRhEtica(forms.ModelForm):
     service = forms.ChoiceField(choices=CHOICES_Service, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
                                 required=False)
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'descricao', 'attachment',)
 
+
+class modelFormRhFerias(forms.ModelForm):
+    CHOICES_ServicoAcessos = [
+        ('Férias', 'Férias'),
+    ]
+
+    assunto = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
+                                 required=False)
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment',)
 
 # -------Secretaria---------------------------------------------------------------------------------------------------------
 
@@ -891,7 +903,7 @@ class ModelFormGestaoRisco(forms.ModelForm):
     service = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'cols': 50}),
                                 required=False)
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -916,7 +928,7 @@ class modelFormAcessosGR(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -941,7 +953,7 @@ class modelFormBasileiaGR(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -965,7 +977,7 @@ class modelFormRiscoGR(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -988,7 +1000,7 @@ class modelFormContabilidadeGR(forms.ModelForm):
     assunto = forms.ChoiceField(choices=CHOICES_AssuntoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
     descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
-    attachment = forms.FileField(widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
 
     class Meta:
@@ -1023,6 +1035,5 @@ class modelFormClock(forms.ModelForm):
     class Meta:
         model = Card
         fields = ('assunto', 'service')
-
 
 

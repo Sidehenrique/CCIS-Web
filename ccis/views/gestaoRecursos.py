@@ -116,7 +116,14 @@ def gestaoRecurso_home(request):
     media_grupo_2 = OperatorRating.objects.filter(group_id=43).aggregate(
         media_rating=ExpressionWrapper(Avg('rating'), output_field=FloatField())
     )['media_rating']
-    media_grupo_2 = '-' if media_grupo_2 is None else media_grupo_2
+
+    # media_grupo_2 = '-' if media_grupo_2 is None else media_grupo_2
+
+    if media_grupo_2:
+        media_ava = round(media_grupo_2, 2)
+
+    else:
+        media_ava = "-"
 
     if request.method == 'GET':
         sector_buttons = SectorButtons.objects.filter(group=43)
@@ -124,7 +131,7 @@ def gestaoRecurso_home(request):
             'username': user, 'groupControle': groupControle, 'setor': setor,
             'group_gestao': group_gestao, 'sector_buttons': sector_buttons,
             'superior': superior, 'equipe': nomes_equipe, 'dadosSetor': dadosSetor,
-            'contagem': contagem_condicional, 'tempo': tempo, 'avaliacao': media_grupo_2
+            'contagem': contagem_condicional, 'tempo': tempo, 'avaliacao': media_ava
         }
 
         return render(request, 'ccis/setor_home.html', context)

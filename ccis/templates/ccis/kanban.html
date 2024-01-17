@@ -4,12 +4,12 @@
 {% block conteudo %}
 
 {% if dados.canvas %}
-    <img class="profile-img" src="{{ dados.canvas.url }}">
-    {% else %}
-    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+<img class="profile-img" src="{{ dados.canvas.url }}">
+{% else %}
+<img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
 
-<!--Container------------>
+<!--Container------------------------------------->
 <div class="container-fluid scrollable-content">
 
     <!-- Menu settings --------->
@@ -31,7 +31,7 @@
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
-                    <li><a class="dropdown-item" href="{% url 'kanban' %}">Processos</a></li>
+                    <li><a class="dropdown-item" href="{% url 'kanban' %}">Caixa de Entrada</a></li>
                     <li><a class="dropdown-item" href="{% url 'kanban_user' %}">Minhas solicitações</a></li>
                 </ul>
 
@@ -48,47 +48,48 @@
         <div class="col col-auto me-auto d-flex">
 
             <!-- Equipe -------------------------->
-            {% if equipe %}
-
+            <div class="avatar-group avatar-group-sm avatar-group-overlapped" id="avatar-group">
                 {% for usuario in equipe %}
-                    <a href="{% url 'profile' user_id=usuario.id %}" class=" equipe-menu-settings">
-
-                        {% if usuario.foto %}
-                            <img class="avatar-img" src="{{ usuario.foto.url }}"
-                                 alt="" width="40" height="40">
-
-                            {% else %}
-
-                            {% if usuario.sexo == "Masculino" %}
-                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-                                 alt="" width="40" height="40">
-
-                            {% elif usuario.sexo == "Feminino" %}
-                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
-                                 alt="" width="40" height="40">
-                            {% endif %}
-
-                            {% endif %}
-
-                    </a>
+                {% if forloop.counter <= 5 %}
+                <a href="{% url 'profile' user_id=usuario.id %}" class="avatar">
+                    {% if usuario.foto %}
+                    <img src="{{ usuario.foto.url }}" alt="user" class="avatar-img rounded-circle">
+                    {% else %}
+                    {% if usuario.sexo == "Masculino" %}
+                    <img src="{% static 'ccis/avatar.jpg' %}" alt="user" class="avatar-img rounded-circle">
+                    {% elif usuario.sexo == "Feminino" %}
+                    <img src="{% static 'ccis/avatar-feminino.jpg' %}" alt="user" class="avatar-img rounded-circle">
+                    {% endif %}
+                    {% endif %}
+                </a>
+                {% endif %}
                 {% endfor %}
-
-            {% endif %}
+                <a href="#" class="avatar {% if equipe|length <= 5 %}hidden{% endif %}" id="avatar-87"
+                   style="cursor: pointer;">
+                    <span class="avatar-text avatar-text-green rounded-circle">
+                        <span class="initial-wrap">
+                            {% if equipe|length > 5 %}
+                                <span>{{ equipe|length|add:"-5" }}+</span>
+                            {% endif %}
+                        </span>
+                    </span>
+                </a>
+            </div>
             <!-- Equipe -------------------------->
 
         </div>
-        <!-- Equipe -------------------------->
+        <!-- Equipe ------------------------------>
 
-        <!-- Filtros ------------------------->
+        <!-- Filtros ----------------------------->
         <div class="col d-flex col-auto">
 
-            <!-- Configurações ---------->
+            <!-- Configurações ------------------->
             <button class="ms-3 btn-personalize-settings me-3" type="button" data-bs-toggle="modal"
                     data-bs-target="#temasModal"><i class="fa-solid fa-gear"></i>
             </button>
-            <!-- Configurações ---------->
+            <!-- Configurações ------------------->
 
-            <!-- Filtro ----------------->
+            <!-- Filtro -------------------------->
             <div class="dropdown">
                 <button class="btn-menu-settings" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -97,7 +98,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
 
-                    <!-- Titulo Filtro ------------>
+                    <!-- Titulo Filtro ----------->
                     <div style="text-align: center;">
                         <h6>
                             Filtro
@@ -105,58 +106,56 @@
                                   onclick="fecharDropdown()">X</span>
                         </h6>
                     </div>
-                    <!-- Titulo Filtro ------------>
+                    <!-- Titulo Filtro ----------->
 
-                    <!-- input -------------------->
+                    <!-- input ------------------->
                     <div class="p-3">
                         <span>Palavra Chave:</span>
                         <input class="bg-dark palavra-passe" type="text" id="palavra-passe" name="palavra-passe"
                                required>
                         <span style="font-size: 12px; color: #999999">Pesquise por assunto, serviço, atendente e N° do card...</span>
                     </div>
-                    <!-- input -------------------->
+                    <!-- input ------------------->
 
-                    <!-- Membros ------------------>
+                    <!-- Membros ----------------->
                     <div class="p-3">
                         <span>Membros</span>
 
-                        <div class="mt-1 form-check">
-                            <input class="bg-dark form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <!--foto perfil-->
+                        <div class="d-flex">
 
-                            <!--foto perfil-->
-                            <div class="d-flex">
+                            <div class="nav-photo-filter">
 
-                                <div class="nav-photo-filter">
+                                {% if user_data.logFoto %}
+                                <img class="nav-photo-filter" src="{{ user_data.logFoto.url }}">
 
-                                    {% if user_data.logFoto %}
-                                    <img class="nav-photo-filter" src="{{ user_data.logFoto.url }}">
+                                {% else %}
 
-                                    {% else %}
+                                {% if user_data.logSexo == "Masculino" %}
+                                <img class="nav-photo-filter"
+                                     src="{% static 'ccis/avatar.jpg' %}">
 
-                                    {% if user_data.logSexo == "Masculino" %}
-                                    <img class="nav-photo-filter"
-                                         src="{% static 'ccis/avatar.jpg' %}">
+                                {% elif user_data.logSexo == "Feminino" %}
+                                <img class="nav-photo-filter"
+                                     src="{% static 'ccis/avatar-feminino.jpg' %}">
 
-                                    {% elif user_data.logSexo == "Feminino" %}
-                                    <img class="nav-photo-filter"
-                                         src="{% static 'ccis/avatar-feminino.jpg' %}">
+                                {% endif %}
 
-                                    {% endif %}
-
-                                    {% endif %}
-
-                                </div>
-
-                                <label class="ms-1 form-check-label" for="flexCheckDefault">
-                                    Atribuídos por mim
-                                </label>
+                                {% endif %}
 
                             </div>
+
+                            <div class="ms-3 mt-1 form-check">
+                                <input class="bg-dark form-check-input" type="checkbox" value=""
+                                       id="flexCheckResponsavel" onchange="filtrarCardsPorResponsavel()">
+                                <label class="form-check-label" for="flexCheckResponsavel">Atribuídos por mim</label>
+                            </div>
+
                         </div>
                     </div>
-                    <!-- Membros ------------------>
+                    <!-- Membros ----------------->
 
-                    <!-- Data --------------------->
+                    <!-- Data -------------------->
                     <div class="p-3">
 
                         <span>Data de entrega</span>
@@ -185,9 +184,9 @@
                             </label>
                         </div>
                     </div>
-                    <!-- Data --------------------->
+                    <!-- Data -------------------->
 
-                    <!-- Etiquetas --------------------->
+                    <!-- Etiquetas --------------->
                     <div class="p-3">
                         <span>Prioridade</span>
 
@@ -216,31 +215,32 @@
                         </div>
 
                     </div>
-                    <!-- Etiquetas --------------------->
+                    <!-- Etiquetas --------------->
 
                 </ul>
+
             </div>
-            <!-- Filtro ----------------->
+            <!-- Filtro -------------------------->
 
             <!-- Pesquisa Rápida ----------------->
             <div class="position-relative">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="search" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa..."
-                        aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
+                       aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
             </div>
             <!-- Pesquisa Rápida ----------------->
 
         </div>
-        <!-- Filtros ------------------------->
+        <!-- Filtros ----------------------------->
 
     </div>
-    <!-- Menu settings --------->
+    <!-- Menu settings --------------------------->
 
 
-    <!-- kanban ---------------->
+    <!-- kanban ---------------------------------->
     <div class="row mt-4">
 
-        <!-- Triagem --------->
+        <!-- Triagem ----------------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -249,15 +249,14 @@
                 </div>
             </div>
             <div id="kanban-body-triagem" class="kanban-body">
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Triagem --------->
+        <!-- Triagem ----------------------------->
 
-        <!-- Em atendimento -->
+        <!-- Em atendimento ---------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -266,15 +265,14 @@
                 </div>
             </div>
             <div id="kanban-body-atendimento" class="kanban-body">
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Em atendimento -->
+        <!-- Em atendimento ---------------------->
 
-        <!-- Encaminhado ----->
+        <!-- Encaminhado ------------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -283,17 +281,14 @@
                 </div>
             </div>
             <div id="kanban-body-encaminhado" class="kanban-body">
-
-
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Encaminhado ----->
+        <!-- Encaminhado ------------------------->
 
-        <!-- Concluido ------->
+        <!-- Concluido --------------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -302,15 +297,14 @@
                 </div>
             </div>
             <div id="kanban-body-concluido" class="kanban-body">
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Concluido ------->
+        <!-- Concluido --------------------------->
 
-        <!-- Finalizado ------>
+        <!-- Finalizado -------------------------->
         <div class="col">
             <div class="kanban-title">
                 <div class="row">
@@ -319,17 +313,117 @@
                 </div>
             </div>
             <div id="kanban-body-finalizado" class="kanban-body">
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
             </div>
         </div>
-        <!-- Finalizado ------>
+        <!-- Finalizado -------------------------->
 
     </div>
-    <!-- kanban ---------------->
+    <!-- kanban ---------------------------------->
 
+
+    <!-- Modal Equipe ---------------------------->
+    <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="perfilModalLabel">Lista de Perfis</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col modal-profile-border p-0">
+
+                            <!-- Equipe -------------------------->
+                            {% if equipe %}
+                            <div class="">
+                                <!-- Supervisor -->
+                                {% for ch in chefe %}
+                                <a href="{% url 'profile' user_id=ch.id %}" class="list-group-item-action" style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                    <div class="align-horizontal-center">
+
+                                        {% if ch.foto %}
+                                        <img class="avatar-img" src="{{ chefe.foto.url }}"
+                                             alt="" width="40" height="40">
+
+                                        {% else %}
+
+                                        {% if ch.sexo == "Masculino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                             alt="" width="40" height="40">
+
+                                        {% elif ch.sexo == "Feminino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                             alt="" width="40" height="40">
+                                        {% endif %}
+
+                                        {% endif %}
+
+                                        <div class="ps-2">
+                                            <h6 class="m-0">{{ ch.first_name }} {{ch.last_name}}</h6>
+                                            <small class="m-0">{{ ch.cargo }}</small>
+                                        </div>
+
+                                    </div>
+
+                                </a>
+                                {% endfor %}
+                                <!-- Supervisor -->
+
+                                <!-- Membros -->
+                                {% for usuario in equipe %}
+                                <a href="{% url 'profile' user_id=usuario.id %}" class="list-group-item-action"
+                                   style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                    <div class="align-horizontal-center">
+
+                                        {% if usuario.foto %}
+                                        <img class="avatar-img" src="{{ usuario.foto.url }}"
+                                             alt="" width="40" height="40">
+
+                                        {% else %}
+
+                                        {% if usuario.sexo == "Masculino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                             alt="" width="40" height="40">
+
+                                        {% elif usuario.sexo == "Feminino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                             alt="" width="40" height="40">
+                                        {% endif %}
+
+                                        {% endif %}
+
+
+                                        <div class="ps-2">
+                                            <h6 class="m-0">{{ usuario.first_name }} {{usuario.last_name}}</h6>
+                                            <small class="m-0">{{ usuario.cargo }}</small>
+                                        </div>
+
+                                    </div>
+
+                                </a>
+                                {% endfor %}
+                                <!-- Membros -->
+                            </div>
+                            {% endif %}
+                            <!-- Equipe -------------------------->
+
+                        </div>
+                    </div>
+                    <footer>
+                        <button id="fecharModal" class="btn btn-secondary mt-3">Fechar</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Equipe ---------------------------->
 
     <!-- Modal Processos ------------------------->
     <div class="modal fade"
@@ -510,6 +604,7 @@
                                 <div class="messages-container mt-2 p-2">
 
                                     <div class="message-item">
+
                                         <!-- Cabeçalho -->
                                         <div class="row pt-1">
 
@@ -533,6 +628,7 @@
                                             <p id="messageContainer"></p>
                                         </div>
                                         <!-- texto -->
+
                                     </div>
 
                                 </div>
@@ -759,48 +855,6 @@
 
                 <div class="modal-body">
 
-                    <!-- Temas ------------------->
-                    <div class="me-4">
-
-                        <!-- Titulo Temas ------------>
-                        <h6>Temas</h6>
-                        <!-- Titulo Temas ------------>
-
-                        <!-- Botões ------------------>
-                        <div class="row mt-3 ms-3">
-
-                            <div class="col tema">
-                                <a href="#" class="botao">
-                                    <img src="{% static 'ccis/defPadrao.png' %}"
-                                         width="80%"
-                                         height="auto">
-                                </a>
-                                Padrão
-                            </div>
-
-                            <div class="col tema">
-                                <a href="#" class="botao">
-                                    <img src="{% static 'ccis/defRoxa.png' %}"
-                                         width="82%"
-                                         height="auto">
-                                </a>
-                                Roxo
-                            </div>
-
-                            <div class="col tema">
-                                <a href="#" class="botao">
-                                    <img src="{% static 'ccis/defCinza.png' %}"
-                                         width="80%"
-                                         height="auto">
-                                </a>
-                                Cinza
-                            </div>
-                        </div>
-                        <!-- Botões ------------------>
-
-                    </div>
-                    <!-- Temas ------------------->
-
                     <!-- Determinar Hora --------->
                     <div class="mt-3">
 
@@ -824,6 +878,9 @@
                     </div>
                     <!-- Determinar Hora --------->
 
+                    <footer>
+                        <button class="btn btn-primary">Confirmar</button>
+                    </footer>
                 </div>
 
             </div>
@@ -832,7 +889,7 @@
     <!-- Modal Temas e Hora ---------------------->
 
 </div>
-<!--Container------------>
+<!--Container------------------------------------->
 
 
 <script>
@@ -847,6 +904,25 @@
         fetchCards('processos');
 
     });
+
+    document.getElementById('avatar-87').addEventListener('click', function() {
+        if ($('#avatar-87').hasClass('hidden')) {
+            return; // Evitar abrir o modal se o avatar-87 estiver escondido
+        }
+
+
+        var equipeCount = {{ equipe|length }};
+        if (equipeCount >= 6) {
+            equipeCount -= 5; // Subtrai 3 da contagem
+            $('#avatar-87 .badge').text(equipeCount); // Atualiza o conteúdo do badge
+        }
+        $('#perfilModal').modal('show');
+    });
+
+    document.getElementById('fecharModal').addEventListener('click', function() {
+        $('#perfilModal').modal('hide');
+    });
+
 </script>
 
 

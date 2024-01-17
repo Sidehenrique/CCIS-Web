@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('kanban/', pages.kanban_view, name='kanban'),
     path('kanban_user/', pages.kanban_view_user, name='kanban_user'),
+    path('chat', pages.chat, name='chat'),
     path('cards_kanban_api/', pages.card_kanban_api, name='cards_kanban_api'),
     path('card_detl/<int:card_id>', pages.card_detl, name='card_detl'),
     path('enviar_resposta/<int:card_id>', pages.enviar_resposta, name='enviar_resposta'),
@@ -116,6 +117,7 @@ urlpatterns = [
     path('rh/salvar_etica', rh.salvar_etica, name='salvar_etica'),
     path('rh/request_ci_rh', rh.request_ci_rh, name='request_ci_rh'),
     path('rh/request_apontamentos_rh', rh.request_apontamentos_rh, name='request_apontamentos_rh'),
+    path('rh/request_ferias', rh.request_ferias, name='request_ferias'),
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request', ti.new_request, name='new_request'),

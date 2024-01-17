@@ -1,153 +1,288 @@
 {% extends 'ccis/base.html' %}
 {% load static %}
 
-
 {% block conteudo %}
 
 <style>
-    .body{
-        margin-top:20px;
-        background:#eee;
-    }
 
-    .team-style1 {
+    .avatar {
+        font-size: 1.25rem; /* Aumentando o tamanho da fonte do avatar */
         position: relative;
+        display: inline-block;
+        width: 4.5rem; /* Aumentando a largura do avatar */
+        height: 4.5rem; /* Aumentando a altura do avatar */
+    }
+
+
+    .avatar.hidden {
+        display: none;
+    }
+
+    .avatar .avatar-text {
         display: block;
-        overflow: hidden
+        width: 100%;
+        height: 100%;
+        position: relative;
+        text-transform: uppercase;
+        overflow: hidden;
+        background: #fff;
+        font-weight: 600;
+        color: #00acf0;
+        background: #DDF3E3;
     }
 
-    .team-style1 img {
-    width: 100%; /* Ajusta a imagem para preencher o contêiner */
-    height: auto; /* Mantém a proporção da imagem */
-}
-
-    .team-style1 .team-info {
-        bottom: 15px;
-        left: 15px;
-        right: 15px;
-        border-radius: 5px;
-        transform: translate3d(0px, 0%, 0px);
-        transition: all 800ms ease 0.35s;
-        padding: 10px;
-        box-shadow: 0px 5px 24.25px 0.75px rgba(0,0,0,0.1);
-        background: #ffffff;
-        position: absolute
+    .avatar .avatar-text .initial-wrap {
+        display: table;
+        width: 100%;
+        height: 100%;
     }
 
-    .team-style1 .team-overlay {
-        left: 15px;
-        right: 15px;
-        opacity: 1;
-        padding: 0 20px;
-        position: absolute;
-        top: 15px;
-        bottom: 15px;
-        transform: translate3d(0px, -110%, 0px);
-        transition: all 500ms ease 0.35s;
-        box-shadow: 0px 5px 24.25px 0.75px rgba(0,0,0,0.1)
+    .avatar .avatar-text .initial-wrap > span {
+        position: relative;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
     }
 
-    .team-style1:hover .team-overlay {
-        transform: translate3d(0px, 0, 0px);
-        transition-delay: 0.1s;
-        background: rgba(47,191,167,0.9);
-        border-radius: 5px
+    .avatar .avatar-text.avatar-text-green,
+    .avatar .avatar-text.avatar-text-success {
+        color: #22af47;
     }
 
-    .team-style1:hover .team-info {
-        transform: translate3d(0px, 130px, 0px);
-        transition-delay: 0.2s
+    .avatar-group {
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
     }
 
-    .team-bg-shape img {
-        position: absolute;
-        top: -40px;
-        right: -40px;
-        z-index: 0
+    .avatar-group .avatar {
+        font-size: 1.1rem; /* Aumentando o tamanho da fonte do grupo de avatares */
+        width: 3.5rem; /* Aumentando a largura do grupo de avatares */
+        height: 3.5rem; /* Aumentando a altura do grupo de avatares */
     }
 
-    a {
-    text-decoration:none;
+    .avatar-group .avatar .avatar-img,
+    .avatar-group .avatar .avatar-text {
+        border: 2px solid #fff;
     }
+
+    .avatar-group.avatar-group-overlapped .avatar {
+        margin-right: -15px; /* Ajustando a sobreposição do grupo de avatares */
+    }
+
+    .avatar-group.avatar-group-overlapped .avatar:hover {
+        z-index: 1;
+    }
+
+    .avatar-group.avatar-group-lg .avatar {
+        font-size: 1.2rem; /* Aumentando o tamanho da fonte do grupo de avatares grande */
+        width: 4rem; /* Aumentando a largura do grupo de avatares grande */
+        height: 4rem; /* Aumentando a altura do grupo de avatares grande */
+    }
+
+    .avatar-group.avatar-group-lg.avatar-group-overlapped .avatar {
+        margin-right: -18px; /* Ajustando a sobreposição do grupo de avatares grande */
+    }
+
+    .avatar-group.avatar-group-sm .avatar {
+        font-size: 0.8rem; /* Ajustando o tamanho da fonte do grupo de avatares pequeno */
+        width: 2.8rem; /* Ajustando a largura do grupo de avatares pequeno */
+        height: 2.8rem; /* Ajustando a altura do grupo de avatares pequeno */
+    }
+
+    .avatar-group.avatar-group-sm.avatar-group-overlapped .avatar {
+        margin-right: -12px; /* Ajustando a sobreposição do grupo de avatares pequeno */
+    }
+
+    /* Reduzir o tamanho da imagem */
+    .avatar-group .avatar .avatar-img {
+        width: 100%; /* Faz a imagem preencher o contêiner */
+        height: 100%;
+        object-fit: cover; /* Mantém a proporção da imagem ao cobrir o contêiner */
+    }
+
+
+    .modal-avatar-img {
+        width: 50px; /* Ajuste o valor conforme necessário */
+        height: 50px; /* Ajuste o valor conforme necessário */
+        object-fit: cover;
+    }
+
+    .modal-profile-border {
+    border-bottom: 1px solid #ccc; /* Adicione a borda inferior desejada */
+    padding-bottom: 10px; /* Adicione o espaçamento desejado abaixo da borda */
+    display: block;
+    }
+
 </style>
 
-<div class="container-fluid scrollable-content">
+<div class="avatar-group avatar-group-sm avatar-group-overlapped mt-5" id="avatar-group">
+    {% for usuario in equipe %}
+    {% if forloop.counter <= 3 %}
+    <a href="{% url 'profile' user_id=usuario.id %}" class="avatar">
+        {% if usuario.foto %}
+        <img src="{{ usuario.foto.url }}" alt="user" class="avatar-img rounded-circle">
+        {% else %}
+        {% if usuario.sexo == "Masculino" %}
+        <img src="{% static 'ccis/avatar.jpg' %}" alt="user" class="avatar-img rounded-circle">
+        {% elif usuario.sexo == "Feminino" %}
+        <img src="{% static 'ccis/avatar-feminino.jpg' %}" alt="user" class="avatar-img rounded-circle">
+        {% endif %}
+        {% endif %}
+    </a>
+    {% else %}
+    <a href="{% url 'profile' user_id=usuario.id %}" class="avatar hidden">
+        {% if usuario.foto %}
+        <img src="{{ usuario.foto.url }}" alt="user" class="avatar-img rounded-circle">
+        {% else %}
+        {% if usuario.sexo == "Masculino" %}
+        <img src="{% static 'ccis/avatar.jpg' %}" alt="user" class="avatar-img rounded-circle">
+        {% elif usuario.sexo == "Feminino" %}
+        <img src="{% static 'ccis/avatar-feminino.jpg' %}" alt="user" class="avatar-img rounded-circle">
+        {% endif %}
+        {% endif %}
+    </a>
+    {% endif %}
+    {% endfor %}
+    <a href="#" class="avatar {% if equipe|length < 4 %}hidden{% endif %}" id="avatar-87" style="cursor: pointer;">
+      <span class="avatar-text avatar-text-green rounded-circle">
+        <span class="initial-wrap">
+        {% if equipe|length >= 4 %}
+         {% with count=equipe|length|add:"-3" %}
+           <span>{{ count }}+</span>
+         {% endwith %}
+        {% endif %}
+        </span>
+      </span>
+    </a>
 
-    <div class="row position-relative mt-n1-9">
+</div>
 
-        <div class="col-2">
-            <div class="team-style1 text-center" style="width: 200px; height: 200px;">
 
-                <img src="{% static 'ccis/testedev.png' %}" alt="...">
-
-                <div class="team-info">
-                    <h3 class="text-primary mb-1 h4">Contabilidade</h3>
-                    <span class="font-weight-600 text-secondary">Gestão & Controle</span>
-                </div>
-
-                <div class="team-overlay">
-                    <div class="d-table h-100 w-100">
-                        <div class="d-table-cell align-middle">
-                            <a href="{% url 'contabilidade' %}" class="text-white">
-                                <h5>Contabilidade</h5>
-                                <p style="font-size: 13px;">Acompanhamento de Orçamentos e<br>Relatórios Contábeis</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
+<!-- Modal -->
+<div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="perfilModalLabel">Lista de Perfis</h5>
             </div>
-        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col modal-profile-border p-0">
 
-        <div class="col-2">
-            <div class="team-style1 text-center" style="width: 200px; height: 200px;">
+                        <!-- Equipe -------------------------->
+                        {% if equipe %}
+                        <div class="">
+                            <!-- Supervisor -->
+                            {% for ch in chefe %}
+                            <a href="{% url 'profile' user_id=ch.id %}" class="list-group-item-action" style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
 
-                <img src="{% static 'ccis/testedev2.png' %}" alt="...">
+                                <div class="align-horizontal-center">
 
-                <div class="team-info">
-                    <h4 class="text-primary mb-1 h4">OQS</h4>
-                    <span class="font-weight-600 text-secondary">Gestão & Controle</span>
-                </div>
+                                    {% if ch.foto %}
+                                    <img class="avatar-img" src="{{ chefe.foto.url }}"
+                                         alt="" width="40" height="40">
 
-                <div class="team-overlay">
-                    <div class="d-table h-100 w-100">
-                        <div class="d-table-cell align-middle">
-                            <a href="{% url 'qqs' %}" class="text-white">
-                                <h4>OQS</h4>
-                                <p style="font-size: 13px;">Principais Números,<br>Análise Quantitativa e<br> Análise
-                                    Qualitativa</p>
+                                    {% else %}
+
+                                    {% if ch.sexo == "Masculino" %}
+                                    <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                         alt="" width="40" height="40">
+
+                                    {% elif ch.sexo == "Feminino" %}
+                                    <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                         alt="" width="40" height="40">
+                                    {% endif %}
+
+                                    {% endif %}
+
+                                    <div class="ps-2">
+                                        <h6 class="m-0">{{ ch.first_name }} {{ch.last_name}}</h6>
+                                        <small class="m-0">{{ ch.cargo }}</small>
+                                    </div>
+
+                                </div>
+
                             </a>
+                            {% endfor %}
+                            <!-- Supervisor -->
+
+                            <!-- Membros -->
+                            {% for usuario in equipe %}
+                            <a href="{% url 'profile' user_id=usuario.id %}" class="list-group-item-action"
+                               style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                <div class="align-horizontal-center">
+
+                                    {% if usuario.foto %}
+                                    <img class="avatar-img" src="{{ usuario.foto.url }}"
+                                         alt="" width="40" height="40">
+
+                                    {% else %}
+
+                                    {% if usuario.sexo == "Masculino" %}
+                                    <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                         alt="" width="40" height="40">
+
+                                    {% elif usuario.sexo == "Feminino" %}
+                                    <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                         alt="" width="40" height="40">
+                                    {% endif %}
+
+                                    {% endif %}
+
+
+                                    <div class="ps-2">
+                                        <h6 class="m-0">{{ usuario.first_name }} {{usuario.last_name}}</h6>
+                                        <small class="m-0">{{ usuario.cargo }}</small>
+                                    </div>
+
+                                </div>
+
+                            </a>
+                            {% endfor %}
+                            <!-- Membros -->
                         </div>
+                        {% endif %}
+                        <!-- Equipe -------------------------->
+
                     </div>
                 </div>
-            </div>
-        </div>
-
-         <div class="col-2">
-            <div class="team-style1 text-center" style="width: 200px; height: 200px;">
-
-                <img src="{% static 'ccis/testedev2.png' %}" alt="...">
-
-                <div class="team-info">
-                    <h3 class="text-primary mb-1 h4">Planejamento Estrarégico</h3>
-                    <span class="font-weight-600 text-secondary">Gestão & Controle</span>
-                </div>
-
-                <div class="team-overlay">
-                    <div class="d-table h-100 w-100">
-                        <div class="d-table-cell align-middle">
-                            <a href="#" class="text-white">
-                                <h5>Planejamento Estratégico</h5>
-                                <p style="font-size: 13px;">Principais Números,<br>Análise Quantitativa e<br> Análise
-                                    Qualitativa</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <footer>
+                    <button id="fecharModal" class="btn btn-secondary mt-3">Fechar</button>
+                </footer>
             </div>
         </div>
     </div>
 </div>
 
+
+<script>
+    document.getElementById('avatar-87').addEventListener('click', function() {
+        if ($('#avatar-87').hasClass('hidden')) {
+            return; // Evitar abrir o modal se o avatar-87 estiver escondido
+        }
+
+
+        var equipeCount = {{ equipe|length }};
+        if (equipeCount >= 4) {
+            equipeCount -= 3; // Subtrai 3 da contagem
+            $('#avatar-87 .badge').text(equipeCount); // Atualiza o conteúdo do badge
+        }
+        $('#perfilModal').modal('show');
+    });
+
+
+    $(document).ready(function() {
+        $("#fecharModal").click(function() {
+            // Coloque aqui o código para fechar o modal
+            $("#perfilModal").modal("hide");
+        });
+    });
+
+</script>
 
 {% endblock %}

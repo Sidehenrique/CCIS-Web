@@ -634,7 +634,7 @@ function loadCardInfo(cardId) {
                 function atualizarListaMensagens(cardId) {
                     // Agora, vamos buscar as mensagens do solicitante
                     const messagesContainer = modal.find(".messages-container");
-                    messagesContainer.empty(); // Limpa qualquer conteúdo anterior
+                    messagesContainer.empty();
 
                     $.ajax({
                         url: `/get_messages/${cardId}`,
@@ -669,7 +669,7 @@ function loadCardInfo(cardId) {
                                     } else {
                                         const nomeCompleto = "<h6>Usuario Anônimo</h6>";
                                         colElementEsquerda.append(nomeCompleto);
-                                    }''
+                                    }
 
                                     // Verificar se há anexo
                                     if (message.attachment) {
@@ -695,13 +695,12 @@ function loadCardInfo(cardId) {
 
                                     const colElementDireita = $("<div>").addClass("col-auto");
                                     const dataElement = $(`<small>${dataFormatada} ${horarioFormatado}</small>`);
-                                    const messageElement = $(`<p>${message.message}</p>`);
+                                    const messageElement = $(`<div>${message.message.replace(/\n/g, '<br>')}</div>`);
 
                                     // Adicionar os elementos à estrutura desejada
                                     colElementDireita.append(dataElement);
 
-                                    rowElement.append(colElementEsquerda, colElementDireita);
-                                    rowElement.append(messageElement);
+                                    rowElement.append(colElementEsquerda, colElementDireita, messageElement);
 
                                     // Adicionar a rowElement ao seu container de mensagens
                                     messagesContainer.append(rowElement);
@@ -716,10 +715,6 @@ function loadCardInfo(cardId) {
                     });
 
                 }
-
-
-
-
 
 
                 //---------------------------------------------------------------------------------------------
@@ -1304,6 +1299,7 @@ $(document).ready(function() {
             },
 
             locale: 'pt-br',
+            selectable: true, // Adiciona a opção para selecionar datas
 
             // Adicione seus eventos ao calendário
             events: [
@@ -1411,4 +1407,66 @@ itemActions.forEach(item => {
             console.error('ID do cartão não encontrado.');
         }
     });
+});
+
+
+// Temas --------------------------------------------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Referenciar os elementos relevantes
+    var backgroundImage = document.getElementById("backgroundImage");
+    var padraoBtn = document.getElementById("padraoBtn");
+    var roxoBtn = document.getElementById("roxoBtn");
+    var cinzaBtn = document.getElementById("cinzaBtn");
+
+    function setTema(tema) {
+        console.log("Salvando tema: " + tema);
+        localStorage.setItem("tema", tema);
+    }
+
+    // Função para obter o tema do localStorage
+    function getTema() {
+        return localStorage.getItem("tema");
+    }
+
+    function aplicarTema() {
+        var temaSalvo = getTema();
+        console.log("Aplicando tema: " + temaSalvo);
+        if (temaSalvo) {
+            backgroundImage.src = temaSalvo;
+        }
+    }
+
+    padraoBtn.addEventListener("click", function() {
+        setTema("/static/ccis/backgroundPro.png");
+        aplicarTema();
+    });
+
+    roxoBtn.addEventListener("click", function() {
+        setTema("/static/ccis/backgroundRosa.png");
+        aplicarTema();
+    });
+
+    cinzaBtn.addEventListener("click", function() {
+        setTema("/static/ccis/backgroundCinza.png");
+        aplicarTema();
+    });
+
+    azulBtn.addEventListener("click", function() {
+        setTema("/static/ccis/backgroundAzul.png");
+        aplicarTema();
+    });
+
+    brancoBtn.addEventListener("click", function() {
+        setTema("/static/ccis/backgroundBranco.png");
+        aplicarTema();
+    });
+
+    amareloBtn.addEventListener("click", function() {
+        setTema("/static/ccis/backgroundAmarelo.png");
+        aplicarTema();
+    });
+
+    // Aplicar o tema ao carregar a página
+    aplicarTema();
 });

@@ -29,20 +29,27 @@
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Férias
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-scale-balanced"></i>
                             Violação de Ética
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_4" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-file-pen"></i>
                             Solicitações CI/CNAC/R.O
                         </a>
                     </li>
 
                     <li class="li-menu-request">
-                        <a type="button" id="btn_request_4" class="li-link-request" aria-current="page">
+                        <a type="button" id="btn_request_5" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-scale-unbalanced-flip"></i>
                             Apontamentos
                         </a>
@@ -237,8 +244,118 @@
         </div>
         <!-- Formulário de Malotes -------------------------->
 
-        <!-- Formulário VIOLAÇÃO AO PACTO DE ÉTICA -------------------------->
+        <!-- Formulário de Férias -------------------------->
         <div id="formulario2" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE FÉRIAS</h5>
+
+            <form action="{% url 'request_ferias' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+                        <div class="mt-2">
+                            <label class="required-label">Nome do Cooperado:</label>
+                            {{ ferias.assunto }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="required-label">CPF:</label>
+                            <input class="input-new" type="text" name="cpf_cooperado"/>
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="required-label" for="calendario">Selecione uma data de férias:</label>
+                            <input class="form-control" type="text" id="calendario" name="data_ferias">
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="required-label">Observações:</label>
+                            {{ ferias.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Anexar arquivo:</label>
+                            {{ ferias.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                    <!-- Segunda col --------------------------->
+                    <div class="col">
+
+                        <p class="required-label">Dias Úteis:</p>
+
+                        <form>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias"
+                                       value="5">
+                                <label class="form-check-label">
+                                    5
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias2"
+                                       value="10">
+                                <label class="form-check-label">
+                                    10
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias3"
+                                       value=15>
+                                <label class="form-check-label">
+                                    15
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias4"
+                                       value="20">
+                                <label class="form-check-label">
+                                    20
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias5"
+                                       value="25">
+                                <label class="form-check-label">
+                                    25
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias6"
+                                       value="30">
+                                <label class="form-check-label">
+                                    30
+                                </label>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <!-- Segunda col --------------------------->
+
+                </div>
+            </form>
+        </div>
+        <!-- Formulário de Férias -------------------------->
+
+        <!-- Formulário VIOLAÇÃO AO PACTO DE ÉTICA -------------------------->
+        <div id="formulario3" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE VIOLAÇÃO AO PACTO DE ÉTICA</h5>
 
             <form action="{% url 'salvar_etica' %}"
@@ -299,7 +416,7 @@
         <!-- Formulário VIOLAÇÃO AO PACTO DE ÉTICA -------------------------->
 
         <!-- Formulário de CI --------------------->
-        <div id="formulario3" class="col menu-request m-0" style="display:none">
+        <div id="formulario4" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE SOLICITAÇÕES CI/CNAC/R.O</h5>
 
             <div class="row p-3 ">
@@ -342,7 +459,7 @@
         <!-- Formulário de CI --------------------->
 
         <!-- Formulário de Apontamentos --------------------->
-        <div id="formulario4" class="col menu-request m-0" style="display:none">
+        <div id="formulario5" class="col menu-request m-0" style="display:none">
             <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
 
             <form action="{% url 'request_apontamentos_rh' %}"

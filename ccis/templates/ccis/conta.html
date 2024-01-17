@@ -4,6 +4,12 @@
 
 {% block conteudo %}
 
+<!--- background ----------------------------->
+{% if dados.canvas %}
+    <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+{% endif %}
+<!--- background ----------------------------->
+
 <!-- Conteúdo ------------------------------------------->
 <div class="container-fluid scrollable-content">
 
@@ -131,7 +137,7 @@
                 <div class="col-6 mt-5">
 
                     <h6>Orientações para atualizações de Dados Pessoais:</h6>
-                    <p>Campos obrigatrórios:</p>
+                    <p>Campos obrigatórios:</p>
 
                     <ul class="marcadores">
 
@@ -325,9 +331,10 @@
                                 {{form.cns}}
                             </div>
 
+                            <input type="hidden" name="pcd" value="{{ form.pcd.value }}">
                             <div class="form-check pt-3">
-                                {{form.pcd}}
-                                <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" id="id_pcd" name="pcd_checkbox">
+                                <label class="form-check-label" for="id_pcd">
                                     Possui Deficiência Física?
                                 </label>
                             </div>

@@ -4,11 +4,12 @@
 
 {% block conteudo %}
 
-<!--- background ----------------------------->
+
+<!--- background --------------------------------->
 {% if dados.canvas %}
-<img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+    <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
-<!--- background ----------------------------->
+<!--- background --------------------------------->
 
 <div class="container-fluid scrollable-content">
 
@@ -29,7 +30,6 @@
     </div>
     <!-- End subMenu ----------------------------->
 
-
     <!-- Header do conteúdo ---------------------->
     <div class="row mt-3 mb-2">
 
@@ -46,511 +46,683 @@
         <div class="col-5 d-inline-block img-fluid">
             <img src="{% static 'ccis/Grupo 6171.png' %}"
                  alt="right"
-                 width="100%"
+                 width="87%"
                  height="auto">
         </div>
 
     </div>
     <!-- Header do conteúdo ---------------------->
 
-
-    <!-- Linha adm ------------------------------->
-    <p style="margin-top:30px; margin-bottom:0px">Administrativo</p>
-    <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
-    <!-- Linha adm ------------------------------->
-
-
-    <!-- 1° linha de cards documentos ------------>
-    <div class="row justify-content-start mt-1">
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'adm_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">ADMINISTRATIVO</h6>
-                    <hr>
-                    <h3 CLASS="">ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#004E8C;">AD</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'cobranca_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">COBRANÇA</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#4F6BED;">CB</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'controladoria_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">PERFORMANCE CORPORATIVA</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#8764B8;">PC</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               href="{% url 'rh_home' %}"
-               type="button">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">GESTÃO DE PESSOAS</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#038387;">GP</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'gestaoRisco_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">GESTÃO DE RISCO</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#986F0B;">GR</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'retaguarda_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">RETAGUARDA</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#004E8C;">RG</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               href="{% url 'secretaria_home' %}"
-               type="button">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">SECRETARIA</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#498205;">SC</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               href="{% url 'ti_home' %}"
-               type="button">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">TECNOLOGIA</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#0273EB;">TI</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               href="{% url 'marketing_home' %}"
-               type="button">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">MARKETING</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#038387;">MK</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'financeiro_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">FINANCEIRO</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#8764B8;">FI</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'gestaoRecurso_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">GESTÃO DE RECURSOS</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#986F0B;">GR</div>
-
-        </div>
-
+    <!-- Pesquisa Rápida ------------------------->
+    <div class="search-container-dep">
+        <input type="search" class="search-menu-settings-dep" style="color:white;" placeholder="Digite sua pesquisa..." aria-label="Search"
+               id="inputUser" onclick="handleClick()" onkeyup="filterDepartments()">
+        <i class="fa-solid fa-magnifying-glass search-icon-dep" style="color:black;"></i>
     </div>
-    <!-- 1° linha de cards documentos ------------>
+    <!-- Pesquisa Rápida ------------------------->
 
+    <!-- Departamentos --------------------------->
+    <div class="mt-5 mb-5">
+        <ul class="custom-nav">
 
-    <!-- Linha OP ------------------------------->
-    <p style="margin-top:70px; margin-bottom:0px">Operacional</p>
-    <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
-    <!-- Linha OP ------------------------------->
+            <!-- Adm ----------------------------->
+            <li class="custom-nav-item">
+                <a href="#administrativo" style="max-height: 50px; color: black;" class="custom-nav-link"
+                   onclick="toggleIcon('icon_administrativo')">
+                    <h5 class="text-container">Administrativo</h5>
+                    <span class="icon-container">
+                    <img src="{% static 'ccis/IconSicoob.png' %}" alt="Ícone" class="custom-nav-icon mb-1"
+                         id="icon_administrativo">
+                    </span>
+                </a>
+                <div id="administrativo" class="custom-nav-submenu submenu-open">
 
-    <!-- 2° OP linha de cards documentos ------------>
-    <div class="row justify-content-start mb-5">
+                    <div class="row justify-content-start p-3">
 
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
 
-            <a class="links-dep"
-               type="button"
-               href="{% url 'cadastro_home' %}">
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'adm_home' %}">
 
-                <div class="card-buttons" style="text-align:center;">
+                                <div class="card-buttons" style="text-align:center;">
 
-                    <h6 class="pt-3">CADASTRO</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
+                                    <h6 class="pt-4">ADMINISTRATIVO</h6>
+                                    <hr>
+                                    <h6 CLASS="">ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#004E8C;">AD</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'cobranca_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">COBRANÇA</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#4F6BED;">CB</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'controladoria_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">PERFORMANCE CORPORATIVA</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#8764B8;">PC</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               href="{% url 'rh_home' %}"
+                               type="button">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">GESTÃO DE PESSOAS</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#038387;">GP</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'gestaoRisco_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">GESTÃO DE RISCO</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#986F0B;">GR</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'retaguarda_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">RETAGUARDA</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#004E8C;">RG</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               href="{% url 'secretaria_home' %}"
+                               type="button">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">SECRETARIA</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#498205;">SC</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               href="{% url 'ti_home' %}"
+                               type="button">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">TECNOLOGIA</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#0273EB;">TI</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               href="{% url 'marketing_home' %}"
+                               type="button">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">MARKETING</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#038387;">MK</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'financeiro_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">FINANCEIRO</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#8764B8;">FI</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'gestaoRecurso_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">GESTÃO DE RECURSOS</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#986F0B;">GR</div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </a>
+            </li>
+            <!-- Adm ----------------------------->
 
-            <div class="icon-dep" style="background-color:#0273EB;">CA</div>
+            <!-- Ope ----------------------------->
+            <li class="custom-nav-item">
+                <a href="#operacional" style="max-height: 50px; color: black;" class="custom-nav-link"
+                   onclick="toggleIcon('icon_operacional')">
+                    <h5 class="text-container">Operacional</h5>
+                    <span class="icon-container">
+                        <img src="{% static 'ccis/IconSicoob.png' %}" alt="Ícone" class="custom-nav-icon mb-1"
+                             id="icon_operacional">
+                    </span>
+                </a>
+                <div id="operacional" class="custom-nav-submenu">
 
-        </div>
+                    <div class="row justify-content-start p-3">
 
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
 
-            <a class="links-dep"
-               type="button"
-               href="{% url 'credito_home' %}">
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'cadastro_home' %}">
 
-                <div class="card-buttons" style="text-align:center;">
+                                <div class="card-buttons" style="text-align:center;">
 
-                    <h6 class="pt-3">CRÉDITO</h6>
-                    <hr>
-                    <h4>ACESSAR</h4>
+                                    <h6 class="pt-4">CADASTRO</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#0273EB;">CA</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'credito_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">CRÉDITO</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#498205;">CR</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'produtoServico_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">PRODUTOS E SERVIÇOS</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#038387;">PS</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'recepcao_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">RECEPÇÃO</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#8764B8;">RE</div>
+
+                        </div>
+
+                    </div>
 
                 </div>
+            </li>
+            <!-- Ope ----------------------------->
 
-            </a>
+            <!-- PAs ----------------------------->
+            <li class="custom-nav-item">
+                <a href="#pas" style="max-height: 50px; color: black;" class="custom-nav-link"
+                   onclick="toggleIcon('icon_pas')">
+                    <h5 class="text-container">PA's</h5>
+                    <span class="icon-container">
+                        <img src="{% static 'ccis/IconSicoob.png' %}" alt="Ícone" class="custom-nav-icon mb-1"
+                             id="icon_pas">
+                    </span>
+                </a>
 
-            <div class="icon-dep" style="background-color:#498205;">CR</div>
+                <div id="pas" class="custom-nav-submenu">
 
-        </div>
+                    <div class="row justify-content-start p-3">
 
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
 
-            <a class="links-dep"
-               type="button"
-               href="{% url 'produtoServico_home' %}">
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'paDigital_home' %}">
 
-                <div class="card-buttons" style="text-align:center;">
+                                <div class="card-buttons" style="text-align:center;">
 
-                    <h6 class="pt-3">PRODUTOS E SERVIÇOS</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
+                                    <h6 class="pt-4">PA DIGITAL</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#986F0B;">DIG</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'planaltina_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">PLANALTINA</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#8764B8;">PLA</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'padf_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">PAD/DF</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#498205;">PADF</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'formosa_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">FORMOSA</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#0273EB;">FSA</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'vicente_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">VICENTE PIRES</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#038387;">VIP</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'SJ_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">SÃO JOÃO</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#004E8C;">SJA</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'saosebas_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">SÃO SEBASTIÃO</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#038387;">SSB</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'sia_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">SIA</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#986F0B;">SIA</div>
+
+                        </div>
+
+                    </div>
 
                 </div>
+            </li>
+            <!-- PAs ----------------------------->
 
-            </a>
-
-            <div class="icon-dep" style="background-color:#038387;">PS</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'recepcao_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">RECEPÇÃO</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#8764B8;">RE</div>
-
-        </div>
-
+        </ul>
     </div>
-    <!-- 2° OP linha de cards documentos ------------>
-
-
-    <!-- Linha PAs ------------------------------->
-    <p style="margin-top:70px; margin-bottom:0px">PAs</p>
-    <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
-    <!-- Linha PAs ------------------------------->
-
-    <!-- 3a PAs linha de buttons --------------------->
-    <div class="row justify-content-start mb-5">
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'paDigital_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">PA DIGITAL</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#986F0B;">DIG</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'planaltina_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">PLANALTINA</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#8764B8;">PLA</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'padf_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">PADF</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#498205;">PADF</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'formosa_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">FORMOSA</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#0273EB;">FSA</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'vicente_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">VICENTE PIRES</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#038387;">VIP</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'SJ_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">SÃO JOÃO</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#004E8C;">SJA</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'saosebas_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">SÃO SEBASTIÃO</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#038387;">SSB</div>
-
-        </div>
-
-        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
-
-            <a class="links-dep"
-               type="button"
-               href="{% url 'sia_home' %}">
-
-                <div class="card-buttons" style="text-align:center;">
-
-                    <h6 class="pt-3">SIA</h6>
-                    <hr>
-                    <h3>ACESSAR</h3>
-
-                </div>
-
-            </a>
-
-            <div class="icon-dep" style="background-color:#986F0B;">SIA</div>
-
-        </div>
-
-    </div>
-    <!-- 3a PAs linha de buttons --------------------->
+    <!-- Departamentos --------------------------->
 
 </div>
 
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const submenuLinks = document.querySelectorAll('.custom-nav-link');
+
+        submenuLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenu = this.nextElementSibling;
+                const isOpen = submenu.classList.contains('submenu-open');
+
+                closeAllSubmenus();
+
+                if (!isOpen) {
+                    submenu.classList.add('submenu-open');
+                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                    this.parentNode.classList.add('open');
+                } else {
+                    this.parentNode.classList.remove('open');
+                }
+            });
+        });
+
+        function closeAllSubmenus() {
+            const submenus = document.querySelectorAll('.custom-nav-submenu');
+            submenus.forEach(function(submenu) {
+                submenu.classList.remove('submenu-open');
+                submenu.style.maxHeight = null;
+                submenu.previousElementSibling.classList.remove('open');
+            });
+        }
+
+        function openCorrespondingSubmenu(department) {
+            closeAllSubmenus();
+
+            const accordion = department.closest('.custom-nav-submenu');
+            if (accordion) {
+                const parentItem = accordion.previousElementSibling;
+                parentItem.classList.add('open');
+                accordion.classList.add('submenu-open');
+                accordion.style.maxHeight = accordion.scrollHeight + 'px';
+                parentItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+// Função de pesquisa com destaque e abertura do accordion
+function searchDepartments() {
+    const searchTerm = document.getElementById('inputUser').value.trim().toLowerCase();
+    const departments = document.querySelectorAll('.links-dep');
+
+    departments.forEach(function(department) {
+        const departmentName = department.innerText.trim().toLowerCase();
+
+        if (searchTerm !== '' && containsSearchTerm(departmentName, searchTerm)) {
+            department.parentElement.style.animation = 'highlight 2s infinite';
+            openCorrespondingSubmenu(department);
+        } else {
+            department.parentElement.style.animation = 'none';
+        }
+    });
+
+    if (searchTerm === '') {
+        closeAllSubmenus();
+    }
+}
+
+function containsSearchTerm(string, searchTerm) {
+    let searchTermIndex = 0;
+
+    for (let i = 0; i < string.length; i++) {
+        if (string[i] === searchTerm[searchTermIndex]) {
+            searchTermIndex++;
+        } else {
+            // Se não houver correspondência, reiniciamos a contagem
+            searchTermIndex = 0;
+        }
+
+        if (searchTermIndex === searchTerm.length) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+        // Evento para acionar a função de pesquisa ao digitar
+        document.getElementById('inputUser').addEventListener('input', function() {
+            searchDepartments();
+        });
+
+        // Estilos CSS para a animação de destaque
+        var style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes highlight {
+                80% {
+                    background-color: #27debf;
+                    border-radius: 10px
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    });
+
+    // Adicione uma função JavaScript para cada ícone que você deseja que gire individualmente
+    function toggleIcon(iconId) {
+        const icon = document.getElementById(iconId);
+        icon.classList.toggle("rotate");
+    }
+
+    function handleClick() {
+    var icon = document.querySelector('.search-icon-dep');
+    icon.style.display = 'none';
+
+    // Adicionando um event listener para detectar quando o input perde o foco
+    var inputField = document.getElementById('inputUser');
+    inputField.addEventListener('blur', handleInput);
+}
+
+    function handleInput() {
+    var inputField = document.getElementById('inputUser');
+    var icon = document.querySelector('.search-icon-dep');
+
+    if (inputField.value !== '') {
+        icon.style.display = 'none';
+    } else {
+        icon.style.display = 'block';
+    }
+}
+
+
+</script>
 
 {% endblock %}

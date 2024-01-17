@@ -480,9 +480,14 @@ def conta(request):
         form = modelFormDadosPessoais(request.POST, instance=pk_dados)
 
         if form.is_valid():
+            # Verifica se o checkbox foi marcado
+            if 'pcd_checkbox' in request.POST:
+                form.instance.pcd = True
+            else:
+                form.instance.pcd = False
+
             form.save()
             return redirect('conta')
-
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Dados Pessoais'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
@@ -855,7 +860,7 @@ def registrar_atendimento(request, card_id):
     # Crie uma notificação para informar o usuário do atendimento registrado
     notification = Notification(
         author=request.user,
-        description=f"Sua solicitação esta em Atendimento por {request.user.first_name} {request.user.last_name}",
+        description=f"Sua solicitação está em Atendimento por {request.user.first_name} {request.user.last_name}",
         subject=card.assunto + f" N°: {card.idCard}",
         recipient=card.solicitante,  # O destinatário é o solicitante da questão
         url='kanban_user',  # URL da página atual
@@ -1298,4 +1303,9 @@ def notificacao_lida(request, notification_id):
         return JsonResponse({'success': False, 'message': 'Notificação não encontrada.'})
 
         return JsonResponse({"error": "Card não encontrado"}, status=404)
+
+
+@login_required(login_url="/login")
+def chat(request):
+    return render(request, 'ccis/chat.html')
 
