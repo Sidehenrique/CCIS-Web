@@ -4,28 +4,9 @@
 {% block conteudo %}
 
 <div class="container-fluid scrollable-content">
-
-    <!-- subMenu --------------------------------->
-    <div class="row">
-
-        <nav class="navbar paragrafo-style">
-            <div class="container-fluid">
-
-                <div class="navbar-nav-wrap-content-end">
-
-                </div>
-            </div>
-
-        </nav>
-
-
-    </div>
-    <!-- End subMenu ----------------------------->
-
-    <!-- Container ------------------------------->
     <div class="row  mt-5">
 
-        <div class="col position-relative" style="height:80%;">
+        <div class="col position-relative">
 
             <!-- Icon Do Setor --------------------------->
             <div class="icon-set" style="background-color:{{dadosSetor.cor}};">{{dadosSetor.sigla}}</div>
@@ -47,7 +28,7 @@
                         <!-- Titulo ---------------------->
 
                         <!-- Conteúdo -------------------->
-                        <div class="row ">
+                        <div class="row">
 
                             <div class="col" style="text-align:left">
 
@@ -218,6 +199,7 @@
                                     <!-- Membros -->
                                 </div>
                                 {% else %}
+
                                 <div>
                                     <div class="">
                                         <img src="{% static 'ccis/Grupo 4678.png' %}"
@@ -311,7 +293,6 @@
                         </div>
 
 
-
                         {% if dadosSetor.imagem %}
                         <img src="{{ dadosSetor.imagem.url }}"
                              alt="imagemSetor"
@@ -340,8 +321,6 @@
         </div>
 
     </div>
-    <!-- Container ------------------------------->
 
 </div>
-
 {% endblock %}

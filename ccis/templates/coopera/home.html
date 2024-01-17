@@ -5,7 +5,7 @@
 
 <!--- background ----------------------------->
 {% if dados.canvas %}
-<img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+    <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
 <!--- background ----------------------------->
 
@@ -70,8 +70,7 @@
                     <div class="d-table h-100 w-100">
                         <div class="d-table-cell align-middle">
                             <a style="text-decoration: none;" href="{% url 'india' %}" class="text-white">
-                                <p style="font-size: 12px;">Inativos de propensos à eliminação, Inativos à
-                                    trabalhar, etc...</p>
+                                <p style="font-size: 12px;">Relatório analítico de dados do Cooperado.</p>
                             </a>
                         </div>
                     </div>
@@ -95,7 +94,7 @@
                     <div class="d-table h-100 w-100">
                         <div class="d-table-cell align-middle">
                             <a style="text-decoration: none;" href="{% url 'dados' %}" class="text-white">
-                                <p style="font-size: 13px;">Parecer técnico</p>
+                                <p style="font-size: 13px;">Relatório sintético de dados do Cooperado.</p>
                             </a>
                         </div>
                     </div>

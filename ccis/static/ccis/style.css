@@ -1096,19 +1096,20 @@ status-negativo{
 }
 
 .search-menu-settings-dep {
-  width: 100%;
+  width: 35%;
   padding-right: 50px; /* Espaço para o ícone "x" */
   border: none; /* Remove as bordas */
   border-radius: 20px; /* Arredonda as bordas */
   font-size: 16px; /* Ajusta o tamanho da fonte */
   padding: 10px; /* Aumenta o padding interno */
   outline: none; /* Remove o contorno quando o campo está focado */
+  background-color: #A8A8A8
 }
 
 .search-menu-settings-dep::after {
   content: '×'; /* Caractere "x" para limpar o campo */
   position: absolute;
-  right: 10px; /* Ajuste o valor conforme necessário para posicionar o ícone "x" */
+  left: 34%; /* Ajuste o valor conforme necessário para posicionar o ícone "x" */
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px; /* Tamanho do ícone "x" */
@@ -1122,7 +1123,7 @@ status-negativo{
 .search-icon-dep {
   position: absolute;
   top: 50%;
-  right: 25px; /* Ajuste o valor conforme necessário para o espaçamento do ícone */
+  left: 610px; /* Ajuste o valor conforme necessário para o espaçamento do ícone */
   transform: translateY(-50%);
 }
 
@@ -1758,6 +1759,112 @@ status-negativo{
 }
 
 
+
+.avatar {
+    font-size: 1.25rem; /* Aumentando o tamanho da fonte do avatar */
+    position: relative;
+    display: inline-block;
+    width: 4.5rem; /* Aumentando a largura do avatar */
+    height: 4.5rem; /* Aumentando a altura do avatar */
+}
+
+
+.avatar.hidden {
+    display: none;
+}
+
+.avatar .avatar-text {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-transform: uppercase;
+    overflow: hidden;
+    background: #fff;
+    font-weight: 600;
+    color: #00acf0;
+    background: #DDF3E3;
+}
+
+.avatar .avatar-text .initial-wrap {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.avatar .avatar-text .initial-wrap > span {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.avatar .avatar-text.avatar-text-green,
+.avatar .avatar-text.avatar-text-success {
+    color: #22af47;
+}
+
+.avatar-group {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+.avatar-group .avatar {
+    font-size: 1.1rem; /* Aumentando o tamanho da fonte do grupo de avatares */
+    width: 3.5rem; /* Aumentando a largura do grupo de avatares */
+    height: 3.5rem; /* Aumentando a altura do grupo de avatares */
+}
+
+.avatar-group.avatar-group-overlapped .avatar {
+    margin-right: -15px; /* Ajustando a sobreposição do grupo de avatares */
+}
+
+.avatar-group.avatar-group-overlapped .avatar:hover {
+    z-index: 1;
+}
+
+.avatar-group.avatar-group-lg .avatar {
+    font-size: 1.2rem; /* Aumentando o tamanho da fonte do grupo de avatares grande */
+    width: 4rem; /* Aumentando a largura do grupo de avatares grande */
+    height: 4rem; /* Aumentando a altura do grupo de avatares grande */
+}
+
+.avatar-group.avatar-group-lg.avatar-group-overlapped .avatar {
+    margin-right: -18px; /* Ajustando a sobreposição do grupo de avatares grande */
+}
+
+.avatar-group.avatar-group-sm .avatar {
+    font-size: 0.8rem; /* Ajustando o tamanho da fonte do grupo de avatares pequeno */
+    width: 2.8rem; /* Ajustando a largura do grupo de avatares pequeno */
+    height: 2.8rem; /* Ajustando a altura do grupo de avatares pequeno */
+}
+
+.avatar-group.avatar-group-sm.avatar-group-overlapped .avatar {
+    margin-right: -12px; /* Ajustando a sobreposição do grupo de avatares pequeno */
+}
+
+/* Reduzir o tamanho da imagem */
+.avatar-group .avatar .avatar-img {
+    width: 100%; /* Faz a imagem preencher o contêiner */
+    height: 100%;
+    object-fit: cover; /* Mantém a proporção da imagem ao cobrir o contêiner */
+}
+
+
+.modal-avatar-img {
+    width: 50px; /* Ajuste o valor conforme necessário */
+    height: 50px; /* Ajuste o valor conforme necessário */
+    object-fit: cover;
+}
+
+.modal-profile-border {
+border-bottom: 1px solid #ccc; /* Adicione a borda inferior desejada */
+padding-bottom: 10px; /* Adicione o espaçamento desejado abaixo da borda */
+display: block;
+}
+
+
 /*-- processos ----------------------------*/
 
 
@@ -2194,15 +2301,14 @@ status-negativo{
 
 .tema {
   display: inline-block;
-  padding: 10px;
+  padding-top: 10px;
   text-align: center;
   text-decoration: none;
-  border-radius: 5px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 10px;
+  transition: transform 0.7s;
+  cursor: pointer;
 }
+
 
 .links {
   display: inline-block;

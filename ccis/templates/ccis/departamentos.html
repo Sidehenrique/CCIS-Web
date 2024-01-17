@@ -4,11 +4,12 @@
 
 {% block conteudo %}
 
-<!--- background ----------------------------->
+
+<!--- background --------------------------------->
 {% if dados.canvas %}
-<img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+    <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
-<!--- background ----------------------------->
+<!--- background --------------------------------->
 
 <div class="container-fluid scrollable-content">
 
@@ -54,9 +55,9 @@
 
     <!-- Pesquisa Rápida ------------------------->
     <div class="search-container-dep">
-        <input type="search" class="search-menu-settings-dep" placeholder="Digite sua pesquisa..." aria-label="Search"
+        <input type="search" class="search-menu-settings-dep" style="color:white;" placeholder="Digite sua pesquisa..." aria-label="Search"
                id="inputUser" onclick="handleClick()" onkeyup="filterDepartments()">
-        <i class="fa-solid fa-magnifying-glass search-icon-dep"></i>
+        <i class="fa-solid fa-magnifying-glass search-icon-dep" style="color:black;"></i>
     </div>
     <!-- Pesquisa Rápida ------------------------->
 
@@ -74,7 +75,7 @@
                          id="icon_administrativo">
                     </span>
                 </a>
-                <div id="administrativo" class="custom-nav-submenu">
+                <div id="administrativo" class="custom-nav-submenu submenu-open">
 
                     <div class="row justify-content-start p-3">
 
@@ -126,7 +127,7 @@
 
                                 <div class="card-buttons" style="text-align:center;">
 
-                                    <h6 class="pt-2">PERFORMANCE CORPORATIVA</h6>
+                                    <h6 class="pt-4">PERFORMANCE CORPORATIVA</h6>
                                     <hr>
                                     <h6>ACESSAR</h6>
 
@@ -624,7 +625,6 @@
             });
         }
 
-        // Função para abrir o submenu do departamento correspondente
         function openCorrespondingSubmenu(department) {
             closeAllSubmenus();
 
@@ -721,6 +721,8 @@ function containsSearchTerm(string, searchTerm) {
         icon.style.display = 'block';
     }
 }
+
+
 </script>
 
 {% endblock %}

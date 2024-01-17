@@ -3,7 +3,13 @@
 
 {% block conteudo %}
 
-<!-- Conteúdo -------------------------------->
+<!--- background --------------------------------->
+{% if dados.canvas %}
+    <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+{% endif %}
+<!--- background --------------------------------->
+
+<!-- Conteúdo ------------------------------------>
 <div class="container" style="margin-top:75px">
 
     <div class="row">
@@ -121,12 +127,12 @@
                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>Sisbr: Solicitar Permisões, Criar, Liberação, Redefinição de Senha e Exclusão de
+                                <li>Sisbr: Solicitar Permissões, Criar, Liberação, Redefinição de Senha e Exclusão de
                                     Usuário.
                                 </li>
                                 <li>VPN: Solicitar Criação de Usuário, Redefinição de Senha e Exclusão de Conta</li>
                                 <li>Email: Solicitar Criação de Usuário, Redefinição de Senha e Exclusão de Conta</li>
-                                <li>Itranet: Solicitar Alterar Grupo/Setor, Criar, Redefinição de Senha e Exclusão de
+                                <li>Intranet: Solicitar Alterar Grupo/Setor, Criar, Redefinição de Senha e Exclusão de
                                     Usuário.
                                 </li>
                             </ul>
@@ -146,7 +152,7 @@
                         <div class="accordion-body">
                             <ul>
                                 <li>Instalação: Solicitação de Softweres</li>
-                                <li>Manutenção: Atualizãção de Softweres, Troca de Computadores antigos e Troca de
+                                <li>Manutenção: Atualização de Softweres, Troca de Computadores antigos e Troca de
                                     Periféricos
                                 </li>
                             </ul>
@@ -165,7 +171,7 @@
                          aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>Implementação de Melhorias: Descreva suas nececidades dentro da Intranet.</li>
+                                <li>Implementação de Melhorias: Descreva suas necessidades dentro da Intranet.</li>
                                 <li>Solicitação de visita: Solicite um técnico da TI</li>
                                 <li>Outros: Descreva suas nececidades.</li>
                             </ul>
@@ -544,9 +550,9 @@
         <!-- Formulário de Apontamentos ---------->
 
     </div>
-    <!-- Formulário de Equipamentos --------------------->
+    <!-- Formulário de Equipamentos -------------->
 
 </div>
-<!-- Conteúdo -------------------------------->
+<!-- Conteúdo ------------------------------------>
 
 {% endblock %}

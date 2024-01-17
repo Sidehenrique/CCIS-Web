@@ -4,6 +4,12 @@
 
 {% block conteudo %}
 
+<!--- background ----------------------------->
+{% if dados.canvas %}
+    <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+{% endif %}
+<!--- background ----------------------------->
+
 <!-- Conteúdo ------------------------------------------->
 <div class="container-fluid scrollable-content">
 

@@ -4,11 +4,10 @@
 {% block conteudo %}
 
 {% if dados.canvas %}
-    <img class="profile-img" src="{{ dados.canvas.url }}">
-    {% else %}
-    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+<img class="profile-img" src="{{ dados.canvas.url }}">
+{% else %}
+<img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
-
 <!--Container------------>
 <div class="container-fluid scrollable-content">
 
@@ -32,7 +31,7 @@
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
-                    <li><a class="dropdown-item" href="{% url 'kanban' %}">Processos</a></li>
+                    <li><a class="dropdown-item" href="{% url 'kanban' %}">Caixa de Entrada</a></li>
                     <li><a class="dropdown-item" href="{% url 'kanban_user' %}">Minhas solicitações</a></li>
                 </ul>
 
@@ -49,32 +48,33 @@
         <div class="col col-auto me-auto d-flex">
 
             <!-- Equipe -------------------------->
-            {% if equipe %}
-
+            <div class="avatar-group avatar-group-sm avatar-group-overlapped" id="avatar-group">
                 {% for usuario in equipe %}
-                    <a href="{% url 'profile' user_id=usuario.id %}" class=" equipe-menu-settings">
-
-                        {% if usuario.foto %}
-                            <img class="avatar-img" src="{{ usuario.foto.url }}"
-                                 alt="" width="40" height="40">
-
-                            {% else %}
-
-                            {% if usuario.sexo == "Masculino" %}
-                            <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
-                                 alt="" width="40" height="40">
-
-                            {% elif usuario.sexo == "Feminino" %}
-                            <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
-                                 alt="" width="40" height="40">
-                            {% endif %}
-
-                            {% endif %}
-
-                    </a>
+                {% if forloop.counter <= 5 %}
+                <a href="{% url 'profile' user_id=usuario.id %}" class="avatar">
+                    {% if usuario.foto %}
+                    <img src="{{ usuario.foto.url }}" alt="user" class="avatar-img rounded-circle">
+                    {% else %}
+                    {% if usuario.sexo == "Masculino" %}
+                    <img src="{% static 'ccis/avatar.jpg' %}" alt="user" class="avatar-img rounded-circle">
+                    {% elif usuario.sexo == "Feminino" %}
+                    <img src="{% static 'ccis/avatar-feminino.jpg' %}" alt="user" class="avatar-img rounded-circle">
+                    {% endif %}
+                    {% endif %}
+                </a>
+                {% endif %}
                 {% endfor %}
-
-            {% endif %}
+                <a href="#" class="avatar {% if equipe|length <= 5 %}hidden{% endif %}" id="avatar-87"
+                   style="cursor: pointer;">
+                    <span class="avatar-text avatar-text-green rounded-circle">
+                        <span class="initial-wrap">
+                            {% if equipe|length > 5 %}
+                                <span>{{ equipe|length|add:"-5" }}+</span>
+                            {% endif %}
+                        </span>
+                    </span>
+                </a>
+            </div>
             <!-- Equipe -------------------------->
 
         </div>
@@ -227,7 +227,7 @@
             <div class="position-relative">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="search" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa..."
-                        aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
+                       aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
             </div>
             <!-- Pesquisa Rápida ----------------->
 
@@ -286,7 +286,6 @@
             <div id="kanban-body-encaminhado" class="kanban-body">
 
 
-
             </div>
             <div class="kanban-footer">
                 <a type="button" class="kanban-btn">+ Adicionar um lembrete</a>
@@ -330,6 +329,107 @@
 
     </div>
     <!-- kanban ---------------->
+
+    <!-- Modal Equipe ---------------------------->
+    <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="perfilModalLabel">Lista de Perfis</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col modal-profile-border p-0">
+
+                            <!-- Equipe -------------------------->
+                            {% if equipe %}
+                            <div class="">
+                                <!-- Supervisor -->
+                                {% for ch in chefe %}
+                                <a href="{% url 'profile' user_id=ch.id %}" class="list-group-item-action" style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                    <div class="align-horizontal-center">
+
+                                        {% if ch.foto %}
+                                        <img class="avatar-img" src="{{ chefe.foto.url }}"
+                                             alt="" width="40" height="40">
+
+                                        {% else %}
+
+                                        {% if ch.sexo == "Masculino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                             alt="" width="40" height="40">
+
+                                        {% elif ch.sexo == "Feminino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                             alt="" width="40" height="40">
+                                        {% endif %}
+
+                                        {% endif %}
+
+                                        <div class="ps-2">
+                                            <h6 class="m-0">{{ ch.first_name }} {{ch.last_name}}</h6>
+                                            <small class="m-0">{{ ch.cargo }}</small>
+                                        </div>
+
+                                    </div>
+
+                                </a>
+                                {% endfor %}
+                                <!-- Supervisor -->
+
+                                <!-- Membros -->
+                                {% for usuario in equipe %}
+                                <a href="{% url 'profile' user_id=usuario.id %}" class="list-group-item-action"
+                                   style="border-bottom: 1px solid; border-color: rgb(235,235,235);
+                                           display: block; padding: 0.5rem 1rem; text-decoration: none;">
+
+                                    <div class="align-horizontal-center">
+
+                                        {% if usuario.foto %}
+                                        <img class="avatar-img" src="{{ usuario.foto.url }}"
+                                             alt="" width="40" height="40">
+
+                                        {% else %}
+
+                                        {% if usuario.sexo == "Masculino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                             alt="" width="40" height="40">
+
+                                        {% elif usuario.sexo == "Feminino" %}
+                                        <img class="avatar-img" src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                             alt="" width="40" height="40">
+                                        {% endif %}
+
+                                        {% endif %}
+
+
+                                        <div class="ps-2">
+                                            <h6 class="m-0">{{ usuario.first_name }} {{usuario.last_name}}</h6>
+                                            <small class="m-0">{{ usuario.cargo }}</small>
+                                        </div>
+
+                                    </div>
+
+                                </a>
+                                {% endfor %}
+                                <!-- Membros -->
+                            </div>
+                            {% endif %}
+                            <!-- Equipe -------------------------->
+
+                        </div>
+                    </div>
+                    <footer>
+                        <button id="fecharModal" class="btn btn-secondary mt-3">Fechar</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Equipe ---------------------------->
 
     <!-- Modal Processos ------------------------->
     <div class="modal fade"
@@ -785,6 +885,24 @@
         // Chama a função fetchCards com a opção 'processos' ao carregar a página
         fetchCards('minhas_solicitacoes');
 
+    });
+
+    document.getElementById('avatar-87').addEventListener('click', function() {
+        if ($('#avatar-87').hasClass('hidden')) {
+            return; // Evitar abrir o modal se o avatar-87 estiver escondido
+        }
+
+
+        var equipeCount = {{ equipe|length }};
+        if (equipeCount >= 6) {
+            equipeCount -= 5; // Subtrai 3 da contagem
+            $('#avatar-87 .badge').text(equipeCount); // Atualiza o conteúdo do badge
+        }
+        $('#perfilModal').modal('show');
+    });
+
+    document.getElementById('fecharModal').addEventListener('click', function() {
+        $('#perfilModal').modal('hide');
     });
 </script>
 
