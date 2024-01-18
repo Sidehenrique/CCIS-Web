@@ -11,7 +11,7 @@ from reportlab.pdfgen import canvas
 from io import BytesIO
 
 from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
-from django.http import JsonResponse, HttpResponseNotFound
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponseForbidden
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -639,7 +639,10 @@ def kanban_view(request):
                                   key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
                                                  x['cargo'] != 'Encarregado(a)'))
 
+            grupos_usuario = request.user.groups.all()
+
             context = {
+                'grupos_usuario': grupos_usuario,
                 'clock': clock,
                 'superior': superior,
                 'equipe': nomes_equipe,
@@ -716,19 +719,19 @@ def card_kanban_api(request):
     # Obtém o ID do usuário logado
     user_id = request.user.id
 
-    # Obtém a opção da solicitação (processos ou minhas_solicitacoes)
-    option = request.query_params.get('option', None)
+    # Obtém o nome do grupo da solicitação
+    group_name = request.query_params.get('option', None)
 
-    # Lógica para filtrar os cards com base na opção
-    if option == 'processos':
-        # Filtra os cards relacionados ao setor do usuário
-        queryset = Card.objects.filter(setor__user=user_id)
-    elif option == 'minhas_solicitacoes':
-        # Filtra os cards criados pelo próprio usuário
-        queryset = Card.objects.filter(solicitante__id=user_id)
-    else:
-        # Lógica adicional conforme necessário
-        queryset = Card.objects.all()
+    if not group_name:
+        return HttpResponseForbidden('O nome do grupo é obrigatório.')
+
+    # Lógica para filtrar os cards com base no nome do grupo
+    try:
+        group = Group.objects.get(name=group_name)
+    except Group.DoesNotExist:
+        return HttpResponseForbidden('Grupo não encontrado.')
+
+    queryset = Card.objects.filter(setor__user=user_id, setor=group)
 
     serializer = CardSerializer(queryset, many=True)
     return Response(serializer.data)

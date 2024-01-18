@@ -31,9 +31,14 @@
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
-                    <li><a class="dropdown-item" href="{% url 'kanban' %}">Caixa de Entrada</a></li>
+                    {% for grupo in grupos_usuario %}
+                        <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.name }}">
+                            {{ grupo.name }}
+                        </li>
+                    {% endfor %}
                     <li><a class="dropdown-item" href="{% url 'kanban_user' %}">Minhas solicitações</a></li>
                 </ul>
+
 
             </div>
 
@@ -877,7 +882,6 @@
 
                     </div>
                     <!-- Determinar Hora --------->
-
                     <footer>
                         <button class="btn btn-primary">Confirmar</button>
                     </footer>
@@ -897,13 +901,6 @@
         userId: {{ user_data.log_id }},
         userGroup: '{{ user_data.logGroup }}',
     };
-
-    // Espera que o documento esteja completamente carregado
-    document.addEventListener('DOMContentLoaded', function () {
-        // Chama a função fetchCards com a opção 'processos' ao carregar a página
-        fetchCards('processos');
-
-    });
 
     document.getElementById('avatar-87').addEventListener('click', function() {
         if ($('#avatar-87').hasClass('hidden')) {
@@ -925,5 +922,5 @@
 
 </script>
 
-
 {% endblock %}
+
