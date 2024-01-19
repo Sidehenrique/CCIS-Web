@@ -1432,16 +1432,36 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Função para obter o tema do localStorage
     function getTema() {
-        return localStorage.getItem("tema");
+        // Obter o tema do localStorage, se não estiver definido, usar um valor padrão
+        return localStorage.getItem("tema") || "/static/ccis/backgroundPro.png";
+    }
+
+    // Função para verificar se é o primeiro login
+    function isFirstLogin() {
+        return localStorage.getItem("firstLogin") === null;
+    }
+
+    function markFirstLogin() {
+        localStorage.setItem("firstLogin", "false");
     }
 
     function aplicarTema() {
         var temaSalvo = getTema();
         console.log("Aplicando tema: " + temaSalvo);
-        if (temaSalvo) {
-            backgroundImage.src = temaSalvo;
-        }
+        backgroundImage.src = temaSalvo;
     }
+
+    // Adicione um evento ao botão padrão para verificar o primeiro login
+    padraoBtn.addEventListener("click", function() {
+        // Verificar se é o primeiro login antes de definir o tema
+        if (isFirstLogin()) {
+            markFirstLogin();
+            setTema("/static/ccis/backgroundPro.png");
+        } else {
+            setTema("/static/ccis/backgroundPro.png");
+        }
+        aplicarTema();
+    });
 
     padraoBtn.addEventListener("click", function() {
         setTema("/static/ccis/backgroundPro.png");
