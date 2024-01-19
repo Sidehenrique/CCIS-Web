@@ -254,66 +254,75 @@ function getCookie(name) {
 
 //Cards ----------------------------------------------------------------------------------------------
 
-//botão de recolhimento do card
-$(document).ready(function () {
-    // Seu código existente...
+// Função para recolher ou exibir o conteúdo ao clicar no header do card
+$(document).on('click', '[id^="toggleBtn-"]', function () {
+    const cardId = this.id.split('-').pop();
+    const cardContent = $(`#cardContent-${cardId}`);
 
-    // Função para recolher ou exibir o conteúdo ao clicar no header do card
-    $(document).on('click', '[id^="toggleBtn-"]', function () {
+    // Adicione um teste para verificar se o elemento foi encontrado
+    if (cardContent.length) {
+        cardContent.slideToggle();
 
-        const cardId = this.id.split('-').pop(); // Obtém o número do cardId
-        console.log(cardId);
-        const cardContent = $(`#cardContent-${cardId}`);
+        // Atualize o estado de recolhimento do card no cookie
+        const collapsedCards = JSON.parse(getCookie('collapsedCards')) || {};
+        collapsedCards[cardId] = !collapsedCards[cardId];
+        document.cookie = `collapsedCards=${JSON.stringify(collapsedCards)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/`;
+    } else {
+        console.error('Elemento não encontrado:', `#cardContent-${cardId}`);
+    }
+});
 
-        // Adicione um teste para verificar se o elemento foi encontrado
-        if (cardContent.length) {
-            cardContent.slideToggle();
-        } else {
-            console.error('Elemento não encontrado:', `#cardContent-${cardId}`);
-        }
-    });
 
-    // Mais do seu código...
+
+// Adicione um manipulador de evento para detectar cliques nos itens da lista
+$('.dropdown-item-group').click(function () {
+    var grupoSelecionado = $(this).data('value');
+    fetchCards(grupoSelecionado);
 });
 
 
 // Função para buscar cards com base na opção selecionada
-function fetchCards(option) {
+async function fetchCards(grupoSelecionado) {
     const userId = getLoggedInUserId();
-    const groupName = getLoggedInUserGroup();
+
+    // Atualize o texto do elemento h5 com base no grupo selecionado
+    const areaTrabalhoElement = document.getElementById('area-trabalho-kanban');
+    areaTrabalhoElement.innerText = grupoSelecionado;
 
 
-    // Defina o texto do elemento h5 com base na opção selecionada
-    if (option === 'processos') {
-        document.getElementById('area-trabalho-kanban').innerText = groupName;
-    } else if (option === 'minhas_solicitacoes') {
-        document.getElementById('area-trabalho-kanban').innerText = 'Minhas solicitações';
-    } else {
-        // Se não for nenhum dos tipos conhecidos, você pode definir um texto padrão
-        document.getElementById('area-trabalho-kanban').innerText = 'Área de Trabalho Kanban';
+    // Salve a área de trabalho no cookie
+    saveWorkspaceToCookie(grupoSelecionado);
+
+    try {
+        // Faça uma solicitação AJAX para o backend
+        const data = await $.ajax({
+            url: `/cards_kanban_api/?option=${grupoSelecionado}&userId=${userId}`,
+            type: 'GET',
+            dataType: 'json'
+        });
+
+        // Recupere o estado de recolhimento do card do cookie
+        const collapsedCards = JSON.parse(getCookie('collapsedCards')) || {};
+
+
+        // Aqui, data conterá os cards retornados pelo backend
+        // Atualize o kanban com os dados recebidos do backend
+        updateKanban(data, collapsedCards);
+    } catch (error) {
+        console.error('Erro ao buscar cards:', error.responseText || error.statusText);
     }
-
-    // Faça uma solicitação AJAX para o backend
-    $.ajax({
-        url: `/cards_kanban_api/?option=${option}&userId=${userId}`,
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            // Aqui, data conterá os cards retornados pelo backend
-            // Atualize o kanban com os dados recebidos do backend
-            updateKanban(data);
-        },
-        error: function(xhr, status, error) {
-            console.error('Erro ao buscar cards:', xhr.responseText);
-            console.error('Status:', status);
-            console.error('Erro:', error);
-        }
-    });
 }
 
 
+// Atualize os cards a cada 1 minuto (60 segundos)
+setInterval(() => {
+    const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
+    fetchCards(grupoSelecionado);
+}, 60000); // 60000 milissegundos = 1 minuto
+
+
 // Função para atualizar o kanban com os dados recebidos do backend
-function updateKanban(cards) {
+function updateKanban(cards, collapsedCards) {
     // Limpe os corpos do kanban
     clearKanbanBodies();
 
@@ -323,13 +332,13 @@ function updateKanban(cards) {
         const columnId = card.status.toLowerCase();
         // Adicione o card ao corpo da coluna correspondente
         const kanbanBody = $(`#kanban-body-${columnId}`);
-        kanbanBody.append(createCardElement(card));
+        kanbanBody.append(createCardElement(card, collapsedCards[card.idCard]));
     });
 }
 
 
 // Função para criar um elemento de card HTML com base nas informações do card
-function createCardElement(card) {
+function createCardElement(card, isCollapsed) {
     const cardId = `${card.idCard}`;
 
     // Função para formatar a data
@@ -352,7 +361,7 @@ function createCardElement(card) {
 
     // Crie a estrutura HTML do card
     const cardElement = `
-        <div class="kanban-card m-2" id="${cardId}">
+        <div class="kanban-card m-2 ${isCollapsed ? 'collapsed' : ''}" id="${cardId}">
             <!-- header do card --------->
             <a id="toggleBtn-${cardId}" type="button" class="d-grid kanban-card-header toggle-button">
                 <div class="row">
@@ -368,7 +377,7 @@ function createCardElement(card) {
             <!-- header do card --------->
 
             <!-- conteúdo card --------->
-            <div id="cardContent-${cardId}" class="kanban-card-content card-container">
+            <div id="cardContent-${cardId}" class="kanban-card-content card-container" ${isCollapsed ? 'style="display: none;"' : ''}>
                 <hr style="color:#C4C0C0; margin:0px;">
 
                 <a class="d-grid kanban-card-header card-filter"
@@ -414,7 +423,7 @@ function createCardElement(card) {
 function clearKanbanBodies() {
     // Adapte isso conforme a estrutura real do seu HTML
     $('#kanban-body-triagem').empty();
-    $('#kanban-body-em-atendimento').empty();
+    $('#kanban-body-atendimento').empty();
     $('#kanban-body-encaminhado').empty();
     $('#kanban-body-concluido').empty();
     $('#kanban-body-finalizado').empty();
@@ -431,6 +440,33 @@ function getLoggedInUserId() {
 function getLoggedInUserGroup() {
     return userData.userGroup;
 }
+
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+function saveWorkspaceToCookie(workspace) {
+    // Defina o cookie 'workspace' com o valor fornecido
+    setCookie('workspace', workspace, 30); // Ajuste conforme necessário
+}
+
+function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const workspace = getCookie('workspace');
+    if (workspace) {
+        // Faça algo com a área de trabalho, se necessário
+        // Por exemplo, você pode configurar a área de trabalho na interface do usuário
+        fetchCards(workspace); // Se necessário, atualize os cards com base na área de trabalho salva
+    }
+});
 
 function filterProcesses() {
     const searchText = document.getElementById('inputUser').value.toLowerCase();
@@ -721,9 +757,7 @@ function loadCardInfo(cardId) {
 
 
                 if (data.card.setor_history && data.card.setor_history.length > 0) {
-                    console.log(data.card.setor_history); // Adicione este log para verificar os dados do histórico de setores
                     const ultimaEntradaSetor = data.card.setor_history[data.card.setor_history.length - 1];
-                    console.log(ultimaEntradaSetor); // Adicione este log para verificar a última entrada de setor
                     const setorAtual = ultimaEntradaSetor.setor_atual;
                     sectorInfo.text(setorAtual);
                 } else {
@@ -741,27 +775,55 @@ function loadCardInfo(cardId) {
                     nomeResponsavel.text("Aguardando atendimento");
                 }
 
-                //---------------------------------------------------------------------------------------------
 
+                // -------------------------------------------------------------------------------
+                // Remova eventos antigos
 
-                // Ouvinte de evento para o botão "Atender"
-                $("#registrarAtendimentoButton").click(function (event) {
-                    event.preventDefault(); // Impede o link de navegar para outra página
-                    registrarAtendimento(cardId); // Chama a função para registrar o atendimento
+                $("#registrarAtendimentoButton").off("click");
+                $("#encaminharCardButton").off("click");
+                $("#transferirCardButton").off("click");
+                $("#PersonalizarCard").off("click");
+                $("#ConcluirCardButton").off("click");
+                $("#compartilharCardButton").off("click");
+                $("#FinalizarAtendimentoButton").off("click");
+                $("#reabrirChamadoButton").off("click");
+                $("#avaliarAtendimentoButton").off("click");
+
+                // AÇÕES ------------------------------------------------------------------------
+
+                // Ouvinte de evento para o botão "Atender" no modal
+                $("#registrarAtendimentoButton").off("click").on("click",function () {
+                    $.ajax({
+                        url: `/registrar_atendimento/${cardId}`,
+                        method: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+
+//                                alert('Card Concluido com sucesso.');]
+                                $(this).data('bs.modal', null);
+                                $('#processoModal').modal('hide');
+
+                            } else {
+                                alert('ERRO: ' + data.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('ERRO: ' + error);
+                        }
+                    });
                 });
-
-
 
                 //---------------------------------------------------------------------------------------------
 
                 // Ouvinte de evento para o botão "Encaminhar"
-                $("#encaminharCardButton").click(function () {
+                $("#encaminharCardButton").off("click").on("click",function () {
                     // Ao clicar no botão "Encaminhar", exiba o segundo modal para seleção do setor
                     $('#modalSelecaoSetor').modal('show');
                 });
 
                 // Ouvinte de evento para o botão "Confirmar" no segundo modal
-                $("#confirmarEncaminhamento").click(function () {
+                $("#confirmarEncaminhamento").off("click").on("click",function () {
                     const selectedGroup = $("#seletorGrupo").val(); // Obtém o valor selecionado no <select>
 
                     // Verifique se o valor do grupo é válido
@@ -784,7 +846,8 @@ function loadCardInfo(cardId) {
                         dataType: 'json',
                         success: function (data) {
                             if (data.success) {
-                                alert('Card encaminhado com sucesso.');
+//                                alert('Card encaminhado com sucesso.');
+                                $(this).data('bs.modal', null);
                                 $('#modalSelecaoSetor').modal('hide');
                                 $('#processoModal').modal('hide');
                             } else {
@@ -798,19 +861,16 @@ function loadCardInfo(cardId) {
 
                 });
 
-
-
                 //---------------------------------------------------------------------------------------------
 
-
                 // Ouvinte de evento para o botão "Transferir"
-                $("#transferirCardButton").click(function () {
+                $("#transferirCardButton").off("click").on("click",function () {
                     // Ao clicar no botão "Encaminhar", exiba o segundo modal para seleção do setor
                     $('#modalSelecaoSetorTrans').modal('show');
                 });
 
                 // Ouvinte de evento para o botão "Confirmar" no segundo modal
-                $("#confirmarTransferencia").click(function () {
+                $("#confirmarTransferencia").off("click").on("click",function () {
                     const selectedGroupTrans = $("#seletorGrupoTrans").val(); // Obtém o valor selecionado no <select>
 
                     // Verifique se o valor do grupo é válido
@@ -847,18 +907,16 @@ function loadCardInfo(cardId) {
 
                 });
 
-
                 // --------------------------------------------------------------------------------------------
 
-
                 // Ouvinte de evento para o botão "Personalizar"
-                $("#PersonalizarCard").click(function () {
+                $("#PersonalizarCard").off("click").on("click",function () {
                     // Ao clicar no botão "Encaminhar", exiba o segundo modal para seleção do setor
                     $('#modalSelecaoCor').modal('show');
                 });
 
                 // Ouvinte de evento para o botão "Confirmar" no segundo modal
-                $("#confirmarCor").click(function () {
+                $("#confirmarCor").off("click").on("click",function () {
                     const selectedColor = $("#seletorCor").val(); // Obtém o valor selecionado no <select>
 
                     // Verifique se o valor do grupo é válido
@@ -895,14 +953,10 @@ function loadCardInfo(cardId) {
 
                 });
 
-
-
                 //--------------------------------------------------------------------------------------------
 
-
-
                 // Ouvinte de evento para o botão "Finalizar" no modal
-                $("#ConcluirCardButton").click(function () {
+                $("#ConcluirCardButton").off("click").on("click",function () {
                     $.ajax({
                         url: `/concluir_card/${cardId}`,
                         method: 'POST',
@@ -910,7 +964,8 @@ function loadCardInfo(cardId) {
                         success: function (data) {
                             if (data.success) {
 
-                                alert('Card Concluido com sucesso.');
+//                                alert('Card Concluido com sucesso.');]
+                                $(this).data('bs.modal', null);
                                 $('#processoModal').modal('hide');
 
                             } else {
@@ -923,18 +978,16 @@ function loadCardInfo(cardId) {
                     });
                 });
 
-
                 //--------------------------------------------------------------------------------------------
 
-
                 // Ouvinte de evento para o botão "Personalizar"
-                $("#compartilharCardButton").click(function () {
+                $("#compartilharCardButton").off("click").on("click",function () {
                     // Ao clicar no botão "Encaminhar", exiba o segundo modal para seleção do setor
                     $('#modalSeletorUser').modal('show');
                 });
 
                 // Ouvinte de evento para o botão "Confirmar" no segundo modal
-                $("#confirmarCompartilhamento").click(function () {
+                $("#confirmarCompartilhamento").off("click").on("click",function () {
                     const selectedUser = $("#seletorUser").val(); // Obtém o valor selecionado no <select>
 
                     // Verifique se o valor do grupo é válido
@@ -957,9 +1010,9 @@ function loadCardInfo(cardId) {
                         dataType: 'json',
                         success: function (data) {
                             if (data.success) {
-                                alert('Card Compartilhado com sucesso.');
-                                // Feche o segundo modal após o encaminhamento
-                                $('#modalSeletorUser').modal('hide');
+//                                alert('Card Compartilhado com sucesso.');
+//                                // Feche o segundo modal após o encaminhamento
+//                                $('#modalSeletorUser').modal('hide');
                             } else {
                                 alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
                             }
@@ -971,13 +1024,10 @@ function loadCardInfo(cardId) {
 
                 });
 
-
-
                 //---------------------------------------------------------------------------------------------
 
-
                 // Ouvinte de evento para o botão "Finalizar" no modal
-                $("#FinalizarAtendimentoButton").click(function () {
+                $("#FinalizarAtendimentoButton").off("click").on("click",function () {
                     $.ajax({
                         url: `/finalizar_card/${cardId}`,
                         method: 'POST',
@@ -998,12 +1048,10 @@ function loadCardInfo(cardId) {
                     });
                 });
 
-
                 //---------------------------------------------------------------------------------------------
 
-
                 // Ouvinte de evento para o botão "Reabrir" no modal
-                $("#reabrirChamadoButton").click(function () {
+                $("#reabrirChamadoButton").off("click").on("click",function () {
                     $.ajax({
                         url: `/reabrir_card/${cardId}`,
                         method: 'POST',
@@ -1024,11 +1072,7 @@ function loadCardInfo(cardId) {
                     });
                 });
 
-
-
                 //---------------------------------------------------------------------------------------------
-
-
 
                 // Realizar uma solicitação AJAX para obter as informações de avaliação do usuário logado para o cartão
                 $.ajax({
@@ -1053,9 +1097,7 @@ function loadCardInfo(cardId) {
                     }
                 });
 
-
                 //---------------------------------------------------------------------------------------------
-
 
                 let selectedRating = 0; // Inicialmente, nenhuma estrela está selecionada
 
@@ -1080,7 +1122,7 @@ function loadCardInfo(cardId) {
 
 
                 // Ouvinte de evento para o botão "Avaliar Atendimento"
-                $("#avaliarAtendimentoButton").click(function () {
+                $("#avaliarAtendimentoButton").off("click").on("click",function () {
                     if (selectedRating > 0) {
                         // Enviar a avaliação para o servidor se uma classificação estiver selecionada
                         enviarAvaliacao(cardId, selectedRating);
@@ -1088,7 +1130,6 @@ function loadCardInfo(cardId) {
                         alert('Selecione uma classificação antes de avaliar.');
                     }
                 });
-
 
                 //------------------------------------------------------------------------------------------------------
 
@@ -1164,15 +1205,15 @@ function loadCardInfo(cardId) {
 
                 //------------------------------------------------------------------------------------------------------
 
+                // Adicione um ouvinte de evento para o evento de ocultação do modal
+                modal.on("hidden.bs.modal", function () {
+                    const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
+                    fetchCards(grupoSelecionado);
+                    $(this).data('bs.modal', null);
+                });
 
                 // Abra o modal
                 modal.modal('show');
-
-                // Adicione um ouvinte de evento para o evento de ocultação do modal
-                modal.on("hidden.bs.modal", function () {
-                    // Atualize a página
-                    location.reload();
-                });
 
             } else {
                 alert('Dados do card não encontrados.');
@@ -1186,40 +1227,6 @@ function loadCardInfo(cardId) {
 }
 
 
-function registrarAtendimento(cardId) {
-    console.log("ID do card:", cardId);
-
-    // Construa um objeto com os dados do atendimento
-    const dadosAtendimento = {
-        cardId: cardId,
-    };
-
-    // Envie uma solicitação AJAX para atualizar o status do card
-    $.ajax({
-        url: `/registrar_atendimento/${cardId}`,  // Substitua pela URL correta da sua view
-        method: 'POST',
-        dataType: 'json',
-        data: dadosAtendimento,
-
-        success: function (data) {
-            if (data.success) {
-                location.reload();
-
-                // Exibir um alerta de sucesso
-                alert(data.message);
-            } else {
-                // Exibir um alerta de erro
-                alert(data.message);
-            }
-        },
-
-        error: function () {
-            // Exibir um alerta de erro genérico
-            alert('Erro ao registrar atendimento.');
-        }
-    });
-}
-
 
 function enviarAvaliacao(cardId, rating) {
     // Envie a avaliação para o servidor por meio de uma solicitação AJAX
@@ -1231,9 +1238,8 @@ function enviarAvaliacao(cardId, rating) {
         success: function (data) {
             if (data.success) {
                 // A avaliação foi registrada com sucesso, você pode atualizar o modal ou executar outras ações necessárias
-                alert('Avaliado e Finalizado com sucesso.');
-                $('#processoModal').modal('hide');
-                location.reload();
+//                alert('Avaliado e Finalizado com sucesso.');
+//                $('#processoModal').modal('hide');
 
             } else {
                 alert('Erro ao registrar a avaliação: ' + data.message);
