@@ -381,7 +381,18 @@ class modelFormCurso(forms.ModelForm):
 
 
 class GroupForm(forms.Form):
-    group = forms.ModelChoiceField(queryset=Group.objects.all())
+    def __init__(self, *args, **kwargs):
+        super(GroupForm, self).__init__(*args, **kwargs)
+
+        excluded_groups = kwargs.pop('excluded_groups', ['Lixo', 'governanca', 'gestao e controle'])  # Obtenha os grupos para excluir
+
+        # Atualize as opções do campo 'group', excluindo grupos indesejados
+        self.fields['group'].queryset = Group.objects.exclude(name__in=excluded_groups)
+
+    group = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
 
 
 # CHAMADOS TI  -------------------------------------------------------------->
@@ -875,18 +886,23 @@ class ModelFormRhEtica(forms.ModelForm):
 
 
 class modelFormRhFerias(forms.ModelForm):
-    CHOICES_ServicoAcessos = [
+
+    CHOICES_Assunto = [
         ('Férias', 'Férias'),
     ]
 
-    assunto = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    service = forms.ChoiceField(choices=CHOICES_ServicoAcessos, widget=forms.Select(attrs={'class': 'form-select'}))
-    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service =forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    date = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}))
+    descricao = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
+        required=False
+    )
     attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
     class Meta:
         model = Card
-        fields = ('assunto', 'service', 'descricao', 'attachment',)
+        fields = ('assunto', 'service', 'date', 'descricao', 'attachment',)
 
 # -------Secretaria---------------------------------------------------------------------------------------------------------
 

@@ -29,7 +29,7 @@
 
                     <li class="li-menu-request">
                         <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
-                            <i class="fa-solid fa-key"></i>
+                            <i class="fa-solid fa-umbrella-beach"></i>
                             Férias
                         </a>
                     </li>
@@ -260,18 +260,18 @@
                     <div class="col-7">
 
                         <div class="mt-2">
-                            <label class="required-label">Nome do Cooperado:</label>
-                            {{ ferias.assunto }}
+                            <label class="required-label">Selecione seu Departamento:</label>
+                            {{ group.group }}
                         </div>
 
                         <div class="mt-2">
                             <label class="required-label">CPF:</label>
-                            <input class="input-new" type="text" name="cpf_cooperado"/>
+                            {{ ferias.service }}
                         </div>
 
-                        <div class="mt-2">
-                            <label class="required-label" for="calendario">Selecione uma data de férias:</label>
-                            <input class="form-control" type="text" id="calendario" name="data_ferias">
+                        <div id="campo_data" class="mt-2">
+                            <label class="required-label">Selecione uma data de férias:</label>
+                            {{ ferias.date }}
                         </div>
 
                         <div class="mt-2">
@@ -291,63 +291,60 @@
 
                     <!-- Segunda col --------------------------->
                     <div class="col">
-
-                        <p class="required-label">Dias Úteis:</p>
+                        <p class="required-label">Dias Ausentes:</p>
 
                         <form>
-
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias"
-                                       value="5">
+                                <input class="form-check-input" type="radio" name="dias_ausentes" id="dias"
+                                       value="5" required>
                                 <label class="form-check-label">
                                     5
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias2"
-                                       value="10">
+                                <input class="form-check-input" type="radio" name="dias_ausentes" id="dias2"
+                                       value="10" required>
                                 <label class="form-check-label">
                                     10
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias3"
-                                       value=15>
+                                <input class="form-check-input" type="radio" name="dias_ausentes" id="dias3"
+                                       value="15" required>
                                 <label class="form-check-label">
                                     15
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias4"
-                                       value="20">
+                                <input class="form-check-input" type="radio" name="dias_ausentes" id="dias4"
+                                       value="20" required>
                                 <label class="form-check-label">
                                     20
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias5"
-                                       value="25">
+                                <input class="form-check-input" type="radio" name="dias_ausentes" id="dias5"
+                                       value="25" required>
                                 <label class="form-check-label">
                                     25
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="dias_uteis_selecionados" id="dias6"
-                                       value="30">
+                                <input class="form-check-input" type="radio" name="dias_ausentes" id="dias6"
+                                       value="30" required>
                                 <label class="form-check-label">
                                     30
                                 </label>
                             </div>
-
                         </form>
-
                     </div>
                     <!-- Segunda col --------------------------->
+
 
                 </div>
             </form>
@@ -565,3 +562,10 @@
 
 
 {% endblock %}
+
+
+
+
+
+
+
