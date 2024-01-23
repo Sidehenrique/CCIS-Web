@@ -502,6 +502,7 @@ class CustomGroupInfo(models.Model):
     url = models.TextField(blank=True, null=True)
     url_home = models.URLField(blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
+    periodo_arquivamento = models.IntegerField(default=10)
 
     def __str__(self):
         return self.group.name

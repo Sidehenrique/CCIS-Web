@@ -729,7 +729,7 @@ def card_kanban_api(request):
     try:
         group = Group.objects.get(name=group_name)
     except Group.DoesNotExist:
-        return HttpResponseForbidden('Grupo não encontrado.')
+        return HttpResponseForbidden('Grupo não Informado.')
 
     queryset = Card.objects.filter(setor__user=user_id, setor=group)
 
@@ -954,13 +954,13 @@ def compartilhar_card(request, card_id):
         )
         notification.save()
 
-        return JsonResponse({'success': True, 'message': 'Card encaminhado com sucesso.'})
+        return JsonResponse({'success': True, 'message': 'Card conpartilhado com sucesso.'})
 
     except Card.DoesNotExist:
         return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
 
     except Exception as e:
-        return JsonResponse({'success': False, 'message': 'Erro ao encaminhar o card.'})
+        return JsonResponse({'success': False, 'message': 'Erro ao conpartilhar o card.'})
 
 
 @login_required(login_url="/login")
@@ -1022,13 +1022,13 @@ def presonalizar_card(request, card_id):
         card.cor = cor
         card.save()
 
-        return JsonResponse({'success': True, 'message': 'Card Presonalizado com sucesso.'})
+        return JsonResponse({'success': True, 'message': 'Card presonalizado com sucesso.'})
 
     except Card.DoesNotExist:
         return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
 
     except Exception as e:
-        return JsonResponse({'success': False, 'message': 'Erro ao Personalizar o card.'})
+        return JsonResponse({'success': False, 'message': 'Erro ao pPersonalizar o card.'})
 
 
 @login_required(login_url="/login")
@@ -1068,7 +1068,7 @@ def concluir_card(request, card_id):
             notification.save()
 
             card_setor_history.save()
-            return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
+            return JsonResponse({'success': True, 'message': 'Card concluido com sucesso'})
 
         except Card.DoesNotExist:
             return JsonResponse({'success': False, 'message': 'Card não encontrado'})
@@ -1145,7 +1145,7 @@ def avaliar_card(request, card_id):
         rating.group = card.setor
         rating.save()
 
-        return JsonResponse({'success': True})
+        return JsonResponse({'success': True, 'message': 'Avaliação bem sucedida'})
 
     except Card.DoesNotExist:
         return JsonResponse({'success': False, 'message': 'Requisição inválida'})
@@ -1242,7 +1242,7 @@ def reabrir_card(request, card_id):
                 url=setor_link,  # URL da página atual
             )
             notification.save()
-            return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
+            return JsonResponse({'success': True, 'message': 'Card reaberto com sucesso'})
 
         except Card.DoesNotExist:
             return JsonResponse({'success': False, 'message': 'Card não encontrado'})

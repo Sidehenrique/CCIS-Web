@@ -567,7 +567,24 @@
                     {% block conteudo %}
 
 
+
+
                     {% endblock %}
+
+                    <!--  Toast de notificações e alertas ------>
+                    <div id="customToast"
+                         class="toast align-items-center text-white bg-primary
+                         border-0 position-fixed top-0 start-50 translate-middle-x"
+                         role="alert" aria-live="assertive"
+                         aria-atomic="true" style="margin-top:70px">
+                      <div class="d-flex">
+                        <div id="toastBody" class="toast-body">
+                          Hello, world! This is a toast message.
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                      </div>
+                    </div>
+                    <!--  Toast de notificações e alertas ------>
 
                 </div>
                 <!-- End Conteúdo ------------------------------->

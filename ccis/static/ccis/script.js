@@ -1,27 +1,4 @@
 
-// Filtrar Campos tabela -------------------------------------------------------------------------------------
-function filterTable() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("inputUser");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tableUser");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td");
-    for (var j = 0; j < td.length; j++) {
-      txtValue = td[j].textContent || td[j].innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-        break;
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-}
-
-
-
 // Example starter JavaScript for disabling form submissions if there are invalid fields ---------------------
 (function () {
     'use strict'
@@ -42,32 +19,6 @@ form.classList.add('was-validated')
 }, false)
 })
 })()
-
-
-
-// Tratamento da view novo_user para esconder o display --------------------------------------------------------
-function displayFileName(input) {
-    var fileName = input.files[0].name;
-    document.getElementById('file-name').textContent = fileName;
-}
-document.addEventListener("DOMContentLoaded", function() {
-
-    const form1 = document.getElementById("form1");
-    const form2 = document.getElementById("form2");
-
-    document.getElementById("nextBtn1").addEventListener("click", function() {
-        form1.style.display = "none";
-        form2.style.display = "block";
-    });
-
-
-    document.getElementById("prevBtn2").addEventListener("click", function() {
-        form2.style.display = "none";
-        form1.style.display = "block";
-    });
-
-});
-
 
 
 // Tratamento da view novo_user para esconder o display --------------------------------------------------------
@@ -252,7 +203,7 @@ function getCookie(name) {
 }
 
 
-//Cards ----------------------------------------------------------------------------------------------
+//Cards ===============================================================================================
 
 // Função para recolher ou exibir o conteúdo ao clicar no header do card
 $(document).on('click', '[id^="toggleBtn-"]', function () {
@@ -271,7 +222,6 @@ $(document).on('click', '[id^="toggleBtn-"]', function () {
         console.error('Elemento não encontrado:', `#cardContent-${cardId}`);
     }
 });
-
 
 
 // Adicione um manipulador de evento para detectar cliques nos itens da lista
@@ -309,6 +259,8 @@ async function fetchCards(grupoSelecionado) {
         // Atualize o kanban com os dados recebidos do backend
         updateKanban(data, collapsedCards);
     } catch (error) {
+        areaTrabalhoElement.innerText = "Selecione uma Área de Trabalho";
+        customToast(error.responseText || error.statusText, "notificationSong3.mp3")
         console.error('Erro ao buscar cards:', error.responseText || error.statusText);
     }
 }
@@ -449,15 +401,18 @@ function getCookie(name) {
     return null;
 }
 
+
 function saveWorkspaceToCookie(workspace) {
     // Defina o cookie 'workspace' com o valor fornecido
     setCookie('workspace', workspace, 30); // Ajuste conforme necessário
 }
 
+
 function setCookie(name, value, days) {
     const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
     document.cookie = `${name}=${value}; expires=${expires}; path=/`;
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const workspace = getCookie('workspace');
@@ -467,6 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchCards(workspace); // Se necessário, atualize os cards com base na área de trabalho salva
     }
 });
+
 
 function filterProcesses() {
     const searchText = document.getElementById('inputUser').value.toLowerCase();
@@ -488,7 +444,28 @@ function filterProcesses() {
         }
     });
 }
-//----------------------------------------------------------------------------------------------------
+
+
+// Função para exibir o Toast personalizado
+function customToast(mensagem, somNome) {
+    const customToast = $("#customToast");
+    const toastBody = $("#toastBody");
+    const audioElement = new Audio(`/static/songs/${somNome}`); // Caminho completo para o arquivo de áudio
+
+    // Atualiza o conteúdo do Toast com a mensagem desejada
+    toastBody.html(mensagem);
+
+    // Exibe o Toast
+    customToast.toast("show");
+
+    // Toca o som
+    audioElement.play();
+
+    // Esconde o Toast após 3 segundos (3000 milissegundos)
+    setTimeout(function() {
+        customToast.toast("hide");
+    }, 40000);
+}
 
 
 function loadCardInfo(cardId) {
@@ -800,8 +777,7 @@ function loadCardInfo(cardId) {
                         success: function (data) {
                             if (data.success) {
 
-//                                alert('Card Concluido com sucesso.');]
-                                $(this).data('bs.modal', null);
+                                customToast(data.message, "normalSong.mp3");
                                 $('#processoModal').modal('hide');
 
                             } else {
@@ -846,10 +822,11 @@ function loadCardInfo(cardId) {
                         dataType: 'json',
                         success: function (data) {
                             if (data.success) {
-//                                alert('Card encaminhado com sucesso.');
-                                $(this).data('bs.modal', null);
+
+                                customToast(data.message, "notificationSong4.mp3");
                                 $('#modalSelecaoSetor').modal('hide');
                                 $('#processoModal').modal('hide');
+
                             } else {
                                 alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
                             }
@@ -893,9 +870,11 @@ function loadCardInfo(cardId) {
                         dataType: 'json',
                         success: function (data) {
                             if (data.success) {
-                                alert('Card Transferido com sucesso.');
+
+                                customToast(data.message, "notificationSong4.mp3");
                                 $('#modalSelecaoSetorTrans').modal('hide');
                                 $('#processoModal').modal('hide');
+
                             } else {
                                 alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
                             }
@@ -939,9 +918,10 @@ function loadCardInfo(cardId) {
                         dataType: 'json',
                         success: function (data) {
                             if (data.success) {
-                                alert('Card Personalizado com sucesso.');
-                                // Feche o segundo modal após o encaminhamento
+
+                                customToast(data.message);
                                 $('#modalSelecaoCor').modal('hide');
+
                             } else {
                                 alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
                             }
@@ -964,8 +944,7 @@ function loadCardInfo(cardId) {
                         success: function (data) {
                             if (data.success) {
 
-//                                alert('Card Concluido com sucesso.');]
-                                $(this).data('bs.modal', null);
+                                customToast(data.message, "successSong.mp3");
                                 $('#processoModal').modal('hide');
 
                             } else {
@@ -1010,9 +989,10 @@ function loadCardInfo(cardId) {
                         dataType: 'json',
                         success: function (data) {
                             if (data.success) {
-//                                alert('Card Compartilhado com sucesso.');
-//                                // Feche o segundo modal após o encaminhamento
-//                                $('#modalSeletorUser').modal('hide');
+
+                                customToast(data.message, "notificationSong4.mp3");
+                                $('#modalSeletorUser').modal('hide');
+
                             } else {
                                 alert('ERRO: ' + data.message); // Exibe a mensagem de erro do servidor
                             }
@@ -1035,7 +1015,7 @@ function loadCardInfo(cardId) {
                         success: function (data) {
                             if (data.success) {
 
-                                alert('Card Finalizado com sucesso.');
+                                customToast(data.message, "notificationSong4.mp3");
                                 $('#processoModal').modal('hide');
 
                             } else {
@@ -1059,7 +1039,7 @@ function loadCardInfo(cardId) {
                         success: function (data) {
                             if (data.success) {
 
-                                alert('Requisição Reaberta com sucesso.');
+                                customToast(data.message, "normalSong.mp3");
                                 $('#processoModal').modal('hide');
 
                             } else {
@@ -1227,7 +1207,6 @@ function loadCardInfo(cardId) {
 }
 
 
-
 function enviarAvaliacao(cardId, rating) {
     // Envie a avaliação para o servidor por meio de uma solicitação AJAX
     $.ajax({
@@ -1250,6 +1229,8 @@ function enviarAvaliacao(cardId, rating) {
         }
     });
 }
+
+//====================================================================================================
 
 
 // Tratamento de Notificações ---------------------------------------------------------------------------
