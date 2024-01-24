@@ -1103,7 +1103,7 @@ status-negativo{
     font-size: 16px;
     padding: 10px;
     outline: none;
-    background-color: #A8A8A8;
+    background-color: #ffffff;
     position: relative;
 }
 
@@ -1851,6 +1851,44 @@ padding-bottom: 10px; /* Adicione o espaçamento desejado abaixo da borda */
 display: block;
 }
 
+.ul-menu-kanban{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+
+.li-menu-kanban{
+    vertical-align: middle;
+    padding:2px;
+}
+
+
+.li-link-kanban{
+    text-decoration: none;
+    padding:12px 10px 12px 20px;
+    display: block;
+    font-family:asap;
+    transition: all .5s;
+    color:#37474F;
+    border:none
+
+}
+
+.li-link-kanban:hover{
+    background-color:#d9d9d9;
+    border-radius: 10px;
+    color:#37474F;
+}
+
+.tempo-kanban {
+  background-color: #d9d9d9;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box; /* Add this line */
+}
 
 /*-- processos ----------------------------*/
 
@@ -2287,15 +2325,18 @@ display: block;
 /* ----- Tema ------------------------------------------------------- */
 
 .tema {
+  background-color: #d9d9d9;
   display: inline-block;
   padding-top: 10px;
-  text-align: center;
-  text-decoration: none;
   border-radius: 10px;
   transition: transform 0.7s;
   cursor: pointer;
 }
 
+.tema:hover {
+  transform: translateY(-3px);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
 
 .links {
   display: inline-block;
@@ -2309,11 +2350,6 @@ display: block;
   background-color: #d9d9d9;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.tema:hover {
-  transform: translateY(-3px);
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* ----- Footer home ------------------------------------------------------- */
