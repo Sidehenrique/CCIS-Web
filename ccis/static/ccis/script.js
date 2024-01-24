@@ -143,25 +143,39 @@ document.addEventListener("DOMContentLoaded", function() {
     config_3.style.display = "none";
     config_4.style.display = "none";
 
+    // Função para remover a classe 'active' de todos os botões
+    function removeAllActiveClasses() {
+        const buttons = menu_config.querySelectorAll('.li-link-kanban');
+        buttons.forEach(button => {
+            button.classList.remove('active');
+        });
+    }
 
     // Adicionando eventos aos botões do menu
     document.getElementById("btn-config_1").addEventListener("click", function() {
+        removeAllActiveClasses();
+        this.classList.add('active');
+
         config_1.style.display = "block";
         config_2.style.display = "none";
         config_3.style.display = "none";
         config_4.style.display = "none";
-
     });
 
     document.getElementById("btn_config_2").addEventListener("click", function() {
+        removeAllActiveClasses();
+        this.classList.add('active');
+
         config_1.style.display = "none";
         config_2.style.display = "block";
         config_3.style.display = "none";
         config_4.style.display = "none";
-
     });
 
     document.getElementById("btn_config_3").addEventListener("click", function() {
+        removeAllActiveClasses();
+        this.classList.add('active');
+
         config_1.style.display = "none";
         config_2.style.display = "none";
         config_3.style.display = "block";
@@ -169,6 +183,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById("btn_config_4").addEventListener("click", function() {
+        removeAllActiveClasses();
+        this.classList.add('active');
+
         config_1.style.display = "none";
         config_2.style.display = "none";
         config_3.style.display = "none";
