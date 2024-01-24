@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
-    dadosBancarios, outros, CustomGroupInfo, SectorButtons
+    dadosBancarios, outros, CustomGroupInfo, SectorButtons, KanbanGroupUser
 from django.contrib.auth.models import User, Group
 
 
@@ -46,8 +46,15 @@ class CustomGroupAdmin(GroupAdmin):
     inlines = [CustomGroupInline]
 
 
+class KanbanGroupUserAdmin(admin.ModelAdmin):
+    list_display = ('user', 'group')
+    search_fields = ('user__username', 'group__name')
+
+
 # Registre o modelo DadosPessoais com o admin personalizado
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.unregister(Group)
 admin.site.register(Group, CustomGroupAdmin)
+admin.site.register(KanbanGroupUser, KanbanGroupUserAdmin)
+

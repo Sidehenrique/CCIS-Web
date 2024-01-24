@@ -32,9 +32,9 @@
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
                     {% for grupo in grupos_usuario %}
-                    <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.name }}">
-                        {{ grupo.name }}
-                    </li>
+                        <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.group.name }}">
+                            {{ grupo.group.name }}
+                        </li>
                     {% endfor %}
                     <li><a class="dropdown-item" href="{% url 'kanban_user' %}">Minhas solicitações</a></li>
                 </ul>
@@ -430,7 +430,8 @@
     </div>
     <!-- Modal Equipe ------------------------>
 
-    <!-- Modal Processos --------------------->
+
+    <!-- Modal Processos ------------------------->
     <div class="modal fade"
          id="processoModal"
          tabindex="-1"
@@ -672,7 +673,16 @@
 
                             <hr style="color:#C4C0C0">
 
-                            <ul class="ul-menu-request buttons-Acao">
+                            <!-- Div para a mensagem do espectador -->
+                            <div id="mensagemEspectador" class="text-center">
+                                <img class="menu-icon" src="{% static 'ccis/Grupo 6669.png' %}"
+                                     alt="icon-menu"
+                                     style="width: 100%; height: auto;"
+                                >
+                                <p>Somente visualização.</p>
+                            </div>
+
+                            <ul class="ul-menu-request buttons-Acao card-buttons">
 
                                 <li class="li-menu-request">
                                     <a type="button" id="registrarAtendimentoButton" class="modal-processo-link"
@@ -848,7 +858,7 @@
     <!-- Modal cor --------------------------->
 
 
-    <!-- Configurações ----------------------->
+    <!-- Configurações ---------------------->
     <div class="modal fade" id="temasModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -861,8 +871,7 @@
                 <div class="modal-body">
 
                     <div class="row">
-
-                        <!-- Botões ---------->
+                        <!-- Botões -->
                         <div id="menu_config" class="col-3 mb-3" style="border-right: 1px solid #ccc;">
                             <ul class="ul-menu-kanban">
                                 <li class="li-menu-request">
@@ -918,7 +927,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Fim dos Temas ---->
+                        <!-- Fim dos Temas -->
 
                         <!-- Determinar Hora -->
                         <div id="config_2" class="col-8 ms-4" style="display:none;">
@@ -956,13 +965,12 @@
                             </div>
 
                         </div>
-                        <!-- Determinar Hora -->
+                        <!-- Fim da Determinação da Hora -->
 
                         <div id="config_3" class="col-8" style="display:none;">
                             <!-- Conteúdo da Configuração 3 -->
                         </div>
 
-                        <!-- Determinar Hora -->
                         <div id="config_4" class="col-8" style="display:none;">
 
                             <div class="tempo-kanban ms-4">
@@ -984,8 +992,6 @@
                             </div>
 
                         </div>
-                        <!-- Determinar Hora -->
-
                     </div>
 
 
@@ -994,19 +1000,7 @@
             </div>
         </div>
     </div>
-    <!-- Configurações ----------------------->
-
-
-    <div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive"
-         aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                Hello, world! This is a toast message.
-            </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-        </div>
-    </div>
+    <!-- Configurações ---------------------->
 
 </div>
 <!--Container--------------------------------->

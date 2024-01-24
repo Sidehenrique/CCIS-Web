@@ -805,8 +805,7 @@ status-negativo{
 /*-- Button ---------------------------------*/
 
 
-
-
+/*-- Toast ---------------------------------*/
 
 
 
@@ -1744,7 +1743,6 @@ status-negativo{
 .kanban-card-content {
     height: auto;
 }
-
 
 
 .avatar {

@@ -502,6 +502,7 @@ class CustomGroupInfo(models.Model):
     url = models.TextField(blank=True, null=True)
     url_home = models.URLField(blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
+    periodo_arquivamento = models.IntegerField(default=10)
 
     def __str__(self):
         return self.group.name
@@ -604,3 +605,15 @@ class Cupons(models.Model):
 
     def __str__(self):
         return self.cpf
+
+
+#-------------------------------------------------------------------------------------
+
+class KanbanGroupUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.group.id} - {self.group.name}"
+
+
