@@ -128,6 +128,59 @@ document.addEventListener("DOMContentLoaded", function() {
 //---------------------------------------------------------------------------------------------------------------
 
 
+// Tratamento PAGINA CONFIGURAÇÕES ------------------------------------------------------------------------------
+document.addEventListener("DOMContentLoaded", function() {
+    const menu_config = document.getElementById("menu_config");
+
+    const config_1 = document.getElementById("config_1");
+    const config_2 = document.getElementById("config_2");
+    const config_3 = document.getElementById("config_3");
+    const config_4 = document.getElementById("config_4");
+
+    // Exibindo a página de Temas por padrão
+    config_1.style.display = "block";
+    config_2.style.display = "none";
+    config_3.style.display = "none";
+    config_4.style.display = "none";
+
+
+    // Adicionando eventos aos botões do menu
+    document.getElementById("btn-config_1").addEventListener("click", function() {
+        config_1.style.display = "block";
+        config_2.style.display = "none";
+        config_3.style.display = "none";
+        config_4.style.display = "none";
+
+    });
+
+    document.getElementById("btn_config_2").addEventListener("click", function() {
+        config_1.style.display = "none";
+        config_2.style.display = "block";
+        config_3.style.display = "none";
+        config_4.style.display = "none";
+
+    });
+
+    document.getElementById("btn_config_3").addEventListener("click", function() {
+        config_1.style.display = "none";
+        config_2.style.display = "none";
+        config_3.style.display = "block";
+        config_4.style.display = "none";
+    });
+
+    document.getElementById("btn_config_4").addEventListener("click", function() {
+        config_1.style.display = "none";
+        config_2.style.display = "none";
+        config_3.style.display = "none";
+        config_4.style.display = "block";
+    });
+
+    // Se estiver utilizando Bootstrap, você pode tentar atualizar o modal após as alterações
+    $('#temasModal').modal('handleUpdate');
+});
+//---------------------------------------------------------------------------------------------------------------
+
+
 // Redefinição de Senha -----------------------------------------------------------------------------------------
 function validarFormulario() {
     var password1 = document.getElementById('id_password1').value;
@@ -1433,7 +1486,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Referenciar os elementos relevantes
     var backgroundImage = document.getElementById("backgroundImage");
     var padraoBtn = document.getElementById("padraoBtn");
-    var roxoBtn = document.getElementById("roxoBtn");
     var cinzaBtn = document.getElementById("cinzaBtn");
 
     function setTema(tema) {
@@ -1443,44 +1495,44 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Função para obter o tema do localStorage
     function getTema() {
-        return localStorage.getItem("tema");
+        // Obter o tema do localStorage, se não estiver definido, usar um valor padrão
+        return localStorage.getItem("tema") || "/static/ccis/backgroundPro.png";
+    }
+
+    // Função para verificar se é o primeiro login
+    function isFirstLogin() {
+        return localStorage.getItem("firstLogin") === null;
+    }
+
+    function markFirstLogin() {
+        localStorage.setItem("firstLogin", "false");
     }
 
     function aplicarTema() {
         var temaSalvo = getTema();
         console.log("Aplicando tema: " + temaSalvo);
-        if (temaSalvo) {
-            backgroundImage.src = temaSalvo;
-        }
+        backgroundImage.src = temaSalvo;
     }
+
+    // Adicione um evento ao botão padrão para verificar o primeiro login
+    padraoBtn.addEventListener("click", function() {
+        // Verificar se é o primeiro login antes de definir o tema
+        if (isFirstLogin()) {
+            markFirstLogin();
+            setTema("/static/ccis/backgroundPro.png");
+        } else {
+            setTema("/static/ccis/backgroundPro.png");
+        }
+        aplicarTema();
+    });
 
     padraoBtn.addEventListener("click", function() {
         setTema("/static/ccis/backgroundPro.png");
         aplicarTema();
     });
 
-    roxoBtn.addEventListener("click", function() {
-        setTema("/static/ccis/backgroundRosa.png");
-        aplicarTema();
-    });
-
     cinzaBtn.addEventListener("click", function() {
         setTema("/static/ccis/backgroundCinza.png");
-        aplicarTema();
-    });
-
-    azulBtn.addEventListener("click", function() {
-        setTema("/static/ccis/backgroundAzul.png");
-        aplicarTema();
-    });
-
-    brancoBtn.addEventListener("click", function() {
-        setTema("/static/ccis/backgroundBranco.png");
-        aplicarTema();
-    });
-
-    amareloBtn.addEventListener("click", function() {
-        setTema("/static/ccis/backgroundAmarelo.png");
         aplicarTema();
     });
 

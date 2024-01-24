@@ -4,7 +4,7 @@ from django.urls import path
 from .views import (credito, controladoria, secretaria, cobranca, adm, cadastro, retaguarda, financeiro,
                     gestaoNegocios, gestaoControle, formularios, security, rh, pages, cooperar, ti, produtoServico,
                     gestaoRisco, padigital, padf, planaltina, formosa, vicente, saojoao, saosebas, marketing, sia, gestaoRecursos,
-                    recepcao)
+                    recepcao, brazlandia,)
 
 urlpatterns = [
     path('base', pages.base, name='base'),
@@ -66,6 +66,9 @@ urlpatterns = [
     path('calendario', gestaoNegocios.calendario, name='calendario'),
     path('gestaoCarteira', gestaoNegocios.gestaoCarteira, name='gestaoCarteira'),
     path('carteiras', gestaoNegocios.carteiras, name='carteiras'),
+    path('capitalRecorrente', gestaoNegocios.capitalRecorrente, name='capitalRecorrente'),
+    path('contasInativas', gestaoNegocios.contasInativas, name='contasInativas'),
+    path('margemContri', gestaoNegocios.margemContri, name='margemContri'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
@@ -273,6 +276,11 @@ urlpatterns = [
     path('request_ci_rec', recepcao.request_ci_rec, name='request_ci_rec'),
     path('request_apontamentos_rec', recepcao.request_apontamentos_rec, name='request_apontamentos_rec'),
     path('processos_recepcao', recepcao.processos_recepcao, name='processos_recepcao'),
+
+    path('braz_home', brazlandia.braz_home, name='braz_home'),
+    path('new_request_braz', brazlandia.new_request_braz, name='new_request_braz'),
+    path('salvar_malote_braz', brazlandia.salvar_malote_braz, name='salvar_malote_braz'),
+
 
 
     path('dev', pages.dev, name='dev'),

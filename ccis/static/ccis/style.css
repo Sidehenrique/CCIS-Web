@@ -1095,35 +1095,22 @@ status-negativo{
 }
 
 .search-menu-settings-dep {
-  width: 35%;
-  padding-right: 50px; /* Espaço para o ícone "x" */
-  border: none; /* Remove as bordas */
-  border-radius: 20px; /* Arredonda as bordas */
-  font-size: 16px; /* Ajusta o tamanho da fonte */
-  padding: 10px; /* Aumenta o padding interno */
-  outline: none; /* Remove o contorno quando o campo está focado */
-  background-color: #A8A8A8
-}
-
-.search-menu-settings-dep::after {
-  content: '×'; /* Caractere "x" para limpar o campo */
-  position: absolute;
-  left: 34%; /* Ajuste o valor conforme necessário para posicionar o ícone "x" */
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px; /* Tamanho do ícone "x" */
-  cursor: pointer;
-}
-
-.search-menu-settings-dep:empty::after {
-  content: none; /* Esconde o ícone "x" quando o campo está vazio */
+    width: 34%; /* Ajuste conforme necessário */
+    padding-right: 50px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 10px;
+    outline: none;
+    background-color: #ffffff;
+    position: relative;
 }
 
 .search-icon-dep {
-  position: absolute;
-  top: 50%;
-  left: 610px; /* Ajuste o valor conforme necessário para o espaçamento do ícone */
-  transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 32%; /* Ajuste conforme necessário */
+    transform: translateY(-50%);
 }
 
 .links-dep {
@@ -1863,6 +1850,55 @@ display: block;
 }
 
 
+.menu-request-kanban{
+    height: auto;
+    overflow-y: auto;
+    background-color:white;
+    border-radius:10px;
+    margin-right:12px;
+    padding:25px;
+}
+
+.ul-menu-kanban{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+
+.li-menu-kanban{
+    vertical-align: middle;
+    padding:2px;
+}
+
+
+.li-link-kanban{
+    text-decoration: none;
+    padding:12px 10px 12px 20px;
+    display: block;
+    font-family:asap;
+    transition: all .5s;
+    color:#37474F;
+    border:none
+
+}
+
+
+.li-link-kanban:hover{
+    background-color:#d9d9d9;
+    border-radius: 10px;
+    color:#37474F;
+}
+
+.tempo-kanban {
+  background-color: #d9d9d9;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box; /* Add this line */
+}
+
 /*-- processos ----------------------------*/
 
 
@@ -2298,15 +2334,18 @@ display: block;
 /* ----- Tema ------------------------------------------------------- */
 
 .tema {
+  background-color: #d9d9d9;
   display: inline-block;
   padding-top: 10px;
-  text-align: center;
-  text-decoration: none;
   border-radius: 10px;
   transition: transform 0.7s;
   cursor: pointer;
 }
 
+.tema:hover {
+  transform: translateY(-3px);
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
 
 .links {
   display: inline-block;
@@ -2320,11 +2359,6 @@ display: block;
   background-color: #d9d9d9;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.tema:hover {
-  transform: translateY(-3px);
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* ----- Footer home ------------------------------------------------------- */

@@ -4,14 +4,7 @@
 
 {% block conteudo %}
 
-
-<!--- background --------------------------------->
-{% if dados.canvas %}
-    <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
-{% endif %}
-<!--- background --------------------------------->
-
-<div class="container-fluid scrollable-content">
+<div class="container-fluid scrollable-content" style="background-color: #F1F2F5;">
 
     <!-- subMenu --------------------------------->
     <div class="row">
@@ -54,7 +47,7 @@
     <!-- Header do conteúdo ---------------------->
 
     <!-- Pesquisa Rápida ------------------------->
-    <div class="search-container-dep">
+    <div class="search-container-dep ms-2">
         <input type="search" class="search-menu-settings-dep" style="color:white;" placeholder="Digite sua pesquisa..." aria-label="Search"
                id="inputUser" onclick="handleClick()" onkeyup="filterDepartments()">
         <i class="fa-solid fa-magnifying-glass search-icon-dep" style="color:black;"></i>
@@ -578,6 +571,26 @@
                             </a>
 
                             <div class="icon-dep" style="background-color:#986F0B;">SIA</div>
+
+                        </div>
+
+                        <div class="d-grid col-sm-6 col-md-3 col-lg-2  mt-5 position-relative">
+
+                            <a class="links-dep"
+                               type="button"
+                               href="{% url 'braz_home' %}">
+
+                                <div class="card-buttons" style="text-align:center;">
+
+                                    <h6 class="pt-4">Brazlândia</h6>
+                                    <hr>
+                                    <h6>ACESSAR</h6>
+
+                                </div>
+
+                            </a>
+
+                            <div class="icon-dep" style="background-color:#498205;">BRZ</div>
 
                         </div>
 

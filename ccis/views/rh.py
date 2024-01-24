@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
+from datetime import datetime, timedelta
 from ..models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,
                       OperatorRating,
                       Card, Notification)
-from ..forms import ModelFormMalotes, ModelFormRhEtica, modelFormCI, modelFormApontamentos, modelFormRhFerias
+from ..forms import ModelFormMalotes, ModelFormRhEtica, modelFormCI, modelFormApontamentos, modelFormRhFerias, GroupForm
 from django.db.models import OuterRef, Subquery, F, ExpressionWrapper, fields, Avg, Count, FloatField
 
 
@@ -221,12 +222,14 @@ def new_request(request):
     apontamentos = modelFormApontamentos()
     ci = modelFormCI()
     ferias = modelFormRhFerias()
+    group = GroupForm()
 
     context = {'form': form,
                'form_Etica': form_Etica,
                'apontamentos': apontamentos,
                'ci': ci,
                'ferias': ferias,
+               'group': group,
                }
 
     return render(request, "setores/rh/new_request.html", context)
@@ -319,9 +322,9 @@ def request_ferias(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
-        request.POST['service'] = 'Férias'
+        request.POST['assunto'] = 'Férias'
 
-        form = ModelFormMalotes(request.POST, request.FILES)
+        form = modelFormRhFerias(request.POST, request.FILES)
 
         if form.is_valid():
             card = form.save(commit=False)
@@ -341,23 +344,49 @@ def request_ferias(request):
             )
             history_entry.save()
 
-            dias_uteis_selecionados = request.POST.get('dias_uteis', "")
-            observacoes = request.POST.get("descricao", "")  # Use get para evitar exceção se não houver descrição
-            cpf_cooperado = request.POST.get('cpf_cooperado', "")
-            data_ferias = request.POST.get('data_saída', "")
-            descricao = f"{dias_uteis_selecionados} dias úteis."
-
-            if cpf_cooperado:
-                descricao += f"<br>CPF do cooperado: {cpf_cooperado}"
-
-            if data_ferias:
-                descricao += f"<br>Data de saída: {data_ferias}"
-
-            if observacoes:
-                descricao += "<br><br>"
-                descricao += "Descrição:<br>" + observacoes
+            descricao = request.POST.get('descricao', '')
 
             attachment = request.FILES.get('attachment')
+
+            campos_descricao = ['group', 'dias_ausentes', 'date', 'descricao']
+
+            descricao_items = []
+            data_ferias = None
+
+            for campo in campos_descricao:
+                if campo == 'group' and request.POST.get(campo):
+                    # Se o campo é 'group', consulte o nome do setor correspondente
+                    setor_id = request.POST.get(campo)
+                    setor = Group.objects.get(pk=setor_id)
+                    descricao_items.append(f"Setor do Cooperado: {setor.name}")
+                elif campo == 'date' and request.POST.get(campo):
+                    # Formatando a data para o padrão desejado
+                    data_ferias = datetime.strptime(request.POST.get(campo), "%Y-%m-%d").strftime("%d/%m/%Y")
+                    descricao_items.append(f"Data de Início das Férias: {data_ferias}")
+                elif campo == 'dias_ausentes' and request.POST.get(campo):
+                    # Assuming dias_ausentes is the name of the radio button group
+                    dias_ausentes_value = request.POST.get('dias_ausentes')
+                    descricao_items.append(f"Dias Ausentes: {dias_ausentes_value}")
+
+            # Verificando se data_ferias e dias_ausentes_value existem antes de calcular
+            if data_ferias and dias_ausentes_value:
+                data_ferias_obj = datetime.strptime(data_ferias, "%d/%m/%Y")
+                data_fim = data_ferias_obj + timedelta(days=int(dias_ausentes_value))
+                descricao_items.append(f"Data de Fim das Férias: {data_fim.strftime('%d/%m/%Y')}")
+
+                # Calculando a data de retorno (dia seguinte ao término das férias)
+                data_retorno = data_fim + timedelta(days=1)
+                descricao_items.append(f"Data de Retorno: {data_retorno.strftime('%d/%m/%Y')}")
+
+            # Movendo o bloco de Observações para o final
+            for campo in campos_descricao:
+                if campo == 'descricao' and request.POST.get(campo):
+                    descricao_items.append(f"Observações: {request.POST.get(campo)}")
+
+
+            # Se algum campo estiver presente, construa a descrição
+            if descricao_items:
+                descricao = "<br>".join(descricao_items)
 
             # Salvar a descrição no campo message do MessageHistory
             message_history = MessageHistory(
@@ -392,7 +421,7 @@ def request_ferias(request):
         return redirect('rh_home')
 
     else:
-        form = ModelFormMalotes()
+        form = GroupForm()
 
     return render(request, 'setores/rh/new_request.html', {'form': form}) @ login_required(login_url="/login")
 
