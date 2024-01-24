@@ -22,7 +22,7 @@ from collections import defaultdict
 
 from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
     dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification, SectorButtons, \
-    CustomGroupInfo, Cupons
+    CustomGroupInfo, Cupons, KanbanGroupUser
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
@@ -639,8 +639,7 @@ def kanban_view(request):
                                   key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
                                                  x['cargo'] != 'Encarregado(a)'))
 
-            grupos_usuario = request.user.groups.all()
-
+            grupos_usuario = KanbanGroupUser.objects.filter(user=request.user)
             context = {
                 'grupos_usuario': grupos_usuario,
                 'clock': clock,
@@ -652,7 +651,6 @@ def kanban_view(request):
             }
 
             return render(request, 'ccis/kanban.html', context)
-
 
     except AttributeError:
         return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
@@ -712,7 +710,6 @@ def kanban_view_user(request):
     except AttributeError:
         return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
 
-
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def card_kanban_api(request):
@@ -727,14 +724,39 @@ def card_kanban_api(request):
 
     # Lógica para filtrar os cards com base no nome do grupo
     try:
-        group = Group.objects.get(name=group_name)
-    except Group.DoesNotExist:
-        return HttpResponseForbidden('Grupo não Informado.')
+        # Obtém o grupo associado ao usuário
+        kanban_group = KanbanGroupUser.objects.get(user=user_id, group__name=group_name).group
+    except KanbanGroupUser.DoesNotExist:
+        return HttpResponseForbidden('Nenhum grupo selecionado.')
 
-    queryset = Card.objects.filter(setor__user=user_id, setor=group)
+    queryset = Card.objects.filter(setor=kanban_group)
 
     serializer = CardSerializer(queryset, many=True)
     return Response(serializer.data)
+
+
+# @api_view(['GET'])
+# @permission_classes([permissions.IsAuthenticated])
+# def card_kanban_api(request):
+#     # Obtém o ID do usuário logado
+#     user_id = request.user.id
+#
+#     # Obtém o nome do grupo da solicitação
+#     group_name = request.query_params.get('option', None)
+#
+#     if not group_name:
+#         return HttpResponseForbidden('O nome do grupo é obrigatório.')
+#
+#     # Lógica para filtrar os cards com base no nome do grupo
+#     try:
+#         group = Group.objects.get(name=group_name)
+#     except Group.DoesNotExist:
+#         return HttpResponseForbidden('Grupo não Informado.')
+#
+#     queryset = Card.objects.filter(setor__user=user_id, setor=group)
+#
+#     serializer = CardSerializer(queryset, many=True)
+#     return Response(serializer.data)
 
 
 @api_view(['GET'])

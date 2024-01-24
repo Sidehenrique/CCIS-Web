@@ -260,7 +260,7 @@ async function fetchCards(grupoSelecionado) {
         updateKanban(data, collapsedCards);
     } catch (error) {
         areaTrabalhoElement.innerText = "Selecione uma Área de Trabalho";
-        customToast(error.responseText || error.statusText, "notificationSong3.mp3")
+        customToast(error.responseText || error.statusText, "errorSoong.mp3")
         console.error('Erro ao buscar cards:', error.responseText || error.statusText);
     }
 }
@@ -469,6 +469,7 @@ function customToast(mensagem, somNome) {
 
 
 function loadCardInfo(cardId) {
+
     const modal = $('#processoModal');
     const modalBody = modal.find('.modal-body');
 
@@ -478,6 +479,7 @@ function loadCardInfo(cardId) {
         method: 'GET',
         dataType: 'json',
         success: function (data) {
+
             if (data) {
                 // Use variáveis para armazenar os seletores dos elementos do modal
                 const assuntoInfo = $("#assuntoInfo");
@@ -1113,6 +1115,35 @@ function loadCardInfo(cardId) {
 
                 //------------------------------------------------------------------------------------------------------
 
+                // Obter o ID do usuário logado
+                const userId = getLoggedInUserId();
+                console.log('ID do usuário logado:', userId);
+
+                const groupId = getLoggedInUserGroup();
+                console.log('ID do grupo do usuário logado:', groupId);
+
+                // Verificar se o usuário logado é o solicitante
+                const isSolicitante = userId === data.card.solicitante.id;
+                console.log('É o solicitante?', isSolicitante);
+
+                // Verificar se há um responsável e se o usuário logado é o responsável
+                const isResponsavel = data.card.responsavel && userId === data.card.responsavel.id;
+                console.log('É o responsável?', isResponsavel);
+
+                // Verificar se o usuário é do setor ao qual o card foi criado
+                const isDoSetor = groupId === data.card.setor;
+                console.log('É do setor ao qual o card foi criado?', isDoSetor);
+
+                // Esconder todos os botões e mostrar a mensagem do espectador por padrão
+                $(".card-buttons").hide();
+                $("#mensagemEspectador").show();
+
+                // Se o usuário for o solicitante, responsável ou do setor, mostrar os botões e ocultar a mensagem
+                if (isSolicitante || isResponsavel || isDoSetor) {
+                    $(".card-buttons").show();
+                    $("#mensagemEspectador").hide();
+                }
+
                 // Verifique o status do card
                 const statusAtual = data.card.status;
 
@@ -1189,7 +1220,6 @@ function loadCardInfo(cardId) {
                 modal.on("hidden.bs.modal", function () {
                     const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
                     fetchCards(grupoSelecionado);
-                    $(this).data('bs.modal', null);
                 });
 
                 // Abra o modal

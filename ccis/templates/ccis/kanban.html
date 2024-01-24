@@ -32,8 +32,8 @@
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
                     {% for grupo in grupos_usuario %}
-                        <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.name }}">
-                            {{ grupo.name }}
+                        <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.group.name }}">
+                            {{ grupo.group.name }}
                         </li>
                     {% endfor %}
                     <li><a class="dropdown-item" href="{% url 'kanban_user' %}">Minhas solicitações</a></li>
@@ -430,6 +430,7 @@
     </div>
     <!-- Modal Equipe ---------------------------->
 
+
     <!-- Modal Processos ------------------------->
     <div class="modal fade"
          id="processoModal"
@@ -672,7 +673,16 @@
 
                             <hr style="color:#C4C0C0">
 
-                            <ul class="ul-menu-request buttons-Acao">
+                            <!-- Div para a mensagem do espectador -->
+                            <div id="mensagemEspectador" class="text-center">
+                                <img class="menu-icon" src="{% static 'ccis/Grupo 6669.png' %}"
+                                     alt="icon-menu"
+                                     style="width: 100%; height: auto;"
+                                >
+                                <p>Somente visualização.</p>
+                            </div>
+
+                            <ul class="ul-menu-request buttons-Acao card-buttons">
 
                                 <li class="li-menu-request">
                                     <a type="button" id="registrarAtendimentoButton" class="modal-processo-link"

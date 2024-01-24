@@ -605,3 +605,15 @@ class Cupons(models.Model):
 
     def __str__(self):
         return self.cpf
+
+
+#-------------------------------------------------------------------------------------
+
+class KanbanGroupUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.group.id} - {self.group.name}"
+
+
