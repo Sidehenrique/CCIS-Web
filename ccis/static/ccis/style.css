@@ -1851,16 +1851,6 @@ padding-bottom: 10px; /* Adicione o espaçamento desejado abaixo da borda */
 display: block;
 }
 
-
-.menu-request-kanban{
-    height: auto;
-    overflow-y: auto;
-    background-color:white;
-    border-radius:10px;
-    margin-right:12px;
-    padding:25px;
-}
-
 .ul-menu-kanban{
     list-style-type: none;
     margin:0;
@@ -1884,7 +1874,6 @@ display: block;
     border:none
 
 }
-
 
 .li-link-kanban:hover{
     background-color:#d9d9d9;
