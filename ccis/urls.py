@@ -205,6 +205,7 @@ urlpatterns = [
     path('request_estudo_PC', controladoria.request_estudo_PC, name='request_estudo_PC'),
     path('request_apontamentos_pc', controladoria.request_apontamentos_pc, name='request_apontamentos_pc'),
     path('request_ci_pc', controladoria.request_ci_pc, name='request_ci_pc'),
+    path('request_processos_PC', controladoria.request_processos_PC, name='request_processos_PC'),
 
     path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
     path('request_acessos_risco', gestaoRisco.request_acessos_risco, name='request_acessos_risco'),

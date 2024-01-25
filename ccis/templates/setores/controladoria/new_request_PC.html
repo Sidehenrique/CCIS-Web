@@ -49,6 +49,13 @@
                     </li>
 
                     <li class="li-menu-request">
+                        <a type="button" id="btn_request_7" class="li-link-request" aria-current="page">
+                           <i class="fa-solid fa-comment"></i>
+                            Processos
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
                         <a type="button" id="btn_request_5" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-file-pen"></i>
                             Solicitações CI/CNAC/R.O
@@ -188,6 +195,27 @@
                                 <li>Estudo de Viabilidade de Região</li>
                                 <li>Estudo de Rentabilidade de Produto ou Serviço</li>
                                 <li>Pesquisa de Mercado</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingfive">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseFour" aria-expanded="false"
+                                aria-controls="flush-collapseFour">
+                            Processos
+                        </button>
+                    </h2>
+                    <div id="flush-collapsefive" class="accordion-collapse collapse"
+                         aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Criação de Relatórios</li>
+                                <li>Ajuste</li>
+                                <li>Erros</li>
+                                <li>Sugestões</li>
                             </ul>
                         </div>
                     </div>
@@ -348,6 +376,49 @@
             </form>
         </div>
         <!-- Formulário de Pesquisa/Estudos ------>
+
+        <!-- Formulário de Processos ------>
+        <div id="formulario7" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO PROCESSOS</h5>
+
+            <form action="{% url 'request_processos_PC' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <div class="col-7">
+
+                        <div class="">
+                            <label class="required-label">Assunto:</label>
+                            {{ processo.assunto }}
+                        </div>
+
+                        <div class="">
+                            <label class="required-label">Serviço:</label>
+                            {{ processo.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Descrição:</label>
+                            {{ processo.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Anexar arquivo:</label>
+                            {{ processo.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!-- Formulário de Processos ------>
 
         <!-- Formulário de CI -------------------->
         <div id="formulario5" class="col menu-request m-0" style="display:none">
