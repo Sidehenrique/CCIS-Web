@@ -618,6 +618,12 @@
 <!-- Finalmente, inclua seu script personalizado -->
 <script src="{% static 'ccis/script.js' %}"></script>
 
+<script>
+    var userData = {
+        userId: {{ user_data.log_id }},
+        userGroup: '{{ user_data.logGroup }}',
+    };
+</script>
 
 </body>
 

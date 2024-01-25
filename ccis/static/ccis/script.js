@@ -303,12 +303,19 @@ $('.dropdown-item-group').click(function () {
 
 // Função para buscar cards com base na opção selecionada
 async function fetchCards(grupoSelecionado) {
+
+    // Verificar se o elemento exclusivo do Kanban está presente na página
+    const kanbanElement = $('#area-trabalho-kanban');
+    if (kanbanElement.length === 0) {
+        // Se o elemento não estiver presente, sair da função
+        return;
+    }
+
     const userId = getLoggedInUserId();
 
     // Atualize o texto do elemento h5 com base no grupo selecionado
     const areaTrabalhoElement = document.getElementById('area-trabalho-kanban');
     areaTrabalhoElement.innerText = grupoSelecionado;
-
 
     // Salve a área de trabalho no cookie
     saveWorkspaceToCookie(grupoSelecionado);
@@ -336,11 +343,20 @@ async function fetchCards(grupoSelecionado) {
 }
 
 
-// Atualize os cards a cada 1 minuto (60 segundos)
-setInterval(() => {
-    const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
-    fetchCards(grupoSelecionado);
-}, 60000); // 60000 milissegundos = 1 minuto
+// Verificar se o elemento único do Kanban está presente na página
+if ($('#area-trabalho-kanban').length > 0) {
+    // Configurar o setInterval apenas se o elemento do Kanban estiver presente
+    const kanbanInterval = setInterval(() => {
+        const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
+        fetchCards(grupoSelecionado);
+    }, 60000);
+
+    // Opcional: Limpar o intervalo se o usuário sair da página
+    // Exemplo usando o evento beforeunload
+    $(window).on('beforeunload', function() {
+        clearInterval(kanbanInterval);
+    });
+}
 
 
 // Função para atualizar o kanban com os dados recebidos do backend
@@ -1205,12 +1221,12 @@ function loadCardInfo(cardId) {
                 console.log('É do setor ao qual o card foi criado?', isDoSetor);
 
                 // Esconder todos os botões e mostrar a mensagem do espectador por padrão
-                $(".card-buttons").hide();
+                $(".modal-hide-buttons").hide();
                 $("#mensagemEspectador").show();
 
                 // Se o usuário for o solicitante, responsável ou do setor, mostrar os botões e ocultar a mensagem
                 if (isSolicitante || isResponsavel || isDoSetor) {
-                    $(".card-buttons").show();
+                    $(".modal-hide-buttons").show();
                     $("#mensagemEspectador").hide();
                 }
 

@@ -682,7 +682,7 @@
                                 <p>Somente visualização.</p>
                             </div>
 
-                            <ul class="ul-menu-request buttons-Acao card-buttons">
+                            <ul class="ul-menu-request buttons-Acao modal-hide-buttons">
 
                                 <li class="li-menu-request">
                                     <a type="button" id="registrarAtendimentoButton" class="modal-processo-link"
@@ -1007,11 +1007,6 @@
 
 
 <script>
-    var userData = {
-        userId: {{ user_data.log_id }},
-        userGroup: '{{ user_data.logGroup }}',
-    };
-
     document.getElementById('avatar-87').addEventListener('click', function() {
         if ($('#avatar-87').hasClass('hidden')) {
             return; // Evitar abrir o modal se o avatar-87 estiver escondido
