@@ -220,6 +220,9 @@ def request_acessos_risco(request):
 
     return render(request, 'setores/gestaorisco/new_request_risco.html', {'form': form})
 
+@login_required(login_url="/login")
+def liquidacoes(request):
+    return render(request, 'setores/gestaorisco/liquidacoes.html')
 
 @login_required(login_url="/login")
 def processos_GR(request):

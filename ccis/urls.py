@@ -210,6 +210,7 @@ urlpatterns = [
     path('request_acessos_risco', gestaoRisco.request_acessos_risco, name='request_acessos_risco'),
     path('new_request_risco', gestaoRisco.new_request_risco, name='new_request_risco'),
     path('processos_GR', gestaoRisco.processos_GR, name='processos_GR'),
+    path('liquidacoes', gestaoRisco.liquidacoes, name='liquidacoes'),
 
     path('paDigital_home', padigital.paDigital_home, name='paDigital_home'),
     path('new_request_PaDigital', padigital.new_request_PaDigital, name='new_request_PaDigital'),
