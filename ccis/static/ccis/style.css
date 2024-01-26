@@ -1102,7 +1102,6 @@ status-negativo{
     font-size: 16px;
     padding: 10px;
     outline: none;
-    background-color: #ffffff;
     position: relative;
 }
 
@@ -1605,6 +1604,7 @@ status-negativo{
 .btn-menu-settings{
     color:#333;
     min-width:90px;
+    min-height:45px;
     background-color:white !important;
     border:none;
     border-radius:5px;
@@ -1618,7 +1618,7 @@ status-negativo{
     background-color:white !important;
     border:none;
     border-radius:5px;
-    padding:8px;
+    padding:5px;
     text-decoration:none;
 }
 
@@ -1632,6 +1632,7 @@ status-negativo{
 
 .drop-menu-settings{
     color:#333;
+    min-height:45px;
     background-color:white !important;
     padding:8px!important;
     border:none;
@@ -1657,9 +1658,10 @@ status-negativo{
 
 .search-menu-settings{
     padding:8px;
-      display: block;
-      border: none;
-      border-radius: 5px;
+    min-height:45px;
+    display: block;
+    border: none;
+    border-radius: 5px;
 }
 
 
