@@ -27,27 +27,27 @@
 
 <body>
 
-<!-- start container-fluid --------------------------------------------->
+<!-- start container-fluid ---------------------->
 <div class="container-fluid">
 
-    <!-- topMenu ------------------------------------------------------->
+    <!-- topMenu -------------------------------->
     <header class="menu-header nav justify-content-center">
 
         <nav class="col p-0 navbar navbar-expand-lg">
             <div class="container-fluid">
 
-                <!-- Logo do Menu ------------------------------------------------------------------------------------->
+                <!-- Logo do Menu --------------->
                 <a id="toggleMenu" type="button" class="navbar-brand">
 
                     <img class="menu-icon" src="{% static 'ccis/menu.png' %}" alt="icon-menu">
 
                 </a>
-                <!-- End Logo do Menu --------------------------------------------------------------------------------->
+                <!-- End Logo do Menu ----------->
 
                 <!--<img class="logo-menu" src="{% static 'ccis/logo-menu.png' %}" alt="logo-menu">-->
                 <h2 class="font_logo"><span style="color:#00A194">C</span>CIS</h2>
 
-                <!-- Esquerda do Menu --------------------------------------------------------------------------------->
+                <!-- Esquerda do Menu ----------->
                 <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
                     <ul class="navbar-nav">
 
@@ -57,18 +57,19 @@
 
                     </ul>
                 </div>
-                <!-- End Esquerda do Menu ----------------------------------------------------------------------------->
+                <!-- Esquerda do Menu ----------->
 
 
-                <!-- Direita do Menu ---------------------------------------------------------------------------------->
+                <!-- Direita do Menu ------------>
                 <div class="navbar-nav-wrap-content-end">
 
-                    <!-- user button ---------------------------->
+                    <!-- Apps e Notificações ---->
                     <div class="align-items-center">
 
                         <ul class="navbar-nav">
 
                             <li>
+
                                 <div class="btn-group dropstart p-0">
 
                                     <!-- links ------------------->
@@ -77,7 +78,7 @@
                                         <img style="width: 20px; height: 20px;"
                                              src="{% static 'ccis/Grupo 6475.png' %}">
                                     </button>
-                                    <ul class="dropdown-menu p-0" style="width: 25rem;">
+                                    <div class="dropdown-menu p-0" style="width: 25rem;">
 
                                         <div class="list-group">
                                             <div class="text-center pt-2">
@@ -214,7 +215,7 @@
                                             </div>
                                         </div>
 
-                                    </ul>
+                                    </div>
                                     <!-- links ------------------->
 
                                     <!-- notificatios ------------------->
@@ -225,7 +226,7 @@
                                         <span class="notification-badge">{{ notifications|length }}</span>
                                         {% endif %}
                                     </button>
-                                    <ul class="dropdown-menu p-0" style="width: 18rem;">
+                                    <div class="dropdown-menu p-0" style="width: 18rem;">
 
                                         <div class="list-group" style="max-height: 300px; overflow-y: auto;">
                                             <div class="text-center p-2">
@@ -257,16 +258,23 @@
 
                                         </div>
 
-                                    </ul>
+                                        <div class="p-2" style="text-align: center;">
+                                            <a style="cursor: pointer;">
+                                                Limpar tudo
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+
+                                    </div>
                                     <!-- notifications ------------------->
 
                                 </div>
                             </li>
 
-                            <!-- Conta usuário ------------------->
+                            <!-- Conta usuário --->
                             <li class="dropstart media-pill">
 
-                                <!-- Button ----------------------------->
+                                <!-- Button ------>
                                 <a class="align-horizontal-center" type="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
 
@@ -296,10 +304,10 @@
                                     </div>
 
                                 </a>
-                                <!-- Button ----------------------------->
+                                <!-- Button ------>
 
 
-                                <!-- dropdown --------------------------->
+                                <!-- dropdown ---->
                                 <ul class="dropdown-menu p-0" onclick="event.stopPropagation();">
 
                                     <li>
@@ -424,25 +432,26 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <!-- dropdown --------------------------->
+                                <!-- dropdown ---->
 
                             </li>
-                            <!-- Conta usuário ------------------->
+                            <!-- Conta usuário --->
 
                         </ul>
 
                     </div>
-                    <!-- user button ---------------------------->
+                    <!-- Apps e Notificações ---->
 
                 </div>
-                <!-- End Direita do Menu ------------------------------------------------------------------------------>
+                <!-- Direita do Menu ------------>
 
             </div>
         </nav>
 
     </header>
-    <!-- End topMenu --------------------------------------------------->
+    <!-- End topMenu ---------------------------->
 
+    <!-- Botões lateral esquerda ---------------->
     <main>
 
         <div class="container-fluid  ps-0 pe-0">
@@ -508,8 +517,7 @@
 
                 </div>
 
-
-                <!-- Conteúdo ----------------------------------->
+                <!-- Modal Edit Profile ------------------>
                 <div id="conteudo_container" class="col mt-lg-0 position-relative p-0">
 
                     <!-- Modal foto e banner -------------------->
@@ -562,42 +570,28 @@
                             </div>
                         </div>
                     </div>
-                    <!-- End Modal foto e banner ---------------->
+                    <!-- Modal foto e banner -------------------->
 
                     {% block conteudo %}
 
 
                     {% endblock %}
 
-                    <!--  Toast de notificações e alertas ------>
-                    <div id="customToast"
-                         class="toast align-items-center text-white bg-primary
-                         border-0 position-fixed top-0 start-50 translate-middle-x"
-                         role="alert" aria-live="assertive"
-                         aria-atomic="true" style="margin-top:70px">
-                        <div class="d-flex">
-                            <div id="toastBody" class="toast-body">
-                                Hello, world! This is a toast message.
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                                    aria-label="Close"></button>
-                        </div>
-                    </div>
-                    <!--  Toast de notificações e alertas ------>
-
                 </div>
-                <!-- End Conteúdo ------------------------------->
+                <!-- Modal Edit Profile ------------------>
 
             </div>
 
         </div>
 
     </main>
+    <!-- Botões lateral esquerda ---------------->
 
 </div>
-<!-- end container-fluid ------------------------------------------------------------------------>
+<!-- end container-fluid ------------------------>
 
-<!-- Configurações ---------------------->
+
+<!-- Configurações ------------------------------>
 <div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -607,10 +601,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
+            <!-- Modal Body ------------>
             <div class="modal-body">
 
+                <!-- Row Config -------->
                 <div class="row">
-                    <!-- Botões -->
+
+                    <!-- Botões -------->
                     <div id="menu_config" class="col-3 mb-3" style="border-right: 1px solid #ccc;">
                         <ul class="ul-menu-kanban">
                             <li class="li-menu-request">
@@ -635,9 +632,9 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- Fim dos Botões -->
+                    <!-- Botões -------->
 
-                    <!-- Temas -->
+                    <!-- Temas --------->
                     <div id="config_1" class="col-8" style="display:none;">
                         <div class="row">
 
@@ -666,9 +663,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Fim dos Temas -->
+                    <!-- Temas --------->
 
-                    <!-- Determinar Hora -->
+                    <!-- Hora ---------->
                     <div id="config_2" class="col-8 ms-4" style="display:none;">
 
                         <div class="tempo-kanban">
@@ -680,29 +677,29 @@
                                 <div class="col-6">
                                     <span style="font-size: 13px;">Tempo Médio</span>
                                     <select class="form-select" id="tempoMedio" name="tempo">
-                                            <option value="1">1 minuto</option>
-                                            <option value="5">5 minutos</option>
-                                            <option value="10">10 minutos</option>
-                                            <option value="1h">1 hora</option>
-                                            <option value="3h">3 horas</option>
-                                            <option value="6h">6 horas</option>
-                                            <option value="1d">1 dia</option>
-                                            <option value="7d">7 dias</option>
-                                            <option value="30d">30 dias</option>
+                                        <option value="1">1 minuto</option>
+                                        <option value="5">5 minutos</option>
+                                        <option value="10">10 minutos</option>
+                                        <option value="1h">1 hora</option>
+                                        <option value="3h">3 horas</option>
+                                        <option value="6h">6 horas</option>
+                                        <option value="1d">1 dia</option>
+                                        <option value="7d">7 dias</option>
+                                        <option value="30d">30 dias</option>
                                     </select>
                                 </div>
                                 <div class="col-6">
                                     <span style="font-size: 13px;">Tempo Máximo</span>
                                     <select class="form-select" id="tempoMaximo" name="tempo">
-                                            <option value="1">1 minuto</option>
-                                            <option value="5">5 minutos</option>
-                                            <option value="10">10 minutos</option>
-                                            <option value="1h">1 hora</option>
-                                            <option value="3h">3 horas</option>
-                                            <option value="6h">6 horas</option>
-                                            <option value="1d">1 dia</option>
-                                            <option value="7d">7 dias</option>
-                                            <option value="30d">30 dias</option>
+                                        <option value="1">1 minuto</option>
+                                        <option value="5">5 minutos</option>
+                                        <option value="10">10 minutos</option>
+                                        <option value="1h">1 hora</option>
+                                        <option value="3h">3 horas</option>
+                                        <option value="6h">6 horas</option>
+                                        <option value="1d">1 dia</option>
+                                        <option value="7d">7 dias</option>
+                                        <option value="30d">30 dias</option>
                                     </select>
                                 </div>
 
@@ -724,12 +721,13 @@
                         </div>
 
                     </div>
-                    <!-- Fim da Determinação da Hora -->
+                    <!-- Hora ---------->
 
                     <div id="config_3" class="col-8" style="display:none;">
-                        <!-- Conteúdo da Configuração 3 -->
+                        <!-- Prioridades ---->
                     </div>
 
+                    <!-- Sons ---------->
                     <div id="config_4" class="col-8" style="display:none;">
 
                         <div class="tempo-kanban ms-4">
@@ -751,15 +749,19 @@
                         </div>
 
                     </div>
-                </div>
+                    <!-- Sons -->
 
+                </div>
+                <!-- Row Config -------->
 
             </div>
+            <!-- Modal Body ------------>
 
         </div>
     </div>
 </div>
-<!-- Configurações ---------------------->
+<!-- Configurações ------------------------------>
+
 
 <!-- Inclua o jQuery primeiro -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
