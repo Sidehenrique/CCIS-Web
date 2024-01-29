@@ -494,7 +494,7 @@ function getLoggedInUserId() {
 
 // Função para obter o nome do grupo do usuário logado
 function getLoggedInUserGroup() {
-    return userData.userGroup;
+    return userData.userGroupId;
 }
 
 
@@ -611,6 +611,19 @@ function loadCardInfo(cardId) {
                 const areaSolicitante = $("#areaSolicitante");
                 const nomeResponsavel = $("#nomeResponsavel");
                 const horarioAbertura = $("#horarioAbertura");
+
+                // -------------------------------------------------------------------------------
+                // Remova eventos antigos
+                $("#enviarMensagemButton").off("click");
+                $("#registrarAtendimentoButton").off("click");
+                $("#encaminharCardButton").off("click");
+                $("#transferirCardButton").off("click");
+                $("#PersonalizarCard").off("click");
+                $("#ConcluirCardButton").off("click");
+                $("#compartilharCardButton").off("click");
+                $("#FinalizarAtendimentoButton").off("click");
+                $("#reabrirChamadoButton").off("click");
+                $("#avaliarAtendimentoButton").off("click");
 
                 // Preencha os campos relacionados ao card
                 assuntoInfo.text(data.card.assunto);
@@ -869,19 +882,6 @@ function loadCardInfo(cardId) {
                     nomeResponsavel.text("Aguardando atendimento");
                 }
 
-
-                // -------------------------------------------------------------------------------
-                // Remova eventos antigos
-
-                $("#registrarAtendimentoButton").off("click");
-                $("#encaminharCardButton").off("click");
-                $("#transferirCardButton").off("click");
-                $("#PersonalizarCard").off("click");
-                $("#ConcluirCardButton").off("click");
-                $("#compartilharCardButton").off("click");
-                $("#FinalizarAtendimentoButton").off("click");
-                $("#reabrirChamadoButton").off("click");
-                $("#avaliarAtendimentoButton").off("click");
 
                 // AÇÕES ------------------------------------------------------------------------
 
@@ -1228,108 +1228,90 @@ function loadCardInfo(cardId) {
                     }
                 });
 
+
                 //------------------------------------------------------------------------------------------------------
 
-                // Obter o ID do usuário logado
-                const userId = getLoggedInUserId();
-                console.log('ID do usuário logado:', userId);
 
-                const groupId = getLoggedInUserGroup();
-                console.log('ID do grupo do usuário logado:', groupId);
+                // Obter o ID do usuário logado e o ID do grupo do usuário logado
+                const userId = getLoggedInUserId();
+                const userGroupId = getLoggedInUserGroup();
 
                 // Verificar se o usuário logado é o solicitante
                 const isSolicitante = userId === data.card.solicitante.id;
-                console.log('É o solicitante?', isSolicitante);
-
-                // Verificar se há um responsável e se o usuário logado é o responsável
-                const isResponsavel = data.card.responsavel && userId === data.card.responsavel.id;
-                console.log('É o responsável?', isResponsavel);
 
                 // Verificar se o usuário é do setor ao qual o card foi criado
-                const isDoSetor = groupId === data.card.setor;
-                console.log('É do setor ao qual o card foi criado?', isDoSetor);
+                const isDoSetor = parseInt(userGroupId) === parseInt(data.card.setor);
 
-                // Esconder todos os botões e mostrar a mensagem do espectador por padrão
-                $(".modal-hide-buttons").hide();
-                $("#mensagemEspectador").show();
+                // Função para exibir bloco de botões específico e ocultar a mensagem do espectador
+                function showButtonsAndHideMessage(buttons) {
+                    // Oculta todos os botões e mensagem do espectador
+                    $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
 
-                // Se o usuário for o solicitante, responsável ou do setor, mostrar os botões e ocultar a mensagem
-                if (isSolicitante || isResponsavel || isDoSetor) {
-                    $(".modal-hide-buttons").show();
-                    $("#mensagemEspectador").hide();
+                    // Exibe os botões específicos
+                    buttons.forEach(buttonId => {
+                        $(`#${buttonId}`).removeClass("hidden");
+                    });
                 }
 
-                // Verifique o status do card
+                // Adicione a classe "hidden" para ocultar inicialmente os botões e a mensagem do espectador
+                $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
+
+                //Verifique o status do card
                 const statusAtual = data.card.status;
 
-                switch (statusAtual) {
-                    case "Triagem":
-                        $("#compartilharCardButton").show();
-                        $("#priorizarCardButton").show();
-                        $("#enviarMensagemButton").show();
-                        $("#starButtons").css("display", "none");
-                        $("#reabrirChamado").css("display", "none");
-                        $("#avaliarAtendimentoButton").hide();
-                        $("#registrarAtendimentoButton").show();
-                        $("#encaminharCardButton").hide();
-                        $("#transferirCardButton").show();
-                        $("#ConcluirCardButton").hide();
-                        break;
-                    case "Atendimento":
-                        $("#compartilharCardButton").show();
-                        $("#priorizarCardButton").show();
-                        $("#enviarMensagemButton").show();
-                        $("#starButtons").css("display", "none");
-                        $("#reabrirChamado").css("display", "none");
-                        $("#avaliarAtendimentoButton").hide();
-                        $("#registrarAtendimentoButton").hide();
-                        $("#encaminharCardButton").show();
-                        $("#transferirCardButton").hide();
-                        $("#ConcluirCardButton").show();
-                        break;
-                    case "Encaminhado":
-                        $("#compartilharCardButton").show();
-                        $("#priorizarCardButton").show();
-                        $("#enviarMensagemButton").show();
-                        $("#starButtons").css("display", "none");
-                        $("#reabrirChamado").css("display", "none");
-                        $("#avaliarAtendimentoButton").hide();
-                        $("#registrarAtendimentoButton").show();
-                        $("#encaminharCardButton").show();
-                        $("#transferirCardButton").show();
-                        $("#ConcluirCardButton").hide();
-                        break;
-                    case "Concluido":
-                        $("#compartilharCardButton").show();
-                        $("#priorizarCardButton").hide();
-                        $("#enviarMensagemButton").show();
-                        $("#starButtons").css("display", "block");
-                        $("#reabrirChamado").css("display", "none");
-                        $("#avaliarAtendimentoButton").show();
-                        $("#registrarAtendimentoButton").hide();
-                        $("#encaminharCardButton").show();
-                        $("#transferirCardButton").hide();
-                        $("#ConcluirCardButton").hide();
-                        break;
-                    case "Finalizado":
-                        // Ocultar botões quando o card estiver em "Finalizado"
-                        $("#compartilharCardButton").hide();
-                        $("#priorizarCardButton").hide();
-                        $("#enviarMensagemButton").hide();
-                        $("#starButtons").css("display", "none");
-                        $("#reabrirChamado").css("display", "block");
-                        $("#avaliarAtendimentoButton").hide();
-                        $("#registrarAtendimentoButton").hide();
-                        $("#encaminharCardButton").hide();
-                        $("#transferirCardButton").hide();
-                        $("#ConcluirCardButton").hide();
-                        break;
-                    default:
-                        // Lógica para um status desconhecido (pode adicionar conforme necessário)
-                        break;
+                // Verificar condições e exibir os botões apropriados
+                if (isDoSetor) {
+                    // Se o usuário é do mesmo setor
+                    switch (statusAtual) {
+                        case "Triagem":
+                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+                            break;
+                        case "Atendimento":
+                            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton"]);
+                            break;
+                        case "Encaminhado":
+                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+                            break;
+                        // Adicione outras condições conforme necessário
+                        default:
+                            // Lógica para outros status, se necessário
+                            break;
+                    }
+                } else if (isSolicitante) {
+                    // Se o usuário é o solicitante
+                    const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
+                    console.log(grupoSelecionado)
+
+                    if (grupoSelecionado === "Minhas Solicitações") {
+                        switch (statusAtual) {
+                            case "Triagem":
+                            case "Atendimento":
+                            case "Encaminhado":
+                                showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton"]);
+                                break;
+                            case "Concluido":
+                                showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton", "starButtons", "avaliarAtendimentoButton"]);
+                                break;
+                            case "Finalizado":
+                                showButtonsAndHideMessage(["compartilharCardButton", "reabrirChamado"]);
+                                break;
+                            default:
+                                // Lógica para outros status, se necessário
+                                break;
+                                }
+
+                        } else {
+                        $("#mensagemEspectador").removeClass("hidden");
+                    }
+
+                } else {
+                    // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
+                    $("#mensagemEspectador").removeClass("hidden");
                 }
 
+
                 //------------------------------------------------------------------------------------------------------
+
 
                 // Adicione um ouvinte de evento para o evento de ocultação do modal
                 modal.on("hidden.bs.modal", function () {
@@ -1350,6 +1332,7 @@ function loadCardInfo(cardId) {
         }
     });
 }
+
 
 
 function enviarAvaliacao(cardId, rating) {

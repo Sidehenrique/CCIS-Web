@@ -1903,6 +1903,18 @@ display: block;
   box-sizing: border-box; /* Add this line */
 }
 
+
+/* logica para os botões de ação do modal */
+
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block !important;
+}
+
+
 /*-- processos ----------------------------*/
 
 
