@@ -639,9 +639,10 @@ def kanban_view(request):
                                   key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
                                                  x['cargo'] != 'Encarregado(a)'))
 
-            grupos_usuario = KanbanGroupUser.objects.filter(user=request.user)
+            kanban_group = KanbanGroupUser.objects.filter(user=request.user)
+
             context = {
-                'grupos_usuario': grupos_usuario,
+                'kanban_group': kanban_group,
                 'clock': clock,
                 'superior': superior,
                 'equipe': nomes_equipe,

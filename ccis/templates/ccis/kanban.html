@@ -9,10 +9,10 @@
 <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
 
-<!--Container---------------------------------->
+<!--Container--------------------------------->
 <div class="container-fluid scrollable-content">
 
-    <!-- Menu settings ------------------------>
+    <!-- Menu settings ----------------------->
     <div class="row mt-1">
 
         <!-- Home e Area de trabalho ---------->
@@ -31,7 +31,7 @@
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
-                    {% for grupo in grupos_usuario %}
+                    {% for grupo in kanban_group %}
                         <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.group.name }}">
                             {{ grupo.group.name }}
                         </li>
@@ -90,7 +90,7 @@
 
             <!-- Configurações ---------------->
             <button class="ms-3 btn-personalize-settings me-3" type="button" data-bs-toggle="modal"
-                    data-bs-target="#temasModal"><i class="fa-solid fa-gear"></i>
+                    data-bs-target="#configModal"><i class="fa-solid fa-gear"></i>
             </button>
             <!-- Configurações ---------------->
 
@@ -101,7 +101,7 @@
                     <i class="fa-solid fa-filter"></i>
                     Filtro
                 </button>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
 
                     <!-- Titulo Filtro ------->
                     <div style="text-align: center;">
@@ -222,14 +222,14 @@
                     </div>
                     <!-- Etiquetas ----------->
 
-                </ul>
+                </div>
 
             </div>
             <!-- Filtro ---------------------->
 
             <!-- Pesquisa Rápida ------------->
             <div class="position-relative">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <i class="fa-solid fa-magnifying-glass search-icon" id="searchIcon"></i>
                 <input type="search" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa..."
                        aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
             </div>
@@ -431,7 +431,7 @@
     <!-- Modal Equipe ------------------------>
 
 
-    <!-- Modal Processos ------------------------->
+    <!-- Modal Processos --------------------->
     <div class="modal fade"
          id="processoModal"
          tabindex="-1"
@@ -682,6 +682,7 @@
                                 <p>Somente visualização.</p>
                             </div>
 
+                            <!-- botões de ação -->
                             <ul class="ul-menu-request buttons-Acao modal-hide-buttons">
 
                                 <li class="li-menu-request">
@@ -725,6 +726,71 @@
                                        aria-current="page">
                                         <i class="fa-solid fa-check"></i>
                                         Concluir
+                                    </a>
+                                </li>
+
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="compartilharCardButton" class="modal-processo-link"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                        Compartilhar
+                                    </a>
+                                </li>
+
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="priorizarCardButton" class="modal-processo-link"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-bolt"></i>
+                                        Prioridade
+                                    </a>
+                                </li>
+
+
+                                <li id="starButtons" style="margin-top:45px">
+
+
+                                    <div class="d-flex" style="justify-content: center;">
+                                        <a type="button" name="1" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="2" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="3" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="4" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="5" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                    </div>
+
+
+                                    <p style="font-size:12px; text-align:center">Avaliar este atendimento<br>
+                                        <span style="font-size:10px; text-align:center">Sua avaliação é anônima</span>
+                                    </p>
+
+                                </li>
+
+
+                                <li class="li-menu-request mt-1">
+                                    <a type="button" id="avaliarAtendimentoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-heart"></i>
+                                        Avaliar e Finalizar
+                                    </a>
+                                </li>
+
+
+                                <li id="reabrirChamado" class="li-menu-request mt-1" style="display: none">
+                                    <a type="button" id="reabrirChamadoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-power-off"></i>
+                                        Reabrir Solicitação
                                     </a>
                                 </li>
 
@@ -859,7 +925,7 @@
 
 
     <!-- Configurações ---------------------->
-    <div class="modal fade" id="temasModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -994,7 +1060,6 @@
                         </div>
                     </div>
 
-
                 </div>
 
             </div>
@@ -1003,10 +1068,11 @@
     <!-- Configurações ---------------------->
 
 </div>
-<!--Container--------------------------------->
+<!--Container-------------------------------->
 
 
 <script>
+
     document.getElementById('avatar-87').addEventListener('click', function() {
         if ($('#avatar-87').hasClass('hidden')) {
             return; // Evitar abrir o modal se o avatar-87 estiver escondido
