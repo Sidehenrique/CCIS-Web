@@ -9,10 +9,10 @@
 <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
 
-<!--Container---------------------------------->
+<!--Container--------------------------------->
 <div class="container-fluid scrollable-content">
 
-    <!-- Menu settings ------------------------>
+    <!-- Menu settings ----------------------->
     <div class="row mt-1">
 
         <!-- Home e Area de trabalho ---------->
@@ -90,7 +90,7 @@
 
             <!-- Configurações ---------------->
             <button class="ms-3 btn-personalize-settings me-3" type="button" data-bs-toggle="modal"
-                    data-bs-target="#temasModal"><i class="fa-solid fa-gear"></i>
+                    data-bs-target="#configModal"><i class="fa-solid fa-gear"></i>
             </button>
             <!-- Configurações ---------------->
 
@@ -101,7 +101,7 @@
                     <i class="fa-solid fa-filter"></i>
                     Filtro
                 </button>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
 
                     <!-- Titulo Filtro ------->
                     <div style="text-align: center;">
@@ -222,14 +222,14 @@
                     </div>
                     <!-- Etiquetas ----------->
 
-                </ul>
+                </div>
 
             </div>
             <!-- Filtro ---------------------->
 
             <!-- Pesquisa Rápida ------------->
             <div class="position-relative">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <i class="fa-solid fa-magnifying-glass search-icon" id="searchIcon"></i>
                 <input type="search" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa..."
                        aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
             </div>
@@ -431,7 +431,7 @@
     <!-- Modal Equipe ------------------------>
 
 
-    <!-- Modal Processos ------------------------->
+    <!-- Modal Processos --------------------->
     <div class="modal fade"
          id="processoModal"
          tabindex="-1"
@@ -859,7 +859,7 @@
 
 
     <!-- Configurações ---------------------->
-    <div class="modal fade" id="temasModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -1003,10 +1003,11 @@
     <!-- Configurações ---------------------->
 
 </div>
-<!--Container--------------------------------->
+<!--Container-------------------------------->
 
 
 <script>
+
     document.getElementById('avatar-87').addEventListener('click', function() {
         if ($('#avatar-87').hasClass('hidden')) {
             return; // Evitar abrir o modal se o avatar-87 estiver escondido

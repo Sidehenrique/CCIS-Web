@@ -536,17 +536,28 @@ function filterProcesses() {
         const assunto = card.querySelector('.card-titulo').innerText.toLowerCase();
         const servico = card.querySelector('.card-servico').innerText.toLowerCase();
         const nomeSolicitante = card.querySelector('.card-responsavel').innerText.toLowerCase();
+        const cardId = card.id.toLowerCase(); // Obter o ID do card em minúsculas
 
         if (
             assunto.includes(searchText) ||
             servico.includes(searchText) ||
-            nomeSolicitante.includes(searchText)
+            nomeSolicitante.includes(searchText) ||
+            cardId.includes(searchText) // Adicionar verificação pelo ID do card
         ) {
             card.style.display = 'block'; // Mostrar o card
+            card.classList.add('flash'); // Adicionar a classe de animação
         } else {
             card.style.display = 'none'; // Esconder o card
+            card.classList.remove('flash'); // Remover a classe de animação
         }
     });
+
+    // Remover a classe de animação caso a caixa de pesquisa esteja vazia
+    if (searchText === '') {
+        cards.forEach(card => {
+            card.classList.remove('flash');
+        });
+    }
 }
 
 

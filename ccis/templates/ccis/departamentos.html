@@ -608,48 +608,48 @@
 
 <script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const submenuLinks = document.querySelectorAll('.custom-nav-link');
+document.addEventListener('DOMContentLoaded', function() {
+    const submenuLinks = document.querySelectorAll('.custom-nav-link');
 
-        submenuLinks.forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const submenu = this.nextElementSibling;
-                const isOpen = submenu.classList.contains('submenu-open');
+    submenuLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const submenu = this.nextElementSibling;
+            const isOpen = submenu.classList.contains('submenu-open');
 
-                closeAllSubmenus();
-
-                if (!isOpen) {
-                    submenu.classList.add('submenu-open');
-                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
-                    this.parentNode.classList.add('open');
-                } else {
-                    this.parentNode.classList.remove('open');
-                }
-            });
-        });
-
-        function closeAllSubmenus() {
-            const submenus = document.querySelectorAll('.custom-nav-submenu');
-            submenus.forEach(function(submenu) {
-                submenu.classList.remove('submenu-open');
-                submenu.style.maxHeight = null;
-                submenu.previousElementSibling.classList.remove('open');
-            });
-        }
-
-        function openCorrespondingSubmenu(department) {
             closeAllSubmenus();
 
-            const accordion = department.closest('.custom-nav-submenu');
-            if (accordion) {
-                const parentItem = accordion.previousElementSibling;
-                parentItem.classList.add('open');
-                accordion.classList.add('submenu-open');
-                accordion.style.maxHeight = accordion.scrollHeight + 'px';
-                parentItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (!isOpen) {
+                submenu.classList.add('submenu-open');
+                submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                this.parentNode.classList.add('open');
+            } else {
+                this.parentNode.classList.remove('open');
             }
+        });
+    });
+
+    function closeAllSubmenus() {
+        const submenus = document.querySelectorAll('.custom-nav-submenu');
+        submenus.forEach(function(submenu) {
+            submenu.classList.remove('submenu-open');
+            submenu.style.maxHeight = null;
+            submenu.previousElementSibling.classList.remove('open');
+        });
+    }
+
+    function openCorrespondingSubmenu(department) {
+        closeAllSubmenus();
+
+        const accordion = department.closest('.custom-nav-submenu');
+        if (accordion) {
+            const parentItem = accordion.previousElementSibling;
+            parentItem.classList.add('open');
+            accordion.classList.add('submenu-open');
+            accordion.style.maxHeight = accordion.scrollHeight + 'px';
+            parentItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+    }
 
 // Função de pesquisa com destaque e abertura do accordion
 function searchDepartments() {
@@ -691,8 +691,8 @@ function containsSearchTerm(string, searchTerm) {
     return false;
 }
 
-        // Evento para acionar a função de pesquisa ao digitar
-        document.getElementById('inputUser').addEventListener('input', function() {
+    // Evento para acionar a função de pesquisa ao digitar
+    document.getElementById('inputUser').addEventListener('input', function() {
             searchDepartments();
         });
 
@@ -709,13 +709,13 @@ function containsSearchTerm(string, searchTerm) {
         document.head.appendChild(style);
     });
 
-    // Adicione uma função JavaScript para cada ícone que você deseja que gire individualmente
-    function toggleIcon(iconId) {
+// Adicione uma função JavaScript para cada ícone que você deseja que gire individualmente
+function toggleIcon(iconId) {
         const icon = document.getElementById(iconId);
         icon.classList.toggle("rotate");
     }
 
-    function handleClick() {
+function handleClick() {
     var icon = document.querySelector('.search-icon-dep');
     icon.style.display = 'none';
 
@@ -724,7 +724,7 @@ function containsSearchTerm(string, searchTerm) {
     inputField.addEventListener('blur', handleInput);
 }
 
-    function handleInput() {
+function handleInput() {
     var inputField = document.getElementById('inputUser');
     var icon = document.querySelector('.search-icon-dep');
 

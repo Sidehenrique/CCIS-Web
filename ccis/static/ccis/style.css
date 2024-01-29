@@ -1721,6 +1721,19 @@ status-negativo{
     transition: height 0.3s ease;
 }
 
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+.flash {
+    animation: flash 1s 4; /* Duração de 3s e 3 repetições */
+}
+
 .kanban-card-header {
     color:black;
     padding: 10px;
