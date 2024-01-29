@@ -31,7 +31,7 @@
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
-                    {% for grupo in grupos_usuario %}
+                    {% for grupo in kanban_group %}
                         <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.group.name }}">
                             {{ grupo.group.name }}
                         </li>
@@ -682,6 +682,7 @@
                                 <p>Somente visualização.</p>
                             </div>
 
+                            <!-- botões de ação -->
                             <ul class="ul-menu-request buttons-Acao modal-hide-buttons">
 
                                 <li class="li-menu-request">
@@ -725,6 +726,71 @@
                                        aria-current="page">
                                         <i class="fa-solid fa-check"></i>
                                         Concluir
+                                    </a>
+                                </li>
+
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="compartilharCardButton" class="modal-processo-link"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                        Compartilhar
+                                    </a>
+                                </li>
+
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="priorizarCardButton" class="modal-processo-link"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-bolt"></i>
+                                        Prioridade
+                                    </a>
+                                </li>
+
+
+                                <li id="starButtons" style="margin-top:45px">
+
+
+                                    <div class="d-flex" style="justify-content: center;">
+                                        <a type="button" name="1" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="2" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="3" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="4" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="5" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                    </div>
+
+
+                                    <p style="font-size:12px; text-align:center">Avaliar este atendimento<br>
+                                        <span style="font-size:10px; text-align:center">Sua avaliação é anônima</span>
+                                    </p>
+
+                                </li>
+
+
+                                <li class="li-menu-request mt-1">
+                                    <a type="button" id="avaliarAtendimentoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-heart"></i>
+                                        Avaliar e Finalizar
+                                    </a>
+                                </li>
+
+
+                                <li id="reabrirChamado" class="li-menu-request mt-1" style="display: none">
+                                    <a type="button" id="reabrirChamadoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-power-off"></i>
+                                        Reabrir Solicitação
                                     </a>
                                 </li>
 
@@ -993,7 +1059,6 @@
 
                         </div>
                     </div>
-
 
                 </div>
 

@@ -23,6 +23,7 @@ def user_data(request):
             'logEmail': enderecoContato.objects.get(usuario=request.user).emailCorporativo,
             'is_superadmin': request.user.is_superuser,
             'logGroup': request.user.groups.first().name if request.user.groups.first() else None,
+            'id_do_grupo': request.user.groups.first().id if request.user.groups.first() else None,
         }
 
     return {'user_data': user_data}
