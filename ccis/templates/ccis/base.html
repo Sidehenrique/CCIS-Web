@@ -567,8 +567,6 @@
                     {% block conteudo %}
 
 
-
-
                     {% endblock %}
 
                     <!--  Toast de notificações e alertas ------>
@@ -577,12 +575,13 @@
                          border-0 position-fixed top-0 start-50 translate-middle-x"
                          role="alert" aria-live="assertive"
                          aria-atomic="true" style="margin-top:70px">
-                      <div class="d-flex">
-                        <div id="toastBody" class="toast-body">
-                          Hello, world! This is a toast message.
+                        <div class="d-flex">
+                            <div id="toastBody" class="toast-body">
+                                Hello, world! This is a toast message.
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
                         </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                      </div>
                     </div>
                     <!--  Toast de notificações e alertas ------>
 
@@ -598,6 +597,169 @@
 </div>
 <!-- end container-fluid ------------------------------------------------------------------------>
 
+<!-- Configurações ---------------------->
+<div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Configurações</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <!-- Botões -->
+                    <div id="menu_config" class="col-3 mb-3" style="border-right: 1px solid #ccc;">
+                        <ul class="ul-menu-kanban">
+                            <li class="li-menu-request">
+                                <a type="button" id="btn-config_1" class="li-link-kanban" aria-current="page">
+                                    Temas
+                                </a>
+                            </li>
+                            <li class="li-menu-kanban">
+                                <a type="button" id="btn_config_2" class="li-link-kanban" aria-current="page">
+                                    Horários
+                                </a>
+                            </li>
+                            <li class="li-menu-kanban">
+                                <a type="button" id="btn_config_3" class="li-link-kanban" aria-current="page">
+                                    Prioridade
+                                </a>
+                            </li>
+                            <li class="li-menu-kanban">
+                                <a type="button" id="btn_config_4" class="li-link-kanban" aria-current="page">
+                                    Som
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Fim dos Botões -->
+
+                    <!-- Temas -->
+                    <div id="config_1" class="col-8" style="display:none;">
+                        <div class="row">
+
+                            <div class="col-12 tema d-flex ms-4 p-3">
+                                <a id="padraoBtn" class="d-flex align-items-center text-start"
+                                   onclick="suaFuncaoJavaScript()" style="text-decoration: none;">
+                                    <div>
+                                        <h5 style="color: black;">Verde Claro</h5>
+                                        <p style="color: #37474F;">Para uma intranet com mais vida</p>
+                                    </div>
+                                    <img src="{% static 'ccis/backgroundPro.png' %}" class="img-fluid ms-auto"
+                                         style="width: 40%; height: auto;">
+                                </a>
+                            </div>
+
+                            <div class="col-12 tema d-flex mt-3 ms-4 p-3">
+                                <a id="cinzaBtn" class="d-flex align-items-center text-start"
+                                   onclick="suaFuncaoJavaScript()" style="text-decoration: none;">
+                                    <div>
+                                        <h5 style="color: black;">Cinza Claro</h5>
+                                        <p style="color: #37474F;">Para uma intranet mais fria</p>
+                                    </div>
+                                    <img src="{% static 'ccis/backgroundCinza.png' %}" class="img-fluid ms-auto"
+                                         style="width: 40%; height: auto;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fim dos Temas -->
+
+                    <!-- Determinar Hora -->
+                    <div id="config_2" class="col-8 ms-4" style="display:none;">
+
+                        <div class="tempo-kanban">
+
+                            <h5>Alertas de Atraso</h5>
+                            <span style="font-size: 13px;">Determine o tempo médio e máximo para os alertas de atendimento</span>
+
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <span style="font-size: 13px;">Tempo Médio</span>
+                                    <select class="form-select" id="tempoMedio" name="tempo">
+                                            <option value="1">1 minuto</option>
+                                            <option value="5">5 minutos</option>
+                                            <option value="10">10 minutos</option>
+                                            <option value="1h">1 hora</option>
+                                            <option value="3h">3 horas</option>
+                                            <option value="6h">6 horas</option>
+                                            <option value="1d">1 dia</option>
+                                            <option value="7d">7 dias</option>
+                                            <option value="30d">30 dias</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <span style="font-size: 13px;">Tempo Máximo</span>
+                                    <select class="form-select" id="tempoMaximo" name="tempo">
+                                            <option value="1">1 minuto</option>
+                                            <option value="5">5 minutos</option>
+                                            <option value="10">10 minutos</option>
+                                            <option value="1h">1 hora</option>
+                                            <option value="3h">3 horas</option>
+                                            <option value="6h">6 horas</option>
+                                            <option value="1d">1 dia</option>
+                                            <option value="7d">7 dias</option>
+                                            <option value="30d">30 dias</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="tempo-kanban mt-3">
+
+                            <h5>Cards Finalizados</h5>
+                            <span style="font-size: 13px;">Determine o tempo em que seus cards permanecerão na coluna finalizados</span>
+
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    {{ clock.finalizados }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Fim da Determinação da Hora -->
+
+                    <div id="config_3" class="col-8" style="display:none;">
+                        <!-- Conteúdo da Configuração 3 -->
+                    </div>
+
+                    <div id="config_4" class="col-8" style="display:none;">
+
+                        <div class="tempo-kanban ms-4">
+                            <h5>Notificações</h5>
+                            <span style="font-size: 13px;">Ativar ou desativar o som das notificações da intranet</span>
+
+                            <div style="font-size: 20px" class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="SoundNotification">
+                            </div>
+                        </div>
+
+                        <div class="tempo-kanban ms-4 mt-3">
+                            <h5>Kanban</h5>
+                            <span style="font-size: 13px;">Ativar ou desativar o som das notificações do Kanban</span>
+
+                            <div style="font-size: 20px" class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="SoundKanban">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Configurações ---------------------->
 
 <!-- Inclua o jQuery primeiro -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

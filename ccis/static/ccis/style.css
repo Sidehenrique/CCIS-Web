@@ -1102,7 +1102,6 @@ status-negativo{
     font-size: 16px;
     padding: 10px;
     outline: none;
-    background-color: #ffffff;
     position: relative;
 }
 
@@ -1605,6 +1604,7 @@ status-negativo{
 .btn-menu-settings{
     color:#333;
     min-width:90px;
+    min-height:45px;
     background-color:white !important;
     border:none;
     border-radius:5px;
@@ -1618,7 +1618,7 @@ status-negativo{
     background-color:white !important;
     border:none;
     border-radius:5px;
-    padding:8px;
+    padding:5px;
     text-decoration:none;
 }
 
@@ -1632,6 +1632,7 @@ status-negativo{
 
 .drop-menu-settings{
     color:#333;
+    min-height:45px;
     background-color:white !important;
     padding:8px!important;
     border:none;
@@ -1657,9 +1658,10 @@ status-negativo{
 
 .search-menu-settings{
     padding:8px;
-      display: block;
-      border: none;
-      border-radius: 5px;
+    min-height:45px;
+    display: block;
+    border: none;
+    border-radius: 5px;
 }
 
 
@@ -1717,6 +1719,19 @@ status-negativo{
     border-radius:10px;
     background-color: #f1f1f1;
     transition: height 0.3s ease;
+}
+
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+.flash {
+    animation: flash 1s 4; /* Duração de 3s e 3 repetições */
 }
 
 .kanban-card-header {

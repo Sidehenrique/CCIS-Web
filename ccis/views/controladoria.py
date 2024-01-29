@@ -4,7 +4,7 @@ from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
 from ..forms import (modelFormPowerPC, modelFormPropensoPC, modelFormRelatorioPC, modelFormEstudoPC,
-                     modelFormCI, modelFormApontamentos)
+                     modelFormCI, modelFormApontamentos, modelFormProcessoPC)
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
@@ -141,10 +141,11 @@ def new_request_PC(request):
     relatorio = modelFormRelatorioPC()
     estudo = modelFormEstudoPC()
     apontementos = modelFormApontamentos()
-    ci = modelFormCI
+    ci = modelFormCI()
+    processo = modelFormProcessoPC()
 
     context = {'power': power, 'propenso': propenso, 'relatorio': relatorio, 'estudo': estudo,
-               'apontamentos':apontementos, 'ci': ci}
+               'apontamentos':apontementos, 'ci': ci, 'processo': processo,}
 
     return render(request, "setores/controladoria/new_request_PC.html", context)
 
@@ -423,6 +424,74 @@ def request_relatorio_PC(request):
 
     else:
         form = modelFormRelatorioPC()
+
+    return render(request, 'setores/controladoria/new_request_PC.html', {'form': form,})
+
+
+@login_required(login_url="/login")
+def request_processos_PC(request):
+    if request.method == 'POST':
+
+        request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
+        request.POST['assunto'] = 'Relatórios'
+
+        form = modelFormProcessoPC(request.POST, request.FILES)
+        if form.is_valid():
+
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=1)
+            card.status = 'Triagem'
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=1),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Performace Corporativa",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+
+            descricao = form.cleaned_data.get('descricao')
+            if descricao:
+                message_history = MessageHistory(
+                    card=card,
+                    remetente=request.user,
+                    message=descricao,
+                    attachment=attachment,
+                )
+                message_history.save()
+
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
+
+            return redirect('controladoria_home')
+
+    else:
+        form = modelFormProcessoPC()
 
     return render(request, 'setores/controladoria/new_request_PC.html', {'form': form,})
 

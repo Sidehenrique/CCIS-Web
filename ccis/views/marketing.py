@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
 from ..forms import (modelFormGraficaMK, modelFormDigitalMK, modelFormAcessoriaMK, modelFormApontamentos,
                      modelFormCI)
-from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
+from django.db.models import OuterRef, Subquery, ExpressionWrapper, fields, Avg, Count, FloatField
 
 
 @login_required(login_url="/login")

@@ -205,11 +205,13 @@ urlpatterns = [
     path('request_estudo_PC', controladoria.request_estudo_PC, name='request_estudo_PC'),
     path('request_apontamentos_pc', controladoria.request_apontamentos_pc, name='request_apontamentos_pc'),
     path('request_ci_pc', controladoria.request_ci_pc, name='request_ci_pc'),
+    path('request_processos_PC', controladoria.request_processos_PC, name='request_processos_PC'),
 
     path('gestaoRisco_home', gestaoRisco.gestaoRisco_home, name='gestaoRisco_home'),
     path('request_acessos_risco', gestaoRisco.request_acessos_risco, name='request_acessos_risco'),
     path('new_request_risco', gestaoRisco.new_request_risco, name='new_request_risco'),
     path('processos_GR', gestaoRisco.processos_GR, name='processos_GR'),
+    path('liquidacoes', gestaoRisco.liquidacoes, name='liquidacoes'),
 
     path('paDigital_home', padigital.paDigital_home, name='paDigital_home'),
     path('new_request_PaDigital', padigital.new_request_PaDigital, name='new_request_PaDigital'),

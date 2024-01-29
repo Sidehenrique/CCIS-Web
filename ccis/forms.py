@@ -651,6 +651,32 @@ class modelFormEstudoPC(forms.ModelForm):
         fields = ('assunto', 'service', 'descricao', 'attachment')
 
 
+class modelFormProcessoPC(forms.ModelForm):
+    CHOICES_Assunto = [
+        ('', ''),
+        ('Lecom', 'Lecom'),
+    ]
+
+    CHOICES_Servico = [
+        ('', ''),
+        ('Criação de Login', 'Criação de Login'),
+        ('Alteração de Usuário', 'Alteração de Usuário'),
+        ('Desbloqueio/Alteração de Senha', 'Desbloqueio/Alteração de Senha'),
+        ('Erros', 'Erros'),
+        ('Sugestões', 'Sugestões'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
+                                 required=False)
+
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+
+
 # ESTOQUE Marketing  -------------------------------------------------------------->
 
 class modelFormAcessoriaMK(forms.ModelForm):

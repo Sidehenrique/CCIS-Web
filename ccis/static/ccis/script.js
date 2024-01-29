@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const formulario4 = document.getElementById("formulario4");
     const formulario5 = document.getElementById("formulario5");
     const formulario6 = document.getElementById("formulario6");
+    const formulario7 = document.getElementById("formulario7");
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -70,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario4.style.display = "none";
         formulario5.style.display = "none";
         formulario6.style.display = "none";
+        formulario7.style.display = "none";
     });
 
 
@@ -81,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario4.style.display = "none";
         formulario5.style.display = "none";
         formulario6.style.display = "none";
+        formulario7.style.display = "none";
     });
 
 
@@ -92,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario4.style.display = "none";
         formulario5.style.display = "none";
         formulario6.style.display = "none";
+        formulario7.style.display = "none";
     });
 
     document.getElementById("btn_request_4").addEventListener("click", function() {
@@ -102,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario4.style.display = "block";
         formulario5.style.display = "none";
         formulario6.style.display = "none";
+        formulario7.style.display = "none";
     });
 
     document.getElementById("btn_request_5").addEventListener("click", function() {
@@ -112,6 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario4.style.display = "none";
         formulario5.style.display = "block";
         formulario6.style.display = "none";
+        formulario7.style.display = "none";
     });
 
     document.getElementById("btn_request_6").addEventListener("click", function() {
@@ -122,6 +128,18 @@ document.addEventListener("DOMContentLoaded", function() {
         formulario4.style.display = "none";
         formulario5.style.display = "none";
         formulario6.style.display = "block";
+        formulario7.style.display = "none";
+    });
+
+    document.getElementById("btn_request_7").addEventListener("click", function() {
+        informativo.style.display = "none";
+        formulario1.style.display = "none";
+        formulario2.style.display = "none";
+        formulario3.style.display = "none";
+        formulario4.style.display = "none";
+        formulario5.style.display = "none";
+        formulario6.style.display = "none";
+        formulario7.style.display = "block";
     });
 
 });
@@ -518,17 +536,28 @@ function filterProcesses() {
         const assunto = card.querySelector('.card-titulo').innerText.toLowerCase();
         const servico = card.querySelector('.card-servico').innerText.toLowerCase();
         const nomeSolicitante = card.querySelector('.card-responsavel').innerText.toLowerCase();
+        const cardId = card.id.toLowerCase(); // Obter o ID do card em minúsculas
 
         if (
             assunto.includes(searchText) ||
             servico.includes(searchText) ||
-            nomeSolicitante.includes(searchText)
+            nomeSolicitante.includes(searchText) ||
+            cardId.includes(searchText) // Adicionar verificação pelo ID do card
         ) {
             card.style.display = 'block'; // Mostrar o card
+            card.classList.add('flash'); // Adicionar a classe de animação
         } else {
             card.style.display = 'none'; // Esconder o card
+            card.classList.remove('flash'); // Remover a classe de animação
         }
     });
+
+    // Remover a classe de animação caso a caixa de pesquisa esteja vazia
+    if (searchText === '') {
+        cards.forEach(card => {
+            card.classList.remove('flash');
+        });
+    }
 }
 
 
