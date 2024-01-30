@@ -315,6 +315,7 @@ $(document).on('click', '[id^="toggleBtn-"]', function () {
 // Adicione um manipulador de evento para detectar cliques nos itens da lista
 $('.dropdown-item-group').click(function () {
     var grupoSelecionado = $(this).data('value');
+    clearKanbanBodies()
     fetchCards(grupoSelecionado);
 });
 
@@ -335,8 +336,8 @@ async function fetchCards(grupoSelecionado) {
     const areaTrabalhoElement = document.getElementById('area-trabalho-kanban');
     areaTrabalhoElement.innerText = grupoSelecionado;
 
-    // Salve a área de trabalho no cookie
-    saveWorkspaceToCookie(grupoSelecionado);
+//    // Salve a área de trabalho no cookie
+//    saveWorkspaceToCookie(grupoSelecionado);
 
     try {
         // Faça uma solicitação AJAX para o backend
@@ -361,20 +362,20 @@ async function fetchCards(grupoSelecionado) {
 }
 
 
-// Verificar se o elemento único do Kanban está presente na página
-if ($('#area-trabalho-kanban').length > 0) {
-    // Configurar o setInterval apenas se o elemento do Kanban estiver presente
-    const kanbanInterval = setInterval(() => {
-        const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
-        fetchCards(grupoSelecionado);
-    }, 60000);
-
-    // Opcional: Limpar o intervalo se o usuário sair da página
-    // Exemplo usando o evento beforeunload
-    $(window).on('beforeunload', function() {
-        clearInterval(kanbanInterval);
-    });
-}
+//// Verificar se o elemento único do Kanban está presente na página
+//if ($('#area-trabalho-kanban').length > 0) {
+//    // Configurar o setInterval apenas se o elemento do Kanban estiver presente
+//    const kanbanInterval = setInterval(() => {
+//        const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
+//        fetchCards(grupoSelecionado);
+//    }, 60000);
+//
+//    // Opcional: Limpar o intervalo se o usuário sair da página
+//    // Exemplo usando o evento beforeunload
+//    $(window).on('beforeunload', function() {
+//        clearInterval(kanbanInterval);
+//    });
+//}
 
 
 // Função para atualizar o kanban com os dados recebidos do backend
@@ -506,10 +507,10 @@ function getCookie(name) {
 }
 
 
-function saveWorkspaceToCookie(workspace) {
-    // Defina o cookie 'workspace' com o valor fornecido
-    setCookie('workspace', workspace, 30); // Ajuste conforme necessário
-}
+//function saveWorkspaceToCookie(workspace) {
+//    // Defina o cookie 'workspace' com o valor fornecido
+//    setCookie('workspace', workspace, 30); // Ajuste conforme necessário
+//}
 
 
 function setCookie(name, value, days) {
@@ -894,7 +895,7 @@ function loadCardInfo(cardId) {
                         success: function (data) {
                             if (data.success) {
 
-                                customToast(data.message, "normalSong.mp3");
+                                customToast(data.message, "notificationSong4.mp3");
                                 $('#processoModal').modal('hide');
 
                             } else {
@@ -1231,83 +1232,162 @@ function loadCardInfo(cardId) {
 
 // ------------- TRATAMENTO DOS BOTÕES DE AÇÃO -------------------------------------------------------
 
+// Obter o ID do usuário logado e o ID do grupo do usuário logado
+const userId = getLoggedInUserId();
+const userGroupId = getLoggedInUserGroup();
 
-                // Obter o ID do usuário logado e o ID do grupo do usuário logado
-                const userId = getLoggedInUserId();
-                const userGroupId = getLoggedInUserGroup();
+// Verificar se o usuário logado é o solicitante
+const isSolicitante = userId === data.card.solicitante.id;
 
-                // Verificar se o usuário logado é o solicitante
-                const isSolicitante = userId === data.card.solicitante.id;
+// Verificar se o usuário é do setor ao qual o card foi criado
+const isDoSetor = parseInt(userGroupId) === parseInt(data.card.setor);
 
-                // Verificar se o usuário é do setor ao qual o card foi criado
-                const isDoSetor = parseInt(userGroupId) === parseInt(data.card.setor);
+// Verificar se a área de trabalho selecionada é "Minhas Solicitações"
+const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
+const isInMinhasSolicitacoes = grupoSelecionado === "Minhas Solicitações";
 
-                // Função para exibir bloco de botões específico e ocultar a mensagem do espectador
-                function showButtonsAndHideMessage(buttons) {
-                    // Oculta todos os botões e mensagem do espectador
-                    $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
+// Função para exibir bloco de botões específico e ocultar a mensagem do espectador
+function showButtonsAndHideMessage(buttons) {
+    // Oculta todos os botões e mensagem do espectador
+    $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
 
-                    // Exibe os botões específicos
-                    buttons.forEach(buttonId => {
-                        $(`#${buttonId}`).removeClass("hidden");
-                    });
-                }
+    // Exibe os botões específicos
+    buttons.forEach(buttonId => {
+        $(`#${buttonId}`).removeClass("hidden");
+    });
+}
 
-                // Adicione a classe "hidden" para ocultar inicialmente os botões e a mensagem do espectador
-                $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
+// Adicione a classe "hidden" para ocultar inicialmente os botões e a mensagem do espectador
+$(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
 
-                //Verifique o status do card
-                const statusAtual = data.card.status;
 
-                // Verificar condições e exibir os botões apropriados
-                if (isDoSetor) {
-                    // Se o usuário é do mesmo setor
-                    switch (statusAtual) {
-                        case "Triagem":
-                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
-                            break;
-                        case "Atendimento":
-                            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton"]);
-                            break;
-                        case "Encaminhado":
-                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
-                            break;
-                        // Adicione outras condições conforme necessário
-                        default:
-                            // Lógica para outros status, se necessário
-                            break;
-                    }
-                } else if (isSolicitante) {
-                    // Se o usuário é o solicitante
-                    const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
-                    console.log(grupoSelecionado)
+//Verifique o status do card
+const statusAtual = data.card.status;
 
-                    if (grupoSelecionado === "Minhas Solicitações") {
-                        switch (statusAtual) {
-                            case "Triagem":
-                            case "Atendimento":
-                            case "Encaminhado":
-                                showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton"]);
-                                break;
-                            case "Concluido":
-                                showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton", "starButtons", "avaliarAtendimentoButton"]);
-                                break;
-                            case "Finalizado":
-                                showButtonsAndHideMessage(["compartilharCardButton", "reabrirChamado"]);
-                                break;
-                            default:
-                                // Lógica para outros status, se necessário
-                                break;
-                                }
+// Verificar condições e exibir os botões apropriados
+if (isInMinhasSolicitacoes) {
 
-                        } else {
-                        $("#mensagemEspectador").removeClass("hidden");
-                    }
+    resetStarRating();
 
-                } else {
-                    // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
-                    $("#mensagemEspectador").removeClass("hidden");
-                }
+    // Se o usuário está em "Minhas Solicitações"
+    switch (statusAtual) {
+        case "Triagem":
+        case "Atendimento":
+        case "Encaminhado":
+            showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton"]);
+            break;
+        case "Concluido":
+            showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton", "starButtons", "avaliarAtendimentoButton"]);
+            break;
+        case "Finalizado":
+            showButtonsAndHideMessage(["compartilharCardButton", "reabrirChamadoButton"]);
+            break;
+        default:
+            // Lógica para outros status, se necessário
+            break;
+    }
+} else if (isDoSetor) {
+    // Se o usuário é do mesmo setor
+    switch (statusAtual) {
+        case "Triagem":
+            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+            break;
+        case "Atendimento":
+            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton"]);
+            break;
+        case "Encaminhado":
+            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+            break;
+        // Adicione outras condições conforme necessário
+        default:
+            // Lógica para outros status, se necessário
+            break;
+    }
+} else {
+    // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
+    $("#mensagemEspectador").removeClass("hidden");
+}
+
+
+
+
+
+//                // Obter o ID do usuário logado e o ID do grupo do usuário logado
+//                const userId = getLoggedInUserId();
+//                const userGroupId = getLoggedInUserGroup();
+//
+//                // Verificar se o usuário logado é o solicitante
+//                const isSolicitante = userId === data.card.solicitante.id;
+//
+//                // Verificar se o usuário é do setor ao qual o card foi criado
+//                const isDoSetor = parseInt(userGroupId) === parseInt(data.card.setor);
+//
+//                // Função para exibir bloco de botões específico e ocultar a mensagem do espectador
+//                function showButtonsAndHideMessage(buttons) {
+//                    // Oculta todos os botões e mensagem do espectador
+//                    $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
+//
+//                    // Exibe os botões específicos
+//                    buttons.forEach(buttonId => {
+//                        $(`#${buttonId}`).removeClass("hidden");
+//                    });
+//                }
+//
+//                // Adicione a classe "hidden" para ocultar inicialmente os botões e a mensagem do espectador
+//                $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
+//
+//                //Verifique o status do card
+//                const statusAtual = data.card.status;
+//
+//                // Verificar condições e exibir os botões apropriados
+//                if (isDoSetor) {
+//                    // Se o usuário é do mesmo setor
+//                    switch (statusAtual) {
+//                        case "Triagem":
+//                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+//                            break;
+//                        case "Atendimento":
+//                            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton"]);
+//                            break;
+//                        case "Encaminhado":
+//                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+//                            break;
+//                        // Adicione outras condições conforme necessário
+//                        default:
+//                            // Lógica para outros status, se necessário
+//                            break;
+//                    }
+//                } else if (isSolicitante) {
+//                    // Se o usuário é o solicitante
+//                    const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
+//                    console.log(grupoSelecionado)
+//
+//                    if (grupoSelecionado === "Minhas Solicitações") {
+//                        switch (statusAtual) {
+//                            case "Triagem":
+//                            case "Atendimento":
+//                            case "Encaminhado":
+//                                showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton"]);
+//                                break;
+//                            case "Concluido":
+//                                showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton", "starButtons", "avaliarAtendimentoButton"]);
+//                                break;
+//                            case "Finalizado":
+//                                showButtonsAndHideMessage(["compartilharCardButton", "reabrirChamado"]);
+//                                break;
+//                            default:
+//                                // Lógica para outros status, se necessário
+//                                break;
+//                                }
+//
+//                        } else {
+//                        $("#mensagemEspectador").removeClass("hidden");
+//                    }
+//
+//                } else {
+//                    // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
+//                    $("#mensagemEspectador").removeClass("hidden");
+//                }
 
 
                 //------------------------------------------------------------------------------------------------------
@@ -1320,6 +1400,7 @@ function loadCardInfo(cardId) {
                 });
 
                 // Abra o modal
+                resetStarRating();
                 modal.modal('show');
 
             } else {
@@ -1344,9 +1425,9 @@ function enviarAvaliacao(cardId, rating) {
         dataType: 'json',
         success: function (data) {
             if (data.success) {
-                // A avaliação foi registrada com sucesso, você pode atualizar o modal ou executar outras ações necessárias
-//                alert('Avaliado e Finalizado com sucesso.');
-//                $('#processoModal').modal('hide');
+
+                customToast(data.message, "finishSong.mp3");
+                $('#processoModal').modal('hide');
 
             } else {
                 alert('Erro ao registrar a avaliação: ' + data.message);
@@ -1356,6 +1437,16 @@ function enviarAvaliacao(cardId, rating) {
             alert('Erro ao enviar a avaliação');
         }
     });
+}
+
+
+// Função para redefinir as estrelas para a cor original
+function resetStarRating() {
+    // Remover a classe 'filled-star' de todas as estrelas
+    $(".star-link i").removeClass('filled-star');
+
+    // Resetar a classificação selecionada para 0
+    selectedRating = 0;
 }
 
 //====================================================================================================
