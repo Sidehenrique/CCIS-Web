@@ -68,6 +68,7 @@ TEMPLATES = [
                 'ccis.context_processors.user_data',
                 'ccis.context_processors.foto_profile',
                 'ccis.context_processors.ambiente_para_setor',
+                'ccis.context_processors.exibir_notificacoes',
             ],
         },
     },
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'teste2',
+        'NAME': 'banco_teste',
         'USER': 'root',
         'PASSWORD': 'Sicoob4155@@',
         'HOST': '10.6.32.24',

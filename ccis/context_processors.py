@@ -1,6 +1,7 @@
 # myapp/context_processors.py
 from ccis.models import dadosPessoais, enderecoContato
 from ccis.forms import ModelFormMidia
+from .models import Notification
 
 
 def controle_button(request):
@@ -21,6 +22,8 @@ def user_data(request):
             'logSexo': dadosPessoais.objects.get(usuario=request.user).sexo,
             'logEmail': enderecoContato.objects.get(usuario=request.user).emailCorporativo,
             'is_superadmin': request.user.is_superuser,
+            'logGroup': request.user.groups.first().name if request.user.groups.first() else None,
+            'id_do_grupo': request.user.groups.first().id if request.user.groups.first() else None,
         }
 
     return {'user_data': user_data}
@@ -38,5 +41,17 @@ def ambiente_para_setor(request):
         'Tecnologia': 1,
         # Adicione mais mapeamentos para outros ambientes, se necessário
     }
-
     return {'ambiente_para_setor': AMBIENTE_PARA_SETOR}
+
+
+def exibir_notificacoes(request):
+    try:
+        if request.user.is_authenticated:
+            notifications = Notification.objects.filter(
+                recipient=request.user,
+                is_read=False
+            ).order_by('-date')
+            return {'notifications': notifications}
+    except:
+        pass
+    return {'notifications': []}  # Retorna uma lista vazia se não houver usuário logado ou houver algum erro

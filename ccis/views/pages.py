@@ -1,23 +1,32 @@
+import json
+
 import requests
+from rest_framework import status, generics, permissions
 from django.db.models import Prefetch
-from rest_framework.decorators import api_view
+from dateutil.parser import parse
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+
+from reportlab.pdfgen import canvas
+from io import BytesIO
+
 from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponseForbidden
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User, Group
+from collections import defaultdict
 
 from ..models import dadosPessoais, dependentes, enderecoContato, outros, escolaridade, certificacao, \
-    dadosBancarios, docRg, docCnh, docCpf, docReservista, docTitulo, docClt, docResidencia, \
-    docCertidao, docAdmissional, docPeriodico, docCursos, profissional, Card, CardSetorHistory, MessageHistory
+    dadosBancarios, profissional, Card, CardSetorHistory, MessageHistory, OperatorRating, Notification, SectorButtons, \
+    CustomGroupInfo, Cupons, KanbanGroupUser
 
 from ..forms import modelFormDadosPessoais, modelFormDependentes, modelFormEnderecoContato, ModelFormOutros, \
     ModelFormMidia, modelFormEscolaridade, modelFormCertificacao, modelFormProfissional, modelFormDadosBancarios, \
-    CustomUserCreationForm
+    CustomUserCreationForm, modelFormClock
 
 
 # PAGINAS --------------------------------------------------------------------------------------------------------------
@@ -45,21 +54,7 @@ def infoClima():
 
 
 def base(request):
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    dados = dadosPessoais.objects.get(usuario=log)
-
-    context = {
-        'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-        'dados': dados, 'is_superadmin': is_superadmin, 'log': log
-    }
-
-    return render(request, 'ccis/base.html', context)
+    return render(request, 'ccis/base.html')
 
 
 def home(request):
@@ -68,7 +63,49 @@ def home(request):
 
 
 @login_required(login_url="/login")
+def ccc(request):
+    return render(request, "ccis/ccc.html")
+
+
+def processa_cupons(request):
+    cpf = request.GET.get('cpf')
+    cupons = None
+
+    if cpf:
+        cupons = Cupons.objects.filter(cpf=cpf)
+        buffer = BytesIO()
+        p = canvas.Canvas(buffer)
+
+        p.drawString(100, 750, "Cooperar+ - Campanha de Capital Colaboradores")
+        p.drawString(100, 700, f"Cupons para o CPF: {cpf}")
+
+        if cupons:
+            y_position = 650
+            for cupom in cupons:
+                p.drawString(100, y_position, f"Cupom: {cupom.numero_cupom}")
+                y_position -= 20
+
+        p.showPage()
+        p.save()
+
+        buffer.seek(0)
+
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="cupons_{cpf}.pdf'
+        response.write(buffer.read())
+
+        return response  # Retorna o PDF como resposta
+
+    context = {
+        'cupons': cupons
+    }
+
+    return render(request, 'index.html', context)
+
+
+@login_required(login_url="/login")
 def new_login_page(request):
+
     if request.method == 'POST':
 
         first_name = request.POST.get('first-name').capitalize()
@@ -88,18 +125,24 @@ def new_login_page(request):
         user = request.user
         user.set_password(nova_senha)
         user.save()
+
+
         return redirect('profile', user_id=request.user.id)
 
     else:
-        return render(request, 'ccis/new_login_page.html')
+        dadosPessoais = modelFormDadosPessoais()
+        enderecoContato = modelFormEnderecoContato()
+        profissional = modelFormProfissional()
+
+        context={'dadosPessoais': dadosPessoais,
+                 'enderecoContato': enderecoContato,
+                 'profissional': profissional}
+
+        return render(request, 'ccis/new_login_page.html', context)
 
 
 @login_required(login_url="/login")
 def solicitacao(request):
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
 
     user = request.user.username
     dados = User.objects.filter(username=user).select_related('dadosPessoais, profissional').values \
@@ -125,12 +168,6 @@ def solicitacao(request):
 @login_required(login_url="/login")
 def profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
 
     first_name = user.first_name if user.first_name else 'Não informado'
     last_name = user.last_name if user.last_name else ''
@@ -210,9 +247,9 @@ def profile(request, user_id):
 
     dados_cert = certificacao.objects.filter(usuario=user)
 
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
-    is_superadmin = log.is_superuser
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
+    is_superadmin = user.is_superuser
 
     dadosCards_cert = []
     for item in dados_cert:
@@ -221,7 +258,7 @@ def profile(request, user_id):
         conclusao = item.dataEmissao
 
         dadosCards_cert.append({
-            'id': log_id,
+            'id': user_id,
             'nome': nome,
             'instituicao': instituicao,
             'conclusao': conclusao,
@@ -238,7 +275,7 @@ def profile(request, user_id):
         conclusao = item.dataConclusao
 
         dadosCards_esc.append({
-            'id': log_id,
+            'id': user_id,
             'entidade': entidade,
             'curso': curso,
             'graduacao': graduacao,
@@ -246,9 +283,8 @@ def profile(request, user_id):
             'conclusao': conclusao,
         })
 
-    contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name, 'logName': logName,
-                'logLast': logLast, 'log': log,
-                'log_id': log_id, 'logFoto': logFoto, 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
+    contexto = {'user': user_id, 'first_name': first_name, 'last_name': last_name,
+                 'dados': dados, 'prof': prof, 'contato': contatos, 'mid': mid,
                 'equipe': nomes_equipe, 'pf': pf, 'cert': certiAn, 'escolaridade': escola, 'certificacao': certific,
                 'dadosCards_cert': dadosCards_cert, 'dadosCards_esc': dadosCards_esc, 'User': request.user,
                 'is_superadmin': is_superadmin, 'group_gestao': group_gestao, 'groupControle': groupControle}
@@ -409,15 +445,8 @@ def conta(request):
     # user = get_object_or_404(User, id=user_id)
     user = request.user
 
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
+    group_gestao = user.groups.filter(id=3).exists()
+    groupControle = user.groups.filter(id=28).exists()
 
     first_name = user.first_name
     last_name = user.last_name
@@ -440,9 +469,8 @@ def conta(request):
     mid = ModelFormMidia(instance=pk_dados)
 
     context = {'dados': dados, 'first_name': first_name, 'last_name': last_name,
-               'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
                'form': dp, 'dependentes': de, 'contatoEndereco': conEnd, 'group_gestao': group_gestao,
-               'is_superadmin': is_superadmin, 'groupControle': groupControle,
+                'groupControle': groupControle,
                'profissional': prof, 'dadosBancarios': db, 'outros': out, 'midia': mid}
 
     if request.method == 'GET':
@@ -452,9 +480,14 @@ def conta(request):
         form = modelFormDadosPessoais(request.POST, instance=pk_dados)
 
         if form.is_valid():
+            # Verifica se o checkbox foi marcado
+            if 'pcd_checkbox' in request.POST:
+                form.instance.pcd = True
+            else:
+                form.instance.pcd = False
+
             form.save()
             return redirect('conta')
-
         else:
             mensagem = 'Por favor verifique se todos os campos foram preenchidos corretamente do formulário Dados Pessoais'
             messages.add_message(request=request, message=mensagem, level=messages.ERROR)
@@ -467,13 +500,6 @@ def departamentos(request):
 
     user = request.user
 
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
     first_name = user.first_name
     last_name = user.last_name
 
@@ -481,7 +507,6 @@ def departamentos(request):
 
     if request.method == 'GET':
         context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
             'dados': dados, 'username': user, 'first_name': first_name, 'last_name': last_name,
         }
 
@@ -489,71 +514,278 @@ def departamentos(request):
 
 
 @login_required(login_url="/login")
-def utilitariosCopy(request):
-    # user = get_object_or_404(User, id=user_id)
-
-    user = request.user
-
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
-
-    group_gestao = log.groups.filter(id=3).exists()
-    groupControle = log.groups.filter(id=28).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-
-    if request.method == 'GET':
-        context = {
-            'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-            'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-            'last_name': last_name, 'group_gestao': group_gestao, 'is_superadmin': is_superadmin,
-        }
-
-        return render(request, 'ccis/utilitariosCopy.html', context)
-
-
-@login_required(login_url="/login")
 def malotes(request):
-    log = request.user
-    log_id = request.user.id
-    logName = request.user.first_name
-    logLast = request.user.last_name
-    logFoto = dadosPessoais.objects.get(usuario=request.user).foto
-    is_superadmin = log.is_superuser
+    return render(request, 'ccis/malotes.html')
 
-    print(logFoto)
-
-    contexto = {'log_id': log_id, 'logName': logName, 'logLast': logLast, 'logFoto': logFoto,
-                }
-    return render(request, 'ccis/malotes.html', contexto)
-
-
-def utilitariosHome(request):
-    return render(request, 'ccis/utilitariosHome.html')
 
 def dev(request):
-    return render(request, 'ccis/dev.html')
+
+    superior = Group.objects.filter(id=2).first()
+
+    nomes_equipe = []
+
+    if superior is None:
+        pass
+
+    else:
+        equipe = User.objects.filter(groups=superior)
+        # Resto do código
+        for usuario in equipe:
+            first_nameA = usuario.first_name
+            last_nameA = usuario.last_name
+            sexo = usuario.dadosPessoais.sexo
+            foto = usuario.dadosPessoais.foto
+            cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+            nomes_equipe.append(
+                {'id': usuario.id,
+                 'foto': foto,
+                 'first_name': first_nameA,
+                 'last_name': last_nameA,
+                 'sexo': sexo,
+                 'cargo': cargo})
+
+        # Ordenar a equipe com o supervisor no topo
+        nomes_equipe = sorted(nomes_equipe, key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                           x['cargo'] != 'Encarregado(a)'))
+
+    if request.method == 'GET':
+        sector_buttons = SectorButtons.objects.filter(group=2)
+
+        print(sector_buttons)
+
+        context = {
+            'sector_buttons': sector_buttons,'superior': superior, 'equipe': nomes_equipe,
+        }
+
+
+        return render(request, 'ccis/dev.html', context)
 
 
 @login_required(login_url="/login")
-def processo(request):
-    cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-        queryset=CardSetorHistory.objects.order_by('-data_hora'))
-    )
+def processos_user(request):
 
     if request.method == 'GET':
+        cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
+            queryset=CardSetorHistory.objects.order_by('-data_hora'))
+        )
+
+        usuarios = User.objects.all()
+        solicitante = request.user.id
+
+        status_counts = defaultdict(int)
+
+        for card in cards:
+            cardsetorhistory = card.cardsetorhistory_set.first()
+            if card and card.solicitante.id == solicitante and cardsetorhistory:
+                status_atual = cardsetorhistory.status_atual
+                status_counts[status_atual] += 1
+
+        card_count_triagem = status_counts["Triagem"]
+        card_count_atendimento = status_counts["Em Atendimento"]
+        card_count_encaminhado = status_counts["Encaminhado"]
+        card_count_concluido = status_counts["Concluido"]
+        card_count_finalizado = status_counts["Finalizado"]
+
         context = {
             'cards': cards,
+            'usuarios': usuarios,
+            'solicitante': solicitante,
+            'card_count_triagem': card_count_triagem,
+            'card_count_atendimento': card_count_atendimento,
+            'card_count_encaminhado': card_count_encaminhado,
+            'card_count_concluido': card_count_concluido,
+            'card_count_finalizado': card_count_finalizado,
         }
 
-        return render(request, 'ccis/processo.html', context)
+        return render(request, 'ccis/processo_user.html', context)
+
+
+@login_required(login_url="/login")
+def kanban_view(request):
+    usuarios = User.objects.all()
+    group = Group.objects.all()
+    clock = modelFormClock()
+
+    try:
+        id_setor = request.user.groups.first().id
+        group_info = CustomGroupInfo.objects.get(group_id=id_setor)
+
+        superior = Group.objects.filter(id=id_setor).first()
+
+        nomes_equipe = []
+
+        if superior is None:
+            pass
+
+        else:
+            equipe = User.objects.filter(groups=superior)
+            # Resto do código
+            for usuario in equipe:
+                first_nameA = usuario.first_name
+                last_nameA = usuario.last_name
+                sexo = usuario.dadosPessoais.sexo
+                foto = usuario.dadosPessoais.foto
+                cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+                nomes_equipe.append(
+                    {'id': usuario.id,
+                     'foto': foto,
+                     'first_name': first_nameA,
+                     'last_name': last_nameA,
+                     'sexo': sexo,
+                     'cargo': cargo})
+
+            # Ordenar a equipe com o supervisor no topo
+            nomes_equipe = sorted(nomes_equipe,
+                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                 x['cargo'] != 'Encarregado(a)'))
+
+            kanban_group = KanbanGroupUser.objects.filter(user=request.user)
+
+            context = {
+                'kanban_group': kanban_group,
+                'clock': clock,
+                'superior': superior,
+                'equipe': nomes_equipe,
+                'group_info': group_info,
+                'usuarios': usuarios,
+                'group': group
+            }
+
+            return render(request, 'ccis/kanban.html', context)
+
+    except AttributeError:
+        return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
+
+
+@login_required(login_url="/login")
+def kanban_view_user(request):
+    usuarios = User.objects.all()
+    group = Group.objects.all()
+    clock = modelFormClock()
+
+    try:
+        id_setor = request.user.groups.first().id
+        group_info = CustomGroupInfo.objects.get(group_id=id_setor)
+
+        superior = Group.objects.filter(id=id_setor).first()
+
+        nomes_equipe = []
+
+        if superior is None:
+            pass
+
+        else:
+            equipe = User.objects.filter(groups=superior)
+            # Resto do código
+            for usuario in equipe:
+                first_nameA = usuario.first_name
+                last_nameA = usuario.last_name
+                sexo = usuario.dadosPessoais.sexo
+                foto = usuario.dadosPessoais.foto
+                cargo = usuario.profissional.first().cargo if usuario.profissional.first() else 'Não informado'
+                nomes_equipe.append(
+                    {'id': usuario.id,
+                     'foto': foto,
+                     'first_name': first_nameA,
+                     'last_name': last_nameA,
+                     'sexo': sexo,
+                     'cargo': cargo})
+
+            # Ordenar a equipe com o supervisor no topo
+            nomes_equipe = sorted(nomes_equipe,
+                                  key=lambda x: (x['cargo'] != 'Supervisor(a)', x['cargo'] != 'Gerente de PA',
+                                                 x['cargo'] != 'Encarregado(a)'))
+
+            context = {
+                'clock': clock,
+                'superior': superior,
+                'equipe': nomes_equipe,
+                'group_info': group_info,
+                'usuarios': usuarios,
+                'group': group
+            }
+
+            return render(request, 'ccis/kanban_user.html', context)
+
+
+    except AttributeError:
+        return HttpResponseNotFound('O usuário não esta logado ou não pertence a nenhum setor.')
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def card_kanban_api(request):
+    # Obtém o ID do usuário logado
+    user_id = request.user.id
+
+    # Obtém o nome do grupo da solicitação
+    group_name = request.query_params.get('option', None)
+
+    if not group_name:
+        return HttpResponseForbidden('O nome do grupo é obrigatório.')
+
+    # Lógica para filtrar os cards com base no nome do grupo
+    if group_name == 'Minhas Solicitações':
+        # Se a opção for "Minhas Solicitações", filtra os cards com o solicitante sendo o usuário logado
+        queryset = Card.objects.filter(solicitante=user_id)
+    else:
+        # Caso contrário, obtém o grupo associado ao usuário
+        kanban_group = get_object_or_404(KanbanGroupUser, user=user_id, group__name=group_name).group
+        queryset = Card.objects.filter(setor=kanban_group)
+
+    serializer = CardSerializer(queryset, many=True)
+    return Response(serializer.data)
+
+
+
+
+# @api_view(['GET'])
+# @permission_classes([permissions.IsAuthenticated])
+# def card_kanban_api(request):
+#     # Obtém o ID do usuário logado
+#     user_id = request.user.id
+#
+#     # Obtém o nome do grupo da solicitação
+#     group_name = request.query_params.get('option', None)
+#
+#     if not group_name:
+#         return HttpResponseForbidden('O nome do grupo é obrigatório.')
+#
+#     # Lógica para filtrar os cards com base no nome do grupo
+#     try:
+#         # Obtém o grupo associado ao usuário
+#         kanban_group = KanbanGroupUser.objects.get(user=user_id, group__name=group_name).group
+#     except KanbanGroupUser.DoesNotExist:
+#         return HttpResponseForbidden('Nenhum grupo selecionado.')
+#
+#     queryset = Card.objects.filter(setor=kanban_group)
+#
+#     serializer = CardSerializer(queryset, many=True)
+#     return Response(serializer.data)
+
+
+# @api_view(['GET'])
+# @permission_classes([permissions.IsAuthenticated])
+# def card_kanban_api(request):
+#     # Obtém o ID do usuário logado
+#     user_id = request.user.id
+#
+#     # Obtém o nome do grupo da solicitação
+#     group_name = request.query_params.get('option', None)
+#
+#     if not group_name:
+#         return HttpResponseForbidden('O nome do grupo é obrigatório.')
+#
+#     # Lógica para filtrar os cards com base no nome do grupo
+#     try:
+#         group = Group.objects.get(name=group_name)
+#     except Group.DoesNotExist:
+#         return HttpResponseForbidden('Grupo não Informado.')
+#
+#     queryset = Card.objects.filter(setor__user=user_id, setor=group)
+#
+#     serializer = CardSerializer(queryset, many=True)
+#     return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -579,23 +811,63 @@ def card_detl(request, card_id):
 @api_view(['POST'])
 def enviar_resposta(request, card_id):
 
-    print(card_id)
-
     if request.method == 'POST':
         card = get_object_or_404(Card, idCard=card_id)
         descricao = request.data.get('resposta')
-        attachment = request.data.get('attachment')  # Se você permitir anexos
-        remetente = request.user  # Suponha que o remetente é o usuário logado
+        attachment = request.data.get('attachment')
+        remetente = request.user
 
-        # Crie um novo objeto MessageHistory
         message_history = MessageHistory(
             card=card,
             remetente=remetente,
             message=descricao,
-            attachment=attachment,  # Se você permitir anexos
+            attachment=attachment,
         )
-
         message_history.save()
+
+        # Obtenha o histórico de setor mais recente para o cartão
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Obtenha o grupo associado ao histórico de setor
+        grupo_setor = historico_setor.setor
+
+        # Obtenha a URL do setor com base no grupo do responsável
+        setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+        if card.responsavel is None:
+            # Se o responsável não existe, envie a mensagem para todos os membros do grupo
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        description="Você tem uma nova mensagem",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
+
+        elif card.responsavel == request.user:
+            # Se o remetente é o próprio responsável, envie a mensagem para o solicitante
+            notification = Notification(
+                author=request.user,
+                description="Você tem uma nova mensagem",
+                subject=card.assunto + f" N°: {card.idCard}",
+                recipient=card.solicitante,
+                url='kanban_user',  # Defina a URL apropriada
+            )
+            notification.save()
+        else:
+            # Se o remetente não é o responsável, envie a mensagem para o responsável
+            notification = Notification(
+                author=request.user,
+                description="Você tem uma nova mensagem",
+                subject=card.assunto + f" N°: {card.idCard}",
+                recipient=card.responsavel,
+                url=setor_link,
+            )
+            notification.save()
 
         data = {'status': 'Mensagem adicionada com sucesso'}
         return JsonResponse(data)
@@ -604,40 +876,490 @@ def enviar_resposta(request, card_id):
 @api_view(['GET'])
 def get_messages(request, card_id):
     messages = MessageHistory.objects.filter(card__idCard=card_id)
-    message_serializer = MessageHistorySerializer(messages, many=True)  # Certifique-se de criar o serializador adequado
+    message_serializer = MessageHistorySerializer(messages, many=True)
 
     return Response(message_serializer.data)
 
 
+@login_required(login_url="/login")
 def registrar_atendimento(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)
 
-    if card.status != "Em Atendimento":
+    card.status = 'Atendimento'
+    card.setor = request.user.groups.first()
+    card.responsavel = request.user
+    card.save()
 
-        card.status = 'Em Atendimento'
-        card.responsavel = request.user
+    groups = request.user.groups.all()
+    if groups:
+        setor_atual = groups[0]  # Se o usuário estiver em apenas um grupo
+    else:
+        setor_atual = None
+
+    historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+    # Registre o histórico de movimentação
+    card_setor_history = CardSetorHistory(
+        setor_id=setor_atual.id,
+        card_id=card_id,
+        status_anterior=historico.status_atual,
+        status_atual="Em Atendimento",
+        setor_anterior=historico.setor_atual,
+        setor_atual=setor_atual.name,
+        operador=request.user
+    )
+
+    card_setor_history.save()
+
+    # Crie uma notificação para informar o usuário do atendimento registrado
+    notification = Notification(
+        author=request.user,
+        description=f"Sua solicitação está em Atendimento por {request.user.first_name} {request.user.last_name}",
+        subject=card.assunto + f" N°: {card.idCard}",
+        recipient=card.solicitante,  # O destinatário é o solicitante da questão
+        url='kanban_user',  # URL da página atual
+    )
+    notification.save()
+
+    return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
+
+
+@login_required(login_url="/login")
+def encaminhar_card(request, card_id):
+
+    try:
+        id_group = request.POST.get('selectedGroup')
+        group = Group.objects.get(id=id_group)
+
+        card = Card.objects.get(idCard=card_id)
+        card.status = 'Encaminhado'
+        card.setor = group
+        card.responsavel = None
         card.save()
 
-        groups = request.user.groups.all()
-        if groups:
-            setor_atual = groups[0]  # Se o usuário estiver em apenas um grupo
-        else:
-            setor_atual = None
-
-        print(setor_atual.name, setor_atual.id)
+        historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
 
         # Registre o histórico de movimentação
         card_setor_history = CardSetorHistory(
-            setor_id=setor_atual.id,  # Defina o setor apropriado, se aplicável
+            setor_id=group.id,
             card_id=card_id,
-            status_anterior="Triagem",  # Atualize com o status anterior apropriado
-            status_atual="Em Atendimento",
-            setor_anterior="Tecnologia",  # Atualize com o setor anterior apropriado
-            setor_atual=setor_atual.name,  # Atualize com o setor atual apropriado
+            status_anterior=historico.status_atual,
+            status_atual="Encaminhado",
+            setor_anterior=historico.setor_atual,
+            setor_atual=group.name,
+            operador=request.user
+        )
+
+        card_setor_history.save()
+
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Notificar o solicitante
+        notification = Notification(
+            author=request.user,
+            description="Sua solicitação foi encaminhada para " + historico_setor.setor_atual,
+            subject=card.assunto + f" N°: {card.idCard}",
+            recipient=card.solicitante,
+            url='kanban_user',
+        )
+        notification.save()
+
+        # Notificar os usuários compartilhados
+        for user in card.compartilhar.all():
+            if user != request.user:
+                notification = Notification(
+                    author=request.user,
+                    description="Uma solicitação encaminhada para" + historico_setor.setor_atual,
+                    subject=card.assunto + f" N°: {card.idCard}",
+                    recipient=user,
+                    url='kanban_user',
+                )
+                notification.save()
+
+        return JsonResponse({'success': True, 'message': 'Card encaminhado com sucesso.'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'Erro ao encaminhar o card.'})
+
+
+@login_required(login_url="/login")
+def compartilhar_card(request, card_id):
+
+    try:
+        id_User = request.POST.get('selectedUser')
+        user = User.objects.get(id=id_User)
+
+        card = Card.objects.get(idCard=card_id)
+        card.compartilhar.add(user)
+        card.save()
+
+        notification = Notification(
+            author=request.user,
+            description="Solicitação compartilhada com você",
+            subject=card.assunto + f" N°: {card.idCard}",
+            recipient=user,  # O destinatário é o solicitante da questão
+            url='kanban_user',  # URL da página atual
+        )
+        notification.save()
+
+        return JsonResponse({'success': True, 'message': 'Card conpartilhado com sucesso.'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'Erro ao conpartilhar o card.'})
+
+
+@login_required(login_url="/login")
+def transferir_card(request, card_id):
+
+    try:
+        id_group = request.POST.get('selectedGroupTrans')
+        group = Group.objects.get(id=id_group)
+
+        card = Card.objects.get(idCard=card_id)
+        card.status = 'Triagem'
+        card.setor = group
+        card.responsavel = None
+        card.save()
+
+        historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+        # Registre o histórico de movimentação
+        card_setor_history = CardSetorHistory(
+            setor_id=group.id,
+            card_id=card_id,
+            status_anterior=historico.status_atual,
+            status_atual="Triagem",
+            setor_anterior=historico.setor_atual,
+            setor_atual=group.name,
+            operador=request.user,
+        )
+
+        card_setor_history.save()
+
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Notificar o solicitante
+        notification = Notification(
+            author=request.user,
+            description="Sua solicitação foi Transferida para " + historico_setor.setor_atual,
+            subject=card.assunto + f" N°: {card.idCard}",
+            recipient=card.solicitante,
+            url='kanban_user',
+        )
+        notification.save()
+
+        return JsonResponse({'success': True, 'message': 'Card Transferido com sucesso.'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'Erro ao Transferir o card.'})
+
+
+@login_required(login_url="/login")
+def presonalizar_card(request, card_id):
+
+    try:
+        cor = request.POST.get('selectedColor')
+
+        card = Card.objects.get(idCard=card_id)
+        card.cor = cor
+        card.save()
+
+        return JsonResponse({'success': True, 'message': 'Card presonalizado com sucesso.'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Card não encontrado.'})
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'Erro ao pPersonalizar o card.'})
+
+
+@login_required(login_url="/login")
+def concluir_card(request, card_id):
+
+    if request.method == 'POST':
+        card = get_object_or_404(Card, idCard=card_id)
+
+        try:
+            card.status = 'Concluido'
+            card.setor = request.user.groups.first()
+            card.responsavel = request.user
+            card.save()
+
+            group = request.user.groups.first()
+
+            historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+            # Registre o histórico de movimentação
+            card_setor_history = CardSetorHistory(
+                setor_id=group.id,
+                card_id=card_id,
+                status_anterior=historico.status_atual,
+                status_atual="Concluido",
+                setor_anterior=historico.setor_atual,
+                setor_atual=group.name,
+                operador=request.user,
+            )
+
+            notification = Notification(
+                author=request.user,
+                description="Eba! Sua solicitação foi concluida",
+                subject=card.assunto + f" N°: {card.idCard}",
+                recipient=card.solicitante,  # O destinatário é o solicitante da questão
+                url='kanban_user',  # URL da página atual
+            )
+            notification.save()
+
+            card_setor_history.save()
+            return JsonResponse({'success': True, 'message': 'Card concluido com sucesso'})
+
+        except Card.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Card não encontrado'})
+
+
+@login_required(login_url="/login")
+def get_user_rating(request, card_id):
+
+    try:
+        # Verifique se o usuário logado já avaliou o atendimento para o cartão
+        user = request.user
+        card = Card.objects.get(idCard=card_id)
+
+        user_has_rated = OperatorRating.objects.filter(card=card, remetente=user).exists()
+
+        return JsonResponse({'user_has_rated': user_has_rated})
+    except Card.DoesNotExist:
+        return JsonResponse({'error': 'Card não encontrado.'})
+    except Exception as e:
+        return JsonResponse({'error': 'Erro ao verificar a avaliação do usuário.'})
+
+
+@login_required(login_url="/login")
+def avaliar_card(request, card_id):
+
+    card = Card.objects.get(idCard=card_id)
+
+    try:
+        card.status = 'Finalizado'
+        card.save()
+
+        group = request.user.groups.first()
+
+        historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+        # Registre o histórico de movimentação
+        card_setor_history = CardSetorHistory(
+            setor_id=group.id,
+            card_id=card_id,
+            status_anterior=historico.status_atual,
+            status_atual="Finalizado",
+            setor_anterior=historico.setor_atual,
+            setor_atual=group.name,
+            operador=request.user,
         )
         card_setor_history.save()
 
-        return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
+        # Obtenha o histórico de setor mais recente para o cartão
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
 
+        # Obtenha o grupo associado ao histórico de setor
+        grupo_setor = historico_setor.setor
+
+        # Obtenha a URL do setor com base no grupo do responsável
+        setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+        notification = Notification(
+            author=request.user,
+            description="Solicitação finalizada pelo solicitante",
+            subject=card.assunto + f" N°: {card.idCard}",
+            recipient=card.responsavel,  # O destinatário
+            url=setor_link,  # URL da página atual
+        )
+
+        notification.save()
+
+        avaliacao = request.POST.get('rating')
+
+        rating = OperatorRating()
+        rating.card = card
+        rating.rating = avaliacao
+        rating.operador = card.responsavel
+        rating.anonymous = request.user
+        rating.group = card.setor
+        rating.save()
+
+        return JsonResponse({'success': True, 'message': 'Avaliação bem sucedida'})
+
+    except Card.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Requisição inválida'})
+
+
+@login_required(login_url="/login")
+def finalizar_card(request, card_id):
+    if request.method == 'POST':
+        try:
+            card = Card.objects.get(idCard=card_id)
+            card.status = 'Finalizado'
+            card.save()
+
+            group = request.user.groups.first()
+
+            historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+            # Registre o histórico de movimentação
+            card_setor_history = CardSetorHistory(
+                setor_id=group.id,
+                card_id=card_id,
+                status_anterior=historico.status_atual,
+                status_atual="Finalizado",
+                setor_anterior=historico.setor_atual,
+                setor_atual=group.name,
+                operador=request.user,
+            )
+            card_setor_history.save()
+
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
+
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+            notification = Notification(
+                author=request.user,
+                description="Solicitação finalizada pelo solicitante",
+                subject=card.assunto,
+                recipient=card.responsavel,  # O destinatário
+                url=setor_link,  # URL da página atual
+            )
+            notification.save()
+
+            return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
+
+        except Card.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Card não encontrado'})
     else:
-        return JsonResponse({'success': False, 'message': 'Atendimento já registrado.'})
+        return JsonResponse({'success': False, 'message': 'Requisição inválida'})
+
+
+@login_required(login_url="/login")
+def reabrir_card(request, card_id):
+    if request.method == 'POST':
+        try:
+            card = Card.objects.get(idCard=card_id)
+            card.status = 'Atendimento'
+            card.save()
+
+            group = request.user.groups.first()
+
+            historico = CardSetorHistory.objects.filter(card=card).order_by('-data_hora').last()
+
+            # Registre o histórico de movimentação
+            card_setor_history = CardSetorHistory(
+                setor_id=group.id,
+                card_id=card_id,
+                status_anterior=historico.status_atual,
+                status_atual="Em Atendimento",
+                setor_anterior=historico.setor_atual,
+                setor_atual=group.name,
+                operador=request.user,
+            )
+            card_setor_history.save()
+
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
+
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+            notification = Notification(
+                author=request.user,
+                description="Solicitação reaberta pelo usuário",
+                subject=card.assunto,
+                recipient=card.responsavel,  # O destinatário
+                url=setor_link,  # URL da página atual
+            )
+            notification.save()
+            return JsonResponse({'success': True, 'message': 'Card reaberto com sucesso'})
+
+        except Card.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Card não encontrado'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Requisição inválida'})
+
+
+def history_request(request):
+    cards = Card.objects.prefetch_related('messagehistory_set').all()
+
+    context = {
+        'cards': cards,
+    }
+
+    return render(request, 'ccis/history_request.html', context)
+
+
+def get_message_history(request, card_id):
+    if card_id:
+        try:
+            card_id = int(card_id)
+            messages = MessageHistory.objects.filter(card_id=card_id).values('message')
+
+            messages_list = [{'message': msg['message']} for msg in messages]
+            return JsonResponse(messages_list, safe=False)
+
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({'error': 'Invalid card ID'}, status=400)
+    return JsonResponse({'error': 'Card ID not provided'}, status=400)
+
+
+def get_card_details(request, card_id):
+    try:
+        card = Card.objects.get(id=card_id)
+        # Obtenha os detalhes do card e retorne como JSON
+        card_details = {
+            "assunto": card.assunto,
+            "service": card.service,
+            # Adicione outros detalhes do card aqui
+        }
+        return JsonResponse(card_details)
+    except Card.DoesNotExist:
+        return JsonResponse({'error': 'Cartão não encontrado'}, status=404)
+
+
+@login_required(login_url="/login")
+def notificacao_lida(request, notification_id):
+    try:
+        notification = Notification.objects.get(pk=notification_id)
+
+        if request.user == notification.recipient:
+            notification.is_read = True
+            notification.save()
+            return JsonResponse({'success': True, 'message': 'Notificação marcada como lida.'})
+
+        else:
+            return JsonResponse({'success': False, 'message': 'Você não tem permissão para marcar esta notificação como lida.'})
+
+    except Notification.DoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Notificação não encontrada.'})
+
+        return JsonResponse({"error": "Card não encontrado"}, status=404)
+
+
+@login_required(login_url="/login")
+def chat(request):
+    return render(request, 'ccis/chat.html')
+

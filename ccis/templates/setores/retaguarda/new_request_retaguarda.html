@@ -1,0 +1,514 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+<!-- Conteúdo ---------------------------->
+<div class="container" style="margin-top:75px">
+
+
+    <div class="row">
+
+        <!-- Menu ---------------------------->
+        <div id="menu_inicial" class="col-3 menu-request">
+
+            <!-- Botões ---------------------->
+            <div class="">
+
+                <h5 class="text-center p-1">RETAGUARDA</h5>
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Malotes
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-file-pen"></i>
+                            Solicitações CI/CNAC/R.O
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-scale-unbalanced-flip"></i>
+                            Apontamentos
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- Botões ---------------------->
+
+            <!-- Voltar ---------------------->
+            <div class="">
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo mt-5">
+                        <a href="{% url 'retaguarda_home' %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Voltar
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- Voltar ---------------------->
+
+        </div>
+        <!-- Menu ---------------------------->
+
+
+        <!-- Informativo --------------------->
+        <div id="informativo" class="col menu-request m-0 p-5">
+            <!-- Texto ----------------------->
+            <div class="">
+                <h6>Orientações para abertura de chamado - 4155. Retaguarda</h6>
+                <p>
+                    Pontos a serem observados durante a abertura de chamado:
+                    - Detalhar bem a sua solicitação.
+                    - Se possuir evidências anexar no chamado.
+
+                    Horário de Atendimento
+                    - Segunda-feira a sexta-feira das 08:30hs às 17:30hs
+                </p>
+            </div>
+            <!-- Texto ----------------------->
+
+            <!-- Acordeões ------------------->
+            <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                            Malote
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse show"
+                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Solicite o que contem dentro do Malote!</li>
+                                <li>Fique atento aos campos "CC deverá ser informada no campo abaixo".</li>
+                                <li>Fique atento ao seu painel de solicitações.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Acordeões ------------------->
+
+        </div>
+        <!-- Informativo --------------------->
+
+
+        <!-- Formulário de Malotes ----------->
+        <div id="formulario1" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
+
+            <form action="{% url 'salvar_malote_retaguarda' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- Primeira col -------------------------->
+                    <div class="col-7">
+
+                        <div class="">
+                            <label class="required-label">Lacre:</label>
+                            {{ form.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="required-label">Descrição:</label>
+                            {{ form.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Anexar arquivo:</label>
+                            {{ form.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                    <!-- segunda col -------------------------->
+                    <div class="col">
+
+                        <h6 class="required-label">Selecione os itens desejados:</h6>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item1" value="Agendamento de convênio" type="checkbox"
+                                   id="flexSwitchCheckDefault3">
+                            <label class="form-check-label" for="flexSwitchCheckDefault3">Agendamento de
+                                convênio</label>
+                        </div>
+                        <div id="descricao-agendamento" style="display: none;">
+                            <label style="color: red;">CC deverá ser informada no campo abaixo:</label><br>
+                            <textarea class="new-desc-extra" name="descricao-agendamento"></textarea>
+                        </div>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item2" value="Autorização de débito" type="checkbox"
+                                   id="flexSwitchCheckDefault4">
+                            <label class="form-check-label" for="flexSwitchCheckDefault4">Autorização de débito</label>
+                        </div>
+                        <div id="descricao-debito" style="display: none;">
+                            <label style="color: red;">CC deverá ser informada no campo abaixo:</label><br>
+                            <textarea class="new-desc-extra" name="descricao-debito"></textarea>
+                        </div>
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item3" value="Requisições de talão de
+                                cheques" type="checkbox"
+                                   id="flexSwitchCheckDefault5">
+                            <label class="form-check-label" for="flexSwitchCheckDefault5">Requisições de talão de
+                                cheques</label>
+                        </div>
+                        <div id="descricao-cheque" style="display: none;">
+                            <label style="color: red;">CC deverá ser informada no campo abaixo:</label><br>
+                            <textarea class="new-desc-extra" name="descricao-cheque"></textarea>
+                        </div>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item4" value="Transferência entre contas
+                                correntes" type="checkbox"
+                                   id="flexSwitchCheckDefault2">
+                            <label class="form-check-label" for="flexSwitchCheckDefault2">Transferência entre contas
+                                correntes</label>
+                        </div>
+                        <div id="descricao-conta" style="display: none;">
+                            <label style="color: red;">CC deverá ser informada no campo abaixo:</label><br>
+                            <textarea class="new-desc-extra" name="descricao-conta"></textarea>
+                        </div>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item5" id="Ata" value="Ata de fragmentação de cheques"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Ata">Ata de fragmentação de cheques</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item6" id="Aviso" value="Aviso de lançamento"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Aviso">Aviso de lançamento</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item7" id="Cheque" value="Cheque intercredis"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Cheque">Cheque intercredis</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item8" id="Formulario"
+                                   value="Formulário + declaração de cancelamento"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Formulario">Formulário + declaração de
+                                cancelamento</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item9" id="Movimento"
+                                   value="Movimento de todos os caixas"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Movimento">Movimento de todos os caixas</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item10" id="Ocorrencia"
+                                   value="Ocorrência da devolução"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Ocorrencia">Ocorrência da devolução</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item11" id="Relatorio172"
+                                   value="Relatório 172"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Relatorio172">Relatório 172</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item12" id="RelatorioATM"
+                                   value="Relatório de atm"
+                                   type="checkbox">
+                            <label class="form-check-label" for="RelatorioATM">Relatório de atm </label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item13" id="RelatorioCustodia"
+                                   value="Relatório de custódia"
+                                   type="checkbox">
+                            <label class="form-check-label" for="RelatorioCustodia">Relatório de custódia</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item14" id="RelatorioDevolucao"
+                                   value="Relatório de devolução de cheques"
+                                   type="checkbox">
+                            <label class="form-check-label" for="RelatorioDevolucao">Relatório de devolução de
+                                cheques</label>
+                        </div>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item15" value="Talão de Cheque" type="checkbox"
+                                   id="flexSwitchCheckDefault8">
+                            <label class="form-check-label" for="flexSwitchCheckDefault8">Talão de Cheque</label>
+                        </div>
+                        <div id="descricao-talao" style="display: none;">
+                            <label style="color: red;">Número da Conta:</label><br>
+                            <textarea class="new-desc-extra" name="descricao-talao"></textarea>
+                        </div>
+
+                        <!-------------------------------------->
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item16" id="Exclusao"
+                                   value="Exclusão ccf/ Sustação/ Inutilização de cheques"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Exclusao">Exclusão ccf/ Sustação/ Inutilização de
+                                cheques;</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item16" id="Relatório de TD"
+                                   value="Relatório de TD - Título descontado"
+                                   type="checkbox">
+                            <label class="form-check-label" for="Relatório de TD">Relatório de TD - Título
+                                descontado;</label>
+                        </div>
+
+                    </div>
+                    <!-- segunda col -------------------------->
+
+                </div>
+            </form>
+        </div>
+        <!-- Formulário de Malotes ----------->
+
+        <!-- Formulário de CI ---------------->
+        <div id="formulario2" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE SOLICITAÇÕES CI/CNAC/R.O</h5>
+
+            <div class="row p-3 ">
+
+                <div class="col-7">
+
+                    <form action="{% url 'request_ci_ret' %}"
+                          method="POST"
+                          enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+                        <div class="mb-2">
+                            <label class="required-label">Assunto:</label>
+                            <input class="input-new" type="text" id="assunto-input" name="assunto-input" required>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="required-label">Demandante:</label>
+                            {{ ci.service }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Descrição:</label><br>
+                            {{ ci.descricao }}
+                        </div>
+
+                        <div>
+                            <label>Anexar arquivo:</label>
+                            {{ ci.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Formulário de CI ---------------->
+
+        <!-- Formulário de Apontamentos ------>
+        <div id="formulario3" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
+
+            <form action="{% url 'request_apontamentos_ret' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+                <div class="row p-3 ">
+
+                    <!-- Primeira col -------------------->
+                    <div class="col-7">
+
+                        <div class="mb-2">
+                            <label class="required-label">Assunto:</label>
+                            <input class="input-new" type="text" id="input" name="input" required>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="required-label">Demandante:</label>
+                            {{ apontamentos.service }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Descrição:</label><br>
+                            {{ apontamentos.descricao }}
+                        </div>
+
+                        <div class="">
+                            <label>Anexar arquivo:</label>
+                            {{ apontamentos.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+                    </div>
+                    <!-- Primeira col -------------------->
+
+                    <!-- Segunda col -------------------->
+                    <div class="col">
+
+                        <p>Reincidente:</p>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="reincidente" id="reincidente" value="Sim"
+                                   type="checkbox">
+                            <label class="form-check-label">Sim?</label>
+                        </div>
+
+
+                        <p class="required-label">Reagendamentos:</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento1"
+                                   value="0">
+                            <label class="form-check-label">
+                                0
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento2"
+                                   value="1">
+                            <label class="form-check-label">
+                                1
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento3"
+                                   value=2>
+                            <label class="form-check-label">
+                                2
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento4"
+                                   value="3">
+                            <label class="form-check-label">
+                                3
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento5"
+                                   value="4">
+                            <label class="form-check-label">
+                                4
+                            </label>
+                        </div>
+
+                    </div>
+                    <!-- Segunda col -------------------->
+
+                </div>
+            </form>
+        </div>
+        <!-- Formulário de Apontamentos ------>
+
+    </div>
+
+</div>
+<!-- Conteúdo -------------------------------->
+
+<script>
+    document.getElementById('flexSwitchCheckDefault3').addEventListener('change', function() {
+      var descricao = document.getElementById('descricao-agendamento');
+      if (this.checked) {
+        descricao.style.display = 'block';
+      } else {
+        descricao.style.display = 'none';
+      }
+    });
+
+    document.getElementById('flexSwitchCheckDefault4').addEventListener('change', function() {
+      var descricao = document.getElementById('descricao-debito');
+      if (this.checked) {
+        descricao.style.display = 'block';
+      } else {
+        descricao.style.display = 'none';
+      }
+    });
+
+    document.getElementById('flexSwitchCheckDefault5').addEventListener('change', function() {
+      var descricao = document.getElementById('descricao-cheque');
+      if (this.checked) {
+        descricao.style.display = 'block';
+      } else {
+        descricao.style.display = 'none';
+      }
+    });
+
+    document.getElementById('flexSwitchCheckDefault2').addEventListener('change', function() {
+      var descricao = document.getElementById('descricao-conta');
+      if (this.checked) {
+        descricao.style.display = 'block';
+      } else {
+        descricao.style.display = 'none';
+      }
+    });
+
+    document.getElementById('flexSwitchCheckDefault8').addEventListener('change', function() {
+      var descricao = document.getElementById('descricao-talao');
+      if (this.checked) {
+        descricao.style.display = 'block';
+      } else {
+        descricao.style.display = 'none';
+      }
+    });
+
+</script>
+
+
+{% endblock %}

@@ -3,90 +3,252 @@
 
 {% block conteudo %}
 
+<!-- Conteúdo ------------------------------------->
+<div class="container-fluid scrollable-content" style="background-color: #F1F2F5;">
 
-<body>
-    <!-- Conteúdo -->
-    <div class="container-fluid scrollable-content">
+    <!-- Titulo ----------------------------------->
+    <div class="row mb-2">
 
-        <!-- Titulo-------------------------------->
-        <div class="row mt-3 mb-2">
+        <div class="col-8 ps-5 pt-4">
 
-            <div class="col ps-5 pt-4">
-
-                <h1 style="font-family: oswald ; font-size:42px;">Bem vindo ao módulo<br>
-                    <span style="color:#27DEBF; font-family: oswald ; font-size:70px;">GESTÃO DE NEGÓCIOS</span>
-                </h1>
-                <p class="pt-3" style="color:#8a8a8a; font-size: 17px;">Metas são quantificações específicas de algo que queremos alcançar. No geral, elas fazem parte de um objetivo, mas são mais precisas e podem estar relacionadas a qualquer coisa. Da vida pessoa à profissional, as metas ajudam pessoas a chegar ao que elas desejam.</p>
-            </div>
-
-            <div style="text-align: center;" class="col-5 d-inline-block img-fluid m-0">
-                <img src="{% static 'ccis/gestaoMetas.png' %}"
-                    alt="right"
-                    width="77%"
-                    height="auto">
-            </div>
-
+            <h1 style="font-family: oswald ; font-size:42px;">Bem vindo ao módulo<br>
+                <span style="color:#27DEBF; font-family: oswald ; font-size:70px;">GESTÃO DE NEGÓCIOS</span>
+            </h1>
+            <p class="pt-3" style="color:#8a8a8a; font-size: 17px;">Metas são quantificações específicas de algo que
+                queremos alcançar. No geral, elas fazem parte de um objetivo, mas são mais precisas e podem estar
+                relacionadas a qualquer coisa. Da vida pessoa à profissional, as metas ajudam pessoas a chegar ao que
+                elas desejam.</p>
         </div>
-        <!---titulo end-------------------------------->
 
-        <!---linha gerencia-------------------------------->
-        <div class="m-5">
-            <hr class="mt-0 mb-1" style="background-color:#C4C4C4">
-        </div>
-        <!---linha gerencia-------------------------------->
-
-        <div class="col m-5">
-            <!--buttoms------------------------------------------------->
-            <div style="text-align: center;" class="row mt-5">
-
-                <div class="col">
-                    <a href="{% url 'gestaoMetas' %}" class="">
-                        <i class="fa-solid fa-bullseye" style="color: #00353e; font-size: 6vh;"></i>
-                    </a> 
-                    <div>Gestão de <br> Metas</div>
-                </div>
-
-                <div class="col">
-                    <a href="{%url 'relatorioVisitas'%}" class="">
-                        <i class="fa-solid fa-scroll" style="color: #00353e; font-size: 6vh;"></i>
-                    </a> 
-                    <div>Relatório <br>Visitas</div>
-                </div>
-
-                <div class="col">
-                    <a href="{%url 'diaria'%}" class="">
-                        <i class="fa-solid fa-cloud-sun" style="color: #00353e; font-size: 6vh;"></i>
-                    </a> 
-                    <div>Inadimplência <br> Diária</div>
-                </div>
-
-                <div class="col">
-                    <a href="{%url 'planoMetas'%}" class="">
-                        <i class="fa-solid fa-chess-knight" style="color: #00353e; font-size: 6vh;"></i>
-                    </a> 
-                    <div>Plano de <br> Metas</div>
-                </div>
-
-
-                <div class="col">
-                    <a href="{%url 'listasPropensos'%}" class="">
-                        <i class="fa-solid fa-file-lines" style="color: #00353e; font-size: 6vh;"></i>
-                    </a> 
-                    <div>Listas de <br> Propensos</div>
-                </div>
-
-
-                <div class="col">
-                    <a href="{%url 'pronampe'%}" class="">
-                        <i class="fa-solid fa-file-circle-exclamation" style="color: #00353e; font-size: 6vh;"></i>
-                    </a>
-                    <div>Lista de <br> Pronampe</div>
-                </div>
-
-            </div>
-        </div>
     </div>
-    <!-- Conteúdo -->
-</body>
+    <!--- titulo end ------------------------------->
+
+    <!--- linha gerencia --------------------------->
+    <div class="mb-5 ">
+        <hr>
+    </div>
+    <!---linha gerencia----------------------------->
+
+    <!--- Botões ----------------------------------->
+    <div class="col m-3">
+
+        <div class="row position-relative ">
+
+            <!--- Gestão de Metas ------------------>
+            <div class="col-1 mb-3 ms-4 me-5">
+
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                    <img src="{% static 'ccis/carteiras.png' %}">
+
+                    <div class="team-info">
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Gestão de Metas</h3>
+                    </div>
+
+                    <div class="team-overlay">
+                        <div class="d-table h-100 w-100">
+                            <div class="d-table-cell align-middle">
+                                <a style="text-decoration: none;" href="{% url 'gestaoCarteira' %}" class="text-white">
+                                    <p style="font-size: 13px;">Sub Módulo Gestão de Metas, Gestão de Agendamento, etc...
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--- Gestão de Metas ------------------>
+
+            <!--- Relatorio Visitas ---------------->
+            <div class="col-1 ms-3 me-5">
+
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                    <img src="{% static 'ccis/relatorioConselho.png' %}" alt="...">
+
+                    <div class="team-info">
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Relatório Visitas</h3>
+                    </div>
+
+                    <div class="team-overlay">
+                        <div class="d-table h-100 w-100">
+                            <div class="d-table-cell align-middle">
+                                <a style="text-decoration: none;" href="{%url 'relatorioVisitas'%}"
+                                   class="text-white">
+                                    <p style="font-size: 13px;">Pessoa Jurídica ou Produtor Rural.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--- Relatorio Visitas ---------------->
+
+            <!--- Gestão das Captações ------------->
+            <div class="col-1 ms-3 me-5">
+
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                    <img src="{% static 'ccis/captacoes.png' %}" alt="...">
+
+                    <div class="team-info">
+                        <h4 style="color: #003641; font-size: 15px;" class="mb-1 h4">Gestão das Captações</h4>
+                    </div>
+
+                    <div class="team-overlay">
+                        <div class="d-table h-100 w-100">
+                            <div class="d-table-cell align-middle">
+                                <a style="text-decoration: none;" href="{% url 'lastro' %}" class="text-white">
+                                    <p style="font-size: 13px;">Gestão dos Ativos, Gestão do custo LCA e Relação de
+                                        Aplicações.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--- Gestão das Captações ------------->
+
+            <!--- Carteira de Crédito -------------->
+            <div class="col-1 ms-3 me-5">
+
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                    <img src="{% static 'ccis/gestaoCredito.png' %}">
+
+                    <div class="team-info">
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Carteira de Crédito</h3>
+                    </div>
+
+                    <div class="team-overlay">
+                        <div class="d-table h-100 w-100">
+                            <div class="d-table-cell align-middle">
+                                <a style="text-decoration: none;" href="{% url 'credito' %}" class="text-white">
+                                    <p style="font-size: 13px;">Sub Módulo Liberações Mensais de Crédito e Operações de
+                                        Crédito.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--- Carteira de Crédito -------------->
+
+            <!--- inadimplencia Diária ------------->
+            <div class="col-1 ms-3 me-5">
+
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                    <img src="{% static 'ccis/inadimplencia.png' %}">
+
+                    <div class="team-info">
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Inadimplência Diária</h3>
+                    </div>
+
+                    <div class="team-overlay">
+                        <div class="d-table h-100 w-100">
+                            <div class="d-table-cell align-middle">
+                                <a style="text-decoration: none;" href="{%url 'diaria'%}" class="text-white">
+                                    <p style="font-size: 13px;">Geral, Operações em atraso e garantias, Prejuízo e
+                                        Cartões</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--- inadimplencia Diária ------------->
+
+            <!--- Orçamento ------------------------>
+            <div class="col-1 ms-3 me-5">
+
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                    <img src="{% static 'ccis/metas.png' %}">
+
+                    <div class="team-info">
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Orçamento</h3>
+                    </div>
+
+                    <div class="team-overlay">
+                        <div class="d-table h-100 w-100">
+                            <div class="d-table-cell align-middle">
+                                <a style="text-decoration: none;" href="{%url 'planoMetas'%}" class="text-white">
+                                    <p style="font-size: 13px;">Índice de Basiléia, Patrimônio de Referência e Contas de
+                                        Referência</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--- Orçamento ------------------------>
+
+            <!--- Coluna a Baixo ------------------->
+
+            <!--- Listas de Propensos -------------->
+            <div class="col-1 ms-3 me-5">
+
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                    <img src="{% static 'ccis/propensos.png' %}">
+
+                    <div class="team-info">
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Listas de Propensos</h3>
+                    </div>
+
+                    <div class="team-overlay">
+                        <div class="d-table h-100 w-100">
+                            <div class="d-table-cell align-middle">
+                                <a style="text-decoration: none;" href="{%url 'listasPropensos'%}" class="text-white">
+                                    <p style="font-size: 13px;">Consórcio Auto, Consórcio Imóvel, Cheque especial. </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--- Listas de Propensos -------------->
+
+            <!--- Lista de Pronampe ---------------->
+            <div class="col-1 ms-4 me-5">
+
+                <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                    <img src="{% static 'ccis/pronampe.png' %}">
+
+                    <div class="team-info">
+                        <h3 style="color: #003641; font-size: 15px;" class="mb-1 h4">Lista de Pronampe</h3>
+                    </div>
+
+                    <div class="team-overlay">
+                        <div class="d-table h-100 w-100">
+                            <div class="d-table-cell align-middle">
+                                <a style="text-decoration: none;" href="{%url 'pronampe'%}" class="text-white">
+                                    <p style="font-size: 13px;">Universo de Limite por PA, Produtos adquiridos pelo
+                                        cooperado</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--- Lista de Pronampe ---------------->
+
+        </div>
+
+    </div>
+    <!--- Botões ----------------------------------->
+
+</div>
+<!-- Conteúdo ------------------------------------->
 
 {% endblock %}

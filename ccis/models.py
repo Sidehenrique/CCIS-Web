@@ -458,7 +458,37 @@ class docCursos(models.Model):
         return self.certiCurso
 
 
-# ------------------- tabela Group -------------------------------------------------------------------------------------
+# ------------------- Botões ---------------------------------------------------------------------------
+class SectorButtons(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    text1 = models.CharField(max_length=45, blank=True, null=True)
+    text2 = models.CharField(max_length=45, blank=True, null=True)
+    cor = models.CharField(max_length=45, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
+    icon = models.CharField(max_length=45, blank=True, null=True)
+    permissao = models.CharField(max_length=45, blank=True, null=True)
+
+    def __str__(self):
+        return self.group.name
+
+
+# ------------------- tabela Notificação -----------------------------------------------------------------
+
+class Notification(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authorNotification', default=None)
+    description = models.TextField()
+    subject = models.CharField(max_length=255)
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications_received')
+    department = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
+    url = models.URLField()
+    date = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.description
+
+
+# ------------------- tabela Group ---------------------------------------------------------------------
 
 class CustomGroupInfo(models.Model):
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
@@ -469,13 +499,16 @@ class CustomGroupInfo(models.Model):
     ramal = models.CharField(max_length=45, blank=True, null=True)
     contato = models.CharField(max_length=45, blank=True, null=True)
     imagem = models.ImageField(upload_to='group/', blank=True, null=True)
+    url = models.TextField(blank=True, null=True)
+    url_home = models.URLField(blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
+    periodo_arquivamento = models.IntegerField(default=10)
 
     def __str__(self):
         return self.group.name
 
 
-# -------- Tabelas de Processo ------------------------------------------------------------------------------------------
+# -------- Tabelas de Processo --------------------------------------------------------------------------
 class Card(models.Model):
     idCard = models.AutoField(db_column='idCard', primary_key=True)
     assunto = models.CharField(max_length=45, blank=False, null=True)
@@ -484,7 +517,11 @@ class Card(models.Model):
     solicitante = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chamados_solicitados', default=None)
     responsavel = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name='chamados_responsaveis', default=None)
-    status = models.CharField(max_length=20)
+    setor = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=50, default='Triagem')
+    compartilhar = models.ManyToManyField(User, related_name="cards_compartilhados", blank=True)
+    anonymous = models.BooleanField(default=False)
+    cor = models.CharField(max_length=20, null=True)
 
     def __str__(self):
         return self.assunto
@@ -496,7 +533,7 @@ class MessageHistory(models.Model):
     remetente = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
-    attachment = models.FileField(upload_to='chat/', null=True, blank=True)
+    attachment = models.ImageField(upload_to='chat/', null=True, blank=True)  # Alterado para ImageField
 
     def __str__(self):
         return self.message
@@ -506,10 +543,12 @@ class CardSetorHistory(models.Model):
     idCardSetorHistory = models.AutoField(db_column='idCardSetorHistory', primary_key=True)
     setor = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    status_anterior = models.CharField(max_length=20, null=True, blank=True)
-    status_atual = models.CharField(max_length=20)
-    setor_anterior = models.CharField(max_length=20, null=True, blank=True)
-    setor_atual = models.CharField(max_length=20)
+    status_anterior = models.CharField(max_length=100, null=True, blank=True)
+    status_atual = models.CharField(max_length=100)
+    setor_anterior = models.CharField(max_length=100, null=True, blank=True)
+    setor_atual = models.CharField(max_length=100)
+    operador = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                                  related_name='operador_history', default=None)
     data_hora = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -519,14 +558,17 @@ class CardSetorHistory(models.Model):
 class OperatorRating(models.Model):
     idOperatorRating = models.AutoField(db_column='idOperatorRating', primary_key=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField(
-        choices=[(1, '1 estrela'), (2, '2 estrelas'), (3, '3 estrelas'), (4, '4 estrelas'), (5, '5 estrelas')])
+    rating = models.TextField(blank=True)
     comment = models.TextField(blank=True)
+    operador = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                                    related_name='avaliacao_user', default=None)
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True)
+    anonymous = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                                    related_name='avaliador_anonimo', default=None)
     datetime = models.DateTimeField(auto_now_add=True)
-    anonymous = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.rating
+        return self.operador
 
 
 # -------- Estoque ------------------------------------------------------------------------------------------------------
@@ -551,3 +593,27 @@ class Notebook(models.Model):
 
     def __str__(self):
         return self.modelo
+
+
+#-------------------------------------------------------------------------------------
+
+class Cupons(models.Model):
+    criado = models.DateTimeField('Data de Criação', auto_now_add=True)
+    modificado = models.DateTimeField('Data de modificação', auto_now=True)
+    cpf = models.CharField('CPF', max_length=14)
+    numero_cupom = models.CharField('Numero Cupom', max_length=5, unique=True)
+
+    def __str__(self):
+        return self.cpf
+
+
+#-------------------------------------------------------------------------------------
+
+class KanbanGroupUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.group.id} - {self.group.name}"
+
+

@@ -1,0 +1,340 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<!-- Conteúdo -------------------------------->
+<div class="container" style="margin-top:75px">
+    <div class="row">
+
+        <!-- Menu -------------------------------->
+        <div id="menu_inicial" class="col-3 menu-request">
+
+            <div class="">
+
+                <h5 class="text-center p-1">ADMINISTRATIVO</h5>
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-key"></i>
+                            Malotes
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_2" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-file-pen"></i>
+                            Solicitações CI/CNAC/R.O
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
+                        <a type="button" id="btn_request_3" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-scale-unbalanced-flip"></i>
+                            Apontamentos
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="">
+
+                <hr style="color:#C4C0C0">
+
+                <ul class="ul-menu-request">
+
+                    <li class="li-lista-novo mt-5">
+                        <a href="{% url 'adm_home' %}" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Voltar
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+        <!-- Menu -------------------------------->
+
+
+        <!-- Informativo ------------------------->
+        <div id="informativo" class="col menu-request m-0 p-5">
+
+            <!-- Texto --------------------------->
+            <div class="">
+                <h6>Orientações para abertura de chamado - 4155. Administrativo</h6>
+                <p>
+                    Pontos a serem observados durante a abertura de chamado:
+                    - Detalhar bem a sua solicitação.
+                    - Se possuir evidências anexar no chamado.
+
+                    Horário de Atendimento
+                    - Segunda-feira a sexta-feira das 08:30hs às 17:30hs
+                </p>
+            </div>
+            <!-- Texto --------------------------->
+
+            <!-- Acordeões ----------------------->
+            <div class="accordion accordion-flush mt-4" id="accordionFlushExample">
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                            Malote
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse show"
+                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li>Solicite o que contem dentro do Malote!</li>
+                                <li>Fique atento aos campos "CC deverá ser informada no campo abaixo".</li>
+                                <li>Fique atento ao seu painel de solicitações.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Acordeões ----------------------->
+
+        </div>
+        <!-- Informativo ------------------------->
+
+
+        <!-- Formulário de Malotes -------------------------->
+        <div id="formulario1" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE MALOTES</h5>
+
+            <form action="{% url 'salvar_malote_adm' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col -------------------------->
+                    <div class="col-7">
+
+                        <div class="">
+                            <label class="required-label">Lacre:</label>
+                            {{ form.service }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="required-label">Descrição:</label>
+                            {{ form.descricao }}
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Anexar arquivo:</label>
+                            <input type="file" name="attachment" class="form-control" multiple>
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </div>
+                    <!-- primeira col -------------------------->
+
+                    <!-- segunda col -------------------------->
+                    <div class="col">
+
+                        <h6 class="required-label">Selecione os itens desejados:</h6>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item1" id="Brindes" value="Brindes" type="checkbox">
+                            <label class="form-check-label" for="Brindes">Brindes</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item2" id="Carimbo" value="Carimbo" type="checkbox">
+                            <label class="form-check-label" for="Carimbo">Carimbo</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item3" id="Chaves" value="Chaves" type="checkbox">
+                            <label class="form-check-label" for="Chaves">Chaves</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item4" id="MaterialCampanha"
+                                   value="Material de Campanha" type="checkbox">
+                            <label class="form-check-label" for="MaterialCampanha">Material de Campanha</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item5" id="MaterialEscritorio"
+                                   value="Material de Escritório" type="checkbox">
+                            <label class="form-check-label" for="MaterialEscritorio">Material de Escritório</label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="item6" id="TermosEnvio" value="Termos de Envio"
+                                   type="checkbox">
+                            <label class="form-check-label" for="TermosEnvio">Termos de Envio</label>
+                        </div>
+
+                    </div>
+                    <!-- segunda col -------------------------->
+
+                </div>
+            </form>
+        </div>
+        <!-- Formulário de Malotes -------------------------->
+
+        <!-- Formulário de CI ------------------------------->
+        <div id="formulario2" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE SOLICITAÇÕES CI/CNAC/R.O</h5>
+
+            <div class="row p-3 ">
+
+                <div class="col-7">
+
+                    <form action="{% url 'request_ci_adm' %}"
+                          method="POST"
+                          enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+                        <div class="mb-2">
+                            <label class="required-label">Assunto:</label>
+                            <input class="input-new" type="text" id="assunto-input" name="assunto-input" required>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="required-label">Demandante:</label>
+                            {{ ci.service }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Descrição:</label><br>
+                            {{ ci.descricao }}
+                        </div>
+
+                        <div class="">
+                            <label>Anexar arquivo:</label>
+                            {{ ci.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!-- Formulário de CI ------------------------------->
+
+        <!-- Formulário de Apontamentos --------------------->
+        <div id="formulario3" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE APONTAMENOS</h5>
+
+            <form action="{% url 'request_apontamentos_adm' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+                <div class="row p-3 ">
+
+                    <div class="col-7">
+
+                        <div class="mb-2">
+                            <label class="required-label">Assunto:</label>
+                            <input class="input-new" type="text" id="input" name="input" required>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="required-label">Demandante:</label>
+                            {{ apontamentos.service }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Descrição:</label><br>
+                            {{ apontamentos.descricao }}
+                        </div>
+
+                        <div class="">
+                            <label>Anexar arquivo:</label>
+                            {{ apontamentos.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+                    </div>
+
+                    <div class="col">
+
+                        <p>Reincidente:</p>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="reincidente" id="reincidente" value="Sim"
+                                   type="checkbox">
+                            <label class="form-check-label">Sim?</label>
+                        </div>
+
+
+                        <p class="required-label">Reagendamentos:</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento1"
+                                   value="0">
+                            <label class="form-check-label">
+                                0
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento2"
+                                   value="1">
+                            <label class="form-check-label">
+                                1
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento3"
+                                   value=2>
+                            <label class="form-check-label">
+                                2
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento4"
+                                   value="3">
+                            <label class="form-check-label">
+                                3
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="reagendamento" id="reagendamento5"
+                                   value="4">
+                            <label class="form-check-label">
+                                4
+                            </label>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+        <!-- Formulário de Apontamentos --------------------->
+
+    </div>
+</div>
+<!-- Conteúdo -------------------------------->
+
+
+{% endblock %}

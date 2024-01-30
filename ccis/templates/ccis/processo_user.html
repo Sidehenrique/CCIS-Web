@@ -1,0 +1,992 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+
+{% block conteudo %}
+
+<div class="container-fluid scrollable-content">
+
+    <!-- subMenu --------------------------------->
+    <div class="row">
+
+        <nav class="navbar paragrafo-style">
+            <div class="container-fluid">
+
+                <div class="navbar-nav-wrap-content-end">
+
+                </div>
+            </div>
+
+        </nav>
+
+
+    </div>
+    <!-- End subMenu ----------------------------->
+
+
+    <!-- Pesquisa pro -------------------------->
+    <nav class="navbar align-center mb-2 " style="background-color:white">
+        <div class="container-fluid pe-1 alert-container">
+
+            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> MINHAS SOLICITAÇÕES</p>
+
+            <div class="navbar-nav-wrap-content-end" style="position: relative;">
+                <form class="d-flex">
+                    <!-- input de pesquisa ----------------------->
+                    <input class="form-control me-2" type="search" placeholder="Pesquisar"
+                           aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
+
+                    <!-- Botão Novo Usuário ---------------------->
+                    <button class=""
+                            style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target=""
+                            data-bs-whatever="@mdo">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Pesquisa pro -------------------------->
+
+
+
+    <!-- cabeçalho ------------------------------->
+    <div class="row m-0">
+
+        <div class="col me-3 processo-cabecalho" style="background-color:#E0E006; color:#fff">
+
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_triagem }}</span></div>
+            </div>
+
+        </div>
+
+        <div class="col me-3 processo-cabecalho" style="background-color:#2D73FF; color:#fff">
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_atendimento }}</span></div>
+            </div>
+        </div>
+
+        <div class="col me-3 processo-cabecalho" style="background-color:#4DD3E8; color:#fff">
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_encaminhado }}</span></div>
+            </div>
+        </div>
+
+        <div class="col me-3 processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluído</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_concluido }}</span></div>
+            </div>
+        </div>
+
+        <div class="col processo-cabecalho" style="background-color:#d9d9d9; color:#fff">
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Finalizados</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_finalizado }}</span></div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- cabeçalho ------------------------------->
+
+
+    <!-- Processo -------------------------------->
+    <div class="row ms-0 me-0" id="tabelaProcessos">
+
+        <!-- Triagem ----------------------------->
+        <div class="col me-3 overflow-auto processo-colum pt-2">
+
+            {% for card in cards %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
+
+            <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
+               type="button"
+               data-bs-toggle="modal"
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <div class="processo-card" style="background-color:{{ card.cor }}">
+
+                    <div class="row">
+
+                        <div class="col-auto me-auto">
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
+                        </div>
+
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        </div>
+
+                    </div>
+
+                    <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                    <div class="col-auto mb-2">
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.responsavel %}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+
+                    <div class="" style="color:#818181; font-size:13px;">
+
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+
+                    </div>
+
+
+                    <div class="card-data row" style="color:#818181; font-size:13px">
+
+                        <div class="col-auto me-auto">
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </a>
+            <!-- card ---------------------------->
+
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Triagem ----------------------------->
+
+        <!-- Atendimento ------------------------->
+        <div class="col me-3 overflow-auto processo-colum pt-2">
+
+            {% for card in cards %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
+
+             <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
+               type="button"
+               data-bs-toggle="modal"
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <div class="processo-card" style="background-color:{{ card.cor }}">
+
+                    <div class="row">
+
+                        <div class="col-auto me-auto">
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
+
+                        </div>
+
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        </div>
+
+                    </div>
+
+                    <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                    <div class="col-auto mb-2">
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.responsavel %}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+
+                    <div class="" style="color:#818181; font-size:13px;">
+
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+
+                    </div>
+
+
+                    <div class="card-data row" style="color:#818181; font-size:13px">
+
+                        <div class="col-auto me-auto">
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </a>
+            <!-- card ---------------------------->
+
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Atendimento ------------------------->
+
+        <!-- Encaminhamento ---------------------->
+        <div class="col me-3 overflow-auto processo-colum pt-2">
+
+            {% for card in cards %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
+
+             <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
+               type="button"
+               data-bs-toggle="modal"
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <div class="processo-card" style="background-color:{{ card.cor }}">
+
+                    <div class="row">
+
+                        <div class="col-auto me-auto">
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
+
+                        </div>
+
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        </div>
+
+                    </div>
+
+                    <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                    <div class="col-auto mb-2">
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.responsavel %}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+
+                    <div class="" style="color:#818181; font-size:13px;">
+
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+
+                    </div>
+
+
+                    <div class="card-data row" style="color:#818181; font-size:13px">
+
+                        <div class="col-auto me-auto">
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </a>
+            <!-- card ---------------------------->
+
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Encaminhamento ---------------------->
+
+        <!-- Concluído --------------------------->
+        <div class="col me-3 overflow-auto processo-colum pt-2">
+
+            {% for card in cards %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
+
+             <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
+               type="button"
+               data-bs-toggle="modal"
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <div class="processo-card" style="background-color:{{ card.cor }}">
+
+                    <div class="row">
+
+                        <div class="col-auto me-auto">
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
+
+                        </div>
+
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        </div>
+
+                    </div>
+
+                    <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                    <div class="col-auto mb-2">
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.responsavel %}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+
+                    <div class="" style="color:#818181; font-size:13px;">
+
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+
+                    </div>
+
+
+                    <div class="card-data row" style="color:#818181; font-size:13px">
+
+                        <div class="col-auto me-auto">
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </a>
+            <!-- card ---------------------------->
+
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Concluído --------------------------->
+
+        <!-- Finalizado -------------------------->
+        <div class="col overflow-auto processo-colum pt-2"  id="pro_finalizado">
+
+            {% for card in cards %}
+            {% if card.solicitante == user or user in card.compartilhar.all %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
+
+            <!-- card ---------------------------->
+            <a class="d-grid card-filter processo-link mb-2"
+               type="button"
+               data-bs-toggle="modal"
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
+
+                <div class="processo-card" style="background-color:{{ card.cor }}">
+
+                    <div class="row">
+
+                        <div class="col-auto me-auto">
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
+
+                        </div>
+
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        </div>
+
+                    </div>
+
+                    <hr style="color:#C4C0C0; margin-top:0px;">
+
+
+                    <div class="col-auto mb-2">
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.responsavel %}
+
+                                {% if card.responsavel.dadosPessoais.foto %}
+                                <img class="foto_card" src="{{ card.responsavel.dadosPessoais.foto.url }}" width="25"
+                                     height="25">
+                                {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% else %}
+
+                                    {% if card.responsavel.dadosPessoais.sexo == "Masculino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                                    {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                                    {% elif card.responsavel.dadosPessoais.sexo == "Feminino" %}
+                                    <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                         height="25">
+                                    {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                                {% endif %}
+
+                            {% endif %}
+
+                            {% else %}
+                            <i class="fa-solid fa-user-slash"></i>
+                            Aguardando ...
+
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+
+                    <div class="" style="color:#818181; font-size:13px;">
+
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+
+                    </div>
+
+
+                    <div class="card-data row" style="color:#818181; font-size:13px">
+
+                        <div class="col-auto me-auto">
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </a>
+            <!-- card ---------------------------->
+
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <!-- Finalizado -------------------------->
+
+    </div>
+    <!-- Processo -------------------------------->
+
+
+    <!-- Modal Processos ------------------------->
+    <div class="modal fade"
+         id="processoModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- header --------------------->
+                <div class="modal-header">
+
+                    <h5 class="modal-title me-1" id="assuntoInfo"></h5>
+                    <span class="ms-2" style="color:gray;" id="servicoInfo"></span>
+
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <!-- header --------------------->
+
+
+                <!-- body ----------------------->
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <!-- informações -->
+                        <div class="col-4 overflow-auto" style="border-right:1px solid #818181">
+
+
+                            <div class="col-auto me-auto">
+
+                                <span class="processo-tag-cod" id="codInfo"></span>
+                                <span class="processo-tag-setor" id="sectorInfo"></span>
+
+                            </div>
+
+
+                            <h6 class="mt-2">Informações da solicitação</h6>
+
+                            <hr class="linha-custom">
+
+
+                            <div class="mt-2 overflow-auto accordion accordion-flush" id="accordionFlushExample"
+                                 style="max-height:330px;">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                                aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Dados do Solicitante
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+                                        <div class="card-body-custom">
+
+                                            <ul class="card-ul">
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-user card-icon"></i>
+                                                    <span id="nomeSolicitante"></span>
+                                                </li>
+
+                                                <li class="">
+                                                    <i class="fa-solid fa-briefcase card-icon"></i>
+                                                    <span id="loginSolicitante"></span>
+                                                </li>
+
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-at card-icon"></i>
+                                                    <span id="emailSolicitante"></span>
+                                                </li>
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-location-dot card-icon"></i>
+                                                    <span id="areaSolicitante"></span>
+                                                </li>
+
+                                                <li class="card-li">
+                                                    <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
+                                                    <span id="ramalSolicitante"></span>
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                                aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Compartilhamento
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+
+
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                                aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Historico
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+
+                                        <div class="d-flex container-buttons" onwheel="handleScroll(event)">
+                                            <!-- span com os historicos aqui -->
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- informações -->
+
+
+                        <!-- message ------------>
+                        <div class="col-6" style="border-right:1px solid #818181;">
+
+                            <!-- cabeçalho ------>
+                            <div>
+                                <div class="col-auto me-auto">
+                                    <small><i class="fa-solid fa-clock"></i>
+                                        <span id="horarioAbertura"></span>
+                                    </small>
+                                </div>
+
+                                <h6 class="mt-2">Descrição</h6>
+
+                                <hr class="linha-custom">
+                            </div>
+                            <!-- cabeçalho ------>
+
+
+                            <!-- Descrição ------>
+                            <div class="overflow-auto" style=" max-height:200px">
+
+                                <!-- Chat ---------->
+                                <div class="messages-container mt-2 p-2">
+
+                                    <div class="message-item">
+                                        <!-- Cabeçalho -->
+                                        <div class="row pt-1">
+
+                                            <div class="col-auto me-auto">
+
+                                                <h6 id="nomeRemetente"></h6>
+
+                                            </div>
+
+
+                                            <div class="col-auto">
+                                                <small id="dataRemetente"></small>
+                                            </div>
+
+
+                                        </div>
+                                        <!-- Cabeçalho -->
+
+                                        <!-- texto -->
+                                        <div class="p-2">
+                                            <p id="messageContainer"></p>
+                                        </div>
+                                        <!-- texto -->
+                                    </div>
+
+                                </div>
+                                <!-- Chat ---------->
+
+                            </div>
+                            <!-- Descrição ------>
+
+
+                            <!-- Resposta ------>
+                            <div class="containerResposta mt-2" style="background-color:#fff">
+                                <form id="" enctype="multipart/form-data">
+                                    <div class="form-group">
+
+                                        <textarea class="form-control" placeholder="Responder" id="resposta" rows="3"
+                                                  cols="70" required></textarea>
+
+                                    </div>
+                                    <div class=" form-group pt-2">
+                                        <input type="file" id="attachmentInput" name="attachmentInput">
+                                    </div>
+
+                                </form>
+                            </div>
+                            <!-- Resposta ------>
+
+
+                        </div>
+                        <!-- message ------------>
+
+
+                        <!-- Ações -------------->
+                        <div class="col">
+
+                            <h5 class="text-center p-2">AÇÕES</h5>
+
+                            <hr style="color:#C4C0C0">
+
+                            <ul class="ul-menu-request buttons-Acao">
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="enviarMensagemButton" class="modal-processo-link"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                        Responder
+                                    </a>
+                                </li>
+
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="compartilharCardButton" class="modal-processo-link"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                        Compartilhar
+                                    </a>
+                                </li>
+
+
+                                <li class="li-menu-request">
+                                    <a type="button" id="priorizarCardButton" class="modal-processo-link"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-bolt"></i>
+                                        Prioridade
+                                    </a>
+                                </li>
+
+
+                                <li id="starButtons" style="margin-top:45px">
+
+
+                                    <div class="d-flex" style="justify-content: center;">
+                                        <a type="button" name="1" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="2" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="3" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="4" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                        <a type="button" name="5" class="star-link">
+                                            <i class="fa-solid fa-star"></i>
+                                        </a>
+                                    </div>
+
+
+                                    <p style="font-size:12px; text-align:center">Avaliar este atendimento<br>
+                                        <span style="font-size:10px; text-align:center">Sua avaliação é anônima</span>
+                                    </p>
+
+                                </li>
+
+
+                                <li class="li-menu-request mt-1">
+                                    <a type="button" id="avaliarAtendimentoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-heart"></i>
+                                        Avaliar e Finalizar
+                                    </a>
+                                </li>
+
+
+                                <li id="reabrirChamado" class="li-menu-request mt-1" style="display: none">
+                                    <a type="button" id="reabrirChamadoButton"
+                                       class="modal-processo-link btn-finish" aria-current="page">
+                                        <i class="fa-solid fa-power-off"></i>
+                                        Reabrir Solicitação
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </div>
+                        <!-- Ações -------------->
+
+                    </div>
+
+
+                </div>
+                <!-- body ----------------------->
+
+
+                <!-- footer --------------------->
+                <div class="modal-footer">
+
+                    <div class="col">
+
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <span id="nomeResponsavel"></span>
+
+                    </div>
+
+                </div>
+                <!-- footer --------------------->
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal Processos ------------------------->
+
+
+    <!-- Modal compartilhar ------------------------>
+    <div class="modal" id="modalSeletorUser" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Compartilhar Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="p-3">
+                    <label>Selecione o Usuario *:</label>
+                    <select id="seletorUser" class="form-select" required>
+                        {% for user in usuarios %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button id="confirmarCompartilhamento" type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal encaminhar ------------------------>
+
+
+</div>
+
+<script>
+    function filterProcesses() {
+        // Captura o valor digitado no campo de pesquisa
+        var input = document.getElementById('inputUser');
+        var filter = input.value.toUpperCase();
+
+        // Captura os elementos de coluna de processo (cada estágio)
+        var processColumns = document.querySelectorAll('.processo-colum');
+
+        // Loop por cada coluna de processo para filtrar os processos dentro delas
+        processColumns.forEach(column => {
+            var processes = column.getElementsByClassName('processo-card');
+
+            // Loop pelos processos na coluna e exibe/oculta com base no filtro
+            Array.from(processes).forEach(process => {
+                var textData = process.textContent || process.innerText;
+                if (textData.toUpperCase().indexOf(filter) > -1) {
+                    process.style.display = "";
+                } else {
+                    process.style.display = "none";
+                }
+            });
+        });
+    }
+
+    // Adiciona um ouvinte de eventos para acionar a função de filtro ao digitar
+    var inputField = document.getElementById('inputUser');
+    inputField.addEventListener('keyup', filterProcesses);
+</script>
+
+{% endblock %}

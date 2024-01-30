@@ -1,6 +1,7 @@
 {% extends 'ccis/base.html' %}
 {% load static %}
 
+
 {% block conteudo %}
 
 <div class="container-fluid scrollable-content">
@@ -27,25 +28,23 @@
     <nav class="navbar align-center mb-2 " style="background-color:white">
         <div class="container-fluid pe-1 alert-container">
 
-            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL DE PROCESSOS</p>
+            <p class="m-0" style="font-family:Asap Regular; color:#AFAFAF;"> PAINEL {{ setor|upper }}</p>
+
+            <p id="numeroCartoesFiltrados"></p>
 
             <div class="navbar-nav-wrap-content-end" style="position: relative;">
-                <form class="d-flex">
-                    <!-- input de pesquisa ----------------------->
-                    <input class="form-control me-2" type="search" placeholder="Pesquisar"
-                           aria-label="Search" id="inputUser" onkeyup="filterTable()">
 
-                    <!-- Botão Novo Usuário ---------------------->
-                    <button class=""
-                            style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target=""
-                            data-bs-whatever="@mdo"
-                            onclick="filterTable()">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </form>
+                <!-- input de pesquisa ----------------------->
+                <input class="form-control me-2" type="search" placeholder="Pesquisar"
+                       aria-label="Search" id="filterProcesso" onkeyup="filterCards()">
+
+                <button class=""
+                        style="position: absolute; top:12%; right: 5%; border:none; color:#AFAFAF; background-color:white"
+                        type="button"
+                        onclick="filterCards()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
             </div>
 
         </div>
@@ -58,28 +57,40 @@
     <div class="row m-0">
 
         <div class="col me-3 processo-cabecalho" style="background-color:#E0E006; color:#fff">
-            <i class="fa-solid fa-check-to-slot"></i>
-            Triagem
+
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-check-to-slot"></i> Triagem</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_triagem }}</span></div>
+            </div>
+
         </div>
 
         <div class="col me-3 processo-cabecalho" style="background-color:#2D73FF; color:#fff">
-            <i class="fa-solid fa-bars-progress"></i>
-            Em Atendimento
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-bars-progress"></i> Em Atendimento</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_atendimento }}</span></div>
+            </div>
         </div>
 
         <div class="col me-3 processo-cabecalho" style="background-color:#4DD3E8; color:#fff">
-            <i class="fa-solid fa-angles-right"></i>
-            Encaminhado
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-angles-right"></i> Encaminhado</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_encaminhado }}</span></div>
+            </div>
         </div>
 
         <div class="col me-3 processo-cabecalho" style="background-color:#4FD1B8; color:#fff">
-            <i class="fa-solid fa-square-check"></i>
-            Concluído
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Concluído</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_concluido }}</span></div>
+            </div>
         </div>
 
         <div class="col processo-cabecalho" style="background-color:#d9d9d9; color:#fff">
-            <i class="fa-solid fa-square-check"></i>
-            Finalizados
+            <div class="row">
+                <div class="col-auto me-auto"><i class="fa-solid fa-square-check"></i> Finalizados</div>
+                <div class="col-auto"><span class="quantidadeNumber">{{ card_count_finalizado }}</span></div>
+            </div>
         </div>
 
 
@@ -91,32 +102,32 @@
     <div class="row ms-0 me-0">
 
         <!-- Triagem ----------------------------->
-        <div class="col me-3 overflow-auto processo-colum pt-2">
+        <div class="col coluna-triagem me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
             {% if card.cardsetorhistory_set.first.status_atual == "Triagem" %}
 
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
-                <!-- Falta uma informação aqui referente ao id -->
 
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -125,28 +136,37 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;">
-                            {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% else %}
-                            <i class="fa-solid fa-user-slash"></i>
-                            Aguardando ...
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% endif %}
-
-
+                            {% endif %}
+                            {% endif %}
                         </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
                             <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
@@ -159,6 +179,7 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
 
@@ -170,32 +191,32 @@
         <!-- Triagem ----------------------------->
 
         <!-- Atendimento ------------------------->
-        <div class="col me-3 overflow-auto processo-colum pt-2">
+        <div class="col card-filter coluna-atendimento me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.cardsetorhistory_set.first.setor_atual == "Tecnologia" %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
             {% if card.cardsetorhistory_set.first.status_atual == "Em Atendimento" %}
+
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
                data-bs-target="#processoModal"
                data-card-id="{{ card.idCard }}"
                onclick="loadCardInfo({{ card.idCard }})">
 
-               <!-- Falta uma informação aqui referente ao id -->
-
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1"> {{ card.assunto }}</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -204,28 +225,37 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;">
-                            {% if card.responsavel %}
-                            <i class="fa-solid fa-user me-1"></i>
-                            {{ card.responsavel.first_name }} {{ card.responsavel.last_name }}
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% else %}
-                            <i class="fa-solid fa-user-slash"></i>
-                            Aguardando ...
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
                             {% endif %}
-
-
+                            {% endif %}
+                            {% endif %}
                         </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
                             <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
@@ -238,8 +268,10 @@
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
+
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -248,28 +280,32 @@
         <!-- Atendimento ------------------------->
 
         <!-- Encaminhamento ---------------------->
-        <div class="col me-3 overflow-auto processo-colum pt-2">
+        <div class="col card-filter coluna-encaminhado me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '3' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Encaminhado" %}
+
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
 
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -278,34 +314,53 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% else %}
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                        </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
+
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -314,28 +369,32 @@
         <!-- Encaminhamento ---------------------->
 
         <!-- Concluído --------------------------->
-        <div class="col me-3 overflow-auto processo-colum pt-2">
+        <div class="col card-filter coluna-concluido me-3 overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '4' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Concluido" %}
+
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
 
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -344,34 +403,53 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% else %}
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                        </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
+
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -380,28 +458,32 @@
         <!-- Concluído --------------------------->
 
         <!-- Finalizado -------------------------->
-        <div class="col  overflow-auto processo-colum pt-2">
+        <div class="col card-filter coluna-finalizado overflow-auto processo-colum pt-2">
 
             {% for card in cards %}
-            {% if card.sector.id == 1 %}
-            {% if card.colunaAtual == '5' %}
+            {% if card.cardsetorhistory_set.first.setor_atual == setor %}
+            {% if card.cardsetorhistory_set.first.status_atual == "Finalizado" %}
+
             <!-- card ---------------------------->
-            <a class="d-grid processo-link mb-2"
+            <a class="d-grid card-filter processo-link mb-2"
                type="button"
                data-bs-toggle="modal"
-               data-bs-target="#processoModal">
+               data-bs-target="#processoModal"
+               data-card-id="{{ card.idCard }}"
+               onclick="loadCardInfo({{ card.idCard }})">
 
-                <div class="processo-card">
+                <div class="processo-card" style="background-color:{{ card.cor }}">
 
                     <div class="row">
 
                         <div class="col-auto me-auto">
-                            <h5 class="mt-1">SISBR</h5>
+                            <h5 class="card-titulo mt-1"> {{ card.assunto }} </h5>
 
                         </div>
 
-                        <div class="col-auto">
-                            <span class="processo-tag-setor">Tecnologia</span>
+                        <div class="col-auto mb-1">
+                            <span class="card-setor processo-tag-setor">N° {{card.idCard}}</span>
+                            <span class="card-setor processo-tag-setor">{{card.cardsetorhistory_set.first.setor_atual }}</span>
                         </div>
 
                     </div>
@@ -410,34 +492,53 @@
 
 
                     <div class="col-auto mb-2">
-                        <p style="color:#818181;"><i class="fa-solid fa-user me-1"></i>
-                            Henrique Silva</p>
+
+                        <p class="card-responsavel" style="color:#818181;">
+                            {% if card.solicitante %}
+                            {% if card.solicitante.dadosPessoais.foto %}
+                            <img class="foto_card" src="{{ card.solicitante.dadosPessoais.foto.url }}" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% else %}
+                            {% if card.solicitante.dadosPessoais.sexo == "Masculino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar.jpg' %}" alt="" width="25" height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% elif card.solicitante.dadosPessoais.sexo == "Feminino" %}
+                            <img class="foto_card" src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="25"
+                                 height="25">
+                            {{ card.solicitante.first_name }} {{ card.solicitante.last_name }}
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                        </p>
+
                     </div>
 
 
                     <div class="" style="color:#818181; font-size:13px;">
 
-                        <p class="mb-1"><i class="fa-regular fa-circle-dot"></i>
-                            Redefinição</p>
+                        <p class="card-servico mb-1"><i class="fa-regular fa-circle-dot"></i> {{ card.service }}</p>
 
                     </div>
 
 
-                    <div class="row" style="color:#818181; font-size:13px">
+                    <div class="card-data row" style="color:#818181; font-size:13px">
 
                         <div class="col-auto me-auto">
-                            <i class="fa-solid fa-calendar-days"></i> 20/09/2023
+                            <i class="fa-solid fa-calendar-days"></i> {{ card.dataCriacao|date:"d/m/Y" }}
                         </div>
 
                         <div class="col-auto">
-                            <i class="fa-solid fa-clock"></i> 14:53
+                            <i class="fa-solid fa-clock"></i> {{ card.dataCriacao|time:"H:i" }}
                         </div>
 
                     </div>
 
                 </div>
+
             </a>
             <!-- card ---------------------------->
+
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -478,8 +579,8 @@
 
                     <div class="row">
 
-                        <!-- Dados solicitante -->
-                        <div class="col-4" style="border-right:1px solid #818181">
+                        <!-- informações -->
+                        <div class="col-4 overflow-auto" style="border-right:1px solid #818181">
 
 
                             <div class="col-auto me-auto">
@@ -490,69 +591,102 @@
                             </div>
 
 
-                            <h6 class="mt-2">Dados do Solicitante</h6>
-
-                            <hr class="linha-custom">
-
-                            <div class="card-body-custom">
-
-                                <ul class="card-ul">
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-user card-icon"></i>
-                                        <span id="nomeSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-sharp fa-solid fa-building card-icon"></i>
-                                        <span id="cpfSolicitante"></span>
-                                    </li>
-
-                                    <li class="">
-                                        <i class="fa-solid fa-briefcase card-icon"></i>
-                                        <span id="loginSolicitante"></span>
-                                    </li>
-
-                                </ul>
-
-                                <div class="card-text-custom mt-4">CONTATO</div>
-
-                                <ul class="card-ul">
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-at card-icon"></i>
-                                        <span id="emailSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
-                                        <span id="ramalSolicitante"></span>
-                                    </li>
-
-                                    <li class="card-li">
-                                        <i class="fa-solid fa-location-dot card-icon"></i>
-                                        <span id="areaSolicitante"></span>
-                                    </li>
-
-                                </ul>
-
-
-                            </div>
-
+                            <h6 class="mt-2">Informações da solicitação</h6>
 
                             <hr class="linha-custom">
 
 
-                            <h6 class="mt-2">Histórico</h6>
+                            <div class="mt-2 overflow-auto accordion accordion-flush" id="accordionFlushExample"
+                                 style="max-height:330px;">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                                aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Dados do Solicitante
+                                        </button>
+                                    </h2>
 
 
-                            <div class="d-flex container-buttons" onwheel="handleScroll(event)">
-                                <!-- span com os historicos aqui -->
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+                                        <div class="card-body-custom">
+
+                                            <ul class="card-ul">
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-user card-icon"></i>
+                                                    <span id="nomeSolicitante"></span>
+                                                </li>
+
+                                                <li class="">
+                                                    <i class="fa-solid fa-briefcase card-icon"></i>
+                                                    <span id="loginSolicitante"></span>
+                                                </li>
+
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-at card-icon"></i>
+                                                    <span id="emailSolicitante"></span>
+                                                </li>
+
+                                                <li class="card-li">
+                                                    <i class="fa-solid fa-location-dot card-icon"></i>
+                                                    <span id="areaSolicitante"></span>
+                                                </li>
+
+                                                <li class="card-li">
+                                                    <i class="fa-sharp fa-solid fa-address-book card-icon"></i>
+                                                    <span id="ramalSolicitante"></span>
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                                aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Compartilhamento
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+
+
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                                aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Historico
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+
+                                        <div class="d-flex mt-2 container-buttons" style="overflow-y: auto; max-height: 150px;">
+                                            <!-- span com os historicos aqui -->
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-
 
                         </div>
-                        <!-- Dados solicitante -->
+                        <!-- informações -->
 
 
                         <!-- message ------------>
@@ -560,13 +694,27 @@
 
                             <!-- cabeçalho ------>
                             <div>
-                                <div class="col-auto me-auto">
-                                    <small><i class="fa-solid fa-clock"></i>
-                                        <span id="horarioAbertura"></span>
-                                    </small>
+
+                                <div class="row">
+                                    <div class="col-auto me-auto">
+                                        <small><i class="fa-solid fa-clock"></i>
+                                            <span id="horarioAbertura"></span>
+                                        </small>
+                                    </div>
+                                    <div class="col-auto">
+
+                                        <a type="button" id="PersonalizarCard">
+                                            <span class="processo-tag-cor">
+                                                <i class="fa-solid fa-brush"></i>
+                                                Personalizar
+                                            </span>
+                                        </a>
+
+                                    </div>
                                 </div>
 
-                                <h6 class="mt-2">Descrição</h6>
+
+                                <h6 class="mt-2" >Descrição</h6>
 
                                 <hr class="linha-custom">
                             </div>
@@ -662,7 +810,7 @@
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="En" class="modal-processo-link"
+                                    <a type="button" id="encaminharCardButton" class="modal-processo-link"
                                        aria-current="page">
                                         <i class="fa-solid fa-angles-right"></i>
                                         Encaminhar
@@ -671,47 +819,19 @@
 
 
                                 <li class="li-menu-request">
-                                    <a type="button" id="Tr" class="modal-processo-link" aria-current="page">
+                                    <a type="button" id="transferirCardButton" class="modal-processo-link"
+                                       aria-current="page">
                                         <i class="fa-solid fa-arrow-right-arrow-left"></i>
                                         Transferir
                                     </a>
                                 </li>
 
 
-                                <li class="" style="margin-top:45px">
-
-
-                                    <div class="d-flex" style="justify-content: center;">
-
-                                        <a type="button" name="1" class="star-link">
-                                            <i class="fa-solid fa-star"></i>
-                                        </a>
-                                        <a type="button" name="2" class="star-link">
-                                            <i class="fa-solid fa-star"></i>
-                                        </a>
-                                        <a type="button" name="3" class="star-link">
-                                            <i class="fa-solid fa-star"></i>
-                                        </a>
-                                        <a type="button" name="4" class="star-link">
-                                            <i class="fa-solid fa-star"></i>
-                                        </a>
-                                        <a type="button" name="5" class="star-link">
-                                            <i class="fa-solid fa-star"></i>
-                                        </a>
-
-                                    </div>
-
-                                    <p style="font-size:12px; text-align:center">Avaliar este atendimento<br>
-                                        <span style="font-size:10px; text-align:center">Sua avaliação é anônima</span>
-                                    </p>
-
-                                </li>
-
-
-                                <li class="li-menu-request mt-1">
-                                    <a type="button" id="Fi" class="modal-processo-link btn-finish" aria-current="page">
-                                        <i class="fa-solid fa-check-double"></i>
-                                        Finalizar
+                                <li class="li-menu-request" style="margin-top:120px">
+                                    <a type="button" id="ConcluirCardButton" class="modal-processo-link btn-done"
+                                       aria-current="page">
+                                        <i class="fa-solid fa-check"></i>
+                                        Concluir
                                     </a>
                                 </li>
 
@@ -731,10 +851,14 @@
                 <!-- footer --------------------->
                 <div class="modal-footer">
 
-                    <div class="col">
+                    <div class="col-10">
 
                         <i class="fa-solid fa-phone-volume"></i>
                         <span id="nomeResponsavel"></span>
+
+                    </div>
+
+                    <div class="col">
 
                     </div>
 
@@ -746,19 +870,131 @@
     </div>
     <!-- Modal Processos ------------------------->
 
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1">
-      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <img src="..." class="rounded me-2" alt="...">
-          <strong class="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+
+    <!-- Modal encaminhar ------------------------>
+    <div class="modal" id="modalSelecaoSetor" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Encaminhar Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="p-3">
+                    <label>Selecione o grupo *:</label>
+                    <select id="seletorGrupo" class="form-select" required>
+                        {% for grupo in group %}
+                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button id="confirmarEncaminhamento" type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+
+            </div>
         </div>
-        <div class="toast-body">
-          Hello, world! This is a toast message.
-        </div>
-      </div>
     </div>
+    <!-- Modal encaminhar ------------------------>
+
+
+    <!-- Modal Transferir ------------------------>
+    <div class="modal" id="modalSelecaoSetorTrans" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Transferir Processo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="p-3">
+                    <label>Selecione o grupo *:</label>
+                    <select id="seletorGrupoTrans" class="form-select" required>
+                        {% for grupo in group %}
+                        <option value="{{ grupo.id }}">{{ grupo.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button id="confirmarTransferencia" type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal Transferir ------------------------>
+
+
+    <!-- Modal cor ------------------------>
+    <div class="modal" id="modalSelecaoCor" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Personalizar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="col p-3">
+                    <label>Selecione a Cor Do Card*:</label>
+                    <select id="seletorCor" class="form-select" required>
+
+                        <option></option>
+                        <option value="#f6f6f6">Padão</option>
+                        <option value="#FFCECE">Vermelho</option>
+                        <option value="#CEDFFF">Azul</option>
+                        <option value="#CEFFD3">Verde</option>
+                        <option value="#FFFCA7">Amarelo</option>
+
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button id="confirmarCor" type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal cor ------------------------>
+
 
 </div>
+
+
+
+<script>
+function filterCards() {
+    var input, filter, cards, card, subject, service, userName, i;
+    input = document.getElementById('filterProcesso');
+    filter = input.value.toUpperCase();
+    cards = document.getElementsByClassName('processo-card');
+
+    for (i = 0; i < cards.length; i++) {
+        card = cards[i];
+        subject = card.querySelector('.card-titulo').textContent.toUpperCase();
+        service = card.querySelector('.card-servico').textContent.toUpperCase();
+        userName = card.querySelector('.card-responsavel').textContent.toUpperCase();
+
+        if (
+            subject.indexOf(filter) > -1 ||
+            service.indexOf(filter) > -1 ||
+            userName.indexOf(filter) > -1
+        ) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    }
+}
+
+</script>
+
+
 {% endblock %}

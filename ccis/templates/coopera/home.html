@@ -3,68 +3,215 @@
 
 {% block conteudo %}
 
-<div class="container-fluid scrollable-content ps-0 pe-0">
+<!-- Conteúdo -------------------------------->
+<div class="container-fluid scrollable-content ps-0 pe-0" style="background-color: #F1F2F5;">
 
-    <!-- Conteúdo -------------------------------->
-    <div class="row">
+    <!-- Titulo ------------------------------>
+    <div class="row m-3 text-center">
 
-        <div class="col logo-coopera">
-            <img src= "{% static 'ccis/Grupo 6345.png' %}" alt="logo-COOPERA" width="270px">
+        <div class="col ps-5 pt-4">
+
+            <div class="col p-0">
+                <img src="{% static 'ccis/Grupo 6330.png' %}" alt="logo-COOPERA" width="350px">
+            </div>
+
         </div>
 
     </div>
+    <!---titulo ------------------------------>
 
-    <div style="font-size: 15px;" class="row justify-content-center text-center mt-3 mb-5">
+    <!--- Botões ----------------------------->
 
-        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
-            <a class="btn flex-column" href="{% url 'relacionamento' %}">
-                <i class="fa-solid fa-handshake" style="color: #00353e; font-size: 6vh;"></i>
-            </a>
-            <div>Relacionamento</div>
+    <div class="row justify-content-center position-relative me-1 p-5">
+
+        <!--- Relacionamento --------->
+        <div class="col-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/relacionamento.png' %}">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 13px;" class="mb-1 h4">Relacionamento</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'relacionamento' %}" class="text-white">
+                                <p style="font-size: 12px;">Relacionamento com o cooperado</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
-            <a class="btn flex-column" href="{% url 'simulador' %}">
-                <i class="fa-solid fa-chart-simple"  style="color: #00353e; font-size: 6vh;"></i>
-            </a>
-            <div>Simulador</div>
+        <!--- Relacionamento --------->
+
+        <!--- india ------------------>
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/india.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h4 style="color: white; font-size: 13px;" class="mb-1 h4">India</h4>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'india' %}" class="text-white">
+                                <p style="font-size: 12px;">Relatório analítico de dados do Cooperado.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
-            <a class="btn flex-column" href="{% url 'india' %}">
-                <i class="fa-solid fa-list" style="color: #00353e; font-size: 6vh;"></i>
-            </a>
-            <div>India</div>
+        <!--- india ------------------>
+
+        <!--- Dados Consolidados ----->
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/consolidados.png' %}">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 12px;" class="mb-1 h4">Dados Consolidados</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'dados' %}" class="text-white">
+                                <p style="font-size: 13px;">Relatório sintético de dados do Cooperado.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
-            <a class="btn flex-column" href="{% url 'portifolio' %}">
-                <i class="fa-solid fa-paste" style="color: #00353e; font-size: 6vh;"></i>
-            </a>
-            <div>Linhas e Produtos</div>
+        <!--- Dados Consolidados ----->
+
+        <!--- Linhas e Produtos ------>
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/linhasProdutos.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 13px;" class="mb-1 h4">Linhas e Produtos</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'portifolio' %}" class="text-white">
+                                <p style="font-size: 12px;">Portifólio de linhas de crédito, taxas de juros e
+                                    condições básicas...</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
-            <a class="btn flex-column" href="{% url 'tabela' %}">
-                <i class="fa-solid fa-triangle-exclamation" style="color: #00353e; font-size: 6vh;"></i>
-            </a>
-            <div>PD X LGD</div>
+        <!--- Linhas e Produtos ------>
+
+        <!--- PDxLGD ----------------->
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/PDxLGD.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 13px;" class="mb-1 h4">PDxLGD</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'tabela' %}" class="text-white">
+                                <p style="font-size: 12px;">Modelo de classificação do risco das operações -
+                                    Reclassificação automática</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
-            <a class="btn flex-column" href="{% url 'capital' %}">
-                <i class="fa-solid fa-chart-column" style="color: #00353e; font-size: 6vh;"></i>
-            </a>
-            <div>Gestão<br>de Capital</div>
+        <!--- PDxLGD ----------------->
+
+        <!--- Gestão de Capital ------>
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/capital.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 13px;" class="mb-1 h4">Gestão de Capital</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'capital' %}" class="text-white">
+                                <p style="font-size: 13px;">Análise de indicadores</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="col-4 col-lg-1 col-md-4 m-3 p-0">
-            <a class="btn flex-column" href="{% url 'dados' %}">
-                <i class="fa-solid fa-clipboard-list" style="color: #00353e; font-size: 6vh;"></i>
-            </a>
-            <div>Dados <br> Consolidados</div>
+        <!--- Gestão de Capítal ------>
+
+        <!--- Simulador -------------->
+        <div class="col-1 ms-1 me-5">
+
+            <div class="team-style1 text-center" style="width: 150px; height: 150px;">
+
+                <img src="{% static 'ccis/simulador.png' %}" alt="...">
+
+                <div class="team-info-blue">
+                    <h3 style="color: white; font-size: 15px;" class="mb-1 h4">Simulador</h3>
+                </div>
+
+                <div class="team-overlay-blue">
+                    <div class="d-table h-100 w-100">
+                        <div class="d-table-cell align-middle">
+                            <a style="text-decoration: none;" href="{% url 'simulador' %}"
+                               class="text-white">
+                                <p style="font-size: 13px;">Simulador de taxas, linha de crédito, etc...</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        <!--- Simulador -------------->
+
 
     </div>
 
 
-    <div class="row justify-content-center text-center">
+    <!--- Botões ----------------------------->
 
-        <div class="col-11 col-lg-2 col-md-6 box-coopera" style="background-color:#7DB61C;">
+    <!-- Faixas ------------------------------>
+    <div class="row justify-content-center">
+
+        <div class="col-2 ms-5 box-coopera" style="background-color:#7DB61C;">
 
             <h4 class="pt-2">PROPÓSITO</h4>
 
@@ -72,7 +219,7 @@
 
         </div>
 
-        <div class="col-11 col-lg-2 col-md-6 box-coopera" style="background-color:#49479D;">
+        <div class="col-2 box-coopera" style="background-color:#49479D;">
 
             <h4 class="pt-2">MISSÃO</h4>
 
@@ -80,7 +227,7 @@
 
         </div>
 
-        <div class="col-11 col-lg-2 col-md-6 box-coopera" style="background-color:#00AE9D;">
+        <div class="col-2 box-coopera" style="background-color:#00AE9D;">
 
             <h4 class="pt-2">VISÃO</h4>
 
@@ -90,7 +237,7 @@
 
         </div>
 
-        <div class="col-11 col-lg-2 col-md-6 box-coopera" style="background-color:#C9D200;">
+        <div class="col-2 box-coopera" style="background-color:#C9D200;">
 
             <h4 class="pt-2">VALORES</h4>
 
@@ -102,11 +249,9 @@
         </div>
 
     </div>
-
-
-
-    <!-- Conteúdo -------------------------------->
+    <!-- Faixas ------------------------------>
 
 </div>
+<!-- Conteúdo -------------------------------->
 
 {% endblock %}

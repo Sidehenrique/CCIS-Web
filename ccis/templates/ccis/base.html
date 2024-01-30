@@ -10,10 +10,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <!-- link css -->
     <link rel="stylesheet" href="{% static 'ccis/style.css' %}">
-
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,11 +25,10 @@
 
 </head>
 
-<body style="background-color:#F1F2F5">
+<body>
 
-<!-- start container-fluid ---------------------------------------------------------------------------------------->
+<!-- start container-fluid --------------------------------------------->
 <div class="container-fluid">
-
 
     <!-- topMenu ------------------------------------------------------->
     <header class="menu-header nav justify-content-center">
@@ -37,20 +37,22 @@
             <div class="container-fluid">
 
                 <!-- Logo do Menu ------------------------------------------------------------------------------------->
-                <a class="navbar-brand" href="{% url 'home' %}">
-                    <img src="{% static 'ccis/logonav.png' %}" alt="logo" width="47" height="54"
-                         class="d-inline-block align-text-center;">
+                <a id="toggleMenu" type="button" class="navbar-brand">
+
+                    <img class="menu-icon" src="{% static 'ccis/menu.png' %}" alt="icon-menu">
+
                 </a>
                 <!-- End Logo do Menu --------------------------------------------------------------------------------->
 
+                <!--<img class="logo-menu" src="{% static 'ccis/logo-menu.png' %}" alt="logo-menu">-->
+                <h2 class="font_logo"><span style="color:#00A194">C</span>CIS</h2>
 
                 <!-- Esquerda do Menu --------------------------------------------------------------------------------->
                 <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
                     <ul class="navbar-nav">
 
-                        <li class="  ms-5 me-4">
-                            <a style="font-family:Asap Semibold; text-decoration: none; color:#B7B7B7;"
-                               href="#"></a>
+                        <li class="ms-5 me-4">
+
                         </li>
 
                     </ul>
@@ -66,53 +68,198 @@
 
                         <ul class="navbar-nav">
 
-
                             <li>
                                 <div class="btn-group dropstart p-0">
 
-                                    <button type="button" class="btn" style="color:#219180"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-bell"></i>
+                                    <!-- links ------------------->
+                                    <button type="button" class="btn" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                        <img style="width: 20px; height: 20px;"
+                                             src="{% static 'ccis/Grupo 6475.png' %}">
                                     </button>
-
-                                    <ul class="dropdown-menu p-0" style="width: 18rem;">
+                                    <ul class="dropdown-menu p-0" style="width: 25rem;">
 
                                         <div class="list-group">
+                                            <div class="text-center pt-2">
+                                                <h6>Links</h6>
+                                                <hr>
+
+                                                <!-- Botões ------------------>
+                                                <div class="row p-4"
+                                                     style="max-height: 400px; overflow-y: auto; overflow-x: auto;">
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://portal.sisbr.coop.br/Citrix/XenApp/auth/loggedout.aspx?CTX_MessageType=INFORMATION&CTX_MessageKey=SessionExpired"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/LogoCitrix.png' %}"
+                                                                 width="70%"
+                                                                 height="auto">
+                                                        </a>
+                                                        Citrix
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://www.sicoob.com.br/group/sicoob-universidade/jornadas-de-aprendizagem"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/Jornada.png' %}"
+                                                                 width="80%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Jornada de Aprendizagem</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://app.credibrasilia.lecom.com.br/sso/?redirectBackTo=https://app.credibrasilia.lecom.com.br:443/bpm/index.jsp"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/LogoLecom.png' %}"
+                                                                 width="80%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Lecom</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://apps.neoway.com.br/auth/login"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/LogoNeoway.png' %}"
+                                                                 width="80%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Neoway</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://portal.sisbr.coop.br/painel-comercial/pessoa-associado"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/PainelComercial.png' %}"
+                                                                 width="80%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Painel Comercial</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://portalmeurh.sicoob.com.br/FrameHTML/web/app/RH/PortalMeuRH/#/login"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/LogoPonto.png' %}"
+                                                                 width="80%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Ponto</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://atendimento.sisbr.coop.br/tas/public/login/form"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/LogoCss.png' %}"
+                                                                 width="80%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Portal de serviços CCS</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://www.sicoobnegocios.com.br/login-usuario.html"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/LogoNegocios.png' %}"
+                                                                 width="80%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Sicoob Negócios</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="http://172.16.2.13/gestaodepessoas" target="_blank"
+                                                           class="btn flex-column" class="botao">
+                                                            <img src="{% static 'ccis/SicoobUniversidade.png' %}"
+                                                                 width="90%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Sicoob Universidade</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://web.sipag.com.br/sipagnet/emi/site"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/LogoSipag.png' %}"
+                                                                 width="80%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Sipag</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://sisbranalitico.sisbr.coop.br/" target="_blank"
+                                                           class="botao">
+                                                            <img src="{% static 'ccis/LogoSisbr.png' %}"
+                                                                 width="70%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Sisbr Analítico</span>
+                                                    </div>
+
+                                                    <div class="col-4 links">
+                                                        <a href="https://sisbrmobile.sicoob.com.br/sisbr/mobile/"
+                                                           target="_blank" class="botao">
+                                                            <img src="{% static 'ccis/LogoSisbr.png' %}"
+                                                                 width="70%"
+                                                                 height="auto">
+                                                        </a>
+                                                        <span style="font-size: 13px;">Sisbr Mobile Download</span>
+                                                    </div>
+
+                                                </div>
+                                                <!-- Botões ------------------>
+
+                                            </div>
+                                        </div>
+
+                                    </ul>
+                                    <!-- links ------------------->
+
+                                    <!-- notificatios ------------------->
+                                    <button type="button" class="btn" style="color:#219180" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                        <i class="fa-solid fa-bell"></i>
+                                        {% if notifications %}
+                                        <span class="notification-badge">{{ notifications|length }}</span>
+                                        {% endif %}
+                                    </button>
+                                    <ul class="dropdown-menu p-0" style="width: 18rem;">
+
+                                        <div class="list-group" style="max-height: 300px; overflow-y: auto;">
+                                            <div class="text-center p-2">
+                                                <h6>Notificações</h6>
+                                            </div>
 
                                             <!-- rodar o for aqui dentro -->
-                                            <a href="#" class="list-group-item list-group-item-action"
-                                               aria-current="true">
+                                            {% for notification in notifications %}
+                                            {% if notification %}
+                                            <a href="{% url notification.url %}"
+                                               class="marcar-lida-notificacao list-group-item list-group-item-action"
+                                               data-notification-id="{{ notification.id }}" aria-current="true">
                                                 <div class="d-flex w-100 justify-content-between">
-                                                    <h6 class="mb-1">Solicitação de Ferias</h6>
-                                                    <small>3 days ago</small>
+                                                    <h6 class="mb-1">{{ notification.author.first_name }}
+                                                        {{ notification.author.last_name }}</h6>
+                                                    <small>{{ notification.date|date:"Y-m-d H:i" }}</small>
                                                 </div>
-                                                <p class="mb-1">Por favor, Solicito ferias ao...</p>
-                                                <small>Assunto: Ferias</small>
+                                                <p class="mb-1">{{ notification.description }}</p>
+                                                <small>Assunto: {{ notification.subject }}</small>
                                             </a>
+                                            {% else %}
+                                            <div>
+                                                <p>Nenhuma solicitação no momento</p>
+                                            </div>
+                                            {% endif %}
 
-                                            <a href="#" class="list-group-item list-group-item-action"
-                                               aria-current="true">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <h6 class="mb-1">Solicitação de Ferias</h6>
-                                                    <small>3 days ago</small>
-                                                </div>
-                                                <p class="mb-1">Por favor, Solicito ferias ao...</p>
-                                                <small>Assunto: Ferias</small>
-                                            </a>
+                                            {% endfor %}
 
-                                            <a href="#" class="list-group-item list-group-item-action"
-                                               aria-current="true">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <h6 class="mb-1">Solicitação de Ferias</h6>
-                                                    <small>3 days ago</small>
-                                                </div>
-                                                <p class="mb-1">Por favor, Solicito ferias ao...</p>
-                                                <small>Assunto: Ferias</small>
-                                            </a>
 
                                         </div>
 
                                     </ul>
+                                    <!-- notifications ------------------->
+
                                 </div>
                             </li>
 
@@ -124,9 +271,9 @@
                                    aria-expanded="false">
 
                                     <div class="">
-                                            <span class="nav-photo">
+                                        <span class="nav-photo">
                                                 {% if user_data.logFoto %}
-                                                <img class="nav-photo" src="{{ logFoto.url }}"
+                                                <img class="nav-photo" src="{{ user_data.logFoto.url }}"
                                                      alt="" width="36" height="36">
 
                                                 {% else %}
@@ -151,6 +298,7 @@
                                 </a>
                                 <!-- Button ----------------------------->
 
+
                                 <!-- dropdown --------------------------->
                                 <ul class="dropdown-menu p-0" onclick="event.stopPropagation();">
 
@@ -161,40 +309,46 @@
 
                                                 <!--foto perfil-->
                                                 <div class="d-flex m-3">
-                                                    <a class="profile-link" type="button" data-bs-toggle="modal"
-                                                       data-bs-target="#profileModal"
-                                                       data-bs-whatever="@getbootstrap" aria-expanded="false">
-                                                        <div class="nav-photo-edit">
-                                                            {% if user_data.logFoto %}
-                                                            <img class="nav-photo-edit-image" src="{{ logFoto.url }}"
-                                                                 alt="">
-                                                            {% else %}
-                                                            {% if user_data.logSexo == "Masculino" %}
-                                                            <img class="nav-photo-edit-image"
-                                                                 src="{% static 'ccis/avatar.jpg' %}" alt="">
-                                                            {% elif user_data.logSexo == "Feminino" %}
-                                                            <img class="nav-photo-edit-image"
-                                                                 src="{% static 'ccis/avatar-feminino.jpg' %}" alt="">
-                                                            {% endif %}
-                                                            {% endif %}
-                                                            <div class="icone-lapis-edit">
-                                                                <i class="far fa-pen-to-square"></i>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+
+
+                                                    <div class="nav-photo-edit">
+
+                                                        {% if user_data.logFoto %}
+                                                        <img class="nav-photo-edit" src="{{ user_data.logFoto.url }}">
+
+                                                        {% else %}
+
+                                                        {% if user_data.logSexo == "Masculino" %}
+                                                        <img class="nav-photo-edit"
+                                                             src="{% static 'ccis/avatar.jpg' %}">
+
+                                                        {% elif user_data.logSexo == "Feminino" %}
+                                                        <img class="nav-photo-edit"
+                                                             src="{% static 'ccis/avatar-feminino.jpg' %}">
+
+                                                        {% endif %}
+
+                                                        {% endif %}
+
+
+                                                    </div>
+
 
                                                     <!--nome perfil-->
                                                     <div class="ms-2">
+
                                                         <a href="{% url 'profile' request.user.id %}"
-                                                           class="btn custom-profile-button" data-toggle="tooltip"
-                                                           data-placement="top"
-                                                           title="Clique para ver o perfil do usuário" data-delay="100">
-                                                            <strong class="">{{ user_data.logName }} {{ user_data.logLast }}</strong>
+                                                           class="btn custom-profile-button"
+                                                           title="Perfil" data-delay="100">
+
+                                                            <strong class="">{{ user_data.logName }}
+                                                                {{ user_data.logLast }}</strong>
                                                             <span class="me-2">{{ user_data.logEmail }}</span>
+
                                                         </a>
 
 
-                                                        <select class="m-0" style="border: none;">
+                                                        <select class="ms-2" style="border: none;">
                                                             <option value="valor1" selected>Disponivel</option>
                                                             <option value="valor2">Ocupado</option>
                                                             <option value="valor3">Ausente</option>
@@ -234,42 +388,29 @@
 
                                                 <div class="">
                                                     <a style="font-size: 15px;" class="dropdown-item"
-                                                       href="{%url 'processos'%}">
-                                                            <span>
-                                                                <i style="font-size: 2vh;"
-                                                                   class="fa-solid fa-file-circle-plus"></i>
-                                                                Painel Solicitações
-                                                            </span>
+                                                       href="{% url 'kanban_user' %}">
+                                                        <span>
+                                                            <i style="font-size: 2vh;"
+                                                               class="fa-solid fa-file-circle-plus"></i>
+                                                            Minhas Solicitações
+                                                        </span>
                                                     </a>
                                                 </div>
 
                                             </div>
 
-
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                                    <button class="accordion-button collapsed ps-3" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsStayOpen-collapseThree"
-                                                            aria-expanded="false"
-                                                            aria-controls="panelsStayOpen-collapseThree">
-                                                            <span>
-                                                                <i style="font-size: 2vh;" class="fa-solid fa-book"></i>
-                                                                Utilitarios
-                                                            </span>
-                                                    </button>
-                                                </h2>
 
-                                                <div id="panelsStayOpen-collapseThree"
-                                                     class="accordion-collapse collapse"
-                                                     aria-labelledby="panelsStayOpen-headingThree">
-
-                                                    <div class="accordion-body p-0">
-
-                                                        <div><a class="dropdown-item"
-                                                                href="{%url 'utilitariosCopy'%}">Links</a></div>
-
-                                                    </div>
+                                                <div class="">
+                                                    <a type="button" data-bs-toggle="modal"
+                                                       data-bs-target="#configModal" style="font-size: 15px;"
+                                                       class="dropdown-item">
+                                                        <span>
+                                                            <i style="font-size: 2vh;"
+                                                               class="fa-solid fa-gear"></i>
+                                                            Configurações
+                                                        </span>
+                                                    </a>
                                                 </div>
 
                                             </div>
@@ -284,33 +425,6 @@
                                     </li>
                                 </ul>
                                 <!-- dropdown --------------------------->
-                                <!-- Modal ----------------------------->
-                                <div class="modal fade" id="fotoPerfil" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Fechar">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Fechar
-                                                </button>
-                                                <button type="button" class="btn btn-primary">Salvar
-                                                    mudanças
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Modal ------------------------------>
 
                             </li>
                             <!-- Conta usuário ------------------->
@@ -329,100 +443,74 @@
     </header>
     <!-- End topMenu --------------------------------------------------->
 
-
     <main>
 
         <div class="container-fluid  ps-0 pe-0">
 
             <div class="row">
 
-                <!-- Menu Lateral -------------------------------------------------------------------->
-                <div class="col-lg-2 col-md-3 col-12 menu-background" style="padding-top:80px">
+                <div id="menu_lateral" class="position-relative ps-0 pe-0">
 
-                    <!-- Menu -->
-                    <ul class="ul-lista-novo">
+                    <ul>
 
-                        <!-- Departamentos -->
-                        <li class="li-lista-novo">
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'departamentos' %}"
-                               class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-network-wired"></i>
-                                Departamentos
+                        <li>
+                            <a href="{% url 'departamentos' %}" aria-current="page">
+                                <i class="fa-solid fa-cubes"></i>
+                                <small>Departamentos</small>
                             </a>
+
                         </li>
 
-                        <!-- Gestão e Controle -->
+                        <hr class="m-1" style=" width: 33px; color:#b3b3b3;">
+
                         {% if controle %}
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoControle' %}"
-                               class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-handshake"></i>
-                                Gestão & Controle
+                        <li>
+                            <a href="{% url 'gestaoControle' %}" aria-current="page">
+                                <img class="menu-icon-responsivo" src="{% static 'ccis/iconcontrole.png' %}">
+                                <small class="ms-2">Gestão e Controle</small>
                             </a>
-
                         </li>
                         {% endif %}
 
-                        <!-- Gestão de Metas -->
-                        <li class="li-lista-novo">
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'gestaoNegocios' %}"
-                               class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-bullseye"></i>
-                                Gestão de Negócios
+                        <li>
+                            <a href="{% url 'gestaoNegocios' %}" aria-current="page">
+                                <i class="fa-solid fa-handshake"></i>
+                                <small>Gestão de Negócios</small>
                             </a>
                         </li>
 
-                        <!-- ferias -->
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'ferias' %}"
-                               class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-umbrella-beach"></i>
-                                Férias
+                        <li>
+                            <a href="{% url 'coopera' %}" aria-current="page">
+                                <img class="menu-icon-responsivo" src="{% static 'ccis/Grupo 6349.png' %}">
+                                <small class="ms-2">Cooperar</small>
                             </a>
                         </li>
 
-                        <!-- anbima -->
-                        <li class="li-lista-novo">
+                        <hr class="m-1" style=" width: 33px; color:#b3b3b3;">
 
-                            <a style="font-family: asap; color: #00353e; font-size: 15px;" href="{% url 'anbima' %}"
-                               class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-certificate"></i>
-                                Certificações Anbima
+                        <li>
+                            <a href="" aria-current="page">
+                                <i class="fa-solid fa-comments"></i>
+                                <small>Chat</small>
                             </a>
                         </li>
 
-                        <hr>
+                        <hr class="m-1" style=" width: 33px; color:#b3b3b3;">
 
-                        <!-- coopera -->
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{% url 'coopera' %}"
-                               class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-infinity"></i>
-                                Cooperar+
-                            </a>
-                        </li>
-
-                        <!-- Malotes -->
-                        <li class="li-lista-novo">
-
-                            <a style="font-family: asap; color: #00353e;" href="{%url 'malotes'%}"
-                               class="li-link-novo" aria-current="page">
-                                <i class="fa-solid fa-sack-dollar"></i>
-                                Controle de Malotes
+                        <li>
+                            <a href="{% url 'ccc' %}" aria-current="page">
+                                <i class="fa-solid fa-ticket"></i>
+                                <small>Capital Colaboradores</small>
                             </a>
                         </li>
 
                     </ul>
 
                 </div>
-                <!-- End Menu Lateral ---------------------------------------------------------------->
 
 
-                <!-- Conteúdo -------------------------------------------------------------------->
-                <div class="col-lg-10 col-md-9 col-12 mt-lg-0" style="padding: 0 0 0 0;">
+                <!-- Conteúdo ----------------------------------->
+                <div id="conteudo_container" class="col mt-lg-0 position-relative p-0">
 
                     <!-- Modal foto e banner -------------------->
                     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModal"
@@ -475,13 +563,30 @@
                         </div>
                     </div>
                     <!-- End Modal foto e banner ---------------->
+
                     {% block conteudo %}
 
 
                     {% endblock %}
 
+                    <!--  Toast de notificações e alertas ------>
+                    <div id="customToast"
+                         class="toast align-items-center text-white bg-primary
+                         border-0 position-fixed top-0 start-50 translate-middle-x"
+                         role="alert" aria-live="assertive"
+                         aria-atomic="true" style="margin-top:70px">
+                        <div class="d-flex">
+                            <div id="toastBody" class="toast-body">
+                                Hello, world! This is a toast message.
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <!--  Toast de notificações e alertas ------>
+
                 </div>
-                <!-- End Conteúdo ---------------------------------------------------------------->
+                <!-- End Conteúdo ------------------------------->
 
             </div>
 
@@ -492,6 +597,169 @@
 </div>
 <!-- end container-fluid ------------------------------------------------------------------------>
 
+<!-- Configurações ---------------------->
+<div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Configurações</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <!-- Botões -->
+                    <div id="menu_config" class="col-3 mb-3" style="border-right: 1px solid #ccc;">
+                        <ul class="ul-menu-kanban">
+                            <li class="li-menu-request">
+                                <a type="button" id="btn-config_1" class="li-link-kanban" aria-current="page">
+                                    Temas
+                                </a>
+                            </li>
+                            <li class="li-menu-kanban">
+                                <a type="button" id="btn_config_2" class="li-link-kanban" aria-current="page">
+                                    Horários
+                                </a>
+                            </li>
+                            <li class="li-menu-kanban">
+                                <a type="button" id="btn_config_3" class="li-link-kanban" aria-current="page">
+                                    Prioridade
+                                </a>
+                            </li>
+                            <li class="li-menu-kanban">
+                                <a type="button" id="btn_config_4" class="li-link-kanban" aria-current="page">
+                                    Som
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Fim dos Botões -->
+
+                    <!-- Temas -->
+                    <div id="config_1" class="col-8" style="display:none;">
+                        <div class="row">
+
+                            <div class="col-12 tema d-flex ms-4 p-3">
+                                <a id="padraoBtn" class="d-flex align-items-center text-start"
+                                   onclick="suaFuncaoJavaScript()" style="text-decoration: none;">
+                                    <div>
+                                        <h5 style="color: black;">Verde Claro</h5>
+                                        <p style="color: #37474F;">Para uma intranet com mais vida</p>
+                                    </div>
+                                    <img src="{% static 'ccis/backgroundPro.png' %}" class="img-fluid ms-auto"
+                                         style="width: 40%; height: auto;">
+                                </a>
+                            </div>
+
+                            <div class="col-12 tema d-flex mt-3 ms-4 p-3">
+                                <a id="cinzaBtn" class="d-flex align-items-center text-start"
+                                   onclick="suaFuncaoJavaScript()" style="text-decoration: none;">
+                                    <div>
+                                        <h5 style="color: black;">Cinza Claro</h5>
+                                        <p style="color: #37474F;">Para uma intranet mais fria</p>
+                                    </div>
+                                    <img src="{% static 'ccis/backgroundCinza.png' %}" class="img-fluid ms-auto"
+                                         style="width: 40%; height: auto;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fim dos Temas -->
+
+                    <!-- Determinar Hora -->
+                    <div id="config_2" class="col-8 ms-4" style="display:none;">
+
+                        <div class="tempo-kanban">
+
+                            <h5>Alertas de Atraso</h5>
+                            <span style="font-size: 13px;">Determine o tempo médio e máximo para os alertas de atendimento</span>
+
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <span style="font-size: 13px;">Tempo Médio</span>
+                                    <select class="form-select" id="tempoMedio" name="tempo">
+                                            <option value="1">1 minuto</option>
+                                            <option value="5">5 minutos</option>
+                                            <option value="10">10 minutos</option>
+                                            <option value="1h">1 hora</option>
+                                            <option value="3h">3 horas</option>
+                                            <option value="6h">6 horas</option>
+                                            <option value="1d">1 dia</option>
+                                            <option value="7d">7 dias</option>
+                                            <option value="30d">30 dias</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <span style="font-size: 13px;">Tempo Máximo</span>
+                                    <select class="form-select" id="tempoMaximo" name="tempo">
+                                            <option value="1">1 minuto</option>
+                                            <option value="5">5 minutos</option>
+                                            <option value="10">10 minutos</option>
+                                            <option value="1h">1 hora</option>
+                                            <option value="3h">3 horas</option>
+                                            <option value="6h">6 horas</option>
+                                            <option value="1d">1 dia</option>
+                                            <option value="7d">7 dias</option>
+                                            <option value="30d">30 dias</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="tempo-kanban mt-3">
+
+                            <h5>Cards Finalizados</h5>
+                            <span style="font-size: 13px;">Determine o tempo em que seus cards permanecerão na coluna finalizados</span>
+
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    {{ clock.finalizados }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Fim da Determinação da Hora -->
+
+                    <div id="config_3" class="col-8" style="display:none;">
+                        <!-- Conteúdo da Configuração 3 -->
+                    </div>
+
+                    <div id="config_4" class="col-8" style="display:none;">
+
+                        <div class="tempo-kanban ms-4">
+                            <h5>Notificações</h5>
+                            <span style="font-size: 13px;">Ativar ou desativar o som das notificações da intranet</span>
+
+                            <div style="font-size: 20px" class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="SoundNotification">
+                            </div>
+                        </div>
+
+                        <div class="tempo-kanban ms-4 mt-3">
+                            <h5>Kanban</h5>
+                            <span style="font-size: 13px;">Ativar ou desativar o som das notificações do Kanban</span>
+
+                            <div style="font-size: 20px" class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="SoundKanban">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Configurações ---------------------->
 
 <!-- Inclua o jQuery primeiro -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -501,9 +769,24 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+
+<!-- No cabeçalho do seu HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale-all.js"></script>
+
+
 <!-- Finalmente, inclua seu script personalizado -->
 <script src="{% static 'ccis/script.js' %}"></script>
 
+<script>
+    var userData = {
+        userId: {{ user_data.log_id }},
+        userGroup: '{{ user_data.logGroup }}',
+        userGroupId: '{{ user_data.id_do_grupo }}',
+    };
+</script>
 
 </body>
 

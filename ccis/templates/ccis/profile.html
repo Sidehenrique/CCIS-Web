@@ -4,16 +4,11 @@
 {% block conteudo %}
 
 <!--Background profile ------------------------------->
-<div class="profile-background">
-
-    {% if dados.canvas %}
-    <img class="profile-img" src="{{ dados.canvas.url }}">
-    {% else %}
-    <img src="{% static 'ccis/backgroundPro.jpg' %}" class="profile-img">
-    {% endif %}
-
-
-</div>
+{% if dados.canvas %}
+<img class="profile-img" src="{{ dados.canvas.url }}">
+{% else %}
+<img src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
+{% endif %}
 <!--Background profile ------------------------------->
 
 
@@ -27,15 +22,21 @@
 </button>
 <!-- Button Banner ----------------------------------->
 
+<!-- Button edit ----------------------------------->
+<button class="profile-button-edit" type="button" data-bs-toggle="modal" data-bs-target="#profileModal">
+    <i class="fa-solid fa-pencil"></i>
+</button>
+<!-- Button edit ----------------------------------->
+
 
 <!-- Conteúdo Pagina 1 ------------------------------->
 <div id="pag1" class="container-fluid scrollable-content">
 
-    <!-- mobile ------------------------------->
+    <!-- header ------------------------------->
     <div class="row mt-4">
 
         <!-- avatar -------------------------->
-        <div class="d-lg-none d-md-none col d-sm-block profile-info mb-3">
+        <div class="col-3 profile-info mb-3">
 
             {% if dados.foto %}
             <img class="profile-user"
@@ -59,94 +60,10 @@
 
             <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
 
+
         </div>
         <!-- avatar -------------------------->
 
-        <!-- Status -------------------------->
-        <div class="d-lg-none d-md-none col-sm-12 d-sm-block align-self-end mb-3">
-            <div class="profile-progress mb-3">
-
-                <!-- Barra de progresso -->
-                <div class="col position-relative">
-
-                    <div class="progress-percent">{{pf}}%</div>
-                    <div class="">Profile status</div>
-
-                    <div class="progress"
-                         role="progressbar"
-                         aria-label=""
-                         aria-valuenow=""
-                         aria-valuemin="0"
-                         aria-valuemax="100"
-                         style="height: 7px; width: 100%;">
-                        <div class="progress-bar">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Barra de progresso -->
-
-                <!-- celos certificados -->
-                <div class="justify-content-end">
-
-                    <div class="image-list">
-                        {% for certifi in cert %}
-                        {% if certifi.certiAnbima == 'CPA-10' %}
-                        <img src="{% static 'ccis/CPA-10.jpg' %}">
-                        {% elif certifi.certiAnbima == 'CPA-20' %}
-                        <img src="{% static 'ccis/CPA-20.jpg' %}">
-                        {% elif certifi.certiAnbima == 'CEA' %}
-                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
-                        {% else %}
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-
-                </div>
-                <!-- celos certificados -->
-
-            </div>
-        </div>
-        <!-- status -------------------------->
-
-    </div>
-    <!-- mobile ------------------------------->
-
-    <!-- header ------------------------------->
-    <div class="row mt-4">
-
-        <!-- avatar -------------------------->
-        <div class="col-md-5 col-lg-3 d-none d-sm-block d-sm-none d-md-block profile-info mb-3 container">
-
-            <div class="m-3">
-
-                <a class="profile-link" type="button" data-bs-toggle="modal"
-                   data-bs-target="#profileModal"
-                   data-bs-whatever="@getbootstrap" aria-expanded="false">
-                    <div class="nav-photo2">
-                        {% if user_data.logFoto %}
-                        <img src="{{ logFoto.url }}" alt="" width="165" height="180">
-                        {% else %}
-                        {% if user_data.logSexo == "Masculino" %}
-                        <img src="{% static 'ccis/avatar.jpg' %}" alt="" width="165" height="180">
-                        {% elif user_data.logSexo == "Feminino" %}
-                        <img src="{% static 'ccis/avatar-feminino.jpg' %}" alt="" width="165" height="180">
-                        {% endif %}
-                        {% endif %}
-                        <div class="icone-lapis2">
-                            <i class="far fa-pen-to-square"></i>
-                        </div>
-                    </div>
-                </a>
-
-                <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
-
-                <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
-
-            </div>
-        </div>
-
-        <!-- avatar -------------------------->
         <!-- Status -------------------------->
         <div class="col d-none d-sm-block d-sm-none d-md-block align-self-end">
             <div class="profile-progress mb-3">
@@ -156,9 +73,7 @@
 
                     <div class="progress-percent">{{ pf }}%</div>
 
-                    <div class="progress-title">
-                            <span>Profile Status<span>
-                    </div>
+                    <span class="progress-title">Profile Status<span>
 
                     <div class="progress"
                          role="progressbar"
@@ -168,8 +83,8 @@
                          aria-valuemax="100"
                          style="height: 7px;">
                         <div class="progress-bar custom-progress-bar" style="width: {{ pf }}%;"></div>
-                    </div>
 
+                    </div>
                 </div>
                 <!-- Barra de progresso -->
 
@@ -204,7 +119,7 @@
     <div class="row mb-3">
 
         <!-- Info user ----------------------->
-        <div class="col-11 col-lg-3 col-md-5 card-custom container">
+        <div class="col-3 card-custom container">
 
             <div class="card-header-custom">
                 Profile
@@ -286,13 +201,42 @@
 
             <hr class="linha-custom">
 
+            <div class="card-timeline">
+                <div class="card-body" style="margin-top: 30px;">
 
-            <div class="card-body-custom" style="text-align: center;">
-
-                <img src="{% static 'ccis/Grupo 2410.png' %}"
-                     width="100%"
-                     height="auto">
-
+                    <div class="hori-timeline" dir="ltr">
+                        <ul class="list-inline events">
+                            <li class="list-inline-item event-list">
+                                <div class="px-4">
+                                    <div class="event-date bg-soft-primary" style="color: white;">01/12/23</div>
+                                    <h5 class="font-size-16">Primeiro Evento</h5>
+                                    <p class="text-muted">Sua Time-line está ficando pronta...</p>
+                                </div>
+                            </li>
+                            <li class="list-inline-item event-list">
+                                <div class="px-4">
+                                    <div class="event-date bg-soft-success" style="color: white;">01/12/23</div>
+                                    <h5 class="font-size-16">Segundo Evento</h5>
+                                    <p class="text-muted">Sua Time-line está ficando pronta...</p>
+                                </div>
+                            </li>
+                            <li class="list-inline-item event-list">
+                                <div class="px-4">
+                                    <div class="event-date bg-soft-danger" style="color: white;">01/12/23</div>
+                                    <h5 class="font-size-16">Terceiro Evento</h5>
+                                    <p class="text-muted">Sua Time-line está ficando pronta...</p>
+                                </div>
+                            </li>
+                            <li class="list-inline-item event-list">
+                                <div class="px-4">
+                                    <div class="event-date bg-soft-warning" style="color: white;">01/12/23</div>
+                                    <h5 class="font-size-16">Quarto Evento</h5>
+                                    <p class="text-muted">Sua Time-line está ficando pronta...</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -306,7 +250,7 @@
 
         <!-- Equipe -------------------------->
         {% if equipe %}
-        <div class="col-11 col-sm-12 col-md-5 col-lg-3 card-custom align-self-start container">
+        <div class="col-3 card-custom align-self-start container">
 
             <div class="card-header-custom">
                 Equipe
@@ -381,7 +325,6 @@
                             <h6 class="m-0">{{ usuario.first_name }} {{usuario.last_name}}</h6>
                             <small class="m-0">{{ usuario.cargo }}</small>
                         </div>
-
                     </div>
 
                 </a>
@@ -414,194 +357,36 @@
 
         <!-- Histórico Corporativo ----------->
         <div class="col card-custom">
-
             <div class="card-header-custom">
-                Atividade | Em breve
+                Atividades
             </div>
-
             <hr class="linha-custom">
+            <div class="card-body-custom">
+                <ul class="list-group list-group-flush">
 
+                    <li class="list-group-item">
+                        <h5>Painel de Solicitações</h5>
+                        <p>Verifique seu painel de solicitações sempre que puder!</p>
+                    </li>
 
-            <div class="card-body-custom" style="text-align: center;">
+                    <li class="list-group-item">
+                        Não há eventos para exibir.
+                    </li>
 
-
+                </ul>
             </div>
-
         </div>
         <!-- Histórico Corporativ ------------>
 
     </div>
     <!-- Cards ------------------------------->
 
-
 </div>
 <!-- Conteúdo Pagina 1 ------------------------------->
 
 
 <!-- Conteudo pagina 2 ------------------------------->
-<div id="pag2" class="container-fluid scrollable-content" style="display: none;">
-
-    <!-- mobile ------------------------------->
-    <div class="row mt-4">
-
-        <!-- avatar -------------------------->
-        <div class="d-lg-none d-md-none col d-sm-block profile-info mb-3">
-
-            {% if dados.foto %}
-            <img class="profile-user"
-                 src="{{ dados.foto.url }}">
-
-            {% else %}
-
-            {% if dados.sexo == "Masculino" %}
-            <img class="profile-user"
-                 src="{% static 'ccis/avatar.jpg' %}">
-
-            {% elif dados.sexo == "Feminino" %}
-            <img class="profile-user"
-                 src="{% static 'ccis/avatar-feminino.jpg' %}">
-
-            {% endif %}
-
-            {% endif %}
-
-            <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
-
-            <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
-
-        </div>
-        <!-- avatar -------------------------->
-
-        <!-- Status -------------------------->
-        <div class="d-lg-none d-md-none col-sm-12 d-sm-block align-self-end mb-3">
-            <div class="profile-progress mb-3">
-
-                <!-- Barra de progresso -->
-                <div class="col position-relative">
-
-                    <div class="progress-percent">{{pf}}%</div>
-                    <div class="">Profile status</div>
-
-                    <div class="progress"
-                         role="progressbar"
-                         aria-label=""
-                         aria-valuenow=""
-                         aria-valuemin="0"
-                         aria-valuemax="100"
-                         style="height: 7px; width: 100%;">
-                        <div class="progress-bar">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Barra de progresso -->
-
-                <!-- celos certificados -->
-                <div class="justify-content-end">
-
-                    <div class="image-list">
-                        {% for certifi in cert %}
-                        {% if certifi.certiAnbima == 'CPA-10' %}
-                        <img src="{% static 'ccis/CPA-10.jpg' %}">
-                        {% elif certifi.certiAnbima == 'CPA-20' %}
-                        <img src="{% static 'ccis/CPA-20.jpg' %}">
-                        {% elif certifi.certiAnbima == 'CEA' %}
-                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
-                        {% else %}
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-
-                </div>
-                <!-- celos certificados -->
-
-            </div>
-        </div>
-        <!-- status -------------------------->
-
-    </div>
-    <!-- mobile ------------------------------->
-
-    <!-- header ------------------------------->
-    <div class="row mt-4">
-
-        <!-- avatar -------------------------->
-        <div class="col-md-5 col-lg-3 d-none d-sm-block d-sm-none d-md-block profile-info mb-3">
-
-            {% if dados.foto %}
-            <img class="profile-user"
-                 src="{{ dados.foto.url }}">
-
-            {% else %}
-
-            {% if dados.sexo == "Masculino" %}
-            <img class="profile-user"
-                 src="{% static 'ccis/avatar.jpg' %}">
-
-            {% elif dados.sexo == "Feminino" %}
-            <img class="profile-user"
-                 src="{% static 'ccis/avatar-feminino.jpg' %}">
-
-            {% endif %}
-
-            {% endif %}
-
-            <h2 class="profile-name pt-2 mb-0"> {{ first_name }} {{ last_name}} </h2>
-
-            <span class="profile-cargo m-0"> {{ prof.cargo }} </span>
-
-        </div>
-        <!-- avatar -------------------------->
-
-        <!-- Status -------------------------->
-        <div class="col d-none d-sm-block d-sm-none d-md-block align-self-end">
-            <div class="profile-progress mb-3">
-
-                <!-- Barra de progresso -->
-                <div class="col position-relative">
-
-                    <div class="progress-percent">{{pf}}%</div>
-                    <div class="">Profile status</div>
-
-                    <div class="progress"
-                         role="progressbar"
-                         aria-label=""
-                         aria-valuenow=""
-                         aria-valuemin="0"
-                         aria-valuemax="100"
-                         style="height: 7px; width: 100%;">
-                        <div class="progress-bar">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Barra de progresso -->
-
-                <!-- celos certificados -->
-                <div class="justify-content-end">
-
-                    <div class="image-list">
-                        {% for certifi in cert %}
-                        {% if certifi.certiAnbima == 'CPA-10' %}
-                        <img src="{% static 'ccis/CPA-10.jpg' %}">
-                        {% elif certifi.certiAnbima == 'CPA-20' %}
-                        <img src="{% static 'ccis/CPA-20.jpg' %}">
-                        {% elif certifi.certiAnbima == 'CEA' %}
-                        <img src="{% static 'ccis/CPA-CEA.jpg' %}">
-                        {% else %}
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-
-                </div>
-                <!-- celos certificados -->
-
-            </div>
-        </div>
-        <!-- Status -------------------------->
-
-    </div>
-    <!-- header ------------------------------->
+<div id="pag2" class="container-fluid scrollable-content mt-3" style="display: none;">
 
     {% if log_id == user %}
     <!-- from escolaridade -------------------->
@@ -1134,7 +919,6 @@
     <!-- End Modal foto e banner ------------------------->
 
 </div>
-
 
 {% endblock %}
 

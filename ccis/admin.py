@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from .models import dadosPessoais, dependentes, enderecoContato, escolaridade, certificacao, profissional, \
-    dadosBancarios, outros, CustomGroupInfo
+    dadosBancarios, outros, CustomGroupInfo, SectorButtons, KanbanGroupUser
 from django.contrib.auth.models import User, Group
 
 
@@ -24,25 +24,37 @@ class profissionalInline(admin.StackedInline):
     can_delete = False
 
 
-class CustomGroupInline(admin.TabularInline):  # Use TabularInline ou StackedInline, dependendo da aparência desejada
+@admin.register(SectorButtons)
+class CustomButtonsSectorAdmin(admin.ModelAdmin):
+    list_display = ('group', 'text1', 'text2', 'cor', 'url', 'icon', 'permissao')
+    list_filter = ('cor', 'permissao')
+    search_fields = ('group__name', 'text1', 'text2')
+
+
+class CustomGroupInline(admin.TabularInline):
     model = CustomGroupInfo
     can_delete = False
-    verbose_name = 'Custom Group'  # Nome da seção no admin
+    verbose_name = 'Custom Group'
     verbose_name_plural = 'Custom Groups'
 
 
 class CustomUserAdmin(UserAdmin):
-    inlines = (dadosPessoaisInline, enderecoContatoInline, profissionalInline)
+    inlines = (dadosPessoaisInline, enderecoContatoInline, profissionalInline,)
 
 
 class CustomGroupAdmin(GroupAdmin):
     inlines = [CustomGroupInline]
 
 
+class KanbanGroupUserAdmin(admin.ModelAdmin):
+    list_display = ('user', 'group')
+    search_fields = ('user__username', 'group__name')
+
+
 # Registre o modelo DadosPessoais com o admin personalizado
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
-
-
 admin.site.unregister(Group)
 admin.site.register(Group, CustomGroupAdmin)
+admin.site.register(KanbanGroupUser, KanbanGroupUserAdmin)
+
