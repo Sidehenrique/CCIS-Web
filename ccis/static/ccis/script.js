@@ -1469,6 +1469,20 @@ $('.marcar-lida-notificacao').click(function() {
     });
 });
 
+function limparTodasNotificacoes() {
+    $.ajax({
+        url: '/limpar_todas_notificacoes/',
+        method: 'POST',
+        success: function(data) {
+            if (data.success) {
+                // Reload the page or update the UI as needed
+                location.reload();
+            } else {
+                alert('Erro ao limpar todas as notificações: ' + data.message);
+            }
+        }
+    });
+}
 
 //Menu --------------------------------------------------------------------------------------------------
 $(document).ready(function () {

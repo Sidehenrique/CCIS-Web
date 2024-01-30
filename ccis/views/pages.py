@@ -1363,3 +1363,14 @@ def notificacao_lida(request, notification_id):
 def chat(request):
     return render(request, 'ccis/chat.html')
 
+
+def limpar_todas_notificacoes(request):
+    if request.method == 'POST':
+        try:
+            # Assuming you have a function or method to mark all notifications as read
+            Notification.objects.all().update(is_read=True)
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method'})
