@@ -1229,7 +1229,7 @@ function loadCardInfo(cardId) {
                 });
 
 
-                //------------------------------------------------------------------------------------------------------
+// ------------- TRATAMENTO DOS BOTÕES DE AÇÃO -------------------------------------------------------
 
 
                 // Obter o ID do usuário logado e o ID do grupo do usuário logado
