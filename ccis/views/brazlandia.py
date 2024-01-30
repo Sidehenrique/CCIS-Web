@@ -59,7 +59,7 @@ def braz_home(request):
 
     contagem_condicional = CardSetorHistory.objects.filter(
         status_atual__in=['Triagem', 'Em Atendimento'],
-        setor_atual='Formosa',
+        setor_atual='Brazlândia',
         status_atual=Subquery(ultimos_status)
     ).count()
 
@@ -75,7 +75,7 @@ def braz_home(request):
     ).order_by('-data_hora').values('data_hora')[:1]
 
     diferenca_tempo = CardSetorHistory.objects.filter(
-        setor_atual='Formosa',
+        setor_atual='Brazlândia',
         status_atual__in=['Triagem', 'Concluido']
     ).values('setor_atual').annotate(
         tempo_atendimento=Avg(ExpressionWrapper(
@@ -105,7 +105,10 @@ def braz_home(request):
             resultados.append(
                 '-',
             )
-    tempo = resultados[0]
+    if resultados:
+        tempo = resultados[0]
+    else:
+        tempo = "-"
 
     # média da avaliação por setor
 
