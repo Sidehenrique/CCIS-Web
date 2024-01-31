@@ -9,10 +9,10 @@
 <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
 
-<!--Container--------------------------------->
+<!--Container---------------------------------->
 <div class="container-fluid scrollable-content">
 
-    <!-- Menu settings ----------------------->
+    <!-- Menu settings ------------------------>
     <div class="row mt-1">
 
         <!-- Home e Area de trabalho ---------->
@@ -32,11 +32,14 @@
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
                     {% for grupo in kanban_group %}
-                        <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.group.name }}">
-                            {{ grupo.group.name }}
-                        </li>
+                    <li style="cursor: pointer;" class="dropdown-item-group dropdown-item"
+                        data-value="{{ grupo.group.name }}">
+                        {{ grupo.group.name }}
+                    </li>
                     {% endfor %}
-                    <li class="dropdown-item-group dropdown-item" data-value="Minhas Solicitações">Minhas solicitações</li>
+                    <li style="cursor: pointer;" class="dropdown-item-group dropdown-item"
+                        data-value="Minhas Solicitações">Minhas solicitações
+                    </li>
                 </ul>
 
 
@@ -239,10 +242,10 @@
         <!-- Filtros ------------------------->
 
     </div>
-    <!-- Menu settings ----------------------->
+    <!-- Menu settings ------------------------>
 
 
-    <!-- kanban ------------------------------>
+    <!-- kanban ------------------------------->
     <div class="row mt-4">
 
         <!-- Triagem ----------------------------->
@@ -326,10 +329,10 @@
         <!-- Finalizado -------------------------->
 
     </div>
-    <!-- kanban ------------------------------>
+    <!-- kanban ------------------------------->
 
 
-    <!-- Modal Equipe ------------------------>
+    <!-- Modal Equipe ------------------------->
     <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -428,10 +431,10 @@
             </div>
         </div>
     </div>
-    <!-- Modal Equipe ------------------------>
+    <!-- Modal Equipe ------------------------->
 
 
-    <!-- Modal Processos --------------------->
+    <!-- Modal Processos ---------------------->
     <div class="modal fade"
          id="processoModal"
          tabindex="-1"
@@ -442,7 +445,8 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
-                <!-- header --------------------->
+
+                <!-- header ------------------>
                 <div class="modal-header">
 
                     <h5 class="modal-title me-1" id="assuntoInfo"></h5>
@@ -452,15 +456,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                 </div>
-                <!-- header --------------------->
+                <!-- header ------------------>
 
 
-                <!-- body ----------------------->
+                <!-- body -------------------->
                 <div class="modal-body">
 
                     <div class="row">
 
-                        <!-- informações -->
+                        <!-- Informações ----->
                         <div class="col-4 overflow-auto" style="border-right:1px solid #818181">
 
 
@@ -568,10 +572,10 @@
                             </div>
 
                         </div>
-                        <!-- informações -->
+                        <!-- Informações ----->
 
 
-                        <!-- message ------------>
+                        <!-- message --------->
                         <div class="col-6" style="border-right:1px solid #818181;">
 
                             <!-- cabeçalho ------>
@@ -663,10 +667,10 @@
 
 
                         </div>
-                        <!-- message ------------>
+                        <!-- message --------->
 
 
-                        <!-- Ações -------------->
+                        <!-- Ações ----------->
                         <div class="col">
 
                             <h5 class="text-center p-2">AÇÕES</h5>
@@ -798,16 +802,16 @@
                             </ul>
 
                         </div>
-                        <!-- Ações -------------->
+                        <!-- Ações ----------->
 
                     </div>
 
 
                 </div>
-                <!-- body ----------------------->
+                <!-- body -------------------->
 
 
-                <!-- footer --------------------->
+                <!-- footer ------------------>
                 <div class="modal-footer">
 
                     <div class="col-10">
@@ -822,10 +826,12 @@
                     </div>
 
                 </div>
-                <!-- footer --------------------->
+                <!-- footer ------------------>
+
 
             </div>
         </div>
+
     </div>
     <!-- Modal Processos --------------------->
 
@@ -924,7 +930,7 @@
     <!-- Modal cor --------------------------->
 
 
-    <!-- Configurações ---------------------->
+    <!-- Configurações ----------------------->
     <div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -937,7 +943,8 @@
                 <div class="modal-body">
 
                     <div class="row">
-                        <!-- Botões -->
+
+                        <!-- Botões ---------->
                         <div id="menu_config" class="col-3 mb-3" style="border-right: 1px solid #ccc;">
                             <ul class="ul-menu-kanban">
                                 <li class="li-menu-request">
@@ -962,9 +969,9 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- Fim dos Botões -->
+                        <!-- Botões ---------->
 
-                        <!-- Temas -->
+                        <!-- Temas ----------->
                         <div id="config_1" class="col-8" style="display:none;">
                             <div class="row">
 
@@ -993,9 +1000,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Fim dos Temas -->
+                        <!-- Temas ----------->
 
-                        <!-- Determinar Hora -->
+                        <!-- Hora ------------>
                         <div id="config_2" class="col-8 ms-4" style="display:none;">
 
                             <div class="tempo-kanban">
@@ -1031,14 +1038,14 @@
                             </div>
 
                         </div>
-                        <!-- Fim da Determinação da Hora -->
+                        <!-- Hora ------------>
 
                         <div id="config_3" class="col-8" style="display:none;">
-                            <!-- Conteúdo da Configuração 3 -->
+                            <!-- Configuração Prioridade -->
                         </div>
 
+                        <!-- Sons ------------>
                         <div id="config_4" class="col-8" style="display:none;">
-
                             <div class="tempo-kanban ms-4">
                                 <h5>Notificações</h5>
                                 <span style="font-size: 13px;">Ativar ou desativar o som das notificações da intranet</span>
@@ -1056,8 +1063,9 @@
                                     <input class="form-check-input" type="checkbox" id="SoundKanban">
                                 </div>
                             </div>
-
                         </div>
+                        <!-- Sons ------------>
+
                     </div>
 
                 </div>
@@ -1065,10 +1073,10 @@
             </div>
         </div>
     </div>
-    <!-- Configurações ---------------------->
+    <!-- Configurações ----------------------->
 
 </div>
-<!--Container-------------------------------->
+<!--Container--------------------------------->
 
 
 <script>
