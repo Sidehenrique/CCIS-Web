@@ -291,7 +291,7 @@ function getCookie(name) {
 }
 
 
-//Cards ===============================================================================================
+//=========================================== CARDS ==================================================
 
 // Função para recolher ou exibir o conteúdo ao clicar no header do card
 $(document).on('click', '[id^="toggleBtn-"]', function () {
@@ -303,7 +303,7 @@ $(document).on('click', '[id^="toggleBtn-"]', function () {
         cardContent.slideToggle();
 
         // Atualize o estado de recolhimento do card no cookie
-        const collapsedCards = JSON.parse(getCookie('collapsedCards')) || {};
+        const collapsedCards = JSON.parse(getCookieCards('collapsedCards')) || {};
         collapsedCards[cardId] = !collapsedCards[cardId];
         document.cookie = `collapsedCards=${JSON.stringify(collapsedCards)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/`;
     } else {
@@ -348,7 +348,7 @@ async function fetchCards(grupoSelecionado) {
         });
 
         // Recupere o estado de recolhimento do card do cookie
-        const collapsedCards = JSON.parse(getCookie('collapsedCards')) || {};
+        const collapsedCards = JSON.parse(getCookieCards('collapsedCards')) || {};
 
 
         // Aqui, data conterá os cards retornados pelo backend
@@ -499,7 +499,7 @@ function getLoggedInUserGroup() {
 }
 
 
-function getCookie(name) {
+function getCookieCards(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
@@ -520,7 +520,7 @@ function setCookie(name, value, days) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const workspace = getCookie('workspace');
+    const workspace = getCookieCards('workspace');
     if (workspace) {
         // Faça algo com a área de trabalho, se necessário
         // Por exemplo, você pode configurar a área de trabalho na interface do usuário
@@ -559,28 +559,6 @@ function filterProcesses() {
             card.classList.remove('flash');
         });
     }
-}
-
-
-// Função para exibir o Toast personalizado
-function customToast(mensagem, somNome) {
-    const customToast = $("#customToast");
-    const toastBody = $("#toastBody");
-    const audioElement = new Audio(`/static/songs/${somNome}`); // Caminho completo para o arquivo de áudio
-
-    // Atualiza o conteúdo do Toast com a mensagem desejada
-    toastBody.html(mensagem);
-
-    // Exibe o Toast
-    customToast.toast("show");
-
-    // Toca o som
-    audioElement.play();
-
-    // Esconde o Toast após 3 segundos (3000 milissegundos)
-    setTimeout(function() {
-        customToast.toast("hide");
-    }, 40000);
 }
 
 
@@ -1232,162 +1210,81 @@ function loadCardInfo(cardId) {
 
 // ------------- TRATAMENTO DOS BOTÕES DE AÇÃO -------------------------------------------------------
 
-// Obter o ID do usuário logado e o ID do grupo do usuário logado
-const userId = getLoggedInUserId();
-const userGroupId = getLoggedInUserGroup();
+                // Obter o ID do usuário logado e o ID do grupo do usuário logado
+                const userId = getLoggedInUserId();
+                const userGroupId = getLoggedInUserGroup();
 
-// Verificar se o usuário logado é o solicitante
-const isSolicitante = userId === data.card.solicitante.id;
+                // Verificar se o usuário logado é o solicitante
+                const isSolicitante = userId === data.card.solicitante.id;
 
-// Verificar se o usuário é do setor ao qual o card foi criado
-const isDoSetor = parseInt(userGroupId) === parseInt(data.card.setor);
+                // Verificar se o usuário é do setor ao qual o card foi criado
+                const isDoSetor = parseInt(userGroupId) === parseInt(data.card.setor);
 
-// Verificar se a área de trabalho selecionada é "Minhas Solicitações"
-const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
-const isInMinhasSolicitacoes = grupoSelecionado === "Minhas Solicitações";
+                // Verificar se a área de trabalho selecionada é "Minhas Solicitações"
+                const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
+                const isInMinhasSolicitacoes = grupoSelecionado === "Minhas Solicitações";
 
-// Função para exibir bloco de botões específico e ocultar a mensagem do espectador
-function showButtonsAndHideMessage(buttons) {
-    // Oculta todos os botões e mensagem do espectador
-    $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
+                // Função para exibir bloco de botões específico e ocultar a mensagem do espectador
+                function showButtonsAndHideMessage(buttons) {
+                    // Oculta todos os botões e mensagem do espectador
+                    $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
 
-    // Exibe os botões específicos
-    buttons.forEach(buttonId => {
-        $(`#${buttonId}`).removeClass("hidden");
-    });
-}
+                    // Exibe os botões específicos
+                    buttons.forEach(buttonId => {
+                        $(`#${buttonId}`).removeClass("hidden");
+                    });
+                }
 
-// Adicione a classe "hidden" para ocultar inicialmente os botões e a mensagem do espectador
-$(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
-
-
-//Verifique o status do card
-const statusAtual = data.card.status;
-
-// Verificar condições e exibir os botões apropriados
-if (isInMinhasSolicitacoes) {
-
-    resetStarRating();
-
-    // Se o usuário está em "Minhas Solicitações"
-    switch (statusAtual) {
-        case "Triagem":
-        case "Atendimento":
-        case "Encaminhado":
-            showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton"]);
-            break;
-        case "Concluido":
-            showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton", "starButtons", "avaliarAtendimentoButton"]);
-            break;
-        case "Finalizado":
-            showButtonsAndHideMessage(["compartilharCardButton", "reabrirChamadoButton"]);
-            break;
-        default:
-            // Lógica para outros status, se necessário
-            break;
-    }
-} else if (isDoSetor) {
-    // Se o usuário é do mesmo setor
-    switch (statusAtual) {
-        case "Triagem":
-            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
-            break;
-        case "Atendimento":
-            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton"]);
-            break;
-        case "Encaminhado":
-            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
-            break;
-        // Adicione outras condições conforme necessário
-        default:
-            // Lógica para outros status, se necessário
-            break;
-    }
-} else {
-    // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
-    $("#mensagemEspectador").removeClass("hidden");
-}
+                // Adicione a classe "hidden" para ocultar inicialmente os botões e a mensagem do espectador
+                $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
 
 
+                //Verifique o status do card
+                const statusAtual = data.card.status;
 
+                // Verificar condições e exibir os botões apropriados
+                if (isInMinhasSolicitacoes) {
 
+                    resetStarRating();
 
-//                // Obter o ID do usuário logado e o ID do grupo do usuário logado
-//                const userId = getLoggedInUserId();
-//                const userGroupId = getLoggedInUserGroup();
-//
-//                // Verificar se o usuário logado é o solicitante
-//                const isSolicitante = userId === data.card.solicitante.id;
-//
-//                // Verificar se o usuário é do setor ao qual o card foi criado
-//                const isDoSetor = parseInt(userGroupId) === parseInt(data.card.setor);
-//
-//                // Função para exibir bloco de botões específico e ocultar a mensagem do espectador
-//                function showButtonsAndHideMessage(buttons) {
-//                    // Oculta todos os botões e mensagem do espectador
-//                    $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
-//
-//                    // Exibe os botões específicos
-//                    buttons.forEach(buttonId => {
-//                        $(`#${buttonId}`).removeClass("hidden");
-//                    });
-//                }
-//
-//                // Adicione a classe "hidden" para ocultar inicialmente os botões e a mensagem do espectador
-//                $(".modal-processo-link, #starButtons, #reabrirChamado, #avaliarAtendimentoButton, #mensagemEspectador").addClass("hidden");
-//
-//                //Verifique o status do card
-//                const statusAtual = data.card.status;
-//
-//                // Verificar condições e exibir os botões apropriados
-//                if (isDoSetor) {
-//                    // Se o usuário é do mesmo setor
-//                    switch (statusAtual) {
-//                        case "Triagem":
-//                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
-//                            break;
-//                        case "Atendimento":
-//                            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton"]);
-//                            break;
-//                        case "Encaminhado":
-//                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
-//                            break;
-//                        // Adicione outras condições conforme necessário
-//                        default:
-//                            // Lógica para outros status, se necessário
-//                            break;
-//                    }
-//                } else if (isSolicitante) {
-//                    // Se o usuário é o solicitante
-//                    const grupoSelecionado = $('#area-trabalho-kanban').text().trim();
-//                    console.log(grupoSelecionado)
-//
-//                    if (grupoSelecionado === "Minhas Solicitações") {
-//                        switch (statusAtual) {
-//                            case "Triagem":
-//                            case "Atendimento":
-//                            case "Encaminhado":
-//                                showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton"]);
-//                                break;
-//                            case "Concluido":
-//                                showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton", "starButtons", "avaliarAtendimentoButton"]);
-//                                break;
-//                            case "Finalizado":
-//                                showButtonsAndHideMessage(["compartilharCardButton", "reabrirChamado"]);
-//                                break;
-//                            default:
-//                                // Lógica para outros status, se necessário
-//                                break;
-//                                }
-//
-//                        } else {
-//                        $("#mensagemEspectador").removeClass("hidden");
-//                    }
-//
-//                } else {
-//                    // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
-//                    $("#mensagemEspectador").removeClass("hidden");
-//                }
+                    // Se o usuário está em "Minhas Solicitações"
+                    switch (statusAtual) {
+                        case "Triagem":
+                        case "Atendimento":
+                        case "Encaminhado":
+                            showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton"]);
+                            break;
+                        case "Concluido":
+                            showButtonsAndHideMessage(["compartilharCardButton", "enviarMensagemButton", "starButtons", "avaliarAtendimentoButton"]);
+                            break;
+                        case "Finalizado":
+                            showButtonsAndHideMessage(["compartilharCardButton", "reabrirChamadoButton"]);
+                            break;
+                        default:
+                            // Lógica para outros status, se necessário
+                            break;
+                    }
+                } else if (isDoSetor) {
+                    // Se o usuário é do mesmo setor
+                    switch (statusAtual) {
+                        case "Triagem":
+                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+                            break;
+                        case "Atendimento":
+                            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton"]);
+                            break;
+                        case "Encaminhado":
+                            showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+                            break;
+                        // Adicione outras condições conforme necessário
+                        default:
+                            // Lógica para outros status, se necessário
+                            break;
+                    }
+                } else {
+                    // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
+                    $("#mensagemEspectador").removeClass("hidden");
+                }
 
 
                 //------------------------------------------------------------------------------------------------------
@@ -1413,7 +1310,6 @@ if (isInMinhasSolicitacoes) {
         }
     });
 }
-
 
 
 function enviarAvaliacao(cardId, rating) {
@@ -1452,7 +1348,9 @@ function resetStarRating() {
 //====================================================================================================
 
 
-// Tratamento de Notificações ---------------------------------------------------------------------------
+
+
+//========================================= NOTIFICAÇÕES =============================================
 $('.marcar-lida-notificacao').click(function() {
     var notificationId = $(this).data('notification-id');
     $.ajax({
@@ -1469,6 +1367,7 @@ $('.marcar-lida-notificacao').click(function() {
     });
 });
 
+
 function limparTodasNotificacoes() {
     $.ajax({
         url: '/limpar_todas_notificacoes/',
@@ -1484,7 +1383,87 @@ function limparTodasNotificacoes() {
     });
 }
 
-//Menu --------------------------------------------------------------------------------------------------
+//====================================================================================================
+
+
+
+
+//============================================== SOM =================================================
+
+// Variavel que armazena o opção de som ativo ou inativo
+let somAtivo = true;
+
+
+// Função para salvar a escolha do usuário no cookie
+    function saveSoundPreferenceToCookie() {
+        const cookieValue = somAtivo ? 'ativo' : 'inativo';
+        setCookie('soundPreference', cookieValue, 365);  // Ajuste conforme necessário
+    }
+
+    // Ouvinte de evento para o botão de alternância
+    $("#toggleSoundButton").on("change", function () {
+        somAtivo = this.checked;
+        saveSoundPreferenceToCookie();
+        customToast(somAtivo ? "Som ativado" : "Som desativado", "normalSong.mp3");
+    });
+
+    // Função para definir um cookie
+    function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+    }
+
+    // Função para obter um cookie
+    function getCookieSound(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
+
+    // Verificar o cookie ao carregar a página
+    document.addEventListener('DOMContentLoaded', function () {
+        const cookieValue = getCookieSound('soundPreference');
+        if (cookieValue === 'ativo') {
+            somAtivo = true;
+            $("#toggleSoundButton").prop('checked', true);
+        } else {
+            somAtivo = false;
+            $("#toggleSoundButton").prop('checked', false);
+        }
+    });
+
+// Função para exibir o Toast personalizado
+function customToast(mensagem, somNome) {
+    const customToast = $("#customToast");
+    const toastBody = $("#toastBody");
+    const audioElement = new Audio(`/static/songs/${somNome}`);
+
+    // Atualiza o conteúdo do Toast com a mensagem desejada
+    toastBody.html(mensagem);
+
+    // Exibe o Toast
+    customToast.toast("show");
+
+    // Toca o se o som estive ativado
+    if (somAtivo) {
+        audioElement.play();
+    }
+
+
+    // Esconde o Toast após 3 segundos (3000 milissegundos)
+    setTimeout(function() {
+        customToast.toast("hide");
+    }, 40000);
+}
+
+
+//====================================================================================================
+
+
+
+//============================================== MENU ================================================
+
 $(document).ready(function () {
     // Verifica se há um estado salvo no localStorage
     var menuState = localStorage.getItem('menuState');
@@ -1508,8 +1487,12 @@ $(document).ready(function () {
     });
   });
 
+//====================================================================================================
 
-//calendario --------------------------------------------------------------------------------------------
+
+
+//=========================================== CALENDARIO =============================================
+
 $(document).ready(function() {
         $('#calendario').fullCalendar({
             header: {
@@ -1537,6 +1520,8 @@ $(document).ready(function() {
             ]
         });
     });
+
+//====================================================================================================
 
 
 // time line ---------------------------------------------------------------------------------------------
