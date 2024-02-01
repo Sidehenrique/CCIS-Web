@@ -737,57 +737,6 @@ def card_kanban_api(request):
     return Response(serializer.data)
 
 
-
-
-# @api_view(['GET'])
-# @permission_classes([permissions.IsAuthenticated])
-# def card_kanban_api(request):
-#     # Obtém o ID do usuário logado
-#     user_id = request.user.id
-#
-#     # Obtém o nome do grupo da solicitação
-#     group_name = request.query_params.get('option', None)
-#
-#     if not group_name:
-#         return HttpResponseForbidden('O nome do grupo é obrigatório.')
-#
-#     # Lógica para filtrar os cards com base no nome do grupo
-#     try:
-#         # Obtém o grupo associado ao usuário
-#         kanban_group = KanbanGroupUser.objects.get(user=user_id, group__name=group_name).group
-#     except KanbanGroupUser.DoesNotExist:
-#         return HttpResponseForbidden('Nenhum grupo selecionado.')
-#
-#     queryset = Card.objects.filter(setor=kanban_group)
-#
-#     serializer = CardSerializer(queryset, many=True)
-#     return Response(serializer.data)
-
-
-# @api_view(['GET'])
-# @permission_classes([permissions.IsAuthenticated])
-# def card_kanban_api(request):
-#     # Obtém o ID do usuário logado
-#     user_id = request.user.id
-#
-#     # Obtém o nome do grupo da solicitação
-#     group_name = request.query_params.get('option', None)
-#
-#     if not group_name:
-#         return HttpResponseForbidden('O nome do grupo é obrigatório.')
-#
-#     # Lógica para filtrar os cards com base no nome do grupo
-#     try:
-#         group = Group.objects.get(name=group_name)
-#     except Group.DoesNotExist:
-#         return HttpResponseForbidden('Grupo não Informado.')
-#
-#     queryset = Card.objects.filter(setor__user=user_id, setor=group)
-#
-#     serializer = CardSerializer(queryset, many=True)
-#     return Response(serializer.data)
-
-
 @api_view(['GET'])
 def card_detl(request, card_id):
     card = get_object_or_404(Card, idCard=card_id)

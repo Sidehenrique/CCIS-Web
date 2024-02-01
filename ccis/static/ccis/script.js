@@ -1351,6 +1351,7 @@ function resetStarRating() {
 
 
 //========================================= NOTIFICAÇÕES =============================================
+
 $('.marcar-lida-notificacao').click(function() {
     var notificationId = $(this).data('notification-id');
     $.ajax({
