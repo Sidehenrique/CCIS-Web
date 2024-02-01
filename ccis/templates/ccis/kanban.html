@@ -9,10 +9,10 @@
 <img id="backgroundImage" src="{% static 'ccis/backgroundPro.jpg' %}" class="kanban-container">
 {% endif %}
 
-<!--Container--------------------------------->
+<!--Container---------------------------------->
 <div class="container-fluid scrollable-content">
 
-    <!-- Menu settings ----------------------->
+    <!-- Menu settings ------------------------>
     <div class="row mt-1">
 
         <!-- Home e Area de trabalho ---------->
@@ -32,11 +32,14 @@
 
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuSettings">
                     {% for grupo in kanban_group %}
-                        <li class="dropdown-item-group dropdown-item" data-value="{{ grupo.group.name }}">
-                            {{ grupo.group.name }}
-                        </li>
+                    <li style="cursor: pointer;" class="dropdown-item-group dropdown-item"
+                        data-value="{{ grupo.group.name }}">
+                        {{ grupo.group.name }}
+                    </li>
                     {% endfor %}
-                    <li class="dropdown-item-group dropdown-item" data-value="Minhas Solicitações">Minhas solicitações</li>
+                    <li style="cursor: pointer;" class="dropdown-item-group dropdown-item"
+                        data-value="Minhas Solicitações">Minhas solicitações
+                    </li>
                 </ul>
 
 
@@ -239,10 +242,10 @@
         <!-- Filtros ------------------------->
 
     </div>
-    <!-- Menu settings ----------------------->
+    <!-- Menu settings ------------------------>
 
 
-    <!-- kanban ------------------------------>
+    <!-- kanban ------------------------------->
     <div class="row mt-4">
 
         <!-- Triagem ----------------------------->
@@ -326,10 +329,10 @@
         <!-- Finalizado -------------------------->
 
     </div>
-    <!-- kanban ------------------------------>
+    <!-- kanban ------------------------------->
 
 
-    <!-- Modal Equipe ------------------------>
+    <!-- Modal Equipe ------------------------->
     <div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="perfilModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -428,10 +431,10 @@
             </div>
         </div>
     </div>
-    <!-- Modal Equipe ------------------------>
+    <!-- Modal Equipe ------------------------->
 
 
-    <!-- Modal Processos --------------------->
+    <!-- Modal Processos ---------------------->
     <div class="modal fade"
          id="processoModal"
          tabindex="-1"
@@ -442,7 +445,8 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
-                <!-- header --------------------->
+
+                <!-- header ------------------>
                 <div class="modal-header">
 
                     <h5 class="modal-title me-1" id="assuntoInfo"></h5>
@@ -452,15 +456,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                 </div>
-                <!-- header --------------------->
+                <!-- header ------------------>
 
 
-                <!-- body ----------------------->
+                <!-- body -------------------->
                 <div class="modal-body">
 
                     <div class="row">
 
-                        <!-- informações -->
+                        <!-- Informações ----->
                         <div class="col-4 overflow-auto" style="border-right:1px solid #818181">
 
 
@@ -568,10 +572,10 @@
                             </div>
 
                         </div>
-                        <!-- informações -->
+                        <!-- Informações ----->
 
 
-                        <!-- message ------------>
+                        <!-- message --------->
                         <div class="col-6" style="border-right:1px solid #818181;">
 
                             <!-- cabeçalho ------>
@@ -663,10 +667,10 @@
 
 
                         </div>
-                        <!-- message ------------>
+                        <!-- message --------->
 
 
-                        <!-- Ações -------------->
+                        <!-- Ações ----------->
                         <div class="col">
 
                             <h5 class="text-center p-2">AÇÕES</h5>
@@ -798,16 +802,16 @@
                             </ul>
 
                         </div>
-                        <!-- Ações -------------->
+                        <!-- Ações ----------->
 
                     </div>
 
 
                 </div>
-                <!-- body ----------------------->
+                <!-- body -------------------->
 
 
-                <!-- footer --------------------->
+                <!-- footer ------------------>
                 <div class="modal-footer">
 
                     <div class="col-10">
@@ -822,10 +826,11 @@
                     </div>
 
                 </div>
-                <!-- footer --------------------->
+                <!-- footer ------------------>
 
             </div>
         </div>
+
     </div>
     <!-- Modal Processos --------------------->
 
@@ -924,8 +929,151 @@
     <!-- Modal cor --------------------------->
 
 
+    <!-- Configurações ---------------------->
+    <div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Configurações</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row">
+                        <!-- Botões -->
+                        <div id="menu_config" class="col-3 mb-3" style="border-right: 1px solid #ccc;">
+                            <ul class="ul-menu-kanban">
+                                <li class="li-menu-request">
+                                    <a type="button" id="btn-config_1" class="li-link-kanban" aria-current="page">
+                                        Temas
+                                    </a>
+                                </li>
+                                <li class="li-menu-kanban">
+                                    <a type="button" id="btn_config_2" class="li-link-kanban" aria-current="page">
+                                        Horários
+                                    </a>
+                                </li>
+                                <li class="li-menu-kanban">
+                                    <a type="button" id="btn_config_3" class="li-link-kanban" aria-current="page">
+                                        Prioridade
+                                    </a>
+                                </li>
+                                <li class="li-menu-kanban">
+                                    <a type="button" id="btn_config_4" class="li-link-kanban" aria-current="page">
+                                        Som
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Fim dos Botões -->
+
+                        <!-- Temas -->
+                        <div id="config_1" class="col-8" style="display:none;">
+                            <div class="row">
+
+                                <div class="col-12 tema d-flex ms-4 p-3">
+                                    <a id="padraoBtn" class="d-flex align-items-center text-start"
+                                       onclick="suaFuncaoJavaScript()" style="text-decoration: none;">
+                                        <div>
+                                            <h5 style="color: black;">Verde Claro</h5>
+                                            <p style="color: #37474F;">Para uma intranet com mais vida</p>
+                                        </div>
+                                        <img src="{% static 'ccis/backgroundPro.png' %}" class="img-fluid ms-auto"
+                                             style="width: 40%; height: auto;">
+                                    </a>
+                                </div>
+
+                                <div class="col-12 tema d-flex mt-3 ms-4 p-3">
+                                    <a id="cinzaBtn" class="d-flex align-items-center text-start"
+                                       onclick="suaFuncaoJavaScript()" style="text-decoration: none;">
+                                        <div>
+                                            <h5 style="color: black;">Cinza Claro</h5>
+                                            <p style="color: #37474F;">Para uma intranet mais fria</p>
+                                        </div>
+                                        <img src="{% static 'ccis/backgroundCinza.png' %}" class="img-fluid ms-auto"
+                                             style="width: 40%; height: auto;">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fim dos Temas -->
+
+                        <!-- Determinar Hora -->
+                        <div id="config_2" class="col-8 ms-4" style="display:none;">
+
+                            <div class="tempo-kanban">
+
+                                <h5>Alertas de Atraso</h5>
+                                <span style="font-size: 13px;">Determine o tempo médio e máximo para os alertas de atendimento</span>
+
+                                <div class="row mt-3">
+                                    <div class="col-6">
+                                        <span style="font-size: 13px;">Tempo Médio</span>
+                                        {{ clock.service }}
+                                    </div>
+                                    <div class="col-6">
+                                        <span style="font-size: 13px;">Tempo Máximo</span>
+                                        {{ clock.assunto }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tempo-kanban mt-3">
+
+                                <h5>Cards Finalizados</h5>
+                                <span style="font-size: 13px;">Determine o tempo em que seus cards permanecerão na coluna finalizados</span>
+
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        {{ clock.finalizados }}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- Fim da Determinação da Hora -->
+
+                        <div id="config_3" class="col-8" style="display:none;">
+                            <!-- Conteúdo da Configuração 3 -->
+                        </div>
+
+                        <div id="config_4" class="col-8" style="display:none;">
+
+                            <div class="tempo-kanban ms-4">
+                                <h5>Notificações</h5>
+                                <span style="font-size: 13px;">Ativar ou desativar o som das notificações da intranet</span>
+
+                                <div style="font-size: 20px" class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="SoundNotification">
+                                </div>
+                            </div>
+
+                            <div class="tempo-kanban ms-4 mt-3">
+                                <h5>Kanban</h5>
+                                <span style="font-size: 13px;">Ativar ou desativar o som das notificações do Kanban</span>
+
+                                <div style="font-size: 20px" class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="SoundKanban">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Configurações ---------------------->
+
 </div>
-<!--Container-------------------------------->
+<!--Container--------------------------------->
 
 
 <script>

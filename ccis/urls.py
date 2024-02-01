@@ -67,9 +67,8 @@ urlpatterns = [
     path('calendario', gestaoNegocios.calendario, name='calendario'),
     path('gestaoCarteira', gestaoNegocios.gestaoCarteira, name='gestaoCarteira'),
     path('carteiras', gestaoNegocios.carteiras, name='carteiras'),
-    path('capitalRecorrente', gestaoNegocios.capitalRecorrente, name='capitalRecorrente'),
+    path('resultadoCoop', gestaoNegocios.resultadoCoop, name='resultadoCoop'),
     path('contasInativas', gestaoNegocios.contasInativas, name='contasInativas'),
-    path('margemContri', gestaoNegocios.margemContri, name='margemContri'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
