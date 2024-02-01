@@ -222,38 +222,19 @@
                                     <button type="button" class="btn" style="color:#219180" data-bs-toggle="dropdown"
                                             aria-expanded="false">
                                         <i class="fa-solid fa-bell"></i>
-                                        {% if notifications %}
-                                        <span class="notification-badge">{{ notifications|length }}</span>
-                                        {% endif %}
+                                        <span class="notification-badge"></span>
                                     </button>
+
                                     <div class="dropdown-menu p-0" style="width: 18rem;">
 
-                                        <div id="listaNotificacoes" class="list-group"
-                                             style="max-height: 300px; overflow-y: auto;">
+                                        <div style="max-height: 300px; overflow-y: auto;">
                                             <div class="text-center p-2">
                                                 <h6>Notificações</h6>
                                             </div>
+                                            <img class="img_msg" src="{% static 'ccis/Grupo 6747.png' %}" alt="Nenhuma notificação" width="100%">
 
-                                            <!-- rodar o for aqui dentro -->
-                                            {% for notification in notifications %}
-                                            {% if notification %}
-                                            <a href="{% url notification.url %}"
-                                               class="marcar-lida-notificacao list-group-item list-group-item-action"
-                                               data-notification-id="{{ notification.id }}" aria-current="true">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <h6 class="mb-1">{{ notification.author.first_name }}
-                                                        {{ notification.author.last_name }}</h6>
-                                                    <small>{{ notification.date|date:"Y-m-d H:i" }}</small>
-                                                </div>
-                                                <p class="mb-1">{{ notification.description }}</p>
-                                                <small>Assunto: {{ notification.subject }}</small>
-                                            </a>
-                                            {% else %}
-                                            <div>
-                                                <p>Nenhuma solicitação no momento</p>
-                                            </div>
-                                            {% endif %}
-                                            {% endfor %}
+                                            <div id="listaNotificacoes" class="list-group"></div>
+
                                         </div>
 
                                         <div id="limparTudoBtn"

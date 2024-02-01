@@ -260,10 +260,12 @@ def request_equipamentos(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",
                             subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
                         )
                         notification.save()
 

@@ -38,6 +38,7 @@ urlpatterns = [
     path('notificacao_lida/<int:notification_id>/', pages.notificacao_lida, name='notificacao_lida'),
     path('limpar_todas_notificacoes/', pages.limpar_todas_notificacoes, name='limpar_todas_notificacoes'),
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
+    path('api/notifications/', pages.notification_list, name='notification-list-api'),
 
     path('malotes', pages.malotes, name='malotes'),
     path('ccc', pages.ccc, name='ccc'),

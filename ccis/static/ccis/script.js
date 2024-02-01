@@ -1352,37 +1352,116 @@ function resetStarRating() {
 
 //========================================= NOTIFICAÇÕES =============================================
 
-$('.marcar-lida-notificacao').click(function() {
-    var notificationId = $(this).data('notification-id');
-    $.ajax({
-        url: `/notificacao_lida/${notificationId}`,
-        method: 'POST',
-        success: function(data) {
-            if (data.success) {
-//                location.reload();
-                // Atualize a interface do usuário para refletir que a notificação foi marcada como lida.
-            } else {
-                alert('Erro ao registrar a avaliação: ' + data.message);
+function fetchAndRenderNotifications() {
+    // Função para buscar notificações
+    function fetchNotifications() {
+        $.ajax({
+            url: '/api/notifications/',  // URL da sua API de notificações
+            method: 'GET',
+            success: function (data) {
+                // Limpar a lista de notificações existente
+                $('#listaNotificacoes').empty();
+
+                // Atualizar o contador de notificações
+                const notificationCount = data.length;
+                updateNotificationBadge(notificationCount);
+
+                // Selecionar a imagem com a classe 'img_msg'
+                const $noNotificationImage = $(".img_msg");
+
+                // Verificar se há notificações não lidas
+                if (notificationCount > 0) {
+                    // Iterar sobre as notificações e criar elementos HTML
+                    $.each(data, function (index, notification) {
+                        const notificationUrl = buildNotificationUrl(notification);
+                        const formattedDate = moment(notification.date).format('DD/MM/YYYY HH:mm');
+
+                        const $notificationElement = $(`
+                            <a href="${notificationUrl}"
+                                class="marcar-lida-notificacao list-group-item list-group-item-action"
+                                data-notification-id="${notification.id}" aria-current="true">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">${notification.authorFirst} ${notification.authorLast}</h6>
+                                    <small>${formattedDate}</small>
+                                </div>
+                                <p class="mb-1">${notification.description}</p>
+                                <small>Assunto: ${notification.subject}</small>
+                            </a>
+                        `);
+
+                        // Adicionar um ouvinte de evento para marcar como lida e redirecionar
+                        $notificationElement.click(function (event) {
+                            event.preventDefault();
+
+                            markNotificationAsRead(notification.id, notificationUrl);
+                        });
+
+                        // Adicionar o elemento ao container
+                        $('#listaNotificacoes').append($notificationElement);
+                    });
+
+                    // Ocultar a imagem se houver notificações
+                    $noNotificationImage.hide();
+
+                } else {
+
+                     // Mostrar a imagem se não houver notificações
+                    $noNotificationImage.show();
+                }
+            },
+            error: function () {
+                console.error('Erro ao buscar notificações.');
             }
+        });
+    }
+
+    // Função para construir a URL da notificação
+    function buildNotificationUrl(notification) {
+        const urlPrefix = window.location.pathname.includes('/kanban/') ? '' : '/kanban/';
+        return `${urlPrefix}`;
+    }
+
+    // Função para marcar uma notificação como lida e redirecionar
+    function markNotificationAsRead(notificationId, notificationUrl) {
+        $.ajax({
+            url: `/notificacao_lida/${notificationId}/`,
+            method: 'POST',
+            success: function (data) {
+                if (data.success) {
+                    // Atualize a interface do usuário para refletir que a notificação foi marcada como lida
+                    fetchNotifications();
+
+                    // Redirecione para a página de referência
+                    window.location.href = notificationUrl;
+                } else {
+                    alert('Erro ao marcar a notificação como lida: ' + data.message);
+                }
+            },
+            error: function () {
+                console.error('Erro ao marcar a notificação como lida.');
+            }
+        });
+    }
+
+    // Função para atualizar o contador de notificações
+    function updateNotificationBadge(count) {
+        const $notificationBadge = $('.notification-badge');
+        if (count > 0) {
+            $notificationBadge.text(count).show();
+        } else {
+            $notificationBadge.hide();
         }
-    });
+    }
+
+    // Chamar a função de buscar notificações ao carregar a página
+    fetchNotifications();
+}
+
+// Iniciar a função ao carregar a página
+$(document).ready(function () {
+    fetchAndRenderNotifications();
 });
 
-
-function limparTodasNotificacoes() {
-    $.ajax({
-        url: '/limpar_todas_notificacoes/',
-        method: 'POST',
-        success: function(data) {
-            if (data.success) {
-                // Reload the page or update the UI as needed
-                location.reload();
-            } else {
-                alert('Erro ao limpar todas as notificações: ' + data.message);
-            }
-        }
-    });
-}
 
 //====================================================================================================
 
