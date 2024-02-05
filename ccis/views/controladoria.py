@@ -174,7 +174,7 @@ def request_power_PC(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Performace Corporativa",  # Setor atual
+                setor_atual="Performance Corporativa",  # Setor atual
             )
             print(history_entry)
             history_entry.save()
@@ -247,7 +247,7 @@ def request_propenso_PC(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Performace Corporativa",  # Setor atual
+                setor_atual="Performance Corporativa",  # Setor atual
             )
             history_entry.save()
 
@@ -315,7 +315,7 @@ def request_estudo_PC(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Performace Corporativa",  # Setor atual
+                setor_atual="Performance Corporativa",  # Setor atual
             )
             history_entry.save()
 
@@ -383,7 +383,7 @@ def request_relatorio_PC(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Performace Corporativa",  # Setor atual
+                setor_atual="Performance Corporativa",  # Setor atual
             )
             history_entry.save()
 
@@ -451,7 +451,7 @@ def request_processos_PC(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Performace Corporativa",  # Setor atual
+                setor_atual="Performance Corporativa",  # Setor atual
             )
             history_entry.save()
 
@@ -519,7 +519,7 @@ def request_ci_pc(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Performace Corporativa",  # Setor atual
+                setor_atual="Performance Corporativa",  # Setor atual
             )
             history_entry.save()
 
@@ -593,7 +593,7 @@ def request_apontamentos_pc(request):
                 status_anterior="",  # Status anterior (vazio, pois é a criação do card)
                 status_atual="Triagem",  # Status atual
                 setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
-                setor_atual="Performace Corporativa",  # Setor atual
+                setor_atual="Performance Corporativa",  # Setor atual
             )
             history_entry.save()
 
@@ -670,7 +670,7 @@ def processos_PC(request):
         )
 
         group = Group.objects.all()
-        setor = 'Performace Corporativa'
+        setor = 'Performance Corporativa'
 
         # Inicializa os contadores para cada estado
         card_count_triagem = 0
