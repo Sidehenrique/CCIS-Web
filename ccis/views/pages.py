@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from reportlab.pdfgen import canvas
 from io import BytesIO
 
-from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer
+from ..serializers import CardSerializer, CardSetorHistorySerializer, MessageHistorySerializer, NotificationSerializer
 from django.http import JsonResponse, HttpResponseNotFound, HttpResponseForbidden
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -1298,14 +1298,22 @@ def notificacao_lida(request, notification_id):
             notification.is_read = True
             notification.save()
             return JsonResponse({'success': True, 'message': 'Notificação marcada como lida.'})
-
         else:
             return JsonResponse({'success': False, 'message': 'Você não tem permissão para marcar esta notificação como lida.'})
-
     except Notification.DoesNotExist:
-        return JsonResponse({'success': False, 'message': 'Notificação não encontrada.'})
+        return JsonResponse({'success': False, 'message': 'Notificação não encontrada.'}, status=404)
 
-        return JsonResponse({"error": "Card não encontrado"}, status=404)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def notification_list(request):
+    if request.method == 'GET':
+        user = request.user
+        notifications = Notification.objects.filter(recipient=user, is_read=False)
+        serializer = NotificationSerializer(notifications, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    else:
+        return JsonResponse({'error': 'Método não permitido'}, status=405)
 
 
 @login_required(login_url="/login")

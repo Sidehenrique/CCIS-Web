@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Card, enderecoContato, dadosPessoais, profissional, MessageHistory, CardSetorHistory
+from .models import Card, enderecoContato, dadosPessoais, profissional, MessageHistory, CardSetorHistory, Notification
 from django.contrib.auth.models import User, Group
 
 
@@ -63,3 +63,9 @@ class CardSerializer(serializers.ModelSerializer):
         model = Card
         fields = '__all__'
 
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = '__all__'
