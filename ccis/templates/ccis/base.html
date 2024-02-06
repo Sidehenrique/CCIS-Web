@@ -237,20 +237,18 @@
 
                                         </div>
 
-                                        <div id="limparTudoBtn"
-                                             class="p-2"
-                                             style="text-align: center;">
-                                            <a href="#" onclick="limparTodasNotificacoes()"
-                                               style="cursor: pointer; text-decoration: none; color: black;">
-                                                Limpar tudo
-                                                <i class="fa-solid fa-trash"></i>
+                                        <div id="limparTudoBtn" class="p-2" style="text-align: center;">
+                                            <a href="#" id="limparTudoLink" style="cursor: pointer; text-decoration: none; color: black;">
+                                                Limpar tudo <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </div>
+
 
                                     </div>
                                     <!-- notifications ------------------->
 
                                 </div>
+
                             </li>
 
                             <!-- Conta usuário --->
@@ -705,7 +703,7 @@
                                                 <span style="font-size: 13px;">Ativar ou desativar o som das notificações da intranet</span>
 
                                                 <div style="font-size: 20px" class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="SoundNotification" checked>
+                                                    <input class="form-check-input" type="checkbox" id="toggleNotificationButton" ${notificacoesAtivas ? 'checked' : ''}>
                                                 </div>
                                             </div>
 

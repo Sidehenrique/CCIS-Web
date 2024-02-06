@@ -1304,7 +1304,6 @@ def notificacao_lida(request, notification_id):
         return JsonResponse({'success': False, 'message': 'Notificação não encontrada.'}, status=404)
 
 
-
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def notification_list(request):

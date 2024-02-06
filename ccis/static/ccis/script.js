@@ -1352,6 +1352,41 @@ function resetStarRating() {
 
 //========================================= NOTIFICAÇÕES =============================================
 
+// Variável que armazena a opção de notificações ativas ou inativas
+let notificacoesAtivas = false;
+
+
+// Função para salvar a escolha do usuário no localStorage
+function saveNotificationPreferenceToLocalStorage() {
+    const localStorageValue = notificacoesAtivas ? 'ativas' : 'inativas';
+    localStorage.setItem('notificationPreference', localStorageValue);
+}
+
+
+// Ouvinte de evento para o botão de alternância de notificações
+$("#toggleNotificationButton").on("change", function () {
+    notificacoesAtivas = this.checked;
+    saveNotificationPreferenceToLocalStorage();
+    fetchAndRenderNotifications();
+    customToast(notificacoesAtivas ? "Som de Notificações ativado" : "Som de Notificações desativado", "notificationSong.mp3");
+});
+
+
+// Função para obter a preferência de notificações do localStorage ao carregar a página
+document.addEventListener('DOMContentLoaded', function () {
+    const localStorageValue = localStorage.getItem('notificationPreference');
+    if (localStorageValue === 'ativas') {
+        notificacoesAtivas = true;
+        $("#toggleNotificationButton").prop('checked', true);
+    } else {
+        notificacoesAtivas = false;
+        $("#toggleNotificationButton").prop('checked', false);
+    }
+    fetchAndRenderNotifications(); // Atualiza as notificações com a preferência armazenada
+});
+
+
+// Função para buscar notificações
 function fetchAndRenderNotifications() {
     // Função para buscar notificações
     function fetchNotifications() {
@@ -1368,6 +1403,10 @@ function fetchAndRenderNotifications() {
 
                 // Selecionar a imagem com a classe 'img_msg'
                 const $noNotificationImage = $(".img_msg");
+
+
+                // Obter o número anterior de notificações
+                const previousNotificationCount = parseInt(localStorage.getItem('previousNotificationCount')) || 0;
 
                 // Verificar se há notificações não lidas
                 if (notificationCount > 0) {
@@ -1392,7 +1431,6 @@ function fetchAndRenderNotifications() {
                         // Adicionar um ouvinte de evento para marcar como lida e redirecionar
                         $notificationElement.click(function (event) {
                             event.preventDefault();
-
                             markNotificationAsRead(notification.id, notificationUrl);
                         });
 
@@ -1403,9 +1441,19 @@ function fetchAndRenderNotifications() {
                     // Ocultar a imagem se houver notificações
                     $noNotificationImage.hide();
 
-                } else {
 
-                     // Mostrar a imagem se não houver notificações
+                    // Verificar se há novas notificações
+                    if (notificationCount > previousNotificationCount) {
+                        // Chamar customToast se houver novas notificações
+                        notifcationToast("Você tem uma nova notificação", "notificationSong.mp3");
+
+                        // Atualizar o número anterior de notificações no localStorage
+                        localStorage.setItem('previousNotificationCount', notificationCount);
+                    }
+
+
+                } else {
+                    // Mostrar a imagem se não houver notificações
                     $noNotificationImage.show();
                 }
             },
@@ -1433,6 +1481,7 @@ function fetchAndRenderNotifications() {
 
                     // Redirecione para a página de referência
                     window.location.href = notificationUrl;
+
                 } else {
                     alert('Erro ao marcar a notificação como lida: ' + data.message);
                 }
@@ -1457,11 +1506,71 @@ function fetchAndRenderNotifications() {
     fetchNotifications();
 }
 
+
+// Função para exibir o Toast personalizado
+function notifcationToast(mensagem, somNome) {
+    const notifcationToast = $("#customToast");
+    const toastBody = $("#toastBody");
+    const audioElement = new Audio(`/static/songs/${somNome}`);
+
+    // Atualiza o conteúdo do Toast com a mensagem desejada
+    toastBody.html(mensagem);
+
+    // Exibe o Toast
+    notifcationToast.toast("show");
+
+    if (notificacoesAtivas) {
+        audioElement.play();
+    }
+
+
+    // Esconde o Toast após 3 segundos (3000 milissegundos)
+    setTimeout(function() {
+        notifcationToast.toast("hide");
+    }, 40000);
+}
+
+
+
 // Iniciar a função ao carregar a página
 $(document).ready(function () {
     fetchAndRenderNotifications();
+
+    // Adicione a função para buscar notificações a cada minuto
+    setInterval(fetchAndRenderNotifications, 60000);  // 60000 milissegundos = 1 minuto
 });
 
+
+
+// Ouvinte de evento para o clique no botão "Limpar tudo"
+$("#limparTudoLink").on("click", function (event) {
+    event.preventDefault();
+
+    // Chama a função para marcar todas as notificações como lidas
+    marcarTodasNotificacoesComoLidas();
+});
+
+// Função para marcar todas as notificações como lidas
+function marcarTodasNotificacoesComoLidas() {
+    $.ajax({
+        url: '/limpar_todas_notificacoes/',  // Atualize com a URL correta da sua API
+        method: 'POST',
+        success: function (data) {
+            if (data.success) {
+                // Atualize a interface do usuário para refletir que todas as notificações foram marcadas como lidas
+                fetchAndRenderNotifications();
+
+                // Zere a constante previousNotificationCount
+                localStorage.setItem('previousNotificationCount', 0);
+            } else {
+                alert('Erro ao marcar todas as notificações como lidas: ' + data.message);
+            }
+        },
+        error: function () {
+            console.error('Erro ao marcar todas as notificações como lidas.');
+        }
+    });
+}
 
 //====================================================================================================
 
@@ -1470,8 +1579,8 @@ $(document).ready(function () {
 
 //============================================== SOM =================================================
 
-// Variavel que armazena o opção de som ativo ou inativo
-let somAtivo = true;
+// Variavel que armazena a opção de som ativo ou inativo
+let somAtivo = false;
 
 
 // Função para salvar a escolha do usuário no cookie
@@ -1480,38 +1589,38 @@ let somAtivo = true;
         setCookie('soundPreference', cookieValue, 365);  // Ajuste conforme necessário
     }
 
-    // Ouvinte de evento para o botão de alternância
-    $("#toggleSoundButton").on("change", function () {
-        somAtivo = this.checked;
-        saveSoundPreferenceToCookie();
-        customToast(somAtivo ? "Som ativado" : "Som desativado", "normalSong.mp3");
-    });
+// Ouvinte de evento para o botão de alternância
+$("#toggleSoundButton").on("change", function () {
+    somAtivo = this.checked;
+    saveSoundPreferenceToCookie();
+    customToast(somAtivo ? "Som ativado" : "Som desativado", "normalSong.mp3");
+});
 
-    // Função para definir um cookie
-    function setCookie(name, value, days) {
-        const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
-        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+// Função para definir um cookie
+function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+}
+
+// Função para obter um cookie
+function getCookieSound(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+// Verificar o cookie ao carregar a página
+document.addEventListener('DOMContentLoaded', function () {
+    const cookieValue = getCookieSound('soundPreference');
+    if (cookieValue === 'ativo') {
+        somAtivo = true;
+        $("#toggleSoundButton").prop('checked', true);
+    } else {
+        somAtivo = false;
+        $("#toggleSoundButton").prop('checked', false);
     }
-
-    // Função para obter um cookie
-    function getCookieSound(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return null;
-    }
-
-    // Verificar o cookie ao carregar a página
-    document.addEventListener('DOMContentLoaded', function () {
-        const cookieValue = getCookieSound('soundPreference');
-        if (cookieValue === 'ativo') {
-            somAtivo = true;
-            $("#toggleSoundButton").prop('checked', true);
-        } else {
-            somAtivo = false;
-            $("#toggleSoundButton").prop('checked', false);
-        }
-    });
+});
 
 // Função para exibir o Toast personalizado
 function customToast(mensagem, somNome) {
@@ -1529,7 +1638,6 @@ function customToast(mensagem, somNome) {
     if (somAtivo) {
         audioElement.play();
     }
-
 
     // Esconde o Toast após 3 segundos (3000 milissegundos)
     setTimeout(function() {
