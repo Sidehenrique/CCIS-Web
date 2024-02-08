@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
-from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification, \
     OperatorRating
@@ -211,7 +210,9 @@ def salvar_malote_braz(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",
                             subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
@@ -225,48 +226,3 @@ def salvar_malote_braz(request):
 
     return render(request, 'pa/braslandia/new_request_braz.html', {'form': form})
 
-
-@login_required(login_url="/login")
-def processos_formosa(request):
-    if request.method == 'GET':
-        cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
-                                                             queryset=CardSetorHistory.objects.order_by('-data_hora'))
-                                                    )
-
-        group = Group.objects.all()
-        setor = 'Brazlândia'
-
-        # Inicializa os contadores para cada estado
-        card_count_triagem = 0
-        card_count_atendimento = 0
-        card_count_encaminhado = 0
-        card_count_concluido = 0
-        card_count_finalizado = 0
-
-        for card in cards:
-            cardsetorhistory = card.cardsetorhistory_set.first()
-            if cardsetorhistory:
-                if cardsetorhistory.setor_atual == setor:
-                    if cardsetorhistory.status_atual == "Triagem":
-                        card_count_triagem += 1
-                    elif cardsetorhistory.status_atual == "Em Atendimento":
-                        card_count_atendimento += 1
-                    elif cardsetorhistory.status_atual == "Encaminhado":
-                        card_count_encaminhado += 1
-                    elif cardsetorhistory.status_atual == "Concluido":
-                        card_count_concluido += 1
-                    elif cardsetorhistory.status_atual == "Finalizado":
-                        card_count_finalizado += 1
-
-        context = {
-            'cards': cards,
-            'group': group,
-            'setor': setor,
-            'card_count_triagem': card_count_triagem,
-            'card_count_atendimento': card_count_atendimento,
-            'card_count_encaminhado': card_count_encaminhado,
-            'card_count_concluido': card_count_concluido,
-            'card_count_finalizado': card_count_finalizado,
-        }
-
-        return render(request, 'ccis/processo.html', context)

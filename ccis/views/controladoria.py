@@ -206,8 +206,9 @@ def request_power_PC(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -277,8 +278,9 @@ def request_propenso_PC(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -345,8 +347,9 @@ def request_estudo_PC(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -413,8 +416,9 @@ def request_relatorio_PC(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -481,8 +485,9 @@ def request_processos_PC(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -553,8 +558,9 @@ def request_ci_pc(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -647,8 +653,9 @@ def request_apontamentos_pc(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
