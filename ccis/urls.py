@@ -196,6 +196,7 @@ urlpatterns = [
     path('request_ci_cre', credito.request_ci_cre, name='request_ci_cre'),
     path('request_apontamentos_cre', credito.request_apontamentos_cre, name='request_apontamentos_cre'),
     path('processos_credito', credito.processos_credito, name='processos_credito'),
+    path('operacoes_Liquidadas', credito.operacoes_Liquidadas, name='operacoes_Liquidadas'),
 
     path('controladoria_home', controladoria.controladoria_home, name='controladoria_home'),
     path('new_request_PC', controladoria.new_request_PC, name='new_request_PC'),

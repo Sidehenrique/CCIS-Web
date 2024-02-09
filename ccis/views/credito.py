@@ -138,6 +138,10 @@ def new_request_credito(request):
     return render(request, "setores/credito/new_request_credito.html", context)
 
 
+def operacoes_Liquidadas(request):
+    return render(request, "setores/credito/operacaoLiquidada.html")
+
+
 def salvar_malote_credito(request):
     if request.method == 'POST':
 
