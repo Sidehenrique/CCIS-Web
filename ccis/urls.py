@@ -150,6 +150,7 @@ urlpatterns = [
     path('processos_PS', produtoServico.processos_PS, name='processos_PS'),
     path('request_ci_ps', produtoServico.request_ci_ps, name='request_ci_ps'),
     path('request_apontamentos_ps', produtoServico.request_apontamentos_ps, name='request_apontamentos_ps'),
+    path('Controle_Carteira', produtoServico.Controle_Carteira, name='Controle_Carteira'),
 
     path('financeiro_home', financeiro.financeiro_home, name='financeiro_home'),
     path('new_request_financeiro', financeiro.new_request_financeiro, name='new_request_financeiro'),

@@ -131,6 +131,7 @@ def produtoServico_home(request):
         return render(request, 'ccis/setor_home.html', context)
 
 
+@login_required(login_url="/login")
 def request_produto_servico(request):
     form = ModelFormPS()
     apontamentos = modelFormApontamentos()
@@ -139,6 +140,12 @@ def request_produto_servico(request):
     context = {'form': form, 'apontamentos': apontamentos, 'ci': ci}
 
     return render(request, "setores/produtoServico/request_produto_servico.html", context)
+
+
+@login_required(login_url="/login")
+def Controle_Carteira(request):
+
+    return render(request, "setores/produtoServico/Controle_Carteira.html")
 
 
 @login_required(login_url="/login")
