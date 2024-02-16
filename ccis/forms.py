@@ -1091,3 +1091,34 @@ class modelFormClock(forms.ModelForm):
         fields = ('assunto', 'service')
 
 
+class modelFormPagamentoFI(forms.ModelForm):
+    CHOICES_Assunto = [
+        ('', ''),
+        ('Cartão Corporativo', 'Cartão Corporativo'),
+        ('Boleto', 'Boleto'),
+        (' Reembolso', ' Reembolso'),
+    ]
+
+    CHOICES_Servico = [
+        ('', ''),
+        ('Alimentação', 'Alimentação'),
+        ('Gasolina', 'Gasolina'),
+        ('Hospedagem', 'Hospedagem'),
+        ('Copa Cozinha', 'Copa Cozinha'),
+        ('Produtos de Limpeza', 'Produtos de Limpeza'),
+        ('Manutenção/Conservação', 'Manutenção/Conservação'),
+        ('Serviços Técnicos Especializados', 'Serviços Técnicos Especializados'),
+        ('Brindes', 'Brindes'),
+        ('Serviços Gerais', 'Serviços Gerais'),
+        ('Outros', 'Outros'),
+    ]
+
+    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.ChoiceField(choices=CHOICES_Servico, widget=forms.Select(attrs={'class': 'form-select'}))
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}))
+    attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
+                                 required=False)
+    class Meta:
+        model = Card
+        fields = ('assunto', 'service', 'descricao', 'attachment')
+

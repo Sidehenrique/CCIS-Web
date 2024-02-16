@@ -21,6 +21,13 @@
                 <ul class="ul-menu-request">
 
                     <li class="li-menu-request">
+                        <a type="button" id="btn_request_4" class="li-link-request" aria-current="page">
+                            <i class="fa-solid fa-file-invoice"></i>
+                            Tipo de Pagamento
+                        </a>
+                    </li>
+
+                    <li class="li-menu-request">
                         <a type="button" id="btn_request_1" class="li-link-request" aria-current="page">
                             <i class="fa-solid fa-key"></i>
                             Malotes
@@ -112,6 +119,74 @@
         </div>
         <!-- Informativo ------------------------->
 
+        <!-- Formulário de pagamentos --------------->
+        <div id="formulario4" class="col menu-request m-0" style="display:none">
+            <h5 class="p-3">FORMULÁRIO DE PAGAMENTOS</h5>
+
+            <form action="{% url 'tipo_pagamento' %}"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row p-3 ">
+
+                    <!-- primeira col ------------------------->
+                    <div class="col-7">
+
+                        <div class="mb-2" id="assunto-pagamentos">
+                            <label class="required-label">Tipo:</label>
+                            {{ formPagamentos.assunto }}
+                        </div>
+
+                        <div id="service-pagamentos" class="mb-3">
+                            <label class="required-label">Serviço:</label><br>
+                            {{ formPagamentos.service }}
+                        </div>
+
+                        <div id="descricao-pagamentos" class="mb-3">
+                            <label class="required-label">Descrição:</label><br>
+                            <textarea class="new-desc" name="descricao" required></textarea>
+                        </div>
+
+                        <div class="">
+                            <label>Anexar arquivo:</label>
+                            {{ form.attachment }}
+                        </div>
+
+                        <input class="mt-5 button-request" type="submit" value="Enviar">
+
+
+                    </div>
+                    <!-- primeira col ------------------------->
+
+                    <!-- segunda col -------------------------->
+                    <div class="col">
+
+                        <div class="mb-2" id="motivo-pagamentos">
+                            <label class="required-label">Motivo:</label>
+                            <input name="motivo" type="text" placeholder="Insumo insuficiente" class="form-control"  required>
+                        </div>
+
+                        <div id="valor-pagamentos" class="mb-3">
+                            <label class="required-label">Valor:</label><br>
+                            <input name="valor" type="number" placeholder="129,00" class="form-control" required>
+                        </div>
+
+                        <div id="data-pagamentos" class="mb-3">
+                            <label class="required-label">Data:</label><br>
+                            <input name="data" type="date" class="form-control" required>
+                        </div>
+
+                        <!-- segunda col -------------------------->
+
+                    </div>
+                    <!-- segunda col -------------------------->
+
+                </div>
+            </form>
+        </div>
+        <!-- Formulário de pagamentos --------------->
 
         <!-- Formulário de Malotes --------------->
         <div id="formulario1" class="col menu-request m-0" style="display:none">
@@ -397,6 +472,7 @@
             </form>
         </div>
         <!-- Formulário de Apontamentos ---------->
+
 
     </div>
 

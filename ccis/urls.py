@@ -160,6 +160,7 @@ urlpatterns = [
     path('processos_financeiro', financeiro.processos_financeiro, name='processos_financeiro'),
     path('request_ci_fi', financeiro.request_ci_fi, name='request_ci_fi'),
     path('request_apontamentos_fi', financeiro.request_apontamentos_fi, name='request_apontamentos_fi'),
+    path('tipo_pagamento', financeiro.tipo_pagamento, name='tipo_pagamento'),
 
     path('cadastro_home', cadastro.cadastro_home, name='cadastro_home'),
     path('new_request_cadastro', cadastro.new_request_cadastro, name='new_request_cadastro'),
