@@ -102,6 +102,11 @@ def resultadoCoop(request):
     return render(request, 'gestaoNegocios/resultadoCoop.html')
 
 
+@login_required(login_url="/login")
+def gestaoCapital(request):
+    return render(request, 'gestaoNegocios/gestaoCapital.html')
+
+
 
 
 

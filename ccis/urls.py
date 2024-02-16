@@ -70,6 +70,7 @@ urlpatterns = [
     path('carteiras', gestaoNegocios.carteiras, name='carteiras'),
     path('resultadoCoop', gestaoNegocios.resultadoCoop, name='resultadoCoop'),
     path('contasInativas', gestaoNegocios.contasInativas, name='contasInativas'),
+    path('gestaoCapital', gestaoNegocios.gestaoCapital, name='gestaoCapital'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
