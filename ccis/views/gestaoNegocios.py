@@ -107,6 +107,16 @@ def gestaoCapital(request):
     return render(request, 'gestaoNegocios/gestaoCapital.html')
 
 
+@login_required(login_url="/login")
+def operacoes_vencer(request):
+    return render(request, 'gestaoNegocios/operacoes_vencer.html')
+
+
+@login_required(login_url="/login")
+def sipag(request):
+    return render(request, 'gestaoNegocios/sipag.html')
+
+
 
 
 
