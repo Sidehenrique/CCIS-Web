@@ -1,0 +1,48 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<!-- Conteúdo -->
+<div class="container-fluid scrollable-content">
+
+    <!-- Titulo e Relatórios------------------------>
+    <div class="row mt-3 mb-2">
+
+        <!-- Titulo---------------------------------->
+        <div class="col ps-5 pt-4">
+            <h1 style="font-family: oswald ; font-size:42px;">Bem vindo a Sub Módulo<br>
+                <span style="color:#27DEBF; font-family: oswald ; font-size:70px;">GESTÃO DE CRÉDITO</span>
+            </h1>
+        </div>
+        <!-- Titulo---------------------------------->
+
+
+        <!--- Botões -------------------------------->
+        <div class="col mt-4">
+
+            <a href="{% url 'credito_liberacao' %}" class="meu-botao m-2">Liberações Mensais de Crédito</a>
+
+            <a href="{% url 'operacoes_credito' %}" class="meu-botao m-2">Operações de  Crédito Vigentes</a>
+
+            <a href="{% url 'operacoes_vencer' %}" class="meu-botao m-2">Operações a Vencer</a>
+
+        </div>
+        <!--- Botões -------------------------------->
+
+    </div>
+    <!-- Titulo e Relatórios ----------------------->
+
+    <!-- Imagem ------------------------------------>
+    <div style="text-align: center;" class="col-5 d-inline-block img-fluid m-0">
+        <img src="{% static 'ccis/sub-modulo.png' %}"
+             alt="right"
+             width="77%"
+             height="auto">
+    </div>
+    <!-- Imagem------------------------------------->
+
+</div>
+<!-- Conteúdo -->
+
+{% endblock %}

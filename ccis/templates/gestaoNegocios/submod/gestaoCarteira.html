@@ -1,0 +1,57 @@
+{% extends 'ccis/base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<!-- Conteúdo -->
+<div class="container-fluid scrollable-content">
+
+    <!-- Titulo e Relatórios -------------------------------->
+    <div class="row mt-3 mb-2">
+
+        <!-- Titulo-------------------------------->
+        <div class="col ps-5 pt-4">
+            <h1 style="font-family: oswald ; font-size:42px;">Bem vindo ao Sub Módulo<br>
+                <span style="color:#27DEBF; font-family: oswald ; font-size:70px;">GESTÃO DE METAS</span>
+            </h1>
+        </div>
+        <!-- Titulo-------------------------------->
+
+
+        <!--- Botões -------------------------------->
+        <div class="col mt-4">
+
+            <a href="{% url 'gestaoMetas' %}" class="meu-botao m-2">Metas 2024</a>
+
+            <a href="{% url 'carteiras' %}" class="meu-botao m-2">Agenda de Atendimentos</a>
+
+            <a href="{% url 'calendario' %}" class="meu-botao m-2">Calendário de Vencimentos</a>
+
+            <a href="{% url 'contasInativas' %}" class="meu-botao m-2">Controle de Contas Inativas</a>
+
+            <a href="{% url 'resultadoCoop' %}" class="meu-botao m-2">Resultado por Cooperados</a>
+
+            <a href="{% url 'gestaoCapital' %}" class="meu-botao m-2">Gestão de Capital</a>
+
+            <a href="{% url 'sipag' %}" class="meu-botao m-2">Sipag</a>
+
+        </div>
+        <!--- Botões -------------------------------->
+
+    </div>
+    <!-- Titulo e Relatórios--------------------------------->
+
+    <!-- imagem --------------------------------------------->
+    <div style="text-align: center;" class="col-5 d-inline-block img-fluid m-0">
+        <img src="{% static 'ccis/sub-modulo.png' %}"
+             alt="right"
+             width="77%"
+             height="auto">
+    </div>
+    <!-- imagem --------------------------------------------->
+
+</div>
+<!-- Conteúdo -->
+
+
+{% endblock %}

@@ -2896,3 +2896,56 @@ display: block;
 .a{
     text-decoration: none;
 }
+
+
+ /* ----- Saiba Mais ------------------------------------------------------- */
+
+/* Adicione isso ao seu arquivo style.css */
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  animation: slideInFromBottom 0.8s ease-out;
+}
+
+.object {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Largura do elemento que atravessa a página */
+    height: 150%; /* Altura igual à altura da página */
+    background-color: #00A094; /* Cor de fundo do elemento */
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% -50%); /* Define a forma do triângulo */
+    z-index: -1; /* Define um índice z para que fique atrás do conteúdo */
+    transition: transform 0.3s ease; /* Adiciona transição suave à transformação */
+}
+
+.ball {
+  width: 60px; /* Ajuste o tamanho da bola conforme necessário */
+  height: 60px; /* Ajuste o tamanho da bola conforme necessário */
+  background-color: #56D6C2; /* Cor da bola */
+  border-radius: 50%; /* Bordas arredondadas para criar uma bola */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0px 3px 10px #C6C6C6;
+}
+
+.fa-icon {
+  font-size: 25Fpx; /* Tamanho do ícone */
+  color: black; /* Cor do ícone */
+}
+
+.fa-icon:hover {
+  transition: 0.3s ease; /* Adiciona transição suave à transformação */
+  color: white; /* Cor do ícone */
+}

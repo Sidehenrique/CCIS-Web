@@ -38,6 +38,7 @@ urlpatterns = [
     path('notificacao_lida/<int:notification_id>/', pages.notificacao_lida, name='notificacao_lida'),
     path('limpar_todas_notificacoes/', pages.limpar_todas_notificacoes, name='limpar_todas_notificacoes'),
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
+    path('saibamais', pages.saibamais, name='saibamais'),
     path('api/notifications/', pages.notification_list, name='notification-list-api'),
 
     path('malotes', pages.malotes, name='malotes'),
@@ -73,6 +74,8 @@ urlpatterns = [
     path('gestaoCapital', gestaoNegocios.gestaoCapital, name='gestaoCapital'),
     path('operacoes_vencer', gestaoNegocios.operacoes_vencer, name='operacoes_vencer'),
     path('sipag', gestaoNegocios.sipag, name='sipag'),
+    path('campanhas', gestaoNegocios.campanhas, name='campanhas'),
+    path('integralize', gestaoNegocios.integralize, name='integralize'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
@@ -153,7 +156,6 @@ urlpatterns = [
     path('processos_PS', produtoServico.processos_PS, name='processos_PS'),
     path('request_ci_ps', produtoServico.request_ci_ps, name='request_ci_ps'),
     path('request_apontamentos_ps', produtoServico.request_apontamentos_ps, name='request_apontamentos_ps'),
-    path('Controle_Carteira', produtoServico.Controle_Carteira, name='Controle_Carteira'),
 
     path('financeiro_home', financeiro.financeiro_home, name='financeiro_home'),
     path('new_request_financeiro', financeiro.new_request_financeiro, name='new_request_financeiro'),
@@ -162,7 +164,6 @@ urlpatterns = [
     path('processos_financeiro', financeiro.processos_financeiro, name='processos_financeiro'),
     path('request_ci_fi', financeiro.request_ci_fi, name='request_ci_fi'),
     path('request_apontamentos_fi', financeiro.request_apontamentos_fi, name='request_apontamentos_fi'),
-    path('tipo_pagamento', financeiro.tipo_pagamento, name='tipo_pagamento'),
 
     path('cadastro_home', cadastro.cadastro_home, name='cadastro_home'),
     path('new_request_cadastro', cadastro.new_request_cadastro, name='new_request_cadastro'),
@@ -201,7 +202,6 @@ urlpatterns = [
     path('request_ci_cre', credito.request_ci_cre, name='request_ci_cre'),
     path('request_apontamentos_cre', credito.request_apontamentos_cre, name='request_apontamentos_cre'),
     path('processos_credito', credito.processos_credito, name='processos_credito'),
-    path('operacoes_Liquidadas', credito.operacoes_Liquidadas, name='operacoes_Liquidadas'),
 
     path('controladoria_home', controladoria.controladoria_home, name='controladoria_home'),
     path('new_request_PC', controladoria.new_request_PC, name='new_request_PC'),
@@ -260,7 +260,7 @@ urlpatterns = [
     path('processos_MK', marketing.processos_MK, name='processos_MK'),
     path('request_acessoria_MK', marketing.request_acessoria_MK, name='request_acessoria_MK'),
     path('request_digital_MK', marketing.request_digital_MK, name='request_digital_MK'),
-    path('request_gráfica_MK', marketing.request_grafica_MK, name='request_gráfica_MK'),
+    path('request_gráfica_MK', marketing.request_gráfica_MK, name='request_gráfica_MK'),
     path('request_ci_mk', marketing.request_ci_mk, name='request_ci_mk'),
     path('request_apontamentos_mk', marketing.request_apontamentos_mk, name='request_apontamentos_mk'),
 
@@ -287,6 +287,7 @@ urlpatterns = [
     path('processos_recepcao', recepcao.processos_recepcao, name='processos_recepcao'),
 
     path('braz_home', brazlandia.braz_home, name='braz_home'),
+    path('processos_braz', brazlandia.processos_braz, name='processos_braz'),
     path('new_request_braz', brazlandia.new_request_braz, name='new_request_braz'),
     path('salvar_malote_braz', brazlandia.salvar_malote_braz, name='salvar_malote_braz'),
 
