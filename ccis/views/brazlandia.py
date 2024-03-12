@@ -227,7 +227,7 @@ def salvar_malote_braz(request):
 
 
 @login_required(login_url="/login")
-def processos_formosa(request):
+def processos_braz(request):
     if request.method == 'GET':
         cards = Card.objects.all().prefetch_related(Prefetch('cardsetorhistory_set',
                                                              queryset=CardSetorHistory.objects.order_by('-data_hora'))

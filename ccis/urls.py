@@ -38,6 +38,7 @@ urlpatterns = [
     path('notificacao_lida/<int:notification_id>/', pages.notificacao_lida, name='notificacao_lida'),
     path('limpar_todas_notificacoes/', pages.limpar_todas_notificacoes, name='limpar_todas_notificacoes'),
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
+    path('saibamais', pages.saibamais, name='saibamais'),
 
     path('malotes', pages.malotes, name='malotes'),
     path('ccc', pages.ccc, name='ccc'),
@@ -69,6 +70,8 @@ urlpatterns = [
     path('carteiras', gestaoNegocios.carteiras, name='carteiras'),
     path('resultadoCoop', gestaoNegocios.resultadoCoop, name='resultadoCoop'),
     path('contasInativas', gestaoNegocios.contasInativas, name='contasInativas'),
+    path('campanhas', gestaoNegocios.campanhas, name='campanhas'),
+    path('integralize', gestaoNegocios.integralize, name='integralize'),
 
     path('coopera', cooperar.coopera, name='coopera'),
     path('relacionamento', cooperar.relacionamento, name='relacionamento'),
@@ -280,6 +283,7 @@ urlpatterns = [
     path('processos_recepcao', recepcao.processos_recepcao, name='processos_recepcao'),
 
     path('braz_home', brazlandia.braz_home, name='braz_home'),
+    path('processos_braz', brazlandia.processos_braz, name='processos_braz'),
     path('new_request_braz', brazlandia.new_request_braz, name='new_request_braz'),
     path('salvar_malote_braz', brazlandia.salvar_malote_braz, name='salvar_malote_braz'),
 

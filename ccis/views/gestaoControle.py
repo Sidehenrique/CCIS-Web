@@ -7,181 +7,46 @@ from .. models import dadosPessoais
 
 @login_required(login_url="/login")
 def home(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle':groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao,
-    }
-
-    return render(request, 'gestaoControle/home.html', context)
+    return render(request, 'gestaoControle/home.html')
 
 
 @login_required(login_url="/login")
 def contabilidade(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao,
-    }
-
-    return render(request, 'gestaoControle/contabilidade.html', context)
+    return render(request, 'gestaoControle/painel/contabilidade.html')
 
 
 @login_required(login_url="/login")
 def relatorios(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao,
-    }
-
-    return render(request, 'gestaoControle/relatorios.html', context)
+    return render(request, 'gestaoControle/painel/relatorios.html')
 
 
 @login_required(login_url="/login")
 def estrategico(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao,
-    }
-
-    return render(request, 'gestaoControle/estrategico.html', context)
+    return render(request, 'gestaoControle/painel/estrategico.html')
 
 
 @login_required(login_url="/login")
 def inadimplencia(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao,
-    }
-
-    return render(request, 'gestaoControle/inadimplencia.html', context)
+    return render(request, 'gestaoControle/painel/inadimplencia.html')
 
 
 @login_required(login_url="/login")
 def qqs(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao,
-    }
-
-    return render(request, 'gestaoControle/qqs.html', context)
+    return render(request, 'gestaoControle/painel/qqs.html')
 
 
 @login_required(login_url="/login")
 def pesquisa(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao
-    }
-
-    return render(request, 'gestaoControle/pesquisa.html', context)
+    return render(request, 'gestaoControle/painel/pesquisa.html')
 
 
 @login_required(login_url="/login")
 def gestaoRelatorios(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao
-    }
-
-    return render(request, 'gestaoControle/gestaoRelatorios.html', context)
+    return render(request, 'gestaoControle/submod/gestaoRelatorios.html')
 
 
 @login_required(login_url="/login")
 def rankingsicoob(request):
-    user = request.user
-
-    group_gestao = user.groups.filter(id=3).exists()
-
-    first_name = user.first_name
-    last_name = user.last_name
-
-    dados = dadosPessoais.objects.get(usuario=user)
-    groupControle = user.groups.filter(id=28).exists()
-
-    context = {
-        'dados': dados, 'username': user, 'first_name': first_name, 'groupControle': groupControle,
-        'last_name': last_name, 'group_gestao': group_gestao
-    }
-
-    return render(request, 'gestaoControle/rankingsicoob.html', context)
+    return render(request, 'gestaoControle/painel/rankingsicoob.html')
 
 

@@ -1323,3 +1323,7 @@ def limpar_todas_notificacoes(request):
             return JsonResponse({'success': False, 'message': str(e)})
 
     return JsonResponse({'success': False, 'message': 'Invalid request method'})
+
+
+def saibamais(request):
+    return render(request, 'ccis/saibamais.html')
