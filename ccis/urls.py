@@ -260,7 +260,7 @@ urlpatterns = [
     path('processos_MK', marketing.processos_MK, name='processos_MK'),
     path('request_acessoria_MK', marketing.request_acessoria_MK, name='request_acessoria_MK'),
     path('request_digital_MK', marketing.request_digital_MK, name='request_digital_MK'),
-    path('request_gráfica_MK', marketing.request_gráfica_MK, name='request_gráfica_MK'),
+    path('request_grafica_MK', marketing.request_grafica_MK, name='request_grafica_MK'),
     path('request_ci_mk', marketing.request_ci_mk, name='request_ci_mk'),
     path('request_apontamentos_mk', marketing.request_apontamentos_mk, name='request_apontamentos_mk'),
 
