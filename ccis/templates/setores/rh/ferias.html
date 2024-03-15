@@ -3,22 +3,388 @@
 
 {% block conteudo %}
 
-<div class="container-fluid position-relative scrollable-content ps-0 pe-0">
+<div style="background-color: #F4F5F9;">
 
-    <!-- Conteúdo -------------------------------->
-    <div class="paineis-bi">
-        
+    <div class="container-fluid scrollable-content">
+
+        <!-- Menu settings ------------------------>
+        <div class="row mt-1">
+
+            <!-- Home e Area de trabalho ---------->
+            <div class="col d-flex mb-4">
+
+                <a href="#" class="btn-menu-settings">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </a>
+
+                <div class="text-menu-settings">
+                    <h5 class="m-0">Painel Férias</h5>
+                </div>
+
+            </div>
+            <!-- Home e Area de trabalho ---------->
+
+            <!-- Filtros -------------------------->
+            <div class="col d-flex col-auto">
+
+                <!-- Filtro ----------------------->
+                <div class="dropdown">
+                    <button class="btn-menu-settings" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <i class="fa-solid fa-filter"></i>
+                        Filtro
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+
+                        <!-- Titulo Filtro ------->
+                        <div style="text-align: center;">
+                            <h6>
+                                Filtro
+                                <span class="pe-3" style="float: right; cursor: pointer;"
+                                      onclick="fecharDropdown()">X</span>
+                            </h6>
+                        </div>
+                        <!-- Titulo Filtro ------->
+
+                        <!-- input --------------->
+                        <div class="p-3">
+                            <span>Palavra Chave:</span>
+                            <input class="bg-dark palavra-passe" type="text" id="palavra-passe" name="palavra-passe"
+                                   required>
+                            <span style="font-size: 12px; color: #999999">Pesquise por assunto, serviço, atendente e N° do card...</span>
+                        </div>
+
+                        <div class="p-3">
+                            <label>Filtre uma Data:</label>
+                            <input class="bg-dark palavra-passe" type="text" id="" name="palavra-passe"
+                                   required>
+                        </div>
+                        <!-- input --------------->
+
+                        <!-- Data ---------------->
+                        <div class="p-3">
+
+                            <span>Departamentos</span>
+
+                            <div class="form-check">
+                                <input class="bg-dark form-check-input" type="checkbox" value="" id="data1">
+                                <label class="form-check-label" for="data1">
+                                    PA's
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="bg-dark form-check-input" type="checkbox" value="" id="data2">
+                                <label class="form-check-label" for="data2">
+                                    Administrativo
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="bg-dark form-check-input" type="checkbox" value="" id="data3">
+                                <label class="form-check-label" for="data3">
+                                    Operacional
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Data ---------------->
+
+                        <!-- Etiquetas ----------->
+                        <div class="p-3">
+                            <span>Controle Férias</span>
+
+                            <div class="form-check">
+                                <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta1">
+                                <label class="form-check-label" for="etiqueta1">
+                                    Férias
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta2">
+                                <label class="form-check-label" for="etiqueta2">
+                                    Programadas
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta3">
+                                <label class="form-check-label" for="etiqueta3">
+                                    Tiradas
+                                </label>
+                            </div>
+
+                        </div>
+                        <!-- Etiquetas ----------->
+
+                    </div>
+
+                </div>
+                <!-- Filtro ---------------------->
+
+                <!-- Pesquisa Rápida ------------->
+                <div class="position-relative">
+                    <i class="fa-solid fa-magnifying-glass search-icon" id="searchIcon"></i>
+                    <input type="search" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa..."
+                           aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
+                </div>
+                <!-- Pesquisa Rápida ------------->
+
+            </div>
+            <!-- Filtros ------------------------->
+
+        </div>
+        <!-- Menu settings ------------------------>
+
+        <div class="row">
+
+            <div class="col-6 backbranco" id="calendario"></div>
+
+            <div class="col-6 d-grid justify-content-center align-items-center">
+
+                <div class="backbranco">
+
+                    <div class="chart-container">
+
+                        <div style="width: 600px; height: auto;" class="chart chart-visible" id="chart1">
+                            <!-- Adicione a classe .chart-visible -->
+                            <canvas id="barPa"></canvas>
+                        </div>
+
+                        <div style="width: 600px; height: auto;" class="chart" id="chart2">
+                            <canvas id="barAdm"></canvas>
+                        </div>
+
+                        <div style="width: 600px; height: auto; display: none;" class="chart" id="chart3">
+                            <canvas id="barOpe"></canvas>
+                        </div>
+
+                        <div class="mt-2">
+                            <a id="changeChartBack" style="cursor: pointer;">
+                                <i style="font-size: 4vh" class="fa-solid fa-chevron-left"></i>
+                            </a>
+
+                            <a id="changeChartNext" style="cursor: pointer;">
+                                <i style="font-size: 4vh" class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row mt-4">
+
+                    <div class="text-center col-4">
+                        <div class="backbranco">
+                            <p>Em Férias</p>
+                            <h1>3</h1>
+                        </div>
+                    </div>
+
+                    <div class="text-center col-4">
+                        <div class="backbranco">
+                            <p>Férias Tiradas</p>
+                            <h1>3</h1>
+                        </div>
+                    </div>
+
+                    <div class="text-center col-4">
+                        <div class="backbranco">
+                            <p>Programadas</p>
+                            <h1>3</h1>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-ferias my-4">
+                                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                                        <h6 class="text-white text-capitalize ps-3">Tabela de Férias</h6>
+                                    </div>
+                                </div>
+                                <div class="card-body px-0 pb-2">
+                                    <div class="table-responsive p-0">
+
+                                        <table class="table align-items-center mb-0">
+
+                                            <!-- Names tabela -->
+                                            <thead>
+
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Colaborador
+                                                </th>
+
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                    Data Saída
+                                                </th>
+
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                    Data Final
+                                                </th>
+
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                    Data Retorno
+                                                </th>
+
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                    Dias Ausentes
+                                                </th>
+
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                    Setor / PA
+                                                </th>
+
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Status
+                                                </th>
+
+                                                <th class="text-secondary opacity-7"></th>
+                                            </tr>
+
+                                            </thead>
+                                            <!-- Names tabela -->
+                                            <tbody>
+
+                                            <!-- tabela1 -->
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+
+                                                        <div>
+                                                            <img src="{% static 'ccis/arthur.jpg' %}"
+                                                                 class="avatar-table me-3" alt="user1">
+                                                        </div>
+
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">Arthur Calorio</h6>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                ArthurC4155_00</p>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                arthur.calorio@sicoobbrasilia.com.br</p>
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">10 Dias</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">Tecnologia / Sia</p>
+                                                </td>
+
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="badge badge-sm bg-gradient-success">Em Férias</span>
+                                                </td>
+
+
+                                                <td class="align-middle">
+                                                    <a href="javascript:;" style="text-decoration: none;"
+                                                       class="text-secondary font-weight-bold text-xs"
+                                                       data-toggle="tooltip" data-original-title="Edit user">
+                                                        Edit
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                            <!-- tabela1 -->
+
+                                            <!-- tabela2 -->
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+
+                                                        <div>
+                                                            <img src="{% static 'ccis/arthur.jpg' %}"
+                                                                 class="avatar-table me-3" alt="user1">
+                                                        </div>
+
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">Arthur Calorio</h6>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                ArthurC4155_00</p>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                arthur.calorio@sicoobbrasilia.com.br</p>
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">10 Dias</p>
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">Tecnologia / Sia</p>
+                                                </td>
+
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="badge badge-sm bg-gradient-secondary">Férias Tiradas</span>
+                                                </td>
+
+
+                                                <td class="align-middle">
+                                                    <a href="javascript:;" style="text-decoration: none;"
+                                                       class="text-secondary font-weight-bold text-xs"
+                                                       data-toggle="tooltip" data-original-title="Edit user">
+                                                        Edit
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                            <!-- tabela2 -->
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-        <iframe title="Processos Seletivos - Avaliações" width="100%" height="99%"
-            src="https://app.powerbi.com/view?r=eyJrIjoiYzU2NzNmNTEtYjAwYi00NDY2LWE0NjEtYmU2NDBiY2NhYTk4IiwidCI6ImVkY2M4NTk2LWJjNWUtNDgxNC1hZjMwLThkZDk5ODFhYTQxMiJ9"
-            frameborder="0" allowFullScreen="true">
-        </iframe>
-
-    <!-- Conteúdo -------------------------------->
-
-
-
 </div>
 
 {% endblock %}

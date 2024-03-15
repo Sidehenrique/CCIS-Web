@@ -1352,34 +1352,222 @@ function resetStarRating() {
 
 //========================================= NOTIFICAÇÕES =============================================
 
-$('.marcar-lida-notificacao').click(function() {
-    var notificationId = $(this).data('notification-id');
-    $.ajax({
-        url: `/notificacao_lida/${notificationId}`,
-        method: 'POST',
-        success: function(data) {
-            if (data.success) {
-//                location.reload();
-                // Atualize a interface do usuário para refletir que a notificação foi marcada como lida.
-            } else {
-                alert('Erro ao registrar a avaliação: ' + data.message);
-            }
-        }
-    });
+// Variável que armazena a opção de notificações ativas ou inativas
+let notificacoesAtivas = false;
+
+
+// Função para salvar a escolha do usuário no localStorage
+function saveNotificationPreferenceToLocalStorage() {
+    const localStorageValue = notificacoesAtivas ? 'ativas' : 'inativas';
+    localStorage.setItem('notificationPreference', localStorageValue);
+}
+
+
+// Ouvinte de evento para o botão de alternância de notificações
+$("#toggleNotificationButton").on("change", function () {
+    notificacoesAtivas = this.checked;
+    saveNotificationPreferenceToLocalStorage();
+    fetchAndRenderNotifications();
+    customToast(notificacoesAtivas ? "Som de Notificações ativado" : "Som de Notificações desativado", "notificationSong.mp3");
 });
 
 
-function limparTodasNotificacoes() {
-    $.ajax({
-        url: '/limpar_todas_notificacoes/',
-        method: 'POST',
-        success: function(data) {
-            if (data.success) {
-                // Reload the page or update the UI as needed
-                location.reload();
-            } else {
-                alert('Erro ao limpar todas as notificações: ' + data.message);
+// Função para obter a preferência de notificações do localStorage ao carregar a página
+document.addEventListener('DOMContentLoaded', function () {
+    const localStorageValue = localStorage.getItem('notificationPreference');
+    if (localStorageValue === 'ativas') {
+        notificacoesAtivas = true;
+        $("#toggleNotificationButton").prop('checked', true);
+    } else {
+        notificacoesAtivas = false;
+        $("#toggleNotificationButton").prop('checked', false);
+    }
+    fetchAndRenderNotifications(); // Atualiza as notificações com a preferência armazenada
+});
+
+
+// Função para buscar notificações
+function fetchAndRenderNotifications() {
+    // Função para buscar notificações
+    function fetchNotifications() {
+        $.ajax({
+            url: '/api/notifications/',  // URL da sua API de notificações
+            method: 'GET',
+            success: function (data) {
+                // Limpar a lista de notificações existente
+                $('#listaNotificacoes').empty();
+
+                // Atualizar o contador de notificações
+                const notificationCount = data.length;
+                updateNotificationBadge(notificationCount);
+
+                // Selecionar a imagem com a classe 'img_msg'
+                const $noNotificationImage = $(".img_msg");
+
+
+                // Obter o número anterior de notificações
+                const previousNotificationCount = parseInt(localStorage.getItem('previousNotificationCount')) || 0;
+
+                // Verificar se há notificações não lidas
+                if (notificationCount > 0) {
+                    // Iterar sobre as notificações e criar elementos HTML
+                    $.each(data, function (index, notification) {
+                        const notificationUrl = buildNotificationUrl(notification);
+                        const formattedDate = moment(notification.date).format('DD/MM/YYYY HH:mm');
+
+                        const $notificationElement = $(`
+                            <a href="${notificationUrl}"
+                                class="marcar-lida-notificacao list-group-item list-group-item-action"
+                                data-notification-id="${notification.id}" aria-current="true">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">${notification.authorFirst} ${notification.authorLast}</h6>
+                                    <small>${formattedDate}</small>
+                                </div>
+                                <p class="mb-1">${notification.description}</p>
+                                <small>Assunto: ${notification.subject}</small>
+                            </a>
+                        `);
+
+                        // Adicionar um ouvinte de evento para marcar como lida e redirecionar
+                        $notificationElement.click(function (event) {
+                            event.preventDefault();
+                            markNotificationAsRead(notification.id, notificationUrl);
+                        });
+
+                        // Adicionar o elemento ao container
+                        $('#listaNotificacoes').append($notificationElement);
+                    });
+
+                    // Ocultar a imagem se houver notificações
+                    $noNotificationImage.hide();
+
+
+                    // Verificar se há novas notificações
+                    if (notificationCount > previousNotificationCount) {
+                        // Chamar customToast se houver novas notificações
+                        notifcationToast("Você tem uma nova notificação", "notificationSong.mp3");
+
+                        // Atualizar o número anterior de notificações no localStorage
+                        localStorage.setItem('previousNotificationCount', notificationCount);
+                    }
+
+
+                } else {
+                    // Mostrar a imagem se não houver notificações
+                    $noNotificationImage.show();
+                }
+            },
+            error: function () {
+                console.error('Erro ao buscar notificações.');
             }
+        });
+    }
+
+    // Função para construir a URL da notificação
+    function buildNotificationUrl(notification) {
+        const urlPrefix = window.location.pathname.includes('/kanban/') ? '' : '/kanban/';
+        return `${urlPrefix}`;
+    }
+
+    // Função para marcar uma notificação como lida e redirecionar
+    function markNotificationAsRead(notificationId, notificationUrl) {
+        $.ajax({
+            url: `/notificacao_lida/${notificationId}/`,
+            method: 'POST',
+            success: function (data) {
+                if (data.success) {
+                    // Atualize a interface do usuário para refletir que a notificação foi marcada como lida
+                    fetchNotifications();
+
+                    // Redirecione para a página de referência
+                    window.location.href = notificationUrl;
+
+                } else {
+                    alert('Erro ao marcar a notificação como lida: ' + data.message);
+                }
+            },
+            error: function () {
+                console.error('Erro ao marcar a notificação como lida.');
+            }
+        });
+    }
+
+    // Função para atualizar o contador de notificações
+    function updateNotificationBadge(count) {
+        const $notificationBadge = $('.notification-badge');
+        if (count > 0) {
+            $notificationBadge.text(count).show();
+        } else {
+            $notificationBadge.hide();
+        }
+    }
+
+    // Chamar a função de buscar notificações ao carregar a página
+    fetchNotifications();
+}
+
+
+// Função para exibir o Toast personalizado
+function notifcationToast(mensagem, somNome) {
+    const notifcationToast = $("#customToast");
+    const toastBody = $("#toastBody");
+    const audioElement = new Audio(`/static/songs/${somNome}`);
+
+    // Atualiza o conteúdo do Toast com a mensagem desejada
+    toastBody.html(mensagem);
+
+    // Exibe o Toast
+    notifcationToast.toast("show");
+
+    if (notificacoesAtivas) {
+        audioElement.play();
+    }
+
+
+    // Esconde o Toast após 3 segundos (3000 milissegundos)
+    setTimeout(function() {
+        notifcationToast.toast("hide");
+    }, 40000);
+}
+
+
+
+// Iniciar a função ao carregar a página
+$(document).ready(function () {
+    fetchAndRenderNotifications();
+
+    // Adicione a função para buscar notificações a cada minuto
+    setInterval(fetchAndRenderNotifications, 60000);  // 60000 milissegundos = 1 minuto
+});
+
+
+
+// Ouvinte de evento para o clique no botão "Limpar tudo"
+$("#limparTudoLink").on("click", function (event) {
+    event.preventDefault();
+
+    // Chama a função para marcar todas as notificações como lidas
+    marcarTodasNotificacoesComoLidas();
+});
+
+// Função para marcar todas as notificações como lidas
+function marcarTodasNotificacoesComoLidas() {
+    $.ajax({
+        url: '/limpar_todas_notificacoes/',  // Atualize com a URL correta da sua API
+        method: 'POST',
+        success: function (data) {
+            if (data.success) {
+                // Atualize a interface do usuário para refletir que todas as notificações foram marcadas como lidas
+                fetchAndRenderNotifications();
+
+                // Zere a constante previousNotificationCount
+                localStorage.setItem('previousNotificationCount', 0);
+            } else {
+                alert('Erro ao marcar todas as notificações como lidas: ' + data.message);
+            }
+        },
+        error: function () {
+            console.error('Erro ao marcar todas as notificações como lidas.');
         }
     });
 }
@@ -1391,8 +1579,8 @@ function limparTodasNotificacoes() {
 
 //============================================== SOM =================================================
 
-// Variavel que armazena o opção de som ativo ou inativo
-let somAtivo = true;
+// Variavel que armazena a opção de som ativo ou inativo
+let somAtivo = false;
 
 
 // Função para salvar a escolha do usuário no cookie
@@ -1401,38 +1589,38 @@ let somAtivo = true;
         setCookie('soundPreference', cookieValue, 365);  // Ajuste conforme necessário
     }
 
-    // Ouvinte de evento para o botão de alternância
-    $("#toggleSoundButton").on("change", function () {
-        somAtivo = this.checked;
-        saveSoundPreferenceToCookie();
-        customToast(somAtivo ? "Som ativado" : "Som desativado", "normalSong.mp3");
-    });
+// Ouvinte de evento para o botão de alternância
+$("#toggleSoundButton").on("change", function () {
+    somAtivo = this.checked;
+    saveSoundPreferenceToCookie();
+    customToast(somAtivo ? "Som ativado" : "Som desativado", "normalSong.mp3");
+});
 
-    // Função para definir um cookie
-    function setCookie(name, value, days) {
-        const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
-        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+// Função para definir um cookie
+function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+}
+
+// Função para obter um cookie
+function getCookieSound(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+// Verificar o cookie ao carregar a página
+document.addEventListener('DOMContentLoaded', function () {
+    const cookieValue = getCookieSound('soundPreference');
+    if (cookieValue === 'ativo') {
+        somAtivo = true;
+        $("#toggleSoundButton").prop('checked', true);
+    } else {
+        somAtivo = false;
+        $("#toggleSoundButton").prop('checked', false);
     }
-
-    // Função para obter um cookie
-    function getCookieSound(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return null;
-    }
-
-    // Verificar o cookie ao carregar a página
-    document.addEventListener('DOMContentLoaded', function () {
-        const cookieValue = getCookieSound('soundPreference');
-        if (cookieValue === 'ativo') {
-            somAtivo = true;
-            $("#toggleSoundButton").prop('checked', true);
-        } else {
-            somAtivo = false;
-            $("#toggleSoundButton").prop('checked', false);
-        }
-    });
+});
 
 // Função para exibir o Toast personalizado
 function customToast(mensagem, somNome) {
@@ -1450,7 +1638,6 @@ function customToast(mensagem, somNome) {
     if (somAtivo) {
         audioElement.play();
     }
-
 
     // Esconde o Toast após 3 segundos (3000 milissegundos)
     setTimeout(function() {
@@ -1501,24 +1688,31 @@ $(document).ready(function() {
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay'
             },
-
             locale: 'pt-br',
             selectable: true, // Adiciona a opção para selecionar datas
-
             // Adicione seus eventos ao calendário
             events: [
                 {
-                    title: 'Férias do João',
-                    start: '2023-11-01',
-                    end: '2023-11-05'
+                    title: 'Férias do Arthur',
+                    start: '2024-03-01',
+                    color: '#00A094' // Define a cor do evento
                 },
-
                 {
                     title: 'Férias do Henrique',
-                    start: '2023-11-01',
-                    end: '2023-11-15'
-                },
+                    start: '2024-03-01',
+                    color: '#00A094' // Define a mesma cor para este evento
+                }
             ]
+        });
+
+        $('#calendario').on('mouseover', '.fc-event', function(e) {
+            var title = $(this).find('.fc-title').text();
+            $('<div class="event-tooltip">' + title + '</div>').appendTo('body').css({
+                top: e.pageY + 10,
+                left: e.pageX + 10
+            });
+        }).on('mouseleave', '.fc-event', function() {
+            $('.event-tooltip').remove();
         });
     });
 
@@ -1674,4 +1868,124 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Aplicar o tema ao carregar a página
     aplicarTema();
+});
+
+
+// Férias --------------------------------------------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Configuração para o primeiro gráfico (pizzaPA)
+    const ctx1 = document.getElementById('barPa').getContext('2d');
+    const data1 = {
+        labels: [
+            'BRZ',
+            'FSA',
+            'DIG',
+            'PAD',
+            'PLA',
+            'SJA',
+            'SSB',
+            'SIA',
+            'VIP',
+        ],
+        datasets: [{
+            label: 'PAs',
+            data: [3, 5, 1, 1, 2, 2, 1, 9, 1], // Adicione mais valores conforme necessário
+            backgroundColor: ['#00A094'],
+            hoverOffset: 4
+        }]
+    };
+    const config1 = {
+        type: 'bar',
+        data: data1,
+    };
+    new Chart(ctx1, config1);
+
+    // Configuração para o segundo gráfico (pizzaSetor)
+    const ctx2 = document.getElementById('barAdm').getContext('2d');
+    const data2 = {
+        labels: [
+            'ADM',
+            'CAD',
+            'FIN',
+            'RH',
+            'REC',
+            'RISC',
+            'MKT',
+            'PC',
+            'RET',
+            'SEC',
+            'TEC'
+        ],
+        datasets: [{
+            label: 'Administrativo',
+            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+            backgroundColor: ['#00A094'],
+            hoverOffset: 4
+        }]
+    };
+    const config2 = {
+        type: 'bar',
+        data: data2,
+    };
+    new Chart(ctx2, config2);
+
+    // Configuração para o segundo gráfico (pizzaSetor)
+    const ctx3 = document.getElementById('barOpe').getContext('2d');
+    const data3 = {
+        labels: [
+            'CAD',
+            'CRÉ',
+            'PS',
+            'REC',
+        ],
+        datasets: [{
+            label: 'Operacional',
+            data: [1, 2, 3, 4],
+            backgroundColor: ['#00A094'],
+            hoverOffset: 4
+        }]
+    };
+    const config3 = {
+        type: 'bar',
+        data: data3,
+    };
+    new Chart(ctx3, config3);
+
+    const charts = [
+        document.getElementById('chart1'),
+        document.getElementById('chart2'),
+        document.getElementById('chart3')
+    ];
+    let currentChartIndex = 0;
+
+    const changeChartNextButton = document.getElementById('changeChartNext');
+    const changeChartBackButton = document.getElementById('changeChartBack');
+
+    function showChart(index) {
+        charts.forEach((chart, i) => {
+            if (i === index) {
+                chart.style.display = 'block';
+            } else {
+                chart.style.display = 'none';
+            }
+        });
+    }
+
+    function showNextChart() {
+        currentChartIndex = (currentChartIndex + 1) % charts.length;
+        showChart(currentChartIndex);
+    }
+
+    function showPreviousChart() {
+        currentChartIndex = (currentChartIndex - 1 + charts.length) % charts.length;
+        showChart(currentChartIndex);
+    }
+
+    // Adicione ouvintes de evento aos botões de Next e Back
+    changeChartNextButton.addEventListener('click', showNextChart);
+    changeChartBackButton.addEventListener('click', showPreviousChart);
+
+    // Mostrar o primeiro gráfico inicialmente
+    showChart(currentChartIndex);;
 });

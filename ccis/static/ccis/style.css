@@ -2913,7 +2913,7 @@ display: block;
 }
 
 .slide-in {
-  animation: slideInFromBottom 0.8s ease-out;
+  animation: slideInFromBottom 1.3s ease-out;
 }
 
 .object {
@@ -2928,24 +2928,245 @@ display: block;
     transition: transform 0.3s ease; /* Adiciona transição suave à transformação */
 }
 
-.ball {
-  width: 60px; /* Ajuste o tamanho da bola conforme necessário */
-  height: 60px; /* Ajuste o tamanho da bola conforme necessário */
-  background-color: #56D6C2; /* Cor da bola */
-  border-radius: 50%; /* Bordas arredondadas para criar uma bola */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  box-shadow: 0px 3px 10px #C6C6C6;
+.backversion{
+    margin: 5px;
+    background-color: #F5F5F5;
+    border-radius: 5px;
+    color: Black;
+    box-shadow: 0px 1px 2px #cdcdcd;
 }
 
-.fa-icon {
-  font-size: 25Fpx; /* Tamanho do ícone */
-  color: black; /* Cor do ícone */
+/* ----- Férias ------------------------------------------------------------------------------------------------------- */
+
+.bg-gradient-primary {
+    background-image: linear-gradient(195deg, #00A094 0%, #00A094 100%);
 }
 
-.fa-icon:hover {
-  transition: 0.3s ease; /* Adiciona transição suave à transformação */
-  color: white; /* Cor do ícone */
+.shadow-primary {
+    box-shadow: 0px 4px 20px #cdcdcd !important;
+}
+
+.z-index-2 {
+    z-index: 2 !important;
+}
+
+.card-header {
+    padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
+    margin-bottom: 0;
+    color: var(--bs-card-cap-color);
+    background-color: var(--bs-card-cap-bg);
+    border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+}
+
+.card-ferias .card-body {
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    padding: 1.5rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    color: var(--bs-card-color);
+}
+
+.card-ferias {
+    --bs-card-spacer-y: 1rem;
+    --bs-card-spacer-x: 1rem;
+    --bs-card-title-spacer-y: 0.5rem;
+    --bs-card-border-width: 0;
+    --bs-card-border-color: rgba(0, 0, 0, 0.125);
+    --bs-card-border-radius: 0.75rem;
+    --bs-card-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --bs-card-inner-border-radius: 0.75rem;
+    --bs-card-cap-padding-y: 0.5rem;
+    --bs-card-cap-padding-x: 1rem;
+    --bs-card-cap-bg: #fff;
+    --bs-card-cap-color: ;
+    --bs-card-height: ;
+    --bs-card-color: ;
+    --bs-card-bg: #fff;
+    --bs-card-img-overlay-padding: 1rem;
+    --bs-card-group-margin: 0.75rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: var(--bs-card-height);
+    word-wrap: break-word;
+    background-color: var(--bs-card-bg);
+    background-clip: border-box;
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    border-radius: var(--bs-card-border-radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.table {
+    --bs-table-color: #7b809a;
+    --bs-table-bg: transparent;
+    --bs-table-border-color: #f0f2f5;
+    --bs-table-accent-bg: transparent;
+    --bs-table-striped-color: #7b809a;
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+    --bs-table-active-color: #7b809a;
+    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+    --bs-table-hover-color: #7b809a;
+    --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+    width: 100%;
+    margin-bottom: 1rem;
+    color: var(--bs-table-color);
+    vertical-align: top;
+    border-color: var(--bs-table-border-color);
+    caption-side: bottom;
+    border-collapse: collapse;
+}
+
+.font-weight-bolder {
+    font-weight: 700 !important;
+}
+.text-xxs {
+    font-size: 0.65rem !important;
+}
+.text-secondary {
+    color: #7b809a !important;
+}
+.text-uppercase {
+    text-transform: uppercase !important;
+}
+.opacity-7 {
+    opacity: 0.7 !important;
+}
+
+.avatar-table {
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border-radius: 50rem;
+    height: 45px;
+    width: 45px;
+    transition: all .2s ease-in-out;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.font-weight-bold {
+    font-weight: 600 !important;
+}
+.text-xs {
+    font-size: 0.75rem !important;
+}
+.text-xs {
+    line-height: 1.25;
+}
+
+.border-radius-lg {
+    border-radius: 0.5rem;
+}
+
+.bg-gradient-success {
+    background-image: linear-gradient(195deg, #66bb6a, #43a047);
+}
+
+.bg-gradient-secondary {
+    background-image: linear-gradient(195deg, #747b8a, #495361);
+}
+
+.badge, .btn {
+    text-transform: uppercase;
+}
+
+.badge {
+    --bs-badge-padding-x: 0.9em;
+    --bs-badge-padding-y: 0.55em;
+    --bs-badge-font-size: 0.75em;
+    --bs-badge-font-weight: 700;
+    --bs-badge-color: #fff;
+    --bs-badge-border-radius: 0.45rem;
+    display: inline-block;
+    padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+    font-size: var(--bs-badge-font-size);
+    font-weight: var(--bs-badge-font-weight);
+    line-height: 1;
+    color: var(--bs-badge-color);
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: var(--bs-badge-border-radius);
+}
+
+.table.align-items-center td, .table.align-items-center th {
+    vertical-align: middle;
+}
+
+
+.chart-container {
+    position: relative;
+    width: 600px; /* ajuste conforme necessário */
+    height: 370px; /* ajuste conforme necessário */
+    display: flex; /* usar flexbox */
+    justify-content: center; /* centralizar os itens horizontalmente */
+    align-items: center; /* centralizar os itens verticalmente */
+    flex-wrap: wrap; /* permitir que os elementos quebrem para a próxima linha, se necessário */
+    overflow: hidden;
+}
+
+.chart {
+    display: none; /* Inicialmente, oculte os gráficos */
+    width: 400px; /* ajuste conforme necessário */
+    height: auto; /* ajuste conforme necessário */
+    margin: 10px; /* espaço entre os elementos */
+}
+
+.chart-visible {
+    display: block; /* Exibir os gráficos quando a classe .chart-visible é aplicada */
+}
+
+.backbranco{
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px
+}
+
+#calendario {
+    width: 49%; /* Defina a largura desejada */
+    height: auto; /* Mantém a proporção de altura para largura */
+    /* Adicione outros estilos conforme necessário */
+}
+
+
+.fc-event {
+    background-color: #00A094; /* Cor de fundo dos eventos */
+    color: #ffffff; /* Cor do texto dos eventos */
+    border-color: #00A094; /* Cor da borda dos eventos */
+}
+
+.fc-button {
+    background-color: #ffffff; /* Cor de fundo dos botões */
+    color: #00A094; /* Cor do texto dos botões */
+    border-color: #00A094; /* Cor da borda dos botões */
+}
+
+.fc-button:hover {
+    background-color: #00A094; /* Cor de fundo dos botões ao passar o mouse */
+    color: black; /* Cor do texto dos botões ao passar o mouse */
+    border-color: #008076; /* Cor da borda dos botões ao passar o mouse */
+}
+
+.event-tooltip {
+    position: absolute;
+    z-index: 10000;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: black;
+    border-radius: 5px;
 }
