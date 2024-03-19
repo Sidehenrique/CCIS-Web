@@ -1264,6 +1264,12 @@ function loadCardInfo(cardId) {
                             // Lógica para outros status, se necessário
                             break;
                     }
+
+                    // Verificar se o assunto é "Férias" e mostrar os botões de aprovação/reprovação
+                    if (data.card.assunto === "Férias") {
+                        showButtonsAndHideMessage(["aprovarFeriasButton", "reprovarFeriasButton"]);
+                    }
+
                 } else if (isDoSetor) {
                     // Se o usuário é do mesmo setor
                     switch (statusAtual) {
@@ -1281,10 +1287,78 @@ function loadCardInfo(cardId) {
                             // Lógica para outros status, se necessário
                             break;
                     }
+
+                    // Verificar se o assunto é "Férias" e mostrar os botões de aprovação/reprovação
+                    if (data.card.assunto === "Férias") {
+                        showButtonsAndHideMessage(["aprovarFeriasButton", "reprovarFeriasButton"]);
+                    }
+
                 } else {
                     // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
                     $("#mensagemEspectador").removeClass("hidden");
                 }
+
+
+                // Adicione um manipulador de eventos de clique para o botão "Aprovar"
+                $("#aprovarFeriasButton").click(function() {
+                    // Exibe uma caixa de diálogo de confirmação
+                    const confirmacao = confirm("Tem certeza de que deseja aprovar as férias?");
+
+                    // Se o usuário clicou em "OK" na caixa de diálogo
+                    if (confirmacao) {
+                        // Aqui você pode adicionar a lógica para aprovar as férias
+                        // Por exemplo, você pode fazer uma chamada AJAX para enviar a aprovação para o servidor
+                        // Após a aprovação, você pode exibir uma mensagem de sucesso ou atualizar a interface de alguma forma
+                        // Exemplo:
+                        // $.ajax({
+                        //     url: "url_para_aprovar_ferias",
+                        //     method: "POST",
+                        //     data: { cardId: data.card.id },
+                        //     success: function(response) {
+                        //         alert("Férias aprovadas com sucesso!");
+                        //         // Adicione aqui a lógica para atualizar a interface após a aprovação
+                        //     },
+                        //     error: function(xhr, status, error) {
+                        //         alert("Ocorreu um erro ao aprovar as férias.");
+                        //     }
+                        // });
+
+                        // Aqui você pode substituir o código acima com sua lógica real para aprovar as férias
+                        // Por enquanto, vamos apenas exibir uma mensagem de alerta
+                        alert("Férias aprovadas com sucesso!");
+                    }
+                });
+
+                // Adicione um manipulador de eventos de clique para o botão "Aprovar"
+                $("#reprovarFeriasButton").click(function() {
+                    // Exibe uma caixa de diálogo de confirmação
+                    const confirmacao = confirm("Tem certeza de que deseja Reprovar as férias?");
+
+                    // Se o usuário clicou em "OK" na caixa de diálogo
+                    if (confirmacao) {
+                        // Aqui você pode adicionar a lógica para aprovar as férias
+                        // Por exemplo, você pode fazer uma chamada AJAX para enviar a aprovação para o servidor
+                        // Após a aprovação, você pode exibir uma mensagem de sucesso ou atualizar a interface de alguma forma
+                        // Exemplo:
+                        // $.ajax({
+                        //     url: "url_para_aprovar_ferias",
+                        //     method: "POST",
+                        //     data: { cardId: data.card.id },
+                        //     success: function(response) {
+                        //         alert("Férias aprovadas com sucesso!");
+                        //         // Adicione aqui a lógica para atualizar a interface após a aprovação
+                        //     },
+                        //     error: function(xhr, status, error) {
+                        //         alert("Ocorreu um erro ao aprovar as férias.");
+                        //     }
+                        // });
+
+                        // Aqui você pode substituir o código acima com sua lógica real para aprovar as férias
+                        // Por enquanto, vamos apenas exibir uma mensagem de alerta
+                        alert("Férias Reprovada com sucesso!");
+                    }
+                });
+
 
 
                 //------------------------------------------------------------------------------------------------------

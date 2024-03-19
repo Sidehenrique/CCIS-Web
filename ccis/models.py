@@ -620,3 +620,13 @@ class KanbanGroupUser(models.Model):
         return f"{self.group.id} - {self.group.name}"
 
 
+# -------- Férias ------------------------------------------------------------------------------------------------------
+
+class Ferias(models.Model):
+    colaborador = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Ferias')
+    datasaida = models.CharField(max_length=100)
+    datafinal = models.CharField(max_length=100)
+    dataretorno = models.CharField(max_length=100)
+    diasausentes = models.CharField(max_length=100)
+    setorpa = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
