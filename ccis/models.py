@@ -481,8 +481,6 @@ class Notification(models.Model):
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications_received')
     department = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     url = models.URLField()
-    authorFirst = models.CharField(max_length=255, default="")
-    authorLast = models.CharField(max_length=255, default="")
     date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
 
@@ -623,7 +621,7 @@ class KanbanGroupUser(models.Model):
 # -------- Férias ------------------------------------------------------------------------------------------------------
 
 class Ferias(models.Model):
-    colaborador = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Ferias')
+    colaborador = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Férias')
     datasaida = models.CharField(max_length=100)
     datafinal = models.CharField(max_length=100)
     dataretorno = models.CharField(max_length=100)

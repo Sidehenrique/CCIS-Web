@@ -224,6 +224,7 @@
                                             <!-- Names tabela -->
                                             <thead>
 
+
                                             <tr>
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                     Colaborador
@@ -256,123 +257,79 @@
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
 
+
                                             </thead>
                                             <!-- Names tabela -->
                                             <tbody>
 
-                                            <!-- tabela1 -->
+
+                                            {% for ferias in dadosTable %}
+
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
 
-                                                        <div>
-                                                            <img src="{% static 'ccis/arthur.jpg' %}"
-                                                                 class="avatar-table me-3" alt="user1">
-                                                        </div>
+                                                        {% if item.sexo %}
+
+                                                        {% if item.sexo == "Masculino" %}
+                                                        <img class="avatar-img" src="{% static 'ccis/avatar.jpg' %}"
+                                                             alt="" width="40" height="40">
+
+                                                        {% elif item.sexo == "Feminino" %}
+                                                        <img class="avatar-img"
+                                                             src="{% static 'ccis/avatar-feminino.jpg' %}"
+                                                             alt="" width="40" height="40">
+                                                        {% endif %}
+                                                        {% endif %}
 
                                                         <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">Arthur Calorio</h6>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                ArthurC4155_00</p>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                arthur.calorio@sicoobbrasilia.com.br</p>
-                                                        </div>
 
+                                                            <h6 class="mb-0 text-sm">
+                                                                {{ ferias.colaborador.username }}
+                                                            </h6>
+
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                {{ ferias.colaborador.email }}
+                                                            </p>
+
+                                                        </div>
                                                     </div>
                                                 </td>
-
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ ferias.datasaida }}</p>
                                                 </td>
-
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ ferias.datafinal }}</p>
                                                 </td>
-
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ ferias.dataretorno
+                                                        }}</p>
                                                 </td>
-
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">10 Dias</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ ferias.diasausentes
+                                                        }}</p>
                                                 </td>
-
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">Tecnologia / Sia</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ ferias.setorpa }}</p>
                                                 </td>
-
                                                 <td class="align-middle text-center text-sm">
-                                                    <span class="badge badge-sm bg-gradient-success">Em Férias</span>
+                                                    {% if ferias.status == "Em Férias" %}
+                                                    <span class="badge badge-sm bg-gradient-success">{{ ferias.status }}</span>
+                                                    {% else %}
+                                                    <span class="badge badge-sm bg-gradient-secondary">{{ ferias.status }}</span>
+                                                    {% endif %}
                                                 </td>
-
-
                                                 <td class="align-middle">
                                                     <a href="javascript:;" style="text-decoration: none;"
                                                        class="text-secondary font-weight-bold text-xs"
-                                                       data-toggle="tooltip" data-original-title="Edit user">
-                                                        Edit
+                                                       data-toggle="tooltip" data-original-title="Editar">
+                                                        Editar
                                                     </a>
                                                 </td>
-
                                             </tr>
-                                            <!-- tabela1 -->
 
-                                            <!-- tabela2 -->
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
+                                            {% endfor %}
 
-                                                        <div>
-                                                            <img src="{% static 'ccis/arthur.jpg' %}"
-                                                                 class="avatar-table me-3" alt="user1">
-                                                        </div>
-
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">Arthur Calorio</h6>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                ArthurC4155_00</p>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                arthur.calorio@sicoobbrasilia.com.br</p>
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
-                                                </td>
-
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
-                                                </td>
-
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">23/04/18</p>
-                                                </td>
-
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">10 Dias</p>
-                                                </td>
-
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">Tecnologia / Sia</p>
-                                                </td>
-
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="badge badge-sm bg-gradient-secondary">Férias Tiradas</span>
-                                                </td>
-
-
-                                                <td class="align-middle">
-                                                    <a href="javascript:;" style="text-decoration: none;"
-                                                       class="text-secondary font-weight-bold text-xs"
-                                                       data-toggle="tooltip" data-original-title="Edit user">
-                                                        Edit
-                                                    </a>
-                                                </td>
-
-                                            </tr>
-                                            <!-- tabela2 -->
 
                                             </tbody>
 
