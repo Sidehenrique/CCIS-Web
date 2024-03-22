@@ -204,8 +204,9 @@ def request_acessoria_MK(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -272,8 +273,9 @@ def request_digital_MK(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -288,7 +290,7 @@ def request_digital_MK(request):
 
 
 @login_required(login_url="/login")
-def request_gráfica_MK(request):
+def request_grafica_MK(request):
     if request.method == 'POST':
 
         request.POST = request.POST.copy()  # Crie uma cópia do dicionário para modificação
@@ -340,8 +342,9 @@ def request_gráfica_MK(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -411,8 +414,9 @@ def request_ci_mk(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -505,8 +509,9 @@ def request_apontamentos_mk(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )

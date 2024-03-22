@@ -138,6 +138,10 @@ def new_request_credito(request):
     return render(request, "setores/credito/new_request_credito.html", context)
 
 
+def operacoes_Liquidadas(request):
+    return render(request, "setores/credito/operacaoLiquidada.html")
+
+
 def salvar_malote_credito(request):
     if request.method == 'POST':
 
@@ -204,8 +208,9 @@ def salvar_malote_credito(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -276,8 +281,9 @@ def request_ci_cre(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -369,8 +375,9 @@ def request_apontamentos_cre(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )

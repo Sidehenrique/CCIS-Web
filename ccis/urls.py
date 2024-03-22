@@ -39,6 +39,7 @@ urlpatterns = [
     path('limpar_todas_notificacoes/', pages.limpar_todas_notificacoes, name='limpar_todas_notificacoes'),
     path('get_message_history/<int:card_id>/', pages.get_message_history, name='get_message_history'),
     path('saibamais', pages.saibamais, name='saibamais'),
+    path('api/notifications/', pages.notification_list, name='notification-list-api'),
 
     path('malotes', pages.malotes, name='malotes'),
     path('ccc', pages.ccc, name='ccc'),
@@ -70,6 +71,9 @@ urlpatterns = [
     path('carteiras', gestaoNegocios.carteiras, name='carteiras'),
     path('resultadoCoop', gestaoNegocios.resultadoCoop, name='resultadoCoop'),
     path('contasInativas', gestaoNegocios.contasInativas, name='contasInativas'),
+    path('gestaoCapital', gestaoNegocios.gestaoCapital, name='gestaoCapital'),
+    path('operacoes_vencer', gestaoNegocios.operacoes_vencer, name='operacoes_vencer'),
+    path('sipag', gestaoNegocios.sipag, name='sipag'),
     path('campanhas', gestaoNegocios.campanhas, name='campanhas'),
     path('integralize', gestaoNegocios.integralize, name='integralize'),
 
@@ -257,7 +261,7 @@ urlpatterns = [
     path('processos_MK', marketing.processos_MK, name='processos_MK'),
     path('request_acessoria_MK', marketing.request_acessoria_MK, name='request_acessoria_MK'),
     path('request_digital_MK', marketing.request_digital_MK, name='request_digital_MK'),
-    path('request_gráfica_MK', marketing.request_gráfica_MK, name='request_gráfica_MK'),
+    path('request_grafica_MK', marketing.request_grafica_MK, name='request_grafica_MK'),
     path('request_ci_mk', marketing.request_ci_mk, name='request_ci_mk'),
     path('request_apontamentos_mk', marketing.request_apontamentos_mk, name='request_apontamentos_mk'),
 

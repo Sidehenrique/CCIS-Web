@@ -192,6 +192,29 @@ def salvar_malote_secretaria(request):
                 )
                 message_history.save()
 
+                # Obtenha o histórico de setor mais recente para o cartão
+                historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+                # Obtenha o grupo associado ao histórico de setor
+                grupo_setor = historico_setor.setor
+
+                # Obtenha a URL do setor com base no grupo do responsável
+                setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+                recipients = User.objects.filter(groups=grupo_setor)
+                for recipient in recipients:
+                    if recipient != request.user:
+                        notification = Notification(
+                            author=request.user,
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",
+                            subject=card.assunto + f" N°: {card.idCard}",
+                            recipient=recipient,
+                            url=setor_link,
+                        )
+                        notification.save()
+
             return redirect('secretaria_home')
 
     else:
@@ -257,8 +280,9 @@ def request_ci_sec(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -349,8 +373,9 @@ def request_apontamentos_sec(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )

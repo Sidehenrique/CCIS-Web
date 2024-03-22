@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons, Card, Notification,OperatorRating
-from ..forms import ModelFormMalotes, modelFormCI, modelFormApontamentos
+from ..forms import ModelFormMalotes, modelFormCI, modelFormApontamentos, modelFormPagamentoFI
 from django.db.models import OuterRef, Subquery,F, ExpressionWrapper, fields,Avg, Count,FloatField
 
 
@@ -131,12 +131,86 @@ def financeiro_home(request):
 @login_required(login_url="/login")
 def new_request_financeiro(request):
     form = ModelFormMalotes()
+    formPagamentos = modelFormPagamentoFI()
     apontamentos = modelFormApontamentos()
     ci = modelFormCI()
 
-    context = {'form': form, 'apontamentos': apontamentos, 'ci': ci}
+    context = {'form': form, 'formPagamentos': formPagamentos, 'apontamentos': apontamentos, 'ci': ci}
 
     return render(request, "setores/financeiro/new_request_financeiro.html", context)
+
+
+@login_required(login_url="/login")
+def tipo_pagamento(request):
+    if request.method == 'POST':
+
+        form = modelFormPagamentoFI(request.POST, request.FILES)
+
+        if form.is_valid():
+            card = form.save(commit=False)
+            card.solicitante = request.user
+            card.setor = get_object_or_404(Group, id=32)
+            card.status = 'Triagem'
+            card.save()
+
+            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            history_entry = CardSetorHistory(
+                card=card,
+                setor=get_object_or_404(Group, id=32),
+                status_anterior="",  # Status anterior (vazio, pois é a criação do card)
+                status_atual="Triagem",  # Status atual
+                setor_anterior="",  # Setor anterior (vazio, pois é a criação do card)
+                setor_atual="Financeiro",  # Setor atual
+            )
+            history_entry.save()
+
+            attachment = request.FILES.get('attachment')
+
+            motivo = request.POST.get('motivo')
+            valor = request.POST.get('valor')
+            data = request.POST.get('data')
+
+            descricao = request.POST.get('descricao')
+
+            body_descricao = f"Motivo: {motivo}<br>" + f"Valor: {valor}<br>" + f"Data: {data}<br>" + f"{descricao}"
+
+            # Salvar a descrição no campo message do MessageHistory
+            message_history = MessageHistory(
+                card=card,
+                remetente=request.user,
+                message=body_descricao,
+                attachment=attachment,
+            )
+            message_history.save()
+
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
+
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        authorFirst=request.user.first_name,
+                        authorLast=request.user.last_name,
+                        description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
+
+        return redirect('financeiro_home')
+
+    else:
+        form = modelFormPagamentoFI()
+
+    return render(request, 'setores/financeiro/new_request_financeiro.html', {'form': form})
 
 
 @login_required(login_url="/login")
@@ -207,8 +281,9 @@ def salvar_malote_financeiro(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abri uma nova Solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -279,8 +354,9 @@ def request_ci_fi(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
@@ -310,7 +386,6 @@ def request_apontamentos_fi(request):
             card.status = 'Triagem'
             card.cor = "#FFCECE"
             card.save()
-
 
             # Crie um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
@@ -373,8 +448,9 @@ def request_apontamentos_fi(request):
                     if recipient != request.user:
                         notification = Notification(
                             author=request.user,
-                            description=f"{card.solicitante} Abriu uma nova solicitação",
-                            subject=card.assunto + f" N°: {card.idCard}",
+                            authorFirst=request.user.first_name,
+                            authorLast=request.user.last_name,
+                            description=f"{card.solicitante} Abriu uma nova Solicitação",                            subject=card.assunto + f" N°: {card.idCard}",
                             recipient=recipient,
                             url=setor_link,
                         )
