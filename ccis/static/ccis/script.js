@@ -1299,35 +1299,39 @@ function loadCardInfo(cardId) {
                 }
 
 
-                // Adicione um manipulador de eventos de clique para o botão "Aprovar"
                 $("#aprovarFeriasButton").click(function() {
-                    // Exibe uma caixa de diálogo de confirmação
                     const confirmacao = confirm("Tem certeza de que deseja aprovar as férias?");
+                    const solicitacaoId = $(this).data('solicitacao_id');
 
-                    // Se o usuário clicou em "OK" na caixa de diálogo
+
                     if (confirmacao) {
-                        // Aqui você pode adicionar a lógica para aprovar as férias
-                        // Por exemplo, você pode fazer uma chamada AJAX para enviar a aprovação para o servidor
-                        // Após a aprovação, você pode exibir uma mensagem de sucesso ou atualizar a interface de alguma forma
-                        // Exemplo:
-                        // $.ajax({
-                        //     url: "url_para_aprovar_ferias",
-                        //     method: "POST",
-                        //     data: { cardId: data.card.id },
-                        //     success: function(response) {
-                        //         alert("Férias aprovadas com sucesso!");
-                        //         // Adicione aqui a lógica para atualizar a interface após a aprovação
-                        //     },
-                        //     error: function(xhr, status, error) {
-                        //         alert("Ocorreu um erro ao aprovar as férias.");
-                        //     }
-                        // });
-
-                        // Aqui você pode substituir o código acima com sua lógica real para aprovar as férias
-                        // Por enquanto, vamos apenas exibir uma mensagem de alerta
-                        alert("Férias aprovadas com sucesso!");
+                        // Envie a solicitação de aprovação usando AJAX
+                        $.ajax({
+                            type: 'POST',
+                            url: '/aprovarFerias/',
+                            data: {
+                                solicitacao_id: solicitacaoId,
+                                cod_info: cardId,
+                                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    alert('Férias aprovadas com sucesso!');
+                                    // Aqui você pode atualizar o estado do card, recarregar a página ou fazer outras ações necessárias
+                                } else {
+                                    alert('Erro ao aprovar férias: ' + response.error);
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                alert('Erro ao aprovar férias: ' + error);
+                            }
+                        });
                     }
                 });
+
+
+
+
 
                 // Adicione um manipulador de eventos de clique para o botão "Aprovar"
                 $("#reprovarFeriasButton").click(function() {

@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
+from django.http import JsonResponse
+import json
 from datetime import datetime, timedelta
 from ..models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,
-                      OperatorRating,
-                      Card, Notification)
+                      OperatorRating, Card, Notification, Ferias)
 from ..forms import ModelFormMalotes, ModelFormRhEtica, modelFormCI, modelFormApontamentos, modelFormRhFerias, GroupForm
 from django.db.models import OuterRef, Subquery, F, ExpressionWrapper, fields, Avg, Count, FloatField
 
@@ -180,10 +181,41 @@ def ferias(request):
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
+    # Filtrar apenas as solicitações de férias aprovadas
+    ferias = Ferias.objects.filter(status_ferias='Aprovado')
+
     contexto = {
-        'groupControle': groupControle, 'group_gestao': group_gestao,
+        'groupControle': groupControle,
+        'group_gestao': group_gestao,
+        'dadosTable': ferias,  # Passa apenas as solicitações de férias aprovadas para a tabela
     }
-    return render(request, 'setores/rh/ferias.html', contexto)
+    return render(request, 'setores/rh/ferias.html',  contexto)
+
+
+@login_required(login_url="/login")
+def aprovarFerias(request):
+    if request.method == 'POST':
+        cod_info = request.POST.get('cod_info')
+
+        # Verifique se o cod_info é válido
+        if cod_info is None:
+            return JsonResponse({'success': False, 'error': 'ID da solicitação inválido'})
+
+        try:
+            # Tente encontrar a solicitação de férias usando o cod_info
+            ferias = Ferias.objects.get(card_id=cod_info)
+            ferias.status_ferias = 'Aprovado'
+            ferias.save()
+            return JsonResponse({'success': True})
+        except Ferias.DoesNotExist:
+            # Se a solicitação de férias não for encontrada
+            return JsonResponse({'success': False, 'error': 'Solicitação de férias não encontrada'})
+    else:
+        # Se o método de requisição não for POST
+        return JsonResponse({'success': False, 'error': 'Método de requisição inválido'})
+
+
+
 
 
 @login_required(login_url="/login")
@@ -333,7 +365,10 @@ def request_ferias(request):
             card.status = 'Triagem'
             card.save()
 
-            # Crie um novo registro em CardSetorHistory para rastrear a criação do card
+            # Obtenha o ID do card recém-criado
+            card_id = card.idCard
+
+            # Criar um novo registro em CardSetorHistory para rastrear a criação do card
             history_entry = CardSetorHistory(
                 card=card,
                 setor=get_object_or_404(Group, id=3),
@@ -344,66 +379,60 @@ def request_ferias(request):
             )
             history_entry.save()
 
-            descricao = request.POST.get('descricao', '')
-
-            attachment = request.FILES.get('attachment')
-
-            campos_descricao = ['group', 'dias_ausentes', 'date', 'descricao']
-
             descricao_items = []
-            data_ferias = None
 
-            for campo in campos_descricao:
+            for campo in ['group', 'date', 'dias_ausentes']:
                 if campo == 'group' and request.POST.get(campo):
-                    # Se o campo é 'group', consulte o nome do setor correspondente
                     setor_id = request.POST.get(campo)
                     setor = Group.objects.get(pk=setor_id)
-                    descricao_items.append(f"Setor do Cooperado: {setor.name}")
+                    descricao_items.append(f"Setor do Colaborador: {setor.name}")
                 elif campo == 'date' and request.POST.get(campo):
-                    # Formatando a data para o padrão desejado
                     data_ferias = datetime.strptime(request.POST.get(campo), "%Y-%m-%d").strftime("%d/%m/%Y")
                     descricao_items.append(f"Data de Início das Férias: {data_ferias}")
                 elif campo == 'dias_ausentes' and request.POST.get(campo):
-                    # Assuming dias_ausentes is the name of the radio button group
                     dias_ausentes_value = request.POST.get('dias_ausentes')
                     descricao_items.append(f"Dias Ausentes: {dias_ausentes_value}")
 
-            # Verificando se data_ferias e dias_ausentes_value existem antes de calcular
-            if data_ferias and dias_ausentes_value:
+            if 'data_ferias' in locals() and 'dias_ausentes_value' in locals():
                 data_ferias_obj = datetime.strptime(data_ferias, "%d/%m/%Y")
                 data_fim = data_ferias_obj + timedelta(days=int(dias_ausentes_value))
                 descricao_items.append(f"Data de Fim das Férias: {data_fim.strftime('%d/%m/%Y')}")
 
-                # Calculando a data de retorno (dia seguinte ao término das férias)
                 data_retorno = data_fim + timedelta(days=1)
                 descricao_items.append(f"Data de Retorno: {data_retorno.strftime('%d/%m/%Y')}")
 
-            # Movendo o bloco de Observações para o final
-            for campo in campos_descricao:
-                if campo == 'descricao' and request.POST.get(campo):
-                    descricao_items.append(f"Observações: {request.POST.get(campo)}")
+            descricao = "<br>".join(descricao_items)
 
-
-            # Se algum campo estiver presente, construa a descrição
-            if descricao_items:
-                descricao = "<br>".join(descricao_items)
+            # Salvar informações em Ferias
+            Ferias.objects.create(
+                solicitante=request.user,
+                usuario=request.user.username,  # Salva o nome de usuário
+                nome_solicitante=request.user.dadosPessoais.nomeCompleto,
+                foto_solicitante=request.user.dadosPessoais.foto.url if request.user.dadosPessoais.foto else '',
+                datasaida=data_ferias_obj.strftime("%d/%m/%Y"),
+                datafinal=data_fim.strftime("%d/%m/%Y"),
+                dataretorno=data_retorno.strftime("%d/%m/%Y"),
+                diasausentes=dias_ausentes_value,
+                setorpa=setor.name,
+                card_id=card_id,
+            )
 
             # Salvar a descrição no campo message do MessageHistory
             message_history = MessageHistory(
                 card=card,
                 remetente=request.user,
                 message=descricao,
-                attachment=attachment,
+                attachment=request.FILES.get('attachment'),
             )
             message_history.save()
 
-            # Obtenha o histórico de setor mais recente para o cartão
+            # Obter o histórico de setor mais recente para o cartão
             historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
 
-            # Obtenha o grupo associado ao histórico de setor
+            # Obter o grupo associado ao histórico de setor
             grupo_setor = historico_setor.setor
 
-            # Obtenha a URL do setor com base no grupo do responsável
+            # Obter a URL do setor com base no grupo do responsável
             setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
 
             recipients = User.objects.filter(groups=grupo_setor)
@@ -418,12 +447,12 @@ def request_ferias(request):
                     )
                     notification.save()
 
-        return redirect('rh_home')
+            return redirect('rh_home')
 
-    else:
-        form = GroupForm()
+        else:
+            form = GroupForm()
 
-    return render(request, 'setores/rh/new_request.html', {'form': form}) @ login_required(login_url="/login")
+        return render(request, 'setores/rh/new_request.html', {'form': form})
 
 
 @login_required(login_url="/login")

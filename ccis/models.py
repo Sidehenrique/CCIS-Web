@@ -479,6 +479,8 @@ class Notification(models.Model):
     description = models.TextField()
     subject = models.CharField(max_length=255)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications_received')
+    authorFirst = models.CharField(max_length=100, null=True, blank=True)
+    authorLast = models.CharField(max_length=100, null=True, blank=True)
     department = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
     url = models.URLField()
     date = models.DateTimeField(auto_now_add=True)
@@ -621,10 +623,16 @@ class KanbanGroupUser(models.Model):
 # -------- Férias ------------------------------------------------------------------------------------------------------
 
 class Ferias(models.Model):
-    colaborador = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='Férias')
+    solicitante = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    nome_solicitante = models.CharField(max_length=60, null=True, blank=True)
+    foto_solicitante = models.ImageField(upload_to='solicitantes', null=True, blank=True)
+    usuario = models.CharField(max_length=150, null=True, blank=True)
     datasaida = models.CharField(max_length=100)
     datafinal = models.CharField(max_length=100)
     dataretorno = models.CharField(max_length=100)
     diasausentes = models.CharField(max_length=100)
     setorpa = models.CharField(max_length=100)
-    status = models.CharField(max_length=100)
+    card = models.ForeignKey(Card,null=True, on_delete=models.CASCADE)
+    status_ferias = models.CharField(max_length=100, choices=(("Aprovado", "Aprovado"), ("Reprovado", "Reprovado")))
+
+
