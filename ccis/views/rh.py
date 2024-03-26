@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.db.models import Prefetch
 from django.http import JsonResponse
-import json
+from django.db.models import Q
+from django.utils import timezone
 from datetime import datetime, timedelta
 from ..models import (dadosPessoais, profissional, CardSetorHistory, MessageHistory, CustomGroupInfo, SectorButtons,
                       OperatorRating, Card, Notification, Ferias)
@@ -177,19 +178,53 @@ def pro_seletivo(request):
 @login_required(login_url="/login")
 def ferias(request):
     user = request.user
-
     group_gestao = user.groups.filter(id=3).exists()
     groupControle = user.groups.filter(id=28).exists()
 
     # Filtrar apenas as solicitações de férias aprovadas
-    ferias = Ferias.objects.filter(status_ferias='Aprovado')
+    ferias = Ferias.objects.filter(Q(status_ferias='Aprovado') | Q(status_ferias='Em férias') |
+                                   Q(status_ferias='Férias tiradas'))
+
+    today_str = timezone.now().strftime('%d/%m/%Y')
+    today_date = datetime.strptime(today_str, '%d/%m/%Y').date()
+
+    # Verificar se cada solicitação de férias está atualmente em andamento
+    for feria in ferias:
+        datasaida = datetime.strptime(feria.datasaida, '%d/%m/%Y').date()
+        datafinal = datetime.strptime(feria.datafinal, '%d/%m/%Y').date()
+        data_retorno = datetime.strptime(feria.dataretorno, '%d/%m/%Y').date()
+
+        if datasaida <= today_date <= datafinal:
+            print(f"Atualizando status de férias para 'Em férias' para ID {feria.id}")
+            feria.status_ferias = 'Em férias'
+
+        elif today_date > data_retorno:
+            print(f"Atualizando status de férias para 'Férias tiradas' para ID {feria.id}")
+            feria.status_ferias = 'Férias tiradas'
+
+        feria.save()  # Salvar as alterações no banco de dados
 
     contexto = {
         'groupControle': groupControle,
         'group_gestao': group_gestao,
         'dadosTable': ferias,  # Passa apenas as solicitações de férias aprovadas para a tabela
     }
-    return render(request, 'setores/rh/ferias.html',  contexto)
+    return render(request, 'setores/rh/ferias.html', contexto)
+
+
+def eventosFerias(request):
+    eventos_ferias = []
+    for feria in Ferias.objects.all():
+        evento = {
+            'title': feria.nomecompleto_selecionado,
+            'start': feria.datasaida,
+            'color': '#00A094',  # Defina a cor conforme necessário
+            'className': 'em-ferias' if feria.status_ferias == 'Em férias' else (
+                'ferias-tiradas' if feria.status_ferias == 'Férias tiradas' else '')
+        }
+        eventos_ferias.append(evento)
+
+    return JsonResponse({'eventos': eventos_ferias})
 
 
 @login_required(login_url="/login")
@@ -213,9 +248,6 @@ def aprovarFerias(request):
     else:
         # Se o método de requisição não for POST
         return JsonResponse({'success': False, 'error': 'Método de requisição inválido'})
-
-
-
 
 
 @login_required(login_url="/login")
@@ -256,13 +288,14 @@ def new_request(request):
     ferias = modelFormRhFerias()
     group = GroupForm()
 
-    context = {'form': form,
-               'form_Etica': form_Etica,
-               'apontamentos': apontamentos,
-               'ci': ci,
-               'ferias': ferias,
-               'group': group,
-               }
+    context = {
+        'form': form,
+        'form_Etica': form_Etica,
+        'apontamentos': apontamentos,
+        'ci': ci,
+        'ferias': ferias,
+        'group': group,
+    }
 
     return render(request, "setores/rh/new_request.html", context)
 
@@ -382,6 +415,15 @@ def request_ferias(request):
 
             descricao_items = []
 
+            # Adicione o nome do usuário selecionado à descrição primeiro
+            if 'usuario' in request.POST:
+                usuario_selecionado_id = request.POST.get('usuario')
+                usuario_selecionado = User.objects.get(pk=usuario_selecionado_id)
+                nome_completo_usuario_selecionado = f"{usuario_selecionado.first_name} {usuario_selecionado.last_name}"
+                nome_usuario_selecionado = usuario_selecionado.username
+                foto_usuario_selecionado = usuario_selecionado.dadosPessoais.foto.url if usuario_selecionado.dadosPessoais.foto else ''  # Acessa a foto do usuário selecionado
+                descricao_items.append(f"Usuário Selecionado: {nome_completo_usuario_selecionado}")
+
             for campo in ['group', 'date', 'dias_ausentes']:
                 if campo == 'group' and request.POST.get(campo):
                     setor_id = request.POST.get(campo)
@@ -407,9 +449,10 @@ def request_ferias(request):
             # Salvar informações em Ferias
             Ferias.objects.create(
                 solicitante=request.user,
-                usuario=request.user.username,  # Salva o nome de usuário
-                nome_solicitante=request.user.dadosPessoais.nomeCompleto,
-                foto_solicitante=request.user.dadosPessoais.foto.url if request.user.dadosPessoais.foto else '',
+                foto_usuario_selecionado=foto_usuario_selecionado,  # Salva a foto do usuário selecionado no novo campo
+                usuario_selecionado=nome_usuario_selecionado,
+                nomecompleto_selecionado=nome_completo_usuario_selecionado,
+                id_selecionado=usuario_selecionado_id,
                 datasaida=data_ferias_obj.strftime("%d/%m/%Y"),
                 datafinal=data_fim.strftime("%d/%m/%Y"),
                 dataretorno=data_retorno.strftime("%d/%m/%Y"),

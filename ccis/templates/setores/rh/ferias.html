@@ -148,6 +148,8 @@
 
                     <div class="chart-container">
 
+                        <h6 class="m-0">Férias Aprovadas</h6>
+
                         <div style="width: 600px; height: auto;" class="chart chart-visible" id="chart1">
                             <!-- Adicione a classe .chart-visible -->
                             <canvas id="barPa"></canvas>
@@ -163,11 +165,11 @@
 
                         <div class="mt-2">
                             <a id="changeChartBack" style="cursor: pointer;">
-                                <i style="font-size: 4vh" class="fa-solid fa-chevron-left"></i>
+                                <i style="font-size: 3vh" class="fa-solid fa-chevron-left"></i>
                             </a>
 
                             <a id="changeChartNext" style="cursor: pointer;">
-                                <i style="font-size: 4vh" class="fa-solid fa-chevron-right"></i>
+                                <i style="font-size: 3vh" class="fa-solid fa-chevron-right"></i>
                             </a>
                         </div>
 
@@ -180,21 +182,21 @@
                     <div class="text-center col-4">
                         <div class="backbranco">
                             <p>Em Férias</p>
-                            <h1>3</h1>
+                            <h1 id="em-ferias-count">0</h1>
                         </div>
                     </div>
 
                     <div class="text-center col-4">
                         <div class="backbranco">
-                            <p>Férias Tiradas</p>
-                            <h1>3</h1>
+                            <p>Férias tiradas</p>
+                            <h1 id="ferias-tiradas-count">0</h1>
                         </div>
                     </div>
 
                     <div class="text-center col-4">
                         <div class="backbranco">
-                            <p>Programadas</p>
-                            <h1>3</h1>
+                            <p>Aprovadas</p>
+                            <h1 id="aprovado-count">0</h1>
                         </div>
                     </div>
                 </div>
@@ -269,16 +271,18 @@
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
 
-                                                        <img class="avatar-table" src="{{ ferias.solicitante.dadosPessoais.foto.url }}" alt="Foto do Usuário" width="40" height="40">
+                                                        <img class="avatar-table"
+                                                             src="{{ ferias.foto_usuario_selecionado }}"
+                                                             alt="Foto do Usuário" width="40" height="40">
 
                                                         <div class="d-flex flex-column justify-content-center">
 
                                                             <h6 class="mb-0 ms-2 text-sm">
-                                                            {{ ferias.solicitante.dadosPessoais.nomeCompleto }}
+                                                                {{ ferias.nomecompleto_selecionado }}
                                                             </h6>
 
-                                                            <p class="ms-2 text-xs text-secondary mb-0">
-                                                            {{ ferias.solicitante.username }}
+                                                            <p class="text-xs text-secondary mb-0 ms-2">
+                                                                {{ ferias.usuario_selecionado }}
                                                             </p>
 
                                                         </div>
@@ -306,15 +310,20 @@
 
                                                 <td class="align-middle text-center text-sm">
 
-                                                    {% if ferias.status == "Em Férias" %}
+                                                    {% if ferias.status_ferias == 'Em férias' %}
                                                     <span class="badge badge-sm bg-gradient-success">
-                                                        {{ ferias.status }}
-                                                    </span>
-                                                    {% else %}
+                                                            {{ ferias.status_ferias }}
+                                                        </span>
 
+                                                    {% elif ferias.status_ferias == 'Férias tiradas' %}
                                                     <span class="badge badge-sm bg-gradient-secondary">
-                                                        {{ ferias.status }}
-                                                    </span>
+                                                            {{ ferias.status_ferias }}
+                                                        </span>
+
+                                                    {% else %}
+                                                    <span class="badge badge-sm bg-gradient-primary">
+                                                            {{ ferias.status_ferias }}
+                                                        </span>
                                                     {% endif %}
 
                                                 </td>

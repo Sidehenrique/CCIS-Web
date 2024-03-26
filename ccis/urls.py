@@ -129,6 +129,7 @@ urlpatterns = [
     path('rh/request_apontamentos_rh', rh.request_apontamentos_rh, name='request_apontamentos_rh'),
     path('rh/request_ferias', rh.request_ferias, name='request_ferias'),
     path('aprovarFerias/', rh.aprovarFerias, name='aprovar_ferias'),
+    path('eventosFerias/', rh.eventosFerias, name='eventosFerias'),
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request', ti.new_request, name='new_request'),
@@ -165,6 +166,7 @@ urlpatterns = [
     path('processos_financeiro', financeiro.processos_financeiro, name='processos_financeiro'),
     path('request_ci_fi', financeiro.request_ci_fi, name='request_ci_fi'),
     path('request_apontamentos_fi', financeiro.request_apontamentos_fi, name='request_apontamentos_fi'),
+    path('tipo_pagamento', financeiro.tipo_pagamento, name='tipo_pagamento'),
 
     path('cadastro_home', cadastro.cadastro_home, name='cadastro_home'),
     path('new_request_cadastro', cadastro.new_request_cadastro, name='new_request_cadastro'),

@@ -912,23 +912,33 @@ class ModelFormRhEtica(forms.ModelForm):
 
 
 class modelFormRhFerias(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(modelFormRhFerias, self).__init__(*args, **kwargs)
 
-    CHOICES_Assunto = [
-        ('Férias', 'Férias'),
-    ]
+        # Recuperar todos os usuários do banco de dados
+        usuarios = User.objects.all()
 
-    assunto = forms.ChoiceField(choices=CHOICES_Assunto, widget=forms.Select(attrs={'class': 'form-select'}))
-    service =forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+        # Criar lista de opções para o campo de seleção
+        CHOICES_Usuarios = [("", "---------")]  # Opção vazia
+        CHOICES_Usuarios += [(usuario.id, usuario.username) for usuario in usuarios]
+
+        # Adicionar a lista de opções ao campo de seleção
+        self.fields['usuario'] = forms.ChoiceField(choices=CHOICES_Usuarios,
+                                                   widget=forms.Select(attrs={'class': 'form-select'}),
+                                                   initial='')  # Definir o valor inicial como vazio
+
+    assunto = forms.ChoiceField(choices=[('Férias', 'Férias')], widget=forms.Select(attrs={'class': 'form-select'}))
+    service = forms.CharField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
     date = forms.DateField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}))
-    descricao = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
-        required=False
-    )
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 50}),
+                                required=False)
     attachment = forms.FileField(widget=forms.FileInput(attrs={'multiple': True, 'class': 'form-control'}),
                                  required=False)
+
     class Meta:
         model = Card
         fields = ('assunto', 'service', 'date', 'descricao', 'attachment',)
+
 
 # -------Secretaria---------------------------------------------------------------------------------------------------------
 

@@ -1329,10 +1329,6 @@ function loadCardInfo(cardId) {
                     }
                 });
 
-
-
-
-
                 // Adicione um manipulador de eventos de clique para o botão "Aprovar"
                 $("#reprovarFeriasButton").click(function() {
                     // Exibe uma caixa de diálogo de confirmação
@@ -1362,7 +1358,6 @@ function loadCardInfo(cardId) {
                         alert("Férias Reprovada com sucesso!");
                     }
                 });
-
 
 
                 //------------------------------------------------------------------------------------------------------
@@ -1760,39 +1755,73 @@ $(document).ready(function () {
 //=========================================== CALENDARIO =============================================
 
 $(document).ready(function() {
-        $('#calendario').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            locale: 'pt-br',
-            selectable: true, // Adiciona a opção para selecionar datas
-            // Adicione seus eventos ao calendário
-            events: [
-                {
-                    title: 'Férias do Arthur',
-                    start: '2024-03-01',
-                    color: '#00A094' // Define a cor do evento
-                },
-                {
-                    title: 'Férias do Henrique',
-                    start: '2024-03-01',
-                    color: '#00A094' // Define a mesma cor para este evento
-                }
-            ]
-        });
+    // Variável para armazenar o tooltip
+    var tooltip;
 
-        $('#calendario').on('mouseover', '.fc-event', function(e) {
-            var title = $(this).find('.fc-title').text();
-            $('<div class="event-tooltip">' + title + '</div>').appendTo('body').css({
-                top: e.pageY + 10,
-                left: e.pageX + 10
-            });
-        }).on('mouseleave', '.fc-event', function() {
-            $('.event-tooltip').remove();
+    function carregarEventosFerias() {
+        $.ajax({
+            url: '/eventosFerias/',
+            type: "GET",
+            success: function(response) {
+                var eventosFerias = response.eventos.map(function(evento) {
+                    var dataFormatada = moment(evento.start, 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+                    return {
+                        title: "Férias de " + evento.title,
+                        start: dataFormatada,
+                        color: evento.color,
+                        className: evento.className
+                    };
+                });
+
+                $('#calendario').fullCalendar('removeEvents');
+                $('#calendario').fullCalendar('addEventSource', eventosFerias);
+            },
+            error: function(xhr, status, error) {
+                console.error("Erro ao carregar os eventos de férias:", error);
+            }
         });
+    }
+
+    $('#calendario').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        locale: 'pt-br',
+        selectable: true,
+        events: [],
+        eventRender: function(event, element) {
+            element.attr(event.title);
+        },
+        eventMouseover: function(event, jsEvent, view) {
+            // Verifica se o tooltip já está presente
+            if (!tooltip) {
+                // Cria e exibe o tooltip apenas se não estiver presente
+                tooltip = $('<div class="event-tooltip">' + event.title + '</div>').appendTo('body');
+            }
+            // Posiciona o tooltip conforme o movimento do mouse
+            $(document).on('mousemove', function(e) {
+                tooltip.css({
+                    top: e.pageY + 10, // Adicione um deslocamento vertical conforme necessário
+                    left: e.pageX + 10 // Adicione um deslocamento horizontal conforme necessário
+                });
+            });
+        },
+        eventMouseout: function(event, jsEvent, view) {
+            // Remove o tooltip quando o mouse sai do evento
+            if (tooltip) {
+                tooltip.remove();
+                tooltip = null; // Limpa a variável do tooltip
+            }
+        }
     });
+
+    carregarEventosFerias();
+});
+
+
 
 //====================================================================================================
 
@@ -1952,23 +1981,28 @@ document.addEventListener("DOMContentLoaded", function() {
 // Férias --------------------------------------------------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Configuração para o primeiro gráfico (pizzaPA)
+
+    const PAsDesejados = ['Brazlândia', 'Formosa', 'PA Digital', 'PAD/DF', 'Planaltina', 'São João', 'São Sebastião',
+        'Sia', 'Vicente Pires'];
+
+    // Defina um objeto para armazenar contagens de PAs para o gráfico de PAs
+    const countPA = {};
+    const cellsSetorPA1 = document.querySelectorAll('tbody tr td:nth-child(6)');
+
+    cellsSetorPA1.forEach(cell => {
+        const pa = cell.textContent.trim();
+        const status = cell.nextElementSibling.textContent.trim(); // Obtém o status da próxima célula
+        if (PAsDesejados.includes(pa) && status === 'Aprovadas') {
+            countPA[pa] = (countPA[pa] || 0) + 1;
+        }
+    });
+
     const ctx1 = document.getElementById('barPa').getContext('2d');
     const data1 = {
-        labels: [
-            'BRZ',
-            'FSA',
-            'DIG',
-            'PAD',
-            'PLA',
-            'SJA',
-            'SSB',
-            'SIA',
-            'VIP',
-        ],
+        labels: Object.keys(countPA),
         datasets: [{
             label: 'PAs',
-            data: [3, 5, 1, 1, 2, 2, 1, 9, 1], // Adicione mais valores conforme necessário
+            data: Object.values(countPA),
             backgroundColor: ['#00A094'],
             hoverOffset: 4
         }]
@@ -1979,25 +2013,31 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     new Chart(ctx1, config1);
 
-    // Configuração para o segundo gráfico (pizzaSetor)
+    // Outros gráficos também seguem uma lógica semelhante
+
+    // Defina os setores específicos que você deseja contar para o gráfico administrativo
+    const setoresAdministrativosDesejados = ['Administrativo', 'Cobrança', 'Financeiro', 'Gestão de Pessoas',
+        'Gestão de Recursos', 'Gestão de Risco', 'Marketing',
+        'Performance Corporativa', 'Retaguarda', 'Secretaria', 'Tecnologia'];
+
+    // Defina um objeto para armazenar contagens de setores para o gráfico administrativo
+    const countSetorAdministrativo = {};
+    const cellsSetorPA2 = document.querySelectorAll('tbody tr td:nth-child(6)');
+
+    cellsSetorPA2.forEach(cell => {
+        const setor = cell.textContent.trim();
+        const status = cell.nextElementSibling.textContent.trim(); // Obtém o status da próxima célula
+        if (setoresAdministrativosDesejados.includes(setor) && status === 'Aprovado') {
+            countSetorAdministrativo[setor] = (countSetorAdministrativo[setor] || 0) + 1;
+        }
+    });
+
     const ctx2 = document.getElementById('barAdm').getContext('2d');
     const data2 = {
-        labels: [
-            'ADM',
-            'CAD',
-            'FIN',
-            'RH',
-            'REC',
-            'RISC',
-            'MKT',
-            'PC',
-            'RET',
-            'SEC',
-            'TEC'
-        ],
+        labels: Object.keys(countSetorAdministrativo),
         datasets: [{
             label: 'Administrativo',
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+            data: Object.values(countSetorAdministrativo),
             backgroundColor: ['#00A094'],
             hoverOffset: 4
         }]
@@ -2008,18 +2048,28 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     new Chart(ctx2, config2);
 
-    // Configuração para o segundo gráfico (pizzaSetor)
+
+    // Defina os setores específicos que você deseja contar para o gráfico operacional
+    const setoresOperacionaisDesejados = ['Cadastro', 'Crédito', 'Produtos e Serviços', 'Recepção'];
+
+    // Defina um objeto para armazenar contagens de setores para o gráfico operacional
+    const countSetorOperacional = {};
+    const cellsSetorPA3 = document.querySelectorAll('tbody tr td:nth-child(6)');
+
+    cellsSetorPA3.forEach(cell => {
+        const setor = cell.textContent.trim();
+        const status = cell.nextElementSibling.textContent.trim(); // Obtém o status da próxima célula
+        if (setoresOperacionaisDesejados.includes(setor) && status === 'Aprovadas') {
+            countSetorOperacional[setor] = (countSetorOperacional[setor] || 0) + 1;
+        }
+    });
+
     const ctx3 = document.getElementById('barOpe').getContext('2d');
     const data3 = {
-        labels: [
-            'CAD',
-            'CRÉ',
-            'PS',
-            'REC',
-        ],
+        labels: Object.keys(countSetorOperacional),
         datasets: [{
             label: 'Operacional',
-            data: [1, 2, 3, 4],
+            data: Object.values(countSetorOperacional),
             backgroundColor: ['#00A094'],
             hoverOffset: 4
         }]
@@ -2031,10 +2081,11 @@ document.addEventListener("DOMContentLoaded", function() {
     new Chart(ctx3, config3);
 
     const charts = [
-        document.getElementById('chart1'),
-        document.getElementById('chart2'),
-        document.getElementById('chart3')
+        document.getElementById('barPa'),
+        document.getElementById('barAdm'),
+        document.getElementById('barOpe')
     ];
+
     let currentChartIndex = 0;
 
     const changeChartNextButton = document.getElementById('changeChartNext');
@@ -2043,9 +2094,9 @@ document.addEventListener("DOMContentLoaded", function() {
     function showChart(index) {
         charts.forEach((chart, i) => {
             if (i === index) {
-                chart.style.display = 'block';
+                chart.parentNode.style.display = 'block';
             } else {
-                chart.style.display = 'none';
+                chart.parentNode.style.display = 'none';
             }
         });
     }
@@ -2065,5 +2116,33 @@ document.addEventListener("DOMContentLoaded", function() {
     changeChartBackButton.addEventListener('click', showPreviousChart);
 
     // Mostrar o primeiro gráfico inicialmente
-    showChart(currentChartIndex);;
+    showChart(currentChartIndex);
 });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+        // Função para contar o número de ocorrências de cada status e atualizar os números exibidos
+        function contarStatusFerias() {
+            var statusFerias = {
+                'Em férias': 0,
+                'Férias tiradas': 0,
+                'Aprovado': 0
+            };
+
+            // Iterar sobre cada linha da tabela
+            document.querySelectorAll("tbody tr").forEach(function(row) {
+                var status = row.querySelector(".badge").textContent.trim();
+                statusFerias[status]++;
+            });
+
+            // Atualizar os números exibidos
+            document.getElementById("em-ferias-count").textContent = statusFerias['Em férias'];
+            document.getElementById("ferias-tiradas-count").textContent = statusFerias['Férias tiradas'];
+            document.getElementById("aprovado-count").textContent = statusFerias['Aprovado'];
+        }
+
+        // Chamar a função inicialmente
+        contarStatusFerias();
+    });
+
+

@@ -3178,8 +3178,10 @@ display: block;
     background: #fff;
     border: 1px solid #ccc;
     padding: 10px;
-    border-radius: 3px;
-    font-size: 12px;
+    font-size: 15px;
     color: black;
     border-radius: 5px;
+    /* Ajuste a posição do tooltip */
+    top: 0; /* Ajuste conforme necessário */
+    left: 0; /* Ajuste conforme necessário */
 }

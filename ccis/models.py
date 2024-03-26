@@ -624,15 +624,16 @@ class KanbanGroupUser(models.Model):
 
 class Ferias(models.Model):
     solicitante = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    nome_solicitante = models.CharField(max_length=60, null=True, blank=True)
-    foto_solicitante = models.ImageField(upload_to='solicitantes', null=True, blank=True)
-    usuario = models.CharField(max_length=150, null=True, blank=True)
+    foto_usuario_selecionado = models.ImageField(upload_to='solicitantes', null=True, blank=True)  # Renomeado o campo
+    usuario_selecionado = models.CharField(max_length=150, null=True, blank=True)
+    nomecompleto_selecionado = models.CharField(max_length=150, null=True, blank=True)
+    id_selecionado = models.CharField(null=True, max_length=100)
     datasaida = models.CharField(max_length=100)
     datafinal = models.CharField(max_length=100)
     dataretorno = models.CharField(max_length=100)
     diasausentes = models.CharField(max_length=100)
     setorpa = models.CharField(max_length=100)
     card = models.ForeignKey(Card,null=True, on_delete=models.CASCADE)
-    status_ferias = models.CharField(max_length=100, choices=(("Aprovado", "Aprovado"), ("Reprovado", "Reprovado")))
+    status_ferias = models.CharField(max_length=100)
 
 
