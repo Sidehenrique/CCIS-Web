@@ -1265,10 +1265,7 @@ function loadCardInfo(cardId) {
                             break;
                     }
 
-                    // Verificar se o assunto é "Férias" e mostrar os botões de aprovação/reprovação
-                    if (data.card.assunto === "Férias") {
-                        showButtonsAndHideMessage(["aprovarFeriasButton", "reprovarFeriasButton"]);
-                    }
+
 
                 } else if (isDoSetor) {
                     // Se o usuário é do mesmo setor
@@ -1277,7 +1274,7 @@ function loadCardInfo(cardId) {
                             showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
                             break;
                         case "Atendimento":
-                            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton"]);
+                            showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton", "aprovarFeriasButton", "reprovarFeriasButton"]);
                             break;
                         case "Encaminhado":
                             showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
@@ -1288,10 +1285,39 @@ function loadCardInfo(cardId) {
                             break;
                     }
 
-                    // Verificar se o assunto é "Férias" e mostrar os botões de aprovação/reprovação
-                    if (data.card.assunto === "Férias") {
-                        showButtonsAndHideMessage(["aprovarFeriasButton", "reprovarFeriasButton"]);
+
+                    // Verificar se o card atual é um card de férias
+                    const isCardDeFerias = data.card.assunto === "Férias";
+
+                    // Verificar se o usuário é do mesmo setor e se o card é de férias para exibir os botões apropriados
+                    console.log("isDoSetor: ", isDoSetor); // Adicionando console.log para verificar o valor de isDoSetor
+                    console.log("isCardDeFerias: ", isCardDeFerias);
+
+                    // Verificar se o usuário é do mesmo setor e se o card é de férias para exibir os botões apropriados
+                    if (isDoSetor && isCardDeFerias) {
+                        // Se o usuário é do mesmo setor e o card é de férias
+                        switch (statusAtual) {
+                            case "Triagem":
+                                showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+                                break;
+                            case "Atendimento":
+                                showButtonsAndHideMessage(["encaminharCardButton", "enviarMensagemButton", "ConcluirCardButton", "aprovarFeriasButton", "reprovarFeriasButton"]);
+                                break;
+                            case "Encaminhado":
+                                showButtonsAndHideMessage(["registrarAtendimentoButton", "transferirCardButton"]);
+                                break;
+                            // Adicione outras condições conforme necessário
+                            default:
+                                // Lógica para outros status, se necessário
+                                break;
+                        }
+                    } else {
+                        // Se o usuário não é do mesmo setor ou o card não é de férias, oculte os botões de aprovar e reprovar férias
+                        $("#aprovarFeriasButton, #reprovarFeriasButton").addClass("hidden");
                     }
+
+
+
 
                 } else {
                     // Se nenhuma condição acima for atendida, exibir a imagem e a mensagem do espectador
@@ -1329,33 +1355,35 @@ function loadCardInfo(cardId) {
                     }
                 });
 
-                // Adicione um manipulador de eventos de clique para o botão "Aprovar"
                 $("#reprovarFeriasButton").click(function() {
-                    // Exibe uma caixa de diálogo de confirmação
-                    const confirmacao = confirm("Tem certeza de que deseja Reprovar as férias?");
+                    const confirmacao = confirm("Tem certeza de que deseja aprovar as férias?");
+                    const solicitacaoId = $(this).data('solicitacao_id');
 
                     // Se o usuário clicou em "OK" na caixa de diálogo
                     if (confirmacao) {
-                        // Aqui você pode adicionar a lógica para aprovar as férias
-                        // Por exemplo, você pode fazer uma chamada AJAX para enviar a aprovação para o servidor
-                        // Após a aprovação, você pode exibir uma mensagem de sucesso ou atualizar a interface de alguma forma
-                        // Exemplo:
-                        // $.ajax({
-                        //     url: "url_para_aprovar_ferias",
-                        //     method: "POST",
-                        //     data: { cardId: data.card.id },
-                        //     success: function(response) {
-                        //         alert("Férias aprovadas com sucesso!");
-                        //         // Adicione aqui a lógica para atualizar a interface após a aprovação
-                        //     },
-                        //     error: function(xhr, status, error) {
-                        //         alert("Ocorreu um erro ao aprovar as férias.");
-                        //     }
-                        // });
+                        const solicitacaoId = $(this).data('solicitacao_id');
 
-                        // Aqui você pode substituir o código acima com sua lógica real para aprovar as férias
-                        // Por enquanto, vamos apenas exibir uma mensagem de alerta
-                        alert("Férias Reprovada com sucesso!");
+                        // Envie a solicitação de reprovação usando AJAX
+                        $.ajax({
+                            type: 'POST',
+                            url: '/reprovarFerias/',
+                            data: {
+                                solicitacao_id: solicitacaoId,
+                                cod_info: cardId,
+                                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    alert('Férias reprovada com sucesso!');
+                                    // Aqui você pode atualizar o estado do card, recarregar a página ou fazer outras ações necessárias
+                                } else {
+                                    alert('Erro ao reprovar férias: ' + response.error);
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                alert('Erro ao reprovar férias: ' + error);
+                            }
+                        });
                     }
                 });
 
@@ -1763,9 +1791,13 @@ $(document).ready(function() {
             url: '/eventosFerias/',
             type: "GET",
             success: function(response) {
-                var eventosFerias = response.eventos.map(function(evento) {
-                    var dataFormatada = moment(evento.start, 'DD/MM/YYYY').format('YYYY-MM-DD');
 
+                var eventosFerias = response.eventos.filter(function(evento) {
+                    // Filtra os eventos com status diferente de "Em férias" e "Férias tiradas"
+                    return evento.className !== '' && evento.className !== 'ferias-tiradas'
+                    && evento.className !== 'reprovado';
+                }).map(function(evento) {
+                var dataFormatada = moment(evento.start, 'DD/MM/YYYY').format('YYYY-MM-DD');
                     return {
                         title: "Férias de " + evento.title,
                         start: dataFormatada,
@@ -1820,8 +1852,6 @@ $(document).ready(function() {
 
     carregarEventosFerias();
 });
-
-
 
 //====================================================================================================
 
@@ -2121,28 +2151,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-        // Função para contar o número de ocorrências de cada status e atualizar os números exibidos
-        function contarStatusFerias() {
-            var statusFerias = {
-                'Em férias': 0,
-                'Férias tiradas': 0,
-                'Aprovado': 0
-            };
+    // Função para contar o número de ocorrências de cada status e atualizar os números exibidos
+    function contarStatusFerias() {
+        var statusFerias = {
+            'Em férias': 0,
+            'Férias tiradas': 0,
+            'Aprovado': 0
+        };
 
-            // Iterar sobre cada linha da tabela
-            document.querySelectorAll("tbody tr").forEach(function(row) {
-                var status = row.querySelector(".badge").textContent.trim();
-                statusFerias[status]++;
-            });
+        // Iterar sobre cada linha da tabela
+        document.querySelectorAll("tbody tr").forEach(function(row) {
+            var status = row.querySelector(".badge").textContent.trim();
+            statusFerias[status]++;
+        });
 
-            // Atualizar os números exibidos
-            document.getElementById("em-ferias-count").textContent = statusFerias['Em férias'];
-            document.getElementById("ferias-tiradas-count").textContent = statusFerias['Férias tiradas'];
-            document.getElementById("aprovado-count").textContent = statusFerias['Aprovado'];
-        }
+        // Atualizar os números exibidos
+        document.getElementById("em-ferias-count").textContent = statusFerias['Em férias'];
+        document.getElementById("ferias-tiradas-count").textContent = statusFerias['Férias tiradas'];
+        document.getElementById("aprovado-count").textContent = statusFerias['Aprovado'];
+    }
 
-        // Chamar a função inicialmente
-        contarStatusFerias();
-    });
-
+    // Chamar a função inicialmente
+    contarStatusFerias();
+});
 

@@ -860,15 +860,28 @@ def registrar_atendimento(request, card_id):
 
     card_setor_history.save()
 
-    # Crie uma notificação para informar o usuário do atendimento registrado
-    notification = Notification(
-        author=request.user,
-        description=f"Sua solicitação está em Atendimento por {request.user.first_name} {request.user.last_name}",
-        subject=card.assunto + f" N°: {card.idCard}",
-        recipient=card.solicitante,  # O destinatário é o solicitante da questão
-        url='kanban_user',  # URL da página atual
-    )
-    notification.save()
+    # Obtenha o histórico de setor mais recente para o cartão
+    historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+    # Obtenha o grupo associado ao histórico de setor
+    grupo_setor = historico_setor.setor
+
+    # Obtenha a URL do setor com base no grupo do responsável
+    setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+    recipients = User.objects.filter(groups=grupo_setor)
+    for recipient in recipients:
+        if recipient != request.user:
+            notification = Notification(
+                author=request.user,
+                authorFirst=request.user.first_name,
+                authorLast=request.user.last_name,
+                description=f"{card.solicitante} Abriu uma nova Solicitação",
+                subject=card.assunto + f" N°: {card.idCard}",
+                recipient=recipient,
+                url=setor_link,
+            )
+            notification.save()
 
     return JsonResponse({'success': True, 'message': 'Atendimento registrado com sucesso.'})
 
@@ -913,15 +926,26 @@ def encaminhar_card(request, card_id):
         )
         notification.save()
 
-        # Notificar os usuários compartilhados
-        for user in card.compartilhar.all():
-            if user != request.user:
+        # Obtenha o histórico de setor mais recente para o cartão
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Obtenha o grupo associado ao histórico de setor
+        grupo_setor = historico_setor.setor
+
+        # Obtenha a URL do setor com base no grupo do responsável
+        setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+        recipients = User.objects.filter(groups=grupo_setor)
+        for recipient in recipients:
+            if recipient != request.user:
                 notification = Notification(
                     author=request.user,
-                    description="Uma solicitação encaminhada para" + historico_setor.setor_atual,
+                    authorFirst=request.user.first_name,
+                    authorLast=request.user.last_name,
+                    description=f"{card.solicitante} Abriu uma nova Solicitação",
                     subject=card.assunto + f" N°: {card.idCard}",
-                    recipient=user,
-                    url='kanban_user',
+                    recipient=recipient,
+                    url=setor_link,
                 )
                 notification.save()
 
@@ -945,14 +969,28 @@ def compartilhar_card(request, card_id):
         card.compartilhar.add(user)
         card.save()
 
-        notification = Notification(
-            author=request.user,
-            description="Solicitação compartilhada com você",
-            subject=card.assunto + f" N°: {card.idCard}",
-            recipient=user,  # O destinatário é o solicitante da questão
-            url='kanban_user',  # URL da página atual
-        )
-        notification.save()
+        # Obtenha o histórico de setor mais recente para o cartão
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+        # Obtenha o grupo associado ao histórico de setor
+        grupo_setor = historico_setor.setor
+
+        # Obtenha a URL do setor com base no grupo do responsável
+        setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+        recipients = User.objects.filter(groups=grupo_setor)
+        for recipient in recipients:
+            if recipient != request.user:
+                notification = Notification(
+                    author=request.user,
+                    authorFirst=request.user.first_name,
+                    authorLast=request.user.last_name,
+                    description=f"{card.solicitante} Abriu uma nova Solicitação",
+                    subject=card.assunto + f" N°: {card.idCard}",
+                    recipient=recipient,
+                    url=setor_link,
+                )
+                notification.save()
 
         return JsonResponse({'success': True, 'message': 'Card conpartilhado com sucesso.'})
 
@@ -991,17 +1029,28 @@ def transferir_card(request, card_id):
 
         card_setor_history.save()
 
+        # Obtenha o histórico de setor mais recente para o cartão
         historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
 
-        # Notificar o solicitante
-        notification = Notification(
-            author=request.user,
-            description="Sua solicitação foi Transferida para " + historico_setor.setor_atual,
-            subject=card.assunto + f" N°: {card.idCard}",
-            recipient=card.solicitante,
-            url='kanban_user',
-        )
-        notification.save()
+        # Obtenha o grupo associado ao histórico de setor
+        grupo_setor = historico_setor.setor
+
+        # Obtenha a URL do setor com base no grupo do responsável
+        setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+        recipients = User.objects.filter(groups=grupo_setor)
+        for recipient in recipients:
+            if recipient != request.user:
+                notification = Notification(
+                    author=request.user,
+                    authorFirst=request.user.first_name,
+                    authorLast=request.user.last_name,
+                    description=f"{card.solicitante} Abriu uma nova Solicitação",
+                    subject=card.assunto + f" N°: {card.idCard}",
+                    recipient=recipient,
+                    url=setor_link,
+                )
+                notification.save()
 
         return JsonResponse({'success': True, 'message': 'Card Transferido com sucesso.'})
 
@@ -1058,14 +1107,28 @@ def concluir_card(request, card_id):
                 operador=request.user,
             )
 
-            notification = Notification(
-                author=request.user,
-                description="Eba! Sua solicitação foi concluida",
-                subject=card.assunto + f" N°: {card.idCard}",
-                recipient=card.solicitante,  # O destinatário é o solicitante da questão
-                url='kanban_user',  # URL da página atual
-            )
-            notification.save()
+            # Obtenha o histórico de setor mais recente para o cartão
+            historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
+
+            # Obtenha o grupo associado ao histórico de setor
+            grupo_setor = historico_setor.setor
+
+            # Obtenha a URL do setor com base no grupo do responsável
+            setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        authorFirst=request.user.first_name,
+                        authorLast=request.user.last_name,
+                        description=f"{card.solicitante} Abriu uma nova Solicitação",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
 
             card_setor_history.save()
             return JsonResponse({'success': True, 'message': 'Card concluido com sucesso'})
@@ -1125,15 +1188,28 @@ def avaliar_card(request, card_id):
         # Obtenha a URL do setor com base no grupo do responsável
         setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
 
-        notification = Notification(
-            author=request.user,
-            description="Solicitação finalizada pelo solicitante",
-            subject=card.assunto + f" N°: {card.idCard}",
-            recipient=card.responsavel,  # O destinatário
-            url=setor_link,  # URL da página atual
-        )
+        # Obtenha o histórico de setor mais recente para o cartão
+        historico_setor = CardSetorHistory.objects.filter(card=card).latest('data_hora')
 
-        notification.save()
+        # Obtenha o grupo associado ao histórico de setor
+        grupo_setor = historico_setor.setor
+
+        # Obtenha a URL do setor com base no grupo do responsável
+        setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
+
+        recipients = User.objects.filter(groups=grupo_setor)
+        for recipient in recipients:
+            if recipient != request.user:
+                notification = Notification(
+                    author=request.user,
+                    authorFirst=request.user.first_name,
+                    authorLast=request.user.last_name,
+                    description=f"{card.solicitante} Abriu uma nova Solicitação",
+                    subject=card.assunto + f" N°: {card.idCard}",
+                    recipient=recipient,
+                    url=setor_link,
+                )
+                notification.save()
 
         avaliacao = request.POST.get('rating')
 
@@ -1184,14 +1260,19 @@ def finalizar_card(request, card_id):
             # Obtenha a URL do setor com base no grupo do responsável
             setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
 
-            notification = Notification(
-                author=request.user,
-                description="Solicitação finalizada pelo solicitante",
-                subject=card.assunto,
-                recipient=card.responsavel,  # O destinatário
-                url=setor_link,  # URL da página atual
-            )
-            notification.save()
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        authorFirst=request.user.first_name,
+                        authorLast=request.user.last_name,
+                        description=f"{card.solicitante} Abriu uma nova Solicitação",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
 
             return JsonResponse({'success': True, 'message': 'Card finalizado com sucesso'})
 
@@ -1234,14 +1315,19 @@ def reabrir_card(request, card_id):
             # Obtenha a URL do setor com base no grupo do responsável
             setor_link = CustomGroupInfo.objects.get(group=grupo_setor).url
 
-            notification = Notification(
-                author=request.user,
-                description="Solicitação reaberta pelo usuário",
-                subject=card.assunto,
-                recipient=card.responsavel,  # O destinatário
-                url=setor_link,  # URL da página atual
-            )
-            notification.save()
+            recipients = User.objects.filter(groups=grupo_setor)
+            for recipient in recipients:
+                if recipient != request.user:
+                    notification = Notification(
+                        author=request.user,
+                        authorFirst=request.user.first_name,
+                        authorLast=request.user.last_name,
+                        description=f"{card.solicitante} Abriu uma nova Solicitação",
+                        subject=card.assunto + f" N°: {card.idCard}",
+                        recipient=recipient,
+                        url=setor_link,
+                    )
+                    notification.save()
             return JsonResponse({'success': True, 'message': 'Card reaberto com sucesso'})
 
         except Card.DoesNotExist:

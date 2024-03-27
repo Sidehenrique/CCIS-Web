@@ -195,11 +195,9 @@ def ferias(request):
         data_retorno = datetime.strptime(feria.dataretorno, '%d/%m/%Y').date()
 
         if datasaida <= today_date <= datafinal:
-            print(f"Atualizando status de férias para 'Em férias' para ID {feria.id}")
             feria.status_ferias = 'Em férias'
 
         elif today_date > data_retorno:
-            print(f"Atualizando status de férias para 'Férias tiradas' para ID {feria.id}")
             feria.status_ferias = 'Férias tiradas'
 
         feria.save()  # Salvar as alterações no banco de dados
@@ -219,9 +217,18 @@ def eventosFerias(request):
             'title': feria.nomecompleto_selecionado,
             'start': feria.datasaida,
             'color': '#00A094',  # Defina a cor conforme necessário
-            'className': 'em-ferias' if feria.status_ferias == 'Em férias' else (
-                'ferias-tiradas' if feria.status_ferias == 'Férias tiradas' else '')
+            'className': ''  # Inicialmente, não defina uma classe
         }
+        # Define a classe com base no status de férias
+        if feria.status_ferias == 'Em férias':
+            evento['className'] = 'em-ferias'
+        elif feria.status_ferias == 'Férias tiradas':
+            evento['className'] = 'ferias-tiradas'
+        elif feria.status_ferias == 'Aprovado':
+            evento['className'] = 'aprovado'
+        elif feria.status_ferias == 'Reprovado':
+            evento['className'] = 'reprovado'
+
         eventos_ferias.append(evento)
 
     return JsonResponse({'eventos': eventos_ferias})
@@ -240,6 +247,29 @@ def aprovarFerias(request):
             # Tente encontrar a solicitação de férias usando o cod_info
             ferias = Ferias.objects.get(card_id=cod_info)
             ferias.status_ferias = 'Aprovado'
+            ferias.save()
+            return JsonResponse({'success': True})
+        except Ferias.DoesNotExist:
+            # Se a solicitação de férias não for encontrada
+            return JsonResponse({'success': False, 'error': 'Solicitação de férias não encontrada'})
+    else:
+        # Se o método de requisição não for POST
+        return JsonResponse({'success': False, 'error': 'Método de requisição inválido'})
+
+
+@login_required(login_url="/login")
+def reprovarFerias(request):
+    if request.method == 'POST':
+        cod_info = request.POST.get('cod_info')
+
+        # Verifique se o cod_info é válido
+        if cod_info is None:
+            return JsonResponse({'success': False, 'error': 'ID da solicitação inválido'})
+
+        try:
+            # Tente encontrar a solicitação de férias usando o cod_info
+            ferias = Ferias.objects.get(card_id=cod_info)
+            ferias.status_ferias = 'Reprovado'
             ferias.save()
             return JsonResponse({'success': True})
         except Ferias.DoesNotExist:

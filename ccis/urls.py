@@ -130,6 +130,7 @@ urlpatterns = [
     path('rh/request_ferias', rh.request_ferias, name='request_ferias'),
     path('aprovarFerias/', rh.aprovarFerias, name='aprovar_ferias'),
     path('eventosFerias/', rh.eventosFerias, name='eventosFerias'),
+    path('reprovarFerias/', rh.reprovarFerias, name='reprovar_ferias'),
 
     path('ti', ti.ti_home, name='ti_home'),
     path('ti/new_request', ti.new_request, name='new_request'),

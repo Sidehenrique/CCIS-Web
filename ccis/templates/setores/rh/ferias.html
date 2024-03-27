@@ -52,13 +52,12 @@
                             <span>Palavra Chave:</span>
                             <input class="bg-dark palavra-passe" type="text" id="palavra-passe" name="palavra-passe"
                                    required>
-                            <span style="font-size: 12px; color: #999999">Pesquise por assunto, serviço, atendente e N° do card...</span>
+                            <span style="font-size: 12px; color: #999999">Pesquise por Ferias, Tiradas, Aprovadas...</span>
                         </div>
 
                         <div class="p-3">
-                            <label>Filtre uma Data:</label>
-                            <input class="bg-dark palavra-passe" type="text" id="" name="palavra-passe"
-                                   required>
+                            <label for="filtroData">Filtrar por Data:</label>
+                            <input type="date" id="filtroData">
                         </div>
                         <!-- input --------------->
 
@@ -95,23 +94,26 @@
                             <span>Controle Férias</span>
 
                             <div class="form-check">
-                                <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta1">
+                                <input class="bg-dark form-check-input" type="checkbox" value="Aprovados"
+                                       id="etiqueta1">
                                 <label class="form-check-label" for="etiqueta1">
-                                    Férias
+                                    Aprovados
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta2">
+                                <input class="bg-dark form-check-input" type="checkbox" value="Em Férias"
+                                       id="etiqueta2">
                                 <label class="form-check-label" for="etiqueta2">
-                                    Programadas
+                                    Em Férias
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="bg-dark form-check-input" type="checkbox" value="" id="etiqueta3">
+                                <input class="bg-dark form-check-input" type="checkbox" value="Férias Tiradas"
+                                       id="etiqueta3">
                                 <label class="form-check-label" for="etiqueta3">
-                                    Tiradas
+                                    Férias Tiradas
                                 </label>
                             </div>
 
@@ -127,7 +129,7 @@
                 <div class="position-relative">
                     <i class="fa-solid fa-magnifying-glass search-icon" id="searchIcon"></i>
                     <input type="search" class="search-menu-settings ms-3" placeholder="Digite sua pesquisa..."
-                           aria-label="Search" id="inputUser" onkeyup="filterProcesses()">
+                           aria-label="Search" id="dataFerias" onkeyup="filterFerias()">
                 </div>
                 <!-- Pesquisa Rápida ------------->
 
@@ -262,7 +264,7 @@
 
                                             </thead>
                                             <!-- Names tabela -->
-                                            <tbody>
+                                            <tbody id="tabelaFerias">
 
 
                                             {% for ferias in dadosTable %}
