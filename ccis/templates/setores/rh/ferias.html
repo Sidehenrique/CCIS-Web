@@ -358,4 +358,48 @@
     </div>
 </div>
 
+
+<script>
+
+function removeAccents(text) {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function filterFerias() {
+    console.log("Filtrando férias...");
+
+    var input, filter, table, tr, td, i, nameCell, statusCell;
+    input = document.getElementById("dataFerias");
+    filter = removeAccents(input.value.toUpperCase()); // Removendo acentos do texto de entrada
+    table = document.getElementById("tabelaFerias");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        nameCell = tr[i].getElementsByTagName("td")[0];
+        statusCell = tr[i].getElementsByTagName("td")[6]; // Índice 6 é a coluna do status
+
+        if (nameCell && statusCell) {
+            var nameText = removeAccents(nameCell.textContent || nameCell.innerText); // Removendo acentos do texto do nome
+            var statusText = statusCell.textContent || statusCell.innerText;
+
+            if (removeAccents(nameText.toUpperCase()).indexOf(filter) > -1 || removeAccents(statusText.toUpperCase()).indexOf(filter) > -1 || filter === '') {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    // Rolando a página até o final da tabela
+    var tableHeight = table.offsetHeight;
+    console.log("Altura da tabela:", tableHeight);
+    table.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+}
+
+
+</script>
+
+
 {% endblock %}
+
+
